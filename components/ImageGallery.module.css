@@ -1,0 +1,231 @@
+/* ===========================================
+   IMAGE GALLERY COMPONENT
+   Single image view with prev/next navigation
+   Arrows positioned outside image area
+   =========================================== */
+
+.container {
+  width: 100%;
+  margin: var(--space-md) 0;
+}
+
+/* ===========================================
+   GALLERY WRAPPER
+   Padding creates space for arrows on sides
+   =========================================== */
+.galleryWrapper {
+  position: relative;
+  padding: 0 70px;
+}
+
+/* ===========================================
+   NAVIGATION ARROWS
+   Positioned absolutely outside image
+   =========================================== */
+.arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 56px;
+  height: 56px;
+  min-width: 44px;
+  min-height: 44px;
+  border: 2px solid var(--project-accent, var(--color-green-dark));
+  border-radius: 50%;
+  background-color: transparent;
+  color: var(--project-accent, var(--color-green-dark));
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-gentle);
+  z-index: 10;
+}
+
+.arrowPrev {
+  left: 0;
+}
+
+.arrowNext {
+  right: 0;
+}
+
+@media (hover: hover) {
+  .arrow:hover {
+    background-color: var(--project-accent, var(--color-green-dark));
+    color: var(--project-accent-light, var(--color-bg));
+  }
+}
+
+.arrow:focus-visible {
+  outline: 2px solid var(--project-accent, var(--color-green-warm));
+  outline-offset: 2px;
+}
+
+/* ===========================================
+   IMAGE CONTAINER
+   Fixed height - images use object-fit
+   =========================================== */
+.imageContainer {
+  width: 100%;
+}
+
+.imageButton {
+  display: block;
+  width: 100%;
+  height: 600px; /* Fixed height - tall enough for portraits */
+  border: none;
+  padding: 0;
+  background: none;
+  cursor: pointer;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.imageButton:focus-visible {
+  outline: 2px solid var(--project-accent, var(--color-green-warm));
+  outline-offset: 2px;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  display: block;
+  border-radius: 8px;
+  object-fit: contain; /* Full image visible, no cropping */
+  object-position: center;
+}
+
+/* ===========================================
+   COUNTER
+   =========================================== */
+.counter {
+  text-align: center;
+  color: var(--color-text-light);
+  font-family: var(--font-sans);
+  font-size: var(--text-body-small);
+  margin-top: var(--space-sm);
+  margin-bottom: 0;
+}
+
+/* ===========================================
+   DOT NAVIGATION
+   Important: Dots must meet 44px touch target
+   Visual size is smaller, but tap area is 44px
+   =========================================== */
+.dots {
+  display: flex;
+  justify-content: center;
+  gap: 0.25rem;
+  margin-top: var(--space-sm);
+}
+
+.dot {
+  /* Visual appearance */
+  width: 10px;
+  height: 10px;
+  border-radius: 5px;
+  border: none;
+  background-color: var(--color-border);
+  cursor: pointer;
+  transition: all var(--transition-gentle);
+  
+  /* Expand touch target to 44px without changing visual size */
+  position: relative;
+  padding: 0;
+}
+
+/* Invisible touch target expansion */
+.dot::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 44px;
+  height: 44px;
+  /* Uncomment to debug: background: rgba(255, 0, 0, 0.1); */
+}
+
+.dot:focus-visible {
+  outline: 2px solid var(--project-accent, var(--color-green-warm));
+  outline-offset: 4px;
+}
+
+.dotActive {
+  width: 28px;
+  background-color: var(--project-accent, var(--color-green-dark));
+}
+
+@media (hover: hover) {
+  .dot:hover {
+    background-color: var(--project-accent, var(--color-green-dark));
+    opacity: 0.7;
+  }
+  
+  .dotActive:hover {
+    opacity: 1;
+  }
+}
+
+/* ===========================================
+   RESPONSIVE - TABLET (900px)
+   =========================================== */
+@media (max-width: 900px) {
+  .galleryWrapper {
+    padding: 0 60px;
+  }
+  
+  .arrow {
+    width: 52px;
+    height: 52px;
+  }
+  
+  .imageButton {
+    height: 500px;
+  }
+}
+
+/* ===========================================
+   RESPONSIVE - MOBILE (600px)
+   =========================================== */
+@media (max-width: 600px) {
+  .galleryWrapper {
+    padding: 0 50px;
+  }
+  
+  .arrow {
+    width: 44px;
+    height: 44px;
+  }
+  
+  .arrow svg {
+    width: 20px;
+    height: 20px;
+  }
+  
+  .imageButton {
+    height: 400px;
+  }
+}
+
+/* ===========================================
+   RESPONSIVE - SMALL MOBILE (400px)
+   =========================================== */
+@media (max-width: 400px) {
+  .galleryWrapper {
+    padding: 0 48px;
+  }
+  
+  .arrow {
+    width: 40px;
+    height: 40px;
+    /* Still meets minimum with touch target expansion */
+    min-width: 44px;
+    min-height: 44px;
+  }
+  
+  .imageButton {
+    height: 320px;
+  }
+}

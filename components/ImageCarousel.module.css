@@ -1,0 +1,171 @@
+/* ===========================================
+   IMAGE CAROUSEL COMPONENT
+   Horizontal scrolling gallery with lightbox
+   =========================================== */
+
+.container {
+  position: relative;
+  width: 100%;
+  margin: var(--space-md) 0;
+}
+
+/* Wrapper creates space for arrows on sides */
+.carouselWrapper {
+  position: relative;
+  padding: 0 70px;
+}
+
+/* ===========================================
+   SCROLL CONTAINER
+   =========================================== */
+.scrollContainer {
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  
+  /* Hide scrollbar but keep functionality */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.scrollContainer::-webkit-scrollbar {
+  display: none;
+}
+
+.track {
+  display: flex;
+  gap: var(--space-sm);
+  padding: var(--space-xs) 0;
+}
+
+/* ===========================================
+   IMAGE BUTTONS
+   =========================================== */
+.imageButton {
+  flex-shrink: 0;
+  border: none;
+  padding: 0;
+  background: none;
+  cursor: pointer;
+  scroll-snap-align: start;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: transform var(--transition-gentle), box-shadow var(--transition-gentle);
+}
+
+@media (hover: hover) {
+  .imageButton:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  }
+}
+
+.imageButton:focus-visible {
+  outline: 2px solid var(--project-accent, var(--color-green-warm));
+  outline-offset: 2px;
+}
+
+.image {
+  height: 100%;
+  width: auto;
+  display: block;
+  object-fit: cover;
+}
+
+/* ===========================================
+   NAVIGATION ARROWS
+   =========================================== */
+.arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 56px;
+  height: 56px;
+  min-width: 44px;
+  min-height: 44px;
+  border: 2px solid var(--project-accent, var(--color-green-dark));
+  border-radius: 50%;
+  background-color: var(--color-bg);
+  color: var(--project-accent, var(--color-green-dark));
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity var(--transition-gentle), background-color var(--transition-gentle);
+  z-index: 10;
+}
+
+@media (hover: hover) {
+  .arrow:hover {
+    background-color: var(--project-accent, var(--color-green-dark));
+    color: var(--project-accent-light, var(--color-bg));
+  }
+}
+
+.arrow:focus-visible {
+  outline: 2px solid var(--project-accent, var(--color-green-warm));
+  outline-offset: 2px;
+  opacity: 1;
+}
+
+.arrowLeft {
+  left: 0;
+}
+
+.arrowRight {
+  right: 0;
+}
+
+.arrow.visible {
+  opacity: 1;
+}
+
+/* ===========================================
+   RESPONSIVE - TABLET (900px)
+   =========================================== */
+@media (max-width: 900px) {
+  .carouselWrapper {
+    padding: 0 56px;
+  }
+  
+  .arrow {
+    width: 52px;
+    height: 52px;
+  }
+}
+
+/* ===========================================
+   RESPONSIVE - MOBILE (600px)
+   =========================================== */
+@media (max-width: 600px) {
+  .carouselWrapper {
+    padding: 0; /* No padding on mobile - arrows overlay */
+  }
+  
+  .arrow {
+    width: 44px;
+    height: 44px;
+    background-color: rgba(255, 255, 255, 0.9);
+  }
+  
+  .arrow svg {
+    width: 20px;
+    height: 20px;
+  }
+  
+  .arrowLeft {
+    left: var(--space-xs);
+  }
+  
+  .arrowRight {
+    right: var(--space-xs);
+  }
+  
+  /* Always show arrows on mobile (no hover) */
+  .arrow.visible {
+    opacity: 1;
+  }
+}

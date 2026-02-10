@@ -1,0 +1,36 @@
+/* ===========================================
+   ProgressNav — Top-edge reading progress line
+   =========================================== */
+.progressLine {
+  position: fixed;
+  top: 60px;
+  left: 0;
+  right: 0;
+  height: 3px;
+  z-index: 99;
+  pointer-events: none;
+  transition: opacity 0.5s ease;
+}
+
+.progressLineHidden {
+  opacity: 0;
+}
+
+.progressLineFill {
+  height: 100%;
+  background: var(--project-accent);
+  transition: width 0.15s linear, background 0.4s ease;
+}
+
+.progressLineFillLight {
+  background: rgba(255, 255, 255, 0.85);
+}
+
+/* ===========================================
+   RESPONSIVE — MOBILE (600px)
+   =========================================== */
+@media (max-width: 600px) {
+  .progressLine {
+    top: 52px;
+  }
+}

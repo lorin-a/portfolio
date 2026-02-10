@@ -1,0 +1,143 @@
+/* ===========================================
+   PROJECT HERO COMPONENT
+   Hero section with background image
+   =========================================== */
+
+.hero {
+  min-height: 90vh;
+  min-height: 90dvh; /* Dynamic viewport height for mobile Safari */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  background-size: cover;
+  background-position: center;
+  background-color: var(--project-accent, var(--color-green-dark));
+  padding: var(--space-xl) var(--space-md);
+}
+
+/* ===========================================
+   GRADIENT OVERLAY
+   =========================================== */
+.overlay {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  inset: 0; /* Modern shorthand with fallback above */
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.15) 0%,
+    rgba(0, 0, 0, 0.35) 40%,
+    rgba(0, 0, 0, 0.6) 100%
+  );
+  pointer-events: none;
+}
+
+/* ===========================================
+   CONTENT
+   =========================================== */
+.content {
+  position: relative;
+  z-index: 1;
+  max-width: 900px;
+}
+
+/* ===========================================
+   TYPOGRAPHY
+   =========================================== */
+.title {
+  font-family: var(--font-serif);
+  font-size: clamp(3rem, 10vw, 5.5rem);
+  font-weight: 400;
+  color: var(--project-accent-light, var(--color-bg));
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+.subtitle {
+  font-family: var(--font-serif);
+  font-size: clamp(1.25rem, 3vw, 1.75rem);
+  font-style: italic;
+  font-weight: 400;
+  color: var(--project-accent-light, var(--color-bg));
+  margin-bottom: 0.5rem;
+  text-wrap: balance;
+}
+
+.descriptor {
+  font-family: var(--font-sans);
+  font-size: clamp(0.85rem, 1.5vw, 1rem);
+  color: var(--project-accent-light, var(--color-bg));
+  opacity: 0.85;
+  margin-bottom: 1.5rem;
+}
+
+/* ===========================================
+   TAGS
+   =========================================== */
+.tags {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.tag {
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--project-accent, var(--color-green-dark));
+  background-color: rgba(255, 255, 255, 0.92);
+  padding: 0.6rem 1.25rem;
+  border-radius: 24px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* ===========================================
+   RESPONSIVE - TABLET (900px)
+   =========================================== */
+@media (max-width: 900px) {
+  .hero {
+    min-height: 80vh;
+    padding: var(--space-lg) var(--space-md);
+  }
+}
+
+/* ===========================================
+   RESPONSIVE - MOBILE (600px)
+   =========================================== */
+@media (max-width: 600px) {
+  .hero {
+    min-height: 70vh;
+    padding: var(--space-lg) var(--space-sm);
+  }
+  
+  .tags {
+    gap: 0.5rem;
+  }
+  
+  .tag {
+    font-size: 0.75rem;
+    padding: 0.5rem 1rem;
+  }
+}
+
+/* ===========================================
+   RESPONSIVE - SMALL MOBILE (400px)
+   =========================================== */
+@media (max-width: 400px) {
+  .hero {
+    min-height: 60vh;
+  }
+  
+  .tag {
+    font-size: 0.7rem;
+    padding: 0.4rem 0.8rem;
+  }
+}

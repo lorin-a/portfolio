@@ -1,0 +1,132 @@
+.card {
+  background-color: var(--color-bg);
+  border-radius: 4px;
+  overflow: hidden;
+  transition: transform var(--transition-gentle), box-shadow var(--transition-gentle);
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+.link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+.imageContainer {
+  position: relative;
+  overflow: hidden;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--transition-gentle);
+}
+
+.card:hover .image {
+  transform: scale(1.02);
+}
+
+.imagePlaceholder {
+  background-color: var(--color-bg-alt);
+  border: 2px dashed var(--color-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  color: var(--color-text-light);
+}
+
+.content {
+  padding: var(--space-md);
+}
+
+.title {
+  font-family: var(--font-serif);
+  font-size: 1.5rem;
+  margin-bottom: var(--space-xs);
+}
+
+.subtitle {
+  font-size: 1rem;
+  color: var(--color-text);
+  font-style: italic;
+  margin-bottom: var(--space-xs);
+}
+
+.description {
+  font-size: 0.9375rem;
+  color: var(--color-text-light);
+  line-height: 1.5;
+  margin-bottom: var(--space-sm);
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+}
+
+.tag {
+  font-size: 0.75rem;
+  color: var(--color-green-dark);
+  background-color: var(--color-bg-alt);
+  padding: 0.25em 0.75em;
+  border-radius: 2px;
+}
+
+/* Size variants */
+.large .imageContainer {
+  aspect-ratio: 16 / 9;
+}
+
+.large .imagePlaceholder {
+  min-height: 300px;
+}
+
+.large .title {
+  font-size: 1.75rem;
+}
+
+.medium .imageContainer {
+  aspect-ratio: 4 / 3;
+}
+
+.medium .imagePlaceholder {
+  min-height: 220px;
+}
+
+.small .imageContainer {
+  aspect-ratio: 1 / 1;
+}
+
+.small .imagePlaceholder {
+  min-height: 160px;
+}
+
+.small .content {
+  padding: var(--space-sm);
+}
+
+.small .title {
+  font-size: 1.125rem;
+}
+
+.small .description {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .large .imagePlaceholder {
+    min-height: 200px;
+  }
+  
+  .large .title {
+    font-size: 1.5rem;
+  }
+}

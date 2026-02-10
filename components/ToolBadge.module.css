@@ -1,0 +1,31 @@
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.label {
+  font-size: var(--text-caption);
+  color: var(--color-text-light);
+  margin-right: var(--space-xs);
+}
+
+.list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.375rem;
+}
+
+.badge {
+  font-family: var(--font-sans);
+  font-size: var(--text-label);
+  font-weight: 600;
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-text);
+  background-color: rgba(0, 0, 0, 0.06);
+  padding: 0.35em 0.6em;
+  border-radius: 2px;
+}

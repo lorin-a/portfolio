@@ -1,0 +1,120 @@
+/* ===========================================
+   AUDIO CARD COMPONENT
+   Card with audio player for meditations
+   =========================================== */
+
+.card {
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
+}
+
+/* Dark variant (default) */
+.cardDark {
+  background-color: var(--project-accent, var(--color-green-dark));
+}
+
+/* Light variant */
+.cardLight {
+  background-color: var(--project-accent-light, var(--color-bg-alt));
+  border: 1px solid var(--color-border);
+}
+
+/* ===========================================
+   TYPOGRAPHY
+   =========================================== */
+.type {
+  font-family: var(--font-sans);
+  font-size: var(--text-body-small);
+  margin-bottom: var(--space-xs);
+}
+
+.typeDark {
+  color: var(--project-accent-light, var(--color-bg));
+  opacity: 0.7;
+}
+
+.typeLight {
+  color: var(--color-text-light);
+}
+
+.title {
+  font-family: var(--font-serif);
+  font-size: var(--text-body-large);
+  font-weight: 400;
+  margin-bottom: var(--space-sm);
+}
+
+.titleDark {
+  color: var(--project-accent-light, var(--color-bg));
+}
+
+.titleLight {
+  color: var(--project-accent, var(--color-text));
+}
+
+.artist {
+  font-family: var(--font-sans);
+  font-size: var(--text-body-small);
+  margin-bottom: var(--space-sm);
+}
+
+.artistDark {
+  color: var(--project-accent-light, var(--color-bg));
+  opacity: 0.8;
+}
+
+.artistLight {
+  color: var(--color-text-light);
+}
+
+/* ===========================================
+   AUDIO PLAYER
+   =========================================== */
+.audio {
+  width: 100%;
+  height: var(--min-touch-target);
+  border-radius: var(--radius-pill);
+}
+
+/* Style the audio player for dark backgrounds */
+.cardDark .audio::-webkit-media-controls-panel {
+  background-color: var(--color-bg);
+  border-radius: var(--radius-sm);
+}
+
+.cardDark .audio::-webkit-media-controls-current-time-display,
+.cardDark .audio::-webkit-media-controls-time-remaining-display {
+  color: var(--project-accent);
+}
+
+/* ===========================================
+   GRID LAYOUT
+   =========================================== */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(var(--columns, 2), 1fr);
+  gap: var(--space-md);
+  margin-top: var(--space-md);
+}
+
+/* ===========================================
+   RESPONSIVE - TABLET (900px)
+   =========================================== */
+@media (max-width: 900px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* ===========================================
+   RESPONSIVE - MOBILE (600px)
+   =========================================== */
+@media (max-width: 600px) {
+  .card {
+    padding: var(--space-sm);
+  }
+  
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}

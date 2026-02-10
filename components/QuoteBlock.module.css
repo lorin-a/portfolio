@@ -1,0 +1,156 @@
+/* ===========================================
+   QUOTE BLOCK COMPONENT
+   Styled quotes with attribution
+   =========================================== */
+
+.quote {
+  margin: var(--space-md) 0;
+}
+
+/* ===========================================
+   BORDERED VARIANT
+   =========================================== */
+.bordered {
+  border-left: 4px solid var(--project-accent, var(--color-green-dark));
+  padding-left: var(--space-md);
+}
+
+.bordered.dark {
+  border-left-color: var(--project-accent-light, var(--color-bg));
+}
+
+/* ===========================================
+   TEXT STYLES
+   =========================================== */
+.text {
+  font-family: var(--font-serif);
+  font-size: var(--text-h3);
+  font-style: italic;
+  line-height: var(--leading-relaxed);
+  text-wrap: balance;
+  max-width: 700px;
+  margin: 0 0 var(--space-xs);
+}
+
+.textLarge {
+  font-size: clamp(1.5rem, 3.5vw, 2rem);
+  line-height: 1.5;
+}
+
+.interpretation {
+  font-size: var(--text-body);
+  font-style: italic;
+  opacity: 0.85;
+}
+
+/* ===========================================
+   THEME: LIGHT (default)
+   =========================================== */
+.light .text {
+  color: var(--project-accent, var(--color-green-dark));
+}
+
+.light .attribution {
+  color: var(--color-text-light);
+}
+
+/* ===========================================
+   THEME: DARK
+   =========================================== */
+.dark .text {
+  color: var(--project-accent-light, var(--color-bg));
+}
+
+.dark .attribution {
+  color: var(--project-accent-light, var(--color-bg));
+  opacity: 0.7;
+}
+
+/* ===========================================
+   ATTRIBUTION
+   =========================================== */
+.attribution {
+  display: block;
+  font-family: var(--font-sans);
+  font-size: var(--text-body-small);
+  font-style: normal;
+  margin-top: var(--space-xs);
+}
+
+/* ===========================================
+   QUOTE GRID (for participant quotes)
+   =========================================== */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-md);
+}
+
+.gridItem {
+  border-left: 3px solid rgba(248, 235, 229, 0.4);
+  padding-left: var(--space-sm);
+  padding-top: var(--space-xs);
+  padding-bottom: var(--space-xs);
+}
+
+.participantQuote {
+  font-family: var(--font-serif);
+  font-size: var(--text-body-large);
+  font-style: italic;
+  color: var(--project-accent-light, var(--color-bg));
+  margin-bottom: var(--space-xs);
+  text-wrap: balance;
+}
+
+.participantInterpretation {
+  font-family: var(--font-sans);
+  font-size: var(--text-body-small);
+  color: var(--project-accent-light, var(--color-bg));
+  opacity: 0.7;
+  margin: 0;
+  line-height: var(--leading-normal);
+}
+
+/* ===========================================
+   QUOTE GRID - LIGHT VARIANT
+   For use on light backgrounds
+   =========================================== */
+.gridLight .gridItem {
+  border-left-color: var(--project-accent, var(--color-green-dark));
+  border-left-width: 3px;
+  opacity: 1;
+}
+
+.gridLight .participantQuote {
+  color: var(--project-accent, var(--color-green-dark));
+}
+
+.gridLight .participantInterpretation {
+  color: var(--color-text);
+  opacity: 0.85;
+}
+
+/* ===========================================
+   RESPONSIVE - TABLET (900px)
+   =========================================== */
+@media (max-width: 900px) {
+  .grid,
+  .gridLight {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* ===========================================
+   RESPONSIVE - MOBILE (600px)
+   =========================================== */
+@media (max-width: 600px) {
+  .bordered {
+    padding-left: var(--space-sm);
+    border-left-width: 3px;
+  }
+  
+  .grid,
+  .gridLight {
+    grid-template-columns: 1fr;
+  }
+}

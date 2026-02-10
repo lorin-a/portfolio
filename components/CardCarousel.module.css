@@ -1,0 +1,241 @@
+/* ===========================================
+   CardCarousel — Flip card carousel
+   =========================================== */
+.cardCarouselContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: var(--space-lg) 0;
+  outline: none;
+  overflow: hidden;
+}
+
+.cardCarouselContainer:focus-visible {
+  outline: 2px solid var(--project-accent);
+  outline-offset: 8px;
+  border-radius: 8px;
+}
+
+/* Track */
+.carouselTrack {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-md);
+  margin-bottom: var(--space-lg);
+  width: 100%;
+  max-width: 1000px;
+  transition: opacity 0.3s ease-out;
+}
+
+.carouselTransitioning {
+  opacity: 0.3;
+}
+
+/* Cards */
+.carouselCard {
+  flex-shrink: 0;
+  width: 200px;
+  aspect-ratio: 4.5 / 7.25;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition: all 1s cubic-bezier(0.4, 0, 0.1, 1);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.carouselCardFar {
+  width: 140px;
+  opacity: 0.3;
+  transform: scale(0.85);
+  filter: blur(1px);
+  animation: cardShift 0.6s cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+.carouselCardSide {
+  width: 180px;
+  opacity: 0.6;
+  transform: scale(0.92);
+  animation: cardShift 0.6s cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+.carouselCardCenter {
+  width: 260px;
+  cursor: pointer;
+  perspective: 1000px;
+  background: transparent !important;
+  box-shadow: none;
+  overflow: visible;
+  animation: cardShift 0.6s cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+@media (hover: hover) {
+  .carouselCardCenter:hover {
+    transform: translateY(-4px);
+  }
+}
+
+@keyframes cardShift {
+  0% {
+    opacity: 0.5;
+    transform: scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Card Images */
+.carouselCardImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: var(--radius-lg);
+}
+
+/* Flip Animation */
+.carouselCardInner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  background: transparent;
+}
+
+.carouselCardFlipped .carouselCardInner {
+  transform: rotateY(180deg);
+}
+
+.carouselCardFront,
+.carouselCardBack {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.carouselCardFront {
+  background-color: #e8e4df;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+}
+
+.carouselCardBack {
+  transform: rotateY(180deg);
+  background-color: #faf8f6;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+}
+
+.carouselCardFront .carouselCardImage,
+.carouselCardBack .carouselCardImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Controls */
+.carouselControls {
+  display: flex;
+  align-items: center;
+  gap: var(--space-lg);
+}
+
+.carouselArrow {
+  width: 48px;
+  height: 48px;
+  border: 1px solid var(--color-border);
+  border-radius: 50%;
+  background-color: var(--color-bg);
+  color: var(--project-accent);
+  font-size: 1.25rem;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (hover: hover) {
+  .carouselArrow:hover {
+    background-color: var(--project-accent);
+    color: var(--color-bg);
+    border-color: var(--project-accent);
+    transform: scale(1.05);
+  }
+}
+
+.carouselArrow:active {
+  transform: scale(0.95);
+}
+
+.carouselInfo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  min-width: 120px;
+}
+
+.carouselInstruction {
+  font-family: var(--font-sans);
+  font-size: var(--text-body-small);
+  font-style: italic;
+  color: var(--color-text-light);
+}
+
+.carouselCounter {
+  font-family: var(--font-sans);
+  font-size: var(--text-caption);
+  color: var(--color-text-light);
+  opacity: 0.8;
+}
+
+/* ===========================================
+   RESPONSIVE — TABLET (900px)
+   =========================================== */
+@media (max-width: 900px) {
+  .carouselCardFar {
+    display: none;
+  }
+
+  .carouselCardSide {
+    width: 140px;
+  }
+
+  .carouselCardCenter {
+    width: 220px;
+  }
+}
+
+/* ===========================================
+   RESPONSIVE — MOBILE (600px)
+   =========================================== */
+@media (max-width: 600px) {
+  .carouselTrack {
+    gap: var(--space-sm);
+  }
+
+  .carouselCardSide {
+    width: 100px;
+    opacity: 0.4;
+  }
+
+  .carouselCardCenter {
+    width: 180px;
+  }
+
+  .carouselArrow {
+    width: 40px;
+    height: 40px;
+    font-size: 1rem;
+  }
+
+  .carouselControls {
+    gap: var(--space-md);
+  }
+}

@@ -1,0 +1,45 @@
+/* ===========================================
+   PHASE DIVIDER COMPONENT
+   Chapter marker between major sections
+   =========================================== */
+
+.divider {
+  background-color: var(--project-accent, var(--color-green-dark));
+  padding: var(--space-lg) var(--container-padding, var(--space-md));
+  text-align: center;
+}
+
+/* ===========================================
+   TYPOGRAPHY
+   =========================================== */
+.title {
+  font-family: var(--font-serif);
+  font-size: var(--text-h2);
+  font-weight: 400;
+  color: var(--project-accent-light, var(--color-bg));
+  margin-bottom: var(--space-md);
+}
+
+.intro {
+  font-family: var(--font-sans);
+  font-size: var(--text-body);
+  line-height: var(--leading-relaxed);
+  color: var(--project-accent-light, var(--color-bg));
+  opacity: 0.9;
+  max-width: 700px;
+  margin: 0 auto;
+  text-wrap: balance;
+}
+
+/* ===========================================
+   RESPONSIVE - MOBILE (600px)
+   =========================================== */
+@media (max-width: 600px) {
+  .divider {
+    padding: var(--space-md) var(--space-sm);
+  }
+  
+  .title {
+    margin-bottom: var(--space-sm);
+  }
+}

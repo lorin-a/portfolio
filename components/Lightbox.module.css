@@ -1,0 +1,192 @@
+/* ===========================================
+   LIGHTBOX COMPONENT
+   Full-screen image viewer with keyboard nav
+   =========================================== */
+
+.lightbox {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  inset: 0; /* Modern shorthand with fallback above */
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lightbox:focus {
+  outline: none;
+}
+
+/* ===========================================
+   BACKDROP
+   =========================================== */
+.backdrop {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  inset: 0; /* Modern shorthand with fallback above */
+  background-color: rgba(0, 0, 0, 0.92);
+  cursor: pointer;
+}
+
+/* ===========================================
+   CLOSE BUTTON
+   =========================================== */
+.closeButton {
+  position: absolute;
+  top: var(--space-md);
+  right: var(--space-md);
+  width: 48px;
+  height: 48px;
+  min-width: 44px;
+  min-height: 44px;
+  border: none;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color var(--transition-gentle);
+  z-index: 10;
+}
+
+@media (hover: hover) {
+  .closeButton:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+  }
+}
+
+.closeButton:focus-visible {
+  outline: 2px solid white;
+  outline-offset: 2px;
+}
+
+/* ===========================================
+   NAVIGATION BUTTONS
+   =========================================== */
+.navButton {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 56px;
+  height: 56px;
+  min-width: 44px;
+  min-height: 44px;
+  border: none;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color var(--transition-gentle);
+  z-index: 10;
+}
+
+@media (hover: hover) {
+  .navButton:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+  }
+}
+
+.navButton:focus-visible {
+  outline: 2px solid white;
+  outline-offset: 2px;
+}
+
+.navPrev {
+  left: var(--space-md);
+}
+
+.navNext {
+  right: var(--space-md);
+}
+
+/* ===========================================
+   IMAGE
+   =========================================== */
+.imageContainer {
+  position: relative;
+  max-width: 90vw;
+  max-height: 85vh;
+  z-index: 1;
+}
+
+.image {
+  max-width: 100%;
+  max-height: 85vh;
+  width: auto;
+  height: auto;
+  display: block;
+  border-radius: 4px;
+  cursor: default;
+}
+
+/* ===========================================
+   COUNTER
+   =========================================== */
+.counter {
+  position: absolute;
+  bottom: var(--space-md);
+  left: 50%;
+  transform: translateX(-50%);
+  color: rgba(255, 255, 255, 0.7);
+  font-family: var(--font-sans);
+  font-size: var(--text-body-small);
+  z-index: 10;
+}
+
+/* ===========================================
+   RESPONSIVE - TABLET (900px)
+   =========================================== */
+@media (max-width: 900px) {
+  .navPrev {
+    left: var(--space-sm);
+  }
+  
+  .navNext {
+    right: var(--space-sm);
+  }
+}
+
+/* ===========================================
+   RESPONSIVE - MOBILE (600px)
+   =========================================== */
+@media (max-width: 600px) {
+  .closeButton {
+    top: var(--space-sm);
+    right: var(--space-sm);
+    width: 44px;
+    height: 44px;
+  }
+  
+  .navButton {
+    width: 44px;
+    height: 44px;
+  }
+  
+  .navButton svg {
+    width: 24px;
+    height: 24px;
+  }
+  
+  .navPrev {
+    left: var(--space-xs);
+  }
+  
+  .navNext {
+    right: var(--space-xs);
+  }
+  
+  .counter {
+    bottom: var(--space-sm);
+  }
+}

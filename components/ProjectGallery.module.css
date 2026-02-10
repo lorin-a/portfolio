@@ -1,0 +1,321 @@
+/* ===========================================
+   GALLERY CONTAINER
+   =========================================== */
+.container {
+  position: relative;
+  width: 100%;
+  margin: var(--space-lg) 0;
+}
+
+/* ===========================================
+   SCROLL CONTAINER
+   =========================================== */
+.scrollContainer {
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  
+  /* Hide scrollbar but keep functionality */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.scrollContainer::-webkit-scrollbar {
+  display: none;
+}
+
+.track {
+  display: flex;
+  gap: var(--space-sm);
+  padding: var(--space-xs) 0;
+}
+
+/* ===========================================
+   IMAGE BUTTONS
+   =========================================== */
+.imageButton {
+  flex-shrink: 0;
+  height: 280px;
+  border: none;
+  padding: 0;
+  background: none;
+  cursor: pointer;
+  scroll-snap-align: start;
+  border-radius: 4px;
+  overflow: hidden;
+  transition: transform var(--transition-gentle), box-shadow var(--transition-gentle);
+}
+
+@media (hover: hover) {
+  .imageButton:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.imageButton:focus-visible {
+  outline: 2px solid var(--color-green-warm);
+  outline-offset: 2px;
+}
+
+.image {
+  height: 100%;
+  width: auto;
+  display: block;
+  object-fit: cover;
+}
+
+/* ===========================================
+   NAVIGATION ARROWS
+   =========================================== */
+.arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  border: none;
+  border-radius: 50%;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+  opacity: 0;
+  transition: opacity var(--transition-gentle), background-color var(--transition-gentle);
+  z-index: 10;
+}
+
+@media (hover: hover) {
+  .arrow:hover {
+    background-color: var(--color-bg-alt);
+  }
+}
+
+.arrow:focus-visible {
+  outline: 2px solid var(--color-green-warm);
+  outline-offset: 2px;
+  opacity: 1;
+}
+
+.arrowLeft {
+  left: var(--space-sm);
+}
+
+.arrowRight {
+  right: var(--space-sm);
+}
+
+.arrow.visible {
+  opacity: 1;
+}
+
+/* Show arrows on container hover (desktop) */
+@media (hover: hover) {
+  .container:hover .arrow.visible {
+    opacity: 1;
+  }
+  
+  .arrow.visible {
+    opacity: 0;
+  }
+}
+
+/* ===========================================
+   LIGHTBOX
+   =========================================== */
+.lightbox {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  inset: 0; /* Modern shorthand with fallback above */
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lightboxBackdrop {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  inset: 0; /* Modern shorthand with fallback above */
+  background-color: rgba(0, 0, 0, 0.9);
+  cursor: pointer;
+}
+
+.lightboxContent {
+  position: relative;
+  max-width: 90vw;
+  max-height: 85vh;
+  z-index: 1;
+}
+
+.lightboxImage {
+  max-width: 100%;
+  max-height: 85vh;
+  width: auto;
+  height: auto;
+  display: block;
+  border-radius: 4px;
+}
+
+.lightboxClose {
+  position: absolute;
+  top: var(--space-md);
+  right: var(--space-md);
+  width: 44px;
+  height: 44px;
+  border: none;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color var(--transition-gentle);
+  z-index: 10;
+}
+
+@media (hover: hover) {
+  .lightboxClose:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+  }
+}
+
+.lightboxClose:focus-visible {
+  outline: 2px solid white;
+  outline-offset: 2px;
+}
+
+.lightboxArrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 48px;
+  height: 48px;
+  border: none;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color var(--transition-gentle);
+  z-index: 10;
+}
+
+@media (hover: hover) {
+  .lightboxArrow:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+  }
+}
+
+.lightboxArrow:focus-visible {
+  outline: 2px solid white;
+  outline-offset: 2px;
+}
+
+.lightboxArrowLeft {
+  left: var(--space-md);
+}
+
+.lightboxArrowRight {
+  right: var(--space-md);
+}
+
+.lightboxCounter {
+  position: absolute;
+  bottom: var(--space-md);
+  left: 50%;
+  transform: translateX(-50%);
+  color: rgba(255, 255, 255, 0.7);
+  font-family: var(--font-sans);
+  font-size: var(--text-body-small);
+  z-index: 10;
+}
+
+/* ===========================================
+   RESPONSIVE - TABLET (900px)
+   =========================================== */
+@media (max-width: 900px) {
+  .imageButton {
+    height: 240px;
+  }
+  
+  .lightboxArrowLeft {
+    left: var(--space-sm);
+  }
+  
+  .lightboxArrowRight {
+    right: var(--space-sm);
+  }
+}
+
+/* ===========================================
+   RESPONSIVE - MOBILE (600px)
+   =========================================== */
+@media (max-width: 600px) {
+  .imageButton {
+    height: 200px;
+  }
+  
+  /* Keep arrows at 44px minimum for touch targets */
+  .arrow {
+    width: 44px;
+    height: 44px;
+  }
+  
+  .arrow svg {
+    width: 20px;
+    height: 20px;
+  }
+  
+  /* Always show arrows on mobile (no hover) */
+  .arrow.visible {
+    opacity: 1;
+  }
+  
+  .arrowLeft {
+    left: var(--space-xs);
+  }
+  
+  .arrowRight {
+    right: var(--space-xs);
+  }
+  
+  /* Keep lightbox arrows at 44px minimum */
+  .lightboxArrow {
+    width: 44px;
+    height: 44px;
+  }
+  
+  .lightboxArrow svg {
+    width: 24px;
+    height: 24px;
+  }
+  
+  .lightboxClose {
+    top: var(--space-sm);
+    right: var(--space-sm);
+  }
+}
+
+/* ===========================================
+   RESPONSIVE - SMALL MOBILE (400px)
+   =========================================== */
+@media (max-width: 400px) {
+  .imageButton {
+    height: 160px;
+  }
+}

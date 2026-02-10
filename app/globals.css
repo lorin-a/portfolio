@@ -1,0 +1,324 @@
+/* ===========================================
+   DESIGN SYSTEM VARIABLES
+   =========================================== */
+:root {
+  /* Site Colors - from logo gradient */
+  --color-green-warm: #8B9A6B;
+  --color-green-sage: #7A9A8A;
+  --color-green-dark: #4A5A4A;
+  --color-gold: #96822F; /* Darkened for 4.5:1 contrast on off-white */
+  
+  /* Neutrals */
+  --color-bg: #FAF9F6;
+  --color-bg-alt: #F5F4F1;
+  --color-text: #2D2D2D;
+  --color-text-light: #5A5A5A;
+  --color-border: #E0DDD8;
+  
+  /* Project Accent Colors (overridden per-project) */
+  --project-accent: var(--color-green-dark);
+  --project-accent-light: var(--color-bg-alt);
+  --project-accent-text: var(--color-green-dark);
+  --project-accent-pale: #E4E0EB;
+  --project-border-light: rgba(248, 235, 229, 0.15);
+  --project-border-accent: rgba(85, 77, 101, 0.2);
+
+  /* ===========================================
+     BORDER RADIUS SCALE
+     =========================================== */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-pill: 9999px;
+
+  /* ===========================================
+     ACCESSIBILITY
+     =========================================== */
+  --min-touch-target: 44px;
+
+  /* ===========================================
+     TYPOGRAPHY
+     =========================================== */
+  --font-serif: 'Ovo', Georgia, serif;
+  --font-sans: 'Open Sans', system-ui, sans-serif;
+  
+  /* Type Scale - Desktop */
+  --text-h1: 3rem;             /* 48px */
+  --text-h2: 2.25rem;          /* 36px */
+  --text-h3: 1.5rem;           /* 24px */
+  --text-h4: 1.25rem;          /* 20px */
+  --text-body: 1rem;           /* 16px */
+  --text-body-large: 1.125rem; /* 18px */
+  --text-body-small: 0.875rem; /* 14px */
+  --text-pull-quote: 1.5rem;   /* 24px */
+  --text-caption: 0.75rem;     /* 12px */
+  --text-label: 0.75rem;       /* 12px */
+  
+  /* Line Heights */
+  --leading-tight: 1.2;
+  --leading-normal: 1.6;
+  --leading-relaxed: 1.4;
+  
+  /* ===========================================
+     SPACING
+     =========================================== */
+  --space-xs: 0.5rem;  /* 8px */
+  --space-sm: 1rem;    /* 16px */
+  --space-md: 2rem;    /* 32px */
+  --space-lg: 4rem;    /* 64px */
+  --space-xl: 6rem;    /* 96px */
+  
+  /* ===========================================
+     LAYOUT
+     =========================================== */
+  --max-width: 1200px;
+  --content-width: 900px;
+  --container-padding: var(--space-md);
+  
+  /* ===========================================
+     TRANSITIONS
+     =========================================== */
+  --transition-gentle: 0.3s ease-out;
+  --transition-smooth: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ===========================================
+   TABLET BREAKPOINT (900px)
+   =========================================== */
+@media (max-width: 900px) {
+  :root {
+    --text-h1: 2.25rem;         /* 36px */
+    --text-h2: 1.75rem;         /* 28px */
+    --text-h3: 1.375rem;        /* 22px */
+    --text-pull-quote: 1.375rem; /* 22px */
+    --space-lg: 3rem;
+    --space-xl: 5rem;
+  }
+}
+
+/* ===========================================
+   MOBILE BREAKPOINT (600px)
+   =========================================== */
+@media (max-width: 600px) {
+  :root {
+    --text-h1: 2rem;            /* 32px */
+    --text-h2: 1.5rem;          /* 24px */
+    --text-h3: 1.25rem;         /* 20px */
+    --text-h4: 1.125rem;        /* 18px */
+    --text-body-large: 1rem;    /* 16px */
+    --text-pull-quote: 1.25rem; /* 20px */
+    --space-lg: 2.5rem;
+    --space-xl: 4rem;
+    --container-padding: var(--space-sm);
+  }
+}
+
+/* ===========================================
+   SMALL MOBILE BREAKPOINT (400px)
+   =========================================== */
+@media (max-width: 400px) {
+  :root {
+    --space-lg: 2rem;
+    --space-xl: 3rem;
+  }
+}
+
+/* ===========================================
+   REDUCED MOTION - ACCESSIBILITY
+   =========================================== */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ===========================================
+   RESET
+   =========================================== */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-sans);
+  font-size: var(--text-body);
+  line-height: var(--leading-normal);
+  color: var(--color-text);
+  background-color: var(--color-bg);
+}
+
+/* ===========================================
+   TYPOGRAPHY STYLES
+   =========================================== */
+h1, h2, h3, h4 {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  line-height: var(--leading-tight);
+  color: var(--color-text);
+  text-wrap: balance;
+}
+
+p, li, blockquote, figcaption {
+  text-wrap: pretty; /* Prevents single-word last lines */
+}
+
+[class*="cardDescription"],
+[class*="Description"],
+[class*="intro"],
+[class*="Intro"] {
+  text-wrap: balance;
+}
+
+h1 { font-size: var(--text-h1); }
+h2 { font-size: var(--text-h2); }
+h3 { font-size: var(--text-h3); }
+h4 { font-size: var(--text-h4); }
+
+p {
+  margin-bottom: 1em;
+}
+
+/* Body Variants */
+.body-large {
+  font-size: var(--text-body-large);
+}
+
+.body-small {
+  font-size: var(--text-body-small);
+}
+
+/* Pull Quote */
+.pull-quote {
+  font-family: var(--font-serif);
+  font-size: var(--text-pull-quote);
+  font-style: italic;
+  line-height: var(--leading-relaxed);
+  color: var(--project-accent-text);
+}
+
+/* Caption */
+.caption {
+  font-size: var(--text-caption);
+  line-height: var(--leading-relaxed);
+  color: var(--color-text-light);
+}
+
+/* Label (tags, badges, tool names) */
+.label {
+  font-size: var(--text-label);
+  font-weight: 600;
+  line-height: var(--leading-relaxed);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Section Label (project page section headings) */
+.section-label {
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--project-accent);
+  margin-bottom: var(--space-md);
+}
+
+/* Section Label - light variant (for dark backgrounds) */
+.section-label-light {
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--project-accent-light);
+  margin-bottom: var(--space-md);
+}
+
+/* ===========================================
+   LINKS
+   =========================================== */
+a {
+  color: var(--color-green-dark);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: opacity var(--transition-gentle);
+}
+
+a:hover {
+  opacity: 0.7;
+}
+
+a:focus-visible {
+  outline: 2px solid var(--color-green-warm);
+  outline-offset: 2px;
+}
+
+/* ===========================================
+   SKIP LINK - ACCESSIBILITY
+   =========================================== */
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: var(--space-sm);
+  background: var(--color-green-dark);
+  color: var(--color-bg);
+  padding: var(--space-xs) var(--space-sm);
+  text-decoration: none;
+  z-index: 1000;
+}
+
+.skip-link:focus {
+  top: var(--space-sm);
+}
+
+/* ===========================================
+   LAYOUT
+   =========================================== */
+.container {
+  width: 100%;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 var(--container-padding);
+}
+
+.container-narrow {
+  width: 100%;
+  max-width: var(--content-width);
+  margin: 0 auto;
+  padding: 0 var(--container-padding);
+}
+
+section {
+  padding: var(--space-lg) 0;
+}
+
+/* ===========================================
+   IMAGES
+   =========================================== */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+.image-placeholder {
+  background-color: var(--color-bg-alt);
+  border: 2px dashed var(--color-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-light);
+  font-size: var(--text-body-small);
+  min-height: 200px;
+}
