@@ -19,3 +19,8 @@ export { default as PhaseDivider } from './PhaseDivider'
 
 // Content Components
 export { default as QuoteBlock, QuoteGrid } from './QuoteBlock'
+
+// Homepage Components
+export { default as ToolBadge } from './ToolBadge'
+export { default as FilterTabs } from './FilterTabs'
+export { default as ProjectCard } from './ProjectCard'
