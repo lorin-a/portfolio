@@ -1729,93 +1729,6 @@
   margin: var(--space-xl) 0 var(--space-lg);
 }
 
-/* Press Grid */
-.reflectionPressGrid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: var(--space-lg);
-  margin: 0 0 var(--space-xl);
-}
-
-.reflectionPressCard {
-  display: flex;
-  flex-direction: column;
-  background-color: rgba(248, 235, 229, 0.08);
-  border: 2px solid rgba(248, 235, 229, 0.15);
-  border-radius: 8px;
-  padding: var(--space-lg);
-  text-decoration: none;
-  transition: all 0.3s ease;
-  position: relative;
-  overflow: hidden;
-}
-
-.reflectionPressCard::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 3px;
-  background: linear-gradient(90deg, var(--project-accent-light) 0%, rgba(248, 235, 229, 0.3) 100%);
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.3s ease;
-}
-
-.reflectionPressCard:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 24px rgba(248, 235, 229, 0.15);
-  border-color: rgba(248, 235, 229, 0.3);
-}
-
-.reflectionPressCard:hover::before {
-  transform: scaleX(1);
-}
-
-.reflectionPressCard:focus-visible {
-  outline: 2px solid var(--project-accent-light);
-  outline-offset: 2px;
-}
-
-.reflectionPressSource {
-  font-family: var(--font-sans);
-  font-size: var(--text-caption);
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--project-accent-light);
-  font-weight: 500;
-  opacity: 0.6;
-  margin-bottom: var(--space-xs);
-  display: block;
-}
-
-.reflectionPressTitle {
-  font-family: var(--font-serif);
-  font-size: var(--text-body-large);
-  font-weight: 400;
-  color: var(--project-accent-light);
-  line-height: 1.4;
-  margin: var(--space-sm) 0 var(--space-md);
-  flex-grow: 1;
-}
-
-.reflectionPressLink {
-  font-family: var(--font-sans);
-  font-size: var(--text-body-small);
-  color: var(--project-accent-light);
-  font-weight: 500;
-  transition: transform 0.3s ease;
-  display: inline-block;
-  padding-top: var(--space-sm);
-  border-top: 1px solid rgba(248, 235, 229, 0.15);
-  margin-top: auto;
-}
-
-.reflectionPressCard:hover .reflectionPressLink {
-  transform: translateX(4px);
-}
-
 /* Finale Image */
 .reflectionDividerImage {
   width: 100%;
@@ -1920,64 +1833,148 @@
   white-space: nowrap;
 }
 
-/* Press Cards - Dark Text */
-.reflectionPressCardDark {
+/* ===========================================
+   REFLECTION - PRESS CARDS (NEWSPAPER STYLE)
+   =========================================== */
+
+.reflectionPressGrid {
   display: flex;
-  flex-direction: column;
+  justify-content: center;
+  margin: 0 0 var(--space-xl);
+  padding: var(--space-md) 0;
+}
+
+/* Fanned stack layout */
+.reflectionPressGrid > *:nth-child(1) {
+  z-index: 2;
+  margin-right: -60px;
+}
+
+.reflectionPressGrid > *:nth-child(2) {
+  z-index: 1;
+  margin-top: 20px;
+}
+
+/* Wrapper for card */
+.reflectionPressCardWrapper {
+  position: relative;
+  display: flex;
+  width: 380px;
+  max-width: 45vw;
+  transition: transform 0.3s ease, z-index 0.3s ease;
+}
+
+.reflectionPressCard {
   background-color: var(--project-accent-pale);
   border-left: 3px solid var(--project-accent);
   border-radius: var(--radius-sm);
   padding: var(--space-lg);
   text-decoration: none;
-  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
   position: relative;
-  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(85, 77, 101, 0.12);
+  transition: all 0.3s ease;
+  width: 100%;
 }
 
-.reflectionPressCardDark:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 24px rgba(85, 77, 101, 0.15);
+/* Folded corner - gradient overlay */
+.reflectionPressCard::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  width: 36px;
+  height: 36px;
+  background:
+    linear-gradient(225deg, transparent 50%, #D0CAD8 50%),
+    var(--color-bg);
+  z-index: 1;
 }
 
-.reflectionPressCardDark:focus-visible {
+/* Fanned angles */
+.reflectionPressGrid > *:nth-child(1) .reflectionPressCardWrapper {
+  transform: rotate(-3deg);
+  transform-origin: bottom right;
+}
+
+.reflectionPressGrid > *:nth-child(2) .reflectionPressCardWrapper {
+  transform: rotate(4deg);
+  transform-origin: bottom left;
+}
+
+/* Hide the separate fold element - using ::before instead */
+.reflectionPressFold {
+  display: none;
+}
+
+/* Hover state - bring to front, scale up, enhance border */
+.reflectionPressGrid > *:nth-child(1):hover {
+  z-index: 10;
+}
+
+.reflectionPressGrid > *:nth-child(2):hover {
+  z-index: 10;
+}
+
+.reflectionPressGrid > *:nth-child(1) .reflectionPressCardWrapper:hover {
+  transform: rotate(-2deg) scale(1.02);
+}
+
+.reflectionPressGrid > *:nth-child(2) .reflectionPressCardWrapper:hover {
+  transform: rotate(2deg) scale(1.02);
+}
+
+.reflectionPressCardWrapper:hover .reflectionPressCard {
+  box-shadow: 0 8px 24px rgba(85, 77, 101, 0.18);
+  border-left-width: 5px;
+  opacity: 1;
+}
+
+/* Override global link opacity for press cards */
+.reflectionPressCard:hover {
+  opacity: 1;
+}
+
+.reflectionPressCard:focus-visible {
   outline: 2px solid var(--project-accent);
   outline-offset: 2px;
 }
 
-.reflectionPressSourceDark {
+.reflectionPressSource {
   font-family: var(--font-sans);
   font-size: var(--text-caption);
   text-transform: uppercase;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.08em;
   color: var(--color-text-light);
   font-weight: 500;
-  margin-bottom: var(--space-xs);
-  display: block;
+  margin-bottom: var(--space-sm);
 }
 
-.reflectionPressTitleDark {
+.reflectionPressTitle {
   font-family: var(--font-serif);
-  font-size: var(--text-body-large);
+  font-size: var(--text-h3);
   font-weight: 400;
-  color: var(--project-accent);
+  color: var(--color-text);
   line-height: 1.4;
-  margin: var(--space-sm) 0 var(--space-md);
+  margin: 0 0 var(--space-md);
   flex-grow: 1;
+  padding-right: var(--space-md);
 }
 
-.reflectionPressLinkDark {
+.reflectionPressLink {
   font-family: var(--font-sans);
   font-size: var(--text-body-small);
   color: var(--project-accent);
-  font-weight: 500;
-  transition: transform 0.3s ease;
-  display: inline-block;
-  padding-top: var(--space-sm);
-  border-top: 1px solid rgba(85, 77, 101, 0.15);
+  font-weight: 600;
   margin-top: auto;
+  padding-top: var(--space-sm);
+  border-top: 1px solid rgba(85, 77, 101, 0.4);
+  display: inline-block;
+  transition: transform 0.3s ease;
 }
 
-.reflectionPressCardDark:hover .reflectionPressLinkDark {
+.reflectionPressCard:hover .reflectionPressLink {
   transform: translateX(4px);
 }
 
@@ -2278,8 +2275,7 @@
 
 .makingTimelineTime {
   font-family: var(--font-sans);
-  font-size: var(--text-caption);
-  opacity: 0.6;
+  font-size: var(--text-body-small);
 }
 
 .makingTimelineContext {
@@ -2495,7 +2491,7 @@
   display: block;
   width: 100%;
   max-width: 1200px;
-  margin: 0 auto var(--space-md);
+  margin: var(--space-lg) auto var(--space-xl);
   border-radius: var(--radius-md);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
 }
@@ -2509,7 +2505,7 @@
 .playtestCarouselTrack {
   position: relative;
   height: 572px;
-  margin-bottom: var(--space-md);
+  margin-bottom: var(--space-lg);
 }
 
 .playtestCarouselSlot {
@@ -2566,14 +2562,15 @@
   align-items: flex-start;
   gap: var(--space-sm);
   padding: var(--space-md);
-  background-color: var(--project-accent);
+  background-color: transparent;
+  border: 2px solid var(--project-accent);
   border-radius: 6px;
   margin-top: auto;
 }
 
 .playtestArrow {
   font-size: 1.25rem;
-  color: var(--project-accent-light);
+  color: var(--project-accent);
   flex-shrink: 0;
   line-height: 1.2;
 }
@@ -2582,7 +2579,7 @@
   font-family: var(--font-sans);
   font-size: var(--text-body);
   line-height: var(--leading-normal);
-  color: var(--project-accent-light);
+  color: var(--project-accent);
   margin: 0;
 }
 
@@ -3661,6 +3658,16 @@
     gap: var(--space-md);
   }
 
+  /* Remove rotation on tablet for readability */
+  .reflectionPressCard:nth-child(1),
+  .reflectionPressCard:nth-child(2) {
+    transform: rotate(0deg);
+  }
+
+  .reflectionPressCard:hover {
+    transform: translateY(-4px);
+  }
+
   .ongoingWorkGrid,
   .ongoingWorkGridDark {
     grid-template-columns: 1fr;
@@ -3824,14 +3831,6 @@
   }
 
   .reflectionThesisDark {
-    font-size: var(--text-body);
-  }
-
-  .reflectionPressCardDark {
-    padding: var(--space-md);
-  }
-
-  .reflectionPressTitleDark {
     font-size: var(--text-body);
   }
 

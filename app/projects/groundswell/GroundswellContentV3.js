@@ -906,7 +906,10 @@ export default function GroundswellContent() {
           <div className={styles.stickyContentLight}>
             <h2 className={styles.stickyTitleLight}>The Synthesis</h2>
             <p className={styles.stickyBodyLightBold}>
-              We organized our observations and quotes through affinity mapping and a tetrahedron analysis across four dimensions:
+              We organized our observations and quotes through affinity mapping and a tetrahedron analysis across four dimensions: recognition, environment, culture, and systemic.
+            </p>
+            <p className={styles.stickyBodyLight}>
+              The synthesis revealed a deeper structural tension: healthcare workers face a <strong>dual burden</strong>&mdash;emotional exhaustion from the inherently compassionate nature of their work (constant exposure to grief, loss, and trauma) alongside excessive administrative tasks that disconnect them from their original purpose of patient care.
             </p>
             <div className={styles.synthesisDimensionsGrid}>
               <div className={styles.synthesisDimensionRow}>
@@ -926,9 +929,6 @@ export default function GroundswellContent() {
                 <div className={styles.synthesisDimensionContext}>institutional constraints beyond individual control</div>
               </div>
             </div>
-            <p className={styles.stickyBodyLight}>
-              The synthesis revealed a deeper structural tension: healthcare workers face a <strong>dual burden</strong>&mdash;emotional exhaustion from the inherently compassionate nature of their work (constant exposure to grief, loss, and trauma) alongside excessive administrative tasks that disconnect them from their original purpose of patient care.
-            </p>
           </div>
         </div>
         <div className={styles.parallaxScroll}>
@@ -1013,6 +1013,9 @@ export default function GroundswellContent() {
             <p className={styles.stickyBodyLightBold}>
               This was my first design production experience&mdash;a 10-week sprint to turn concept into installation. Working hybrid between remote coordination and on-site collaboration, I managed donor outreach, copywriting, and strategic partnerships that secured approximately $30,000 worth of donated materials and services.
             </p>
+            <p className={styles.stickyBodyLight}>
+              The project required constant adaptation. Early staff feedback shifted our language from &ldquo;grief&rdquo; to &ldquo;restoration,&rdquo; reframing the messaging. Halfway through production, hospital administration required lockable doors on the pod. Our solution provided engagement, privacy, and emotional safety without surveillance&mdash;turning a constraint into an asset.
+            </p>
             <div className={styles.makingTimelineGrid}>
               <div className={styles.makingTimelineRow}>
                 <div className={styles.makingTimelineLeft}>
@@ -1043,9 +1046,6 @@ export default function GroundswellContent() {
                 <div className={styles.makingTimelineContext}>Pod design and assembly, play testing, install</div>
               </div>
             </div>
-            <p className={styles.stickyBodyLight}>
-              The project required constant adaptation. Early staff feedback shifted our language from &ldquo;grief&rdquo; to &ldquo;restoration,&rdquo; reframing the messaging. Halfway through production, hospital administration required lockable doors on the pod. Our solution provided engagement, privacy, and emotional safety without surveillance&mdash;turning a constraint into an asset.
-            </p>
           </div>
         </div>
       </section>
@@ -1182,33 +1182,39 @@ export default function GroundswellContent() {
           <div className={styles.reflectionPressGrid}>
 
             <AnimatedElement>
-              <a
-                href="https://www.design.cmu.edu/news/groundswell-creates-space-soul-co-designing-oncology-staff-upmc-magee-womens-hospital"
-                target="_blank"
-                rel="noopener noreferrer"
-                className={styles.reflectionPressCardDark}
-              >
-                <span className={styles.reflectionPressSourceDark}>Carnegie Mellon School of Design</span>
-                <h4 className={styles.reflectionPressTitleDark}>
-                  Groundswell Creates Space for the Soul: Co-designing with Oncology Staff
-                </h4>
-                <span className={styles.reflectionPressLinkDark}>Read Article &rarr;</span>
-              </a>
+              <div className={styles.reflectionPressCardWrapper}>
+                <a
+                  href="https://www.design.cmu.edu/news/groundswell-creates-space-soul-co-designing-oncology-staff-upmc-magee-womens-hospital"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={styles.reflectionPressCard}
+                >
+                  <span className={styles.reflectionPressSource}>Carnegie Mellon School of Design</span>
+                  <h4 className={styles.reflectionPressTitle}>
+                    Groundswell Creates Space for the Soul: Co-designing with Oncology Staff
+                  </h4>
+                  <span className={styles.reflectionPressLink}>Read Article &rarr;</span>
+                </a>
+                <span className={styles.reflectionPressFold} aria-hidden="true" />
+              </div>
             </AnimatedElement>
 
             <AnimatedElement>
-              <a
-                href="https://www.design.cmu.edu/news/concept-care-designing-groundswell-oncology-caregivers"
-                target="_blank"
-                rel="noopener noreferrer"
-                className={styles.reflectionPressCardDark}
-              >
-                <span className={styles.reflectionPressSourceDark}>Carnegie Mellon School of Design</span>
-                <h4 className={styles.reflectionPressTitleDark}>
-                  Concept to Care: Designing Groundswell for Oncology Caregivers
-                </h4>
-                <span className={styles.reflectionPressLinkDark}>Read Article &rarr;</span>
-              </a>
+              <div className={styles.reflectionPressCardWrapper}>
+                <a
+                  href="https://www.design.cmu.edu/news/concept-care-designing-groundswell-oncology-caregivers"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={styles.reflectionPressCard}
+                >
+                  <span className={styles.reflectionPressSource}>Carnegie Mellon School of Design</span>
+                  <h4 className={styles.reflectionPressTitle}>
+                    Concept to Care: Designing Groundswell for Oncology Caregivers
+                  </h4>
+                  <span className={styles.reflectionPressLink}>Read Article &rarr;</span>
+                </a>
+                <span className={styles.reflectionPressFold} aria-hidden="true" />
+              </div>
             </AnimatedElement>
 
           </div>
