@@ -82,11 +82,11 @@ const playtestingQuotes = [
 /** Dashboard screen recordings — displayed in Outcomes scroll column */
 const dashboardClips = [
   { src: '/video/groundswell/entrypage.mp4', label: 'Entry Screen' },
-  { src: '/video/groundswell/moduleview.mp4', label: 'Data Module' },
-  { src: '/video/groundswell/popup.mp4', label: 'Click-through Overlay' },
-  { src: '/video/groundswell/chartview.mp4', label: 'Chart View' },
-  { src: '/video/groundswell/displayview.mp4', label: 'Display View' },
-  { src: '/video/groundswell/admin.mp4', label: 'Admin Page' },
+  { src: '/video/groundswell/moduleview.mp4', label: 'Data Module', blur: true },
+  { src: '/video/groundswell/popup.mp4', label: 'Click-through Overlay', blur: true },
+  { src: '/video/groundswell/chartview.mp4', label: 'Chart View', blur: true },
+  { src: '/video/groundswell/displayview.mp4', label: 'Display View', blur: true },
+  { src: '/video/groundswell/admin.mp4', label: 'Admin Page', blur: true },
 ]
 
 /** Pod audio resources */
@@ -633,7 +633,7 @@ export default function GroundswellContent() {
               Updated patient death notification email template with compassionate visuals and language that acknowledges the impact of patient loss.
             </p>
             <p className={styles.stickyBodyLight}>
-              What we initially saw as a cold clinical protocol was actually a staff-created innovation—a radical act of compassion one nurse manager had built to ensure colleagues learned about patient deaths with dignity. This revelation shifted our entire approach: from &ldquo;the system has let you down&rdquo; to &ldquo;you have already created a beautiful culture of care.&rdquo;&nbsp;Groundswell honors and amplifies what was already there.
+              What we initially saw as a cold clinical protocol was actually a staff-created innovation—a radical act of compassion one nurse manager had built to ensure colleagues learned about patient deaths with dignity. This revelation shifted our entire approach: from &ldquo;the system has let you down&rdquo; to &ldquo;you have already created a beautiful culture of care.&rdquo; Groundswell honors and amplifies what was already there by integrating a low-effort change to an Outlook email template. This component infuses the language of care into the workflow without over-burdening staff with administrative overhead.
             </p>
           </div>
         </div>
@@ -763,7 +763,7 @@ export default function GroundswellContent() {
         <div className={styles.parallaxScroll}>
           {dashboardClips.map((clip, i) => (
             <AnimatedElement key={i}>
-              <ScrollVideo src={clip.src} label={clip.label} autoplay />
+              <ScrollVideo src={clip.src} label={clip.label} autoplay blur={clip.blur} />
             </AnimatedElement>
           ))}
         </div>
@@ -776,29 +776,8 @@ export default function GroundswellContent() {
             </p>
 
             <p className={styles.stickyBodyLight}>
-              The study combines quantitative data with qualitative interviews, measuring compassion fatigue, burnout, culture of employee well-being, and intent to leave—before, during, and after the installation. Our methods are designed to undercount rather than overcount.
+              The study combines quantitative data with qualitative interviews, measuring compassion fatigue, burnout, culture of employee well-being, and intent to leave—before, during, and after the installation. I taught myself how to vibecode with Claude AI to create a data visualization website of our findings. It is created in Visual Studio Code, published to Vercel, using NEON database, and integrating YouTube API. Data is blurred to protect unpublished study findings.
             </p>
-
-            {/* Stats - 2x2 Grid */}
-            <p className={styles.statGridHeading}>At 4 months into the study</p>
-            <div className={styles.statGrid}>
-              <div className={styles.statGridItem}>
-                <span className={styles.statGridNumber}>570</span>
-                <span className={styles.statGridLabel}>points of engagement</span>
-              </div>
-              <div className={styles.statGridItem}>
-                <span className={styles.statGridNumber}>207</span>
-                <span className={styles.statGridLabel}>emotion responses</span>
-              </div>
-              <div className={styles.statGridItem}>
-                <span className={styles.statGridNumber}>256</span>
-                <span className={styles.statGridLabel}>pod visits</span>
-              </div>
-              <div className={styles.statGridItem}>
-                <span className={styles.statGridNumber}>107</span>
-                <span className={styles.statGridLabel}>meditation views</span>
-              </div>
-            </div>
 
             {/* Quote - Dr. Taylor */}
             <blockquote className={styles.outcomesQuote}>
@@ -1026,7 +1005,7 @@ export default function GroundswellContent() {
               </div>
               <div className={styles.makingTimelineRow}>
                 <div className={styles.makingTimelineLeft}>
-                  <div className={styles.makingTimelineTitle}>Concept Revisions</div>
+                  <div className={styles.makingTimelineTitle}>concept Revisions</div>
                   <div className={styles.makingTimelineTime}>2 weeks</div>
                 </div>
                 <div className={styles.makingTimelineContext}>Content feedback, donation outreach, presentation</div>

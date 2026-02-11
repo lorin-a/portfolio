@@ -16,6 +16,30 @@
   background-color: #1a1a1a;
 }
 
+/* Blur effect to obscure sensitive data */
+.scrollVideoBlurred {
+  filter: blur(2px);
+}
+
+/* Notice overlay for blurred videos */
+.blurNotice {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(0, 0, 0, 0.75);
+  padding: var(--space-sm) var(--space-md);
+  border-radius: var(--radius-sm);
+  pointer-events: none;
+}
+
+.blurNotice span {
+  font-family: var(--font-sans);
+  font-size: var(--text-body-small);
+  color: rgba(255, 255, 255, 0.9);
+  white-space: nowrap;
+}
+
 /* Hide volume/mute controls - videos are permanently muted */
 .scrollVideo::-webkit-media-controls-mute-button,
 .scrollVideo::-webkit-media-controls-volume-slider,

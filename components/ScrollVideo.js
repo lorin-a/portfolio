@@ -15,7 +15,7 @@ import styles from './ScrollVideo.module.css'
  *   label    — text shown on hover (e.g. "Installation Walkthrough")
  *   autoplay — if true, video autoplays muted and loops, controls on hover
  */
-export default function ScrollVideo({ src, label, autoplay = false }) {
+export default function ScrollVideo({ src, label, autoplay = false, blur = false }) {
   const videoRef = useRef(null)
   const [hasStarted, setHasStarted] = useState(false)
   const [isHovered, setIsHovered] = useState(false)
@@ -49,12 +49,17 @@ export default function ScrollVideo({ src, label, autoplay = false }) {
           muted
           loop
           playsInline
-          controls={isHovered}
-          className={styles.scrollVideo}
+          controls={isHovered && !blur}
+          className={`${styles.scrollVideo} ${blur ? styles.scrollVideoBlurred : ''}`}
         />
         {label && (
           <div className={`${styles.videoLabelBar} ${isHovered ? styles.videoLabelBarHidden : ''}`}>
             <span>{label}</span>
+          </div>
+        )}
+        {blur && isHovered && (
+          <div className={styles.blurNotice}>
+            <span>Data blurred to protect unpublished study results</span>
           </div>
         )}
       </div>
@@ -70,7 +75,7 @@ export default function ScrollVideo({ src, label, autoplay = false }) {
         muted
         playsInline
         controls={hasStarted}
-        className={styles.scrollVideo}
+        className={`${styles.scrollVideo} ${blur ? styles.scrollVideoBlurred : ''}`}
       />
       <div
         className={styles.videoPlayOverlay}
