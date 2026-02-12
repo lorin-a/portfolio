@@ -2,23 +2,53 @@
    DESIGN SYSTEM VARIABLES
    =========================================== */
 :root {
-  /* Site Colors - from logo gradient */
-  --color-green-warm: #8B9A6B;
-  --color-green-sage: #7A9A8A;
-  --color-green-dark: #4A5A4A;
-  --color-gold: #96822F; /* Darkened for 4.5:1 contrast on off-white */
-  
+  /* Olive (Primary Brand) */
+  --olive-light: #D8DBA0;
+  --olive: #898B27;
+  --olive-dark: #6F6D1F;
+
+  /* Lavender (Soft accent) */
+  --lavender-light: #E8E4F0;
+  --lavender: #C4BCE0;
+  --lavender-dark: #8B7EB8;
+
+  /* Sky (Soft accent) */
+  --sky-light: #E4EBF0;
+  --sky: #B8CCD9;
+  --sky-dark: #7A9DB8;
+
+  /* Adobe (Secondary Accent - use sparingly) */
+  --adobe-light: #F5D4C8;
+  --adobe: #E69A7B;
+  --adobe-dark: #D67A5A;
+
+  /* Dusty Rose (Alternative accent) */
+  --rose-light: #F0E4E8;
+  --rose: #D4A5B0;
+  --rose-dark: #B87A8B;
+
   /* Neutrals */
-  --color-bg: #FAF9F6;
-  --color-bg-alt: #F5F4F1;
-  --color-text: #2D2D2D;
-  --color-text-light: #5A5A5A;
-  --color-border: #E0DDD8;
-  
+  --text-heading: #2C2C28;
+  --text-body: #4A4A46;
+  --surface: #FBF9F4;
+  --background: #FBF9F4;
+  --border: #E8E4D8;
+
+  /* Legacy color aliases (for existing components) */
+  --color-green-warm: var(--olive-light);
+  --color-green-sage: var(--olive);
+  --color-green-dark: var(--olive-dark);
+  --color-gold: var(--adobe);
+  --color-bg: var(--background);
+  --color-bg-alt: var(--surface);
+  --color-text: var(--text-heading);
+  --color-text-light: var(--text-body);
+  --color-border: var(--border);
+
   /* Project Accent Colors (overridden per-project) */
-  --project-accent: var(--color-green-dark);
-  --project-accent-light: var(--color-bg-alt);
-  --project-accent-text: var(--color-green-dark);
+  --project-accent: var(--olive-dark);
+  --project-accent-light: var(--olive-light);
+  --project-accent-text: var(--olive-dark);
   --project-accent-pale: #E4E0EB;
   --project-border-light: rgba(248, 235, 229, 0.15);
   --project-border-accent: rgba(85, 77, 101, 0.2);
