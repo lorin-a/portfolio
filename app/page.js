@@ -1,5 +1,6 @@
 import Link from 'next/link'
-import Squiggle from '@/components/Squiggle'
+import Squiggle from '@/components/Squiggle/Squiggle'
+import Hero from '@/components/Hero/Hero'
 import styles from './page.module.css'
 
 const projects = [
@@ -74,14 +75,14 @@ const valueCards = [
   },
 ]
 
-// SVG clip path definitions for wavy card bottoms
-// Matches squiggle: 8 waves with same curve ratio (amplitude ~6% of height)
+// SVG clip path definitions for scalloped card bottoms
+// 8 semi-circular arcs meeting at points (stamp/shell edge style)
 function ClipPathDefs() {
   return (
     <svg width="0" height="0" style={{ position: 'absolute' }} aria-hidden="true">
       <defs>
         <clipPath id="wavyCardClip" clipPathUnits="objectBoundingBox">
-          <path d="M 0,0 L 1,0 L 1,0.94 Q 0.9375,1 0.875,0.94 T 0.75,0.94 T 0.625,0.94 T 0.5,0.94 T 0.375,0.94 T 0.25,0.94 T 0.125,0.94 T 0,0.94 Z" />
+          <path d="M 0,0 L 1,0 L 1,0.95 A 0.0625 0.05 0 0 1 0.875,0.95 A 0.0625 0.05 0 0 1 0.75,0.95 A 0.0625 0.05 0 0 1 0.625,0.95 A 0.0625 0.05 0 0 1 0.5,0.95 A 0.0625 0.05 0 0 1 0.375,0.95 A 0.0625 0.05 0 0 1 0.25,0.95 A 0.0625 0.05 0 0 1 0.125,0.95 A 0.0625 0.05 0 0 1 0,0.95 Z" />
         </clipPath>
       </defs>
     </svg>
@@ -132,26 +133,8 @@ export default function Home() {
     <main>
       <ClipPathDefs />
 
-      {/* Intro Section */}
-      <section className={styles.intro}>
-        <div className={styles.introContent}>
-          <div className={styles.photo}>
-            <img
-              src="/images/lorin-photo.jpg"
-              alt="Lorin Anderberg"
-              className={styles.photoImage}
-            />
-          </div>
-          <h1 className={styles.name}>Lorin Anderberg</h1>
-          <p className={styles.label}>Social Impact Designer + Storyteller</p>
-          <p className={styles.tagline}>
-            I translate <span className={styles.highlight}>community wisdom</span> into narrative-driven systems change.
-          </p>
-          <Link href="/contact" className={styles.cta}>
-            Let&apos;s work together →
-          </Link>
-        </div>
-      </section>
+      {/* Hero - Cinematic Title Sequence */}
+      <Hero />
 
       <Squiggle />
 
@@ -178,7 +161,7 @@ export default function Home() {
       <Squiggle />
 
       {/* Featured Work Section */}
-      <section className={styles.work}>
+      <section id="work" className={styles.work}>
         <div className={styles.sectionHeader}>
           <h2 className={styles.sectionTitle}>Featured Work</h2>
           <p className={styles.sectionDescription}>

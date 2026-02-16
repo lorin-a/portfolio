@@ -3,12 +3,12 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import styles from '@/styles/project.module.css'
-import CardCarousel from '@/components/CardCarousel'
-import ScrollVideo from '@/components/ScrollVideo'
-import AnimatedElement from '@/components/AnimatedElement'
-import ProgressNav from '@/components/ProgressNav'
-import Lightbox from '@/components/Lightbox'
-import Squiggle from '@/components/Squiggle'
+import CardCarousel from '@/components/CardCarousel/CardCarousel'
+import ScrollVideo from '@/components/ScrollVideo/ScrollVideo'
+import AnimatedElement from '@/components/AnimatedElement/AnimatedElement'
+import ProgressNav from '@/components/ProgressNav/ProgressNav'
+import Lightbox from '@/components/Lightbox/Lightbox'
+import Squiggle from '@/components/Squiggle/Squiggle'
 
 
 // ============================================
@@ -281,6 +281,10 @@ function WorkshopCarousel() {
                 cursor: i === current ? 'default' : 'pointer',
               }}
               onClick={() => i !== current && setCurrent(i)}
+              onKeyDown={(e) => { if ((e.key === 'Enter' || e.key === ' ') && i !== current) { e.preventDefault(); setCurrent(i) }}}
+              role={i !== current ? 'button' : undefined}
+              tabIndex={i !== current ? 0 : -1}
+              aria-label={i !== current ? `Go to ${ws.title} workshop` : undefined}
             >
               <div className={styles.workshopCarouselCard}>
                 <span className={styles.workshopLabel}>{ws.label}</span>
@@ -295,9 +299,15 @@ function WorkshopCarousel() {
                 </div>
                 <div className={styles.workshopImageGrid}>
                   {ws.images.map((img, ii) => (
-                    <div key={ii} className={styles.workshopImage} onClick={(e) => { e.stopPropagation(); setLightboxImg(img) }} style={{ cursor: 'zoom-in' }}>
-                    <img src={img.src} alt={img.alt} />
-                  </div>
+                    <button
+                      key={ii}
+                      type="button"
+                      className={styles.workshopImageButton}
+                      onClick={(e) => { e.stopPropagation(); setLightboxImg(img) }}
+                      aria-label={`View ${img.alt} in lightbox`}
+                    >
+                      <img src={img.src} alt={img.alt} />
+                    </button>
                   ))}
                 </div>
               </div>
@@ -420,6 +430,10 @@ function PlaytestCarousel() {
                 cursor: i === current ? 'default' : 'pointer',
               }}
               onClick={() => i !== current && setCurrent(i)}
+              onKeyDown={(e) => { if ((e.key === 'Enter' || e.key === ' ') && i !== current) { e.preventDefault(); setCurrent(i) }}}
+              role={i !== current ? 'button' : undefined}
+              tabIndex={i !== current ? 0 : -1}
+              aria-label={i !== current ? `Go to ${item.label} iteration` : undefined}
             >
               <div className={styles.playtestCarouselCard}>
                 <span className={styles.playtestLabel}>{item.label}</span>

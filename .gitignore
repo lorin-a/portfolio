@@ -1,17 +1,45 @@
+# Dependencies
 node_modules/
+
+# Build output
 .next/
+out/
+
+# Environment files
+.env
+.env.local
+.env*.local
+
+# OS files
 .DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+
+# Vercel
+.vercel
+
+# Backup files
 *.backup
 
-# Large video files (too big for GitHub)
+# Large video files (use external hosting)
+*.mov
+*.MOV
+*.mp4
+*.MP4
+
+# Large audio files (use external hosting)
+*.mp3
+
+# Specific large files that got committed before .gitignore was set up
 public/images/groundswell/Groundswell Presentation Recording.mov
 public/images/groundswell/IMG_8189.MOV
 public/video/groundswell/displayview.mov
 public/video/groundswell/entrypage.mov
 public/video/groundswell/displayview.mp4
 public/images/groundswell/BlueGarden_HRscan.jpg
-
-# More large files
 public/images/groundswell/IMG_7995.MOV
 public/images/groundswell/Groundswell Figma 5.jpg
 public/video/groundswell/gs-walkthrough-video.mp4
@@ -23,22 +51,10 @@ public/video/groundswell/popup.mov
 public/Synthesis.jpg
 public/images/groundswell/Synthesis-diagram.jpg
 public/images/groundswell/gs-cards.jpg
-
-# All MOV files in images (shouldn't be there)
 public/images/**/*.MOV
 public/images/**/*.mov
-
-# All video files (use external hosting)
-*.mov
-*.MOV
-*.mp4
-*.MP4
-
-# Large audio files
 public/audio/groundswell/gs-meditation-10min.mp3
 public/audio/groundswell/gs-meditation-home.mp3
-
-# Large images over 10MB
 public/images/groundswell/IMG_5134 copy.png
 public/images/groundswell/IMG_5136.png
 public/images/groundswell/gs-ctb-email.jpg
@@ -57,9 +73,4 @@ public/images/groundswell/Groundswell_Install-28.jpg
 public/images/groundswell/091925-Groundswell-058.jpg
 public/images/groundswell/Mockup-2_ Sliding Barn Door-2.jpg
 public/images/groundswell/gs-hero.jpg
-
-# All mp3 audio files
-*.mp3
-
-# Large PNG files
 public/images/groundswell/*.png

@@ -1,26 +1,22 @@
 /**
  * Portfolio Component Library
- * 
- * Reusable components for case study pages
- * Built with accessibility, responsiveness, and engineering standards in mind
+ *
+ * Barrel file for clean imports: import { Nav, Footer } from '@/components'
  */
 
-// Core UI Components
-export { default as Lightbox } from './Lightbox'
-export { default as ImageCarousel } from './ImageCarousel'
-export { default as ImageGallery } from './ImageGallery'
-export { default as CardDeck } from './CardDeck'
-export { default as AudioCard, AudioCardGrid } from './AudioCard'
+// Layout
+export { default as Nav } from './Nav/Nav'
+export { default as Footer } from './Footer/Footer'
 
-// Page Structure Components
-export { default as TimelineNav } from './TimelineNav'
-export { default as ProjectHero } from './ProjectHero'
-export { default as PhaseDivider } from './PhaseDivider'
+// Homepage
+export { default as Hero } from './Hero/Hero'
+export { default as InteractiveDial } from './InteractiveDial/InteractiveDial'
+export { default as Squiggle } from './Squiggle/Squiggle'
 
-// Content Components
-export { default as QuoteBlock, QuoteGrid } from './QuoteBlock'
-
-// Homepage Components
-export { default as ToolBadge } from './ToolBadge'
-export { default as FilterTabs } from './FilterTabs'
-export { default as ProjectCard } from './ProjectCard'
+// Project Pages
+export { default as ProjectNav } from './ProjectNav/ProjectNav'
+export { default as CardCarousel } from './CardCarousel/CardCarousel'
+export { default as ScrollVideo } from './ScrollVideo/ScrollVideo'
+export { default as AnimatedElement } from './AnimatedElement/AnimatedElement'
+export { default as ProgressNav } from './ProgressNav/ProgressNav'
+export { default as Lightbox } from './Lightbox/Lightbox'

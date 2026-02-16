@@ -1,0 +1,252 @@
+/* ===========================================
+   HERO - With Interactive Dial (Two-state)
+
+   Animation Timeline:
+   1. Photo fades in (0.2s)
+   2. Pulse rings start (2s)
+   3. "click to meet me" appears (2s)
+   4. Greeting fades up (0.6s delay)
+   5. Headline fades up (0.9s delay)
+   6. Underline draws (2.2s delay)
+   7. CTA fades up (1.4s delay)
+   =========================================== */
+.hero {
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: var(--space-xl) var(--space-lg) var(--space-lg);
+  position: relative;
+  overflow: hidden;
+  background-color: var(--surface);
+}
+
+/* Subtle radial glow in top-right */
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -200px;
+  right: -200px;
+  width: 600px;
+  height: 600px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--lavender) 0%, transparent 70%);
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+/* ===========================================
+   2. GREETING
+   =========================================== */
+.greeting {
+  font-family: var(--font-serif);
+  font-size: 1.5rem;
+  font-weight: 300;
+  font-style: italic;
+  color: var(--olive);
+  margin-top: var(--space-md);
+  margin-bottom: var(--space-sm);
+  opacity: 0;
+  transform: translateY(12px);
+  animation: fadeUp 0.6s var(--ease-out-smooth, cubic-bezier(0.22, 1, 0.36, 1)) 0.6s both;
+}
+
+@keyframes fadeUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ===========================================
+   3. HEADLINE
+   =========================================== */
+.headline {
+  font-family: var(--font-serif);
+  font-size: clamp(32px, 5.5vw, 64px);
+  font-weight: 300;
+  line-height: 1.2;
+  margin-bottom: var(--space-lg);
+  color: var(--text-heading);
+  opacity: 0;
+  transform: translateY(12px);
+  animation: fadeUp 0.6s var(--ease-out-smooth, cubic-bezier(0.22, 1, 0.36, 1)) 0.9s both;
+}
+
+/* Colored spans */
+.olive {
+  font-style: italic;
+  color: var(--olive);
+}
+
+.plum {
+  font-style: italic;
+  color: var(--plum);
+}
+
+/* ===========================================
+   STORIES UNDERLINE
+   =========================================== */
+.storiesUnderline {
+  position: relative;
+}
+
+.storiesUnderline svg {
+  position: absolute;
+  left: -2%;
+  bottom: 0px;
+  width: 108%;
+  height: 10px;
+  overflow: visible;
+}
+
+.storiesUnderline svg path {
+  fill: none;
+  stroke: var(--terracotta);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-dasharray: 200;
+  stroke-dashoffset: 200;
+  animation: drawMark 0.8s cubic-bezier(0.25, 0.1, 0.25, 1) 2.2s both;
+}
+
+@keyframes drawMark {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* ===========================================
+   4. CTA BUTTON
+   =========================================== */
+.cta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-xs);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: var(--space-sm) var(--space-md);
+  opacity: 0;
+  transform: translateY(12px);
+  animation: fadeUp 0.6s var(--ease-out-smooth, cubic-bezier(0.22, 1, 0.36, 1)) 1.4s both;
+  transition: transform 0.3s var(--ease-out-smooth, cubic-bezier(0.22, 1, 0.36, 1));
+}
+
+.cta:hover {
+  transform: translateY(4px);
+}
+
+.cta:focus-visible {
+  outline: 2px solid var(--olive);
+  outline-offset: 4px;
+  border-radius: var(--radius-sm, 4px);
+}
+
+.ctaText {
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--text-heading);
+  opacity: 0.8;
+}
+
+.ctaArrow {
+  width: 20px;
+  height: 20px;
+  color: var(--terracotta);
+  opacity: 0.8;
+  animation: bobDown 2s ease-in-out 2s infinite;
+}
+
+@keyframes bobDown {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(6px);
+  }
+}
+
+/* ===========================================
+   RESPONSIVE - TABLET
+   =========================================== */
+@media (max-width: 900px) {
+  .greeting {
+    font-size: 1.25rem;
+  }
+}
+
+/* ===========================================
+   RESPONSIVE - MOBILE
+   =========================================== */
+@media (max-width: 600px) {
+  .hero {
+    padding: 40px 16px;
+  }
+
+  .greeting {
+    font-size: 1rem;
+    margin-top: 16px;
+    margin-bottom: 12px;
+  }
+
+  .headline {
+    margin-bottom: 24px;
+  }
+
+  .cta {
+    padding: 8px 16px;
+  }
+
+  .ctaText {
+    font-size: 12px;
+  }
+
+  .ctaArrow {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+/* ===========================================
+   ACCESSIBILITY - REDUCED MOTION
+   =========================================== */
+@media (prefers-reduced-motion: reduce) {
+  .greeting {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+
+  .headline {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+
+  .storiesUnderline svg path {
+    animation: none;
+    stroke-dashoffset: 0;
+  }
+
+  .cta {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+
+  .cta:hover {
+    transform: none;
+  }
+
+  .ctaArrow {
+    animation: none;
+  }
+}

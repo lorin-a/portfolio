@@ -40,7 +40,7 @@
 .title {
   font-family: var(--font-serif);
   font-size: var(--text-body-large);
-  font-weight: 400;
+  font-weight: 300;
   margin-bottom: var(--space-sm);
 }
 

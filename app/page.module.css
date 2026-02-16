@@ -34,7 +34,7 @@
 .name {
   font-family: var(--font-serif);
   font-size: 2.5rem;
-  font-weight: 400;
+  font-weight: 300;
   color: var(--text-heading);
   margin-bottom: 0.5rem;
 }
@@ -42,9 +42,9 @@
 .label {
   font-size: 0.8rem;
   font-family: var(--font-sans);
-  font-weight: 600;
+  font-weight: 500;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.02em;
   color: var(--olive);
   margin-bottom: 1.25rem;
 }
@@ -58,7 +58,7 @@
 
 .highlight {
   color: var(--rose-dark);
-  font-weight: 600;
+  font-weight: 500;
 }
 
 .cta {
@@ -67,7 +67,7 @@
   color: white;
   font-family: var(--font-sans);
   font-size: 1rem;
-  font-weight: 600;
+  font-weight: 500;
   text-decoration: none;
   padding: 0.875rem 1.75rem;
   border-radius: 8px;
@@ -97,7 +97,7 @@
 .sectionTitle {
   font-family: var(--font-serif);
   font-size: 2rem;
-  font-weight: 400;
+  font-weight: 300;
   color: var(--text-heading);
   margin-bottom: 1rem;
 }
@@ -132,7 +132,7 @@
 .valuesTitle {
   font-family: var(--font-serif);
   font-size: 2rem;
-  font-weight: 400;
+  font-weight: 300;
   color: var(--lavender-dark);
   margin-bottom: 1rem;
 }
@@ -168,7 +168,7 @@
 .valueHeading {
   font-family: var(--font-serif);
   font-size: 1.5rem;
-  font-weight: 400;
+  font-weight: 300;
   color: var(--lavender-dark);
   margin-bottom: 0.75rem;
 }
@@ -259,9 +259,9 @@
   right: 16px;
   font-family: var(--font-sans);
   font-size: 0.75rem;
-  font-weight: 600;
+  font-weight: 500;
   text-transform: uppercase;
-  letter-spacing: 0.03em;
+  letter-spacing: 0.02em;
   padding: 6px 12px;
   border-radius: 20px;
 }
@@ -287,6 +287,7 @@
   color: var(--text-heading);
   margin-bottom: 0.5rem;
 }
+/* Card titles use 400 for better legibility next to images */
 
 .projectTags {
   font-size: 0.85rem;
@@ -304,7 +305,7 @@
 .projectLink {
   font-family: var(--font-sans);
   font-size: 0.95rem;
-  font-weight: 600;
+  font-weight: 500;
   color: var(--olive);
 }
 
@@ -336,7 +337,7 @@
 .buildingTitle {
   font-family: var(--font-serif);
   font-size: 2rem;
-  font-weight: 400;
+  font-weight: 300;
   color: var(--sky-dark);
   margin-bottom: 1rem;
 }
@@ -372,7 +373,7 @@
 .buildingCardTitle {
   font-family: var(--font-serif);
   font-size: 1.2rem;
-  font-weight: 400;
+  font-weight: 300;
   color: var(--sky-dark);
   margin-bottom: 0.5rem;
 }
@@ -381,9 +382,9 @@
   display: inline-block;
   font-family: var(--font-sans);
   font-size: 0.7rem;
-  font-weight: 600;
+  font-weight: 500;
   text-transform: uppercase;
-  letter-spacing: 0.03em;
+  letter-spacing: 0.02em;
   color: var(--lavender-dark);
   margin-bottom: 0.75rem;
 }

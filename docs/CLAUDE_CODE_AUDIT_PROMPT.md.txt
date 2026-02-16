@@ -1,0 +1,248 @@
+﻿# Claude Code: Codebase Overhaul & Audit Prompt
+
+
+## Context
+
+
+This is a Next.js design portfolio for a Social Impact Designer (lorin.work). It was built iteratively through vibe-coding across many Claude conversations. The code works but has accumulated inconsistencies, dead code, stale comments, and disorganized file structure. The goal is to make this codebase look like it was built by someone who respects engineers — clean, consistent, well-documented, and easy to collaborate on.
+
+
+**This is NOT a redesign.** The visual design and content are intentional. This is a structural, organizational, and code-quality overhaul.
+
+
+---
+
+
+## Critical Constraints
+
+
+1. **PRESERVE the homepage and Groundswell case study.** These are the two most complete, intentional pieces. Do not alter their visual output, layout, or behavior without explicit approval.
+2. **ASK before changing any `.md` content files.** These contain carefully written copy. If you want to modify one, explain what you want to change and why before doing it.
+3. **FLAG, don't delete.** If you find components, pages, files, or code blocks that seem unused, experimental, or half-built — flag them in a summary list for my review. Do not delete anything without my go-ahead.
+4. **Don't break the build.** Run `npm run build` after every structural change to confirm nothing is broken. If the build is already broken, fix it first and document what was wrong.
+5. **Git safety.** Before beginning destructive work, confirm I have committed and pushed current state. Create a new branch called `codebase-overhaul` for all changes.
+
+
+---
+
+
+## Phase 1: Assess & Report (Do this FIRST, change NOTHING yet)
+
+
+Generate a written audit report covering:
+
+
+### File Structure
+- Map the current directory tree
+- Flag any files that don't follow a consistent organizational pattern
+- Flag any components that are not in a proper `ComponentName/` folder structure
+- Flag orphaned files (not imported anywhere)
+- Flag duplicate or near-duplicate files (e.g., backup copies, `.backup` extensions)
+- Note current `public/` asset organization
+
+
+### Code Quality
+- Flag stale, incorrect, or AI-slop comments (e.g., "// This is a component", "// Added per user request", "// TODO" with no context)
+- Flag inconsistent naming conventions (files, variables, CSS classes)
+- Flag inline styles that should be in CSS Modules
+- Flag any hardcoded values that should be CSS custom properties or constants
+- Flag components with mixed concerns (e.g., data + presentation in one file)
+- Flag any accessibility issues (missing alt text, missing ARIA labels, poor semantic HTML, color contrast)
+
+
+### Architecture
+- Confirm whether we're using App Router or Pages Router consistently
+- Check for proper use of `'use client'` directives — are they on every file or only where needed?
+- Check CSS Module usage — are styles properly scoped? Any global styles leaking?
+- Check for unused dependencies in `package.json`
+- Review `next.config.js` for anything unnecessary or misconfigured
+- Review `.gitignore` for completeness (node_modules, .next, .env, OS files, etc.)
+
+
+### What Might Not Belong
+- List any pages, components, or routes that appear incomplete or experimental
+- List any files that look like they were created for testing and never cleaned up
+
+
+**Deliver this as a structured summary I can review before you touch anything.**
+
+
+---
+
+
+## Phase 2: File Organization (After my approval of Phase 1 report)
+
+
+Reorganize into this structure:
+```
+app/
+├── layout.js
+├── page.js
+├── page.module.css
+├── globals.css
+├── not-found.js
+├── not-found.module.css
+├── projects/
+│   └── [slug]/
+│       ├── page.js
+│       └── page.module.css
+├── components/
+│   ├── Nav/
+│   │   ├── Nav.js
+│   │   └── Nav.module.css
+│   ├── Footer/
+│   │   ├── Footer.js
+│   │   └── Footer.module.css
+│   ├── [ComponentName]/
+│   │   ├── [ComponentName].js
+│   │   └── [ComponentName].module.css
+│   └── index.js          ← barrel file for clean imports
+├── content/
+│   └── projects/
+│       ├── groundswell.md
+│       └── [other-project].md
+├── lib/
+│   └── [any utility functions, data helpers, constants]
+└── styles/
+    └── [any shared style tokens or mixins if needed]
+
+
+public/
+├── images/
+│   ├── projects/
+│   │   ├── groundswell/
+│   │   └── [other-project]/
+│   ├── site/              ← logo, favicon, general site images
+│   └── [organized by purpose]
+├── audio/
+├── video/
+└── fonts/                 ← if any local fonts
+```
+
+
+**Rules:**
+- Every component gets its own folder with its `.js` and `.module.css` file
+- No loose component files at root level
+- All imports must be updated to match new paths
+- Create a barrel `index.js` in `components/` for clean imports: `import { Nav, Footer } from '@/components'`
+- Group assets by project/purpose, not by file type
+- Run build after reorganization to confirm nothing broke
+
+
+---
+
+
+## Phase 3: Code Cleanup
+
+
+### Comments
+- **Remove:** Any comment that just restates what the code does (`// set state to true`)
+- **Remove:** Any AI-generated meta-comments (`// Added this section`, `// Per user request`, `// This component handles...`)
+- **Remove:** Any commented-out code blocks (if they seem important, flag them for me first)
+- **Keep/Add:** Comments that explain WHY a non-obvious decision was made
+- **Keep/Add:** Brief JSDoc-style comments at the top of each component explaining its purpose and props
+- **Format:** Comments should be concise, lowercase-start for inline, sentence case for block comments
+
+
+Example of a good component header comment:
+```js
+/**
+ * ProjectCard — Clickable card linking to a case study.
+ * Displays project thumbnail, title, tags, and brief description.
+ * Used in: Homepage featured work section, project gallery pages.
+ *
+ * @param {string} title - Project display name
+ * @param {string} slug - URL path segment for routing
+ * @param {string} thumbnail - Path to preview image
+ * @param {string[]} tags - Category labels shown on card
+ */
+```
+
+
+### CSS
+- Consolidate CSS custom properties into `globals.css` under a clear `:root` section with organized groupings (colors, typography, spacing, motion, breakpoints)
+- Ensure every component uses CSS Modules — no rogue global class names
+- Remove duplicate or overridden styles
+- Use consistent naming: `camelCase` for CSS Module classes
+- Add responsive breakpoints as custom properties or clearly documented values
+- Check for any `!important` usage and eliminate where possible
+
+
+### JavaScript
+- Consistent use of arrow functions vs function declarations (pick one pattern per context)
+- Remove unused imports
+- Remove unused state variables or effects
+- Ensure proper dependency arrays in `useEffect`
+- Ensure images have proper `alt` text (descriptive for content images, empty string for decorative)
+- Ensure semantic HTML (`<main>`, `<section>`, `<article>`, `<nav>`, `<header>`, `<footer>`)
+
+
+### Accessibility Quick Pass
+- All interactive elements are keyboard accessible
+- Focus states are visible
+- Color contrast meets WCAG AA minimum
+- Skip-to-content link exists
+- Heading hierarchy is logical (no skipped levels)
+- Images have alt text
+- ARIA labels on icon-only buttons
+
+
+---
+
+
+## Phase 4: Git & Config Hygiene
+
+
+### .gitignore
+Ensure it includes at minimum:
+```
+node_modules/
+.next/
+out/
+.env
+.env.local
+.env*.local
+.DS_Store
+Thumbs.db
+*.log
+.vercel
+```
+
+
+### package.json
+- Remove unused dependencies
+- Ensure scripts are correct (`dev`, `build`, `start`, `lint`)
+- Add `"engines"` field specifying Node version if not present
+
+
+### README.md
+- Should contain: project name, one-line description, tech stack, how to run locally (`npm install` → `npm run dev`), folder structure overview, deployment notes
+- Keep it lean and practical — this is not marketing copy, it's developer documentation
+- Ask me before rewriting to confirm tone and content
+
+
+---
+
+
+## Phase 5: Final Verification
+
+
+- Run `npm run build` — must complete with zero errors
+- Run `npm run lint` — fix any issues (or document intentional exceptions)
+- Manually verify homepage renders correctly
+- Manually verify Groundswell case study renders correctly
+- Produce a final summary of all changes made, organized by phase
+- List any remaining recommendations or follow-up items
+
+
+---
+
+
+## Communication Style
+
+
+- Be direct. Tell me what's wrong and what you recommend.
+- If something is a judgment call, present options with your recommendation and reasoning.
+- Don't over-explain obvious things. I understand design; I'm learning engineering.
+- If you're unsure whether something is intentional or a mistake, ask.
+- Batch your questions — don't ask me one thing at a time if you can group them.

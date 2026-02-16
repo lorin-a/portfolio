@@ -1,6 +1,23 @@
 import './globals.css'
-import Nav from '@/components/Nav'
-import Footer from '@/components/Footer'
+import { Newsreader, DM_Sans } from 'next/font/google'
+import Nav from '@/components/Nav/Nav'
+import Footer from '@/components/Footer/Footer'
+
+const newsreader = Newsreader({
+  subsets: ['latin'],
+  weight: ['300', '400'],
+  style: ['normal', 'italic'],
+  variable: '--font-newsreader',
+  display: 'swap',
+})
+
+const dmSans = DM_Sans({
+  subsets: ['latin'],
+  weight: ['400', '500'],
+  style: ['normal', 'italic'],
+  variable: '--font-dm-sans',
+  display: 'swap',
+})
 
 export const metadata = {
   title: 'Lorin Anderberg | Design Researcher',
@@ -30,14 +47,8 @@ export const viewport = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html lang="en" className={`${newsreader.variable} ${dmSans.variable}`}>
       <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link 
-          href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Ovo&display=swap" 
-          rel="stylesheet" 
-        />
         <link rel="icon" href="/favicon.ico" sizes="any" />
       </head>
       <body>

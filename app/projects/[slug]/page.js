@@ -3,7 +3,7 @@ import path from 'path'
 import matter from 'gray-matter'
 import ReactMarkdown from 'react-markdown'
 import Link from 'next/link'
-import ProjectNav from '@/components/ProjectNav'
+import ProjectNav from '@/components/ProjectNav/ProjectNav'
 import styles from './page.module.css'
 
 // Get all project slugs for static generation

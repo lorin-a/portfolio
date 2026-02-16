@@ -83,9 +83,11 @@ export default function CardCarousel({ imagePath = '/images/groundswell/gs-card-
         </div>
 
         {/* Center card (flippable) */}
-        <div
+        <button
+          type="button"
           className={`${styles.carouselCard} ${styles.carouselCardCenter} ${isFlipped ? styles.carouselCardFlipped : ''}`}
           onClick={handleFlip}
+          aria-label={isFlipped ? `${getCardAt(0).name} card - click to see front` : `${getCardAt(0).name} card - click to flip and see exercise`}
         >
           <div className={styles.carouselCardInner}>
             <div className={styles.carouselCardFront}>
@@ -103,7 +105,7 @@ export default function CardCarousel({ imagePath = '/images/groundswell/gs-card-
               />
             </div>
           </div>
-        </div>
+        </button>
 
         {/* Right card */}
         <div className={`${styles.carouselCard} ${styles.carouselCardSide}`}>

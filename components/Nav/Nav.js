@@ -6,10 +6,10 @@ import styles from './Nav.module.css'
 
 export default function Nav() {
   const [isOpen, setIsOpen] = useState(false)
-  
+
   const toggleMenu = () => setIsOpen(!isOpen)
   const closeMenu = () => setIsOpen(false)
-  
+
   return (
     <header className={styles.header}>
       <nav className={styles.nav} aria-label="Main navigation">

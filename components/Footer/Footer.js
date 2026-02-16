@@ -1,4 +1,4 @@
-import Squiggle from './Squiggle'
+import Squiggle from '../Squiggle/Squiggle'
 import styles from './Footer.module.css'
 
 export default function Footer() {
