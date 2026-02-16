@@ -38,7 +38,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all var(--transition-gentle);
+  transition: all var(--motion-fast) var(--ease-out);
   z-index: 10;
 }
 
@@ -128,7 +128,7 @@
   border: none;
   background-color: var(--color-border);
   cursor: pointer;
-  transition: all var(--transition-gentle);
+  transition: all var(--motion-fast) var(--ease-out);
   
   /* Expand touch target to 44px without changing visual size */
   position: relative;

@@ -277,7 +277,7 @@
   font-family: var(--font-serif);
   font-size: 1.125rem;
   color: var(--color-text);
-  transition: color var(--transition-gentle);
+  transition: color var(--motion-fast) var(--ease-out);
 }
 
 .bottomNavLink:hover .bottomNavTitle {

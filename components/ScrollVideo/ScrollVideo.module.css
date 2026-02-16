@@ -63,7 +63,7 @@
   background: rgba(0, 0, 0, 0.35);
   border: none;
   cursor: pointer;
-  transition: opacity var(--transition-smooth), background var(--transition-gentle);
+  transition: opacity var(--motion-fast) var(--ease-default), background var(--motion-fast) var(--ease-out);
 }
 
 .videoPlayOverlay:focus-visible {
@@ -86,7 +86,7 @@
   color: var(--project-accent);
   font-size: var(--text-h3);
   padding-left: 4px;
-  transition: transform var(--transition-gentle);
+  transition: transform var(--motion-fast) var(--ease-out);
 }
 
 .videoPlayOverlay:hover .videoPlayIcon {
@@ -98,7 +98,7 @@
   font-size: var(--text-body-small);
   color: rgba(255, 255, 255, 0.85);
   opacity: 0;
-  transition: opacity var(--transition-gentle);
+  transition: opacity var(--motion-fast) var(--ease-out);
 }
 
 .videoPlayOverlay:hover .videoLabelOverlay {
@@ -113,7 +113,7 @@
   right: 0;
   padding: var(--space-xs) var(--space-sm);
   background: linear-gradient(to top, rgba(0, 0, 0, 0.6), transparent);
-  transition: opacity var(--transition-gentle);
+  transition: opacity var(--motion-fast) var(--ease-out);
 }
 
 .videoLabelBar span {

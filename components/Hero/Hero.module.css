@@ -16,20 +16,6 @@
   background-color: var(--surface);
 }
 
-/* Subtle radial glow in top-right */
-.hero::before {
-  content: '';
-  position: absolute;
-  top: -200px;
-  right: -200px;
-  width: 600px;
-  height: 600px;
-  border-radius: 50%;
-  background: radial-gradient(circle, var(--lavender) 0%, transparent 70%);
-  opacity: 0.4;
-  pointer-events: none;
-}
-
 /* ===========================================
    LINE REVEAL - Horizontal wipe, one line at a time
    Each line wipes left to right in reading order
@@ -57,7 +43,7 @@
 }
 
 .line.revealing {
-  animation: lineReveal var(--line-duration, 1.8s) cubic-bezier(0.4, 0.0, 0.4, 1.0) forwards;
+  animation: lineReveal var(--line-duration, 1.8s) cubic-bezier(0.4, 0.0, 0.4, 1.0) forwards; /* One-off: Hero choreography */
   animation-delay: var(--line-delay, 0s);
 }
 
@@ -135,7 +121,7 @@
 }
 
 .underlineSvg.visible path {
-  animation: drawMark 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  animation: drawMark 1.2s var(--ease-default) forwards; /* One-off: Hero choreography */
 }
 
 @keyframes drawMark {
@@ -159,11 +145,11 @@
   color: var(--text-heading);
   opacity: 0;
   transform: translateY(12px);
-  transition: transform 0.3s cubic-bezier(0.42, 0, 0.58, 1);
+  transition: transform var(--motion-fast) var(--ease-default);
 }
 
 .cta.visible {
-  animation: softAppear 1s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  animation: softAppear 1s var(--ease-default) forwards; /* One-off: Hero choreography */
 }
 
 @keyframes softAppear {
@@ -198,7 +184,7 @@
   height: 28px;
   color: currentColor;
   opacity: 0.9;
-  animation: bobDown 2s ease-in-out 2s infinite;
+  animation: bobDown 2s var(--ease-pulse) 2s infinite; /* One-off: Hero choreography */
 }
 
 @keyframes bobDown {

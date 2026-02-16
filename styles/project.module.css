@@ -525,7 +525,7 @@
   text-decoration: underline;
   text-decoration-color: rgba(85, 77, 101, 0.3);
   text-underline-offset: 3px;
-  transition: text-decoration-color 0.3s ease;
+  transition: text-decoration-color var(--motion-fast) var(--ease-default);
 }
 
 .inlineLink:hover {
@@ -877,7 +877,7 @@
   background: transparent;
   color: var(--project-accent);
   cursor: pointer;
-  transition: all var(--transition-gentle);
+  transition: all var(--motion-fast) var(--ease-out);
 }
 
 .diagramTabButton:hover {
@@ -908,7 +908,7 @@
   width: 100%;
   top: 0;
   left: 0;
-  transition: opacity 0.4s ease;
+  transition: opacity var(--motion-fast) var(--ease-default);
 }
 
 .valuesInline {
@@ -985,7 +985,7 @@
   font-size: var(--text-body);
   color: var(--project-accent);
   text-decoration: none;
-  transition: opacity 0.3s ease;
+  transition: opacity var(--motion-fast) var(--ease-default);
 }
 
 .footerNavLink:hover {
@@ -1099,7 +1099,7 @@
   color: var(--project-accent);
   border: none;
   border-radius: var(--radius-pill);
-  transition: all var(--transition-gentle);
+  transition: all var(--motion-fast) var(--ease-out);
 }
 
 .heroTag:hover {
@@ -1131,7 +1131,7 @@
   width: 1px;
   height: 50px;
   background: linear-gradient(to bottom, var(--color-bg), transparent);
-  animation: scrollPulse 2.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  animation: scrollPulse 2.5s var(--ease-default) infinite; /* 2.5s: choreographed scroll pulse */
 }
 
 @keyframes scrollPulse {
@@ -1415,8 +1415,8 @@
   border-radius: var(--radius-md);
   overflow: hidden;
   text-decoration: none;
-  transition: transform var(--transition-smooth),
-              box-shadow var(--transition-smooth);
+  transition: transform var(--motion-fast) var(--ease-default),
+              box-shadow var(--motion-fast) var(--ease-default);
 }
 
 .componentPreviewCard:hover {
@@ -1433,7 +1433,7 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform var(--motion-medium) var(--ease-default);
 }
 
 .componentPreviewCard:hover .componentPreviewImage img {
@@ -1863,7 +1863,7 @@
   display: flex;
   width: 380px;
   max-width: 45vw;
-  transition: transform 0.3s ease, z-index 0.3s ease;
+  transition: transform var(--motion-fast) var(--ease-default), z-index var(--motion-fast) var(--ease-default);
 }
 
 .reflectionPressCard {
@@ -1876,7 +1876,7 @@
   flex-direction: column;
   position: relative;
   box-shadow: var(--shadow-lg);
-  transition: all 0.3s ease;
+  transition: all var(--motion-fast) var(--ease-default);
   width: 100%;
 }
 
@@ -1973,7 +1973,7 @@
   padding-top: var(--space-sm);
   border-top: 1px solid rgba(85, 77, 101, 0.4);
   display: inline-block;
-  transition: transform 0.3s ease;
+  transition: transform var(--motion-fast) var(--ease-default);
 }
 
 .reflectionPressCard:hover .reflectionPressLink {
@@ -2315,7 +2315,7 @@
   margin-top: var(--space-lg);
   border-radius: var(--radius-md);
   overflow: hidden;
-  transition: transform var(--transition-gentle), box-shadow var(--transition-gentle);
+  transition: transform var(--motion-fast) var(--ease-out), box-shadow var(--motion-fast) var(--ease-out);
 }
 
 .voidDiagramLink:hover {
@@ -2515,7 +2515,7 @@
   top: 0;
   width: 480px;
   height: 100%;
-  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all var(--motion-fast) var(--ease-default);
 }
 
 .playtestCarouselCard {
@@ -2604,7 +2604,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: opacity 0.2s ease, background-color 0.2s ease;
+  transition: opacity var(--motion-fast) var(--ease-default), background-color var(--motion-fast) var(--ease-default);
 }
 
 .playtestCarouselArrow:disabled {
@@ -2649,7 +2649,7 @@
   border: none;
   background: var(--project-accent-tint);
   cursor: pointer;
-  transition: all var(--transition-gentle);
+  transition: all var(--motion-fast) var(--ease-out);
   /* Touch target padding */
   padding: 0;
   position: relative;
@@ -2756,7 +2756,7 @@
   top: 0;
   width: 524px;
   height: 100%;
-  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all var(--motion-fast) var(--ease-default);
 }
 
 /* Card chrome — uniform for all cards */
@@ -2850,7 +2850,7 @@
   object-fit: cover;
   object-position: top;
   display: block;
-  transition: transform 0.3s ease;
+  transition: transform var(--motion-fast) var(--ease-default);
 }
 
 .workshopImage:hover img {
@@ -2875,7 +2875,7 @@
   object-fit: cover;
   object-position: top;
   display: block;
-  transition: transform 0.3s ease;
+  transition: transform var(--motion-fast) var(--ease-default);
 }
 
 .workshopImageButton:hover img {
@@ -2907,7 +2907,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: opacity 0.2s ease, background-color 0.2s ease;
+  transition: opacity var(--motion-fast) var(--ease-default), background-color var(--motion-fast) var(--ease-default);
 }
 
 .workshopCarouselArrow:disabled {
@@ -2960,7 +2960,7 @@
   border: none;
   background: var(--project-accent-tint);
   cursor: pointer;
-  transition: all var(--transition-gentle);
+  transition: all var(--motion-fast) var(--ease-out);
   /* Touch target padding */
   padding: 0;
   position: relative;
@@ -3139,7 +3139,7 @@
   position: relative;
   width: 100%;
   height: 100%;
-  transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform var(--motion-medium) var(--ease-default);
   -webkit-transform-style: preserve-3d;
   transform-style: preserve-3d;
 }
@@ -3206,7 +3206,7 @@
   position: relative;
   width: 100%;
   height: 100%;
-  transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform var(--motion-medium) var(--ease-default);
   -webkit-transform-style: preserve-3d;
   transform-style: preserve-3d;
   background: transparent;
@@ -3262,7 +3262,7 @@
   color: var(--project-accent);
   font-size: 1.25rem;
   cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all var(--motion-fast) var(--ease-default);
   display: flex;
   align-items: center;
   justify-content: center;

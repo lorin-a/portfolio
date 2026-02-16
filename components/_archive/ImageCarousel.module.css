@@ -52,7 +52,7 @@
   scroll-snap-align: start;
   border-radius: 8px;
   overflow: hidden;
-  transition: transform var(--transition-gentle), box-shadow var(--transition-gentle);
+  transition: transform var(--motion-fast) var(--ease-out), box-shadow var(--motion-fast) var(--ease-out);
 }
 
 @media (hover: hover) {
@@ -94,7 +94,7 @@
   align-items: center;
   justify-content: center;
   opacity: 0;
-  transition: opacity var(--transition-gentle), background-color var(--transition-gentle);
+  transition: opacity var(--motion-fast) var(--ease-out), background-color var(--motion-fast) var(--ease-out);
   z-index: 10;
 }
 

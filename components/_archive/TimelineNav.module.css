@@ -12,7 +12,7 @@
   background-color: var(--project-accent, var(--color-green-dark));
   transform: translateY(-100%);
   opacity: 0;
-  transition: transform 0.4s ease-out, opacity 0.4s ease-out;
+  transition: transform var(--motion-fast) var(--ease-out), opacity var(--motion-fast) var(--ease-out);
   pointer-events: none;
 }
 
@@ -61,7 +61,7 @@
   height: 2px;
   background-color: var(--project-accent-light, var(--color-bg));
   transform: translateY(-50%);
-  transition: width 0.3s ease-out;
+  transition: width var(--motion-fast) var(--ease-out);
   z-index: 1;
 }
 
@@ -103,7 +103,7 @@
   border-radius: 50%;
   border: 2px solid var(--project-accent-light, var(--color-bg));
   background-color: transparent;
-  transition: all 0.3s ease-out;
+  transition: all var(--motion-fast) var(--ease-out);
 }
 
 .dotFilled {
@@ -125,7 +125,7 @@
   letter-spacing: 0.05em;
   color: var(--project-accent-light, var(--color-bg));
   opacity: 0.7;
-  transition: all 0.3s ease-out;
+  transition: all var(--motion-fast) var(--ease-out);
   white-space: nowrap;
 }
 
@@ -200,7 +200,7 @@
    =========================================== */
 @media (prefers-reduced-motion: reduce) {
   .nav {
-    transition: opacity 0.2s ease-out;
+    transition: opacity var(--motion-fast) var(--ease-out);
     transform: translateY(0);
   }
   

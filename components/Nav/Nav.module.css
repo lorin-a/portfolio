@@ -49,7 +49,7 @@
   height: 2px;
   background-color: var(--color-text);
   position: relative;
-  transition: background-color var(--transition-gentle);
+  transition: background-color var(--motion-fast) var(--ease-out);
 }
 
 .menuIcon::before,
@@ -60,7 +60,7 @@
   width: 24px;
   height: 2px;
   background-color: var(--color-text);
-  transition: transform var(--transition-gentle);
+  transition: transform var(--motion-fast) var(--ease-out);
 }
 
 .menuIcon::before {
@@ -106,7 +106,7 @@
   width: 0;
   height: 1px;
   background-color: var(--color-green-dark);
-  transition: width var(--transition-gentle);
+  transition: width var(--motion-fast) var(--ease-out);
 }
 
 /* Only apply hover effect on devices that support hover */
@@ -124,7 +124,7 @@
 
 .socialLink {
   color: var(--color-text);
-  transition: color var(--transition-gentle);
+  transition: color var(--motion-fast) var(--ease-out);
 }
 
 /* Only apply hover effect on devices that support hover */
@@ -177,7 +177,7 @@
     gap: var(--space-lg);
     opacity: 0;
     visibility: hidden;
-    transition: opacity var(--transition-gentle), visibility var(--transition-gentle);
+    transition: opacity var(--motion-fast) var(--ease-out), visibility var(--motion-fast) var(--ease-out);
   }
 
   .navLinks.navOpen {
