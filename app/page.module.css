@@ -123,7 +123,7 @@
   background-color: var(--lavender-light);
   border-left: 4px solid var(--lavender-dark);
   border-radius: var(--radius-lg);
-  padding: 60px 50px;
+  padding: var(--space-lg) var(--space-md);
 }
 
 .valuesHeader {
@@ -149,14 +149,14 @@
 .valueGrid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 40px;
+  gap: var(--space-md);
 }
 
 .valueCard {
   position: relative;
   background-color: var(--surface);
   border-left: 4px solid var(--lavender-dark);
-  padding: 32px 24px 40px 24px;
+  padding: var(--space-md) var(--space-content-gap) var(--space-md) var(--space-content-gap);
   clip-path: url(#wavyCardClip);
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -193,7 +193,7 @@
 .projectGrid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 40px;
+  gap: var(--space-md);
 }
 
 .projectCard {
@@ -263,7 +263,7 @@
   font-weight: var(--weight-label);
   text-transform: uppercase;
   letter-spacing: 0.02em;
-  padding: 6px 12px;
+  padding: var(--space-xs) var(--space-sm);
   border-radius: var(--radius-pill);
 }
 
@@ -278,7 +278,7 @@
 }
 
 .projectContent {
-  padding: 28px;
+  padding: var(--space-content-gap);
 }
 
 .projectTitle {
@@ -328,7 +328,7 @@
   background-color: var(--sky-light);
   border-left: 4px solid var(--sky-dark);
   border-radius: var(--radius-lg);
-  padding: 60px 50px;
+  padding: var(--space-lg) var(--space-md);
 }
 
 .buildingHeader {
@@ -354,14 +354,14 @@
 .buildingGrid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
+  gap: var(--space-content-gap);
 }
 
 .buildingCard {
   position: relative;
   background-color: var(--surface);
   border-left: 4px solid var(--sky-dark);
-  padding: 32px 24px 40px 24px;
+  padding: var(--space-md) var(--space-content-gap) var(--space-md) var(--space-content-gap);
   clip-path: url(#wavyCardClip);
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -406,7 +406,7 @@
   }
 
   .valuesInner {
-    padding: 48px 40px;
+    padding: var(--space-lg) var(--space-content-gap);
   }
 
   .valuesTitle {
@@ -415,16 +415,16 @@
 
   .valueGrid {
     grid-template-columns: repeat(2, 1fr);
-    gap: 32px;
+    gap: var(--space-md);
   }
 
   .projectGrid {
     grid-template-columns: repeat(2, 1fr);
-    gap: 32px;
+    gap: var(--space-md);
   }
 
   .buildingInner {
-    padding: 48px 40px;
+    padding: var(--space-lg) var(--space-content-gap);
   }
 
   .buildingGrid {
@@ -465,7 +465,7 @@
   }
 
   .valuesInner {
-    padding: 40px 24px;
+    padding: var(--space-md) var(--space-content-gap);
   }
 
   .valuesTitle {
@@ -478,7 +478,7 @@
 
   .valueGrid {
     grid-template-columns: 1fr;
-    gap: 24px;
+    gap: var(--space-content-gap);
   }
 
   .valueCard:hover,
@@ -488,7 +488,7 @@
 
   .projectGrid {
     grid-template-columns: 1fr;
-    gap: 24px;
+    gap: var(--space-content-gap);
   }
 
   .projectImageWrapper {
@@ -496,7 +496,7 @@
   }
 
   .buildingInner {
-    padding: 40px 24px;
+    padding: var(--space-md) var(--space-content-gap);
   }
 
   .buildingTitle {
@@ -509,7 +509,7 @@
 
   .buildingGrid {
     grid-template-columns: 1fr;
-    gap: 20px;
+    gap: var(--space-content-gap);
   }
 }
 

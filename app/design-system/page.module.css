@@ -93,7 +93,7 @@
 
 .swatchRow {
   display: flex;
-  gap: 12px;
+  gap: var(--space-sm);
   flex-wrap: wrap;
   margin-bottom: var(--space-sm);
 }
@@ -481,7 +481,7 @@
    =========================================== */
 .badgeRow {
   display: flex;
-  gap: 12px;
+  gap: var(--space-sm);
   flex-wrap: wrap;
   align-items: center;
   margin-bottom: var(--space-sm);
@@ -493,7 +493,7 @@
   font-weight: var(--weight-label);
   text-transform: uppercase;
   letter-spacing: 0.03em;
-  padding: 6px 12px;
+  padding: var(--space-xs) var(--space-sm);
   border-radius: var(--radius-pill);
 }
 
@@ -535,7 +535,7 @@
 /* Soft pills (Fraunces italic) */
 .pill {
   display: inline-block;
-  padding: 8px 16px;
+  padding: var(--space-xs) var(--space-sm);
   font-family: var(--font-serif);
   font-style: italic;
   font-weight: var(--weight-quote);
@@ -603,7 +603,7 @@
 .valueCard {
   background: var(--surface);
   border-left: 4px solid var(--lavender-dark);
-  padding: 32px 24px;
+  padding: var(--space-md) var(--space-content-gap);
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
