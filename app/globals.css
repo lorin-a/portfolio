@@ -2,6 +2,23 @@
    DESIGN SYSTEM VARIABLES
    =========================================== */
 :root {
+  /* ===========================================
+     MOTION DESIGN SYSTEM
+     =========================================== */
+  /* Timing */
+  --motion-fast: 300ms;
+  --motion-medium: 600ms;
+  --motion-slow: 900ms;
+
+  /* Easing — ease-in-out is the default for everything */
+  --ease-default: cubic-bezier(0.42, 0, 0.58, 1);
+
+  /* Soft bounce — slight overshoot then settle, for elements landing into place */
+  --ease-bounce: cubic-bezier(0.34, 1.4, 0.64, 1);
+
+  /* Gentle pulse — for looping attention indicators like the rings */
+  --ease-pulse: ease-in-out;
+
   /* Hero Animation Colors */
   --cream: #FAF7F0;
   --hero-olive: #8B8525;
@@ -11,10 +28,6 @@
   --plum: #8B5E83;
   --terracotta: #B5654A;
   --sage: #A8B5A0;
-
-  /* Hero Animation Easing */
-  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
-  --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
 
   /* Olive (Primary Brand) */
   --olive-light: #D8DBA0;
@@ -70,6 +83,7 @@
   /* ===========================================
      BORDER RADIUS SCALE
      =========================================== */
+  --radius-xs: 2px;
   --radius-sm: 4px;
   --radius-md: 8px;
   --radius-lg: 12px;
@@ -83,11 +97,22 @@
   /* ===========================================
      TYPOGRAPHY
      =========================================== */
-  --font-heading: var(--font-newsreader), Georgia, 'Times New Roman', serif;
+  --font-heading: var(--font-fraunces), Georgia, 'Times New Roman', serif;
   --font-body: var(--font-dm-sans), -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   /* Legacy aliases */
   --font-serif: var(--font-heading);
   --font-sans: var(--font-body);
+
+  /* Fraunces Variable Font Axes */
+  --font-soft: 'SOFT' 50, 'WONK' 1;
+  --font-sharp: 'SOFT' 0, 'WONK' 0;
+
+  /* Font Weight Hierarchy — change these to tune globally */
+  --weight-hero: 200;      /* Hero intro, greeting, big display text */
+  --weight-title: 400;     /* All headings: h1-h4, section titles, card titles */
+  --weight-body: 400;      /* Body text */
+  --weight-quote: 400;     /* Pull quotes, italic emphasis */
+  --weight-label: 500;     /* Sans-serif UI: labels, badges, buttons */
   
   /* Type Scale - Desktop */
   --text-h1: 3rem;             /* 48px */
@@ -111,6 +136,7 @@
      =========================================== */
   --space-xs: 0.5rem;  /* 8px */
   --space-sm: 1rem;    /* 16px */
+  --space-content-gap: 1.5rem; /* 24px — cards, grid gaps, internal padding */
   --space-md: 2rem;    /* 32px */
   --space-lg: 4rem;    /* 64px */
   --space-xl: 6rem;    /* 96px */
@@ -123,14 +149,26 @@
   --container-padding: var(--space-md);
   
   /* ===========================================
-     TRANSITIONS
+     SHADOWS
      =========================================== */
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
+  --shadow-md: 0 2px 8px rgba(0,0,0,0.08);
+  --shadow-lg: 0 4px 16px rgba(0,0,0,0.10);
+
+  /* ===========================================
+     COLORS — DEVICE CHROME
+     =========================================== */
+  --color-device-dark: #1a1a1a;
+
+  /* ===========================================
+     EASING
+     =========================================== */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* Legacy — will be removed in transitions consolidation */
   --transition-gentle: 0.3s ease-out;
   --transition-smooth: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-
-  /* Animation Easing */
-  --ease-out-smooth: cubic-bezier(0.22, 1, 0.36, 1);
-  --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 /* ===========================================
@@ -207,6 +245,7 @@ body {
   line-height: var(--leading-normal);
   color: var(--color-text);
   background-color: var(--color-bg);
+  font-variation-settings: var(--font-soft);
 }
 
 /* ===========================================
@@ -214,15 +253,11 @@ body {
    =========================================== */
 h1, h2, h3, h4 {
   font-family: var(--font-serif);
-  font-weight: 300;
+  font-weight: var(--weight-title);
+  font-variation-settings: var(--font-soft);
   line-height: var(--leading-tight);
   color: var(--color-text);
   text-wrap: balance;
-}
-
-/* Smaller headings may need 400 for legibility at small sizes */
-h3, h4 {
-  font-weight: 300;
 }
 
 p, li, blockquote, figcaption {
@@ -258,8 +293,9 @@ p {
 .pull-quote {
   font-family: var(--font-serif);
   font-size: var(--text-pull-quote);
-  font-weight: 300;
+  font-weight: var(--weight-quote);
   font-style: italic;
+  font-variation-settings: var(--font-soft);
   line-height: var(--leading-relaxed);
   color: var(--project-accent-text);
 }
@@ -267,6 +303,7 @@ p {
 /* Caption */
 .caption {
   font-size: var(--text-caption);
+  font-variation-settings: var(--font-sharp);
   line-height: var(--leading-relaxed);
   color: var(--color-text-light);
 }
@@ -274,7 +311,8 @@ p {
 /* Label (tags, badges, tool names) */
 .label {
   font-size: var(--text-label);
-  font-weight: 500;
+  font-weight: var(--weight-label);
+  font-variation-settings: var(--font-sharp);
   line-height: var(--leading-relaxed);
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -284,7 +322,8 @@ p {
 .section-label {
   font-family: var(--font-serif);
   font-size: 1rem;
-  font-weight: 300;
+  font-weight: var(--weight-title);
+  font-variation-settings: var(--font-sharp);
   text-transform: uppercase;
   letter-spacing: 0.1em;
   color: var(--project-accent);
@@ -295,7 +334,8 @@ p {
 .section-label-light {
   font-family: var(--font-serif);
   font-size: 1rem;
-  font-weight: 300;
+  font-weight: var(--weight-title);
+  font-variation-settings: var(--font-sharp);
   text-transform: uppercase;
   letter-spacing: 0.1em;
   color: var(--project-accent-light);
