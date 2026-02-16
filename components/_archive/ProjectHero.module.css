@@ -52,7 +52,7 @@
 .title {
   font-family: var(--font-serif);
   font-size: clamp(3rem, 10vw, 5.5rem);
-  font-weight: 300;
+  font-weight: var(--weight-title);
   color: var(--project-accent-light, var(--color-bg));
   margin-bottom: 0.5rem;
   letter-spacing: -0.02em;
@@ -63,7 +63,7 @@
   font-family: var(--font-serif);
   font-size: clamp(1.25rem, 3vw, 1.75rem);
   font-style: italic;
-  font-weight: 300;
+  font-weight: var(--weight-quote);
   color: var(--project-accent-light, var(--color-bg));
   margin-bottom: 0.5rem;
   text-wrap: balance;
@@ -90,13 +90,13 @@
 .tag {
   font-family: var(--font-sans);
   font-size: 0.85rem;
-  font-weight: 500;
+  font-weight: var(--weight-label);
   letter-spacing: 0.02em;
   color: var(--project-accent, var(--color-green-dark));
   background-color: rgba(255, 255, 255, 0.92);
   padding: 0.6rem 1.25rem;
   border-radius: 24px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  box-shadow: var(--shadow-md);
 }
 
 /* ===========================================

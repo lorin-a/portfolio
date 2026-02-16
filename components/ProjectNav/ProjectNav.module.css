@@ -39,7 +39,7 @@
   transform: translateX(-20px);
   transition: opacity var(--transition-gentle), transform var(--transition-gentle);
   max-width: 180px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  box-shadow: var(--shadow-lg);
 }
 
 .right .peekContent {
