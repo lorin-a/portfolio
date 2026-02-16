@@ -7,17 +7,19 @@ import ProjectNav from '@/components/ProjectNav/ProjectNav'
 import styles from './page.module.css'
 
 // Get all project slugs for static generation
+// Excludes 'groundswell' which has its own dedicated page at app/projects/groundswell/
 export async function generateStaticParams() {
   const projectsDirectory = path.join(process.cwd(), 'content/projects')
-  
+
   if (!fs.existsSync(projectsDirectory)) {
     return []
   }
-  
+
   const filenames = fs.readdirSync(projectsDirectory)
-  
+
   return filenames
     .filter(name => name.endsWith('.md'))
+    .filter(name => name !== 'groundswell.md')
     .map(name => ({
       slug: name.replace('.md', '')
     }))
