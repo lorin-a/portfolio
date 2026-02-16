@@ -86,7 +86,7 @@
   position: absolute;
   width: 320px;
   height: 480px;
-  border-radius: 16px;
+  border-radius: var(--radius-lg);
   overflow: hidden;
   pointer-events: none;
 }
@@ -126,7 +126,7 @@
 .cardWrapper:focus-visible {
   outline: 2px solid var(--project-accent, var(--color-green-warm));
   outline-offset: 4px;
-  border-radius: 16px;
+  border-radius: var(--radius-lg);
 }
 
 .card {
@@ -151,7 +151,7 @@
   height: 100%;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
-  border-radius: 16px;
+  border-radius: var(--radius-lg);
   overflow: hidden;
   background-color: var(--project-accent-light, var(--color-bg-alt));
 }
@@ -200,7 +200,7 @@
 .dot {
   width: 10px;
   height: 10px;
-  border-radius: 5px;
+  border-radius: var(--radius-sm);
   border: none;
   background-color: rgba(85, 77, 101, 0.2);
   cursor: pointer;
@@ -313,15 +313,15 @@
   }
   
   .card {
-    border-radius: 12px;
+    border-radius: var(--radius-lg);
   }
   
   .cardFace {
-    border-radius: 12px;
+    border-radius: var(--radius-lg);
   }
   
   .previewCard {
-    border-radius: 12px;
+    border-radius: var(--radius-lg);
   }
 }
 

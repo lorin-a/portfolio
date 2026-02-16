@@ -20,12 +20,12 @@
 .badge {
   font-family: var(--font-sans);
   font-size: var(--text-label);
-  font-weight: 500;
+  font-weight: var(--weight-label);
   line-height: 1;
   text-transform: uppercase;
   letter-spacing: 0.02em;
   color: var(--color-text);
   background-color: rgba(0, 0, 0, 0.06);
   padding: 0.35em 0.6em;
-  border-radius: 2px;
+  border-radius: var(--radius-xs);
 }

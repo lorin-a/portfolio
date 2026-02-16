@@ -79,11 +79,11 @@
   font-family: var(--font-serif);
   font-size: 1.875rem;
   font-weight: var(--weight-hero);
-  font-style: italic;
+  font-style: normal;
   font-variation-settings: var(--font-soft);
-  color: var(--olive);
-  margin-top: var(--space-lg);
-  margin-bottom: var(--space-sm);
+  color: var(--text-heading);
+  margin-top: var(--space-sm);
+  margin-bottom: var(--space-xs);
 }
 
 /* ===========================================
@@ -94,7 +94,7 @@
   font-size: clamp(26px, 4.5vw, 52px);
   font-weight: var(--weight-hero);
   line-height: 1.25;
-  margin-bottom: var(--space-lg);
+  margin-bottom: var(--space-md);
   color: var(--text-heading);
 }
 
@@ -156,6 +156,7 @@
   border: none;
   cursor: pointer;
   padding: var(--space-sm) var(--space-md);
+  color: var(--text-heading);
   opacity: 0;
   transform: translateY(12px);
   transition: transform 0.3s cubic-bezier(0.42, 0, 0.58, 1);
@@ -193,10 +194,10 @@
 }
 
 .ctaArrow {
-  width: 20px;
-  height: 20px;
-  color: var(--terracotta);
-  opacity: 0.8;
+  width: 24px;
+  height: 28px;
+  color: currentColor;
+  opacity: 0.9;
   animation: bobDown 2s ease-in-out 2s infinite;
 }
 

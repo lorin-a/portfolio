@@ -11,7 +11,7 @@
 .title {
   font-family: var(--font-serif);
   font-size: 2rem;
-  font-weight: 300;
+  font-weight: var(--weight-title);
   margin-bottom: var(--space-sm);
 }
 

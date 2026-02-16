@@ -1,13 +1,13 @@
 import './globals.css'
-import { Newsreader, DM_Sans } from 'next/font/google'
+import { Fraunces, DM_Sans } from 'next/font/google'
 import Nav from '@/components/Nav/Nav'
 import Footer from '@/components/Footer/Footer'
 
-const newsreader = Newsreader({
+const fraunces = Fraunces({
   subsets: ['latin'],
-  weight: ['300', '400'],
   style: ['normal', 'italic'],
-  variable: '--font-newsreader',
+  axes: ['SOFT', 'WONK', 'opsz'],
+  variable: '--font-fraunces',
   display: 'swap',
 })
 
@@ -47,7 +47,7 @@ export const viewport = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={`${newsreader.variable} ${dmSans.variable}`}>
+    <html lang="en" className={`${fraunces.variable} ${dmSans.variable}`}>
       <head>
         <link rel="icon" href="/favicon.ico" sizes="any" />
       </head>

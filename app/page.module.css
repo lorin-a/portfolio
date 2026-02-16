@@ -70,7 +70,7 @@
   font-weight: var(--weight-label);
   text-decoration: none;
   padding: 0.875rem 1.75rem;
-  border-radius: 8px;
+  border-radius: var(--radius-md);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -122,7 +122,7 @@
 .valuesInner {
   background-color: var(--lavender-light);
   border-left: 4px solid var(--lavender-dark);
-  border-radius: 12px;
+  border-radius: var(--radius-lg);
   padding: 60px 50px;
 }
 
@@ -199,7 +199,7 @@
 .projectCard {
   background-color: var(--surface);
   border: 2px solid var(--olive);
-  border-radius: 12px;
+  border-radius: var(--radius-lg);
   overflow: hidden;
   text-decoration: none;
   color: inherit;
@@ -264,7 +264,7 @@
   text-transform: uppercase;
   letter-spacing: 0.02em;
   padding: 6px 12px;
-  border-radius: 20px;
+  border-radius: var(--radius-pill);
 }
 
 .statusLive {
@@ -327,7 +327,7 @@
 .buildingInner {
   background-color: var(--sky-light);
   border-left: 4px solid var(--sky-dark);
-  border-radius: 12px;
+  border-radius: var(--radius-lg);
   padding: 60px 50px;
 }
 

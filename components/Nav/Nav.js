@@ -14,7 +14,7 @@ export default function Nav() {
     <header className={styles.header}>
       <nav className={styles.nav} aria-label="Main navigation">
         <Link href="/" className={styles.logo} aria-label="Lorin Anderberg, home">
-         <img src="/lorin-logo.png" alt="Lorin Anderberg" className={styles.navLogo} />
+          <span className={styles.logoText}>Lorin Anderberg</span>
         </Link>
         
         {/* Mobile Menu Button */}

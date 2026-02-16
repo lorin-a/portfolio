@@ -78,7 +78,7 @@
   padding: 0;
   background: none;
   cursor: pointer;
-  border-radius: 8px;
+  border-radius: var(--radius-md);
   overflow: hidden;
 }
 
@@ -91,7 +91,7 @@
   width: 100%;
   height: 100%;
   display: block;
-  border-radius: 8px;
+  border-radius: var(--radius-md);
   object-fit: contain; /* Full image visible, no cropping */
   object-position: center;
 }
@@ -124,7 +124,7 @@
   /* Visual appearance */
   width: 10px;
   height: 10px;
-  border-radius: 5px;
+  border-radius: var(--radius-sm);
   border: none;
   background-color: var(--color-border);
   cursor: pointer;

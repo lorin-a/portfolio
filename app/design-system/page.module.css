@@ -458,7 +458,7 @@
   font-family: var(--font-sans);
   font-size: 0.9375rem;
   border: 1px solid var(--border);
-  border-radius: 2px;
+  border-radius: var(--radius-xs);
   background: transparent;
   color: var(--text-body);
   cursor: pointer;
@@ -494,7 +494,7 @@
   text-transform: uppercase;
   letter-spacing: 0.03em;
   padding: 6px 12px;
-  border-radius: 20px;
+  border-radius: var(--radius-pill);
 }
 
 .statusLive {
@@ -516,7 +516,7 @@
   color: var(--olive-dark);
   background: var(--surface);
   padding: 0.25em 0.75em;
-  border-radius: 2px;
+  border-radius: var(--radius-xs);
   border: 1px solid var(--border);
 }
 
@@ -529,7 +529,7 @@
   color: var(--text-heading);
   background: rgba(0, 0, 0, 0.06);
   padding: 0.35em 0.6em;
-  border-radius: 2px;
+  border-radius: var(--radius-xs);
 }
 
 /* Soft pills (Fraunces italic) */

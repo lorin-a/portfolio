@@ -700,13 +700,13 @@
 .numberedItem {
   padding: var(--space-sm);
   border: 1px solid var(--project-accent);
-  border-radius: 6px;
+  border-radius: var(--radius-sm);
 }
 
 .numberedItemDark {
   padding: var(--space-md);
   background-color: var(--project-accent);
-  border-radius: 8px;
+  border-radius: var(--radius-md);
 }
 
 .numberLabel {
@@ -1365,7 +1365,7 @@
 .scrollImage {
   width: 100%;
   height: auto;
-  border-radius: 4px;
+  border-radius: var(--radius-sm);
   box-shadow: var(--shadow-lg);
 }
 
@@ -1461,7 +1461,7 @@
 .voiceCard {
   background-color: rgba(255, 255, 255, 0.05);
   padding: var(--space-lg);
-  border-radius: 4px;
+  border-radius: var(--radius-sm);
   border-left: 3px solid var(--project-accent-light);
 }
 
@@ -1524,7 +1524,7 @@
 .conclusionCard {
   background-color: var(--color-bg-alt);
   padding: var(--space-md);
-  border-radius: 4px;
+  border-radius: var(--radius-sm);
 }
 
 .conclusionNum {
@@ -1594,7 +1594,7 @@
   text-align: center;
   padding: var(--space-md);
   background-color: var(--color-bg-alt);
-  border-radius: 4px;
+  border-radius: var(--radius-sm);
 }
 
 .teamName {
@@ -1634,7 +1634,7 @@
   margin: 0 0 var(--space-lg);
   width: 100%;
   border: 1px solid var(--project-border-light);
-  border-radius: 6px;
+  border-radius: var(--radius-sm);
   overflow: hidden;
 }
 
@@ -1737,7 +1737,7 @@
   max-width: 900px;
   height: auto;
   margin: var(--space-xl) auto;
-  border-radius: 8px;
+  border-radius: var(--radius-md);
   display: block;
   box-shadow: var(--shadow-lg);
 }
@@ -1753,7 +1753,7 @@
 .ongoingWorkCard {
   background-color: rgba(248, 235, 229, 0.06);
   border: 1px solid rgba(248, 235, 229, 0.15);
-  border-radius: 6px;
+  border-radius: var(--radius-sm);
   padding: var(--space-md);
 }
 
@@ -2024,7 +2024,7 @@
   margin: var(--space-xl) auto;
   aspect-ratio: 1 / 1;
   overflow: hidden;
-  border-radius: 8px;
+  border-radius: var(--radius-md);
   box-shadow: var(--shadow-lg);
 }
 
@@ -2041,7 +2041,7 @@
   aspect-ratio: 16 / 9;
   object-fit: cover;
   display: block;
-  border-radius: 8px;
+  border-radius: var(--radius-md);
   margin: var(--space-lg) auto;
   box-shadow: var(--shadow-lg);
 }
@@ -2108,7 +2108,7 @@
   margin: 0 0 var(--space-lg);
   width: 100%;
   border: 1px solid var(--project-border-light);
-  border-radius: 6px;
+  border-radius: var(--radius-sm);
   overflow: hidden;
 }
 
@@ -2444,7 +2444,7 @@
 .playtestPhotoStacked {
   width: 100%;
   height: auto;
-  border-radius: 6px;
+  border-radius: var(--radius-sm);
   box-shadow: var(--shadow-lg);
   object-fit: cover;
 }
@@ -2458,7 +2458,7 @@
 
 .playtestValidationCard {
   background-color: var(--project-accent-pale);
-  border-radius: 6px;
+  border-radius: var(--radius-sm);
   padding: var(--space-md);
   border-left: 3px solid var(--project-accent);
   flex: 1;
@@ -2566,7 +2566,7 @@
   padding: var(--space-md);
   background-color: transparent;
   border: 2px solid var(--project-accent);
-  border-radius: 6px;
+  border-radius: var(--radius-sm);
   margin-top: auto;
 }
 
@@ -2696,7 +2696,7 @@
 .insightCardDark {
   background-color: rgba(255, 255, 255, 0.05);
   padding: var(--space-md);
-  border-radius: 4px;
+  border-radius: var(--radius-sm);
   border-left: 3px solid rgba(255, 255, 255, 0.2);
 }
 
@@ -2839,7 +2839,7 @@
 
 .workshopImage {
   height: 220px;
-  border-radius: 4px;
+  border-radius: var(--radius-sm);
   overflow: hidden;
   background: var(--project-accent-tint);
 }
@@ -2859,7 +2859,7 @@
 
 .workshopImageButton {
   height: 220px;
-  border-radius: 4px;
+  border-radius: var(--radius-sm);
   overflow: hidden;
   background: var(--project-accent-tint);
   cursor: zoom-in;
@@ -3396,7 +3396,7 @@
 .audioPlayerCompact {
   background-color: var(--project-accent-pale);
   border-left: 3px solid var(--project-accent);
-  border-radius: 4px;
+  border-radius: var(--radius-sm);
   padding: var(--space-sm) var(--space-md);
   margin-bottom: var(--space-xs);
 }
@@ -3468,7 +3468,7 @@
   width: 280px;
   height: 600px;
   background: #1a1a1a;
-  border-radius: 40px;
+  border-radius: 40px; /* One-off: iPhone device mockup rounding */
   padding: 14px;
   box-shadow:
     0 0 0 2px #3a3a3a,
@@ -3494,7 +3494,7 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border-radius: 32px;
+  border-radius: 32px; /* One-off: iPhone device mockup rounding */
   background: #000;
   display: block;
 }
@@ -3565,7 +3565,7 @@
   background-color: var(--project-accent-pale);
   border-left: 3px solid var(--project-accent);
   padding: var(--space-sm) var(--space-md);
-  border-radius: 6px;
+  border-radius: var(--radius-sm);
   font-family: var(--font-sans);
   font-size: var(--text-body);
   color: var(--color-text);
@@ -3585,7 +3585,7 @@
   background-color: var(--project-accent-pale);
   border-left: 3px solid var(--project-accent);
   padding: var(--space-md);
-  border-radius: 6px;
+  border-radius: var(--radius-sm);
 }
 
 .acknowledgementsColumnTitle {
@@ -3633,7 +3633,7 @@
   background-color: var(--project-accent-pale);
   border-left: 3px solid var(--project-accent);
   padding: var(--space-sm) var(--space-md);
-  border-radius: 4px;
+  border-radius: var(--radius-sm);
   text-align: center;
   min-height: 80px;
   display: flex;
@@ -4071,7 +4071,7 @@
   .iphoneFrame {
     width: 240px;
     height: 520px;
-    border-radius: 36px;
+    border-radius: 36px; /* One-off: iPhone device mockup rounding */
     padding: 12px;
   }
 
@@ -4081,7 +4081,7 @@
   }
 
   .iphoneVideo {
-    border-radius: 28px;
+    border-radius: 28px; /* One-off: iPhone device mockup rounding */
   }
 
   .iterationColumn {
@@ -4089,7 +4089,7 @@
   }
 
   .playtestPhotoStacked {
-    border-radius: 4px;
+    border-radius: var(--radius-sm);
   }
 
   .playtestValidationCard {

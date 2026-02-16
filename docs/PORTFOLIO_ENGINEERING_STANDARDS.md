@@ -33,7 +33,7 @@ All values come from `globals.css`. No hardcoded colors, spacing, or fonts.
 
 ### Typography
 ```css
---font-heading: 'Newsreader', Georgia, 'Times New Roman', serif;  /* Headings - weight 300 default */
+--font-heading: 'Fraunces', Georgia, 'Times New Roman', serif;  /* Headings - weight 600 default */
 --font-body: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;  /* Body - weight 400-500 */
 --font-serif: var(--font-heading);  /* Legacy alias */
 --font-sans: var(--font-body);      /* Legacy alias */

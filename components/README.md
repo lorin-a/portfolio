@@ -81,7 +81,7 @@ Components use these CSS variables from `globals.css`:
 
 ```css
 /* Typography */
---font-heading: var(--font-newsreader), Georgia, serif;
+--font-heading: var(--font-fraunces), Georgia, serif;
 --font-body: var(--font-dm-sans), -apple-system, sans-serif;
 
 /* Spacing */

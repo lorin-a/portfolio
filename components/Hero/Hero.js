@@ -18,17 +18,16 @@ export default function Hero() {
   // Define lines with their text content for duration calculation
   const lines = useMemo(() => {
     const lineData = [
-      { text: "Hi, I'm Lorin." },
       { text: "I translate community wisdom" },
       { text: "into systems change" },
       { text: "through stories." },
     ]
 
     // Equal duration for most lines, longer line gets extra time
-    // Line 2 "I translate community wisdom" is longest, needs more time to match pace
+    // Line 1 "I translate community wisdom" is longest, needs more time to match pace
     let cumulativeDelay = 0
     return lineData.map((line, index) => {
-      const duration = index === 1 ? LINE_DURATION + 0.8 : LINE_DURATION
+      const duration = index === 0 ? LINE_DURATION + 0.8 : LINE_DURATION
       const delay = cumulativeDelay
       // Next line starts slightly before this one ends for continuous flow
       cumulativeDelay += duration - (index < lineData.length - 1 ? OVERLAP : 0)
@@ -37,7 +36,7 @@ export default function Hero() {
   }, [])
 
   // Calculate when last line finishes
-  const lastLineEnd = lines[3].delay + lines[3].duration
+  const lastLineEnd = lines[2].delay + lines[2].duration
 
   useEffect(() => {
     const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)')
@@ -77,29 +76,23 @@ export default function Hero() {
     <section className={styles.hero} id="hero">
       <InteractiveDial ringsActive={ringsActive} />
 
-      {/* Line 1: Greeting */}
-      <p className={`${styles.greeting} ${styles.line} ${started ? styles.revealing : ''}`}
-         style={{ '--line-delay': `${lines[0].delay}s`, '--line-duration': `${lines[0].duration}s` }}>
-        Hi, I&apos;m Lorin.
-      </p>
-
       {/* Headline as separate lines */}
       <h1 className={styles.headline}>
+        {/* Line 1 */}
+        <span className={`${styles.line} ${started ? styles.revealing : ''}`}
+              style={{ '--line-delay': `${lines[0].delay}s`, '--line-duration': `${lines[0].duration}s` }}>
+          I translate <span className={styles.olive}>community wisdom</span>
+        </span>
+        <br />
         {/* Line 2 */}
         <span className={`${styles.line} ${started ? styles.revealing : ''}`}
               style={{ '--line-delay': `${lines[1].delay}s`, '--line-duration': `${lines[1].duration}s` }}>
-          I translate <span className={styles.olive}>community wisdom</span>
+          into <span className={styles.plum}>systems change</span>
         </span>
         <br />
         {/* Line 3 */}
         <span className={`${styles.line} ${started ? styles.revealing : ''}`}
               style={{ '--line-delay': `${lines[2].delay}s`, '--line-duration': `${lines[2].duration}s` }}>
-          into <span className={styles.plum}>systems change</span>
-        </span>
-        <br />
-        {/* Line 4 */}
-        <span className={`${styles.line} ${started ? styles.revealing : ''}`}
-              style={{ '--line-delay': `${lines[3].delay}s`, '--line-duration': `${lines[3].duration}s` }}>
           through{' '}
           <span className={styles.storiesUnderline}>
             stories
@@ -121,8 +114,8 @@ export default function Hero() {
         onClick={scrollToWork}
       >
         <span className={styles.ctaText}>See my work</span>
-        <svg className={styles.ctaArrow} viewBox="0 0 20 20" fill="none" aria-hidden="true">
-          <path d="M10 4v10M6 10l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        <svg className={styles.ctaArrow} viewBox="0 0 20 24" fill="none" aria-hidden="true">
+          <path d="M10 2v18M5 14l5 6 5-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
       </button>
     </section>
