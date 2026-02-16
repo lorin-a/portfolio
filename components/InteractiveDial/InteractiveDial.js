@@ -10,7 +10,7 @@ import {
   angleToPos, easeSmooth,
 } from './dialConfig'
 
-export default function InteractiveDial() {
+export default function InteractiveDial({ ringsActive = false }) {
   // Dial states: 'closed' | 'animating' | 'open'
   const [dialState, setDialState] = useState('closed')
   const [activeKey, setActiveKey] = useState(null)
@@ -425,9 +425,9 @@ export default function InteractiveDial() {
         <div className={styles.trackInner} ref={trackInnerRef} />
         <div className={styles.trackOuter} ref={trackOuterRef} />
 
-        {/* Photo with pulse rings (shown when closed) */}
+        {/* Photo with pulse rings (shown when closed AND ringsActive) */}
         <button
-          className={`${styles.photoWrap} ${dialState === 'closed' ? styles.pulsing : ''}`}
+          className={`${styles.photoWrap} ${dialState === 'closed' && ringsActive ? styles.pulsing : ''}`}
           onClick={handlePhotoClick}
           aria-label={dialState === 'closed' ? 'Click to learn more about me' : 'Click to close'}
         >
@@ -447,8 +447,8 @@ export default function InteractiveDial() {
           />
         </button>
 
-        {/* Indicator - shown when closed */}
-        <div className={`${styles.indicator} ${dialState === 'closed' ? styles.visible : ''}`}>
+        {/* Indicator - shown when closed AND ringsActive */}
+        <div className={`${styles.indicator} ${dialState === 'closed' && ringsActive ? styles.visible : ''}`}>
           click to meet me
         </div>
 

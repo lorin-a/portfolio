@@ -13,8 +13,8 @@
 
 .dial {
   position: relative;
-  width: 380px;
-  height: 380px;
+  width: 420px;
+  height: 420px;
 }
 
 /* ===== TRACK RINGS ===== */
@@ -23,8 +23,8 @@
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 244px;
-  height: 244px;
+  width: 280px;
+  height: 280px;
   border-radius: 50%;
   border: 2px dashed var(--sage, #A8B5A0);
   opacity: 0;
@@ -38,8 +38,8 @@
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 344px;
-  height: 344px;
+  width: 380px;
+  height: 380px;
   border-radius: 50%;
   border: 2px solid var(--sage, #A8B5A0);
   opacity: 0;
@@ -64,9 +64,9 @@
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
-  width: 176px;
-  height: 176px;
+  transform: translate(-50%, -50%) scale(0);
+  width: 210px;
+  height: 210px;
   border-radius: 50%;
   z-index: 3;
   cursor: pointer;
@@ -74,15 +74,15 @@
   border: 3px solid var(--sage, #A8B5A0);
   background: none;
   padding: 0;
-  /* Entry animation */
+  /* Entry animation - grow in with bounce */
   opacity: 0;
-  animation: photoFadeIn 0.6s var(--ease-out-smooth, cubic-bezier(0.22, 1, 0.36, 1)) 0.2s both;
+  animation: photoGrowIn var(--motion-medium, 600ms) var(--ease-bounce, cubic-bezier(0.34, 1.4, 0.64, 1)) both;
 }
 
-@keyframes photoFadeIn {
+@keyframes photoGrowIn {
   from {
     opacity: 0;
-    transform: translate(-50%, -50%) scale(0.95);
+    transform: translate(-50%, -50%) scale(0);
   }
   to {
     opacity: 1;
@@ -135,54 +135,65 @@
   height: 100%;
   border-radius: 50%;
   border: 2px solid var(--sage, #A8B5A0);
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%) scale(0);
   opacity: 0;
   pointer-events: none;
   z-index: 0;
 }
 
-/* Only animate when photo is pulsing (dial closed) */
-.photoWrap.pulsing .pulseRing1 {
-  animation: pulse 2.5s cubic-bezier(0.4, 0, 0.2, 1) 2s infinite;
+/* Rings grow in first, then pulse */
+.photoWrap.pulsing .pulseRing1,
+.photoWrap.pulsing .pulseRing2 {
+  animation: ringGrowIn var(--motion-medium, 600ms) var(--ease-bounce, cubic-bezier(0.34, 1.4, 0.64, 1)) forwards,
+             pulse 3s var(--ease-pulse, ease-in-out) var(--motion-medium, 600ms) infinite;
 }
 
 .photoWrap.pulsing .pulseRing2 {
-  animation: pulse 2.5s cubic-bezier(0.4, 0, 0.2, 1) 2.6s infinite;
+  animation-delay: 0.15s, calc(var(--motion-medium, 600ms) + 0.15s);
+}
+
+@keyframes ringGrowIn {
+  from {
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 0;
+  }
+  to {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.5;
+  }
 }
 
 @keyframes pulse {
-  0% {
+  0%, 100% {
     transform: translate(-50%, -50%) scale(1);
-    opacity: 0.6;
+    opacity: 0.5;
   }
-  100% {
-    transform: translate(-50%, -50%) scale(1.5);
-    opacity: 0;
+  50% {
+    transform: translate(-50%, -50%) scale(1.05);
+    opacity: 0.35;
   }
 }
 
 /* ===== INDICATOR ===== */
 .indicator {
   position: absolute;
-  top: calc(50% + 110px);
+  top: calc(50% + 140px);
   left: 50%;
-  transform: translateX(-50%);
+  transform: translateX(-50%) translateY(8px);
   font-size: 12px;
   letter-spacing: 0.06em;
   text-transform: lowercase;
   color: var(--text-dark, #2D2B1E);
   opacity: 0;
-  transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   pointer-events: none;
   white-space: nowrap;
 }
 
 .indicator.visible {
-  opacity: 0.4;
-  animation: indicatorFadeIn 0.5s var(--ease-out-smooth, cubic-bezier(0.22, 1, 0.36, 1)) 2s both;
+  animation: indicatorSoftAppear var(--motion-medium, 600ms) var(--ease-default, cubic-bezier(0.42, 0, 0.58, 1)) forwards;
 }
 
-@keyframes indicatorFadeIn {
+@keyframes indicatorSoftAppear {
   from {
     opacity: 0;
     transform: translateX(-50%) translateY(8px);
@@ -293,7 +304,7 @@
 /* ===== LABEL AREA ===== */
 .labelArea {
   position: relative;
-  width: 380px;
+  width: 420px;
   height: 44px;
   transition: height 0.9s cubic-bezier(0.4, 0, 0.1, 1);
 }
@@ -320,7 +331,7 @@
 
 /* Bold pills (mantras) */
 .pillBold {
-  font-weight: 500;
+  font-weight: var(--weight-label);
   letter-spacing: 0.03em;
   color: var(--cream, #FAF7F0);
 }
@@ -341,7 +352,8 @@
 .pillSoft {
   font-family: var(--font-serif);
   font-style: italic;
-  font-weight: 300;
+  font-weight: var(--weight-quote);
+  font-variation-settings: var(--font-soft);
   background: var(--cream, #FAF7F0);
   border-style: dashed;
 }
@@ -372,8 +384,9 @@
               opacity 0.7s cubic-bezier(0.4, 0, 0.1, 1);
   pointer-events: none;
   font-family: var(--font-serif);
-  font-weight: 300;
+  font-weight: var(--weight-quote);
   font-style: italic;
+  font-variation-settings: var(--font-soft);
   font-size: 14px;
   color: var(--text-dark, #2D2B1E);
   text-align: center;
@@ -390,27 +403,27 @@
 /* ===== RESPONSIVE ===== */
 @media (max-width: 900px) {
   .dial {
+    width: 380px;
+    height: 380px;
+  }
+
+  .trackInner {
+    width: 250px;
+    height: 250px;
+  }
+
+  .trackOuter {
     width: 340px;
     height: 340px;
   }
 
-  .trackInner {
-    width: 218px;
-    height: 218px;
-  }
-
-  .trackOuter {
-    width: 308px;
-    height: 308px;
-  }
-
   .photoWrap {
-    width: 158px;
-    height: 158px;
+    width: 190px;
+    height: 190px;
   }
 
   .labelArea {
-    width: 340px;
+    width: 380px;
   }
 
   .pill {
@@ -419,33 +432,33 @@
   }
 
   .indicator {
-    top: calc(50% + 100px);
+    top: calc(50% + 125px);
   }
 }
 
 @media (max-width: 600px) {
   .dial {
-    width: 300px;
-    height: 300px;
+    width: 320px;
+    height: 320px;
   }
 
   .trackInner {
-    width: 192px;
-    height: 192px;
+    width: 210px;
+    height: 210px;
   }
 
   .trackOuter {
-    width: 272px;
-    height: 272px;
+    width: 290px;
+    height: 290px;
   }
 
   .photoWrap {
-    width: 140px;
-    height: 140px;
+    width: 160px;
+    height: 160px;
   }
 
   .labelArea {
-    width: 300px;
+    width: 320px;
   }
 
   .pill {
@@ -461,7 +474,7 @@
   }
 
   .indicator {
-    top: calc(50% + 90px);
+    top: calc(50% + 105px);
     font-size: 11px;
   }
 }
@@ -471,6 +484,7 @@
   .photoWrap {
     animation: none;
     opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
   }
 
   .trackInner,
@@ -505,10 +519,13 @@
   .photoWrap.pulsing .pulseRing1,
   .photoWrap.pulsing .pulseRing2 {
     animation: none;
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.5;
   }
 
   .indicator.visible {
     animation: none;
     opacity: 0.4;
+    transform: translateX(-50%) translateY(0);
   }
 }
