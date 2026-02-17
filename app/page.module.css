@@ -105,7 +105,7 @@
    =========================================== */
 .building {
   padding: var(--space-xl) var(--container-padding) 0;
-  max-width: var(--max-width);
+  max-width: 1000px;
   margin: 0 auto;
 }
 
@@ -133,23 +133,14 @@
 .buildingGrid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: var(--space-md);
+  gap: var(--space-content-gap);
 }
 
 .buildingCard {
   background-color: var(--surface);
-  border: 2px solid var(--border);
+  border: 1px solid var(--olive);
   border-radius: var(--radius-lg);
   overflow: hidden;
-  transition: transform var(--motion-fast) var(--ease-default),
-              box-shadow var(--motion-fast) var(--ease-default),
-              border-color var(--motion-fast) var(--ease-default);
-}
-
-.buildingCard:hover {
-  transform: translateY(-6px);
-  box-shadow: var(--shadow-lg);
-  border-color: var(--olive);
 }
 
 .buildingPreview {
@@ -208,25 +199,25 @@
 }
 
 .buildingCardContent {
-  padding: var(--space-content-gap);
+  padding: 20px 20px var(--space-content-gap);
 }
 
 .buildingCardTitle {
   font-family: var(--font-serif);
-  font-size: var(--text-h3);
+  font-size: 24px;
   font-weight: var(--weight-title);
   color: var(--text-heading);
-  margin-bottom: 0.5rem;
+  margin-bottom: 6px;
 }
 
 .buildingCardTags {
-  font-size: var(--text-body);
+  font-size: 15px;
   color: var(--text-body);
-  margin-bottom: 0.75rem;
+  margin-bottom: 20px;
 }
 
 .buildingCardDescription {
-  font-size: var(--text-body);
+  font-size: 15px;
   line-height: 1.6;
   color: var(--text-body);
   margin: 0;
@@ -269,10 +260,6 @@
     font-size: 1rem;
   }
 
-  .buildingCard:hover {
-    transform: translateY(-4px);
-  }
-
   .buildingTitle {
     font-size: 1.5rem;
   }
@@ -295,14 +282,11 @@
    REDUCED MOTION
    =========================================== */
 @media (prefers-reduced-motion: reduce) {
-  .buildingCard,
   .cta {
     transition: none;
   }
 
-  .buildingCard:hover,
   .cta:hover {
     transform: none;
-    box-shadow: none;
   }
 }

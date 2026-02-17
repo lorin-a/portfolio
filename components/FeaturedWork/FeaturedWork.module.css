@@ -3,7 +3,7 @@
    =========================================== */
 
 .section {
-  background-color: rgba(45, 43, 30, 0.04);
+  background-color: rgba(45, 43, 30, 0.07);
   padding: 48px var(--container-padding) 72px;
 }
 
@@ -32,15 +32,9 @@
   text-decoration: none;
   color: inherit;
   background-color: var(--cream);
+  border: 1px solid var(--olive);
   border-radius: 12px;
   overflow: hidden;
-  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-              box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.cardLink:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 20px 56px rgba(45, 43, 30, 0.1);
 }
 
 .cardLink:focus-visible {
@@ -85,7 +79,7 @@
   z-index: 2;
   font-family: var(--font-sans);
   font-size: 10px;
-  font-weight: 600;
+  font-weight: 400;
   text-transform: uppercase;
   letter-spacing: 0.08em;
   padding: 5px 14px;
@@ -96,7 +90,7 @@
 
 /* Stacked content */
 .contentStacked {
-  padding: var(--space-content-gap) var(--space-md) var(--space-md);
+  padding: var(--space-content-gap) var(--space-lg) var(--space-md);
 }
 
 .titleStacked {
@@ -104,13 +98,13 @@
 }
 
 .subtitleStacked {
-  font-size: 16px;
-  margin-top: var(--space-sm);
-  margin-bottom: var(--space-content-gap);
+  font-size: 17px;
+  margin-top: 6px;
+  margin-bottom: 20px;
 }
 
 .descriptionStacked {
-  font-size: 14.5px;
+  font-size: 16px;
   max-width: 640px;
 }
 
@@ -128,8 +122,15 @@
   order: 2;
 }
 
+/* Flipped: image on left, content on right */
+.cardSideFlipped {
+  display: grid;
+  grid-template-columns: 42% 1fr;
+  min-height: 320px;
+}
+
 .contentSide {
-  padding: var(--space-md) var(--space-content-gap);
+  padding: var(--space-md) var(--space-md);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -140,13 +141,13 @@
 }
 
 .subtitleSide {
-  font-size: 15px;
-  margin-top: var(--space-sm);
-  margin-bottom: var(--space-content-gap);
+  font-size: 17px;
+  margin-top: 6px;
+  margin-bottom: 20px;
 }
 
 .descriptionSide {
-  font-size: 14px;
+  font-size: 16px;
 }
 
 .contentSide .cta {
@@ -169,7 +170,7 @@
   font-family: var(--font-serif);
   font-weight: 300;
   font-style: italic;
-  color: var(--text-light);
+  color: var(--text-body);
   margin: 0;
 }
 
@@ -177,14 +178,14 @@
   display: flex;
   gap: var(--space-xs);
   flex-wrap: wrap;
-  margin-bottom: var(--space-content-gap);
+  margin-bottom: 20px;
 }
 
 .description {
   font-family: var(--font-sans);
-  color: var(--text-light);
+  color: var(--text-body);
   line-height: 1.6;
-  margin: 0 0 var(--space-content-gap);
+  margin: 0 0 24px;
 }
 
 .cta {
@@ -192,7 +193,7 @@
   align-items: center;
   gap: 6px;
   font-family: var(--font-sans);
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 400;
   color: var(--olive);
   transition: gap 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -212,18 +213,18 @@
 
 .tag {
   font-family: var(--font-sans);
-  font-size: 11px;
+  font-size: var(--text-caption);
   font-weight: 500;
   letter-spacing: 0.04em;
-  padding: 5px 14px;
+  padding: 6px 16px;
   border-radius: 100px;
   border: 1.5px solid;
   white-space: nowrap;
 }
 
 .tagSmall {
-  font-size: 10px;
-  padding: 4px 10px;
+  font-size: var(--text-caption);
+  padding: 5px 12px;
 }
 
 .tagOlive {
@@ -260,8 +261,7 @@
   font-weight: 400;
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  color: var(--text-light);
-  opacity: 0.6;
+  color: var(--text-body);
   margin: 0 0 var(--space-content-gap);
 }
 
@@ -281,16 +281,10 @@
   text-decoration: none;
   color: inherit;
   background-color: var(--cream);
+  border: 1px solid var(--olive);
   border-radius: 10px;
   overflow: hidden;
   height: 100%;
-  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-              box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.smallCardLink:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 36px rgba(45, 43, 30, 0.1);
 }
 
 .smallCardLink:focus-visible {
@@ -312,12 +306,12 @@
   display: flex;
   flex-direction: column;
   flex: 1;
-  padding: var(--space-sm) var(--space-sm) var(--space-content-gap);
+  padding: 20px 20px var(--space-content-gap);
 }
 
 .smallTitle {
   font-family: var(--font-serif);
-  font-size: 22px;
+  font-size: 24px;
   font-weight: 300;
   color: var(--text-heading);
   line-height: 1.15;
@@ -326,26 +320,26 @@
 
 .smallSubtitle {
   font-family: var(--font-serif);
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 300;
   font-style: italic;
-  color: var(--text-light);
-  margin: var(--space-xs) 0 var(--space-sm);
+  color: var(--text-body);
+  margin: 6px 0 20px;
 }
 
 .smallTags {
   display: flex;
   gap: var(--space-xs);
   flex-wrap: wrap;
-  margin-bottom: var(--space-sm);
+  margin-bottom: 20px;
 }
 
 .smallDescription {
   font-family: var(--font-sans);
-  font-size: 13px;
-  color: var(--text-light);
-  line-height: 1.55;
-  margin: 0 0 var(--space-sm);
+  font-size: 15px;
+  color: var(--text-body);
+  line-height: 1.6;
+  margin: 0 0 24px;
 }
 
 .smallCta {
@@ -353,7 +347,7 @@
   align-items: center;
   gap: 6px;
   font-family: var(--font-sans);
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 400;
   color: var(--olive);
   margin-top: auto;
@@ -377,6 +371,10 @@
     grid-template-columns: 1fr 38%;
   }
 
+  .cardSideFlipped {
+    grid-template-columns: 38% 1fr;
+  }
+
   .moreGrid {
     gap: 16px;
   }
@@ -396,7 +394,7 @@
   }
 
   .contentStacked {
-    padding: 24px;
+    padding: 24px 28px;
   }
 
   .titleStacked {
@@ -408,18 +406,20 @@
   }
 
   /* Side cards become stacked on mobile */
-  .cardSide {
+  .cardSide,
+  .cardSideFlipped {
     display: flex;
     flex-direction: column;
   }
 
-  .cardSide .imageSide {
+  .cardSide .imageSide,
+  .cardSideFlipped .imageSide {
     order: -1;
     height: 200px;
   }
 
   .contentSide {
-    padding: 24px;
+    padding: 24px 28px;
   }
 
   /* Small cards grid → single column */
@@ -434,18 +434,73 @@
 }
 
 /* ===========================================
+   SCROLL REVEAL ANIMATIONS
+   =========================================== */
+
+/* Featured cards: grow-in (scale + translate + fade) */
+.featuredCard {
+  opacity: 0;
+  transform: scale(0.97) translateY(12px);
+  will-change: opacity, transform;
+}
+
+.featuredCardVisible {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+  transition: opacity var(--motion-medium) var(--ease-default),
+              transform var(--motion-medium) var(--ease-bounce);
+}
+
+/* "More Work" label: soft appear */
+.moreLabel {
+  opacity: 0;
+  transform: translateY(10px);
+  will-change: opacity, transform;
+}
+
+.moreLabelVisible {
+  opacity: 0.6;
+  transform: translateY(0);
+  transition: opacity var(--motion-medium) var(--ease-default),
+              transform var(--motion-medium) var(--ease-default);
+}
+
+/* Small cards: soft appear */
+.smallCard {
+  opacity: 0;
+  transform: translateY(12px);
+  will-change: opacity, transform;
+}
+
+.smallCardVisible {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity var(--motion-medium) var(--ease-default),
+              transform var(--motion-medium) var(--ease-default);
+}
+
+/* ===========================================
    REDUCED MOTION
    =========================================== */
 
 @media (prefers-reduced-motion: reduce) {
-  .cardLink,
-  .smallCardLink {
-    transition: box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  .featuredCard,
+  .smallCard {
+    opacity: 1;
+    transform: none;
+    will-change: auto;
   }
 
-  .cardLink:hover,
-  .smallCardLink:hover {
+  .moreLabel {
+    opacity: 0.6;
     transform: none;
+    will-change: auto;
+  }
+
+  .featuredCardVisible,
+  .smallCardVisible,
+  .moreLabelVisible {
+    transition: none;
   }
 
   .image {

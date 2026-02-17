@@ -5,14 +5,14 @@
 /* ===== SECTION WRAPPER ===== */
 .section {
   padding: 72px var(--container-padding) 0;
-  background-color: rgba(45, 43, 30, 0.04);
-  border-top: 1px solid rgba(45, 43, 30, 0.04);
+  background-color: rgba(45, 43, 30, 0.07);
 }
 
 .inner {
   max-width: 1000px;
   margin: 0 auto;
   background-color: var(--cream);
+  border: 1px solid var(--olive);
   border-radius: 12px;
   padding: var(--space-xl) var(--space-md);
 }
@@ -29,8 +29,8 @@
 .mounted .header {
   opacity: 0;
   transform: translateY(8px);
-  transition: opacity 600ms cubic-bezier(0.4, 0, 0.2, 1),
-              transform 600ms cubic-bezier(0.4, 0, 0.2, 1);
+  transition: opacity 700ms cubic-bezier(0.4, 0, 0.2, 1),
+              transform 700ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .visible .header {
@@ -80,7 +80,7 @@
 
 .mounted .connectingLine {
   clip-path: inset(0 100% 0 0);
-  transition: clip-path 800ms cubic-bezier(0.4, 0, 0.2, 1) 300ms;
+  transition: clip-path 1200ms cubic-bezier(0.4, 0, 0.2, 1) 500ms;
 }
 
 .visible .connectingLine {
@@ -112,13 +112,35 @@
 .mounted .dot {
   opacity: 0;
   transform: scale(0);
-  transition: opacity 500ms cubic-bezier(0.34, 1.56, 0.64, 1),
-              transform 500ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Staggered dot pop — column 1 */
+.mounted .column:nth-child(2) .dot {
+  transition: opacity 600ms cubic-bezier(0.34, 1.56, 0.64, 1) 400ms,
+              transform 600ms cubic-bezier(0.34, 1.56, 0.64, 1) 400ms;
+}
+
+/* Column 2 */
+.mounted .column:nth-child(3) .dot {
+  transition: opacity 600ms cubic-bezier(0.34, 1.56, 0.64, 1) 700ms,
+              transform 600ms cubic-bezier(0.34, 1.56, 0.64, 1) 700ms;
+}
+
+/* Column 3 */
+.mounted .column:nth-child(4) .dot {
+  transition: opacity 600ms cubic-bezier(0.34, 1.56, 0.64, 1) 1000ms,
+              transform 600ms cubic-bezier(0.34, 1.56, 0.64, 1) 1000ms;
 }
 
 .visible .dot {
   opacity: 1;
   transform: scale(1);
+  animation: dotPulse 2.5s ease-in-out 2.8s infinite;
+}
+
+@keyframes dotPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.15); }
 }
 
 /* Dot colors */
@@ -154,20 +176,20 @@
 
 /* Staggered stem drop — column 1 */
 .mounted .column:nth-child(2) .stem {
-  transition: opacity 400ms cubic-bezier(0.4, 0, 0.2, 1) 700ms,
-              transform 400ms cubic-bezier(0.4, 0, 0.2, 1) 700ms;
+  transition: opacity 500ms cubic-bezier(0.4, 0, 0.2, 1) 1100ms,
+              transform 500ms cubic-bezier(0.4, 0, 0.2, 1) 1100ms;
 }
 
 /* Column 2 */
 .mounted .column:nth-child(3) .stem {
-  transition: opacity 400ms cubic-bezier(0.4, 0, 0.2, 1) 850ms,
-              transform 400ms cubic-bezier(0.4, 0, 0.2, 1) 850ms;
+  transition: opacity 500ms cubic-bezier(0.4, 0, 0.2, 1) 1400ms,
+              transform 500ms cubic-bezier(0.4, 0, 0.2, 1) 1400ms;
 }
 
 /* Column 3 */
 .mounted .column:nth-child(4) .stem {
-  transition: opacity 400ms cubic-bezier(0.4, 0, 0.2, 1) 1000ms,
-              transform 400ms cubic-bezier(0.4, 0, 0.2, 1) 1000ms;
+  transition: opacity 500ms cubic-bezier(0.4, 0, 0.2, 1) 1700ms,
+              transform 500ms cubic-bezier(0.4, 0, 0.2, 1) 1700ms;
 }
 
 .visible .stem {
@@ -227,20 +249,20 @@
 
 /* Staggered title fade — column 1 */
 .mounted .column:nth-child(2) .title {
-  transition: opacity 500ms cubic-bezier(0.4, 0, 0.2, 1) 900ms,
-              transform 500ms cubic-bezier(0.4, 0, 0.2, 1) 900ms;
+  transition: opacity 600ms cubic-bezier(0.4, 0, 0.2, 1) 1400ms,
+              transform 600ms cubic-bezier(0.4, 0, 0.2, 1) 1400ms;
 }
 
 /* Column 2 */
 .mounted .column:nth-child(3) .title {
-  transition: opacity 500ms cubic-bezier(0.4, 0, 0.2, 1) 1100ms,
-              transform 500ms cubic-bezier(0.4, 0, 0.2, 1) 1100ms;
+  transition: opacity 600ms cubic-bezier(0.4, 0, 0.2, 1) 1750ms,
+              transform 600ms cubic-bezier(0.4, 0, 0.2, 1) 1750ms;
 }
 
 /* Column 3 */
 .mounted .column:nth-child(4) .title {
-  transition: opacity 500ms cubic-bezier(0.4, 0, 0.2, 1) 1300ms,
-              transform 500ms cubic-bezier(0.4, 0, 0.2, 1) 1300ms;
+  transition: opacity 600ms cubic-bezier(0.4, 0, 0.2, 1) 2100ms,
+              transform 600ms cubic-bezier(0.4, 0, 0.2, 1) 2100ms;
 }
 
 .visible .title {
@@ -281,20 +303,20 @@
 
 /* Staggered description fade — column 1 */
 .mounted .column:nth-child(2) .description {
-  transition: opacity 500ms cubic-bezier(0.4, 0, 0.2, 1) 950ms,
-              transform 500ms cubic-bezier(0.4, 0, 0.2, 1) 950ms;
+  transition: opacity 600ms cubic-bezier(0.4, 0, 0.2, 1) 1550ms,
+              transform 600ms cubic-bezier(0.4, 0, 0.2, 1) 1550ms;
 }
 
 /* Column 2 */
 .mounted .column:nth-child(3) .description {
-  transition: opacity 500ms cubic-bezier(0.4, 0, 0.2, 1) 1150ms,
-              transform 500ms cubic-bezier(0.4, 0, 0.2, 1) 1150ms;
+  transition: opacity 600ms cubic-bezier(0.4, 0, 0.2, 1) 1900ms,
+              transform 600ms cubic-bezier(0.4, 0, 0.2, 1) 1900ms;
 }
 
 /* Column 3 */
 .mounted .column:nth-child(4) .description {
-  transition: opacity 500ms cubic-bezier(0.4, 0, 0.2, 1) 1350ms,
-              transform 500ms cubic-bezier(0.4, 0, 0.2, 1) 1350ms;
+  transition: opacity 600ms cubic-bezier(0.4, 0, 0.2, 1) 2250ms,
+              transform 600ms cubic-bezier(0.4, 0, 0.2, 1) 2250ms;
 }
 
 .visible .description {

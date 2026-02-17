@@ -59,7 +59,7 @@ export default function HowIWork() {
           observer.unobserve(el)
         }
       },
-      { threshold: 0.2 }
+      { threshold: 0.15 }
     )
 
     observer.observe(el)

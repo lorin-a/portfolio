@@ -46,6 +46,7 @@ const featuredProjects = [
     slug: '/projects/birthstory',
     status: null,
     layout: 'side',
+    imageLeft: true,
   },
   {
     title: 'Transition Design',
@@ -69,7 +70,7 @@ const featuredProjects = [
 const moreProjects = [
   {
     title: 'SomeBuddy',
-    subtitle: 'Lightweight Socializing for Busy Grad Students',
+    subtitle: 'Lightweight Socializing for Grad Students',
     description:
       'A social app concept addressing campus loneliness at CMU through GPS-based peer connection and low-effort plans.',
     tags: [
@@ -83,7 +84,7 @@ const moreProjects = [
   },
   {
     title: 'Bridging the G.A.P.',
-    subtitle: 'Making Bike Touring Accessible to New Riders',
+    subtitle: 'Approachable Bike Touring for Beginners',
     description:
       'Rebrand campaign for the Great Allegheny Passage trail with educational resources, mobile app concept, and environmental graphics.',
     tags: [
@@ -125,15 +126,16 @@ function TagPill({ label, color, small }) {
 
 function FeaturedCard({ project }) {
   const isStacked = project.layout === 'stacked'
+  const sideClass = project.imageLeft ? styles.cardSideFlipped : styles.cardSide
 
   return (
     <article className={styles.featuredCard}>
       <Link
         href={project.slug}
-        className={`${styles.cardLink} ${isStacked ? styles.cardStacked : styles.cardSide}`}
+        className={`${styles.cardLink} ${isStacked ? styles.cardStacked : sideClass}`}
       >
         <div
-          className={`${styles.imageWrapper} ${isStacked ? styles.imageStacked : styles.imageSide}`}
+          className={isStacked ? styles.imageStacked : styles.imageSide}
         >
           <Image
             src={project.heroImage}
@@ -157,7 +159,7 @@ function FeaturedCard({ project }) {
         </div>
 
         <div
-          className={`${styles.content} ${isStacked ? styles.contentStacked : styles.contentSide}`}
+          className={isStacked ? styles.contentStacked : styles.contentSide}
         >
           <div>
             <h3 className={`${styles.title} ${isStacked ? styles.titleStacked : styles.titleSide}`}>
@@ -240,38 +242,46 @@ export default function FeaturedWork() {
     ).matches
     if (prefersReduced) return
 
-    const cards = sectionRef.current?.querySelectorAll(
-      `.${styles.featuredCard}, .${styles.smallCard}`
-    )
-    if (!cards?.length) return
+    const section = sectionRef.current
+    if (!section) return
 
-    cards.forEach((card) => {
-      card.style.opacity = '0'
-      card.style.transform = 'translateY(16px)'
+    // Collect all animatable elements with their visible class and group index
+    const elements = []
+
+    // Featured cards — stagger within their group
+    section.querySelectorAll(`.${styles.featuredCard}`).forEach((el, i) => {
+      elements.push({ el, visibleClass: styles.featuredCardVisible, groupDelay: i * 150 })
+    })
+
+    // "More Work" label
+    const label = section.querySelector(`.${styles.moreLabel}`)
+    if (label) {
+      elements.push({ el: label, visibleClass: styles.moreLabelVisible, groupDelay: 0 })
+    }
+
+    // Small cards — stagger within their group
+    section.querySelectorAll(`.${styles.smallCard}`).forEach((el, i) => {
+      elements.push({ el, visibleClass: styles.smallCardVisible, groupDelay: i * 120 })
     })
 
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (!entry.isIntersecting) return
-          const card = entry.target
-          const index = Array.from(cards).indexOf(card)
-          const delay = index * 100
+          const item = elements.find((e) => e.el === entry.target)
+          if (!item) return
 
           setTimeout(() => {
-            card.style.transition =
-              'opacity 500ms cubic-bezier(0.4, 0, 0.2, 1), transform 500ms cubic-bezier(0.4, 0, 0.2, 1)'
-            card.style.opacity = '1'
-            card.style.transform = 'translateY(0)'
-          }, delay)
+            item.el.classList.add(item.visibleClass)
+          }, item.groupDelay)
 
-          observer.unobserve(card)
+          observer.unobserve(entry.target)
         })
       },
       { threshold: 0.1 }
     )
 
-    cards.forEach((card) => observer.observe(card))
+    elements.forEach(({ el }) => observer.observe(el))
 
     return () => observer.disconnect()
   }, [])
