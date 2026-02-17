@@ -1,14 +1,39 @@
 /* ===========================================
-   AnimatedElement — Scroll-triggered fade-in
+   AnimatedElement — Scroll-triggered soft appear
+   Uses animation (not transition) so it fires once
+   and doesn't conflict with element hover transitions
    =========================================== */
 .animatedElement {
   opacity: 0;
-  transform: translateY(30px);
-  transition: opacity var(--motion-slow) var(--ease-default),
-              transform var(--motion-slow) var(--ease-default);
+  transform: translateY(40px) scale(0.97);
 }
 
 .animatedElementVisible {
-  opacity: 1;
-  transform: translateY(0);
+  animation: softAppearIn var(--motion-slow) var(--ease-bounce) forwards;
+  animation-delay: var(--stagger-delay, 0ms);
+}
+
+@keyframes softAppearIn {
+  from {
+    opacity: 0;
+    transform: translateY(40px) scale(0.97);
+  }
+  70% {
+    opacity: 1;
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animatedElement {
+    opacity: 1;
+    transform: none;
+  }
+
+  .animatedElementVisible {
+    animation: none;
+  }
 }

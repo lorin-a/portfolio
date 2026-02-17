@@ -279,7 +279,7 @@
   transform: translateY(-50%) translateX(-4px);
   font-family: var(--font-serif);
   font-style: italic;
-  font-size: 12px;
+  font-size: var(--text-body, 16px);
   color: var(--text-dark, #2D2B1E);
   opacity: 0;
   transition: opacity 0.6s ease, transform 0.6s ease;
@@ -289,7 +289,7 @@
 }
 
 .instructionDesktop.instructionShow {
-  opacity: 0.4;
+  opacity: 0.6;
   transform: translateY(-50%) translateX(0);
 }
 
@@ -298,7 +298,7 @@
   display: none;
   font-family: var(--font-serif);
   font-style: italic;
-  font-size: 12px;
+  font-size: var(--text-body, 16px);
   color: var(--text-dark, #2D2B1E);
   opacity: 0;
   transform: translateY(4px);
@@ -309,7 +309,7 @@
 }
 
 .instructionMobile.instructionShow {
-  opacity: 0.4;
+  opacity: 0.6;
   transform: translateY(0);
 }
 
@@ -404,7 +404,7 @@
 }
 
 .tooltip.visible {
-  opacity: 0.55;
+  opacity: 0.7;
   transform: translate(-50%, 0);
 }
 
@@ -476,14 +476,14 @@
   }
 
   .pill {
-    font-size: var(--text-caption, 12px);
-    padding: 0 14px;
-    height: 32px;
-    line-height: 32px;
+    font-size: 14px;
+    padding: 0 16px;
+    height: 34px;
+    line-height: 34px;
   }
 
   .tooltip {
-    font-size: 14px;
+    font-size: var(--text-body, 16px);
   }
 }
 

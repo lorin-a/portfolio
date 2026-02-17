@@ -1,0 +1,407 @@
+/* ===========================================
+   HOW I WORK — Connected Nodes Section
+   =========================================== */
+
+/* ===== SECTION WRAPPER ===== */
+.section {
+  padding: var(--space-xl) var(--container-padding);
+}
+
+.inner {
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+/* ===== HEADER ===== */
+.header {
+  text-align: center;
+  margin-bottom: 52px;
+  /* Animation: hidden until mounted + visible */
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.mounted .header {
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 600ms cubic-bezier(0.4, 0, 0.2, 1),
+              transform 600ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.visible .header {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.heading {
+  font-family: var(--font-serif);
+  font-size: 36px;
+  font-weight: 300;
+  color: var(--text-heading);
+  margin: 0 0 16px;
+}
+
+.subhead {
+  font-family: var(--font-sans);
+  font-size: 15px;
+  color: var(--text-light);
+  line-height: 1.6;
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+/* ===== GRID ===== */
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 0;
+  position: relative;
+}
+
+/* ===== CONNECTING DASHED LINE ===== */
+.connectingLine {
+  position: absolute;
+  top: 10px;
+  left: 16.6%;
+  right: 16.6%;
+  height: 0;
+  border-top: 2px dashed var(--sage);
+  opacity: 0.5;
+  z-index: 0;
+  /* Animation: clip from left to right */
+  clip-path: inset(0 100% 0 0);
+  transition: none;
+}
+
+.mounted .connectingLine {
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path 800ms cubic-bezier(0.4, 0, 0.2, 1) 300ms;
+}
+
+.visible .connectingLine {
+  clip-path: inset(0 0% 0 0);
+}
+
+/* ===== COLUMN ===== */
+.column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 0 24px;
+}
+
+/* ===== DOT NODE ===== */
+.dot {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  z-index: 1;
+  margin-bottom: 24px;
+  flex-shrink: 0;
+  /* Animation: hidden until visible */
+  opacity: 1;
+  transform: scale(1);
+}
+
+.mounted .dot {
+  opacity: 0;
+  transform: scale(0);
+  transition: opacity 500ms cubic-bezier(0.34, 1.56, 0.64, 1),
+              transform 500ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.visible .dot {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Dot colors */
+.olive .dot {
+  background: var(--olive);
+  box-shadow: 0 2px 8px rgba(139, 133, 37, 0.25);
+}
+
+.terracotta .dot {
+  background: var(--terracotta);
+  box-shadow: 0 2px 8px rgba(181, 101, 74, 0.25);
+}
+
+.plum .dot {
+  background: var(--plum);
+  box-shadow: 0 2px 8px rgba(139, 94, 131, 0.25);
+}
+
+/* ===== VERTICAL STEM ===== */
+.stem {
+  width: 2px;
+  height: 24px;
+  margin-bottom: 20px;
+  opacity: 1;
+  transform: scaleY(1);
+  transform-origin: top;
+}
+
+.mounted .stem {
+  opacity: 0;
+  transform: scaleY(0);
+}
+
+/* Staggered stem drop — column 1 */
+.mounted .column:nth-child(2) .stem {
+  transition: opacity 400ms cubic-bezier(0.4, 0, 0.2, 1) 700ms,
+              transform 400ms cubic-bezier(0.4, 0, 0.2, 1) 700ms;
+}
+
+/* Column 2 */
+.mounted .column:nth-child(3) .stem {
+  transition: opacity 400ms cubic-bezier(0.4, 0, 0.2, 1) 850ms,
+              transform 400ms cubic-bezier(0.4, 0, 0.2, 1) 850ms;
+}
+
+/* Column 3 */
+.mounted .column:nth-child(4) .stem {
+  transition: opacity 400ms cubic-bezier(0.4, 0, 0.2, 1) 1000ms,
+              transform 400ms cubic-bezier(0.4, 0, 0.2, 1) 1000ms;
+}
+
+.visible .stem {
+  opacity: 1;
+  transform: scaleY(1);
+}
+
+/* Stem colors */
+.olive .stem {
+  background: var(--olive);
+  opacity: 0.2;
+}
+
+.terracotta .stem {
+  background: var(--terracotta);
+  opacity: 0.2;
+}
+
+.plum .stem {
+  background: var(--plum);
+  opacity: 0.2;
+}
+
+/* Override: stem hidden state must override color opacity */
+.mounted .stem {
+  opacity: 0;
+}
+
+.visible .olive .stem {
+  opacity: 0.2;
+}
+
+.visible .terracotta .stem {
+  opacity: 0.2;
+}
+
+.visible .plum .stem {
+  opacity: 0.2;
+}
+
+/* ===== TITLE ===== */
+.title {
+  font-family: var(--font-serif);
+  font-size: 24px;
+  font-weight: 300;
+  line-height: 1.2;
+  margin: 0 0 12px;
+  /* Animation: hidden until visible */
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.mounted .title {
+  opacity: 0;
+  transform: translateY(12px);
+}
+
+/* Staggered title fade — column 1 */
+.mounted .column:nth-child(2) .title {
+  transition: opacity 500ms cubic-bezier(0.4, 0, 0.2, 1) 900ms,
+              transform 500ms cubic-bezier(0.4, 0, 0.2, 1) 900ms;
+}
+
+/* Column 2 */
+.mounted .column:nth-child(3) .title {
+  transition: opacity 500ms cubic-bezier(0.4, 0, 0.2, 1) 1100ms,
+              transform 500ms cubic-bezier(0.4, 0, 0.2, 1) 1100ms;
+}
+
+/* Column 3 */
+.mounted .column:nth-child(4) .title {
+  transition: opacity 500ms cubic-bezier(0.4, 0, 0.2, 1) 1300ms,
+              transform 500ms cubic-bezier(0.4, 0, 0.2, 1) 1300ms;
+}
+
+.visible .title {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Title colors */
+.olive .title {
+  color: var(--olive);
+}
+
+.terracotta .title {
+  color: var(--terracotta);
+}
+
+.plum .title {
+  color: var(--plum);
+}
+
+/* ===== DESCRIPTION ===== */
+.description {
+  font-family: var(--font-sans);
+  font-size: 14px;
+  color: var(--text-light);
+  line-height: 1.6;
+  max-width: 260px;
+  margin: 0;
+  /* Animation: same as title */
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.mounted .description {
+  opacity: 0;
+  transform: translateY(12px);
+}
+
+/* Staggered description fade — column 1 */
+.mounted .column:nth-child(2) .description {
+  transition: opacity 500ms cubic-bezier(0.4, 0, 0.2, 1) 950ms,
+              transform 500ms cubic-bezier(0.4, 0, 0.2, 1) 950ms;
+}
+
+/* Column 2 */
+.mounted .column:nth-child(3) .description {
+  transition: opacity 500ms cubic-bezier(0.4, 0, 0.2, 1) 1150ms,
+              transform 500ms cubic-bezier(0.4, 0, 0.2, 1) 1150ms;
+}
+
+/* Column 3 */
+.mounted .column:nth-child(4) .description {
+  transition: opacity 500ms cubic-bezier(0.4, 0, 0.2, 1) 1350ms,
+              transform 500ms cubic-bezier(0.4, 0, 0.2, 1) 1350ms;
+}
+
+.visible .description {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ===========================================
+   RESPONSIVE — TABLET (≤900px)
+   =========================================== */
+@media (max-width: 900px) {
+  .column {
+    padding: 0 16px;
+  }
+
+  .dot {
+    width: 20px;
+    height: 20px;
+  }
+
+  .title {
+    font-size: 22px;
+  }
+
+  .description {
+    font-size: 13px;
+    max-width: 220px;
+  }
+
+  .connectingLine {
+    top: 9px;
+  }
+}
+
+/* ===========================================
+   RESPONSIVE — MOBILE (≤600px)
+   =========================================== */
+@media (max-width: 600px) {
+  .header {
+    margin-bottom: 36px;
+  }
+
+  .heading {
+    font-size: 28px;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  /* Hide line and stems on mobile */
+  .connectingLine,
+  .stem {
+    display: none;
+  }
+
+  /* Horizontal layout per column */
+  .column {
+    flex-direction: row;
+    align-items: flex-start;
+    text-align: left;
+    gap: 20px;
+    padding: 0;
+  }
+
+  .dot {
+    margin-top: 4px;
+    margin-bottom: 0;
+  }
+
+  .description {
+    max-width: none;
+  }
+
+  /* Tighter animation stagger on mobile */
+  .mounted .column:nth-child(2) .title,
+  .mounted .column:nth-child(2) .description {
+    transition-delay: 0ms;
+  }
+
+  .mounted .column:nth-child(3) .title,
+  .mounted .column:nth-child(3) .description {
+    transition-delay: 150ms;
+  }
+
+  .mounted .column:nth-child(4) .title,
+  .mounted .column:nth-child(4) .description {
+    transition-delay: 300ms;
+  }
+}
+
+/* ===========================================
+   REDUCED MOTION
+   =========================================== */
+@media (prefers-reduced-motion: reduce) {
+  .header,
+  .dot,
+  .stem,
+  .title,
+  .description,
+  .connectingLine {
+    opacity: 1 !important;
+    transform: none !important;
+    clip-path: none !important;
+    transition: none !important;
+    animation: none !important;
+  }
+
+  .olive .stem,
+  .terracotta .stem,
+  .plum .stem {
+    opacity: 0.2 !important;
+  }
+}

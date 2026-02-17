@@ -6,21 +6,25 @@ import styles from './AnimatedElement.module.css'
 /**
  * AnimatedElement — Fades in when scrolled into view.
  *
- * Wraps any content in a div that starts transparent and
- * translated down, then animates to visible when the element
- * enters the viewport. Observes once, then disconnects.
- *
  * Props:
  *   children  — content to animate
  *   className — optional additional class(es)
+ *   delay     — stagger delay in ms (default 0)
+ *   tag       — HTML element to render (default 'div')
  */
-export default function AnimatedElement({ children, className = '' }) {
+export default function AnimatedElement({ children, className = '', delay = 0, tag: Tag = 'div' }) {
   const ref = useRef(null)
   const [isVisible, setIsVisible] = useState(false)
 
   useEffect(() => {
     const element = ref.current
     if (!element) return
+
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    if (prefersReducedMotion) {
+      setIsVisible(true)
+      return
+    }
 
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -29,7 +33,7 @@ export default function AnimatedElement({ children, className = '' }) {
           observer.unobserve(element)
         }
       },
-      { threshold: 0.2 }
+      { threshold: 0.15 }
     )
 
     observer.observe(element)
@@ -40,11 +44,12 @@ export default function AnimatedElement({ children, className = '' }) {
   }, [])
 
   return (
-    <div
+    <Tag
       ref={ref}
       className={`${styles.animatedElement} ${isVisible ? styles.animatedElementVisible : ''} ${className}`}
+      style={delay ? { '--stagger-delay': `${delay}ms` } : undefined}
     >
       {children}
-    </div>
+    </Tag>
   )
 }

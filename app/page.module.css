@@ -3,7 +3,7 @@
    =========================================== */
 
 /* ===========================================
-   INTRO SECTION
+   INTRO SECTION (legacy, kept for reference)
    =========================================== */
 .intro {
   padding: 6rem var(--container-padding) 3rem;
@@ -77,108 +77,12 @@
 .cta:hover {
   opacity: 1;
   transform: translateY(-2px);
-  /* One-off: olive-tinted glow for primary CTA */
   box-shadow: 0 6px 20px rgba(137, 139, 39, 0.25);
 }
 
 .cta:focus-visible {
   outline: 2px solid var(--olive);
   outline-offset: 2px;
-}
-
-/* ===========================================
-   SECTION HEADER (shared)
-   =========================================== */
-.sectionHeader {
-  text-align: center;
-  max-width: 600px;
-  margin: 0 auto 3rem;
-}
-
-.sectionTitle {
-  font-family: var(--font-serif);
-  font-size: var(--text-h2);
-  font-weight: var(--weight-title);
-  color: var(--text-heading);
-  margin-bottom: 1rem;
-}
-
-.sectionDescription {
-  font-size: var(--text-body-large);
-  line-height: 1.6;
-  color: var(--text-body);
-  margin: 0;
-}
-
-/* ===========================================
-   VALUE CARDS SECTION
-   =========================================== */
-.values {
-  padding: 0 var(--container-padding);
-  max-width: var(--max-width);
-  margin: 0 auto;
-}
-
-.valuesInner {
-  background-color: var(--lavender-light);
-  border-left: 4px solid var(--lavender-dark);
-  border-radius: var(--radius-lg);
-  padding: var(--space-lg) var(--space-md);
-}
-
-.valuesHeader {
-  margin-bottom: 2.5rem;
-}
-
-.valuesTitle {
-  font-family: var(--font-serif);
-  font-size: var(--text-h2);
-  font-weight: var(--weight-title);
-  color: var(--lavender-dark);
-  margin-bottom: 1rem;
-}
-
-.valuesDescription {
-  font-size: var(--text-body-large);
-  line-height: 1.6;
-  color: var(--text-body);
-  max-width: 700px;
-  margin: 0;
-}
-
-.valueGrid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: var(--space-md);
-}
-
-.valueCard {
-  position: relative;
-  background-color: var(--surface);
-  border-left: 4px solid var(--lavender-dark);
-  padding: var(--space-md) var(--space-content-gap) var(--space-md) var(--space-content-gap);
-  clip-path: url(#wavyCardClip);
-  transition: all var(--motion-fast) var(--ease-default);
-}
-
-.valueCard:hover {
-  transform: translateY(-8px) rotate(-1.5deg);
-  box-shadow: var(--shadow-lg);
-}
-
-.valueHeading {
-  font-family: var(--font-serif);
-  font-size: var(--text-h3);
-  font-weight: var(--weight-title);
-  color: var(--lavender-dark);
-  margin-bottom: 0.75rem;
-}
-
-.valueText {
-  font-size: var(--text-body);
-  line-height: 1.6;
-  color: var(--text-body);
-  margin: 0;
 }
 
 /* ===========================================
@@ -192,131 +96,12 @@
 
 .projectGrid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: var(--space-md);
-}
-
-.projectCard {
-  background-color: var(--surface);
-  border: 2px solid var(--olive);
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-  text-decoration: none;
-  color: inherit;
-  display: block;
-  transition: transform var(--motion-fast) var(--ease-default),
-              box-shadow var(--motion-fast) var(--ease-default),
-              border-color var(--motion-fast) var(--ease-default);
-}
-
-.projectCard:hover {
-  opacity: 1;
-  transform: translateY(-6px);
-  box-shadow: var(--shadow-lg);
-  border-color: var(--olive-dark);
-}
-
-.projectCard:focus-visible {
-  outline: 2px solid var(--olive);
-  outline-offset: 2px;
-}
-
-.projectCardDisabled {
-  opacity: 0.7;
-  cursor: default;
-}
-
-.projectCardDisabled:hover {
-  transform: none;
-  box-shadow: none;
-  border-color: var(--olive);
-}
-
-.projectImageWrapper {
-  position: relative;
-  height: 240px;
-  background-color: var(--background);
-}
-
-.projectImagePlaceholder {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--text-body);
-  font-size: var(--text-body-small);
-}
-
-.projectImage {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.statusBadge {
-  position: absolute;
-  top: 16px;
-  right: 16px;
-  font-family: var(--font-sans);
-  font-size: var(--text-label);
-  font-weight: var(--weight-label);
-  text-transform: uppercase;
-  letter-spacing: 0.02em;
-  padding: var(--space-xs) var(--space-sm);
-  border-radius: var(--radius-pill);
-}
-
-.statusLive {
-  background-color: var(--surface);
-  color: var(--olive);
-}
-
-.statusComingSoon {
-  background-color: var(--surface);
-  color: var(--text-body);
-}
-
-.projectContent {
-  padding: var(--space-content-gap);
-}
-
-.projectTitle {
-  font-family: var(--font-serif);
-  font-size: var(--text-h3);
-  font-weight: var(--weight-title);
-  color: var(--text-heading);
-  margin-bottom: 0.5rem;
-}
-/* Card titles use 400 for better legibility next to images */
-
-.projectTags {
-  font-size: var(--text-body-small);
-  color: var(--text-body);
-  margin-bottom: 0.75rem;
-}
-
-.projectDescription {
-  font-size: var(--text-body);
-  line-height: 1.6;
-  color: var(--text-body);
-  margin-bottom: 1rem;
-}
-
-.projectLink {
-  font-family: var(--font-sans);
-  font-size: var(--text-body-small);
-  font-weight: 500;
-  color: var(--olive);
-}
-
-.projectLinkDisabled {
-  color: var(--text-body);
-  font-weight: 400;
+  grid-template-columns: 1fr;
+  gap: var(--space-lg);
 }
 
 /* ===========================================
-   BUILDING NOW SECTION
+   BUILDING NOW SECTION — Mini case studies
    =========================================== */
 .building {
   padding: 0 var(--container-padding);
@@ -324,22 +109,17 @@
   margin: 0 auto;
 }
 
-.buildingInner {
-  background-color: var(--sky-light);
-  border-left: 4px solid var(--sky-dark);
-  border-radius: var(--radius-lg);
-  padding: var(--space-lg) var(--space-md);
-}
-
 .buildingHeader {
-  margin-bottom: 2.5rem;
+  text-align: center;
+  max-width: 600px;
+  margin: 0 auto 3rem;
 }
 
 .buildingTitle {
   font-family: var(--font-serif);
   font-size: var(--text-h2);
   font-weight: var(--weight-title);
-  color: var(--sky-dark);
+  color: var(--text-heading);
   margin-bottom: 1rem;
 }
 
@@ -347,51 +127,79 @@
   font-size: var(--text-body-large);
   line-height: 1.6;
   color: var(--text-body);
-  max-width: 700px;
   margin: 0;
 }
 
 .buildingGrid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: var(--space-content-gap);
+  gap: var(--space-md);
 }
 
 .buildingCard {
-  position: relative;
   background-color: var(--surface);
-  border-left: 4px solid var(--sky-dark);
-  padding: var(--space-md) var(--space-content-gap) var(--space-md) var(--space-content-gap);
-  clip-path: url(#wavyCardClip);
-  transition: all var(--motion-fast) var(--ease-default);
+  border: 2px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition: transform var(--motion-fast) var(--ease-default),
+              box-shadow var(--motion-fast) var(--ease-default),
+              border-color var(--motion-fast) var(--ease-default);
 }
 
 .buildingCard:hover {
-  transform: translateY(-8px) rotate(-1.5deg);
+  transform: translateY(-6px);
   box-shadow: var(--shadow-lg);
+  border-color: var(--olive);
 }
 
-.buildingCardTitle {
-  font-family: var(--font-serif);
-  font-size: var(--text-h4);
-  font-weight: var(--weight-title);
-  color: var(--sky-dark);
-  margin-bottom: 0.5rem;
+.buildingPreview {
+  position: relative;
+  height: 220px;
+  background-color: var(--background);
+  overflow: hidden;
+}
+
+.buildingPreviewImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .stageBadge {
-  display: inline-block;
+  position: absolute;
+  top: 12px;
+  right: 12px;
   font-family: var(--font-sans);
   font-size: var(--text-label);
   font-weight: var(--weight-label);
   text-transform: uppercase;
   letter-spacing: 0.02em;
-  color: var(--lavender-dark);
+  padding: var(--space-xs) var(--space-sm);
+  border-radius: var(--radius-pill);
+  background-color: var(--surface);
+  color: var(--olive);
+}
+
+.buildingCardContent {
+  padding: var(--space-content-gap);
+}
+
+.buildingCardTitle {
+  font-family: var(--font-serif);
+  font-size: var(--text-h3);
+  font-weight: var(--weight-title);
+  color: var(--text-heading);
+  margin-bottom: 0.5rem;
+}
+
+.buildingCardTags {
+  font-size: var(--text-body);
+  color: var(--text-body);
   margin-bottom: 0.75rem;
 }
 
 .buildingCardDescription {
-  font-size: var(--text-body-small);
+  font-size: var(--text-body);
   line-height: 1.6;
   color: var(--text-body);
   margin: 0;
@@ -405,34 +213,12 @@
     font-size: 2rem;
   }
 
-  .valuesInner {
-    padding: var(--space-lg) var(--space-content-gap);
-  }
-
-  .valuesTitle {
-    font-size: 1.75rem;
-  }
-
-  .valueGrid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: var(--space-md);
-  }
-
-  .projectGrid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: var(--space-md);
-  }
-
-  .buildingInner {
-    padding: var(--space-lg) var(--space-content-gap);
-  }
-
   .buildingGrid {
     grid-template-columns: repeat(2, 1fr);
   }
 
-  .sectionTitle {
-    font-size: 1.75rem;
+  .buildingPreview {
+    height: 180px;
   }
 
   .buildingTitle {
@@ -456,47 +242,8 @@
     font-size: 1rem;
   }
 
-  .sectionTitle {
-    font-size: 1.5rem;
-  }
-
-  .sectionDescription {
-    font-size: 1rem;
-  }
-
-  .valuesInner {
-    padding: var(--space-md) var(--space-content-gap);
-  }
-
-  .valuesTitle {
-    font-size: 1.5rem;
-  }
-
-  .valuesDescription {
-    font-size: 1rem;
-  }
-
-  .valueGrid {
-    grid-template-columns: 1fr;
-    gap: var(--space-content-gap);
-  }
-
-  .valueCard:hover,
   .buildingCard:hover {
-    transform: translateY(-4px) rotate(-0.5deg);
-  }
-
-  .projectGrid {
-    grid-template-columns: 1fr;
-    gap: var(--space-content-gap);
-  }
-
-  .projectImageWrapper {
-    height: 200px;
-  }
-
-  .buildingInner {
-    padding: var(--space-md) var(--space-content-gap);
+    transform: translateY(-4px);
   }
 
   .buildingTitle {
@@ -511,21 +258,21 @@
     grid-template-columns: 1fr;
     gap: var(--space-content-gap);
   }
+
+  .buildingPreview {
+    height: 200px;
+  }
 }
 
 /* ===========================================
    REDUCED MOTION
    =========================================== */
 @media (prefers-reduced-motion: reduce) {
-  .valueCard,
-  .projectCard,
   .buildingCard,
   .cta {
     transition: none;
   }
 
-  .valueCard:hover,
-  .projectCard:hover,
   .buildingCard:hover,
   .cta:hover {
     transform: none;

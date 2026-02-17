@@ -1,176 +1,111 @@
-import Link from 'next/link'
 import Squiggle from '@/components/Squiggle/Squiggle'
 import Hero from '@/components/Hero/Hero'
+import AnimatedElement from '@/components/AnimatedElement/AnimatedElement'
+import CaseStudyCard from '@/components/CaseStudyCard/CaseStudyCard'
+import HowIWork from '@/components/HowIWork/HowIWork'
 import styles from './page.module.css'
 
 const projects = [
   {
-    slug: 'groundswell',
     title: 'Groundswell',
-    tags: 'Healthcare • Co-Design • Systems Change',
-    description: 'Transforming healthcare worker wellbeing through participatory design and narrative research.',
-    image: '/images/projects/groundswell-hero.jpg',
-    status: 'Live',
-    isClickable: true,
+    subtitle: 'Making Space to Restore, Together',
+    description: 'Transforming healthcare worker wellbeing through participatory design and narrative research. A grant-funded ecosystem of emotional support at UPMC Magee-Womens Hospital.',
+    tags: [
+      { label: 'Healthcare', color: 'olive' },
+      { label: 'Co-Design', color: 'terracotta' },
+      { label: 'Systems Change', color: 'plum' },
+    ],
+    heroImage: '/images/projects/groundswell-hero.jpg',
+    heroAlt: 'A healthcare worker walks down a hospital hallway toward a colorful mural installation',
+    slug: '/projects/groundswell',
+    status: 'Live Study',
   },
   {
-    slug: 'birthstory',
     title: 'BirthStory',
-    tags: 'UX Research • App Design • Healthcare',
-    description: 'Empowering pregnant individuals to document and share their birth experiences.',
-    image: '/images/projects/birthstory-cover.jpg',
-    status: 'Coming Soon',
-    isClickable: false,
+    subtitle: 'Documenting What Matters Most',
+    description: 'Empowering pregnant individuals to document and share their birth experiences through a thoughtfully designed mobile app.',
+    tags: [
+      { label: 'UX Research', color: 'terracotta' },
+      { label: 'App Design', color: 'olive' },
+      { label: 'Healthcare', color: 'plum' },
+    ],
+    heroImage: '/images/projects/birthstory-cover.jpg',
+    heroAlt: 'BirthStory app interface showing birth experience documentation',
+    slug: '/projects/birthstory',
+    status: null,
   },
   {
-    slug: 'somebuddy',
     title: 'SomeBuddy',
-    tags: 'UX Design • Social Connection • Wellbeing',
-    description: 'Reducing loneliness through authentic peer-to-peer connections.',
-    image: '/images/projects/somebuddy-cover.jpg',
-    status: 'Coming Soon',
-    isClickable: false,
+    subtitle: 'Connection Beyond the Surface',
+    description: 'Reducing loneliness through authentic peer-to-peer connections designed around shared vulnerability.',
+    tags: [
+      { label: 'UX Design', color: 'olive' },
+      { label: 'Social Connection', color: 'terracotta' },
+      { label: 'Wellbeing', color: 'plum' },
+    ],
+    heroImage: '/images/projects/somebuddy-cover.gif',
+    heroAlt: 'SomeBuddy app concept showing peer connection interface',
+    slug: '/projects/somebuddy',
+    status: null,
   },
   {
-    slug: 'bridging-the-gap',
     title: 'Bridging the Gap',
-    tags: 'Education • Systems Design • Access',
-    description: 'Supporting college access for underrepresented students through systemic intervention.',
-    image: '/images/projects/bridging-cover.jpg',
-    status: 'Coming Soon',
-    isClickable: false,
+    subtitle: 'Redesigning Access to Higher Education',
+    description: 'Supporting college access for underrepresented students through systemic intervention and community partnership.',
+    tags: [
+      { label: 'Education', color: 'plum' },
+      { label: 'Systems Design', color: 'olive' },
+      { label: 'Access', color: 'terracotta' },
+    ],
+    heroImage: '/images/projects/bridging-cover.gif',
+    heroAlt: 'Bridging the Gap project showing educational access design work',
+    slug: '/projects/bridging-the-gap',
+    status: null,
   },
 ]
 
 const buildingProjects = [
   {
     title: 'Whelm',
+    tags: 'Mental Health • Emotional Granularity',
     stage: 'Active Development',
     description: 'Mental health app exploring emotional granularity and nuanced self-awareness beyond binary good/bad feelings.',
+    preview: '/images/projects/whelm-preview.gif',
   },
   {
     title: 'TRO Tool',
+    tags: 'Safety • Documentation • Access',
     stage: 'Concept Phase',
     description: 'Documentation system for survivors of abuse navigating temporary restraining orders. Early exploration.',
+    preview: '/images/projects/tro-preview.gif',
   },
   {
     title: 'Groundswell Data Viz',
+    tags: 'Data Visualization • Research',
     stage: 'In Development',
     description: 'Interactive visualization of relationship patterns from healthcare worker interviews. Applying for grant funding to continue iteration.',
+    preview: '/images/projects/groundswell-dataviz-preview.gif',
   },
 ]
-
-const valueCards = [
-  {
-    heading: 'Systems',
-    text: 'I map complexity to reveal root causes using rigorous participatory research and systems thinking.',
-  },
-  {
-    heading: 'Stories',
-    text: 'I translate lived experience into narratives that make complexity accessible and catalyze meaningful change.',
-  },
-  {
-    heading: 'Solutions',
-    text: 'I create interventions that transform both individual experiences and systemic barriers simultaneously.',
-  },
-]
-
-// SVG clip path definitions for scalloped card bottoms
-// 8 semi-circular arcs meeting at points (stamp/shell edge style)
-function ClipPathDefs() {
-  return (
-    <svg width="0" height="0" style={{ position: 'absolute' }} aria-hidden="true">
-      <defs>
-        <clipPath id="wavyCardClip" clipPathUnits="objectBoundingBox">
-          <path d="M 0,0 L 1,0 L 1,0.95 A 0.0625 0.05 0 0 1 0.875,0.95 A 0.0625 0.05 0 0 1 0.75,0.95 A 0.0625 0.05 0 0 1 0.625,0.95 A 0.0625 0.05 0 0 1 0.5,0.95 A 0.0625 0.05 0 0 1 0.375,0.95 A 0.0625 0.05 0 0 1 0.25,0.95 A 0.0625 0.05 0 0 1 0.125,0.95 A 0.0625 0.05 0 0 1 0,0.95 Z" />
-        </clipPath>
-      </defs>
-    </svg>
-  )
-}
-
-function ProjectCard({ project }) {
-  const cardContent = (
-    <>
-      <div className={styles.projectImageWrapper}>
-        <img
-          src={project.image}
-          alt={project.title}
-          className={styles.projectImage}
-        />
-        <span className={`${styles.statusBadge} ${project.status === 'Live' ? styles.statusLive : styles.statusComingSoon}`}>
-          {project.status}
-        </span>
-      </div>
-      <div className={styles.projectContent}>
-        <h3 className={styles.projectTitle}>{project.title}</h3>
-        <p className={styles.projectTags}>{project.tags}</p>
-        <p className={styles.projectDescription}>{project.description}</p>
-        <span className={`${styles.projectLink} ${!project.isClickable ? styles.projectLinkDisabled : ''}`}>
-          {project.isClickable ? 'View case study →' : 'Coming soon'}
-        </span>
-      </div>
-    </>
-  )
-
-  if (project.isClickable) {
-    return (
-      <Link href={`/projects/${project.slug}`} className={styles.projectCard}>
-        {cardContent}
-      </Link>
-    )
-  }
-
-  return (
-    <div className={`${styles.projectCard} ${styles.projectCardDisabled}`}>
-      {cardContent}
-    </div>
-  )
-}
 
 export default function Home() {
   return (
     <main>
-      <ClipPathDefs />
-
       {/* Hero - Cinematic Title Sequence */}
       <Hero />
 
-      <Squiggle />
-
-      {/* Value Cards Section */}
-      <section className={styles.values}>
-        <div className={styles.valuesInner}>
-          <div className={styles.valuesHeader}>
-            <h2 className={styles.valuesTitle}>How I Work</h2>
-            <p className={styles.valuesDescription}>
-              My approach combines rigorous research, authentic storytelling, and collaborative design.
-            </p>
-          </div>
-          <div className={styles.valueGrid}>
-            {valueCards.map((card) => (
-              <article key={card.heading} className={styles.valueCard}>
-                <h3 className={styles.valueHeading}>{card.heading}</h3>
-                <p className={styles.valueText}>{card.text}</p>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
+      {/* How I Work — Connected Nodes */}
+      <HowIWork />
 
       <Squiggle />
 
       {/* Featured Work Section */}
       <section id="work" className={styles.work}>
-        <div className={styles.sectionHeader}>
-          <h2 className={styles.sectionTitle}>Featured Work</h2>
-          <p className={styles.sectionDescription}>
-            Case studies exploring healthcare, education, and community wellbeing through participatory design.
-          </p>
-        </div>
         <div className={styles.projectGrid}>
-          {projects.map((project) => (
-            <ProjectCard key={project.slug} project={project} />
+          {projects.map((project, i) => (
+            <AnimatedElement key={project.slug} delay={i * 150}>
+              <CaseStudyCard {...project} priority={i === 0} />
+            </AnimatedElement>
           ))}
         </div>
       </section>
@@ -179,22 +114,34 @@ export default function Home() {
 
       {/* Building Now Section */}
       <section className={styles.building}>
-        <div className={styles.buildingInner}>
+        <AnimatedElement>
           <div className={styles.buildingHeader}>
             <h2 className={styles.buildingTitle}>Building Now</h2>
             <p className={styles.buildingDescription}>
               Active explorations and projects in development. These aren&apos;t full case studies (yet), but they show where my curiosity is taking me.
             </p>
           </div>
-          <div className={styles.buildingGrid}>
-            {buildingProjects.map((project) => (
-              <article key={project.title} className={styles.buildingCard}>
-                <h4 className={styles.buildingCardTitle}>{project.title}</h4>
-                <span className={styles.stageBadge}>{project.stage}</span>
-                <p className={styles.buildingCardDescription}>{project.description}</p>
+        </AnimatedElement>
+        <div className={styles.buildingGrid}>
+          {buildingProjects.map((project, i) => (
+            <AnimatedElement key={project.title} delay={i * 150}>
+              <article className={styles.buildingCard}>
+                <div className={styles.buildingPreview}>
+                  <img
+                    src={project.preview}
+                    alt={`${project.title} preview`}
+                    className={styles.buildingPreviewImage}
+                  />
+                  <span className={styles.stageBadge}>{project.stage}</span>
+                </div>
+                <div className={styles.buildingCardContent}>
+                  <h4 className={styles.buildingCardTitle}>{project.title}</h4>
+                  <p className={styles.buildingCardTags}>{project.tags}</p>
+                  <p className={styles.buildingCardDescription}>{project.description}</p>
+                </div>
               </article>
-            ))}
-          </div>
+            </AnimatedElement>
+          ))}
         </div>
       </section>
     </main>

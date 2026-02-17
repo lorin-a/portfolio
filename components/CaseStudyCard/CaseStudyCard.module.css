@@ -1,0 +1,243 @@
+/* ===========================================
+   CASE STUDY CARD — Clean Image + Content Layout
+   =========================================== */
+
+/* ===== CARD WRAPPER ===== */
+.card {
+  display: block;
+  background-color: var(--cream);
+  border-radius: 12px;
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+              box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 60px rgba(45, 43, 30, 0.1);
+}
+
+.card:focus-visible {
+  outline: 2px solid var(--olive);
+  outline-offset: 4px;
+}
+
+/* ===== IMAGE AREA ===== */
+.imageWrapper {
+  position: relative;
+  height: 380px;
+  overflow: hidden;
+}
+
+.image {
+  object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card:hover .image {
+  transform: scale(1.03);
+}
+
+/* ===== STATUS BADGE ===== */
+.statusBadge {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 2;
+  background-color: var(--olive);
+  color: var(--cream);
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 6px 14px;
+  border-radius: 100px;
+}
+
+/* ===== CONTENT AREA ===== */
+.content {
+  padding: 28px 44px 36px;
+}
+
+/* ===== TITLE BLOCK ===== */
+.titleBlock {
+  margin-bottom: 16px;
+}
+
+.title {
+  font-family: var(--font-serif);
+  font-size: 40px;
+  font-weight: 300;
+  color: var(--text-heading);
+  line-height: 1.1;
+  margin: 0;
+}
+
+.subtitle {
+  font-family: var(--font-serif);
+  font-size: 17px;
+  font-weight: 300;
+  font-style: italic;
+  color: var(--text-light);
+  margin: 6px 0 0;
+}
+
+/* ===== TAGS ===== */
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 18px;
+}
+
+.tag {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  padding: 5px 14px;
+  border-radius: 100px;
+  border: 1.5px solid;
+}
+
+.tagOlive {
+  color: var(--olive);
+  border-color: var(--olive);
+  background: rgba(139, 133, 37, 0.06);
+}
+
+.tagTerracotta {
+  color: var(--terracotta);
+  border-color: var(--terracotta);
+  background: rgba(181, 101, 74, 0.06);
+}
+
+.tagPlum {
+  color: var(--plum);
+  border-color: var(--plum);
+  background: rgba(139, 94, 131, 0.06);
+}
+
+/* ===== BODY — Description left, CTA right ===== */
+.body {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: var(--space-md);
+}
+
+.description {
+  font-family: var(--font-sans);
+  font-size: 15px;
+  color: var(--text-light);
+  line-height: 1.6;
+  max-width: 600px;
+  margin: 0;
+}
+
+.cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--olive);
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: gap 0.3s ease;
+}
+
+.card:hover .cta {
+  gap: 10px;
+}
+
+.ctaArrow {
+  transition: transform 0.3s ease;
+}
+
+/* ===========================================
+   RESPONSIVE — TABLET (≤900px)
+   =========================================== */
+@media (max-width: 900px) {
+  .imageWrapper {
+    height: 320px;
+  }
+
+  .title {
+    font-size: 36px;
+  }
+
+  .content {
+    padding: 24px 32px 32px;
+  }
+}
+
+/* ===========================================
+   RESPONSIVE — MOBILE (≤600px)
+   =========================================== */
+@media (max-width: 600px) {
+  .imageWrapper {
+    height: 240px;
+  }
+
+  .title {
+    font-size: 28px;
+  }
+
+  .subtitle {
+    font-size: 15px;
+  }
+
+  .content {
+    padding: 20px 20px 28px;
+  }
+
+  .description {
+    font-size: 14px;
+  }
+
+  .tag {
+    font-size: 10px;
+    padding: 4px 12px;
+  }
+
+  .body {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+}
+
+/* ===========================================
+   REDUCED MOTION
+   =========================================== */
+@media (prefers-reduced-motion: reduce) {
+  .card {
+    transition: box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .card:hover {
+    transform: none;
+  }
+
+  .image {
+    transition: none;
+  }
+
+  .card:hover .image {
+    transform: none;
+  }
+
+  .cta {
+    transition: none;
+  }
+
+  .card:hover .cta {
+    gap: 6px;
+  }
+}
