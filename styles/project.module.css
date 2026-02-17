@@ -3162,14 +3162,14 @@
 
 .flipCardBack {
   transform: rotateY(180deg);
-  background-color: #faf8f6;
+  background-color: var(--surface);
 }
 
 .flipCardImage {
   width: 100%;
   height: 100%;
   object-fit: contain;
-  background-color: #faf8f6;
+  background-color: var(--surface);
 }
 
 .flipCard:focus-visible {
@@ -3228,13 +3228,13 @@
 }
 
 .carouselCardFront {
-  background-color: #e8e4df;
+  background-color: var(--border);
   box-shadow: var(--shadow-lg);
 }
 
 .carouselCardBack {
   transform: rotateY(180deg);
-  background-color: #faf8f6;
+  background-color: var(--surface);
   box-shadow: var(--shadow-lg);
 }
 
@@ -3467,7 +3467,7 @@
   position: relative;
   width: 280px;
   height: 600px;
-  background: #1a1a1a;
+  background: var(--color-device-dark);
   border-radius: 40px; /* One-off: iPhone device mockup rounding */
   padding: 14px;
   box-shadow:
@@ -3484,7 +3484,7 @@
   transform: translateX(-50%);
   width: 120px;
   height: 28px;
-  background: #1a1a1a;
+  background: var(--color-device-dark);
   border-radius: 0 0 20px 20px;
   z-index: 2;
 }

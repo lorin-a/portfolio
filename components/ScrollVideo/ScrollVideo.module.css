@@ -13,7 +13,7 @@
   width: 100%;
   height: auto;
   display: block;
-  background-color: #1a1a1a;
+  background-color: var(--color-device-dark);
 }
 
 /* Blur effect to obscure sensitive data */

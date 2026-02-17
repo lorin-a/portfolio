@@ -10,7 +10,7 @@
 
 .heading {
   font-family: var(--font-serif);
-  font-size: 1.4rem;
+  font-size: var(--text-h3);
   font-weight: var(--weight-title);
   margin-top: var(--space-md);
   margin-bottom: var(--space-sm);
@@ -18,7 +18,7 @@
 
 .email {
   display: inline-block;
-  font-size: 1rem;
+  font-size: var(--text-body);
   margin-bottom: var(--space-md);
   font-family: var(--font-sans);
   text-underline-offset: 4px;
@@ -33,11 +33,11 @@
 
 .social a {
   color: var(--color-text-light);
-  font-size: 0.875rem;
+  font-size: var(--text-body-small);
 }
 
 .copyright {
-  font-size: 0.75rem;
+  font-size: var(--text-label);
   color: var(--color-text-light);
   margin-bottom: 0;
   font-family: var(--font-sans);

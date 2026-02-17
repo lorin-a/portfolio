@@ -21,23 +21,23 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.75rem;
+  font-size: var(--text-label);
   color: var(--color-text-light);
   margin: 0 auto var(--space-md);
 }
 
 .title {
-  font-size: 2.5rem;
+  font-size: var(--text-h2);
 }
 
 .content h2 {
-  font-size: 1.5rem;
+  font-size: var(--text-h3);
   margin-top: var(--space-lg);
   margin-bottom: var(--space-sm);
 }
 
 .intro {
-  font-size: 1.25rem;
+  font-size: var(--text-h4);
   line-height: 1.5;
 }
 
@@ -81,7 +81,7 @@
 .quote cite {
   display: block;
   margin-top: var(--space-sm);
-  font-size: 0.875rem;
+  font-size: var(--text-body-small);
   font-style: normal;
   color: var(--color-text-light);
 }

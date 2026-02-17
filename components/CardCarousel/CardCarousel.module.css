@@ -130,13 +130,13 @@
 }
 
 .carouselCardFront {
-  background-color: #e8e4df;
+  background-color: var(--border);
   box-shadow: var(--shadow-lg);
 }
 
 .carouselCardBack {
   transform: rotateY(180deg);
-  background-color: #faf8f6;
+  background-color: var(--surface);
   box-shadow: var(--shadow-lg);
 }
 

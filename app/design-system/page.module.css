@@ -140,9 +140,9 @@
 .typeSpecimenDark {
   margin-bottom: var(--space-md);
   padding: var(--space-md);
-  background: #2C2C28;
+  background: var(--text-heading);
   border-radius: var(--radius-md);
-  color: #FAF7F0;
+  color: var(--cream);
 }
 
 .typeMeta {
@@ -276,7 +276,7 @@
 
 .specimenSectionLabel {
   font-family: var(--font-serif);
-  font-size: 1rem;
+  font-size: var(--text-body);
   font-weight: var(--weight-title);
   font-variation-settings: var(--font-sharp);
   text-transform: uppercase;
@@ -489,7 +489,7 @@
 
 .statusBadge {
   font-family: var(--font-sans);
-  font-size: 0.75rem;
+  font-size: var(--text-label);
   font-weight: var(--weight-label);
   text-transform: uppercase;
   letter-spacing: 0.03em;
@@ -511,7 +511,7 @@
 
 .tag {
   font-family: var(--font-sans);
-  font-size: 0.75rem;
+  font-size: var(--text-label);
   font-weight: var(--weight-label);
   color: var(--olive-dark);
   background: var(--surface);
@@ -664,7 +664,7 @@
   font-size: var(--text-h4);
   font-weight: var(--weight-title);
   font-variation-settings: var(--font-soft);
-  color: #FAF7F0;
+  color: var(--cream);
   margin-bottom: 8px;
 }
 
@@ -694,8 +694,8 @@
 }
 
 .darkSection {
-  background: #2C2C28;
-  color: #FAF7F0;
+  background: var(--text-heading);
+  color: var(--cream);
   padding: var(--space-md);
   border-radius: var(--radius-lg);
   margin-bottom: var(--space-md);
