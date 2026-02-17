@@ -199,13 +199,13 @@
 }
 
 .buildingCardContent {
-  padding: 20px 20px var(--space-content-gap);
+  padding: 24px;
 }
 
 .buildingCardTitle {
   font-family: var(--font-serif);
   font-size: 24px;
-  font-weight: var(--weight-title);
+  font-weight: 300;
   color: var(--text-heading);
   margin-bottom: 6px;
 }
@@ -213,11 +213,11 @@
 .buildingCardTags {
   font-size: 15px;
   color: var(--text-body);
-  margin-bottom: 20px;
+  margin-bottom: 24px;
 }
 
 .buildingCardDescription {
-  font-size: 15px;
+  font-size: 16px;
   line-height: 1.6;
   color: var(--text-body);
   margin: 0;

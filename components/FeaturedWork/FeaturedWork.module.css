@@ -90,7 +90,7 @@
 
 /* Stacked content */
 .contentStacked {
-  padding: var(--space-content-gap) var(--space-lg) var(--space-md);
+  padding: 32px var(--space-lg) var(--space-md);
 }
 
 .titleStacked {
@@ -100,11 +100,11 @@
 .subtitleStacked {
   font-size: 17px;
   margin-top: 6px;
-  margin-bottom: 20px;
+  margin-bottom: 28px;
 }
 
 .descriptionStacked {
-  font-size: 16px;
+  font-size: 18px;
   max-width: 640px;
 }
 
@@ -130,7 +130,7 @@
 }
 
 .contentSide {
-  padding: var(--space-md) var(--space-md);
+  padding: 40px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -143,11 +143,11 @@
 .subtitleSide {
   font-size: 17px;
   margin-top: 6px;
-  margin-bottom: 20px;
+  margin-bottom: 28px;
 }
 
 .descriptionSide {
-  font-size: 16px;
+  font-size: 17px;
 }
 
 .contentSide .cta {
@@ -178,14 +178,14 @@
   display: flex;
   gap: var(--space-xs);
   flex-wrap: wrap;
-  margin-bottom: 20px;
+  margin-bottom: 28px;
 }
 
 .description {
   font-family: var(--font-sans);
   color: var(--text-body);
   line-height: 1.6;
-  margin: 0 0 24px;
+  margin: 0 0 32px;
 }
 
 .cta {
@@ -257,11 +257,11 @@
 
 .moreLabel {
   font-family: var(--font-sans);
-  font-size: 12px;
-  font-weight: 400;
+  font-size: 14px;
+  font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  color: var(--text-body);
+  color: var(--text-heading);
   margin: 0 0 var(--space-content-gap);
 }
 
@@ -306,7 +306,7 @@
   display: flex;
   flex-direction: column;
   flex: 1;
-  padding: 20px 20px var(--space-content-gap);
+  padding: 24px;
 }
 
 .smallTitle {
@@ -320,23 +320,23 @@
 
 .smallSubtitle {
   font-family: var(--font-serif);
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 300;
   font-style: italic;
   color: var(--text-body);
-  margin: 6px 0 20px;
+  margin: 6px 0 24px;
 }
 
 .smallTags {
   display: flex;
   gap: var(--space-xs);
   flex-wrap: wrap;
-  margin-bottom: 20px;
+  margin-bottom: 24px;
 }
 
 .smallDescription {
   font-family: var(--font-sans);
-  font-size: 15px;
+  font-size: 16px;
   color: var(--text-body);
   line-height: 1.6;
   margin: 0 0 24px;
@@ -394,7 +394,7 @@
   }
 
   .contentStacked {
-    padding: 24px 28px;
+    padding: 28px 28px;
   }
 
   .titleStacked {
@@ -419,7 +419,7 @@
   }
 
   .contentSide {
-    padding: 24px 28px;
+    padding: 28px 28px;
   }
 
   /* Small cards grid → single column */

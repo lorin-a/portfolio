@@ -70,7 +70,7 @@ const featuredProjects = [
 const moreProjects = [
   {
     title: 'SomeBuddy',
-    subtitle: 'Lightweight Socializing for Grad Students',
+    subtitle: 'Lightweight Campus Socialization',
     description:
       'A social app concept addressing campus loneliness at CMU through GPS-based peer connection and low-effort plans.',
     tags: [
@@ -84,7 +84,7 @@ const moreProjects = [
   },
   {
     title: 'Bridging the G.A.P.',
-    subtitle: 'Approachable Bike Touring for Beginners',
+    subtitle: 'Bike Touring for Beginners',
     description:
       'Rebrand campaign for the Great Allegheny Passage trail with educational resources, mobile app concept, and environmental graphics.',
     tags: [
