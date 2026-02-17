@@ -18,7 +18,6 @@
 }
 
 /* ===== TRACK RINGS ===== */
-/* Hidden by default, shown when activated */
 .trackInner {
   position: absolute;
   top: 50%;
@@ -71,7 +70,6 @@
   z-index: 3;
   overflow: hidden;
   border: 3px solid var(--sage, #A8B5A0);
-  /* Entry animation - grow in with bounce */
   opacity: 0;
   animation: photoGrowIn var(--motion-medium, 600ms) var(--ease-bounce, cubic-bezier(0.34, 1.4, 0.64, 1)) both;
 }
@@ -106,11 +104,17 @@
   border-radius: 50%;
   opacity: 0;
   transform: translate(-50%, -50%);
-  transition: box-shadow var(--motion-fast) var(--ease-default),
+  transition: opacity 0.45s ease,
+              box-shadow var(--motion-fast) var(--ease-default),
               transform var(--motion-fast) var(--ease-default);
   border: none;
   background: none;
   padding: 0;
+}
+
+/* Dots fade in as a group */
+.dot.dotsVisible {
+  opacity: 1;
 }
 
 .dot:hover,
@@ -140,7 +144,7 @@
   border: 1.5px solid currentColor;
   transform: translate(-50%, -50%);
   opacity: 0;
-  animation: ringPulse var(--motion-slow) var(--ease-out) forwards;
+  animation: ringPulse var(--motion-slow) ease-out forwards;
 }
 
 @keyframes ringPulse {
@@ -155,7 +159,7 @@
 }
 
 /* ===== DOT BREATHING PULSE ===== */
-.breathing {
+.dot.breathing {
   animation: dotBreathe 3.5s var(--ease-pulse) infinite;
 }
 
@@ -170,9 +174,51 @@
   }
 }
 
-/* Active dot should not breathe */
+/* Active dot stops breathing */
 .dot.active.breathing {
   animation: none;
+}
+
+/* ===== AMPLIFY DOT POP ===== */
+/* Overrides breathing temporarily — must come after .breathing in source */
+.dot.popping {
+  animation: dotPop 2.5s ease-in-out forwards;
+}
+
+@keyframes dotPop {
+  0% { transform: translate(-50%, -50%) scale(1); }
+  12% { transform: translate(-50%, -50%) scale(1.35); }
+  28% { transform: translate(-50%, -50%) scale(1); }
+  48% { transform: translate(-50%, -50%) scale(1); }
+  60% { transform: translate(-50%, -50%) scale(1.35); }
+  76% { transform: translate(-50%, -50%) scale(1); }
+  100% { transform: translate(-50%, -50%) scale(1); }
+}
+
+/* Ring hint radiating outward on each pop */
+.dot.popping::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1.5px solid currentColor;
+  transform: translate(-50%, -50%) scale(0.8);
+  opacity: 0;
+  animation: ringHint 1.2s ease-out 2;
+}
+
+@keyframes ringHint {
+  0% {
+    transform: translate(-50%, -50%) scale(0.8);
+    opacity: 0.3;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(2.2);
+    opacity: 0;
+  }
 }
 
 /* Fill dots (mantras) */
@@ -222,6 +268,50 @@
   color: var(--olive, #8B8525);
 }
 
+/* ===== INSTRUCTION TEXT ===== */
+/* Desktop: positioned to the right of the Amplify dot */
+/* Amplify dot is at angleToPos(120, 190) ≈ (374, 305) */
+.instructionDesktop {
+  position: absolute;
+  left: 400px;
+  top: 305px;
+  transform: translateY(-50%) translateX(-4px);
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 12px;
+  color: var(--text-dark, #2D2B1E);
+  opacity: 0;
+  transition: opacity 0.6s ease, transform 0.6s ease;
+  pointer-events: none;
+  white-space: nowrap;
+  z-index: 5;
+}
+
+.instructionDesktop.instructionShow {
+  opacity: 0.4;
+  transform: translateY(-50%) translateX(0);
+}
+
+/* Mobile/tablet: centered below dial */
+.instructionMobile {
+  display: none;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 12px;
+  color: var(--text-dark, #2D2B1E);
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+  pointer-events: none;
+  white-space: nowrap;
+  text-align: center;
+}
+
+.instructionMobile.instructionShow {
+  opacity: 0.4;
+  transform: translateY(0);
+}
+
 /* ===== LABEL AREA ===== */
 .labelArea {
   position: relative;
@@ -240,7 +330,7 @@
   line-height: 36px;
   padding: 0 20px;
   border-radius: var(--radius-pill);
-  font-size: 13px;
+  font-size: var(--text-body, 16px);
   pointer-events: none;
   will-change: transform, opacity;
   transition: transform var(--motion-slow) var(--ease-default),
@@ -308,12 +398,11 @@
   font-weight: var(--weight-quote);
   font-style: italic;
   font-variation-settings: var(--font-soft);
-  font-size: 14px;
+  font-size: var(--text-body, 16px);
   color: var(--text-dark, #2D2B1E);
   text-align: center;
   line-height: 1.5;
-  max-width: 320px;
-  white-space: normal;
+  white-space: nowrap;
 }
 
 .tooltip.visible {
@@ -321,7 +410,7 @@
   transform: translate(-50%, 0);
 }
 
-/* ===== RESPONSIVE ===== */
+/* ===== RESPONSIVE - TABLET ===== */
 @media (max-width: 900px) {
   .dial {
     width: 380px;
@@ -348,11 +437,21 @@
   }
 
   .pill {
-    font-size: 12px;
+    font-size: 14px;
     padding: 0 16px;
+  }
+
+  /* Switch from desktop to mobile instruction text */
+  .instructionDesktop {
+    display: none;
+  }
+
+  .instructionMobile {
+    display: block;
   }
 }
 
+/* ===== RESPONSIVE - MOBILE ===== */
 @media (max-width: 600px) {
   .dial {
     width: 320px;
@@ -379,15 +478,14 @@
   }
 
   .pill {
-    font-size: 11px;
+    font-size: var(--text-caption, 12px);
     padding: 0 14px;
     height: 32px;
     line-height: 32px;
   }
 
   .tooltip {
-    font-size: 13px;
-    max-width: 280px;
+    font-size: 14px;
   }
 }
 
@@ -416,8 +514,11 @@
     transition-duration: 0.01s;
   }
 
-  .dot {
+  .dot,
+  .dot.dotsVisible {
     opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+    transition-duration: 0.01s;
   }
 
   .dot.active::after {
@@ -426,5 +527,20 @@
 
   .breathing {
     animation: none;
+  }
+
+  .dot.popping {
+    animation: none;
+  }
+
+  .dot.popping::before {
+    animation: none;
+    opacity: 0;
+  }
+
+  /* Show instruction immediately */
+  .instructionDesktop,
+  .instructionMobile {
+    transition-duration: 0.01s;
   }
 }

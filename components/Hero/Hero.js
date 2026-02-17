@@ -12,7 +12,6 @@ export default function Hero() {
   const [started, setStarted] = useState(false)
   const [underlineVisible, setUnderlineVisible] = useState(false)
   const [ctaVisible, setCtaVisible] = useState(false)
-  const [ringsActive, setRingsActive] = useState(false)
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false)
 
   // Define lines with their text content for duration calculation
@@ -45,7 +44,6 @@ export default function Hero() {
       setStarted(true)
       setUnderlineVisible(true)
       setCtaVisible(true)
-      setRingsActive(true)
     }
   }, [])
 
@@ -57,14 +55,11 @@ export default function Hero() {
     const underlineTimer = setTimeout(() => setUnderlineVisible(true), 900 + (lastLineEnd * 1000) + 300)
     // CTA appears after a brief pause following the underline
     const ctaTimer = setTimeout(() => setCtaVisible(true), 900 + (lastLineEnd * 1000) + 1400)
-    // Rings activate with the CTA
-    const ringsTimer = setTimeout(() => setRingsActive(true), 900 + (lastLineEnd * 1000) + 1400)
 
     return () => {
       clearTimeout(startTimer)
       clearTimeout(underlineTimer)
       clearTimeout(ctaTimer)
-      clearTimeout(ringsTimer)
     }
   }, [prefersReducedMotion, lastLineEnd])
 
@@ -74,7 +69,7 @@ export default function Hero() {
 
   return (
     <section className={styles.hero} id="hero">
-      <InteractiveDial ringsActive={ringsActive} />
+      <InteractiveDial />
 
       {/* Headline as separate lines */}
       <h1 className={styles.headline}>
