@@ -55,7 +55,7 @@ const featuredProjects = [
       'A systems design response to food insecurity in Pittsburgh, mapping interventions across individual, community, and policy scales.',
     tags: [
       { label: 'Systems Thinking', color: 'olive' },
-      { label: 'Design Research', color: 'terracotta' },
+      { label: 'Futures', color: 'terracotta' },
       { label: 'Data Visualization', color: 'sage' },
     ],
     heroImage: '/images/projects/transition-design-hero.jpg',

@@ -286,10 +286,10 @@
 /* ===== DESCRIPTION ===== */
 .description {
   font-family: var(--font-sans);
-  font-size: 14px;
+  font-size: 16px;
   color: var(--text-light);
   line-height: 1.6;
-  max-width: 260px;
+  max-width: 280px;
   margin: 0;
   /* Animation: same as title */
   opacity: 1;
@@ -342,8 +342,8 @@
   }
 
   .description {
-    font-size: 13px;
-    max-width: 220px;
+    font-size: 14px;
+    max-width: 240px;
   }
 
   .connectingLine {
