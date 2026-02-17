@@ -1,0 +1,469 @@
+/* ===========================================
+   FEATURED WORK SECTION
+   =========================================== */
+
+.section {
+  background-color: rgba(45, 43, 30, 0.04);
+  padding: 48px var(--container-padding) 72px;
+}
+
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+/* ===========================================
+   FEATURED CARDS GRID (top tier)
+   =========================================== */
+
+.featuredGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  margin-bottom: 48px;
+}
+
+/* ===========================================
+   SHARED CARD STYLES
+   =========================================== */
+
+.cardLink {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  background-color: var(--cream);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+              box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.cardLink:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 56px rgba(45, 43, 30, 0.1);
+}
+
+.cardLink:focus-visible {
+  outline: 2px solid var(--olive);
+  outline-offset: 4px;
+}
+
+/* ===========================================
+   STACKED LAYOUT (Groundswell)
+   =========================================== */
+
+.cardStacked {
+  display: block;
+}
+
+.imageStacked {
+  position: relative;
+  height: 380px;
+  overflow: hidden;
+}
+
+.imageSide {
+  position: relative;
+  overflow: hidden;
+}
+
+.image {
+  object-fit: cover;
+  object-position: center;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.cardLink:hover .image {
+  transform: scale(1.03);
+}
+
+/* Status badge */
+.statusBadge {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  z-index: 2;
+  font-family: var(--font-sans);
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 5px 14px;
+  border-radius: 100px;
+  background-color: var(--olive);
+  color: var(--cream);
+}
+
+/* Stacked content */
+.contentStacked {
+  padding: var(--space-content-gap) var(--space-md) var(--space-md);
+}
+
+.titleStacked {
+  font-size: 36px;
+}
+
+.subtitleStacked {
+  font-size: 16px;
+  margin-top: var(--space-sm);
+  margin-bottom: var(--space-content-gap);
+}
+
+.descriptionStacked {
+  font-size: 14.5px;
+  max-width: 640px;
+}
+
+/* ===========================================
+   SIDE LAYOUT (BirthStory, Transition Design)
+   =========================================== */
+
+.cardSide {
+  display: grid;
+  grid-template-columns: 1fr 42%;
+  min-height: 320px;
+}
+
+.cardSide .imageSide {
+  order: 2;
+}
+
+.contentSide {
+  padding: var(--space-md) var(--space-content-gap);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.titleSide {
+  font-size: 32px;
+}
+
+.subtitleSide {
+  font-size: 15px;
+  margin-top: var(--space-sm);
+  margin-bottom: var(--space-content-gap);
+}
+
+.descriptionSide {
+  font-size: 14px;
+}
+
+.contentSide .cta {
+  margin-top: auto;
+}
+
+/* ===========================================
+   SHARED CONTENT STYLES
+   =========================================== */
+
+.title {
+  font-family: var(--font-serif);
+  font-weight: 300;
+  color: var(--text-heading);
+  line-height: 1.1;
+  margin: 0;
+}
+
+.subtitle {
+  font-family: var(--font-serif);
+  font-weight: 300;
+  font-style: italic;
+  color: var(--text-light);
+  margin: 0;
+}
+
+.tags {
+  display: flex;
+  gap: var(--space-xs);
+  flex-wrap: wrap;
+  margin-bottom: var(--space-content-gap);
+}
+
+.description {
+  font-family: var(--font-sans);
+  color: var(--text-light);
+  line-height: 1.6;
+  margin: 0 0 var(--space-content-gap);
+}
+
+.cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--olive);
+  transition: gap 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.cardLink:hover .cta {
+  gap: 10px;
+}
+
+.ctaArrowText {
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ===========================================
+   TAG PILLS
+   =========================================== */
+
+.tag {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  padding: 5px 14px;
+  border-radius: 100px;
+  border: 1.5px solid;
+  white-space: nowrap;
+}
+
+.tagSmall {
+  font-size: 10px;
+  padding: 4px 10px;
+}
+
+.tagOlive {
+  color: var(--olive);
+  border-color: var(--olive);
+  background-color: rgba(139, 133, 37, 0.06);
+}
+
+.tagTerracotta {
+  color: var(--terracotta);
+  border-color: var(--terracotta);
+  background-color: rgba(181, 101, 74, 0.06);
+}
+
+.tagPlum {
+  color: var(--plum);
+  border-color: var(--plum);
+  background-color: rgba(139, 94, 131, 0.06);
+}
+
+.tagSage {
+  color: #5a7050;
+  border-color: var(--sage);
+  background-color: rgba(168, 181, 160, 0.1);
+}
+
+/* ===========================================
+   MORE WORK (bottom tier)
+   =========================================== */
+
+.moreLabel {
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-light);
+  opacity: 0.6;
+  margin: 0 0 var(--space-content-gap);
+}
+
+.moreGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-content-gap);
+}
+
+/* ===========================================
+   SMALL CARDS
+   =========================================== */
+
+.smallCardLink {
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  color: inherit;
+  background-color: var(--cream);
+  border-radius: 10px;
+  overflow: hidden;
+  height: 100%;
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+              box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.smallCardLink:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 36px rgba(45, 43, 30, 0.1);
+}
+
+.smallCardLink:focus-visible {
+  outline: 2px solid var(--olive);
+  outline-offset: 4px;
+}
+
+.smallImageWrapper {
+  position: relative;
+  height: 180px;
+  overflow: hidden;
+}
+
+.smallCardLink:hover .image {
+  transform: scale(1.04);
+}
+
+.smallContent {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: var(--space-sm) var(--space-sm) var(--space-content-gap);
+}
+
+.smallTitle {
+  font-family: var(--font-serif);
+  font-size: 22px;
+  font-weight: 300;
+  color: var(--text-heading);
+  line-height: 1.15;
+  margin: 0;
+}
+
+.smallSubtitle {
+  font-family: var(--font-serif);
+  font-size: 13px;
+  font-weight: 300;
+  font-style: italic;
+  color: var(--text-light);
+  margin: var(--space-xs) 0 var(--space-sm);
+}
+
+.smallTags {
+  display: flex;
+  gap: var(--space-xs);
+  flex-wrap: wrap;
+  margin-bottom: var(--space-sm);
+}
+
+.smallDescription {
+  font-family: var(--font-sans);
+  font-size: 13px;
+  color: var(--text-light);
+  line-height: 1.55;
+  margin: 0 0 var(--space-sm);
+}
+
+.smallCta {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--olive);
+  margin-top: auto;
+  transition: gap 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.smallCardLink:hover .smallCta {
+  gap: 10px;
+}
+
+/* ===========================================
+   RESPONSIVE — TABLET (≤900px)
+   =========================================== */
+
+@media (max-width: 900px) {
+  .imageStacked {
+    height: 300px;
+  }
+
+  .cardSide {
+    grid-template-columns: 1fr 38%;
+  }
+
+  .moreGrid {
+    gap: 16px;
+  }
+
+  .smallImageWrapper {
+    height: 150px;
+  }
+}
+
+/* ===========================================
+   RESPONSIVE — MOBILE (≤700px)
+   =========================================== */
+
+@media (max-width: 700px) {
+  .imageStacked {
+    height: 220px;
+  }
+
+  .contentStacked {
+    padding: 24px;
+  }
+
+  .titleStacked {
+    font-size: 28px;
+  }
+
+  .titleSide {
+    font-size: 26px;
+  }
+
+  /* Side cards become stacked on mobile */
+  .cardSide {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .cardSide .imageSide {
+    order: -1;
+    height: 200px;
+  }
+
+  .contentSide {
+    padding: 24px;
+  }
+
+  /* Small cards grid → single column */
+  .moreGrid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .smallImageWrapper {
+    height: 200px;
+  }
+}
+
+/* ===========================================
+   REDUCED MOTION
+   =========================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .cardLink,
+  .smallCardLink {
+    transition: box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .cardLink:hover,
+  .smallCardLink:hover {
+    transform: none;
+  }
+
+  .image {
+    transition: none;
+  }
+
+  .cardLink:hover .image,
+  .smallCardLink:hover .image {
+    transform: none;
+  }
+
+  .cta,
+  .smallCta {
+    transition: none;
+  }
+
+  .cardLink:hover .cta,
+  .smallCardLink:hover .smallCta {
+    gap: 6px;
+  }
+}

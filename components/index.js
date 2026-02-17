@@ -12,6 +12,7 @@ export { default as Footer } from './Footer/Footer'
 export { default as Hero } from './Hero/Hero'
 export { default as InteractiveDial } from './InteractiveDial/InteractiveDial'
 export { default as Squiggle } from './Squiggle/Squiggle'
+export { default as FeaturedWork } from './FeaturedWork/FeaturedWork'
 
 // Project Pages
 export { default as ProjectNav } from './ProjectNav/ProjectNav'

@@ -4,12 +4,17 @@
 
 /* ===== SECTION WRAPPER ===== */
 .section {
-  padding: var(--space-xl) var(--container-padding);
+  padding: 72px var(--container-padding) 0;
+  background-color: rgba(45, 43, 30, 0.04);
+  border-top: 1px solid rgba(45, 43, 30, 0.04);
 }
 
 .inner {
-  max-width: 960px;
+  max-width: 1000px;
   margin: 0 auto;
+  background-color: var(--cream);
+  border-radius: 12px;
+  padding: var(--space-xl) var(--space-md);
 }
 
 /* ===== HEADER ===== */
@@ -328,6 +333,14 @@
    RESPONSIVE — MOBILE (≤600px)
    =========================================== */
 @media (max-width: 600px) {
+  .section {
+    padding: var(--space-lg) var(--container-padding) 0;
+  }
+
+  .inner {
+    padding: var(--space-lg) var(--space-sm);
+  }
+
   .header {
     margin-bottom: 36px;
   }

@@ -104,7 +104,7 @@
    BUILDING NOW SECTION — Mini case studies
    =========================================== */
 .building {
-  padding: 0 var(--container-padding);
+  padding: var(--space-xl) var(--container-padding) 0;
   max-width: var(--max-width);
   margin: 0 auto;
 }
@@ -118,7 +118,7 @@
 .buildingTitle {
   font-family: var(--font-serif);
   font-size: var(--text-h2);
-  font-weight: var(--weight-title);
+  font-weight: 300;
   color: var(--text-heading);
   margin-bottom: 1rem;
 }

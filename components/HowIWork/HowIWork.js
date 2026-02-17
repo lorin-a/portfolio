@@ -16,7 +16,7 @@ const columns = [
     color: 'terracotta',
     title: 'Stories',
     description:
-      'I translate lived experience into narratives that make complexity accessible and catalyze meaningful change.',
+      'I translate lived experience into narratives that make complexity accessible and catalyze change.',
   },
   {
     key: 'solutions',
