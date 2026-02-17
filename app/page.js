@@ -66,25 +66,29 @@ const projects = [
 
 const buildingProjects = [
   {
+    title: 'Groundswell Data Viz',
+    tags: 'Data Visualization • Research',
+    stage: 'In Development',
+    description: 'Interactive visualization of relationship patterns from healthcare worker interviews.',
+    previewType: 'video',
+    preview: '/video/groundswell/entrypage.mp4',
+  },
+  {
     title: 'Whelm',
     tags: 'Mental Health • Emotional Granularity',
     stage: 'Active Development',
     description: 'Mental health app exploring emotional granularity and nuanced self-awareness beyond binary good/bad feelings.',
-    preview: '/images/projects/whelm-preview.gif',
+    previewType: 'video',
+    preview: '/video/whelm-preview.mp4',
+    videoZoom: true,
   },
   {
     title: 'TRO Tool',
     tags: 'Safety • Documentation • Access',
     stage: 'Concept Phase',
     description: 'Documentation system for survivors of abuse navigating temporary restraining orders. Early exploration.',
-    preview: '/images/projects/tro-preview.gif',
-  },
-  {
-    title: 'Groundswell Data Viz',
-    tags: 'Data Visualization • Research',
-    stage: 'In Development',
-    description: 'Interactive visualization of relationship patterns from healthcare worker interviews. Applying for grant funding to continue iteration.',
-    preview: '/images/projects/groundswell-dataviz-preview.gif',
+    previewType: 'none',
+    preview: null,
   },
 ]
 
@@ -127,11 +131,22 @@ export default function Home() {
             <AnimatedElement key={project.title} delay={i * 150}>
               <article className={styles.buildingCard}>
                 <div className={styles.buildingPreview}>
-                  <img
-                    src={project.preview}
-                    alt={`${project.title} preview`}
-                    className={styles.buildingPreviewImage}
-                  />
+                  {project.previewType === 'video' && (
+                    <video
+                      src={project.preview}
+                      autoPlay
+                      loop
+                      muted
+                      playsInline
+                      aria-hidden="true"
+                      className={`${styles.buildingPreviewVideo} ${project.videoZoom ? styles.buildingPreviewZoomed : ''}`}
+                    />
+                  )}
+                  {project.previewType === 'none' && (
+                    <div className={styles.buildingPreviewPlaceholder}>
+                      <span className={styles.placeholderText}>Coming Soon</span>
+                    </div>
+                  )}
                   <span className={styles.stageBadge}>{project.stage}</span>
                 </div>
                 <div className={styles.buildingCardContent}>
