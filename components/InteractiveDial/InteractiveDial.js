@@ -118,7 +118,7 @@ export default function InteractiveDial() {
       pillHide(key)
       setTooltipVisible(false)
       setActiveKey(null)
-      if (labelAreaRef.current) labelAreaRef.current.style.height = '44px'
+      if (labelAreaRef.current) labelAreaRef.current.style.height = '0'
     } else {
       // Dismiss previous if any
       if (activeKey) pillHide(activeKey)
@@ -152,7 +152,7 @@ export default function InteractiveDial() {
         pillHide(activeKey)
         setTooltipVisible(false)
         setActiveKey(null)
-        if (labelAreaRef.current) labelAreaRef.current.style.height = '44px'
+        if (labelAreaRef.current) labelAreaRef.current.style.height = '0'
       }
     }
 

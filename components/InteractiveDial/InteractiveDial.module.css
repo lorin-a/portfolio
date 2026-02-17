@@ -8,6 +8,7 @@
   flex-direction: column;
   align-items: center;
   gap: var(--space-content-gap);
+  margin-bottom: var(--space-sm);
   user-select: none;
 }
 
@@ -316,8 +317,9 @@
 .labelArea {
   position: relative;
   width: 420px;
-  height: 44px;
+  height: 0;
   transition: height var(--motion-slow) var(--ease-default);
+  overflow: visible;
 }
 
 /* ===== PILLS ===== */
@@ -330,7 +332,10 @@
   line-height: 36px;
   padding: 0 20px;
   border-radius: var(--radius-pill);
+  font-family: var(--font-sans);
   font-size: var(--text-body, 16px);
+  font-weight: normal;
+  font-style: normal;
   pointer-events: none;
   will-change: transform, opacity;
   transition: transform var(--motion-slow) var(--ease-default),
@@ -342,8 +347,6 @@
 
 /* Bold pills (mantras) */
 .pillBold {
-  font-weight: var(--weight-label);
-  letter-spacing: 0.03em;
   color: var(--cream, #FAF7F0);
 }
 
@@ -361,10 +364,6 @@
 
 /* Soft pills (paradoxes) */
 .pillSoft {
-  font-family: var(--font-serif);
-  font-style: italic;
-  font-weight: var(--weight-quote);
-  font-variation-settings: var(--font-soft);
   background: var(--cream, #FAF7F0);
   border-style: dashed;
 }
@@ -394,10 +393,9 @@
   transition: transform var(--motion-medium) var(--ease-default),
               opacity var(--motion-medium) var(--ease-default);
   pointer-events: none;
-  font-family: var(--font-serif);
-  font-weight: var(--weight-quote);
-  font-style: italic;
-  font-variation-settings: var(--font-soft);
+  font-family: var(--font-sans);
+  font-weight: normal;
+  font-style: normal;
   font-size: var(--text-body, 16px);
   color: var(--text-dark, #2D2B1E);
   text-align: center;

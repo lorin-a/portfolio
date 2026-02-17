@@ -21,7 +21,7 @@ export const DOTS = {
     ring: 'outer',
     color: 'olive',
     angle: 0,
-    label: 'Translating Complexity',
+    label: 'Distilling Complexity',
     tooltip: 'Honoring nuance and making information approachable',
     pillStyle: 'bold',
   },
