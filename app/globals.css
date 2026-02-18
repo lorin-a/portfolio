@@ -20,7 +20,7 @@
   --ease-pulse: ease-in-out;
 
   /* Hero Animation Colors */
-  --cream: #FAF7F0;
+  --cream: #F7F7F7;
   --hero-olive: #8B8525;
   --hero-olive-dark: #3C3A1F;
   --hero-text-dark: #2D2B1E;
@@ -57,8 +57,8 @@
   /* Neutrals */
   --text-heading: #2C2C28;
   --text-body: #4A4A46;
-  --surface: #FAF7F0;
-  --background: #FAF7F0;
+  --surface: #F7F7F7;
+  --background: #F7F7F7;
   --border: #E8E4D8;
 
   /* Legacy color aliases (for existing components) */

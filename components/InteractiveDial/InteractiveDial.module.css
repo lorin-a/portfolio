@@ -250,7 +250,7 @@
 .dotRing {
   width: 18px;
   height: 18px;
-  background: var(--cream, #FAF7F0);
+  background: var(--cream, #F7F7F7);
   border: 2px solid;
 }
 
@@ -347,7 +347,7 @@
 
 /* Bold pills (mantras) */
 .pillBold {
-  color: var(--cream, #FAF7F0);
+  color: var(--cream, #F7F7F7);
 }
 
 .pillBold.colorOlive {
@@ -364,7 +364,7 @@
 
 /* Soft pills (paradoxes) */
 .pillSoft {
-  background: var(--cream, #FAF7F0);
+  background: var(--cream, #F7F7F7);
   border-style: dashed;
 }
 

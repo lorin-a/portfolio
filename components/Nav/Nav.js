@@ -39,6 +39,15 @@ export default function Nav() {
           <Link href="/about" className={styles.navLink} onClick={closeMenu}>
             About
           </Link>
+          <a
+            href="#"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={styles.navLink}
+            onClick={closeMenu}
+          >
+            Old Portfolio
+          </a>
           <div className={styles.socialLinks}>
             <a 
               href="https://medium.com/@lorinanderberg" 
