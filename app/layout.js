@@ -1,5 +1,5 @@
 import './globals.css'
-import { Fraunces, DM_Sans } from 'next/font/google'
+import { Fraunces, Open_Sans } from 'next/font/google'
 import Nav from '@/components/Nav/Nav'
 import Footer from '@/components/Footer/Footer'
 
@@ -11,11 +11,11 @@ const fraunces = Fraunces({
   display: 'swap',
 })
 
-const dmSans = DM_Sans({
+const openSans = Open_Sans({
   subsets: ['latin'],
-  weight: ['400', '500'],
+  weight: ['400', '500', '600'],
   style: ['normal', 'italic'],
-  variable: '--font-dm-sans',
+  variable: '--font-open-sans',
   display: 'swap',
 })
 
@@ -47,7 +47,7 @@ export const viewport = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={`${fraunces.variable} ${dmSans.variable}`}>
+    <html lang="en" className={`${fraunces.variable} ${openSans.variable}`}>
       <head>
         <link rel="icon" href="/favicon.ico" sizes="any" />
       </head>

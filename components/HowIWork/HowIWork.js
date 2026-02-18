@@ -3,10 +3,11 @@
 import { useEffect, useRef, useState } from 'react'
 import styles from './HowIWork.module.css'
 
-const columns = [
+const pillars = [
   {
     key: 'systems',
     color: 'olive',
+    side: 'left',
     title: 'Systems',
     description:
       'I map complexity to reveal root causes using rigorous participatory research and systems thinking.',
@@ -14,6 +15,7 @@ const columns = [
   {
     key: 'stories',
     color: 'terracotta',
+    side: 'right',
     title: 'Stories',
     description:
       'I translate lived experience into narratives that make complexity accessible and catalyze change.',
@@ -21,6 +23,7 @@ const columns = [
   {
     key: 'solutions',
     color: 'plum',
+    side: 'left',
     title: 'Solutions',
     description:
       'I create interventions that transform both individual experiences and systemic barriers simultaneously.',
@@ -31,6 +34,11 @@ const colorClass = {
   olive: styles.olive,
   terracotta: styles.terracotta,
   plum: styles.plum,
+}
+
+const sideClass = {
+  left: styles.sideLeft,
+  right: styles.sideRight,
 }
 
 export default function HowIWork() {
@@ -83,27 +91,25 @@ export default function HowIWork() {
       className={wrapperClass}
       aria-labelledby="how-i-work-heading"
     >
-      <div className={styles.inner}>
-        <div className={styles.header}>
-          <h2 id="how-i-work-heading" className={styles.heading}>
-            How I Work
-          </h2>
-          <p className={styles.subhead}>
-            My approach combines rigorous research, authentic storytelling, and
-            collaborative design.
-          </p>
-        </div>
+      <div className={styles.content}>
+        <h2 id="how-i-work-heading" className={styles.heading}>
+          How I Work
+        </h2>
 
-        <div className={styles.grid}>
-          {/* Connecting dashed line — real element for clip-path animation */}
-          <div className={styles.connectingLine} aria-hidden="true" />
+        <div className={styles.timeline}>
+          {/* Vertical dashed connector line */}
+          <div className={styles.connectorLine} aria-hidden="true" />
 
-          {columns.map((col) => (
-            <div key={col.key} className={`${styles.column} ${colorClass[col.color]}`}>
+          {pillars.map((pillar, index) => (
+            <div
+              key={pillar.key}
+              className={`${styles.pillar} ${colorClass[pillar.color]} ${sideClass[pillar.side]} ${styles[`pillar${index + 1}`]}`}
+            >
               <div className={styles.dot} aria-hidden="true" />
-              <div className={styles.stem} aria-hidden="true" />
-              <h3 className={styles.title}>{col.title}</h3>
-              <p className={styles.description}>{col.description}</p>
+              <div className={styles.textBlock}>
+                <h3 className={styles.title}>{pillar.title}</h3>
+                <p className={styles.description}>{pillar.description}</p>
+              </div>
             </div>
           ))}
         </div>

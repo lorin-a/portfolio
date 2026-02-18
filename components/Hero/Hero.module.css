@@ -84,14 +84,16 @@
   color: var(--text-heading);
 }
 
-/* Colored spans */
+/* Colored spans — wonky italics only here */
 .olive {
   font-style: italic;
+  font-variation-settings: var(--font-wonky);
   color: var(--olive);
 }
 
 .plum {
   font-style: italic;
+  font-variation-settings: var(--font-wonky);
   color: var(--plum);
 }
 

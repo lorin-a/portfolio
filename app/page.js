@@ -1,7 +1,7 @@
 import Hero from '@/components/Hero/Hero'
 import AnimatedElement from '@/components/AnimatedElement/AnimatedElement'
 import HowIWork from '@/components/HowIWork/HowIWork'
-import FeaturedWork from '@/components/FeaturedWork/FeaturedWork'
+import FeaturedWork from '@/components/FeaturedWork/FeaturedWorkExperimental'
 import styles from './page.module.css'
 
 const buildingProjects = [
@@ -46,6 +46,7 @@ export default function Home() {
 
       {/* Building Now Section */}
       <section className={styles.building}>
+        <div className={styles.buildingInner}>
         <AnimatedElement>
           <div className={styles.buildingHeader}>
             <h2 className={styles.buildingTitle}>Building Now</h2>
@@ -85,6 +86,7 @@ export default function Home() {
               </article>
             </AnimatedElement>
           ))}
+        </div>
         </div>
       </section>
     </main>

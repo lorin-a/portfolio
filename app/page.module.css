@@ -104,7 +104,11 @@
    BUILDING NOW SECTION — Mini case studies
    =========================================== */
 .building {
-  padding: var(--space-xl) var(--container-padding) 0;
+  padding: var(--space-xl) var(--container-padding);
+  background-color: rgba(45, 43, 30, 0.05);
+}
+
+.buildingInner {
   max-width: 1000px;
   margin: 0 auto;
 }
