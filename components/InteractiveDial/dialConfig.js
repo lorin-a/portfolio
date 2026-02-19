@@ -1,12 +1,12 @@
-// Dial dimensions (increased ~20% for larger hero image)
-export const DIAL_SIZE = 420;
-export const CX = DIAL_SIZE / 2; // 210
-export const CY = DIAL_SIZE / 2; // 210
-export const INNER_R = 140;
-export const OUTER_R = 190;
-export const PHOTO_SIZE = 210;
-export const INNER_TRACK_SIZE = 280;
-export const OUTER_TRACK_SIZE = 380;
+// Dial dimensions (scaled up ~25% — no CTA means more vertical room)
+export const DIAL_SIZE = 520;
+export const CX = DIAL_SIZE / 2; // 260
+export const CY = DIAL_SIZE / 2; // 260
+export const INNER_R = 174;
+export const OUTER_R = 236;
+export const PHOTO_SIZE = 260;
+export const INNER_TRACK_SIZE = 346;
+export const OUTER_TRACK_SIZE = 470;
 
 // Pill layout
 export const ROW_H = 36;

@@ -12,7 +12,6 @@ export default function Hero() {
   const [started, setStarted] = useState(false)
   const [underlineVisible, setUnderlineVisible] = useState(false)
   const [dialActive, setDialActive] = useState(false)
-  const [ctaVisible, setCtaVisible] = useState(false)
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false)
 
   // Define lines with their text content for duration calculation
@@ -45,7 +44,6 @@ export default function Hero() {
       setStarted(true)
       setUnderlineVisible(true)
       setDialActive(true)
-      setCtaVisible(true)
     }
   }, [])
 
@@ -56,22 +54,15 @@ export default function Hero() {
     // Underline appears shortly after the period shows
     const underlineTime = 900 + (lastLineEnd * 1000) + 300
     const underlineTimer = setTimeout(() => setUnderlineVisible(true), underlineTime)
-    // Dial activates ~1500ms after underline — rings expand, sentence slides down
-    const dialTimer = setTimeout(() => setDialActive(true), underlineTime + 1500)
-    // CTA deferred to ~8s after dialActive
-    const ctaTimer = setTimeout(() => setCtaVisible(true), underlineTime + 1500 + 8000)
+    // Dial activates ~800ms after underline — rings expand as underline finishes
+    const dialTimer = setTimeout(() => setDialActive(true), underlineTime + 800)
 
     return () => {
       clearTimeout(startTimer)
       clearTimeout(underlineTimer)
       clearTimeout(dialTimer)
-      clearTimeout(ctaTimer)
     }
   }, [prefersReducedMotion, lastLineEnd])
-
-  const scrollToWork = () => {
-    document.getElementById('work')?.scrollIntoView({ behavior: 'smooth' })
-  }
 
   return (
     <section className={styles.hero} id="hero">
@@ -110,15 +101,6 @@ export default function Hero() {
         </span>
       </h1>
 
-      <button
-        className={`${styles.cta} ${ctaVisible ? styles.visible : ''}`}
-        onClick={scrollToWork}
-      >
-        <span className={styles.ctaText}>See my work</span>
-        <svg className={styles.ctaArrow} viewBox="0 0 20 24" fill="none" aria-hidden="true">
-          <path d="M10 2v18M5 14l5 6 5-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-        </svg>
-      </button>
     </section>
   )
 }

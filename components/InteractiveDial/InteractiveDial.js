@@ -251,10 +251,10 @@ export default function InteractiveDial({ dialActive = false }) {
         {/* Photo */}
         <div className={styles.photoWrap}>
           <Image
-            src={cloudImg(HOME_IMAGES['lorin-photo'], 420)}
+            src={cloudImg(HOME_IMAGES['lorin-photo'], 520)}
             alt="Lorin Anderberg, smiling warmly at the camera"
             fill
-            sizes="210px"
+            sizes="260px"
           />
         </div>
 

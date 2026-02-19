@@ -14,13 +14,13 @@
 
 .dial {
   position: relative;
-  width: 420px;
-  height: 210px;
+  width: 520px;
+  height: 260px;
   transition: height var(--motion-slow) var(--ease-default);
 }
 
 .dial.dialActive {
-  height: 420px;
+  height: 520px;
 }
 
 /* ===== TRACK RINGS ===== */
@@ -28,8 +28,8 @@
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 280px;
-  height: 280px;
+  width: 346px;
+  height: 346px;
   border-radius: 50%;
   border: 2px dashed var(--sage, #A8B5A0);
   opacity: 0;
@@ -43,8 +43,8 @@
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 380px;
-  height: 380px;
+  width: 470px;
+  height: 470px;
   border-radius: 50%;
   border: 2px solid var(--sage, #A8B5A0);
   opacity: 0;
@@ -70,14 +70,14 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%) scale(0);
-  width: 210px;
-  height: 210px;
+  width: 260px;
+  height: 260px;
   border-radius: 50%;
   z-index: 3;
   overflow: hidden;
   border: none;
   opacity: 0;
-  animation: photoGrowIn var(--motion-slow, 900ms) var(--ease-bounce, cubic-bezier(0.34, 1.4, 0.64, 1)) both;
+  animation: photoGrowIn 700ms var(--ease-bounce, cubic-bezier(0.34, 1.4, 0.64, 1)) both;
 }
 
 @keyframes photoGrowIn {
@@ -229,8 +229,8 @@
 
 /* Fill dots (mantras) */
 .dotFill {
-  width: 20px;
-  height: 20px;
+  width: 24px;
+  height: 24px;
 }
 
 .dotFill.colorOlive {
@@ -253,8 +253,8 @@
 
 /* Ring dots (paradoxes) */
 .dotRing {
-  width: 18px;
-  height: 18px;
+  width: 22px;
+  height: 22px;
   background: var(--cream, #F7F7F7);
   border: 2px solid;
 }
@@ -321,7 +321,7 @@
 /* ===== LABEL AREA ===== */
 .labelArea {
   position: relative;
-  width: 420px;
+  width: 520px;
   height: 0;
   transition: height var(--motion-slow) var(--ease-default);
   overflow: visible;
@@ -418,7 +418,7 @@
   position: absolute;
   z-index: 5;
   font-family: var(--font-sans);
-  font-size: 13px;
+  font-size: 14px;
   letter-spacing: 0.01em;
   white-space: nowrap;
   opacity: 0;
@@ -461,31 +461,31 @@
 /* ===== RESPONSIVE - TABLET ===== */
 @media (max-width: 900px) {
   .dial {
-    width: 380px;
-    height: 190px;
+    width: 470px;
+    height: 236px;
   }
 
   .dial.dialActive {
-    height: 380px;
+    height: 470px;
   }
 
   .trackInner {
-    width: 250px;
-    height: 250px;
+    width: 310px;
+    height: 310px;
   }
 
   .trackOuter {
-    width: 340px;
-    height: 340px;
+    width: 420px;
+    height: 420px;
   }
 
   .photoWrap {
-    width: 190px;
-    height: 190px;
+    width: 236px;
+    height: 236px;
   }
 
   .labelArea {
-    width: 380px;
+    width: 470px;
   }
 
   .pill {
@@ -494,7 +494,7 @@
   }
 
   .radialLabel {
-    font-size: 12px;
+    font-size: 13px;
   }
 }
 
@@ -506,31 +506,31 @@
   }
 
   .dial {
-    width: 320px;
-    height: 160px;
+    width: 340px;
+    height: 170px;
   }
 
   .dial.dialActive {
-    height: 320px;
+    height: 340px;
   }
 
   .trackInner {
-    width: 210px;
-    height: 210px;
+    width: 224px;
+    height: 224px;
   }
 
   .trackOuter {
-    width: 290px;
-    height: 290px;
+    width: 308px;
+    height: 308px;
   }
 
   .photoWrap {
-    width: 160px;
-    height: 160px;
+    width: 170px;
+    height: 170px;
   }
 
   .labelArea {
-    width: 320px;
+    width: 340px;
   }
 
   .pill {
@@ -543,7 +543,7 @@
   .tooltip {
     font-size: 15px;
     white-space: normal;
-    width: 300px;
+    width: 320px;
     text-wrap: pretty;
   }
 
@@ -568,7 +568,7 @@
 /* ===== REDUCED MOTION ===== */
 @media (prefers-reduced-motion: reduce) {
   .dial {
-    height: 420px;
+    height: 520px;
     transition-duration: 0.01s;
   }
 
