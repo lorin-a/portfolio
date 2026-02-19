@@ -128,9 +128,10 @@ export default async function ProjectPage({ params }) {
       {/* Full-Bleed Hero Image */}
       <div className={styles.heroImage}>
         {frontmatter.hero ? (
-          <img 
-            src={`/images/${frontmatter.hero}`} 
+          <img
+            src={`/images/${frontmatter.hero}`}
             alt={`${frontmatter.title} hero image`}
+            fetchPriority="high"
           />
         ) : (
           <div className={styles.imagePlaceholder}>

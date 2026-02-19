@@ -169,6 +169,17 @@
   margin: 0 auto var(--space-sm);
 }
 
+.bodyTextLightCenteredSpaced {
+  composes: bodyTextLightCentered;
+  margin-bottom: var(--space-xl);
+}
+
+.squiggleDivider {
+  display: flex;
+  justify-content: center;
+  margin: var(--space-lg) 0;
+}
+
 .subheading {
   font-family: var(--font-serif);
   font-size: var(--text-h3);
@@ -280,7 +291,7 @@
 }
 
 .acknowledgementCardText strong {
-  font-weight: 500;
+  font-weight: var(--weight-label);
 }
 
 /* Acknowledgement Cards - Dark Background Version */
@@ -326,7 +337,7 @@
 }
 
 .acknowledgementCardTextLight strong {
-  font-weight: 500;
+  font-weight: var(--weight-label);
 }
 
 .leadText {
@@ -462,7 +473,7 @@
   font-size: var(--text-body-small);
   font-style: normal;
   color: var(--project-accent-light);
-  opacity: 0.7;
+  opacity: 0.85;
   display: block;
   margin-top: var(--space-xs);
 }
@@ -530,6 +541,11 @@
 
 .inlineLink:hover {
   text-decoration-color: var(--project-accent);
+}
+
+.inlineLink:focus-visible {
+  outline: 2px solid var(--project-accent);
+  outline-offset: 2px;
 }
 
 .parallaxDark .inlineLink,
@@ -870,49 +886,52 @@
 
 /* Diagram Tab Toggle */
 .diagramTabs {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   width: 100%;
   max-width: 900px;
   margin: var(--space-lg) auto 0;
 }
 
-.diagramTabBar {
-  display: flex;
-  justify-content: center;
-  gap: var(--space-sm);
-  margin-top: var(--space-lg);
+/* ── Segmented Control ── */
+.segmentedControl {
+  display: inline-flex;
+  align-self: center;
+  margin: 0 auto var(--space-xl);
+  background-color: var(--project-accent-pale, #E4E0EB);
+  border-radius: var(--radius-pill);
+  padding: 3px;
 }
 
-.diagramTabButton {
+.segmentedButton {
   font-family: var(--font-sans);
   font-size: var(--text-body-small);
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  padding: 0.5em 1.8em;
-  border: 1.5px solid var(--project-accent);
+  letter-spacing: 0.04em;
+  padding: 0.5em 1.6em;
+  border: none;
   border-radius: var(--radius-pill);
   background: transparent;
   color: var(--project-accent);
   cursor: pointer;
-  transition: all var(--motion-fast) var(--ease-out);
+  transition: background-color var(--motion-fast) var(--ease-default),
+              color var(--motion-fast) var(--ease-default),
+              box-shadow var(--motion-fast) var(--ease-default);
 }
 
-.diagramTabButton:hover {
-  background-color: var(--project-accent-tint);
+.segmentedButton:hover:not(.segmentedButtonActive) {
+  background-color: rgba(255, 255, 255, 0.5);
 }
 
-.diagramTabButton:focus-visible {
+.segmentedButton:focus-visible {
   outline: 2px solid var(--project-accent);
   outline-offset: 2px;
 }
 
-.diagramTabActive {
+.segmentedButtonActive {
   background-color: var(--project-accent);
-  color: var(--project-accent-light);
-}
-
-.diagramTabActive:hover {
-  background-color: var(--project-accent);
-  color: var(--project-accent-light);
+  color: var(--project-accent-light, #fff);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
 }
 
 .diagramTabContent {
@@ -985,7 +1004,12 @@
 }
 
 .projectNavLink:hover {
-  opacity: 0.7;
+  opacity: 0.8;
+}
+
+.projectNavLink:focus-visible {
+  outline: 2px solid var(--project-accent);
+  outline-offset: 2px;
 }
 
 .projectFooterNav {
@@ -1005,7 +1029,7 @@
 }
 
 .footerNavLink:hover {
-  opacity: 0.6;
+  opacity: 0.8;
 }
 
 /* ===========================================
@@ -1175,7 +1199,7 @@
 .projectInfoItem {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: var(--space-xxs);
 }
 
 .projectInfoLabel {
@@ -1225,7 +1249,7 @@
 
 .parallaxDark .statCalloutLabel {
   color: var(--project-accent-light);
-  opacity: 0.7;
+  opacity: 0.85;
 }
 
 /* Sticky Column */
@@ -1588,7 +1612,7 @@
   font-weight: var(--weight-body);
   color: var(--project-accent);
   line-height: 1.1;
-  margin-bottom: 4px;
+  margin-bottom: var(--space-xxs);
 }
 
 .statLabel {
@@ -1945,7 +1969,7 @@
 
 .reflectionPressCardWrapper:hover .reflectionPressCard {
   box-shadow: var(--shadow-lg);
-  border-left-width: 5px;
+  border-left-width: 4px;
   opacity: 1;
 }
 
@@ -2534,6 +2558,12 @@
   transition: all var(--motion-fast) var(--ease-default);
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .playtestCarouselSlot {
+    transition: none;
+  }
+}
+
 .playtestCarouselCard {
   background: var(--project-accent-pale);
   border-radius: var(--radius-lg);
@@ -2615,21 +2645,23 @@
   margin: 0;
 }
 
-.playtestCarouselControls {
+.playtestCarouselControls,
+.workshopCarouselControls {
   display: flex;
   justify-content: center;
   align-items: center;
   gap: var(--space-md);
 }
 
-.playtestCarouselArrow {
+.playtestCarouselArrow,
+.workshopCarouselArrow {
   width: 44px;
   height: 44px;
   border-radius: 50%;
   border: 1.5px solid var(--project-accent);
   background: transparent;
   color: var(--project-accent);
-  font-size: 18px;
+  font-size: var(--text-body-large);
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -2637,42 +2669,49 @@
   transition: opacity var(--motion-fast) var(--ease-default), background-color var(--motion-fast) var(--ease-default);
 }
 
-.playtestCarouselArrow:disabled {
+.playtestCarouselArrow:disabled,
+.workshopCarouselArrow:disabled {
   opacity: 0.3;
   cursor: default;
 }
 
-.playtestCarouselArrow:not(:disabled):hover {
+.playtestCarouselArrow:not(:disabled):hover,
+.workshopCarouselArrow:not(:disabled):hover {
   background: var(--project-accent-tint);
 }
 
-.playtestCarouselArrow:focus-visible {
+.playtestCarouselArrow:focus-visible,
+.workshopCarouselArrow:focus-visible {
   outline: 2px solid var(--project-accent);
   outline-offset: 2px;
 }
 
-.playtestCarouselInfo {
+.playtestCarouselInfo,
+.workshopCarouselInfo {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 2px;
 }
 
-.playtestCarouselCounter {
+.playtestCarouselCounter,
+.workshopCarouselCounter {
   font-family: var(--font-sans);
   font-size: var(--text-body-small);
   color: var(--project-accent);
   font-weight: var(--weight-label);
 }
 
-.playtestCarouselDots {
+.playtestCarouselDots,
+.workshopCarouselDots {
   display: flex;
   justify-content: center;
   gap: var(--space-xs);
   margin-top: var(--space-sm);
 }
 
-.playtestCarouselDot {
+.playtestCarouselDot,
+.workshopCarouselDot {
   width: 12px;
   height: 12px;
   border-radius: var(--radius-sm);
@@ -2685,18 +2724,21 @@
   position: relative;
 }
 
-.playtestCarouselDot::before {
+.playtestCarouselDot::before,
+.workshopCarouselDot::before {
   content: '';
   position: absolute;
   inset: -16px;
 }
 
-.playtestCarouselDot:focus-visible {
+.playtestCarouselDot:focus-visible,
+.workshopCarouselDot:focus-visible {
   outline: 2px solid var(--project-accent);
   outline-offset: 2px;
 }
 
-.playtestCarouselDotActive {
+.playtestCarouselDotActive,
+.workshopCarouselDotActive {
   width: 28px;
   background: var(--project-accent);
 }
@@ -2795,6 +2837,12 @@
   width: 524px;
   height: 100%;
   transition: all var(--motion-fast) var(--ease-default);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .workshopCarouselSlot {
+    transition: none;
+  }
 }
 
 /* Card chrome — uniform for all cards */
@@ -2925,99 +2973,13 @@
   outline-offset: 2px;
 }
 
-/* ---- Carousel controls ---- */
-.workshopCarouselControls {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: var(--space-md);
-}
-
-.workshopCarouselArrow {
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  border: 1.5px solid var(--project-accent);
-  background: transparent;
-  color: var(--project-accent);
-  font-size: 18px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: opacity var(--motion-fast) var(--ease-default), background-color var(--motion-fast) var(--ease-default);
-}
-
-.workshopCarouselArrow:disabled {
-  opacity: 0.3;
-  cursor: default;
-}
-
-.workshopCarouselArrow:not(:disabled):hover {
-  background: var(--project-accent-tint);
-}
-
-.workshopCarouselArrow:focus-visible {
-  outline: 2px solid var(--project-accent);
-  outline-offset: 2px;
-}
-
-.workshopCarouselInfo {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2px;
-}
+/* Controls, arrows, info, counter, dots — shared with playtest carousel above */
 
 .workshopCarouselInstruction {
   font-family: var(--font-sans);
   font-size: var(--text-caption);
   color: var(--project-accent);
   opacity: 0.8;
-}
-
-.workshopCarouselCounter {
-  font-family: var(--font-sans);
-  font-size: var(--text-body-small);
-  color: var(--project-accent);
-  font-weight: var(--weight-label);
-}
-
-/* Dot indicators */
-.workshopCarouselDots {
-  display: flex;
-  justify-content: center;
-  gap: var(--space-xs);
-  margin-top: var(--space-sm);
-}
-
-.workshopCarouselDot {
-  width: 12px;
-  height: 12px;
-  border-radius: var(--radius-sm);
-  border: none;
-  background: var(--project-accent-tint);
-  cursor: pointer;
-  transition: all var(--motion-fast) var(--ease-out);
-  /* Touch target padding */
-  padding: 0;
-  position: relative;
-}
-
-.workshopCarouselDot::before {
-  content: '';
-  position: absolute;
-  inset: -16px;
-}
-
-.workshopCarouselDot:focus-visible {
-  outline: 2px solid var(--project-accent);
-  outline-offset: 2px;
-}
-
-.workshopCarouselDotActive {
-  width: 28px;
-  background: var(--project-accent);
 }
 
 /* ---- Mobile ---- */
@@ -3151,7 +3113,7 @@
 }
 
 .breakBody strong {
-  font-weight: 500;
+  font-weight: var(--weight-label);
 }
 
 .breakBodyLight {
@@ -3166,7 +3128,7 @@
 }
 
 .breakBodyLight strong {
-  font-weight: 500;
+  font-weight: var(--weight-label);
 }
 
 .breakBodySecondary {
@@ -3216,7 +3178,9 @@
   cursor: pointer;
 }
 
-.flipCardInner {
+/* Shared 3D flip infrastructure */
+.flipCardInner,
+.carouselCardInner {
   position: relative;
   width: 100%;
   height: 100%;
@@ -3230,20 +3194,28 @@
 }
 
 .flipCardFront,
-.flipCardBack {
+.flipCardBack,
+.carouselCardFront,
+.carouselCardBack {
   position: absolute;
   width: 100%;
   height: 100%;
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
-  border-radius: var(--radius-md);
   overflow: hidden;
-  box-shadow: var(--shadow-lg);
 }
 
-.flipCardBack {
+.flipCardBack,
+.carouselCardBack {
   transform: rotateY(180deg);
   background-color: var(--surface);
+}
+
+/* Flip card visual specifics */
+.flipCardFront,
+.flipCardBack {
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
 }
 
 .flipCardImage {
@@ -3283,13 +3255,8 @@
   border-radius: var(--radius-lg);
 }
 
+/* Carousel card visual specifics (3D base shared with flipCard above) */
 .carouselCardInner {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  transition: transform var(--motion-medium) var(--ease-default);
-  -webkit-transform-style: preserve-3d;
-  transform-style: preserve-3d;
   background: transparent;
 }
 
@@ -3299,24 +3266,12 @@
 
 .carouselCardFront,
 .carouselCardBack {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
   border-radius: var(--radius-lg);
-  overflow: hidden;
+  box-shadow: var(--shadow-lg);
 }
 
 .carouselCardFront {
   background-color: var(--border);
-  box-shadow: var(--shadow-lg);
-}
-
-.carouselCardBack {
-  transform: rotateY(180deg);
-  background-color: var(--surface);
-  box-shadow: var(--shadow-lg);
 }
 
 .carouselCardFront .carouselCardImage,
@@ -3371,7 +3326,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 4px;
+  gap: var(--space-xxs);
   min-width: 120px;
 }
 
@@ -3486,7 +3441,7 @@
   display: flex;
   align-items: baseline;
   gap: var(--space-xs);
-  margin-bottom: 6px;
+  margin-bottom: var(--space-xxs);
 }
 
 .audioPlayerCompact .audioType {
@@ -3505,12 +3460,6 @@
   height: 28px;
   opacity: 0.85;
   accent-color: var(--project-accent-pale);
-}
-
-.audioPlayerCompact .audioTitle {
-  color: var(--project-accent);
-  font-size: var(--text-body);
-  margin: 0;
 }
 
 /* WebKit (Chrome, Safari, Edge) compact audio controls */

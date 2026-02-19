@@ -1,0 +1,47 @@
+{
+  "extends": "stylelint-config-standard",
+  "rules": {
+    "comment-empty-line-before": null,
+    "custom-property-empty-line-before": null,
+    "declaration-empty-line-before": null,
+    "rule-empty-line-before": null,
+    "at-rule-empty-line-before": null,
+    "no-descending-specificity": null,
+    "selector-class-pattern": null,
+    "keyframes-name-pattern": null,
+    "custom-property-pattern": null,
+    "declaration-block-no-redundant-longhand-properties": null,
+    "shorthand-property-no-redundant-values": null,
+    "font-family-name-quotes": null,
+    "import-notation": null,
+    "media-feature-range-notation": null,
+    "alpha-value-notation": null,
+    "selector-not-notation": null,
+    "value-keyword-case": null,
+    "declaration-block-no-shorthand-property-overrides": null,
+    "declaration-block-single-line-max-declarations": null,
+    "declaration-block-no-duplicate-custom-properties": null,
+    "no-duplicate-selectors": null,
+    "property-no-vendor-prefix": null,
+    "length-zero-no-unit": null,
+    "color-function-notation": null,
+    "color-function-alias-notation": null,
+    "at-rule-no-vendor-prefix": null,
+    "at-rule-prelude-no-invalid": null,
+    "keyframe-selector-notation": null,
+    "property-no-deprecated": null,
+    "property-no-unknown": [true, { "ignoreProperties": ["composes"] }],
+
+    "declaration-property-value-disallowed-list": {
+      "font-size": [
+        "8px", "9px", "10px", "11px",
+        "0.5rem", "0.5625rem", "0.625rem", "0.6875rem"
+      ]
+    }
+  },
+  "ignoreFiles": [
+    "node_modules/**",
+    ".next/**",
+    "components/_archive/**"
+  ]
+}

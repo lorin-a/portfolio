@@ -3,7 +3,7 @@
    =========================================== */
 
 .section {
-  background-color: #F7F7F7;
+  background-color: var(--surface);
   padding: var(--space-xl) var(--container-padding) var(--space-xl);
 }
 
@@ -32,7 +32,7 @@
   text-decoration: none;
   color: inherit;
   background: var(--card-bg);
-  border-radius: 12px;
+  border-radius: var(--radius-lg);
   overflow: hidden;
 }
 
@@ -63,7 +63,7 @@
 .image {
   object-fit: cover;
   object-position: center;
-  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform var(--motion-medium) var(--ease-out);
 }
 
 .cardLink:hover .image {
@@ -77,8 +77,8 @@
   right: 18px;
   z-index: 2;
   font-family: var(--font-sans);
-  font-size: 12px;
-  font-weight: 400;
+  font-size: var(--text-caption);
+  font-weight: var(--weight-body);
   text-transform: uppercase;
   letter-spacing: 0.08em;
   padding: 5px 14px;
@@ -137,11 +137,11 @@
 }
 
 .subtitleSide {
-  font-size: 19px;
+  font-size: var(--text-body-large);
 }
 
 .descriptionSide {
-  font-size: 17px;
+  font-size: var(--text-body);
 }
 
 .contentSide .cta {
@@ -187,10 +187,10 @@
   align-items: center;
   gap: 6px;
   font-family: var(--font-sans);
-  font-size: 14px;
-  font-weight: 400;
+  font-size: var(--text-body-small);
+  font-weight: var(--weight-body);
   color: var(--card-cta);
-  transition: gap 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: gap var(--motion-fast) var(--ease-out);
 }
 
 .cardLink:hover .cta {
@@ -198,7 +198,7 @@
 }
 
 .ctaArrowText {
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform var(--motion-fast) var(--ease-out);
 }
 
 /* ===========================================
@@ -208,7 +208,7 @@
 .tag {
   font-family: var(--font-sans);
   font-size: var(--text-body, 16px);
-  font-weight: 400;
+  font-weight: var(--weight-body);
   letter-spacing: 0.02em;
   padding: 0 20px;
   height: 36px;
@@ -218,20 +218,20 @@
 }
 
 .tagSmall {
-  font-size: 14px;
+  font-size: var(--text-body-small);
   padding: 0 16px;
   height: 32px;
   line-height: 32px;
 }
 
 .tagOnLight {
-  background-color: #2C2C28;
-  color: #FAF8F4;
+  background-color: var(--text-heading);
+  color: var(--cream);
 }
 
 .tagOnDark {
   background-color: rgba(255, 255, 255, 0.85);
-  color: #2C2C28;
+  color: var(--text-heading);
 }
 
 /* ===========================================
@@ -240,8 +240,8 @@
 
 .moreLabel {
   font-family: var(--font-sans);
-  font-size: 14px;
-  font-weight: 500;
+  font-size: var(--text-body-small);
+  font-weight: var(--weight-label);
   text-transform: uppercase;
   letter-spacing: 0.1em;
   color: var(--text-heading);
@@ -264,7 +264,7 @@
   text-decoration: none;
   color: inherit;
   background: var(--card-bg);
-  border-radius: 10px;
+  border-radius: var(--radius-md);
   overflow: hidden;
   height: 100%;
 }
@@ -288,7 +288,7 @@
   display: flex;
   flex-direction: column;
   flex: 1;
-  padding: 24px;
+  padding: var(--space-content-gap);
   background: var(--card-content-bg, transparent);
 }
 
@@ -303,7 +303,7 @@
 
 .smallSubtitle {
   font-family: var(--font-serif);
-  font-size: 17px;
+  font-size: var(--text-body-large);
   font-weight: 300;
   font-style: italic;
   color: var(--card-subtitle);
@@ -330,11 +330,11 @@
   align-items: center;
   gap: 6px;
   font-family: var(--font-sans);
-  font-size: 14px;
-  font-weight: 400;
+  font-size: var(--text-body-small);
+  font-weight: var(--weight-body);
   color: var(--card-cta);
   margin-top: auto;
-  transition: gap 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: gap var(--motion-fast) var(--ease-out);
 }
 
 .smallCardLink:hover .smallCta {
@@ -348,7 +348,7 @@
 .cardDiv {
   color: inherit;
   background: var(--card-bg);
-  border-radius: 12px;
+  border-radius: var(--radius-lg);
   overflow: hidden;
   cursor: default;
   position: relative;
@@ -363,7 +363,7 @@
   flex-direction: column;
   color: inherit;
   background: var(--card-bg);
-  border-radius: 10px;
+  border-radius: var(--radius-md);
   overflow: hidden;
   height: 100%;
   cursor: default;
@@ -391,9 +391,9 @@
   align-items: center;
   justify-content: center;
   opacity: 0;
-  transition: opacity 300ms var(--ease-default);
+  transition: opacity var(--motion-fast) var(--ease-default);
   background: rgba(0, 0, 0, 0.78);
-  border-radius: 12px;
+  border-radius: var(--radius-lg);
 }
 
 .cardDiv:hover .hoverOverlay,
@@ -405,18 +405,18 @@
   font-family: var(--font-serif);
   font-size: 24px;
   font-weight: 300;
-  color: #FAF8F4;
-  margin-bottom: 12px;
+  color: var(--cream);
+  margin-bottom: var(--space-xs);
 }
 
 .hoverOverlayLink {
   font-family: var(--font-sans);
-  font-size: 14px;
-  color: #FAF8F4;
+  font-size: var(--text-body-small);
+  color: var(--cream);
   text-decoration: underline;
   text-underline-offset: 3px;
   opacity: 0.85;
-  transition: opacity 200ms;
+  transition: opacity var(--motion-fast);
 }
 
 .hoverOverlayLink:hover {

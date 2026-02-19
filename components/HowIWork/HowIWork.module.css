@@ -5,6 +5,7 @@
 /* ===== SECTION WRAPPER ===== */
 .section {
   padding: 72px var(--container-padding);
+  /* One-off: subtle tint of text-heading at 5% opacity */
   background-color: rgba(45, 43, 30, 0.05);
 }
 
@@ -16,8 +17,8 @@
 /* ===== HEADING ===== */
 .heading {
   font-family: var(--font-serif);
-  font-size: 36px;
-  font-weight: 300;
+  font-size: var(--text-h2);
+  font-weight: var(--weight-title);
   color: var(--text-heading);
   text-align: center;
   margin: 0 0 56px;
@@ -29,8 +30,8 @@
 .mounted .heading {
   opacity: 0;
   transform: translateY(8px);
-  transition: opacity 700ms cubic-bezier(0.4, 0, 0.2, 1),
-              transform 700ms cubic-bezier(0.4, 0, 0.2, 1);
+  transition: opacity var(--motion-medium) var(--ease-out),
+              transform var(--motion-medium) var(--ease-out);
 }
 
 .visible .heading {
@@ -105,22 +106,22 @@
 .visible .pillar1 .dot {
   opacity: 1;
   transform: scale(1);
-  transition: opacity 340ms cubic-bezier(0.34, 1.56, 0.64, 1) 340ms,
-              transform 340ms cubic-bezier(0.34, 1.56, 0.64, 1) 340ms;
+  transition: opacity var(--motion-fast) var(--ease-bounce) 340ms,
+              transform var(--motion-fast) var(--ease-bounce) 340ms;
 }
 
 .visible .pillar2 .dot {
   opacity: 1;
   transform: scale(1);
-  transition: opacity 340ms cubic-bezier(0.34, 1.56, 0.64, 1) 1080ms,
-              transform 340ms cubic-bezier(0.34, 1.56, 0.64, 1) 1080ms;
+  transition: opacity var(--motion-fast) var(--ease-bounce) 1080ms,
+              transform var(--motion-fast) var(--ease-bounce) 1080ms;
 }
 
 .visible .pillar3 .dot {
   opacity: 1;
   transform: scale(1);
-  transition: opacity 340ms cubic-bezier(0.34, 1.56, 0.64, 1) 1810ms,
-              transform 340ms cubic-bezier(0.34, 1.56, 0.64, 1) 1810ms;
+  transition: opacity var(--motion-fast) var(--ease-bounce) 1810ms,
+              transform var(--motion-fast) var(--ease-bounce) 1810ms;
 }
 
 /* Breathing pulse after entrance */
@@ -172,21 +173,21 @@
 .visible .pillar1 .textBlock {
   opacity: 1;
   transform: translateY(0) scale(1);
-  transition: opacity 440ms cubic-bezier(0.4, 0, 0.2, 1) 390ms,
+  transition: opacity 440ms var(--ease-out) 390ms,
               transform 440ms var(--ease-bounce) 390ms;
 }
 
 .visible .pillar2 .textBlock {
   opacity: 1;
   transform: translateY(0) scale(1);
-  transition: opacity 440ms cubic-bezier(0.4, 0, 0.2, 1) 1130ms,
+  transition: opacity 440ms var(--ease-out) 1130ms,
               transform 440ms var(--ease-bounce) 1130ms;
 }
 
 .visible .pillar3 .textBlock {
   opacity: 1;
   transform: translateY(0) scale(1);
-  transition: opacity 440ms cubic-bezier(0.4, 0, 0.2, 1) 1860ms,
+  transition: opacity 440ms var(--ease-out) 1860ms,
               transform 440ms var(--ease-bounce) 1860ms;
 }
 
@@ -234,7 +235,7 @@
 /* ===== DESCRIPTION ===== */
 .description {
   font-family: var(--font-sans);
-  font-size: 15px;
+  font-size: var(--text-body);
   color: var(--text-heading);
   line-height: 1.6;
   margin: 0;

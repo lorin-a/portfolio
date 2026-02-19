@@ -140,8 +140,6 @@ function AudioPlayer({ track }) {
 /* ── DiagramTabs ── */
 function DiagramTabs() {
   const [activeTab, setActiveTab] = useState('ecosystem')
-  const [lightboxSrc, setLightboxSrc] = useState(null)
-  const [lightboxAlt, setLightboxAlt] = useState('')
 
   const diagrams = {
     ecosystem: {
@@ -161,58 +159,44 @@ function DiagramTabs() {
 
   return (
     <div className={styles.diagramTabs}>
-      {lightboxSrc && (
-        <Lightbox
-          src={lightboxSrc}
-          alt={lightboxAlt}
-          onClose={() => setLightboxSrc(null)}
-        />
-      )}
-      <div className={styles.diagramTabContent}>
-        <div
-          className={styles.diagramTabPanel}
-          style={{ opacity: activeTab === 'ecosystem' ? 1 : 0, position: activeTab === 'ecosystem' ? 'relative' : 'absolute' }}
-        >
-          <button
-            className={styles.diagramImageButton}
-            onClick={() => { setLightboxSrc(diagrams.ecosystem.src); setLightboxAlt(diagrams.ecosystem.alt) }}
-            aria-label="View ecosystem diagram full size"
-          >
-            <img
-              src={diagrams.ecosystem.src}
-              alt={diagrams.ecosystem.alt}
-              className={styles.diagramImageLarge}
-            />
-          </button>
-        </div>
-        <div
-          className={styles.diagramTabPanel}
-          style={{ opacity: activeTab === 'values' ? 1 : 0, position: activeTab === 'values' ? 'relative' : 'absolute' }}
-        >
-          <button
-            className={styles.diagramImageButton}
-            onClick={() => { setLightboxSrc(diagrams.values.src); setLightboxAlt(diagrams.values.alt) }}
-            aria-label="View values diagram full size"
-          >
-            <img
-              src={diagrams.values.src}
-              alt={diagrams.values.alt}
-              className={styles.diagramImageLarge}
-            />
-          </button>
-        </div>
-      </div>
-      <div className={styles.diagramTabBar}>
+      <div className={styles.segmentedControl} role="tablist">
         {tabs.map((tab) => (
           <button
             key={tab.id}
-            className={`${styles.diagramTabButton} ${activeTab === tab.id ? styles.diagramTabActive : ''}`}
+            role="tab"
+            className={`${styles.segmentedButton} ${activeTab === tab.id ? styles.segmentedButtonActive : ''}`}
             onClick={() => setActiveTab(tab.id)}
-            aria-pressed={activeTab === tab.id}
+            aria-selected={activeTab === tab.id}
           >
             {tab.label}
           </button>
         ))}
+      </div>
+      <div className={styles.diagramTabContent}>
+        <div
+          className={styles.diagramTabPanel}
+          role="tabpanel"
+          style={{ opacity: activeTab === 'ecosystem' ? 1 : 0, position: activeTab === 'ecosystem' ? 'relative' : 'absolute' }}
+        >
+          <img
+            src={diagrams.ecosystem.src}
+            alt={diagrams.ecosystem.alt}
+            className={styles.diagramImageLarge}
+            loading="lazy"
+          />
+        </div>
+        <div
+          className={styles.diagramTabPanel}
+          role="tabpanel"
+          style={{ opacity: activeTab === 'values' ? 1 : 0, position: activeTab === 'values' ? 'relative' : 'absolute' }}
+        >
+          <img
+            src={diagrams.values.src}
+            alt={diagrams.values.alt}
+            className={styles.diagramImageLarge}
+            loading="lazy"
+          />
+        </div>
       </div>
     </div>
   )
@@ -353,7 +337,7 @@ function WorkshopCarousel() {
                       onClick={(e) => { e.stopPropagation(); setLightboxImg(img) }}
                       aria-label={`View ${img.alt} in lightbox`}
                     >
-                      <img src={img.src} alt={img.alt} />
+                      <img src={img.src} alt={img.alt} loading="lazy" />
                     </button>
                   ))}
                 </div>
@@ -694,31 +678,38 @@ export default function GroundswellContent() {
         </div>
       </section>
 
-      {/* ==================== 4a. CTB EMAIL ==================== */}
-      <section id="ctb" className={`${styles.parallaxSection} ${styles.parallaxDark}`}>
+      {/* ==================== 4a. COMMUNITY ART WALL ==================== */}
+      <section id="artwall" className={`${styles.parallaxSection} ${styles.parallaxDark}`}>
         <div className={styles.parallaxSticky}>
-        <div className={styles.stickyContentLight}>
+ <div className={styles.stickyContentLight}>
     <p className={styles.componentLabelLight}>Component 01</p>
-    <h3 className={styles.stickyTitleLight}>Ceased to Breathe Email</h3>
-      <p className={styles.stickyBodyLightBold}>
-              Updated patient death notification email template with compassionate visuals and language that acknowledges the impact of patient loss.
+    <h3 className={styles.stickyTitleLight}>Community Art Wall</h3>
+    <p className={styles.stickyBodyLightBold}>
+              A community art wall that invites participation through anonymous shared emotional expression across the full spectrum of oncology experiences.
             </p>
             <p className={styles.stickyBodyLight}>
-              What we initially saw as a cold clinical protocol was actually a staff-created innovation—a radical act of compassion one nurse manager had built to ensure colleagues learned about patient deaths with dignity. This revelation shifted our entire approach: from &ldquo;the system has let you down&rdquo; to &ldquo;you have already created a beautiful culture of care.&rdquo; Groundswell honors and amplifies what was already there by integrating a low-effort change to an Outlook email template. This component infuses the language of care into the workflow without over-burdening staff with administrative overhead.
+              We intentionally included family caregivers and patients because we saw how important it was for staff to hear from them—especially gratitude, as almost every desk was decorated with cards from patients and families. Staff reported discomfort expressing feelings due to fear of retaliation. We built this as an anonymous place to safely share and understand what others are feeling—giving public, collective voice to the cancer care community.
             </p>
+            <blockquote className={styles.outcomesQuote}>
+              &ldquo;Groundswell is not just a campaign—it's a commitment. By centering staff-identified well-being priorities, we're ensuring that every voice is heard and concerns are addressed.&rdquo;
+            </blockquote>
+            <cite className={styles.outcomesQuoteCite}>&mdash; Kendyl Grant, Director of Operations for the Gynecologic Oncology Division, UPMC</cite>
           </div>
         </div>
         <div className={styles.parallaxScroll}>
-  <AnimatedElement>
-    <img src={gsImg('gs-ctb-detail-01', 1600)} alt="CTB email context and development" className={styles.scrollImage} />
-  </AnimatedElement>
-  <AnimatedElement>
-    <img src={gsImg('gs-ctb-email', 1600)} alt="Redesigned Ceased to Breathe email template" className={styles.scrollImage} />
-  </AnimatedElement>
-  <AnimatedElement>
-    <img src={gsImg('gs-ctb-detail-02', 1600)} alt="CTB email detail showing compassionate language" className={styles.scrollImage} />
-  </AnimatedElement>
-</div>
+          <AnimatedElement>
+            <img src={gsImg('gs-artwall', 1200)} alt="Groundswell Community Art Wall" className={styles.scrollImage} />
+          </AnimatedElement>
+          <AnimatedElement>
+            <img src={gsImg('gs-artwall-detail-01', 1200)} alt="Art wall contributions from staff" className={styles.scrollImage} />
+          </AnimatedElement>
+          <AnimatedElement>
+            <img src={gsImg('gs-artwall-detail-02', 1200)} alt="Art wall community expressions" className={styles.scrollImage} />
+          </AnimatedElement>
+          <AnimatedElement>
+            <img src={gsImg('gs-artwall-detail-03', 1200)} alt="Art wall collective voice" className={styles.scrollImage} />
+          </AnimatedElement>
+        </div>
       </section>
 
       {/* ==================== 4b. RESTORATIVE POD ==================== */}
@@ -775,38 +766,31 @@ export default function GroundswellContent() {
         </div>
       </section>
 
-      {/* ==================== 4c. COMMUNITY ART WALL ==================== */}
-      <section id="artwall" className={`${styles.parallaxSection} ${styles.parallaxDark}`}>
+      {/* ==================== 4c. CTB EMAIL ==================== */}
+      <section id="ctb" className={`${styles.parallaxSection} ${styles.parallaxDark}`}>
         <div className={styles.parallaxSticky}>
- <div className={styles.stickyContentLight}>
+        <div className={styles.stickyContentLight}>
     <p className={styles.componentLabelLight}>Component 03</p>
-    <h3 className={styles.stickyTitleLight}>Community Art Wall</h3>
-    <p className={styles.stickyBodyLightBold}>
-              A community art wall that invites participation through anonymous shared emotional expression across the full spectrum of oncology experiences.
+    <h3 className={styles.stickyTitleLight}>Ceased to Breathe Email</h3>
+      <p className={styles.stickyBodyLightBold}>
+              Updated patient death notification email template with compassionate visuals and language that acknowledges the impact of patient loss.
             </p>
             <p className={styles.stickyBodyLight}>
-              We intentionally included family caregivers and patients because we saw how important it was for staff to hear from them—especially gratitude, as almost every desk was decorated with cards from patients and families. Staff reported discomfort expressing feelings due to fear of retaliation. We built this as an anonymous place to safely share and understand what others are feeling—giving public, collective voice to the cancer care community.
+              What we initially saw as a cold clinical protocol was actually a staff-created innovation—a radical act of compassion one nurse manager had built to ensure colleagues learned about patient deaths with dignity. This revelation shifted our entire approach: from &ldquo;the system has let you down&rdquo; to &ldquo;you have already created a beautiful culture of care.&rdquo; Groundswell honors and amplifies what was already there by integrating a low-effort change to an Outlook email template. This component infuses the language of care into the workflow without over-burdening staff with administrative overhead.
             </p>
-            <blockquote className={styles.outcomesQuote}>
-              &ldquo;Groundswell is not just a campaign—it's a commitment. By centering staff-identified well-being priorities, we're ensuring that every voice is heard and concerns are addressed.&rdquo;
-            </blockquote>
-            <cite className={styles.outcomesQuoteCite}>&mdash; Kendyl Grant, Director of Operations for the Gynecologic Oncology Division, UPMC</cite>
           </div>
         </div>
         <div className={styles.parallaxScroll}>
-          <AnimatedElement>
-            <img src={gsImg('gs-artwall', 1200)} alt="Groundswell Community Art Wall" className={styles.scrollImage} />
-          </AnimatedElement>
-          <AnimatedElement>
-            <img src={gsImg('gs-artwall-detail-01', 1200)} alt="Art wall contributions from staff" className={styles.scrollImage} />
-          </AnimatedElement>
-          <AnimatedElement>
-            <img src={gsImg('gs-artwall-detail-02', 1200)} alt="Art wall community expressions" className={styles.scrollImage} />
-          </AnimatedElement>
-          <AnimatedElement>
-            <img src={gsImg('gs-artwall-detail-03', 1200)} alt="Art wall collective voice" className={styles.scrollImage} />
-          </AnimatedElement>
-        </div>
+  <AnimatedElement>
+    <img src={gsImg('gs-ctb-detail-01', 1600)} alt="CTB email context and development" className={styles.scrollImage} />
+  </AnimatedElement>
+  <AnimatedElement>
+    <img src={gsImg('gs-ctb-email', 1600)} alt="Redesigned Ceased to Breathe email template" className={styles.scrollImage} />
+  </AnimatedElement>
+  <AnimatedElement>
+    <img src={gsImg('gs-ctb-detail-02', 1600)} alt="CTB email detail showing compassionate language" className={styles.scrollImage} />
+  </AnimatedElement>
+</div>
       </section>
 
       {/* ==================== 4d. REFLECTION CARDS ==================== */}
@@ -1282,7 +1266,7 @@ export default function GroundswellContent() {
             <p className={styles.bodyTextLightCenteredBold}>
               This project is a tribute to the quiet strength, deep compassion, and collective spirit of those who provide oncology care. It was shaped by the voices of staff who shared their experiences—those who live this work every day.
             </p>
-            <p className={styles.bodyTextLightCentered} style={{ marginBottom: 'var(--space-xl)' }}>
+            <p className={styles.bodyTextLightCenteredSpaced}>
               Groundswell is a collaboration between Carnegie Mellon University&rsquo;s School of Design, the University of Pittsburgh Schools of Medicine and Nursing, and the Gynecologic Oncology staff at UPMC Magee-Womens Hospital. We are especially grateful to the Department of Obstetrics, Gynecology, and Reproductive Services and the incredible staff at Magee who made this project possible. Funding was provided by College of Fine Arts at CMU; the UPMC Magee-Womens Hospital Medical Staff Fund; and the Paul D. Schurgot Foundation.
             </p>
           </AnimatedElement>
@@ -1354,7 +1338,7 @@ export default function GroundswellContent() {
           </AnimatedElement>
 
           {/* Squiggle Divider */}
-          <div style={{ display: 'flex', justifyContent: 'center', margin: 'var(--space-lg) 0' }}>
+          <div className={styles.squiggleDivider}>
             <Squiggle color="var(--project-accent-light)" />
           </div>
 

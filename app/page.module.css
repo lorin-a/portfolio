@@ -214,16 +214,16 @@
 
 .buildingTag {
   font-family: var(--font-sans);
-  font-size: 14px;
-  font-weight: 400;
+  font-size: var(--text-body-small);
+  font-weight: var(--weight-body);
   letter-spacing: 0.02em;
-  padding: 0 16px;
+  padding: 0 var(--space-sm);
   height: 32px;
   line-height: 32px;
-  border-radius: 100px;
+  border-radius: var(--radius-pill);
   white-space: nowrap;
-  background-color: #2C2C28;
-  color: #FAF8F4;
+  background-color: var(--text-heading);
+  color: var(--cream);
 }
 
 .buildingCardDescription {
@@ -239,8 +239,8 @@
   align-items: center;
   align-self: flex-start;
   font-family: var(--font-sans);
-  font-size: 13px;
-  font-weight: 500;
+  font-size: var(--text-caption);
+  font-weight: var(--weight-label);
   letter-spacing: 0.02em;
   color: var(--stage-color);
   background-color: color-mix(in srgb, var(--stage-color) 10%, transparent);

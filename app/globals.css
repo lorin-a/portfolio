@@ -135,6 +135,7 @@
   /* ===========================================
      SPACING
      =========================================== */
+  --space-xxs: 0.25rem; /* 4px */
   --space-xs: 0.5rem;  /* 8px */
   --space-sm: 1rem;    /* 16px */
   --space-content-gap: 1.5rem; /* 24px — cards, grid gaps, internal padding */
@@ -165,7 +166,6 @@
      EASING
      =========================================== */
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
-  --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
 
 }
 
@@ -349,7 +349,7 @@ a {
 }
 
 a:hover {
-  opacity: 0.7;
+  opacity: 0.8;
 }
 
 a:focus-visible {
