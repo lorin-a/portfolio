@@ -130,7 +130,7 @@
 .buildingDescription {
   font-size: var(--text-body-large);
   line-height: 1.6;
-  color: var(--text-body);
+  color: var(--text-heading);
   margin: 0;
 }
 
@@ -216,7 +216,7 @@
 
 .buildingCardTags {
   font-size: 15px;
-  color: var(--text-body);
+  color: var(--text-heading);
   margin-top: 4px;
   margin-bottom: 16px;
 }
@@ -224,7 +224,7 @@
 .buildingCardDescription {
   font-size: 16px;
   line-height: 1.6;
-  color: var(--text-body);
+  color: var(--text-heading);
   margin: 0;
 }
 

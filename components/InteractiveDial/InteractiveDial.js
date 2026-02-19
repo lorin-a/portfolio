@@ -8,6 +8,7 @@ import {
   TOUR_ORDER,
   angleToPos,
 } from './dialConfig'
+import { cloudImg, HOME_IMAGES } from '@/lib/cloudinary'
 
 // Stagger delays for breathing animation
 const BREATHE_DELAYS = {
@@ -224,7 +225,7 @@ export default function InteractiveDial() {
         {/* Photo */}
         <div className={styles.photoWrap}>
           <img
-            src="/images/lorin-photo.jpg"
+            src={cloudImg(HOME_IMAGES['lorin-photo'])}
             alt="Lorin Anderberg, smiling warmly at the camera"
           />
         </div>

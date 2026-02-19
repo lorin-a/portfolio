@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import styles from './CardCarousel.module.css'
+import { cloudImg, GS_CARDS } from '@/lib/cloudinary'
 
 const reflectionCards = [
   { id: 1, name: 'welcome' },
@@ -21,7 +22,15 @@ const reflectionCards = [
   { id: 15, name: 'thankyou' },
 ]
 
-export default function CardCarousel({ imagePath = '/images/groundswell/gs-card-' }) {
+function cardSrc(name, side) {
+  const key = `${name}-${side}`
+  const publicId = GS_CARDS[key]
+  if (publicId) return cloudImg(publicId)
+  // Fallback to local path if not in Cloudinary map
+  return `/images/groundswell/gs-card-${name}-${side}.jpg`
+}
+
+export default function CardCarousel() {
   const [currentIndex, setCurrentIndex] = useState(7)
   const [isFlipped, setIsFlipped] = useState(false)
   const [isTransitioning, setIsTransitioning] = useState(false)
@@ -67,7 +76,7 @@ export default function CardCarousel({ imagePath = '/images/groundswell/gs-card-
         {/* Far left card (faded) */}
         <div className={`${styles.carouselCard} ${styles.carouselCardFar}`}>
           <img
-            src={`${imagePath}${getCardAt(-2).name}-front.jpg`}
+            src={cardSrc(getCardAt(-2).name, 'front')}
             alt=""
             className={styles.carouselCardImage}
           />
@@ -76,7 +85,7 @@ export default function CardCarousel({ imagePath = '/images/groundswell/gs-card-
         {/* Left card */}
         <div className={`${styles.carouselCard} ${styles.carouselCardSide}`}>
           <img
-            src={`${imagePath}${getCardAt(-1).name}-front.jpg`}
+            src={cardSrc(getCardAt(-1).name, 'front')}
             alt=""
             className={styles.carouselCardImage}
           />
@@ -92,14 +101,14 @@ export default function CardCarousel({ imagePath = '/images/groundswell/gs-card-
           <div className={styles.carouselCardInner}>
             <div className={styles.carouselCardFront}>
               <img
-                src={`${imagePath}${getCardAt(0).name}-front.jpg`}
+                src={cardSrc(getCardAt(0).name, 'front')}
                 alt={`${getCardAt(0).name} card front`}
                 className={styles.carouselCardImage}
               />
             </div>
             <div className={styles.carouselCardBack}>
               <img
-                src={`${imagePath}${getCardAt(0).name}-back.jpg`}
+                src={cardSrc(getCardAt(0).name, 'back')}
                 alt={`${getCardAt(0).name} card back`}
                 className={styles.carouselCardImage}
               />
@@ -110,7 +119,7 @@ export default function CardCarousel({ imagePath = '/images/groundswell/gs-card-
         {/* Right card */}
         <div className={`${styles.carouselCard} ${styles.carouselCardSide}`}>
           <img
-            src={`${imagePath}${getCardAt(1).name}-front.jpg`}
+            src={cardSrc(getCardAt(1).name, 'front')}
             alt=""
             className={styles.carouselCardImage}
           />
@@ -119,7 +128,7 @@ export default function CardCarousel({ imagePath = '/images/groundswell/gs-card-
         {/* Far right card (faded) */}
         <div className={`${styles.carouselCard} ${styles.carouselCardFar}`}>
           <img
-            src={`${imagePath}${getCardAt(2).name}-front.jpg`}
+            src={cardSrc(getCardAt(2).name, 'front')}
             alt=""
             className={styles.carouselCardImage}
           />

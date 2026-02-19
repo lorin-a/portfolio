@@ -43,6 +43,8 @@ const sideClass = {
 
 export default function HowIWork() {
   const sectionRef = useRef(null)
+  const timelineRef = useRef(null)
+  const connectorRef = useRef(null)
   const [mounted, setMounted] = useState(false)
   const [visible, setVisible] = useState(false)
 
@@ -77,6 +79,29 @@ export default function HowIWork() {
     }
   }, [])
 
+  // Position connector line to span exactly between first and last dot centers
+  useEffect(() => {
+    const timeline = timelineRef.current
+    const connector = connectorRef.current
+    if (!timeline || !connector) return
+
+    const positionLine = () => {
+      const dots = timeline.querySelectorAll(`.${styles.dot}`)
+      if (dots.length < 2) return
+      const timelineRect = timeline.getBoundingClientRect()
+      const firstDotRect = dots[0].getBoundingClientRect()
+      const lastDotRect = dots[dots.length - 1].getBoundingClientRect()
+      const firstCenter = firstDotRect.top + firstDotRect.height / 2 - timelineRect.top
+      const lastCenter = lastDotRect.top + lastDotRect.height / 2 - timelineRect.top
+      connector.style.top = `${firstCenter}px`
+      connector.style.bottom = `${timelineRect.height - lastCenter}px`
+    }
+
+    positionLine()
+    window.addEventListener('resize', positionLine)
+    return () => window.removeEventListener('resize', positionLine)
+  }, [mounted])
+
   const wrapperClass = [
     styles.section,
     mounted ? styles.mounted : '',
@@ -96,9 +121,9 @@ export default function HowIWork() {
           How I Work
         </h2>
 
-        <div className={styles.timeline}>
+        <div className={styles.timeline} ref={timelineRef}>
           {/* Vertical dashed connector line */}
-          <div className={styles.connectorLine} aria-hidden="true" />
+          <div className={styles.connectorLine} ref={connectorRef} aria-hidden="true" />
 
           {pillars.map((pillar, index) => (
             <div

@@ -4,6 +4,7 @@ import { useEffect, useRef } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import styles from './FeaturedWork.module.css'
+import { cloudImg, HOME_IMAGES } from '@/lib/cloudinary'
 
 const colorMap = {
   olive: styles.tagOlive,
@@ -23,11 +24,11 @@ const featuredProjects = [
       { label: 'Participatory Research', color: 'plum' },
       { label: 'Healthcare', color: 'olive' },
     ],
-    heroImage: '/images/projects/groundswell-hero.jpg',
+    heroImage: cloudImg(HOME_IMAGES['groundswell-hero']),
     heroAlt:
       'A healthcare worker walks down a hospital hallway toward a colorful mural installation',
     slug: '/projects/groundswell',
-    status: 'Live Study',
+    status: null,
     layout: 'stacked',
   },
   {

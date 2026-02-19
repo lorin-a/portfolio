@@ -3,6 +3,11 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import styles from '@/styles/project.module.css'
+import { cloudImg, cloudVideo, cloudAudio, GS_IMAGES, GS_VIDEOS, GS_AUDIO } from '@/lib/cloudinary'
+
+const gsImg = (key) => cloudImg(GS_IMAGES[key])
+const gsVid = (key) => cloudVideo(GS_VIDEOS[key])
+const gsAud = (key) => cloudAudio(GS_AUDIO[key])
 import CardCarousel from '@/components/CardCarousel/CardCarousel'
 import ScrollVideo from '@/components/ScrollVideo/ScrollVideo'
 import AnimatedElement from '@/components/AnimatedElement/AnimatedElement'
@@ -81,12 +86,12 @@ const playtestingQuotes = [
 
 /** Dashboard screen recordings — displayed in Outcomes scroll column */
 const dashboardClips = [
-  { src: '/video/groundswell/entrypage.mp4', label: 'Entry Screen' },
-  { src: '/video/groundswell/moduleview.mp4', label: 'Data Module', blur: true },
-  { src: '/video/groundswell/popup.mp4', label: 'Click-through Overlay', blur: true },
-  { src: '/video/groundswell/chartview.mp4', label: 'Chart View', blur: true },
-  { src: '/video/groundswell/displayview.mp4', label: 'Display View', blur: true },
-  { src: '/video/groundswell/admin.mp4', label: 'Admin Page', blur: true },
+  { src: gsVid('entrypage'), label: 'Entry Screen' },
+  { src: gsVid('moduleview'), label: 'Data Module', blur: true },
+  { src: gsVid('popup'), label: 'Click-through Overlay', blur: true },
+  { src: gsVid('chartview'), label: 'Chart View', blur: true },
+  { src: gsVid('displayview'), label: 'Display View', blur: true },
+  { src: gsVid('admin'), label: 'Admin Page', blur: true },
 ]
 
 /** Pod audio resources */
@@ -95,13 +100,13 @@ const audioTracks = [
     type: 'Poem',
     title: '\u201CRemember Your Heart\u201D',
     artist: 'Read by Catherine Liggett',
-    src: '/audio/groundswell/gs-poem-remember.mp3',
+    src: gsAud('gs-poem-remember'),
   },
   {
     type: 'Guided Meditation',
     title: '\u201CComing Home to Yourself\u201D',
     artist: 'By Catherine Liggett',
-    src: '/audio/groundswell/gs-meditation-home.mp3',
+    src: gsAud('gs-meditation-home'),
   },
 ]
 
@@ -198,8 +203,8 @@ function WorkshopCarousel() {
         "Positive atmosphere, positive energy. Team player. Support one another.",
       ],
       images: [
-        { src: '/images/groundswell/gs-workshop-flower-01.jpg', alt: 'Nourishing the Flower activity worksheets' },
-        { src: '/images/groundswell/gs-workshop-flower-02.jpg', alt: 'Staff completing flower activity' },
+        { src: gsImg('gs-workshop-flower-01'), alt: 'Nourishing the Flower activity worksheets' },
+        { src: gsImg('gs-workshop-flower-02'), alt: 'Staff completing flower activity' },
       ],
     },
     {
@@ -218,8 +223,8 @@ function WorkshopCarousel() {
         "Self-care to me is gifting time. 'Me' time, 'she' time, and 'we' time.",
       ],
       images: [
-        { src: '/images/groundswell/gs-workshop-coats-01.jpg', alt: 'Women in White Coats event honoring women in cancer care' },
-        { src: '/images/groundswell/gs-workshop-coats-03.jpg', alt: 'Research poster with participant responses' },
+        { src: gsImg('gs-workshop-coats-01'), alt: 'Women in White Coats event honoring women in cancer care' },
+        { src: gsImg('gs-workshop-coats-03'), alt: 'Research poster with participant responses' },
       ],
     },
     {
@@ -234,8 +239,8 @@ function WorkshopCarousel() {
         "A manager or team member asking, what can I do to help? I\u2019ve got you covered.",
       ],
       images: [
-        { src: '/images/groundswell/gs-workshop-grief-01.jpg', alt: 'Grief workshop with trauma-informed facilitation' },
-        { src: '/images/groundswell/gs-workshop-grief-02.jpg', alt: 'Staff engaging with scenario-based discussion' },
+        { src: gsImg('gs-workshop-grief-01'), alt: 'Grief workshop with trauma-informed facilitation' },
+        { src: gsImg('gs-workshop-grief-02'), alt: 'Staff engaging with scenario-based discussion' },
       ],
     },
   ]
@@ -547,7 +552,7 @@ export default function GroundswellContent() {
       <section id="hero" className={styles.chapterHero}>
         <div className={styles.heroImageContainer}>
           <img
-            src="/images/groundswell/gs-hero.jpg"
+            src={gsImg('gs-hero')}
             alt="Groundswell installation at UPMC Magee-Womens Hospital"
             className={styles.heroImageFull}
           />
@@ -614,7 +619,7 @@ export default function GroundswellContent() {
         </div>
         <div className={styles.parallaxScroll}>
           <AnimatedElement>
-            <ScrollVideo src="/video/groundswell/gs-walkthrough-video.mp4" label="Installation Walkthrough" />
+            <ScrollVideo src={gsVid('gs-walkthrough-video')} label="Installation Walkthrough" />
           </AnimatedElement>
         </div>
       </section>
@@ -653,13 +658,13 @@ export default function GroundswellContent() {
         </div>
         <div className={styles.parallaxScroll}>
   <AnimatedElement>
-    <img src="/images/groundswell/gs-ctb-detail-01.jpg" alt="CTB email context and development" className={styles.scrollImage} />
+    <img src={gsImg('gs-ctb-detail-01')} alt="CTB email context and development" className={styles.scrollImage} />
   </AnimatedElement>
   <AnimatedElement>
-    <img src="/images/groundswell/gs-ctb-email.jpg" alt="Redesigned Ceased to Breathe email template" className={styles.scrollImage} />
+    <img src={gsImg('gs-ctb-email')} alt="Redesigned Ceased to Breathe email template" className={styles.scrollImage} />
   </AnimatedElement>
   <AnimatedElement>
-    <img src="/images/groundswell/gs-ctb-detail-02.jpg" alt="CTB email detail showing compassionate language" className={styles.scrollImage} />
+    <img src={gsImg('gs-ctb-detail-02')} alt="CTB email detail showing compassionate language" className={styles.scrollImage} />
   </AnimatedElement>
 </div>
       </section>
@@ -668,16 +673,16 @@ export default function GroundswellContent() {
       <section id="pod" className={`${styles.parallaxSection} ${styles.parallaxReverse}`}>
         <div className={styles.parallaxScroll}>
           <AnimatedElement>
-            <img src="/images/groundswell/gs-pod.jpg" alt="Groundswell Restorative Pod" className={styles.scrollImage} />
+            <img src={gsImg('gs-pod')} alt="Groundswell Restorative Pod" className={styles.scrollImage} />
           </AnimatedElement>
           <AnimatedElement>
-            <img src="/images/groundswell/gs-pod-detail-01.jpg" alt="Pod interior with soft LED lighting" className={styles.scrollImage} />
+            <img src={gsImg('gs-pod-detail-01')} alt="Pod interior with soft LED lighting" className={styles.scrollImage} />
           </AnimatedElement>
           <AnimatedElement>
-            <img src="/images/groundswell/gs-pod-detail-02.jpg" alt="Pod poem and invitation to set down what you carry" className={styles.scrollImage} />
+            <img src={gsImg('gs-pod-detail-02')} alt="Pod poem and invitation to set down what you carry" className={styles.scrollImage} />
           </AnimatedElement>
           <AnimatedElement>
-            <img src="/images/groundswell/gs-pod-detail-03.jpg" alt="Pod meditation resources and finger labyrinth" className={styles.scrollImage} />
+            <img src={gsImg('gs-pod-detail-03')} alt="Pod meditation resources and finger labyrinth" className={styles.scrollImage} />
           </AnimatedElement>
           <AnimatedElement>
             <div className={styles.iphoneMockupContainer}>
@@ -689,7 +694,7 @@ export default function GroundswellContent() {
                   playsInline
                   className={styles.iphoneVideo}
                 >
-                  <source src="/video/groundswell/gs-qr-library.mp4" type="video/mp4" />
+                  <source src={gsVid('gs-qr-library')} type="video/mp4" />
                 </video>
               </div>
               <p className={styles.iphoneCaption}>
@@ -738,16 +743,16 @@ export default function GroundswellContent() {
         </div>
         <div className={styles.parallaxScroll}>
           <AnimatedElement>
-            <img src="/images/groundswell/gs-artwall.jpg" alt="Groundswell Community Art Wall" className={styles.scrollImage} />
+            <img src={gsImg('gs-artwall')} alt="Groundswell Community Art Wall" className={styles.scrollImage} />
           </AnimatedElement>
           <AnimatedElement>
-            <img src="/images/groundswell/gs-artwall-detail-01.jpg" alt="Art wall contributions from staff" className={styles.scrollImage} />
+            <img src={gsImg('gs-artwall-detail-01')} alt="Art wall contributions from staff" className={styles.scrollImage} />
           </AnimatedElement>
           <AnimatedElement>
-            <img src="/images/groundswell/gs-artwall-detail-02.jpg" alt="Art wall community expressions" className={styles.scrollImage} />
+            <img src={gsImg('gs-artwall-detail-02')} alt="Art wall community expressions" className={styles.scrollImage} />
           </AnimatedElement>
           <AnimatedElement>
-            <img src="/images/groundswell/gs-artwall-detail-03.jpg" alt="Art wall collective voice" className={styles.scrollImage} />
+            <img src={gsImg('gs-artwall-detail-03')} alt="Art wall collective voice" className={styles.scrollImage} />
           </AnimatedElement>
         </div>
       </section>
@@ -768,7 +773,7 @@ export default function GroundswellContent() {
               Click any card to flip and explore the exercises on the back.
             </p>
           </AnimatedElement>
-          <CardCarousel imagePath="/images/groundswell/gs-card-" />
+          <CardCarousel />
         </div>
       </section>
 
@@ -835,16 +840,16 @@ export default function GroundswellContent() {
         </div>
         <div className={styles.parallaxScroll}>
           <AnimatedElement>
-            <img src="/images/groundswell/gs-install-upmc.jpg" alt="Groundswell installation at UPMC" className={styles.scrollImage} />
+            <img src={gsImg('gs-install-upmc')} alt="Groundswell installation at UPMC" className={styles.scrollImage} />
           </AnimatedElement>
           <AnimatedElement>
-            <img src="/images/groundswell/gs-context-01.jpg" alt="Research at UPMC Magee-Womens Hospital" className={styles.scrollImage} />
+            <img src={gsImg('gs-context-01')} alt="Research at UPMC Magee-Womens Hospital" className={styles.scrollImage} />
           </AnimatedElement>
           <AnimatedElement>
-            <img src="/images/groundswell/gs-context-02.jpg" alt="Engaging with healthcare workers" className={styles.scrollImage} />
+            <img src={gsImg('gs-context-02')} alt="Engaging with healthcare workers" className={styles.scrollImage} />
           </AnimatedElement>
            <AnimatedElement>
-            <img src="/images/groundswell/gs-context-03.jpg" alt="Rehearsing Research Activities" className={styles.scrollImage} />
+            <img src={gsImg('gs-context-03')} alt="Rehearsing Research Activities" className={styles.scrollImage} />
           </AnimatedElement>
         </div>
       </section>
@@ -926,13 +931,13 @@ export default function GroundswellContent() {
         </div>
         <div className={styles.parallaxScroll}>
           <AnimatedElement>
-            <img src="/images/groundswell/gs-sense-affinity-01.jpg" alt="Affinity mapping session" className={styles.scrollImage} />
+            <img src={gsImg('gs-sense-affinity-01')} alt="Affinity mapping session" className={styles.scrollImage} />
           </AnimatedElement>
           <AnimatedElement>
-            <img src="/images/groundswell/gs-sense-affinity-02.jpg" alt="Research synthesis and pattern identification" className={styles.scrollImage} />
+            <img src={gsImg('gs-sense-affinity-02')} alt="Research synthesis and pattern identification" className={styles.scrollImage} />
           </AnimatedElement>
           <AnimatedElement>
-            <img src="/images/groundswell/gs-sense-affinity-03.jpg" alt="Identifying interconnected forces" className={styles.scrollImage} />
+            <img src={gsImg('gs-sense-affinity-03')} alt="Identifying interconnected forces" className={styles.scrollImage} />
           </AnimatedElement>
         </div>
       </section>
@@ -955,7 +960,7 @@ export default function GroundswellContent() {
               aria-label="View interactive synthesis diagram in Figma (opens in new tab)"
             >
               <img
-                src="/images/groundswell/Synthesis-diagram.jpg"
+                src={gsImg('Synthesis-diagram')}
                 alt="Synthesis diagram mapping Recognition, Environment, Culture, and Systemic Issues with The Void at center"
                 className={styles.voidDiagramImage}
               />
@@ -969,34 +974,34 @@ export default function GroundswellContent() {
       <section id="making" className={`${styles.parallaxSection} ${styles.parallaxReverse} ${styles.parallaxDark}`}>
         <div className={styles.parallaxScroll}>
           <AnimatedElement>
-            <img src="/images/groundswell/gs-making-prototype-01.jpeg" alt="Early lo-fi pod prototype exploring spatial concepts" className={styles.scrollImage} />
+            <img src={gsImg('gs-making-prototype-01')} alt="Early lo-fi pod prototype exploring spatial concepts" className={styles.scrollImage} />
           </AnimatedElement>
           <AnimatedElement>
-            <img src="/images/groundswell/gs-making-mockup-01.jpg" alt="Design mockup and concept visualization" className={styles.scrollImage} />
+            <img src={gsImg('gs-making-mockup-01')} alt="Design mockup and concept visualization" className={styles.scrollImage} />
           </AnimatedElement>
           <AnimatedElement>
-            <img src="/images/groundswell/gs-making-figma-01.jpg" alt="Figma design boards with sketches and planning" className={styles.scrollImage} />
+            <img src={gsImg('gs-making-figma-01')} alt="Figma design boards with sketches and planning" className={styles.scrollImage} />
           </AnimatedElement>
           <AnimatedElement>
-            <img src="/images/groundswell/gs-making-build-01.jpg" alt="Greg Baltus beginning pod fabrication" className={styles.scrollImage} />
+            <img src={gsImg('gs-making-build-01')} alt="Greg Baltus beginning pod fabrication" className={styles.scrollImage} />
           </AnimatedElement>
           <AnimatedElement>
-            <img src="/images/groundswell/gs-making-build-02.jpg" alt="Construction process and assembly" className={styles.scrollImage} />
+            <img src={gsImg('gs-making-build-02')} alt="Construction process and assembly" className={styles.scrollImage} />
           </AnimatedElement>
           <AnimatedElement>
-            <img src="/images/groundswell/gs-making-build-04.jpg" alt="Pod customization in progress" className={styles.scrollImage} />
+            <img src={gsImg('gs-making-build-04')} alt="Pod customization in progress" className={styles.scrollImage} />
           </AnimatedElement>
           <AnimatedElement>
-            <img src="/images/groundswell/gs-making-build-05.jpg" alt="Final fabrication details" className={styles.scrollImage} />
+            <img src={gsImg('gs-making-build-05')} alt="Final fabrication details" className={styles.scrollImage} />
           </AnimatedElement>
           <AnimatedElement>
-            <img src="/images/groundswell/gs-making-facade.jpg" alt="Acrylic facade with LED signaling system installed" className={styles.scrollImage} />
+            <img src={gsImg('gs-making-facade')} alt="Acrylic facade with LED signaling system installed" className={styles.scrollImage} />
           </AnimatedElement>
           <AnimatedElement>
-            <img src="/images/groundswell/gs-making-install-01.jpg" alt="Installation day at UPMC Magee-Womens Hospital" className={styles.scrollImage} />
+            <img src={gsImg('gs-making-install-01')} alt="Installation day at UPMC Magee-Womens Hospital" className={styles.scrollImage} />
           </AnimatedElement>
           <AnimatedElement>
-            <img src="/images/groundswell/gs-making-install-02.jpg" alt="Final installed pod in hospital setting" className={styles.scrollImage} />
+            <img src={gsImg('gs-making-install-02')} alt="Final installed pod in hospital setting" className={styles.scrollImage} />
           </AnimatedElement>
         </div>
 
@@ -1058,7 +1063,7 @@ export default function GroundswellContent() {
           {/* Play Testing Photo */}
           <AnimatedElement>
             <img
-              src="/images/groundswell/gs-playtest-01.jpg"
+              src={gsImg('gs-playtest-01')}
               alt="Play testing setup with participant feedback session"
               className={styles.playtestHeroImage}
             />
@@ -1088,7 +1093,7 @@ export default function GroundswellContent() {
               After implementing these changes, participants reported overwhelmingly positive experiences. The space offered emotional transformation, support, and privacy. Play testers ranged from retired nurses, UPMC administrators, design professors, mental health professionals, and designers.
             </p>
             <img
-              src="/images/groundswell/gs-playtest-03.jpg"
+              src={gsImg('gs-playtest-03')}
               alt="Observing user interactions and gathering feedback"
               className={styles.stickyPhotoFull}
             />
@@ -1118,7 +1123,7 @@ export default function GroundswellContent() {
           {/* Finale Image */}
           <AnimatedElement>
             <img
-              src="/images/groundswell/gs-finale.jpg"
+              src={gsImg('gs-finale')}
               alt="Groundswell team collaboration and installation"
               className={styles.reflectionImageBodyWidth}
             />

@@ -50,8 +50,8 @@
 .connectorLine {
   position: absolute;
   left: 50%;
-  top: 14px;
-  bottom: 14px;
+  top: 0;
+  bottom: 0;
   width: 0;
   border-left: 2px dashed var(--sage);
   opacity: 0.5;
@@ -234,7 +234,7 @@
 .description {
   font-family: var(--font-sans);
   font-size: 15px;
-  color: var(--text-light);
+  color: var(--text-heading);
   line-height: 1.6;
   margin: 0;
   max-width: 300px;

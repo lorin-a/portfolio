@@ -3,6 +3,7 @@ import AnimatedElement from '@/components/AnimatedElement/AnimatedElement'
 import HowIWork from '@/components/HowIWork/HowIWork'
 import FeaturedWork from '@/components/FeaturedWork/FeaturedWorkExperimental'
 import styles from './page.module.css'
+import { cloudVideo, GS_VIDEOS, OTHER_VIDEOS } from '@/lib/cloudinary'
 
 const buildingProjects = [
   {
@@ -11,7 +12,7 @@ const buildingProjects = [
     stage: 'In Development',
     description: 'Interactive visualization of relationship patterns from healthcare worker QI study.',
     previewType: 'video',
-    preview: '/video/groundswell/entrypage.mp4',
+    preview: cloudVideo(GS_VIDEOS['entrypage']),
   },
   {
     title: 'Whelm',
