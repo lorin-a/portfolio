@@ -25,7 +25,7 @@ const reflectionCards = [
 function cardSrc(name, side) {
   const key = `${name}-${side}`
   const publicId = GS_CARDS[key]
-  if (publicId) return cloudImg(publicId)
+  if (publicId) return cloudImg(publicId, 600)
   // Fallback to local path if not in Cloudinary map
   return `/images/groundswell/gs-card-${name}-${side}.jpg`
 }
@@ -78,6 +78,7 @@ export default function CardCarousel() {
           <img
             src={cardSrc(getCardAt(-2).name, 'front')}
             alt=""
+            aria-hidden="true"
             className={styles.carouselCardImage}
           />
         </div>
@@ -87,6 +88,7 @@ export default function CardCarousel() {
           <img
             src={cardSrc(getCardAt(-1).name, 'front')}
             alt=""
+            aria-hidden="true"
             className={styles.carouselCardImage}
           />
         </div>
@@ -121,6 +123,7 @@ export default function CardCarousel() {
           <img
             src={cardSrc(getCardAt(1).name, 'front')}
             alt=""
+            aria-hidden="true"
             className={styles.carouselCardImage}
           />
         </div>
@@ -130,6 +133,7 @@ export default function CardCarousel() {
           <img
             src={cardSrc(getCardAt(2).name, 'front')}
             alt=""
+            aria-hidden="true"
             className={styles.carouselCardImage}
           />
         </div>

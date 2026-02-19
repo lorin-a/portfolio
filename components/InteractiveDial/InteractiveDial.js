@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState, useMemo, useCallback } from 'react'
+import Image from 'next/image'
 import styles from './InteractiveDial.module.css'
 import {
   INNER_R, OUTER_R,
@@ -224,9 +225,11 @@ export default function InteractiveDial() {
 
         {/* Photo */}
         <div className={styles.photoWrap}>
-          <img
-            src={cloudImg(HOME_IMAGES['lorin-photo'])}
+          <Image
+            src={cloudImg(HOME_IMAGES['lorin-photo'], 420)}
             alt="Lorin Anderberg, smiling warmly at the camera"
+            fill
+            sizes="210px"
           />
         </div>
 

@@ -5,65 +5,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import styles from './FeaturedWork.module.css'
 import { cloudImg, HOME_IMAGES } from '@/lib/cloudinary'
-
-const themes = {
-  groundswell: {
-    // Brand purple #554E65
-    cardBg: '#554E65',
-    title: '#EDE8F2',
-    subtitle: '#EDE8F2',
-    description: '#EDE8F2',
-    cta: '#EDE8F2',
-    badgeBg: '#E4E0EB',
-    badgeText: '#3A3347',
-    darkTheme: true,
-  },
-  birthstory: {
-    // Soft periwinkle #B7CAFA
-    cardBg: '#B7CAFA',
-    title: '#1E2E50',
-    subtitle: '#34486E',
-    description: '#1E2E50',
-    cta: '#2A4068',
-    darkTheme: false,
-  },
-  transitionDesign: {
-    // Soft chartreuse #C7D57C
-    cardBg: '#C7D57C',
-    title: '#2A3410',
-    subtitle: '#3E4E1E',
-    description: '#2A3410',
-    cta: '#3E4E1E',
-    darkTheme: false,
-  },
-  somebuddy: {
-    cardBg: 'linear-gradient(135deg, #3830AA 0%, #2E28A0 100%)',
-    contentBg: 'linear-gradient(to bottom, #2E28A0 0%, #252080 100%)',
-    title: '#E8E4FF',
-    subtitle: '#E8E4FF',
-    description: '#E8E4FF',
-    cta: '#C8FF78',
-    darkTheme: true,
-  },
-  bridgingTheGap: {
-    cardBg: 'linear-gradient(135deg, #1A2840 0%, #162238 100%)',
-    contentBg: 'linear-gradient(to bottom, #162238 0%, #0E1828 100%)',
-    title: '#E0E8F0',
-    subtitle: '#E0E8F0',
-    description: '#E0E8F0',
-    cta: '#78C8FF',
-    darkTheme: true,
-  },
-  mindfulnest: {
-    // Soft blue #ADCAF5
-    cardBg: '#ADCAF5',
-    title: '#1A2E50',
-    subtitle: '#34486E',
-    description: '#1A2E50',
-    cta: '#2A4068',
-    darkTheme: false,
-  },
-}
+import { themes } from '@/lib/projectThemes'
 
 const featuredProjects = [
   {
@@ -76,7 +18,7 @@ const featuredProjects = [
       { label: 'Participatory Research' },
       { label: 'Healthcare' },
     ],
-    heroImage: cloudImg(HOME_IMAGES['groundswell-hero']),
+    heroImage: cloudImg(HOME_IMAGES['groundswell-hero'], 1200),
     heroAlt:
       'A healthcare worker walks down a hospital hallway toward a colorful mural installation',
     slug: '/projects/groundswell',
@@ -368,41 +310,50 @@ export default function FeaturedWork() {
     const section = sectionRef.current
     if (!section) return
 
-    const elements = []
-
+    // Featured cards — trigger with standard rootMargin
+    const featuredElements = []
     section.querySelectorAll(`.${styles.featuredCard}`).forEach((el, i) => {
-      elements.push({ el, visibleClass: styles.featuredCardVisible, groupDelay: i * 150 })
+      featuredElements.push({ el, visibleClass: styles.featuredCardVisible, groupDelay: i * 150 })
     })
 
-    const label = section.querySelector(`.${styles.moreLabel}`)
-    if (label) {
-      elements.push({ el: label, visibleClass: styles.moreLabelVisible, groupDelay: 0 })
+    const makeCallback = (items) => (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return
+        const item = items.find((e) => e.el === entry.target)
+        if (!item) return
+        setTimeout(() => {
+          item.el.classList.add(item.visibleClass)
+        }, item.groupDelay)
+        entry.target.__observer && entry.target.__observer.unobserve(entry.target)
+      })
     }
 
+    const featuredObserver = new IntersectionObserver(
+      makeCallback(featuredElements),
+      { threshold: 0.1, rootMargin: '0px 0px -100px 0px' }
+    )
+    featuredElements.forEach(({ el }) => { el.__observer = featuredObserver; featuredObserver.observe(el) })
+
+    // "More Work" label + small cards — separate observer with larger rootMargin
+    const lowerElements = []
+    const label = section.querySelector(`.${styles.moreLabel}`)
+    if (label) {
+      lowerElements.push({ el: label, visibleClass: styles.moreLabelVisible, groupDelay: 0 })
+    }
     section.querySelectorAll(`.${styles.smallCard}`).forEach((el, i) => {
-      elements.push({ el, visibleClass: styles.smallCardVisible, groupDelay: i * 120 })
+      lowerElements.push({ el, visibleClass: styles.smallCardVisible, groupDelay: i * 120 })
     })
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) return
-          const item = elements.find((e) => e.el === entry.target)
-          if (!item) return
-
-          setTimeout(() => {
-            item.el.classList.add(item.visibleClass)
-          }, item.groupDelay)
-
-          observer.unobserve(entry.target)
-        })
-      },
-      { threshold: 0.1 }
+    const lowerObserver = new IntersectionObserver(
+      makeCallback(lowerElements),
+      { threshold: 0.15, rootMargin: '0px 0px -150px 0px' }
     )
+    lowerElements.forEach(({ el }) => { el.__observer = lowerObserver; lowerObserver.observe(el) })
 
-    elements.forEach(({ el }) => observer.observe(el))
-
-    return () => observer.disconnect()
+    return () => {
+      featuredObserver.disconnect()
+      lowerObserver.disconnect()
+    }
   }, [])
 
   return (

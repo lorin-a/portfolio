@@ -5,7 +5,7 @@ import Link from 'next/link'
 import styles from '@/styles/project.module.css'
 import { cloudImg, cloudVideo, cloudAudio, GS_IMAGES, GS_VIDEOS, GS_AUDIO } from '@/lib/cloudinary'
 
-const gsImg = (key) => cloudImg(GS_IMAGES[key])
+const gsImg = (key, w) => cloudImg(GS_IMAGES[key], w)
 const gsVid = (key) => cloudVideo(GS_VIDEOS[key])
 const gsAud = (key) => cloudAudio(GS_AUDIO[key])
 import CardCarousel from '@/components/CardCarousel/CardCarousel'
@@ -203,8 +203,8 @@ function WorkshopCarousel() {
         "Positive atmosphere, positive energy. Team player. Support one another.",
       ],
       images: [
-        { src: gsImg('gs-workshop-flower-01'), alt: 'Nourishing the Flower activity worksheets' },
-        { src: gsImg('gs-workshop-flower-02'), alt: 'Staff completing flower activity' },
+        { src: gsImg('gs-workshop-flower-01', 1200), alt: 'Nourishing the Flower activity worksheets' },
+        { src: gsImg('gs-workshop-flower-02', 1200), alt: 'Staff completing flower activity' },
       ],
     },
     {
@@ -223,8 +223,8 @@ function WorkshopCarousel() {
         "Self-care to me is gifting time. 'Me' time, 'she' time, and 'we' time.",
       ],
       images: [
-        { src: gsImg('gs-workshop-coats-01'), alt: 'Women in White Coats event honoring women in cancer care' },
-        { src: gsImg('gs-workshop-coats-03'), alt: 'Research poster with participant responses' },
+        { src: gsImg('gs-workshop-coats-01', 1200), alt: 'Women in White Coats event honoring women in cancer care' },
+        { src: gsImg('gs-workshop-coats-03', 1600), alt: 'Research poster with participant responses' },
       ],
     },
     {
@@ -239,8 +239,8 @@ function WorkshopCarousel() {
         "A manager or team member asking, what can I do to help? I\u2019ve got you covered.",
       ],
       images: [
-        { src: gsImg('gs-workshop-grief-01'), alt: 'Grief workshop with trauma-informed facilitation' },
-        { src: gsImg('gs-workshop-grief-02'), alt: 'Staff engaging with scenario-based discussion' },
+        { src: gsImg('gs-workshop-grief-01', 1200), alt: 'Grief workshop with trauma-informed facilitation' },
+        { src: gsImg('gs-workshop-grief-02', 1200), alt: 'Staff engaging with scenario-based discussion' },
       ],
     },
   ]
@@ -552,7 +552,7 @@ export default function GroundswellContent() {
       <section id="hero" className={styles.chapterHero}>
         <div className={styles.heroImageContainer}>
           <img
-            src={gsImg('gs-hero')}
+            src={gsImg('gs-hero', 1600)}
             alt="Groundswell installation at UPMC Magee-Womens Hospital"
             className={styles.heroImageFull}
           />
@@ -658,13 +658,13 @@ export default function GroundswellContent() {
         </div>
         <div className={styles.parallaxScroll}>
   <AnimatedElement>
-    <img src={gsImg('gs-ctb-detail-01')} alt="CTB email context and development" className={styles.scrollImage} />
+    <img src={gsImg('gs-ctb-detail-01', 1600)} alt="CTB email context and development" className={styles.scrollImage} />
   </AnimatedElement>
   <AnimatedElement>
-    <img src={gsImg('gs-ctb-email')} alt="Redesigned Ceased to Breathe email template" className={styles.scrollImage} />
+    <img src={gsImg('gs-ctb-email', 1600)} alt="Redesigned Ceased to Breathe email template" className={styles.scrollImage} />
   </AnimatedElement>
   <AnimatedElement>
-    <img src={gsImg('gs-ctb-detail-02')} alt="CTB email detail showing compassionate language" className={styles.scrollImage} />
+    <img src={gsImg('gs-ctb-detail-02', 1600)} alt="CTB email detail showing compassionate language" className={styles.scrollImage} />
   </AnimatedElement>
 </div>
       </section>
@@ -673,16 +673,16 @@ export default function GroundswellContent() {
       <section id="pod" className={`${styles.parallaxSection} ${styles.parallaxReverse}`}>
         <div className={styles.parallaxScroll}>
           <AnimatedElement>
-            <img src={gsImg('gs-pod')} alt="Groundswell Restorative Pod" className={styles.scrollImage} />
+            <img src={gsImg('gs-pod', 1200)} alt="Groundswell Restorative Pod" className={styles.scrollImage} />
           </AnimatedElement>
           <AnimatedElement>
-            <img src={gsImg('gs-pod-detail-01')} alt="Pod interior with soft LED lighting" className={styles.scrollImage} />
+            <img src={gsImg('gs-pod-detail-01', 1200)} alt="Pod interior with soft LED lighting" className={styles.scrollImage} />
           </AnimatedElement>
           <AnimatedElement>
-            <img src={gsImg('gs-pod-detail-02')} alt="Pod poem and invitation to set down what you carry" className={styles.scrollImage} />
+            <img src={gsImg('gs-pod-detail-02', 1200)} alt="Pod poem and invitation to set down what you carry" className={styles.scrollImage} />
           </AnimatedElement>
           <AnimatedElement>
-            <img src={gsImg('gs-pod-detail-03')} alt="Pod meditation resources and finger labyrinth" className={styles.scrollImage} />
+            <img src={gsImg('gs-pod-detail-03', 1200)} alt="Pod meditation resources and finger labyrinth" className={styles.scrollImage} />
           </AnimatedElement>
           <AnimatedElement>
             <div className={styles.iphoneMockupContainer}>
@@ -743,16 +743,16 @@ export default function GroundswellContent() {
         </div>
         <div className={styles.parallaxScroll}>
           <AnimatedElement>
-            <img src={gsImg('gs-artwall')} alt="Groundswell Community Art Wall" className={styles.scrollImage} />
+            <img src={gsImg('gs-artwall', 1200)} alt="Groundswell Community Art Wall" className={styles.scrollImage} />
           </AnimatedElement>
           <AnimatedElement>
-            <img src={gsImg('gs-artwall-detail-01')} alt="Art wall contributions from staff" className={styles.scrollImage} />
+            <img src={gsImg('gs-artwall-detail-01', 1200)} alt="Art wall contributions from staff" className={styles.scrollImage} />
           </AnimatedElement>
           <AnimatedElement>
-            <img src={gsImg('gs-artwall-detail-02')} alt="Art wall community expressions" className={styles.scrollImage} />
+            <img src={gsImg('gs-artwall-detail-02', 1200)} alt="Art wall community expressions" className={styles.scrollImage} />
           </AnimatedElement>
           <AnimatedElement>
-            <img src={gsImg('gs-artwall-detail-03')} alt="Art wall collective voice" className={styles.scrollImage} />
+            <img src={gsImg('gs-artwall-detail-03', 1200)} alt="Art wall collective voice" className={styles.scrollImage} />
           </AnimatedElement>
         </div>
       </section>
@@ -840,16 +840,16 @@ export default function GroundswellContent() {
         </div>
         <div className={styles.parallaxScroll}>
           <AnimatedElement>
-            <img src={gsImg('gs-install-upmc')} alt="Groundswell installation at UPMC" className={styles.scrollImage} />
+            <img src={gsImg('gs-install-upmc', 1200)} alt="Groundswell installation at UPMC" className={styles.scrollImage} />
           </AnimatedElement>
           <AnimatedElement>
-            <img src={gsImg('gs-context-01')} alt="Research at UPMC Magee-Womens Hospital" className={styles.scrollImage} />
+            <img src={gsImg('gs-context-01', 1200)} alt="Research at UPMC Magee-Womens Hospital" className={styles.scrollImage} />
           </AnimatedElement>
           <AnimatedElement>
-            <img src={gsImg('gs-context-02')} alt="Engaging with healthcare workers" className={styles.scrollImage} />
+            <img src={gsImg('gs-context-02', 1200)} alt="Engaging with healthcare workers" className={styles.scrollImage} />
           </AnimatedElement>
            <AnimatedElement>
-            <img src={gsImg('gs-context-03')} alt="Rehearsing Research Activities" className={styles.scrollImage} />
+            <img src={gsImg('gs-context-03', 1200)} alt="Rehearsing Research Activities" className={styles.scrollImage} />
           </AnimatedElement>
         </div>
       </section>
@@ -931,13 +931,13 @@ export default function GroundswellContent() {
         </div>
         <div className={styles.parallaxScroll}>
           <AnimatedElement>
-            <img src={gsImg('gs-sense-affinity-01')} alt="Affinity mapping session" className={styles.scrollImage} />
+            <img src={gsImg('gs-sense-affinity-01', 1200)} alt="Affinity mapping session" className={styles.scrollImage} />
           </AnimatedElement>
           <AnimatedElement>
-            <img src={gsImg('gs-sense-affinity-02')} alt="Research synthesis and pattern identification" className={styles.scrollImage} />
+            <img src={gsImg('gs-sense-affinity-02', 1200)} alt="Research synthesis and pattern identification" className={styles.scrollImage} />
           </AnimatedElement>
           <AnimatedElement>
-            <img src={gsImg('gs-sense-affinity-03')} alt="Identifying interconnected forces" className={styles.scrollImage} />
+            <img src={gsImg('gs-sense-affinity-03', 1200)} alt="Identifying interconnected forces" className={styles.scrollImage} />
           </AnimatedElement>
         </div>
       </section>
@@ -960,7 +960,7 @@ export default function GroundswellContent() {
               aria-label="View interactive synthesis diagram in Figma (opens in new tab)"
             >
               <img
-                src={gsImg('Synthesis-diagram')}
+                src={gsImg('Synthesis-diagram', 1600)}
                 alt="Synthesis diagram mapping Recognition, Environment, Culture, and Systemic Issues with The Void at center"
                 className={styles.voidDiagramImage}
               />
@@ -974,34 +974,34 @@ export default function GroundswellContent() {
       <section id="making" className={`${styles.parallaxSection} ${styles.parallaxReverse} ${styles.parallaxDark}`}>
         <div className={styles.parallaxScroll}>
           <AnimatedElement>
-            <img src={gsImg('gs-making-prototype-01')} alt="Early lo-fi pod prototype exploring spatial concepts" className={styles.scrollImage} />
+            <img src={gsImg('gs-making-prototype-01', 1200)} alt="Early lo-fi pod prototype exploring spatial concepts" className={styles.scrollImage} />
           </AnimatedElement>
           <AnimatedElement>
-            <img src={gsImg('gs-making-mockup-01')} alt="Design mockup and concept visualization" className={styles.scrollImage} />
+            <img src={gsImg('gs-making-mockup-01', 1200)} alt="Design mockup and concept visualization" className={styles.scrollImage} />
           </AnimatedElement>
           <AnimatedElement>
-            <img src={gsImg('gs-making-figma-01')} alt="Figma design boards with sketches and planning" className={styles.scrollImage} />
+            <img src={gsImg('gs-making-figma-01', 1600)} alt="Figma design boards with sketches and planning" className={styles.scrollImage} />
           </AnimatedElement>
           <AnimatedElement>
-            <img src={gsImg('gs-making-build-01')} alt="Greg Baltus beginning pod fabrication" className={styles.scrollImage} />
+            <img src={gsImg('gs-making-build-01', 1200)} alt="Greg Baltus beginning pod fabrication" className={styles.scrollImage} />
           </AnimatedElement>
           <AnimatedElement>
-            <img src={gsImg('gs-making-build-02')} alt="Construction process and assembly" className={styles.scrollImage} />
+            <img src={gsImg('gs-making-build-02', 1200)} alt="Construction process and assembly" className={styles.scrollImage} />
           </AnimatedElement>
           <AnimatedElement>
-            <img src={gsImg('gs-making-build-04')} alt="Pod customization in progress" className={styles.scrollImage} />
+            <img src={gsImg('gs-making-build-04', 1200)} alt="Pod customization in progress" className={styles.scrollImage} />
           </AnimatedElement>
           <AnimatedElement>
-            <img src={gsImg('gs-making-build-05')} alt="Final fabrication details" className={styles.scrollImage} />
+            <img src={gsImg('gs-making-build-05', 1200)} alt="Final fabrication details" className={styles.scrollImage} />
           </AnimatedElement>
           <AnimatedElement>
-            <img src={gsImg('gs-making-facade')} alt="Acrylic facade with LED signaling system installed" className={styles.scrollImage} />
+            <img src={gsImg('gs-making-facade', 1200)} alt="Acrylic facade with LED signaling system installed" className={styles.scrollImage} />
           </AnimatedElement>
           <AnimatedElement>
-            <img src={gsImg('gs-making-install-01')} alt="Installation day at UPMC Magee-Womens Hospital" className={styles.scrollImage} />
+            <img src={gsImg('gs-making-install-01', 1200)} alt="Installation day at UPMC Magee-Womens Hospital" className={styles.scrollImage} />
           </AnimatedElement>
           <AnimatedElement>
-            <img src={gsImg('gs-making-install-02')} alt="Final installed pod in hospital setting" className={styles.scrollImage} />
+            <img src={gsImg('gs-making-install-02', 1200)} alt="Final installed pod in hospital setting" className={styles.scrollImage} />
           </AnimatedElement>
         </div>
 
@@ -1063,7 +1063,7 @@ export default function GroundswellContent() {
           {/* Play Testing Photo */}
           <AnimatedElement>
             <img
-              src={gsImg('gs-playtest-01')}
+              src={gsImg('gs-playtest-01', 1200)}
               alt="Play testing setup with participant feedback session"
               className={styles.playtestHeroImage}
             />
@@ -1093,7 +1093,7 @@ export default function GroundswellContent() {
               After implementing these changes, participants reported overwhelmingly positive experiences. The space offered emotional transformation, support, and privacy. Play testers ranged from retired nurses, UPMC administrators, design professors, mental health professionals, and designers.
             </p>
             <img
-              src={gsImg('gs-playtest-03')}
+              src={gsImg('gs-playtest-03', 1200)}
               alt="Observing user interactions and gathering feedback"
               className={styles.stickyPhotoFull}
             />
@@ -1123,7 +1123,7 @@ export default function GroundswellContent() {
           {/* Finale Image */}
           <AnimatedElement>
             <img
-              src={gsImg('gs-finale')}
+              src={gsImg('gs-finale', 1200)}
               alt="Groundswell team collaboration and installation"
               className={styles.reflectionImageBodyWidth}
             />
