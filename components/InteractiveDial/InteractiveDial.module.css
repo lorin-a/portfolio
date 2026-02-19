@@ -451,6 +451,10 @@
 
 /* ===== RESPONSIVE - MOBILE ===== */
 @media (max-width: 600px) {
+  .wrapper {
+    gap: var(--space-xs, 8px);
+  }
+
   .dial {
     width: 320px;
     height: 320px;
@@ -483,7 +487,14 @@
   }
 
   .tooltip {
-    font-size: var(--text-body, 16px);
+    font-size: 15px;
+    white-space: normal;
+    width: 300px;
+    text-wrap: pretty;
+  }
+
+  .instructionMobile {
+    margin-top: -4px;
   }
 }
 

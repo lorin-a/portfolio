@@ -2693,7 +2693,7 @@
 
   .playtestCarouselTrack {
     height: auto;
-    min-height: 580px;
+    min-height: 620px;
     overflow: hidden;
   }
 
@@ -2704,7 +2704,7 @@
   .playtestCarouselCard {
     padding: var(--space-md) var(--space-md) var(--space-lg);
     height: auto;
-    min-height: 560px;
+    min-height: 600px;
   }
 }
 
@@ -3052,7 +3052,7 @@
   }
 
   .workshopImageButton {
-    height: 150px;
+    height: 190px;
     width: 100%;
     border-radius: var(--radius-sm);
   }
@@ -3917,6 +3917,37 @@
   /* Reflection */
   .reflectionThesis {
     font-size: var(--text-body);
+  }
+
+  /* Press cards: vertical stack instead of fanned overlap */
+  .reflectionPressGrid {
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-md);
+    padding: 0;
+  }
+
+  .reflectionPressGrid > *:nth-child(1) {
+    margin-right: 0;
+  }
+
+  .reflectionPressGrid > *:nth-child(2) {
+    margin-top: 0;
+  }
+
+  .reflectionPressCardWrapper {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .reflectionPressGrid > *:nth-child(1) .reflectionPressCardWrapper,
+  .reflectionPressGrid > *:nth-child(2) .reflectionPressCardWrapper {
+    transform: none;
+  }
+
+  .reflectionPressGrid > *:nth-child(1) .reflectionPressCardWrapper:hover,
+  .reflectionPressGrid > *:nth-child(2) .reflectionPressCardWrapper:hover {
+    transform: none;
   }
 
   .reflectionPressCard {
