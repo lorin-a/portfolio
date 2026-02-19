@@ -12,7 +12,7 @@ const featuredProjects = [
     title: 'Groundswell',
     subtitle: 'Making Space to Restore, Together',
     description:
-      'Grant-funded restorative care ecosystem co-designed with oncology staff at UPMC Magee-Womens Hospital — from participatory research to real-world installation.',
+      'A grant-funded systemic design response to oncology staff well-being offering co-designed resources that acknowledge the emotional complexities of oncology care.',
     tags: [
       { label: 'Co-Design' },
       { label: 'Participatory Research' },
@@ -52,7 +52,7 @@ const featuredProjects = [
     title: 'Transition Design',
     subtitle: 'Roots to Resilience',
     description:
-      'A systems design response to food insecurity in Pittsburgh, mapping interventions across individual, community, and policy scales.',
+      'A systems design response to food insecurity in Pittsburgh. Through a multi-level design lens, this project proposes a hyper-local integrated intervention plan to tackle systemic barriers to food security.',
     tags: [
       { label: 'Systems Thinking' },
       { label: 'Futures' },
@@ -92,7 +92,7 @@ const moreProjects = [
     title: 'Bridging the G.A.P.',
     subtitle: 'Bike Touring for Beginners',
     description:
-      'Rebrand campaign for the Great Allegheny Passage trail with educational resources, mobile app concept, and environmental graphics.',
+      'Rebrand campaign for the Great Allegheny Passage trail with print, digital, and environmental assets.',
     tags: [
       { label: 'Brand Identity' },
       { label: 'UX Research' },
@@ -212,7 +212,7 @@ function FeaturedCard({ project }) {
           </div>
           <span className={styles.cta}>
             <span>{project.ready ? 'View case study' : 'Coming soon'}</span>
-            {project.ready && <span className={styles.ctaArrowText}>&rarr;</span>}
+            <span className={styles.ctaArrowText}>&rarr;</span>
           </span>
         </div>
 
@@ -284,7 +284,7 @@ function SmallCard({ project }) {
           </div>
           <span className={styles.smallCta}>
             <span>{project.ready ? 'View project' : 'Coming soon'}</span>
-            {project.ready && <span className={styles.ctaArrowText}>&rarr;</span>}
+            <span className={styles.ctaArrowText}>&rarr;</span>
           </span>
         </div>
 
