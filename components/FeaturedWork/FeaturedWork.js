@@ -211,8 +211,9 @@ function FeaturedCard({ project }) {
             </p>
           </div>
           <span className={styles.cta}>
+            {!project.ready && <span className={styles.ctaArrowText}>&rarr;</span>}
             <span>{project.ready ? 'View case study' : 'Coming soon'}</span>
-            <span className={styles.ctaArrowText}>&rarr;</span>
+            {project.ready && <span className={styles.ctaArrowText}>&rarr;</span>}
           </span>
         </div>
 
@@ -283,8 +284,9 @@ function SmallCard({ project }) {
             <p className={styles.smallDescription}>{project.description}</p>
           </div>
           <span className={styles.smallCta}>
+            {!project.ready && <span className={styles.ctaArrowText}>&rarr;</span>}
             <span>{project.ready ? 'View project' : 'Coming soon'}</span>
-            <span className={styles.ctaArrowText}>&rarr;</span>
+            {project.ready && <span className={styles.ctaArrowText}>&rarr;</span>}
           </span>
         </div>
 
