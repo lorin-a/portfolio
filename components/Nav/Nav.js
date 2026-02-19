@@ -36,11 +36,11 @@ export default function Nav() {
           <Link href="/#work" className={styles.navLink} onClick={closeMenu}>
             Work
           </Link>
-          <Link href="/about" className={styles.navLink} onClick={closeMenu}>
+          {/* <Link href="/about" className={styles.navLink} onClick={closeMenu}>
             About
-          </Link>
+          </Link> */}
           <a
-            href="#"
+            href="https://snail-squid-djta.squarespace.com/"
             target="_blank"
             rel="noopener noreferrer"
             className={styles.navLink}

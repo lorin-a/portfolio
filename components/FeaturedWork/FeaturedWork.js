@@ -6,11 +6,63 @@ import Image from 'next/image'
 import styles from './FeaturedWork.module.css'
 import { cloudImg, HOME_IMAGES } from '@/lib/cloudinary'
 
-const colorMap = {
-  olive: styles.tagOlive,
-  terracotta: styles.tagTerracotta,
-  plum: styles.tagPlum,
-  sage: styles.tagSage,
+const themes = {
+  groundswell: {
+    // Brand purple #554E65
+    cardBg: '#554E65',
+    title: '#EDE8F2',
+    subtitle: '#EDE8F2',
+    description: '#EDE8F2',
+    cta: '#EDE8F2',
+    badgeBg: '#E4E0EB',
+    badgeText: '#3A3347',
+    darkTheme: true,
+  },
+  birthstory: {
+    // Soft periwinkle #B7CAFA
+    cardBg: '#B7CAFA',
+    title: '#1E2E50',
+    subtitle: '#34486E',
+    description: '#1E2E50',
+    cta: '#2A4068',
+    darkTheme: false,
+  },
+  transitionDesign: {
+    // Soft chartreuse #C7D57C
+    cardBg: '#C7D57C',
+    title: '#2A3410',
+    subtitle: '#3E4E1E',
+    description: '#2A3410',
+    cta: '#3E4E1E',
+    darkTheme: false,
+  },
+  somebuddy: {
+    cardBg: 'linear-gradient(135deg, #3830AA 0%, #2E28A0 100%)',
+    contentBg: 'linear-gradient(to bottom, #2E28A0 0%, #252080 100%)',
+    title: '#E8E4FF',
+    subtitle: '#E8E4FF',
+    description: '#E8E4FF',
+    cta: '#C8FF78',
+    darkTheme: true,
+  },
+  bridgingTheGap: {
+    cardBg: 'linear-gradient(135deg, #1A2840 0%, #162238 100%)',
+    contentBg: 'linear-gradient(to bottom, #162238 0%, #0E1828 100%)',
+    title: '#E0E8F0',
+    subtitle: '#E0E8F0',
+    description: '#E0E8F0',
+    cta: '#78C8FF',
+    darkTheme: true,
+  },
+  mindfulnest: {
+    // Soft blue #ADCAF5
+    cardBg: '#ADCAF5',
+    title: '#1A2E50',
+    subtitle: '#34486E',
+    description: '#1A2E50',
+    cta: '#2A4068',
+    darkTheme: false,
+  },
 }
 
 const featuredProjects = [
@@ -20,9 +72,9 @@ const featuredProjects = [
     description:
       'Grant-funded restorative care ecosystem co-designed with oncology staff at UPMC Magee-Womens Hospital — from participatory research to real-world installation.',
     tags: [
-      { label: 'Co-Design', color: 'terracotta' },
-      { label: 'Participatory Research', color: 'plum' },
-      { label: 'Healthcare', color: 'olive' },
+      { label: 'Co-Design' },
+      { label: 'Participatory Research' },
+      { label: 'Healthcare' },
     ],
     heroImage: cloudImg(HOME_IMAGES['groundswell-hero']),
     heroAlt:
@@ -30,6 +82,8 @@ const featuredProjects = [
     slug: '/projects/groundswell',
     status: null,
     layout: 'stacked',
+    theme: 'groundswell',
+    ready: true,
   },
   {
     title: 'BirthStory',
@@ -37,9 +91,9 @@ const featuredProjects = [
     description:
       'Mobile app concept for the University of Pittsburgh Center for Research on Healthcare, helping birthing parents document and reflect on their experiences.',
     tags: [
-      { label: 'UX Research', color: 'olive' },
-      { label: 'App Design', color: 'terracotta' },
-      { label: 'Interaction Design', color: 'sage' },
+      { label: 'UX Research' },
+      { label: 'App Design' },
+      { label: 'Interaction Design' },
     ],
     heroImage: '/images/projects/birthstory-cover.jpg',
     heroAlt:
@@ -48,6 +102,9 @@ const featuredProjects = [
     status: null,
     layout: 'side',
     imageLeft: true,
+    theme: 'birthstory',
+    ready: false,
+    oldPortfolioUrl: 'https://snail-squid-djta.squarespace.com/case-studies/birthstory',
   },
   {
     title: 'Transition Design',
@@ -55,9 +112,9 @@ const featuredProjects = [
     description:
       'A systems design response to food insecurity in Pittsburgh, mapping interventions across individual, community, and policy scales.',
     tags: [
-      { label: 'Systems Thinking', color: 'olive' },
-      { label: 'Futures', color: 'terracotta' },
-      { label: 'Data Visualization', color: 'sage' },
+      { label: 'Systems Thinking' },
+      { label: 'Futures' },
+      { label: 'Data Visualization' },
     ],
     heroImage: '/images/projects/transition-design-hero.jpg',
     heroAlt:
@@ -65,6 +122,9 @@ const featuredProjects = [
     slug: '/projects/transition-design',
     status: null,
     layout: 'side',
+    theme: 'transitionDesign',
+    ready: false,
+    oldPortfolioUrl: 'https://snail-squid-djta.squarespace.com/case-studies/transitiondesign',
   },
 ]
 
@@ -75,13 +135,16 @@ const moreProjects = [
     description:
       'A social app concept addressing campus loneliness at CMU through GPS-based peer connection and low-effort plans.',
     tags: [
-      { label: 'UX Design', color: 'olive' },
-      { label: 'Brand Identity', color: 'terracotta' },
-      { label: 'Animation', color: 'sage' },
+      { label: 'UX Design' },
+      { label: 'Brand Identity' },
+      { label: 'Animation' },
     ],
     heroImage: '/images/projects/somebuddy-cover.gif',
     heroAlt: 'SomeBuddy brand identity and app screens on a blue background',
     slug: '/projects/somebuddy',
+    theme: 'somebuddy',
+    ready: false,
+    oldPortfolioUrl: 'https://snail-squid-djta.squarespace.com/case-studies/somebuddy',
   },
   {
     title: 'Bridging the G.A.P.',
@@ -89,36 +152,43 @@ const moreProjects = [
     description:
       'Rebrand campaign for the Great Allegheny Passage trail with educational resources, mobile app concept, and environmental graphics.',
     tags: [
-      { label: 'Brand Identity', color: 'terracotta' },
-      { label: 'UX Research', color: 'olive' },
-      { label: 'Animation', color: 'sage' },
+      { label: 'Brand Identity' },
+      { label: 'UX Research' },
+      { label: 'Animation' },
     ],
     heroImage: '/images/projects/bridging-cover.gif',
     heroAlt:
       'Bridging the GAP trail brand mockups showing logo, apparel, and environmental signage',
     slug: '/projects/bridging-the-gap',
+    theme: 'bridgingTheGap',
+    ready: false,
+    oldPortfolioUrl: 'https://snail-squid-djta.squarespace.com/case-studies/gap',
   },
   {
     title: 'MindfulNest',
-    subtitle: 'SEL Technology for Pre-K Classrooms',
+    subtitle: 'SEL Edtech for Pre-K Teachers',
     description:
       'UX redesign of the teacher dashboard for CMU\'s CREATE Lab, informed by workshops with teachers.',
     tags: [
-      { label: 'UX Research', color: 'olive' },
-      { label: 'UX Design', color: 'olive' },
-      { label: 'Education', color: 'plum' },
+      { label: 'UX Research' },
+      { label: 'UX Design' },
+      { label: 'Education' },
     ],
     heroImage: '/images/projects/mindfulnest-hero.jpg',
     heroAlt:
       'MindfulNest dashboard interface showing classroom emotional check-in data',
     slug: '/projects/mindfulnest',
+    theme: 'mindfulnest',
+    ready: false,
+    oldPortfolioUrl: 'https://snail-squid-djta.squarespace.com/case-studies/mindfulnest',
+    ready: false,
   },
 ]
 
-function TagPill({ label, color, small }) {
+function TagPill({ label, darkTheme, small }) {
   return (
     <span
-      className={`${styles.tag} ${colorMap[color] || ''} ${small ? styles.tagSmall : ''}`}
+      className={`${styles.tag} ${darkTheme ? styles.tagOnDark : styles.tagOnLight} ${small ? styles.tagSmall : ''}`}
     >
       {label}
     </span>
@@ -128,13 +198,29 @@ function TagPill({ label, color, small }) {
 function FeaturedCard({ project }) {
   const isStacked = project.layout === 'stacked'
   const sideClass = project.imageLeft ? styles.cardSideFlipped : styles.cardSide
+  const t = themes[project.theme]
+
+  const cardStyle = {
+    '--card-bg': t.cardBg,
+    '--card-title': t.title,
+    '--card-subtitle': t.subtitle,
+    '--card-description': t.description,
+    '--card-cta': t.cta,
+  }
+
+  if (t.badgeBg) {
+    cardStyle['--card-badge-bg'] = t.badgeBg
+    cardStyle['--card-badge-text'] = t.badgeText
+  }
+
+  const Wrapper = project.ready ? Link : 'div'
+  const wrapperProps = project.ready
+    ? { href: project.slug, className: `${styles.cardLink} ${isStacked ? styles.cardStacked : sideClass}`, style: cardStyle }
+    : { className: `${styles.cardDiv} ${isStacked ? styles.cardStacked : sideClass}`, style: cardStyle }
 
   return (
     <article className={styles.featuredCard}>
-      <Link
-        href={project.slug}
-        className={`${styles.cardLink} ${isStacked ? styles.cardStacked : sideClass}`}
-      >
+      <Wrapper {...wrapperProps}>
         <div
           className={isStacked ? styles.imageStacked : styles.imageSide}
         >
@@ -173,7 +259,7 @@ function FeaturedCard({ project }) {
             )}
             <div className={styles.tags}>
               {project.tags.map((tag) => (
-                <TagPill key={tag.label} label={tag.label} color={tag.color} />
+                <TagPill key={tag.label} label={tag.label} darkTheme={t.darkTheme} />
               ))}
             </div>
             <p className={`${styles.description} ${isStacked ? styles.descriptionStacked : styles.descriptionSide}`}>
@@ -181,21 +267,48 @@ function FeaturedCard({ project }) {
             </p>
           </div>
           <span className={styles.cta}>
-            <span>View case study</span>
-            <span className={styles.ctaArrowText}>&rarr;</span>
+            <span>{project.ready ? 'View case study' : 'Coming soon'}</span>
+            {project.ready && <span className={styles.ctaArrowText}>&rarr;</span>}
           </span>
         </div>
-      </Link>
+
+        {!project.ready && (
+          <div className={styles.hoverOverlay}>
+            <span className={styles.hoverOverlayTitle}>Case study coming soon</span>
+            <a href={project.oldPortfolioUrl} target="_blank" rel="noopener noreferrer" className={styles.hoverOverlayLink} onClick={(e) => e.stopPropagation()}>
+              View previous portfolio version &rarr;
+            </a>
+          </div>
+        )}
+      </Wrapper>
     </article>
   )
 }
 
 function SmallCard({ project }) {
   const visibleTags = project.tags.slice(0, 2)
+  const t = themes[project.theme]
+
+  const cardStyle = {
+    '--card-bg': t.cardBg,
+    '--card-title': t.title,
+    '--card-subtitle': t.subtitle,
+    '--card-description': t.description,
+    '--card-cta': t.cta,
+  }
+
+  if (t.contentBg) {
+    cardStyle['--card-content-bg'] = t.contentBg
+  }
+
+  const Wrapper = project.ready ? Link : 'div'
+  const wrapperProps = project.ready
+    ? { href: project.slug, className: styles.smallCardLink, style: cardStyle }
+    : { className: styles.smallCardDiv, style: cardStyle }
 
   return (
     <article className={styles.smallCard}>
-      <Link href={project.slug} className={styles.smallCardLink}>
+      <Wrapper {...wrapperProps}>
         <div className={styles.smallImageWrapper}>
           <Image
             src={project.heroImage}
@@ -217,7 +330,7 @@ function SmallCard({ project }) {
                 <TagPill
                   key={tag.label}
                   label={tag.label}
-                  color={tag.color}
+                  darkTheme={t.darkTheme}
                   small
                 />
               ))}
@@ -225,11 +338,20 @@ function SmallCard({ project }) {
             <p className={styles.smallDescription}>{project.description}</p>
           </div>
           <span className={styles.smallCta}>
-            <span>View project</span>
-            <span className={styles.ctaArrowText}>&rarr;</span>
+            <span>{project.ready ? 'View project' : 'Coming soon'}</span>
+            {project.ready && <span className={styles.ctaArrowText}>&rarr;</span>}
           </span>
         </div>
-      </Link>
+
+        {!project.ready && (
+          <div className={styles.hoverOverlay}>
+            <span className={styles.hoverOverlayTitle}>Case study coming soon</span>
+            <a href={project.oldPortfolioUrl} target="_blank" rel="noopener noreferrer" className={styles.hoverOverlayLink} onClick={(e) => e.stopPropagation()}>
+              View previous portfolio version &rarr;
+            </a>
+          </div>
+        )}
+      </Wrapper>
     </article>
   )
 }
@@ -246,21 +368,17 @@ export default function FeaturedWork() {
     const section = sectionRef.current
     if (!section) return
 
-    // Collect all animatable elements with their visible class and group index
     const elements = []
 
-    // Featured cards — stagger within their group
     section.querySelectorAll(`.${styles.featuredCard}`).forEach((el, i) => {
       elements.push({ el, visibleClass: styles.featuredCardVisible, groupDelay: i * 150 })
     })
 
-    // "More Work" label
     const label = section.querySelector(`.${styles.moreLabel}`)
     if (label) {
       elements.push({ el: label, visibleClass: styles.moreLabelVisible, groupDelay: 0 })
     }
 
-    // Small cards — stagger within their group
     section.querySelectorAll(`.${styles.smallCard}`).forEach((el, i) => {
       elements.push({ el, visibleClass: styles.smallCardVisible, groupDelay: i * 120 })
     })
@@ -288,7 +406,7 @@ export default function FeaturedWork() {
   }, [])
 
   return (
-    <section className={styles.section} ref={sectionRef}>
+    <section id="work" className={styles.section} ref={sectionRef}>
       <div className={styles.container}>
         <div className={styles.featuredGrid}>
           {featuredProjects.map((project) => (

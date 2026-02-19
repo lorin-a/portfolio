@@ -1,23 +1,25 @@
 import Hero from '@/components/Hero/Hero'
 import AnimatedElement from '@/components/AnimatedElement/AnimatedElement'
 import HowIWork from '@/components/HowIWork/HowIWork'
-import FeaturedWork from '@/components/FeaturedWork/FeaturedWorkExperimental'
+import FeaturedWork from '@/components/FeaturedWork/FeaturedWork'
 import styles from './page.module.css'
 import { cloudVideo, GS_VIDEOS, OTHER_VIDEOS } from '@/lib/cloudinary'
 
 const buildingProjects = [
   {
     title: 'Groundswell Data Viz',
-    tags: 'Data Visualization • Research',
-    stage: 'In Development',
+    tags: ['Data Visualization', 'Research'],
+    stage: 'In Production',
+    stageColor: '#6B8F5E',
     description: 'Interactive visualization of relationship patterns from healthcare worker QI study.',
     previewType: 'video',
     preview: cloudVideo(GS_VIDEOS['entrypage']),
   },
   {
     title: 'Whelm',
-    tags: 'Mental Health • Web App Design',
+    tags: ['Mental Health', 'Web-App'],
     stage: 'Active Development',
+    stageColor: '#7B6B8A',
     description: 'Mental health app for untangling overwhelm with somatic self-awareness.',
     previewType: 'video',
     preview: '/video/whelm-preview.mp4',
@@ -25,8 +27,9 @@ const buildingProjects = [
   },
   {
     title: 'TRO Tool',
-    tags: 'Safety • Documentation • Access',
+    tags: ['Documentation', 'Legal Access'],
     stage: 'Concept Phase',
+    stageColor: '#B07255',
     description: 'Documentation system for survivors of abuse navigating restraining orders.',
     previewType: 'none',
     preview: null,
@@ -77,12 +80,16 @@ export default function Home() {
                       <span className={styles.placeholderText}>Coming Soon</span>
                     </div>
                   )}
-                  <span className={styles.stageBadge}>{project.stage}</span>
                 </div>
                 <div className={styles.buildingCardContent}>
                   <h4 className={styles.buildingCardTitle}>{project.title}</h4>
-                  <p className={styles.buildingCardTags}>{project.tags}</p>
+                  <div className={styles.buildingCardTags}>
+                    {project.tags.map((tag) => (
+                      <span key={tag} className={styles.buildingTag}>{tag}</span>
+                    ))}
+                  </div>
                   <p className={styles.buildingCardDescription}>{project.description}</p>
+                  <span className={styles.stagePill} style={{ '--stage-color': project.stageColor }}>{project.stage}</span>
                 </div>
               </article>
             </AnimatedElement>

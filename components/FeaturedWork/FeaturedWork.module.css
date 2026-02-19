@@ -1,8 +1,9 @@
 /* ===========================================
-   FEATURED WORK SECTION
+   FEATURED WORK SECTION — EXPERIMENTAL (color-tinted cards)
    =========================================== */
 
 .section {
+  background-color: #F7F7F7;
   padding: 48px var(--container-padding) 72px;
 }
 
@@ -18,7 +19,7 @@
 .featuredGrid {
   display: flex;
   flex-direction: column;
-  gap: 28px;
+  gap: 40px;
   margin-bottom: 48px;
 }
 
@@ -30,8 +31,7 @@
   display: block;
   text-decoration: none;
   color: inherit;
-  background-color: var(--cream);
-  border: 1px solid var(--olive);
+  background: var(--card-bg);
   border-radius: 12px;
   overflow: hidden;
 }
@@ -83,8 +83,8 @@
   letter-spacing: 0.08em;
   padding: 5px 14px;
   border-radius: 100px;
-  background-color: var(--olive);
-  color: var(--cream);
+  background-color: var(--card-badge-bg, var(--olive));
+  color: var(--card-badge-text, var(--cream));
 }
 
 /* Stacked content */
@@ -149,13 +149,13 @@
 }
 
 /* ===========================================
-   SHARED CONTENT STYLES
+   SHARED CONTENT STYLES — themed via custom properties
    =========================================== */
 
 .title {
   font-family: var(--font-serif);
   font-weight: 300;
-  color: var(--text-heading);
+  color: var(--card-title);
   line-height: 1.1;
   margin: 0 0 10px;
 }
@@ -164,7 +164,7 @@
   font-family: var(--font-serif);
   font-weight: 300;
   font-style: italic;
-  color: var(--text-heading);
+  color: var(--card-subtitle);
   margin: 2px 0 10px;
 }
 
@@ -177,7 +177,7 @@
 
 .description {
   font-family: var(--font-sans);
-  color: var(--text-heading);
+  color: var(--card-description);
   line-height: 1.6;
   margin: 0 0 32px;
 }
@@ -189,7 +189,7 @@
   font-family: var(--font-sans);
   font-size: 14px;
   font-weight: 400;
-  color: var(--olive);
+  color: var(--card-cta);
   transition: gap 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -202,7 +202,7 @@
 }
 
 /* ===========================================
-   TAG PILLS
+   TAG PILLS — unified inverted treatment
    =========================================== */
 
 .tag {
@@ -214,7 +214,6 @@
   height: 36px;
   line-height: 36px;
   border-radius: 100px;
-  border: 1.5px solid;
   white-space: nowrap;
 }
 
@@ -225,28 +224,14 @@
   line-height: 32px;
 }
 
-.tagOlive {
-  color: var(--olive);
-  border-color: var(--olive);
-  background-color: rgba(139, 133, 37, 0.06);
+.tagOnLight {
+  background-color: #2C2C28;
+  color: #FAF8F4;
 }
 
-.tagTerracotta {
-  color: var(--terracotta);
-  border-color: var(--terracotta);
-  background-color: rgba(181, 101, 74, 0.06);
-}
-
-.tagPlum {
-  color: var(--plum);
-  border-color: var(--plum);
-  background-color: rgba(139, 94, 131, 0.06);
-}
-
-.tagSage {
-  color: #5a7050;
-  border-color: var(--sage);
-  background-color: rgba(168, 181, 160, 0.1);
+.tagOnDark {
+  background-color: rgba(255, 255, 255, 0.85);
+  color: #2C2C28;
 }
 
 /* ===========================================
@@ -278,8 +263,7 @@
   flex-direction: column;
   text-decoration: none;
   color: inherit;
-  background-color: var(--cream);
-  border: 1px solid var(--olive);
+  background: var(--card-bg);
   border-radius: 10px;
   overflow: hidden;
   height: 100%;
@@ -305,15 +289,16 @@
   flex-direction: column;
   flex: 1;
   padding: 24px;
+  background: var(--card-content-bg, transparent);
 }
 
 .smallTitle {
   font-family: var(--font-serif);
   font-size: 24px;
   font-weight: 300;
-  color: var(--text-heading);
+  color: var(--card-title);
   line-height: 1.15;
-  margin: 0 0 8px;
+  margin: 0 0 10px;
 }
 
 .smallSubtitle {
@@ -321,23 +306,23 @@
   font-size: 17px;
   font-weight: 300;
   font-style: italic;
-  color: var(--text-heading);
-  margin: 2px 0 8px;
+  color: var(--card-subtitle);
+  margin: 2px 0 16px;
 }
 
 .smallTags {
   display: flex;
   gap: var(--space-xs);
   flex-wrap: wrap;
-  margin-bottom: 16px;
+  margin-bottom: 20px;
 }
 
 .smallDescription {
   font-family: var(--font-sans);
   font-size: 16px;
-  color: var(--text-heading);
+  color: var(--card-description);
   line-height: 1.6;
-  margin: 0 0 24px;
+  margin: 0 0 32px;
 }
 
 .smallCta {
@@ -347,13 +332,95 @@
   font-family: var(--font-sans);
   font-size: 14px;
   font-weight: 400;
-  color: var(--olive);
+  color: var(--card-cta);
   margin-top: auto;
   transition: gap 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .smallCardLink:hover .smallCta {
   gap: 10px;
+}
+
+/* ===========================================
+   NON-CLICKABLE CARD VARIANTS
+   =========================================== */
+
+.cardDiv {
+  color: inherit;
+  background: var(--card-bg);
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: default;
+  position: relative;
+}
+
+.cardDiv:hover .image {
+  transform: scale(1.03);
+}
+
+.smallCardDiv {
+  display: flex;
+  flex-direction: column;
+  color: inherit;
+  background: var(--card-bg);
+  border-radius: 10px;
+  overflow: hidden;
+  height: 100%;
+  cursor: default;
+  position: relative;
+}
+
+.smallCardDiv:hover .image {
+  transform: scale(1.04);
+}
+
+/* ===========================================
+   HOVER OVERLAY (coming soon)
+   =========================================== */
+
+.hoverOverlay {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  inset: 0;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 300ms var(--ease-default);
+  background: rgba(0, 0, 0, 0.78);
+  border-radius: 12px;
+}
+
+.cardDiv:hover .hoverOverlay,
+.smallCardDiv:hover .hoverOverlay {
+  opacity: 1;
+}
+
+.hoverOverlayTitle {
+  font-family: var(--font-serif);
+  font-size: 24px;
+  font-weight: 300;
+  color: #FAF8F4;
+  margin-bottom: 12px;
+}
+
+.hoverOverlayLink {
+  font-family: var(--font-sans);
+  font-size: 14px;
+  color: #FAF8F4;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  opacity: 0.85;
+  transition: opacity 200ms;
+}
+
+.hoverOverlayLink:hover {
+  opacity: 1;
 }
 
 /* ===========================================
@@ -506,7 +573,9 @@
   }
 
   .cardLink:hover .image,
-  .smallCardLink:hover .image {
+  .cardDiv:hover .image,
+  .smallCardLink:hover .image,
+  .smallCardDiv:hover .image {
     transform: none;
   }
 
