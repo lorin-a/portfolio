@@ -22,13 +22,13 @@ const BREATHE_DELAYS = {
   hold: '2.5s',
 }
 
-// Hero.js CTA appears at ~7350ms — sync pulse start with that
-const PULSE_DELAY = 7400
-const POP_DELAY = PULSE_DELAY + 800       // amplify dot pops
+// Delays relative to dialActive becoming true
+const PULSE_DELAY = 5000                   // breathing starts
+const POP_DELAY = 5800                     // amplify dot pops
 const POP_DURATION = 2500                  // pop animation length
-const INSTRUCTION_DELAY = POP_DELAY + POP_DURATION + 200
+const INSTRUCTION_DELAY = 8500             // instruction text
 
-export default function InteractiveDial() {
+export default function InteractiveDial({ dialActive = false }) {
   const [dotsVisible, setDotsVisible] = useState(false)
   const [pulsing, setPulsing] = useState(false)
   const [guidedDot, setGuidedDot] = useState(null)
@@ -61,33 +61,38 @@ export default function InteractiveDial() {
     return positions
   }, [])
 
-  // Mount sequence: rings → dots → headline → CTA → pulse → pop → instruction
+  // Reduced-motion: show everything immediately on mount
   useEffect(() => {
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    if (!prefersReducedMotion) return
 
-    if (prefersReducedMotion) {
-      if (trackInnerRef.current) trackInnerRef.current.classList.add(styles.visible)
-      if (trackOuterRef.current) trackOuterRef.current.classList.add(styles.visible)
-      setDotsVisible(true)
-      setInstructionVisible(true)
-      return
-    }
+    if (trackInnerRef.current) trackInnerRef.current.classList.add(styles.visible)
+    if (trackOuterRef.current) trackOuterRef.current.classList.add(styles.visible)
+    setDotsVisible(true)
+    setInstructionVisible(true)
+  }, [])
 
-    // Rings expand on mount
+  // dialActive sequence: rings → dots → pulse → pop → instruction
+  useEffect(() => {
+    if (!dialActive) return
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    if (prefersReducedMotion) return
+
+    // Rings expand immediately
     requestAnimationFrame(() => {
       if (trackInnerRef.current) trackInnerRef.current.classList.add(styles.visible)
       if (trackOuterRef.current) trackOuterRef.current.classList.add(styles.visible)
     })
 
-    // Dots fade in as a group after rings expand (~800ms)
+    // Dots fade in after rings expand (~800ms)
     const dotsTimer = setTimeout(() => setDotsVisible(true), 800)
-    // Breathing starts when Hero CTA appears
+    // Breathing starts
     const pulseTimer = setTimeout(() => setPulsing(true), PULSE_DELAY)
-    // Amplify dot pops to draw attention (first tour stop)
+    // Amplify dot pops to draw attention
     const popTimer = setTimeout(() => setGuidedDot('amplify'), POP_DELAY)
     // Pop ends, return to normal breathing
     const popEndTimer = setTimeout(() => setGuidedDot(null), POP_DELAY + POP_DURATION)
-    // Instruction text fades in after pop completes
+    // Instruction text fades in
     const instructionTimer = setTimeout(() => setInstructionVisible(true), INSTRUCTION_DELAY)
 
     return () => {
@@ -98,7 +103,7 @@ export default function InteractiveDial() {
       clearTimeout(instructionTimer)
       clearTimeout(tourTimerRef.current)
     }
-  }, [])
+  }, [dialActive])
 
   // Pill positioning (click interaction)
   const pillCenter = useCallback((key) => {
@@ -224,7 +229,7 @@ export default function InteractiveDial() {
 
   return (
     <div className={styles.wrapper} ref={wrapperRef}>
-      <div className={styles.dial}>
+      <div className={`${styles.dial}${dialActive ? ` ${styles.dialActive}` : ''}`}>
         {/* Track rings */}
         <div className={styles.trackInner} ref={trackInnerRef} />
         <div className={styles.trackOuter} ref={trackOuterRef} />

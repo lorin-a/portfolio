@@ -15,6 +15,11 @@
 .dial {
   position: relative;
   width: 420px;
+  height: 210px;
+  transition: height var(--motion-slow) var(--ease-default);
+}
+
+.dial.dialActive {
   height: 420px;
 }
 
@@ -412,6 +417,10 @@
 @media (max-width: 900px) {
   .dial {
     width: 380px;
+    height: 190px;
+  }
+
+  .dial.dialActive {
     height: 380px;
   }
 
@@ -458,6 +467,10 @@
 
   .dial {
     width: 320px;
+    height: 160px;
+  }
+
+  .dial.dialActive {
     height: 320px;
   }
 
@@ -502,6 +515,11 @@
 
 /* ===== REDUCED MOTION ===== */
 @media (prefers-reduced-motion: reduce) {
+  .dial {
+    height: 420px;
+    transition-duration: 0.01s;
+  }
+
   .photoWrap {
     animation: none;
     opacity: 1;
