@@ -1322,13 +1322,10 @@ export default function GroundswellContent() {
         </div>
       </section>
 
-      {/* ==================== FOOTER NAV ==================== */}
+      {/* ==================== FOOTER NAV — next/prev hidden until case studies are built out ==================== */}
       <nav className={styles.projectFooterNav}>
-        <Link href="/projects" className={styles.footerNavLink}>
-          &larr; All Projects
-        </Link>
-        <Link href="/projects/birthstory" className={styles.footerNavLink}>
-          Next Project &rarr;
+        <Link href="/#work" className={styles.footerNavLink}>
+          &larr; All Work
         </Link>
       </nav>
     </div>

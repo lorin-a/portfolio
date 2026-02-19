@@ -94,12 +94,12 @@ export default async function ProjectPage({ params }) {
   
   return (
     <article className={styles.project}>
-      {/* Side Navigation Peeks */}
-      <ProjectNav 
-        prev={prevProject} 
-        next={nextProject} 
+      {/* Side Navigation Peeks — hidden until case studies are built out */}
+      {/* <ProjectNav
+        prev={prevProject}
+        next={nextProject}
         currentSlug={slug}
-      />
+      /> */}
       
       {/* Hero Section */}
       <header className={styles.header}>
@@ -227,20 +227,10 @@ export default async function ProjectPage({ params }) {
         </ReactMarkdown>
       </div>
       
-      {/* Bottom Navigation */}
+      {/* Bottom Navigation — prev/next hidden until case studies are built out */}
       <nav className={styles.bottomNav} aria-label="Project navigation">
-        <Link href={`/projects/${prevProject.slug}`} className={styles.bottomNavLink}>
-          <span className={styles.bottomNavLabel}>Previous</span>
-          <span className={styles.bottomNavTitle}>{prevProject.title}</span>
-        </Link>
-        
         <Link href="/#work" className={styles.backToWork}>
           All Work
-        </Link>
-        
-        <Link href={`/projects/${nextProject.slug}`} className={styles.bottomNavLink}>
-          <span className={styles.bottomNavLabel}>Next</span>
-          <span className={styles.bottomNavTitle}>{nextProject.title}</span>
         </Link>
       </nav>
     </article>

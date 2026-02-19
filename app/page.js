@@ -22,7 +22,7 @@ const buildingProjects = [
     stageColor: '#7B6B8A',
     description: 'Mental health app for untangling overwhelm with somatic self-awareness.',
     previewType: 'video',
-    preview: '/video/whelm-preview.mp4',
+    preview: cloudVideo(OTHER_VIDEOS['whelm-preview']),
     videoZoom: true,
   },
   {

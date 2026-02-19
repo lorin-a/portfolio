@@ -109,7 +109,7 @@
 
 .detail h4 {
   font-family: var(--font-sans);
-  font-size: 0.6875rem;
+  font-size: 0.75rem;
   font-weight: var(--weight-label);
   text-transform: uppercase;
   letter-spacing: 0.02em;
@@ -265,7 +265,7 @@
 
 .bottomNavLabel {
   display: block;
-  font-size: 0.6875rem;
+  font-size: 0.75rem;
   text-transform: uppercase;
   letter-spacing: 0.1em;
   color: var(--color-text-light);
