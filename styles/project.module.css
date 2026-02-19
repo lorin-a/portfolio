@@ -160,7 +160,7 @@
 
 .bodyTextLightCenteredItalic {
   font-family: var(--font-sans);
-  font-size: var(--text-body-small);
+  font-size: var(--text-body);
   font-style: italic;
   line-height: var(--leading-relaxed);
   color: var(--project-accent-light);
@@ -317,7 +317,7 @@
 
 .acknowledgementCardTitleLight {
   font-family: var(--font-serif);
-  font-size: var(--text-h3);
+  font-size: var(--text-body-large);
   font-weight: var(--weight-title);
   color: var(--project-accent-light);
   margin-bottom: var(--space-sm);
@@ -1815,7 +1815,7 @@
 
 .ongoingWorkLabel {
   font-family: var(--font-sans);
-  font-size: var(--text-body-small);
+  font-size: var(--text-caption);
   text-transform: uppercase;
   letter-spacing: 0.08em;
   color: var(--project-accent-light);
@@ -2053,7 +2053,7 @@
 
 .ongoingWorkLabelDark {
   font-family: var(--font-sans);
-  font-size: var(--text-body-small);
+  font-size: var(--text-caption);
   text-transform: uppercase;
   letter-spacing: 0.08em;
   color: var(--project-accent);
