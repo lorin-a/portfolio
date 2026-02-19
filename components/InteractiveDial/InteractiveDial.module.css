@@ -75,9 +75,9 @@
   border-radius: 50%;
   z-index: 3;
   overflow: hidden;
-  border: 3px solid var(--sage, #A8B5A0);
+  border: none;
   opacity: 0;
-  animation: photoGrowIn var(--motion-medium, 600ms) var(--ease-bounce, cubic-bezier(0.34, 1.4, 0.64, 1)) both;
+  animation: photoGrowIn var(--motion-slow, 900ms) var(--ease-bounce, cubic-bezier(0.34, 1.4, 0.64, 1)) both;
 }
 
 @keyframes photoGrowIn {
@@ -343,9 +343,9 @@
   font-style: normal;
   pointer-events: none;
   will-change: transform, opacity;
-  transition: transform var(--motion-slow) var(--ease-default),
-              opacity var(--motion-slow) var(--ease-default);
-  transform: translate(-50%, 12px);
+  transition: transform var(--motion-fast) var(--ease-default),
+              opacity var(--motion-fast) var(--ease-default);
+  transform: translate(-50%, 6px);
   opacity: 0;
   border: 1.5px solid transparent;
 }
@@ -413,6 +413,51 @@
   transform: translate(-50%, 0);
 }
 
+/* ===== RADIAL LABELS — near outer dots ===== */
+.radialLabel {
+  position: absolute;
+  z-index: 5;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity var(--motion-medium) var(--ease-default);
+  pointer-events: none;
+}
+
+.radialLabelVisible {
+  opacity: 0.85;
+}
+
+/* Translate dot (0°, top center) — label above */
+.labelTranslate {
+  left: 50%;
+  top: 1%;
+  transform: translate(-50%, -120%);
+  text-align: center;
+  color: var(--olive, #8B8525);
+  transition-delay: 0s;
+}
+
+/* Amplify dot (120°, bottom-right) — label to the right */
+.labelAmplify {
+  left: 93%;
+  top: 73%;
+  transform: translateY(-50%);
+  color: var(--terracotta, #B5654A);
+  transition-delay: 0.3s;
+}
+
+/* Hold dot (240°, bottom-left) — label to the left */
+.labelHold {
+  left: 7%;
+  top: 73%;
+  transform: translate(-100%, -50%);
+  color: var(--plum, #8B5E83);
+  transition-delay: 0.6s;
+}
+
 /* ===== RESPONSIVE - TABLET ===== */
 @media (max-width: 900px) {
   .dial {
@@ -448,13 +493,8 @@
     padding: 0 16px;
   }
 
-  /* Switch from desktop to mobile instruction text */
-  .instructionDesktop {
-    display: none;
-  }
-
-  .instructionMobile {
-    display: block;
+  .radialLabel {
+    font-size: 12px;
   }
 }
 
@@ -507,9 +547,21 @@
     text-wrap: pretty;
   }
 
-  .instructionMobile {
-    margin-top: -8px;
-    margin-bottom: -4px;
+  .radialLabel {
+    font-size: 12px;
+  }
+
+  /* On mobile, pull side labels inward to avoid viewport overflow */
+  .labelAmplify {
+    left: auto;
+    right: -8px;
+    transform: translate(0, -50%);
+  }
+
+  .labelHold {
+    left: -8px;
+    transform: translate(0, -50%);
+    text-align: left;
   }
 }
 
@@ -539,7 +591,8 @@
 
   .pill,
   .labelArea,
-  .tooltip {
+  .tooltip,
+  .radialLabel {
     transition-duration: 0.01s;
   }
 

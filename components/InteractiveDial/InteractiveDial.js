@@ -7,8 +7,9 @@ import {
   DIAL_SIZE,
   INNER_R, OUTER_R,
   DOTS, ALL_KEYS,
-  TOUR_ORDER,
+  OUTER_KEYS, INNER_KEYS,
   angleToPos,
+  easeSmooth,
 } from './dialConfig'
 import { cloudImg, HOME_IMAGES } from '@/lib/cloudinary'
 
@@ -22,29 +23,22 @@ const BREATHE_DELAYS = {
   hold: '2.5s',
 }
 
-// Delays relative to dialActive becoming true
-const PULSE_DELAY = 5000                   // breathing starts
-const POP_DELAY = 5800                     // amplify dot pops
-const POP_DURATION = 2500                  // pop animation length
-const INSTRUCTION_DELAY = 8500             // instruction text
-
 export default function InteractiveDial({ dialActive = false }) {
   const [dotsVisible, setDotsVisible] = useState(false)
+  const [labelsVisible, setLabelsVisible] = useState(false)
   const [pulsing, setPulsing] = useState(false)
-  const [guidedDot, setGuidedDot] = useState(null)
-  const [instructionVisible, setInstructionVisible] = useState(false)
-  const [hasInteracted, setHasInteracted] = useState(false)
   const [activeKey, setActiveKey] = useState(null)
   const [tooltipVisible, setTooltipVisible] = useState(false)
   const [tooltipText, setTooltipText] = useState('')
 
   const pillRefs = useRef({})
+  const dotRefs = useRef({})
   const labelAreaRef = useRef(null)
   const trackInnerRef = useRef(null)
   const trackOuterRef = useRef(null)
   const wrapperRef = useRef(null)
-  const tourTimerRef = useRef(null)
-  const visitedDotsRef = useRef(new Set())
+  const arcRafRef = useRef(null)
+  const postArcTimersRef = useRef([])
 
   // Compute dot positions as percentages so they scale with container
   const dotPositions = useMemo(() => {
@@ -69,41 +63,8 @@ export default function InteractiveDial({ dialActive = false }) {
     if (trackInnerRef.current) trackInnerRef.current.classList.add(styles.visible)
     if (trackOuterRef.current) trackOuterRef.current.classList.add(styles.visible)
     setDotsVisible(true)
-    setInstructionVisible(true)
+    setLabelsVisible(true)
   }, [])
-
-  // dialActive sequence: rings → dots → pulse → pop → instruction
-  useEffect(() => {
-    if (!dialActive) return
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    if (prefersReducedMotion) return
-
-    // Rings expand immediately
-    requestAnimationFrame(() => {
-      if (trackInnerRef.current) trackInnerRef.current.classList.add(styles.visible)
-      if (trackOuterRef.current) trackOuterRef.current.classList.add(styles.visible)
-    })
-
-    // Dots fade in after rings expand (~800ms)
-    const dotsTimer = setTimeout(() => setDotsVisible(true), 800)
-    // Breathing starts
-    const pulseTimer = setTimeout(() => setPulsing(true), PULSE_DELAY)
-    // Amplify dot pops to draw attention
-    const popTimer = setTimeout(() => setGuidedDot('amplify'), POP_DELAY)
-    // Pop ends, return to normal breathing
-    const popEndTimer = setTimeout(() => setGuidedDot(null), POP_DELAY + POP_DURATION)
-    // Instruction text fades in
-    const instructionTimer = setTimeout(() => setInstructionVisible(true), INSTRUCTION_DELAY)
-
-    return () => {
-      clearTimeout(dotsTimer)
-      clearTimeout(pulseTimer)
-      clearTimeout(popTimer)
-      clearTimeout(popEndTimer)
-      clearTimeout(instructionTimer)
-      clearTimeout(tourTimerRef.current)
-    }
-  }, [dialActive])
 
   // Pill positioning (click interaction)
   const pillCenter = useCallback((key) => {
@@ -118,36 +79,100 @@ export default function InteractiveDial({ dialActive = false }) {
   const pillHide = useCallback((key) => {
     const el = pillRefs.current[key]
     if (el) {
-      el.style.transform = 'translate(-50%, 12px)'
+      el.style.transform = 'translate(-50%, 6px)'
       el.style.opacity = '0'
       el.style.pointerEvents = 'none'
     }
   }, [])
 
-  // Start a 5s timer to advance the guided tour to the next unvisited dot
-  const startTourTimer = useCallback(() => {
-    clearTimeout(tourTimerRef.current)
-    tourTimerRef.current = setTimeout(() => {
-      const nextDot = TOUR_ORDER.find((k) => !visitedDotsRef.current.has(k))
-      if (nextDot) {
-        setGuidedDot(nextDot)
+  // Arc animation: dots sweep along their rings into position
+  const startDotArcAnimation = useCallback((onComplete) => {
+    const ARC_DURATION = 800
+    const ARC_OFFSET = 120
+    const STAGGER = 100
+
+    const arcOrder = [...OUTER_KEYS, ...INNER_KEYS]
+    const animations = arcOrder.map((key, i) => {
+      const dot = DOTS[key]
+      const radius = dot.ring === 'inner' ? INNER_R : OUTER_R
+      const finalAngle = dot.angle
+      const startAngle = dot.ring === 'outer'
+        ? finalAngle - ARC_OFFSET
+        : finalAngle + ARC_OFFSET
+      return { key, radius, startAngle, finalAngle, delay: i * STAGGER }
+    })
+
+    const startTime = performance.now()
+
+    function frame(now) {
+      const elapsed = now - startTime
+      let allDone = true
+
+      for (const { key, radius, startAngle, finalAngle, delay } of animations) {
+        const t = Math.max(0, Math.min(1, (elapsed - delay) / ARC_DURATION))
+        if (t < 1) allDone = false
+
+        const easedT = easeSmooth(t)
+        const currentAngle = startAngle + (finalAngle - startAngle) * easedT
+        const pos = angleToPos(currentAngle, radius)
+        const xPct = (pos.x / DIAL_SIZE) * 100
+        const yPct = (pos.y / DIAL_SIZE) * 100
+
+        const el = dotRefs.current[key]
+        if (el) {
+          el.style.left = `${xPct}%`
+          el.style.top = `${yPct}%`
+          el.style.opacity = String(Math.min(1, t * 3))
+        }
       }
-    }, 5000)
+
+      if (!allDone) {
+        arcRafRef.current = requestAnimationFrame(frame)
+      } else {
+        setDotsVisible(true)
+        if (onComplete) onComplete()
+      }
+    }
+
+    arcRafRef.current = requestAnimationFrame(frame)
   }, [])
+
+  // dialActive sequence: rings → arc dots → labels fade in → inner dots pulse
+  useEffect(() => {
+    if (!dialActive) return
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    if (prefersReducedMotion) return
+
+    // Rings expand immediately
+    requestAnimationFrame(() => {
+      if (trackInnerRef.current) trackInnerRef.current.classList.add(styles.visible)
+      if (trackOuterRef.current) trackOuterRef.current.classList.add(styles.visible)
+    })
+
+    // Dots arc into position after rings expand
+    const dotsTimer = setTimeout(() => {
+      startDotArcAnimation(() => {
+        // Labels fade in 500ms after dots land (CSS handles stagger per label)
+        const labelTimer = setTimeout(() => setLabelsVisible(true), 500)
+        postArcTimersRef.current.push(labelTimer)
+
+        // Inner dots start pulsing after labels are all visible (~1.5s after labels start)
+        const pulseTimer = setTimeout(() => setPulsing(true), 2000)
+        postArcTimersRef.current.push(pulseTimer)
+      })
+    }, 800)
+
+    return () => {
+      clearTimeout(dotsTimer)
+      cancelAnimationFrame(arcRafRef.current)
+      postArcTimersRef.current.forEach(clearTimeout)
+      postArcTimersRef.current = []
+    }
+  }, [dialActive, startDotArcAnimation])
 
   // Dot click handler
   const handleDotClick = useCallback((key) => {
     if (!dotsVisible) return
-    if (!hasInteracted) setHasInteracted(true)
-
-    // Track visited dot for tour
-    visitedDotsRef.current.add(key)
-
-    // If clicking the currently guided dot, stop its pop animation
-    if (key === guidedDot) setGuidedDot(null)
-
-    // Clear any pending tour timer and start a new one
-    clearTimeout(tourTimerRef.current)
 
     if (activeKey === key) {
       // Dismiss current
@@ -173,10 +198,7 @@ export default function InteractiveDial({ dialActive = false }) {
         }, 250)
       })
     }
-
-    // Advance tour after 5s reading pause
-    startTourTimer()
-  }, [dotsVisible, hasInteracted, activeKey, guidedDot, pillHide, pillCenter, startTourTimer])
+  }, [dotsVisible, activeKey, pillHide, pillCenter])
 
   // Click outside to dismiss
   useEffect(() => {
@@ -193,14 +215,12 @@ export default function InteractiveDial({ dialActive = false }) {
         setTooltipVisible(false)
         setActiveKey(null)
         if (labelAreaRef.current) labelAreaRef.current.style.height = '0'
-        // Keep tour advancing even after dismiss — user already read the content
-        startTourTimer()
       }
     }
 
     document.addEventListener('click', handleClickOutside)
     return () => document.removeEventListener('click', handleClickOutside)
-  }, [dotsVisible, activeKey, pillHide, startTourTimer])
+  }, [dotsVisible, activeKey, pillHide])
 
   // Class name helpers
   const getDotClassName = (key) => {
@@ -209,11 +229,7 @@ export default function InteractiveDial({ dialActive = false }) {
     const colorClass = styles[`color${dot.color.charAt(0).toUpperCase() + dot.color.slice(1)}`]
     const classes = [styles.dot, typeClass, colorClass]
     if (dotsVisible) classes.push(styles.dotsVisible)
-    if (key === guidedDot) {
-      classes.push(styles.popping)
-    } else if (pulsing) {
-      classes.push(styles.breathing)
-    }
+    if (pulsing && activeKey !== key) classes.push(styles.breathing)
     if (activeKey === key) classes.push(styles.active)
     return classes.join(' ')
   }
@@ -224,8 +240,6 @@ export default function InteractiveDial({ dialActive = false }) {
     const colorClass = styles[`color${dot.color.charAt(0).toUpperCase() + dot.color.slice(1)}`]
     return `${styles.pill} ${styleClass} ${colorClass}`
   }
-
-  const showInstruction = instructionVisible && !hasInteracted
 
   return (
     <div className={styles.wrapper} ref={wrapperRef}>
@@ -248,6 +262,7 @@ export default function InteractiveDial({ dialActive = false }) {
         {ALL_KEYS.map((key) => (
           <button
             key={key}
+            ref={(el) => (dotRefs.current[key] = el)}
             className={getDotClassName(key)}
             aria-label={DOTS[key].label}
             style={{
@@ -262,16 +277,17 @@ export default function InteractiveDial({ dialActive = false }) {
           />
         ))}
 
-        {/* Desktop instruction text — positioned right of Amplify dot */}
-        <span className={`${styles.instructionDesktop} ${showInstruction ? styles.instructionShow : ''}`}>
-          click to explore
+        {/* Radial labels — positioned near outer dots */}
+        <span className={`${styles.radialLabel} ${styles.labelTranslate} ${labelsVisible ? styles.radialLabelVisible : ''}`}>
+          Distilling Complexity
+        </span>
+        <span className={`${styles.radialLabel} ${styles.labelAmplify} ${labelsVisible ? styles.radialLabelVisible : ''}`}>
+          Amplifying Voices
+        </span>
+        <span className={`${styles.radialLabel} ${styles.labelHold} ${labelsVisible ? styles.radialLabelVisible : ''}`}>
+          Holding Space
         </span>
       </div>
-
-      {/* Mobile/tablet instruction text — centered between dial and labels */}
-      <span className={`${styles.instructionMobile} ${showInstruction ? styles.instructionShow : ''}`}>
-        tap to explore
-      </span>
 
       <div className={styles.labelArea} ref={labelAreaRef}>
         {ALL_KEYS.map((key) => (
