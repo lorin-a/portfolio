@@ -845,6 +845,22 @@
   border-radius: var(--radius-md);
 }
 
+.diagramImageButton {
+  display: block;
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: zoom-in;
+  font: inherit;
+}
+
+.diagramImageButton:focus-visible {
+  outline: 2px solid var(--project-accent);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
 .diagramImageLarge {
   width: 100%;
   height: auto;
@@ -2693,18 +2709,19 @@
 
   .playtestCarouselTrack {
     height: auto;
-    min-height: 620px;
-    overflow: hidden;
+    min-height: 680px;
+    overflow: visible;
   }
 
   .playtestCarouselSlot {
     width: 88vw;
+    height: auto;
   }
 
   .playtestCarouselCard {
     padding: var(--space-md) var(--space-md) var(--space-lg);
     height: auto;
-    min-height: 600px;
+    min-height: 660px;
   }
 }
 
@@ -3052,7 +3069,7 @@
   }
 
   .workshopImageButton {
-    height: 190px;
+    height: 130px;
     width: 100%;
     border-radius: var(--radius-sm);
   }

@@ -140,6 +140,19 @@ function AudioPlayer({ track }) {
 /* ── DiagramTabs ── */
 function DiagramTabs() {
   const [activeTab, setActiveTab] = useState('ecosystem')
+  const [lightboxSrc, setLightboxSrc] = useState(null)
+  const [lightboxAlt, setLightboxAlt] = useState('')
+
+  const diagrams = {
+    ecosystem: {
+      src: '/images/groundswell/gs-ecosystem-diagram-purple.svg',
+      alt: 'Ecosystem flow diagram showing how CTB Email, Pod, Garden Art Wall, and Reflection Cards connect to moments like arriving at work, taking a break, patient loss, hard moments, and one-on-one meetings',
+    },
+    values: {
+      src: '/images/groundswell/gs-values-diagram.svg',
+      alt: 'Groundswell core values: Humanity, Together, Normalcy, and Compassion forming a continuous cycle',
+    },
+  }
 
   const tabs = [
     { id: 'ecosystem', label: 'System Map' },
@@ -148,26 +161,45 @@ function DiagramTabs() {
 
   return (
     <div className={styles.diagramTabs}>
+      {lightboxSrc && (
+        <Lightbox
+          src={lightboxSrc}
+          alt={lightboxAlt}
+          onClose={() => setLightboxSrc(null)}
+        />
+      )}
       <div className={styles.diagramTabContent}>
         <div
           className={styles.diagramTabPanel}
           style={{ opacity: activeTab === 'ecosystem' ? 1 : 0, position: activeTab === 'ecosystem' ? 'relative' : 'absolute' }}
         >
-          <img
-            src="/images/groundswell/gs-ecosystem-diagram-purple.svg"
-            alt="Ecosystem flow diagram showing how CTB Email, Pod, Garden Art Wall, and Reflection Cards connect to moments like arriving at work, taking a break, patient loss, hard moments, and one-on-one meetings"
-            className={styles.diagramImageLarge}
-          />
+          <button
+            className={styles.diagramImageButton}
+            onClick={() => { setLightboxSrc(diagrams.ecosystem.src); setLightboxAlt(diagrams.ecosystem.alt) }}
+            aria-label="View ecosystem diagram full size"
+          >
+            <img
+              src={diagrams.ecosystem.src}
+              alt={diagrams.ecosystem.alt}
+              className={styles.diagramImageLarge}
+            />
+          </button>
         </div>
         <div
           className={styles.diagramTabPanel}
           style={{ opacity: activeTab === 'values' ? 1 : 0, position: activeTab === 'values' ? 'relative' : 'absolute' }}
         >
-          <img
-            src="/images/groundswell/gs-values-diagram.svg"
-            alt="Groundswell core values: Humanity, Together, Normalcy, and Compassion forming a continuous cycle"
-            className={styles.diagramImageLarge}
-          />
+          <button
+            className={styles.diagramImageButton}
+            onClick={() => { setLightboxSrc(diagrams.values.src); setLightboxAlt(diagrams.values.alt) }}
+            aria-label="View values diagram full size"
+          >
+            <img
+              src={diagrams.values.src}
+              alt={diagrams.values.alt}
+              className={styles.diagramImageLarge}
+            />
+          </button>
         </div>
       </div>
       <div className={styles.diagramTabBar}>

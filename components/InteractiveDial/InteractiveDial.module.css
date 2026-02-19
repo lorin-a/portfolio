@@ -452,7 +452,8 @@
 /* ===== RESPONSIVE - MOBILE ===== */
 @media (max-width: 600px) {
   .wrapper {
-    gap: var(--space-xs, 8px);
+    gap: 4px;
+    margin-bottom: 0;
   }
 
   .dial {
@@ -494,7 +495,8 @@
   }
 
   .instructionMobile {
-    margin-top: -4px;
+    margin-top: -8px;
+    margin-bottom: -4px;
   }
 }
 

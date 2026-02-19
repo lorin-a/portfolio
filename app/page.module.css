@@ -306,6 +306,58 @@
 }
 
 /* ===========================================
+   BUILDING NOW — VIDEO PREVIEW
+   =========================================== */
+.buildingPreviewClickable {
+  cursor: pointer;
+}
+
+.buildingPreviewClickable:focus-visible {
+  outline: 2px solid var(--olive);
+  outline-offset: 2px;
+}
+
+.videoOverlay {
+  position: fixed;
+  top: 0; right: 0; bottom: 0; left: 0;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.9);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-md);
+}
+
+.videoOverlayClose {
+  position: absolute;
+  top: var(--space-md);
+  right: var(--space-md);
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  padding: var(--space-xs);
+  z-index: 1001;
+  min-width: var(--min-touch-target);
+  min-height: var(--min-touch-target);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.videoOverlayClose:focus-visible {
+  outline: 2px solid white;
+  outline-offset: 2px;
+}
+
+.videoOverlayPlayer {
+  max-width: 90vw;
+  max-height: 80vh;
+  border-radius: var(--radius-md);
+}
+
+/* ===========================================
    REDUCED MOTION
    =========================================== */
 @media (prefers-reduced-motion: reduce) {

@@ -157,7 +157,8 @@ export default function InteractiveDial() {
 
       // Activate new dot
       setActiveKey(key)
-      if (labelAreaRef.current) labelAreaRef.current.style.height = '80px'
+      const isMobile = window.innerWidth <= 600
+      if (labelAreaRef.current) labelAreaRef.current.style.height = isMobile ? '70px' : '80px'
 
       requestAnimationFrame(() => {
         pillCenter(key)
