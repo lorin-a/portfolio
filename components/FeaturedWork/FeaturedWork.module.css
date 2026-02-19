@@ -4,7 +4,7 @@
 
 .section {
   background-color: #F7F7F7;
-  padding: 48px var(--container-padding) 72px;
+  padding: var(--space-xl) var(--container-padding) var(--space-xl);
 }
 
 .container {
@@ -19,8 +19,8 @@
 .featuredGrid {
   display: flex;
   flex-direction: column;
-  gap: 40px;
-  margin-bottom: 48px;
+  gap: var(--space-lg);
+  margin-bottom: var(--space-xl);
 }
 
 /* ===========================================
@@ -93,15 +93,15 @@
 }
 
 .titleStacked {
-  font-size: 36px;
+  font-size: var(--text-h2, 36px);
 }
 
 .subtitleStacked {
-  font-size: 19px;
+  font-size: var(--text-body-large, 19px);
 }
 
 .descriptionStacked {
-  font-size: 18px;
+  font-size: var(--text-body-large, 18px);
 }
 
 /* ===========================================
@@ -453,7 +453,7 @@
    RESPONSIVE — MOBILE (≤700px)
    =========================================== */
 
-@media (max-width: 700px) {
+@media (max-width: 600px) {
   .imageStacked {
     height: 220px;
   }

@@ -43,6 +43,12 @@
   z-index: 101;
 }
 
+.menuButton:focus-visible {
+  outline: 2px solid var(--color-green-dark);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
 .menuIcon {
   display: block;
   width: 24px;
@@ -142,6 +148,17 @@
   font-weight: 400;
   color: var(--text-heading);
   letter-spacing: 0.01em;
+}
+
+/* Tablet Styles */
+@media (max-width: 900px) {
+  .nav {
+    padding: var(--space-xs) var(--space-sm);
+  }
+
+  .navLinks {
+    gap: var(--space-sm);
+  }
 }
 
 /* Mobile Styles */

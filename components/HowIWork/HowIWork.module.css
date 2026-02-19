@@ -64,7 +64,7 @@
 
 .mounted .connectorLine {
   clip-path: inset(0 0 100% 0);
-  transition: clip-path 1200ms cubic-bezier(0.4, 0, 0.2, 1) 500ms;
+  transition: clip-path 2000ms cubic-bezier(0.4, 0, 0.2, 1) 1200ms;
 }
 
 .visible .connectorLine {
@@ -101,38 +101,40 @@
   transform: scale(0);
 }
 
-/* Staggered dot entrance */
+/* Staggered dot entrance — all dots appear before line starts */
 .mounted .pillar1 .dot {
+  transition: opacity 600ms cubic-bezier(0.34, 1.56, 0.64, 1) 400ms,
+              transform 600ms cubic-bezier(0.34, 1.56, 0.64, 1) 400ms;
+}
+
+.mounted .pillar2 .dot {
+  transition: opacity 600ms cubic-bezier(0.34, 1.56, 0.64, 1) 650ms,
+              transform 600ms cubic-bezier(0.34, 1.56, 0.64, 1) 650ms;
+}
+
+.mounted .pillar3 .dot {
   transition: opacity 600ms cubic-bezier(0.34, 1.56, 0.64, 1) 900ms,
               transform 600ms cubic-bezier(0.34, 1.56, 0.64, 1) 900ms;
 }
 
-.mounted .pillar2 .dot {
-  transition: opacity 600ms cubic-bezier(0.34, 1.56, 0.64, 1) 1200ms,
-              transform 600ms cubic-bezier(0.34, 1.56, 0.64, 1) 1200ms;
-}
-
-.mounted .pillar3 .dot {
-  transition: opacity 600ms cubic-bezier(0.34, 1.56, 0.64, 1) 1500ms,
-              transform 600ms cubic-bezier(0.34, 1.56, 0.64, 1) 1500ms;
-}
-
-.visible .dot {
+.visible .pillar1 .dot,
+.visible .pillar2 .dot,
+.visible .pillar3 .dot {
   opacity: 1;
   transform: scale(1);
 }
 
 /* Breathing pulse after entrance */
 .visible .pillar1 .dot {
-  animation: dotBreathe 3.5s ease-in-out 2.8s infinite;
+  animation: dotBreathe 3.5s ease-in-out 4s infinite;
 }
 
 .visible .pillar2 .dot {
-  animation: dotBreathe 3.5s ease-in-out 3.3s infinite;
+  animation: dotBreathe 3.5s ease-in-out 4.5s infinite;
 }
 
 .visible .pillar3 .dot {
-  animation: dotBreathe 3.5s ease-in-out 3.8s infinite;
+  animation: dotBreathe 3.5s ease-in-out 5s infinite;
 }
 
 @keyframes dotBreathe {
@@ -168,23 +170,25 @@
   transform: translateY(12px);
 }
 
-/* Staggered text entrance */
+/* Staggered text entrance — synced with line reaching each dot */
 .mounted .pillar1 .textBlock {
-  transition: opacity 650ms cubic-bezier(0.4, 0, 0.2, 1) 1000ms,
-              transform 650ms cubic-bezier(0.4, 0, 0.2, 1) 1000ms;
+  transition: opacity 750ms cubic-bezier(0.4, 0, 0.2, 1) 1200ms,
+              transform 750ms cubic-bezier(0.4, 0, 0.2, 1) 1200ms;
 }
 
 .mounted .pillar2 .textBlock {
-  transition: opacity 650ms cubic-bezier(0.4, 0, 0.2, 1) 1300ms,
-              transform 650ms cubic-bezier(0.4, 0, 0.2, 1) 1300ms;
+  transition: opacity 750ms cubic-bezier(0.4, 0, 0.2, 1) 2200ms,
+              transform 750ms cubic-bezier(0.4, 0, 0.2, 1) 2200ms;
 }
 
 .mounted .pillar3 .textBlock {
-  transition: opacity 650ms cubic-bezier(0.4, 0, 0.2, 1) 1600ms,
-              transform 650ms cubic-bezier(0.4, 0, 0.2, 1) 1600ms;
+  transition: opacity 750ms cubic-bezier(0.4, 0, 0.2, 1) 3200ms,
+              transform 750ms cubic-bezier(0.4, 0, 0.2, 1) 3200ms;
 }
 
-.visible .textBlock {
+.visible .pillar1 .textBlock,
+.visible .pillar2 .textBlock,
+.visible .pillar3 .textBlock {
   opacity: 1;
   transform: translateY(0);
 }

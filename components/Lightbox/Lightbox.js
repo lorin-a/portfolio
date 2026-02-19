@@ -142,6 +142,7 @@ export default function Lightbox({
       
       {/* Image */}
       <div className={styles.imageContainer}>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={src}
           alt={alt}

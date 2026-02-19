@@ -33,7 +33,7 @@ export default function AnimatedElement({ children, className = '', delay = 0, t
           observer.unobserve(element)
         }
       },
-      { threshold: 0.15 }
+      { threshold: 0.15, rootMargin: '0px 0px -100px 0px' }
     )
 
     observer.observe(element)

@@ -191,7 +191,7 @@
 }
 
 .buildingCardContent {
-  padding: 24px;
+  padding: var(--space-md);
   display: flex;
   flex-direction: column;
   flex: 1;
@@ -199,7 +199,7 @@
 
 .buildingCardTitle {
   font-family: var(--font-serif);
-  font-size: 24px;
+  font-size: var(--text-h4, 24px);
   font-weight: 300;
   color: var(--text-heading);
   margin: 0 0 10px;
@@ -228,7 +228,7 @@
 
 .buildingCardDescription {
   font-family: var(--font-sans);
-  font-size: 16px;
+  font-size: var(--text-body, 16px);
   line-height: 1.6;
   color: var(--text-heading);
   margin: 0 0 24px;

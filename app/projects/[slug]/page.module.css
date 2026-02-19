@@ -74,6 +74,12 @@
   object-fit: cover;
 }
 
+@media (max-width: 600px) {
+  .heroImage img {
+    max-height: 50vh;
+  }
+}
+
 .imagePlaceholder {
   background-color: var(--color-bg-alt);
   border: 2px dashed var(--color-border);

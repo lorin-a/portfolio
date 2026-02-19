@@ -69,7 +69,7 @@ export default function HowIWork() {
           observer.unobserve(el)
         }
       },
-      { threshold: 0.15 }
+      { threshold: 0.15, rootMargin: '0px 0px -100px 0px' }
     )
 
     observer.observe(el)

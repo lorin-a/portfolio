@@ -42,3 +42,21 @@
   margin-bottom: 0;
   font-family: var(--font-sans);
 }
+
+/* ===========================================
+   RESPONSIVE — MOBILE (≤600px)
+   =========================================== */
+@media (max-width: 600px) {
+  .footer {
+    padding: var(--space-lg) var(--space-sm);
+  }
+
+  .heading {
+    font-size: var(--text-h4);
+  }
+
+  .social {
+    gap: var(--space-md);
+    flex-wrap: wrap;
+  }
+}

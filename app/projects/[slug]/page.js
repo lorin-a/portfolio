@@ -92,8 +92,13 @@ export default async function ProjectPage({ params }) {
   const prevProject = currentIndex > 0 ? allProjects[currentIndex - 1] : allProjects[allProjects.length - 1]
   const nextProject = currentIndex < allProjects.length - 1 ? allProjects[currentIndex + 1] : allProjects[0]
   
+  // Set per-project accent color from frontmatter
+  const projectStyle = frontmatter.accentColor
+    ? { '--project-accent': frontmatter.accentColor }
+    : undefined
+
   return (
-    <article className={styles.project}>
+    <article className={styles.project} style={projectStyle}>
       {/* Side Navigation Peeks — hidden until case studies are built out */}
       {/* <ProjectNav
         prev={prevProject}
