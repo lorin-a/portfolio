@@ -262,8 +262,6 @@ p, li, blockquote, figcaption {
   text-wrap: pretty; /* Prevents single-word last lines */
 }
 
-[class*="cardDescription"],
-[class*="Description"],
 [class*="intro"],
 [class*="Intro"] {
   text-wrap: balance;

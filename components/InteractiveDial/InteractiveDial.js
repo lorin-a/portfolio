@@ -4,6 +4,7 @@ import { useEffect, useRef, useState, useMemo, useCallback } from 'react'
 import Image from 'next/image'
 import styles from './InteractiveDial.module.css'
 import {
+  DIAL_SIZE,
   INNER_R, OUTER_R,
   DOTS, ALL_KEYS,
   TOUR_ORDER,
@@ -45,13 +46,17 @@ export default function InteractiveDial() {
   const tourTimerRef = useRef(null)
   const visitedDotsRef = useRef(new Set())
 
-  // Compute dot positions from config at render time
+  // Compute dot positions as percentages so they scale with container
   const dotPositions = useMemo(() => {
     const positions = {}
     ALL_KEYS.forEach((key) => {
       const dot = DOTS[key]
       const radius = dot.ring === 'inner' ? INNER_R : OUTER_R
-      positions[key] = angleToPos(dot.angle, radius)
+      const pos = angleToPos(dot.angle, radius)
+      positions[key] = {
+        x: `${(pos.x / DIAL_SIZE) * 100}%`,
+        y: `${(pos.y / DIAL_SIZE) * 100}%`,
+      }
     })
     return positions
   }, [])

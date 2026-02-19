@@ -187,7 +187,8 @@ function DiagramTabs() {
 }
 
 function WorkshopCarousel() {
-  const [current, setCurrent] = useState(1)
+  const isMobileInit = typeof window !== 'undefined' && window.innerWidth <= 600
+  const [current, setCurrent] = useState(isMobileInit ? 0 : 1)
   const [lightboxImg, setLightboxImg] = useState(null)
 
   const workshops = [
@@ -253,8 +254,17 @@ function WorkshopCarousel() {
     if (e.key === 'ArrowLeft') goPrev()
   }
 
+  const isMobile = typeof window !== 'undefined' && window.innerWidth <= 600
+
   const getPosition = (index) => {
     const diff = index - current
+    if (isMobile) {
+      // Mobile: only show active card, slide others off-screen
+      if (diff === 0)  return { left: '50%', scale: 1,    opacity: 1,    z: 3 }
+      if (diff === -1) return { left: '-50%', scale: 0.9, opacity: 0,    z: 1 }
+      if (diff === 1)  return { left: '150%', scale: 0.9, opacity: 0,    z: 1 }
+      return { left: '50%', scale: 0.8, opacity: 0, z: 0 }
+    }
     if (diff === 0)  return { left: '50%', scale: 1,    opacity: 1,    z: 3 }
     if (diff === -1) return { left: '16%', scale: 0.88, opacity: 0.65, z: 2 }
     if (diff === 1)  return { left: '84%', scale: 0.88, opacity: 0.65, z: 2 }
@@ -371,7 +381,8 @@ function WorkshopCarousel() {
 }
 
 function PlaytestCarousel() {
-  const [current, setCurrent] = useState(1)
+  const isMobileInit = typeof window !== 'undefined' && window.innerWidth <= 600
+  const [current, setCurrent] = useState(isMobileInit ? 0 : 1)
 
   const iterations = [
     {
@@ -402,8 +413,16 @@ function PlaytestCarousel() {
     if (e.key === 'ArrowLeft') goPrev()
   }
 
+  const isMobile = typeof window !== 'undefined' && window.innerWidth <= 600
+
   const getPosition = (index) => {
     const diff = index - current
+    if (isMobile) {
+      if (diff === 0)  return { left: '50%', scale: 1,    opacity: 1,    z: 3 }
+      if (diff === -1) return { left: '-50%', scale: 0.9, opacity: 0,    z: 1 }
+      if (diff === 1)  return { left: '150%', scale: 0.9, opacity: 0,    z: 1 }
+      return { left: '50%', scale: 0.8, opacity: 0, z: 0 }
+    }
     if (diff === 0)  return { left: '50%', scale: 1,    opacity: 1,    z: 3 }
     if (diff === -1) return { left: '16%', scale: 0.88, opacity: 0.65, z: 2 }
     if (diff === 1)  return { left: '84%', scale: 0.88, opacity: 0.65, z: 2 }
@@ -441,6 +460,7 @@ function PlaytestCarousel() {
               aria-label={i !== current ? `Go to ${item.label} iteration` : undefined}
             >
               <div className={styles.playtestCarouselCard}>
+                <span className={styles.playtestCategoryLabel}>FEEDBACK</span>
                 <span className={styles.playtestLabel}>{item.label}</span>
                 <p className={styles.playtestProblem}>{item.problem}</p>
                 <blockquote className={styles.playtestQuote}>

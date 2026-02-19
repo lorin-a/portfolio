@@ -64,7 +64,7 @@
 
 .mounted .connectorLine {
   clip-path: inset(0 0 100% 0);
-  transition: clip-path 2000ms cubic-bezier(0.4, 0, 0.2, 1) 1200ms;
+  transition: clip-path 1570ms cubic-bezier(0.25, 0, 0.4, 1) 340ms;
 }
 
 .visible .connectorLine {
@@ -101,40 +101,39 @@
   transform: scale(0);
 }
 
-/* Staggered dot entrance — all dots appear before line starts */
-.mounted .pillar1 .dot {
-  transition: opacity 600ms cubic-bezier(0.34, 1.56, 0.64, 1) 400ms,
-              transform 600ms cubic-bezier(0.34, 1.56, 0.64, 1) 400ms;
+/* Staggered dot entrance — each dot appears with the line reaching it */
+.visible .pillar1 .dot {
+  opacity: 1;
+  transform: scale(1);
+  transition: opacity 340ms cubic-bezier(0.34, 1.56, 0.64, 1) 340ms,
+              transform 340ms cubic-bezier(0.34, 1.56, 0.64, 1) 340ms;
 }
 
-.mounted .pillar2 .dot {
-  transition: opacity 600ms cubic-bezier(0.34, 1.56, 0.64, 1) 650ms,
-              transform 600ms cubic-bezier(0.34, 1.56, 0.64, 1) 650ms;
+.visible .pillar2 .dot {
+  opacity: 1;
+  transform: scale(1);
+  transition: opacity 340ms cubic-bezier(0.34, 1.56, 0.64, 1) 1080ms,
+              transform 340ms cubic-bezier(0.34, 1.56, 0.64, 1) 1080ms;
 }
 
-.mounted .pillar3 .dot {
-  transition: opacity 600ms cubic-bezier(0.34, 1.56, 0.64, 1) 900ms,
-              transform 600ms cubic-bezier(0.34, 1.56, 0.64, 1) 900ms;
-}
-
-.visible .pillar1 .dot,
-.visible .pillar2 .dot,
 .visible .pillar3 .dot {
   opacity: 1;
   transform: scale(1);
+  transition: opacity 340ms cubic-bezier(0.34, 1.56, 0.64, 1) 1810ms,
+              transform 340ms cubic-bezier(0.34, 1.56, 0.64, 1) 1810ms;
 }
 
 /* Breathing pulse after entrance */
 .visible .pillar1 .dot {
-  animation: dotBreathe 3.5s ease-in-out 4s infinite;
+  animation: dotBreathe 3.5s ease-in-out 2.5s infinite;
 }
 
 .visible .pillar2 .dot {
-  animation: dotBreathe 3.5s ease-in-out 4.5s infinite;
+  animation: dotBreathe 3.5s ease-in-out 3s infinite;
 }
 
 .visible .pillar3 .dot {
-  animation: dotBreathe 3.5s ease-in-out 5s infinite;
+  animation: dotBreathe 3.5s ease-in-out 3.5s infinite;
 }
 
 @keyframes dotBreathe {
@@ -160,37 +159,35 @@
 
 /* ===== TEXT BLOCK ===== */
 .textBlock {
-  /* Animation */
   opacity: 1;
-  transform: translateY(0);
+  transform: translateY(0) scale(1);
 }
 
 .mounted .textBlock {
   opacity: 0;
-  transform: translateY(12px);
+  transform: translateY(20px) scale(0.97);
 }
 
-/* Staggered text entrance — synced with line reaching each dot */
-.mounted .pillar1 .textBlock {
-  transition: opacity 750ms cubic-bezier(0.4, 0, 0.2, 1) 1200ms,
-              transform 750ms cubic-bezier(0.4, 0, 0.2, 1) 1200ms;
+/* Staggered text entrance — paired with corresponding dot */
+.visible .pillar1 .textBlock {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  transition: opacity 440ms cubic-bezier(0.4, 0, 0.2, 1) 390ms,
+              transform 440ms var(--ease-bounce) 390ms;
 }
 
-.mounted .pillar2 .textBlock {
-  transition: opacity 750ms cubic-bezier(0.4, 0, 0.2, 1) 2200ms,
-              transform 750ms cubic-bezier(0.4, 0, 0.2, 1) 2200ms;
+.visible .pillar2 .textBlock {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  transition: opacity 440ms cubic-bezier(0.4, 0, 0.2, 1) 1130ms,
+              transform 440ms var(--ease-bounce) 1130ms;
 }
 
-.mounted .pillar3 .textBlock {
-  transition: opacity 750ms cubic-bezier(0.4, 0, 0.2, 1) 3200ms,
-              transform 750ms cubic-bezier(0.4, 0, 0.2, 1) 3200ms;
-}
-
-.visible .pillar1 .textBlock,
-.visible .pillar2 .textBlock,
 .visible .pillar3 .textBlock {
   opacity: 1;
-  transform: translateY(0);
+  transform: translateY(0) scale(1);
+  transition: opacity 440ms cubic-bezier(0.4, 0, 0.2, 1) 1860ms,
+              transform 440ms var(--ease-bounce) 1860ms;
 }
 
 /* ===== SIDE PLACEMENT ===== */
@@ -340,15 +337,15 @@
     transition-delay: 700ms;
   }
 
-  .mounted .pillar1 .textBlock {
+  .visible .pillar1 .textBlock {
     transition-delay: 500ms;
   }
 
-  .mounted .pillar2 .textBlock {
+  .visible .pillar2 .textBlock {
     transition-delay: 650ms;
   }
 
-  .mounted .pillar3 .textBlock {
+  .visible .pillar3 .textBlock {
     transition-delay: 800ms;
   }
 }

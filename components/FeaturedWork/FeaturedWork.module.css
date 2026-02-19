@@ -450,7 +450,7 @@
 }
 
 /* ===========================================
-   RESPONSIVE — MOBILE (≤700px)
+   RESPONSIVE — MOBILE (≤600px)
    =========================================== */
 
 @media (max-width: 600px) {
@@ -487,10 +487,10 @@
     padding: 28px 28px;
   }
 
-  /* Small cards grid → single column */
+  /* Small cards grid → single column, match featured card spacing */
   .moreGrid {
     grid-template-columns: 1fr;
-    gap: 16px;
+    gap: var(--space-lg);
   }
 
   .smallImageWrapper {

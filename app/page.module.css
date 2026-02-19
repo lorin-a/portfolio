@@ -297,7 +297,7 @@
 
   .buildingGrid {
     grid-template-columns: 1fr;
-    gap: var(--space-content-gap);
+    gap: var(--space-lg);
   }
 
   .buildingPreview {

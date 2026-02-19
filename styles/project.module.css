@@ -2521,6 +2521,7 @@
 .playtestCarouselCard {
   background: var(--project-accent-pale);
   border-radius: var(--radius-lg);
+  border-left: 3px solid var(--project-accent);
   padding: var(--space-lg);
   height: 100%;
   box-sizing: border-box;
@@ -2528,6 +2529,20 @@
   display: flex;
   flex-direction: column;
   gap: var(--space-sm);
+}
+
+.playtestCategoryLabel {
+  display: inline-block;
+  font-family: var(--font-sans);
+  font-size: var(--text-caption);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--color-bg);
+  background: var(--project-accent);
+  padding: var(--space-xs) var(--space-sm);
+  border-radius: var(--radius-sm);
+  margin-bottom: var(--space-sm);
+  align-self: flex-start;
 }
 
 .playtestLabel {
@@ -2556,7 +2571,6 @@
   padding-left: var(--space-sm);
   border-left: 3px solid var(--project-accent);
   margin: var(--space-sm) 0;
-  flex: 1;
 }
 
 .playtestSolution {
@@ -2673,17 +2687,24 @@
 
 /* Mobile adjustments */
 @media (max-width: 600px) {
+  .playtestCarouselContainer {
+    overflow: hidden;
+  }
+
   .playtestCarouselTrack {
     height: auto;
-    min-height: 418px;
+    min-height: 580px;
+    overflow: hidden;
   }
 
   .playtestCarouselSlot {
-    width: 85vw;
+    width: 88vw;
   }
 
   .playtestCarouselCard {
-    padding: var(--space-md);
+    padding: var(--space-md) var(--space-md) var(--space-lg);
+    height: auto;
+    min-height: 560px;
   }
 }
 
@@ -2984,21 +3005,64 @@
 
 /* ---- Mobile ---- */
 @media (max-width: 600px) {
+  .workshopCarouselContainer {
+    overflow: hidden;
+  }
+
   .workshopCarouselTrack {
     height: auto;
-    min-height: 520px;
+    min-height: 560px;
+    overflow: hidden;
   }
 
   .workshopCarouselSlot {
-    width: 85vw;
+    width: 88vw;
   }
 
+  .workshopCarouselCard {
+    padding: var(--space-md) var(--space-md) var(--space-lg);
+    height: auto;
+    min-height: auto;
+    gap: var(--space-content-gap);
+  }
+
+  .workshopLabel {
+    margin-bottom: 0;
+  }
+
+  .workshopTitle {
+    margin: 0;
+  }
+
+  .workshopBody {
+    margin: 0;
+  }
+
+  .workshopQuotes {
+    flex: 0;
+    padding-top: 0;
+  }
+
+  /* Two thumbnails on mobile — fill card width */
   .workshopImageGrid {
-    grid-template-columns: 1fr;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-xs);
+    margin-top: 0;
   }
 
-  .workshopImage {
-    height: 160px;
+  .workshopImageButton {
+    height: 150px;
+    width: 100%;
+    border-radius: var(--radius-sm);
+  }
+
+  .workshopImageButton img {
+    object-position: center;
+  }
+
+  .workshopCarouselInstruction {
+    display: none;
   }
 }
 
@@ -3751,6 +3815,11 @@
 
   .parallaxReverse {
     direction: ltr;
+  }
+
+  /* In reversed sections, show text before images on mobile */
+  .parallaxReverse .parallaxSticky {
+    order: -1;
   }
 
   .parallaxSticky {
