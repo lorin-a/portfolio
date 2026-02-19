@@ -110,8 +110,8 @@
 
 .cardSide {
   display: grid;
-  grid-template-columns: 1fr 42%;
-  min-height: 320px;
+  grid-template-columns: 1fr 50%;
+  min-height: 400px;
 }
 
 .cardSide .imageSide {
@@ -121,8 +121,8 @@
 /* Flipped: image on left, content on right */
 .cardSideFlipped {
   display: grid;
-  grid-template-columns: 42% 1fr;
-  min-height: 320px;
+  grid-template-columns: 50% 1fr;
+  min-height: 400px;
 }
 
 .contentSide {
@@ -268,7 +268,7 @@
 
 .smallImageWrapper {
   position: relative;
-  height: 180px;
+  height: 220px;
   overflow: hidden;
 }
 
@@ -425,11 +425,11 @@
   }
 
   .cardSide {
-    grid-template-columns: 1fr 38%;
+    grid-template-columns: 1fr 50%;
   }
 
   .cardSideFlipped {
-    grid-template-columns: 38% 1fr;
+    grid-template-columns: 50% 1fr;
   }
 
   .moreGrid {
