@@ -215,15 +215,14 @@
 .buildingTag {
   font-family: var(--font-sans);
   font-size: var(--text-body-small);
-  font-weight: var(--weight-body);
+  font-weight: var(--weight-label);
   letter-spacing: 0.02em;
-  padding: 0 var(--space-sm);
-  height: 32px;
-  line-height: 32px;
+  padding: 6px 16px;
   border-radius: var(--radius-pill);
   white-space: nowrap;
-  background-color: var(--text-heading);
-  color: var(--cream);
+  color: var(--stage-color);
+  background-color: color-mix(in srgb, var(--stage-color) 10%, transparent);
+  border: 1.5px dashed var(--stage-color);
 }
 
 .buildingCardDescription {
@@ -237,17 +236,23 @@
 .stagePill {
   display: inline-flex;
   align-items: center;
+  gap: 8px;
   align-self: flex-start;
   font-family: var(--font-sans);
-  font-size: var(--text-caption);
+  font-size: var(--text-body-small);
   font-weight: var(--weight-label);
   letter-spacing: 0.02em;
   color: var(--stage-color);
-  background-color: color-mix(in srgb, var(--stage-color) 10%, transparent);
-  border: 1.5px dashed var(--stage-color);
-  border-radius: var(--radius-pill);
-  padding: 4px 16px;
   margin-top: auto;
+}
+
+.stagePill::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--stage-color);
+  flex-shrink: 0;
 }
 
 /* ===========================================

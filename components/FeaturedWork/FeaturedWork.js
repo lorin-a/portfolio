@@ -127,10 +127,10 @@ const moreProjects = [
   },
 ]
 
-function TagPill({ label, darkTheme, small }) {
+function TagPill({ label, small }) {
   return (
     <span
-      className={`${styles.tag} ${darkTheme ? styles.tagOnDark : styles.tagOnLight} ${small ? styles.tagSmall : ''}`}
+      className={`${styles.tag} ${small ? styles.tagSmall : ''}`}
     >
       {label}
     </span>
@@ -148,6 +148,8 @@ function FeaturedCard({ project }) {
     '--card-subtitle': t.subtitle,
     '--card-description': t.description,
     '--card-cta': t.cta,
+    '--card-tag-bg': t.tagBg,
+    '--card-tag-text': t.tagText,
   }
 
   if (t.badgeBg) {
@@ -201,7 +203,7 @@ function FeaturedCard({ project }) {
             )}
             <div className={styles.tags}>
               {project.tags.map((tag) => (
-                <TagPill key={tag.label} label={tag.label} darkTheme={t.darkTheme} />
+                <TagPill key={tag.label} label={tag.label} />
               ))}
             </div>
             <p className={`${styles.description} ${isStacked ? styles.descriptionStacked : styles.descriptionSide}`}>
@@ -237,6 +239,8 @@ function SmallCard({ project }) {
     '--card-subtitle': t.subtitle,
     '--card-description': t.description,
     '--card-cta': t.cta,
+    '--card-tag-bg': t.tagBg,
+    '--card-tag-text': t.tagText,
   }
 
   if (t.contentBg) {
@@ -272,7 +276,6 @@ function SmallCard({ project }) {
                 <TagPill
                   key={tag.label}
                   label={tag.label}
-                  darkTheme={t.darkTheme}
                   small
                 />
               ))}

@@ -56,7 +56,7 @@ export default function BuildingNow({ projects }) {
         <div className={styles.buildingGrid}>
           {projects.map((project, i) => (
             <AnimatedElement key={project.title} delay={i * 150}>
-              <article className={styles.buildingCard}>
+              <article className={styles.buildingCard} style={{ '--stage-color': project.stageColor }}>
                 <div
                   className={`${styles.buildingPreview} ${project.previewType === 'video' ? styles.buildingPreviewClickable : ''}`}
                   onClick={() => project.previewType === 'video' && setPreviewSrc(project.preview)}
@@ -95,7 +95,7 @@ export default function BuildingNow({ projects }) {
                     ))}
                   </div>
                   <p className={styles.buildingCardDescription}>{project.description}</p>
-                  <span className={styles.stagePill} style={{ '--stage-color': project.stageColor }}>{project.stage}</span>
+                  <span className={styles.stagePill}>{project.stage}</span>
                 </div>
               </article>
             </AnimatedElement>

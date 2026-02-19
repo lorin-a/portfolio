@@ -11,6 +11,7 @@ const OVERLAP = 0.35 // seconds of overlap between lines for continuous flow
 export default function Hero() {
   const [started, setStarted] = useState(false)
   const [underlineVisible, setUnderlineVisible] = useState(false)
+  const [dialActive, setDialActive] = useState(false)
   const [ctaVisible, setCtaVisible] = useState(false)
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false)
 
@@ -43,6 +44,7 @@ export default function Hero() {
     if (mediaQuery.matches) {
       setStarted(true)
       setUnderlineVisible(true)
+      setDialActive(true)
       setCtaVisible(true)
     }
   }, [])
@@ -52,13 +54,17 @@ export default function Hero() {
 
     const startTimer = setTimeout(() => setStarted(true), 900)
     // Underline appears shortly after the period shows
-    const underlineTimer = setTimeout(() => setUnderlineVisible(true), 900 + (lastLineEnd * 1000) + 300)
-    // CTA appears after a brief pause following the underline
-    const ctaTimer = setTimeout(() => setCtaVisible(true), 900 + (lastLineEnd * 1000) + 1400)
+    const underlineTime = 900 + (lastLineEnd * 1000) + 300
+    const underlineTimer = setTimeout(() => setUnderlineVisible(true), underlineTime)
+    // Dial activates ~1500ms after underline — rings expand, sentence slides down
+    const dialTimer = setTimeout(() => setDialActive(true), underlineTime + 1500)
+    // CTA deferred to ~8s after dialActive
+    const ctaTimer = setTimeout(() => setCtaVisible(true), underlineTime + 1500 + 8000)
 
     return () => {
       clearTimeout(startTimer)
       clearTimeout(underlineTimer)
+      clearTimeout(dialTimer)
       clearTimeout(ctaTimer)
     }
   }, [prefersReducedMotion, lastLineEnd])
@@ -69,7 +75,7 @@ export default function Hero() {
 
   return (
     <section className={styles.hero} id="hero">
-      <InteractiveDial />
+      <InteractiveDial dialActive={dialActive} />
 
       {/* Headline as separate lines */}
       <h1 className={styles.headline}>

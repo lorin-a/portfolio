@@ -215,6 +215,8 @@
   line-height: 36px;
   border-radius: 100px;
   white-space: nowrap;
+  background-color: var(--card-tag-bg);
+  color: var(--card-tag-text);
 }
 
 .tagSmall {
@@ -222,16 +224,6 @@
   padding: 0 16px;
   height: 32px;
   line-height: 32px;
-}
-
-.tagOnLight {
-  background-color: var(--text-heading);
-  color: var(--cream);
-}
-
-.tagOnDark {
-  background-color: rgba(255, 255, 255, 0.85);
-  color: var(--text-heading);
 }
 
 /* ===========================================

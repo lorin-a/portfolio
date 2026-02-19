@@ -95,6 +95,18 @@
   }
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .carouselCardFar,
+  .carouselCardSide,
+  .carouselCardCenter {
+    animation: none;
+  }
+
+  .carouselCardInner {
+    transition: none;
+  }
+}
+
 /* Card Images */
 .carouselCardImage {
   width: 100%;
@@ -162,7 +174,7 @@
   border-radius: 50%;
   background-color: var(--color-bg);
   color: var(--project-accent);
-  font-size: 1.25rem;
+  font-size: var(--text-body-large);
   cursor: pointer;
   transition: all var(--motion-fast) var(--ease-default);
   display: flex;
@@ -242,7 +254,7 @@
   .carouselArrow {
     width: 40px;
     height: 40px;
-    font-size: 1rem;
+    font-size: var(--text-body);
   }
 
   .carouselControls {
