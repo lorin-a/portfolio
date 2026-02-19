@@ -5,6 +5,7 @@ import styles from './InteractiveDial.module.css'
 import {
   INNER_R, OUTER_R,
   DOTS, ALL_KEYS,
+  TOUR_ORDER,
   angleToPos,
 } from './dialConfig'
 
@@ -27,7 +28,7 @@ const INSTRUCTION_DELAY = POP_DELAY + POP_DURATION + 200
 export default function InteractiveDial() {
   const [dotsVisible, setDotsVisible] = useState(false)
   const [pulsing, setPulsing] = useState(false)
-  const [amplifyPopping, setAmplifyPopping] = useState(false)
+  const [guidedDot, setGuidedDot] = useState(null)
   const [instructionVisible, setInstructionVisible] = useState(false)
   const [hasInteracted, setHasInteracted] = useState(false)
   const [activeKey, setActiveKey] = useState(null)
@@ -39,6 +40,8 @@ export default function InteractiveDial() {
   const trackInnerRef = useRef(null)
   const trackOuterRef = useRef(null)
   const wrapperRef = useRef(null)
+  const tourTimerRef = useRef(null)
+  const visitedDotsRef = useRef(new Set())
 
   // Compute dot positions from config at render time
   const dotPositions = useMemo(() => {
@@ -73,10 +76,10 @@ export default function InteractiveDial() {
     const dotsTimer = setTimeout(() => setDotsVisible(true), 800)
     // Breathing starts when Hero CTA appears
     const pulseTimer = setTimeout(() => setPulsing(true), PULSE_DELAY)
-    // Amplify dot pops to draw attention
-    const popTimer = setTimeout(() => setAmplifyPopping(true), POP_DELAY)
+    // Amplify dot pops to draw attention (first tour stop)
+    const popTimer = setTimeout(() => setGuidedDot('amplify'), POP_DELAY)
     // Pop ends, return to normal breathing
-    const popEndTimer = setTimeout(() => setAmplifyPopping(false), POP_DELAY + POP_DURATION)
+    const popEndTimer = setTimeout(() => setGuidedDot(null), POP_DELAY + POP_DURATION)
     // Instruction text fades in after pop completes
     const instructionTimer = setTimeout(() => setInstructionVisible(true), INSTRUCTION_DELAY)
 
@@ -86,6 +89,7 @@ export default function InteractiveDial() {
       clearTimeout(popTimer)
       clearTimeout(popEndTimer)
       clearTimeout(instructionTimer)
+      clearTimeout(tourTimerRef.current)
     }
   }, [])
 
@@ -108,10 +112,30 @@ export default function InteractiveDial() {
     }
   }, [])
 
+  // Start a 5s timer to advance the guided tour to the next unvisited dot
+  const startTourTimer = useCallback(() => {
+    clearTimeout(tourTimerRef.current)
+    tourTimerRef.current = setTimeout(() => {
+      const nextDot = TOUR_ORDER.find((k) => !visitedDotsRef.current.has(k))
+      if (nextDot) {
+        setGuidedDot(nextDot)
+      }
+    }, 5000)
+  }, [])
+
   // Dot click handler
   const handleDotClick = useCallback((key) => {
     if (!dotsVisible) return
     if (!hasInteracted) setHasInteracted(true)
+
+    // Track visited dot for tour
+    visitedDotsRef.current.add(key)
+
+    // If clicking the currently guided dot, stop its pop animation
+    if (key === guidedDot) setGuidedDot(null)
+
+    // Clear any pending tour timer and start a new one
+    clearTimeout(tourTimerRef.current)
 
     if (activeKey === key) {
       // Dismiss current
@@ -136,7 +160,10 @@ export default function InteractiveDial() {
         }, 250)
       })
     }
-  }, [dotsVisible, hasInteracted, activeKey, pillHide, pillCenter])
+
+    // Advance tour after 5s reading pause
+    startTourTimer()
+  }, [dotsVisible, hasInteracted, activeKey, guidedDot, pillHide, pillCenter, startTourTimer])
 
   // Click outside to dismiss
   useEffect(() => {
@@ -153,12 +180,14 @@ export default function InteractiveDial() {
         setTooltipVisible(false)
         setActiveKey(null)
         if (labelAreaRef.current) labelAreaRef.current.style.height = '0'
+        // Keep tour advancing even after dismiss — user already read the content
+        startTourTimer()
       }
     }
 
     document.addEventListener('click', handleClickOutside)
     return () => document.removeEventListener('click', handleClickOutside)
-  }, [dotsVisible, activeKey, pillHide])
+  }, [dotsVisible, activeKey, pillHide, startTourTimer])
 
   // Class name helpers
   const getDotClassName = (key) => {
@@ -167,7 +196,7 @@ export default function InteractiveDial() {
     const colorClass = styles[`color${dot.color.charAt(0).toUpperCase() + dot.color.slice(1)}`]
     const classes = [styles.dot, typeClass, colorClass]
     if (dotsVisible) classes.push(styles.dotsVisible)
-    if (key === 'amplify' && amplifyPopping) {
+    if (key === guidedDot) {
       classes.push(styles.popping)
     } else if (pulsing) {
       classes.push(styles.breathing)

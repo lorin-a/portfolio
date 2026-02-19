@@ -83,6 +83,9 @@ export const ROW2_KEYS = OUTER_KEYS; // mantras on bottom row
 // Retract order (reverse of appearance)
 export const RETRACT_ORDER = ['hold', 'amplify', 'translate', 'hopeful', 'meticulous', 'playful'];
 
+// Guided tour order (clockwise)
+export const TOUR_ORDER = ['amplify', 'hold', 'translate', 'playful', 'meticulous', 'hopeful'];
+
 // Helper: convert angle to x,y position
 export function angleToPos(angleDeg, radius) {
   const rad = (angleDeg - 90) * Math.PI / 180;
