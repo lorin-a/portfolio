@@ -55,10 +55,13 @@
 
 .tag {
   font-size: 0.875rem;
-  color: var(--color-green-dark);
-  background-color: var(--color-bg-alt);
   padding: 0.25em 0.75em;
-  border-radius: var(--radius-xs);
+  border-radius: var(--pill-radius);
+  border: 1px solid var(--pill-border-light);
+  color: var(--pill-text-light);
+  background: var(--pill-bg-light);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
 }
 
 /* Full-Bleed Hero Image */

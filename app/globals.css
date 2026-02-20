@@ -167,6 +167,19 @@
      =========================================== */
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
 
+  /* ===========================================
+     PILL / TAG SYSTEM (Frosted AA)
+     =========================================== */
+  --pill-font-size: 0.75rem;
+  --pill-padding: 0.25em 0.8em;
+  --pill-radius: 18px;
+  --pill-border-light: rgba(0, 0, 0, 0.5);
+  --pill-text-light: rgba(0, 0, 0, 0.88);
+  --pill-bg-light: rgba(255, 255, 255, 0.35);
+  --pill-border-dark: rgba(255, 255, 255, 0.55);
+  --pill-text-dark: rgba(255, 255, 255, 1.0);
+  --pill-bg-dark: rgba(255, 255, 255, 0.12);
+
 }
 
 /* ===========================================
@@ -414,4 +427,28 @@ img {
   color: var(--color-text-light);
   font-size: var(--text-body-small);
   min-height: 200px;
+}
+
+/* ===========================================
+   PILL / TAG UTILITIES (Frosted AA)
+   =========================================== */
+.pill {
+  font-family: var(--font-sans);
+  font-size: var(--pill-font-size);
+  padding: var(--pill-padding);
+  border-radius: var(--pill-radius);
+  white-space: nowrap;
+  line-height: 1;
+  display: inline-block;
+  border: 1px solid var(--pill-border-light);
+  color: var(--pill-text-light);
+  background: var(--pill-bg-light);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+}
+
+.pill--dark {
+  border: 1px solid var(--pill-border-dark);
+  color: var(--pill-text-dark);
+  background: var(--pill-bg-dark);
 }

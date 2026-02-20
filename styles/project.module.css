@@ -1145,15 +1145,12 @@
   text-transform: uppercase;
   letter-spacing: 0.1em;
   padding: var(--space-xs) var(--space-sm);
-  background-color: rgba(228, 224, 235, 0.85); /* project-accent-pale with opacity */
-  color: var(--project-accent);
-  border: none;
-  border-radius: var(--radius-pill);
-  transition: all var(--motion-fast) var(--ease-out);
-}
-
-.heroTag:hover {
-  background-color: rgba(228, 224, 235, 0.95);
+  border: 1px solid var(--pill-border-dark);
+  color: var(--pill-text-dark);
+  background: var(--pill-bg-dark);
+  border-radius: var(--pill-radius);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
 }
 
 .scrollIndicator {

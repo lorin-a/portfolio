@@ -26,14 +26,14 @@ const BREATHE_DELAYS = {
 export default function InteractiveDial({ dialActive = false }) {
   const [dotsVisible, setDotsVisible] = useState(false)
   const [labelsVisible, setLabelsVisible] = useState(false)
+  const [innerLabelsVisible, setInnerLabelsVisible] = useState(false)
   const [pulsing, setPulsing] = useState(false)
   const [activeKey, setActiveKey] = useState(null)
-  const [tooltipVisible, setTooltipVisible] = useState(false)
-  const [tooltipText, setTooltipText] = useState('')
+  const [inviteVisible, setInviteVisible] = useState(false)
+  const [sentenceText, setSentenceText] = useState('')
+  const [sentenceVisible, setSentenceVisible] = useState(false)
 
-  const pillRefs = useRef({})
   const dotRefs = useRef({})
-  const labelAreaRef = useRef(null)
   const trackInnerRef = useRef(null)
   const trackOuterRef = useRef(null)
   const wrapperRef = useRef(null)
@@ -64,25 +64,7 @@ export default function InteractiveDial({ dialActive = false }) {
     if (trackOuterRef.current) trackOuterRef.current.classList.add(styles.visible)
     setDotsVisible(true)
     setLabelsVisible(true)
-  }, [])
-
-  // Pill positioning (click interaction)
-  const pillCenter = useCallback((key) => {
-    const el = pillRefs.current[key]
-    if (el) {
-      el.style.transform = 'translate(-50%, 0)'
-      el.style.opacity = '1'
-      el.style.pointerEvents = 'auto'
-    }
-  }, [])
-
-  const pillHide = useCallback((key) => {
-    const el = pillRefs.current[key]
-    if (el) {
-      el.style.transform = 'translate(-50%, 6px)'
-      el.style.opacity = '0'
-      el.style.pointerEvents = 'none'
-    }
+    setInnerLabelsVisible(true)
   }, [])
 
   // Arc animation: dots sweep along their rings into position
@@ -137,7 +119,7 @@ export default function InteractiveDial({ dialActive = false }) {
     arcRafRef.current = requestAnimationFrame(frame)
   }, [])
 
-  // dialActive sequence: rings → arc dots → labels fade in → inner dots pulse
+  // dialActive sequence: rings → arc dots → outer labels → inner labels → invite
   useEffect(() => {
     if (!dialActive) return
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
@@ -152,13 +134,25 @@ export default function InteractiveDial({ dialActive = false }) {
     // Dots arc into position after rings expand
     const dotsTimer = setTimeout(() => {
       startDotArcAnimation(() => {
-        // Labels fade in 500ms after dots land (CSS handles stagger per label)
+        // Outer labels fade in 500ms after dots land
         const labelTimer = setTimeout(() => setLabelsVisible(true), 500)
         postArcTimersRef.current.push(labelTimer)
 
-        // Inner dots start pulsing after labels are all visible (~1.5s after labels start)
-        const pulseTimer = setTimeout(() => setPulsing(true), 2000)
+        // Inner labels fade in after outer labels settle (~1.3s after outer start)
+        const innerLabelTimer = setTimeout(() => setInnerLabelsVisible(true), 1800)
+        postArcTimersRef.current.push(innerLabelTimer)
+
+        // Dots start breathing after all labels visible
+        const pulseTimer = setTimeout(() => setPulsing(true), 2500)
         postArcTimersRef.current.push(pulseTimer)
+
+        // Photo invite appears after everything settles
+        const inviteTimer = setTimeout(() => setInviteVisible(true), 3000)
+        postArcTimersRef.current.push(inviteTimer)
+
+        // Auto-dismiss invite after 5s of being visible
+        const dismissTimer = setTimeout(() => setInviteVisible(false), 8000)
+        postArcTimersRef.current.push(dismissTimer)
       })
     }, 800)
 
@@ -170,35 +164,26 @@ export default function InteractiveDial({ dialActive = false }) {
     }
   }, [dialActive, startDotArcAnimation])
 
-  // Dot click handler
+  // Dot click handler — show sentence in photo center
   const handleDotClick = useCallback((key) => {
     if (!dotsVisible) return
 
+    // Dismiss invite on first interaction
+    setInviteVisible(false)
+
     if (activeKey === key) {
-      // Dismiss current
-      pillHide(key)
-      setTooltipVisible(false)
+      // Dismiss — restore photo
+      setSentenceVisible(false)
       setActiveKey(null)
-      if (labelAreaRef.current) labelAreaRef.current.style.height = '0'
     } else {
-      // Dismiss previous if any
-      if (activeKey) pillHide(activeKey)
-      setTooltipVisible(false)
-
-      // Activate new dot
+      // Show new sentence
       setActiveKey(key)
-      const isMobile = window.innerWidth <= 600
-      if (labelAreaRef.current) labelAreaRef.current.style.height = isMobile ? '70px' : '80px'
-
+      setSentenceText(DOTS[key].tooltip)
       requestAnimationFrame(() => {
-        pillCenter(key)
-        setTimeout(() => {
-          setTooltipText(DOTS[key].tooltip)
-          setTooltipVisible(true)
-        }, 250)
+        setSentenceVisible(true)
       })
     }
-  }, [dotsVisible, activeKey, pillHide, pillCenter])
+  }, [dotsVisible, activeKey])
 
   // Click outside to dismiss
   useEffect(() => {
@@ -211,16 +196,14 @@ export default function InteractiveDial({ dialActive = false }) {
       }
 
       if (activeKey) {
-        pillHide(activeKey)
-        setTooltipVisible(false)
+        setSentenceVisible(false)
         setActiveKey(null)
-        if (labelAreaRef.current) labelAreaRef.current.style.height = '0'
       }
     }
 
     document.addEventListener('click', handleClickOutside)
     return () => document.removeEventListener('click', handleClickOutside)
-  }, [dotsVisible, activeKey, pillHide])
+  }, [dotsVisible, activeKey])
 
   // Class name helpers
   const getDotClassName = (key) => {
@@ -234,13 +217,6 @@ export default function InteractiveDial({ dialActive = false }) {
     return classes.join(' ')
   }
 
-  const getPillClassName = (key) => {
-    const dot = DOTS[key]
-    const styleClass = dot.pillStyle === 'bold' ? styles.pillBold : styles.pillSoft
-    const colorClass = styles[`color${dot.color.charAt(0).toUpperCase() + dot.color.slice(1)}`]
-    return `${styles.pill} ${styleClass} ${colorClass}`
-  }
-
   return (
     <div className={styles.wrapper} ref={wrapperRef}>
       <div className={`${styles.dial}${dialActive ? ` ${styles.dialActive}` : ''}`}>
@@ -248,7 +224,7 @@ export default function InteractiveDial({ dialActive = false }) {
         <div className={styles.trackInner} ref={trackInnerRef} />
         <div className={styles.trackOuter} ref={trackOuterRef} />
 
-        {/* Photo */}
+        {/* Photo with overlays */}
         <div className={styles.photoWrap}>
           <Image
             src={cloudImg(HOME_IMAGES['lorin-photo'], 520)}
@@ -256,6 +232,19 @@ export default function InteractiveDial({ dialActive = false }) {
             fill
             sizes="260px"
           />
+          {/* Dim overlay */}
+          <div className={`${styles.photoDim} ${inviteVisible || sentenceVisible ? styles.photoDimVisible : ''}`} />
+          {/* Invitation text */}
+          <span className={`${styles.photoInvite} ${inviteVisible && !sentenceVisible ? styles.photoInviteVisible : ''}`}>
+            tap a trait to<br />learn more
+          </span>
+          {/* Sentence display */}
+          <span
+            className={`${styles.photoSentence} ${sentenceVisible ? styles.photoSentenceVisible : ''}`}
+            aria-live="polite"
+          >
+            {sentenceText}
+          </span>
         </div>
 
         {/* All dots */}
@@ -277,7 +266,7 @@ export default function InteractiveDial({ dialActive = false }) {
           />
         ))}
 
-        {/* Radial labels — positioned near outer dots */}
+        {/* Radial labels — outer dots (mantras) */}
         <span className={`${styles.radialLabel} ${styles.labelTranslate} ${labelsVisible ? styles.radialLabelVisible : ''}`}>
           Distilling Complexity
         </span>
@@ -287,24 +276,16 @@ export default function InteractiveDial({ dialActive = false }) {
         <span className={`${styles.radialLabel} ${styles.labelHold} ${labelsVisible ? styles.radialLabelVisible : ''}`}>
           Holding Space
         </span>
-      </div>
 
-      <div className={styles.labelArea} ref={labelAreaRef}>
-        {ALL_KEYS.map((key) => (
-          <span
-            key={key}
-            ref={(el) => (pillRefs.current[key] = el)}
-            className={getPillClassName(key)}
-          >
-            {DOTS[key].label}
-          </span>
-        ))}
-
-        <span
-          className={`${styles.tooltip} ${tooltipVisible ? styles.visible : ''}`}
-          aria-live="polite"
-        >
-          {tooltipText}
+        {/* Radial labels — inner dots (paradoxes) */}
+        <span className={`${styles.radialLabel} ${styles.radialLabelInner} ${styles.labelPlayful} ${innerLabelsVisible ? styles.radialLabelVisible : ''}`}>
+          playful perfectionist
+        </span>
+        <span className={`${styles.radialLabel} ${styles.radialLabelInner} ${styles.labelMeticulous} ${innerLabelsVisible ? styles.radialLabelVisible : ''}`}>
+          meticulous dreamer
+        </span>
+        <span className={`${styles.radialLabel} ${styles.radialLabelInner} ${styles.labelHopeful} ${innerLabelsVisible ? styles.radialLabelVisible : ''}`}>
+          hopeful realist
         </span>
       </div>
     </div>

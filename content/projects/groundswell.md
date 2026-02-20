@@ -124,4 +124,4 @@ Three practices enabled partial movement toward relational design despite instit
 - **Attunement**: responsive listening across diverse perspectives
 - **Harmonization**: amplifying existing community innovations
 
-Together, these practices cultivated resonance—the degree to which a design aligns with community needs, values, and capacities such that people recognize themselves in it, trust it, and nurture it.
+Together, these practices cultivated resonance: the degree to which a design aligns with community needs, values, and capacities such that people recognize themselves in it, trust it, and nurture it.

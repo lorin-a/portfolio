@@ -102,6 +102,72 @@
   object-position: center 20%;
 }
 
+/* ===== PHOTO OVERLAYS ===== */
+.photoDim {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: rgba(45, 43, 30, 0.55);
+  opacity: 0;
+  transition: opacity var(--motion-medium) var(--ease-default);
+  z-index: 1;
+  pointer-events: none;
+}
+
+.photoDimVisible {
+  opacity: 1;
+}
+
+.photoInvite {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) translateY(6px);
+  z-index: 2;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: var(--text-body, 16px);
+  color: var(--cream, #F7F7F7);
+  text-align: center;
+  line-height: 1.5;
+  opacity: 0;
+  transition: opacity var(--motion-medium) var(--ease-default),
+              transform var(--motion-medium) var(--ease-default);
+  pointer-events: none;
+}
+
+.photoInviteVisible {
+  opacity: 0.95;
+  transform: translate(-50%, -50%) translateY(0);
+}
+
+.photoSentence {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) translateY(6px);
+  z-index: 2;
+  width: 75%;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: var(--weight-body);
+  color: var(--cream, #F7F7F7);
+  text-align: center;
+  line-height: 1.5;
+  opacity: 0;
+  transition: opacity var(--motion-fast) var(--ease-default),
+              transform var(--motion-fast) var(--ease-default);
+  pointer-events: none;
+}
+
+.photoSentenceVisible {
+  opacity: 0.95;
+  transform: translate(-50%, -50%) translateY(0);
+}
+
 /* ===== DOTS ===== */
 .dot {
   position: absolute;
@@ -185,48 +251,6 @@
   animation: none;
 }
 
-/* ===== AMPLIFY DOT POP ===== */
-/* Overrides breathing temporarily — must come after .breathing in source */
-.dot.popping {
-  animation: dotPop 2.5s ease-in-out forwards;
-}
-
-@keyframes dotPop {
-  0% { transform: translate(-50%, -50%) scale(1); }
-  12% { transform: translate(-50%, -50%) scale(1.35); }
-  28% { transform: translate(-50%, -50%) scale(1); }
-  48% { transform: translate(-50%, -50%) scale(1); }
-  60% { transform: translate(-50%, -50%) scale(1.35); }
-  76% { transform: translate(-50%, -50%) scale(1); }
-  100% { transform: translate(-50%, -50%) scale(1); }
-}
-
-/* Ring hint radiating outward on each pop */
-.dot.popping::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  border: 1.5px solid currentColor;
-  transform: translate(-50%, -50%) scale(0.8);
-  opacity: 0;
-  animation: ringHint 1.2s ease-out 2;
-}
-
-@keyframes ringHint {
-  0% {
-    transform: translate(-50%, -50%) scale(0.8);
-    opacity: 0.3;
-  }
-  100% {
-    transform: translate(-50%, -50%) scale(2.2);
-    opacity: 0;
-  }
-}
-
 /* Fill dots (mantras) */
 .dotFill {
   width: 24px;
@@ -274,151 +298,13 @@
   color: var(--olive, #8B8525);
 }
 
-/* ===== INSTRUCTION TEXT ===== */
-/* Desktop: positioned to the right of the Amplify dot */
-/* Amplify dot is at angleToPos(120, 190) ≈ (374, 305) */
-.instructionDesktop {
-  position: absolute;
-  left: 400px;
-  top: 305px;
-  transform: translateY(-50%) translateX(-4px);
-  font-family: var(--font-serif);
-  font-style: italic;
-  font-size: var(--text-body, 16px);
-  color: var(--text-dark, #2D2B1E);
-  opacity: 0;
-  transition: opacity 0.6s ease, transform 0.6s ease;
-  pointer-events: none;
-  white-space: nowrap;
-  z-index: 5;
-}
-
-.instructionDesktop.instructionShow {
-  opacity: 0.85;
-  transform: translateY(-50%) translateX(0);
-}
-
-/* Mobile/tablet: centered below dial */
-.instructionMobile {
-  display: none;
-  font-family: var(--font-serif);
-  font-style: italic;
-  font-size: var(--text-body, 16px);
-  color: var(--text-dark, #2D2B1E);
-  opacity: 0;
-  transform: translateY(4px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
-  pointer-events: none;
-  white-space: nowrap;
-  text-align: center;
-}
-
-.instructionMobile.instructionShow {
-  opacity: 0.85;
-  transform: translateY(0);
-}
-
-/* ===== LABEL AREA ===== */
-.labelArea {
-  position: relative;
-  width: 520px;
-  height: 0;
-  transition: height var(--motion-slow) var(--ease-default);
-  overflow: visible;
-}
-
-/* ===== PILLS ===== */
-.pill {
-  position: absolute;
-  left: 50%;
-  top: 0;
-  white-space: nowrap;
-  height: 36px;
-  line-height: 36px;
-  padding: 0 20px;
-  border-radius: var(--radius-pill);
-  font-family: var(--font-sans);
-  font-size: var(--text-body, 16px);
-  font-weight: normal;
-  font-style: normal;
-  pointer-events: none;
-  will-change: transform, opacity;
-  transition: transform var(--motion-fast) var(--ease-default),
-              opacity var(--motion-fast) var(--ease-default);
-  transform: translate(-50%, 6px);
-  opacity: 0;
-  border: 1.5px solid transparent;
-}
-
-/* Bold pills (mantras) */
-.pillBold {
-  color: var(--cream, #F7F7F7);
-}
-
-.pillBold.colorOlive {
-  background: var(--olive, #8B8525);
-}
-
-.pillBold.colorTerracotta {
-  background: var(--terracotta, #B5654A);
-}
-
-.pillBold.colorPlum {
-  background: var(--plum, #8B5E83);
-}
-
-/* Soft pills (paradoxes) */
-.pillSoft {
-  background: var(--cream, #F7F7F7);
-  border-style: dashed;
-}
-
-.pillSoft.colorTerracotta {
-  color: var(--terracotta, #B5654A);
-  border-color: var(--terracotta, #B5654A);
-}
-
-.pillSoft.colorPlum {
-  color: var(--plum, #8B5E83);
-  border-color: var(--plum, #8B5E83);
-}
-
-.pillSoft.colorOlive {
-  color: var(--olive, #8B8525);
-  border-color: var(--olive, #8B8525);
-}
-
-/* ===== TOOLTIP ===== */
-.tooltip {
-  position: absolute;
-  left: 50%;
-  top: 48px;
-  transform: translate(-50%, 6px);
-  opacity: 0;
-  transition: transform var(--motion-medium) var(--ease-default),
-              opacity var(--motion-medium) var(--ease-default);
-  pointer-events: none;
-  font-family: var(--font-sans);
-  font-weight: normal;
-  font-style: normal;
-  font-size: var(--text-body, 16px);
-  color: var(--text-dark, #2D2B1E);
-  text-align: center;
-  line-height: 1.5;
-  white-space: nowrap;
-}
-
-.tooltip.visible {
-  opacity: 0.85;
-  transform: translate(-50%, 0);
-}
-
-/* ===== RADIAL LABELS — near outer dots ===== */
+/* ===== RADIAL LABELS — all 6 traits around the dial ===== */
 .radialLabel {
   position: absolute;
   z-index: 5;
   font-family: var(--font-sans);
-  font-size: 14px;
+  font-size: var(--text-body, 16px);
+  font-weight: var(--weight-label);
   letter-spacing: 0.01em;
   white-space: nowrap;
   opacity: 0;
@@ -426,11 +312,19 @@
   pointer-events: none;
 }
 
+/* Inner dot labels — italic to distinguish paradoxes */
+.radialLabelInner {
+  font-style: italic;
+  font-weight: var(--weight-body);
+}
+
 .radialLabelVisible {
   opacity: 0.85;
 }
 
-/* Translate dot (0°, top center) — label above */
+/* --- Outer dot labels (mantras) --- */
+
+/* Translate (0°, top center) — label above */
 .labelTranslate {
   left: 50%;
   top: 1%;
@@ -440,7 +334,7 @@
   transition-delay: 0s;
 }
 
-/* Amplify dot (120°, bottom-right) — label to the right */
+/* Amplify (120°, bottom-right) — label to the right */
 .labelAmplify {
   left: 93%;
   top: 73%;
@@ -449,12 +343,42 @@
   transition-delay: 0.3s;
 }
 
-/* Hold dot (240°, bottom-left) — label to the left */
+/* Hold (240°, bottom-left) — label to the left */
 .labelHold {
   left: 7%;
   top: 73%;
   transform: translate(-100%, -50%);
   color: var(--plum, #8B5E83);
+  transition-delay: 0.6s;
+}
+
+/* --- Inner dot labels (paradoxes) --- */
+
+/* Playful (60°, upper-right) — label to the right */
+.labelPlayful {
+  left: 92%;
+  top: 25%;
+  transform: translateY(-50%);
+  color: var(--terracotta, #B5654A);
+  transition-delay: 0s;
+}
+
+/* Meticulous (180°, bottom-center) — label below */
+.labelMeticulous {
+  left: 50%;
+  top: 98%;
+  transform: translate(-50%, 0);
+  text-align: center;
+  color: var(--plum, #8B5E83);
+  transition-delay: 0.3s;
+}
+
+/* Hopeful (300°, upper-left) — label to the left */
+.labelHopeful {
+  left: 8%;
+  top: 25%;
+  transform: translate(-100%, -50%);
+  color: var(--olive, #8B8525);
   transition-delay: 0.6s;
 }
 
@@ -484,17 +408,8 @@
     height: 236px;
   }
 
-  .labelArea {
-    width: 470px;
-  }
-
-  .pill {
-    font-size: 14px;
-    padding: 0 16px;
-  }
-
   .radialLabel {
-    font-size: 13px;
+    font-size: 15px;
   }
 }
 
@@ -529,26 +444,17 @@
     height: 170px;
   }
 
-  .labelArea {
-    width: 340px;
-  }
-
-  .pill {
+  .photoInvite {
     font-size: 14px;
-    padding: 0 16px;
-    height: 34px;
-    line-height: 34px;
   }
 
-  .tooltip {
-    font-size: 15px;
-    white-space: normal;
-    width: 320px;
-    text-wrap: pretty;
+  .photoSentence {
+    font-size: 12px;
+    width: 80%;
   }
 
   .radialLabel {
-    font-size: 12px;
+    font-size: 13px;
   }
 
   /* On mobile, pull side labels inward to avoid viewport overflow */
@@ -559,6 +465,18 @@
   }
 
   .labelHold {
+    left: -8px;
+    transform: translate(0, -50%);
+    text-align: left;
+  }
+
+  .labelPlayful {
+    left: auto;
+    right: -8px;
+    transform: translate(0, -50%);
+  }
+
+  .labelHopeful {
     left: -8px;
     transform: translate(0, -50%);
     text-align: left;
@@ -589,10 +507,10 @@
     opacity: 0.7;
   }
 
-  .pill,
-  .labelArea,
-  .tooltip,
-  .radialLabel {
+  .radialLabel,
+  .photoDim,
+  .photoInvite,
+  .photoSentence {
     transition-duration: 0.01s;
   }
 
@@ -609,20 +527,5 @@
 
   .breathing {
     animation: none;
-  }
-
-  .dot.popping {
-    animation: none;
-  }
-
-  .dot.popping::before {
-    animation: none;
-    opacity: 0;
-  }
-
-  /* Show instruction immediately */
-  .instructionDesktop,
-  .instructionMobile {
-    transition-duration: 0.01s;
   }
 }
