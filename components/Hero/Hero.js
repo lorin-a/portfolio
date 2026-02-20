@@ -2,7 +2,6 @@
 
 import { useEffect, useState, useMemo } from 'react'
 import styles from './Hero.module.css'
-import InteractiveDial from '../InteractiveDial/InteractiveDial'
 
 // Fixed duration for all lines (equal timing) - soft, readable pace
 const LINE_DURATION = 1.65 // seconds per line
@@ -10,8 +9,10 @@ const OVERLAP = 0.35 // seconds of overlap between lines for continuous flow
 
 export default function Hero() {
   const [started, setStarted] = useState(false)
+  const [nameVisible, setNameVisible] = useState(false)
   const [underlineVisible, setUnderlineVisible] = useState(false)
-  const [dialActive, setDialActive] = useState(false)
+  const [credentialVisible, setCredentialVisible] = useState(false)
+  const [ctaVisible, setCtaVisible] = useState(false)
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false)
 
   // Define lines with their text content for duration calculation
@@ -42,31 +43,45 @@ export default function Hero() {
     setPrefersReducedMotion(mediaQuery.matches)
     if (mediaQuery.matches) {
       setStarted(true)
+      setNameVisible(true)
       setUnderlineVisible(true)
-      setDialActive(true)
+      setCredentialVisible(true)
+      setCtaVisible(true)
     }
   }, [])
 
   useEffect(() => {
     if (prefersReducedMotion) return
 
+    // Name arrives first, ~400ms before the tagline wipe begins
+    const nameTimer = setTimeout(() => setNameVisible(true), 500)
     const startTimer = setTimeout(() => setStarted(true), 900)
     // Underline appears shortly after the period shows
     const underlineTime = 900 + (lastLineEnd * 1000) + 300
     const underlineTimer = setTimeout(() => setUnderlineVisible(true), underlineTime)
-    // Dial activates ~800ms after underline — rings expand as underline finishes
-    const dialTimer = setTimeout(() => setDialActive(true), underlineTime + 800)
+    // Credential fades in ~800ms after underline finishes drawing (1.2s draw)
+    const credentialTime = underlineTime + 1200 + 800
+    const credentialTimer = setTimeout(() => setCredentialVisible(true), credentialTime)
+    // CTA fades in ~600ms after credential
+    const ctaTime = credentialTime + 600
+    const ctaTimer = setTimeout(() => setCtaVisible(true), ctaTime)
 
     return () => {
+      clearTimeout(nameTimer)
       clearTimeout(startTimer)
       clearTimeout(underlineTimer)
-      clearTimeout(dialTimer)
+      clearTimeout(credentialTimer)
+      clearTimeout(ctaTimer)
     }
   }, [prefersReducedMotion, lastLineEnd])
 
   return (
     <section className={styles.hero} id="hero">
-      <InteractiveDial dialActive={dialActive} />
+
+      {/* Name */}
+      <p className={`${styles.name} ${nameVisible ? styles.visible : ''}`}>
+        Lorin Anderberg
+      </p>
 
       {/* Headline as separate lines */}
       <h1 className={styles.headline}>
@@ -100,6 +115,25 @@ export default function Hero() {
           .
         </span>
       </h1>
+
+      {/* Credential line */}
+      <p className={`${styles.credential} ${credentialVisible ? styles.visible : ''}`}>
+        Social Impact Designer &middot; CMU
+      </p>
+
+      {/* Scroll CTA */}
+      <button
+        className={`${styles.cta} ${ctaVisible ? styles.visible : ''}`}
+        onClick={() => {
+          document.getElementById('work')?.scrollIntoView({ behavior: 'smooth' })
+        }}
+        aria-label="Scroll to featured work"
+      >
+        <span className={styles.ctaText}>see my work</span>
+        <svg className={styles.ctaArrow} viewBox="0 0 20 24" fill="none" aria-hidden="true">
+          <path d="M10 4 L10 18 M4 14 L10 20 L16 14" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+      </button>
 
     </section>
   )

@@ -127,10 +127,10 @@ const moreProjects = [
   },
 ]
 
-function TagPill({ label, small }) {
+function TagPill({ label, small, dark }) {
   return (
     <span
-      className={`${styles.tag} ${small ? styles.tagSmall : ''}`}
+      className={`${styles.tag} ${dark ? styles.tagDark : ''} ${small ? styles.tagSmall : ''}`}
     >
       {label}
     </span>
@@ -203,7 +203,7 @@ function FeaturedCard({ project }) {
             )}
             <div className={styles.tags}>
               {project.tags.map((tag) => (
-                <TagPill key={tag.label} label={tag.label} />
+                <TagPill key={tag.label} label={tag.label} dark={t.darkTheme} />
               ))}
             </div>
             <p className={`${styles.description} ${isStacked ? styles.descriptionStacked : styles.descriptionSide}`}>
@@ -278,6 +278,7 @@ function SmallCard({ project }) {
                   key={tag.label}
                   label={tag.label}
                   small
+                  dark={t.darkTheme}
                 />
               ))}
             </div>
@@ -362,7 +363,7 @@ export default function FeaturedWork() {
   }, [])
 
   return (
-    <section id="work" className={styles.section} ref={sectionRef}>
+    <section className={styles.section} ref={sectionRef}>
       <div className={styles.container}>
         <div className={styles.featuredGrid}>
           {featuredProjects.map((project) => (
