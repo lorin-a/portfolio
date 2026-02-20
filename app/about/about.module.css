@@ -1,0 +1,443 @@
+/* ===========================================
+   ABOUT PAGE
+   =========================================== */
+
+.about {
+  padding: var(--space-lg) var(--container-padding) var(--space-xl);
+}
+
+/* ===========================================
+   SECTION 1: HERO
+   =========================================== */
+
+.hero {
+  max-width: 760px;
+  margin: 0 auto var(--space-lg);
+  text-align: center;
+  opacity: 0;
+  transform: translateY(16px);
+}
+
+.hero.visible {
+  animation: scrollReveal 700ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.photoWrap {
+  width: 180px;
+  height: 180px;
+  margin: 0 auto var(--space-md);
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.role {
+  font-family: var(--font-body);
+  font-size: var(--text-body-small);
+  font-weight: var(--weight-label);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-light);
+  margin-bottom: var(--space-sm);
+}
+
+.tagline {
+  font-family: var(--font-heading);
+  font-weight: 300;
+  font-variation-settings: var(--font-soft);
+  font-size: var(--text-h2);
+  color: var(--text-heading);
+  line-height: var(--leading-tight);
+  margin-bottom: var(--space-sm);
+}
+
+.philosophy {
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  color: var(--text-light);
+  line-height: var(--leading-normal);
+  max-width: 620px;
+  margin: 0 auto;
+}
+
+/* ===========================================
+   SQUIGGLE DIVIDER
+   =========================================== */
+
+.squiggleDivider {
+  margin: var(--space-lg) auto;
+  display: flex;
+  justify-content: center;
+}
+
+/* ===========================================
+   SECTION 2: HOW I WORK
+   =========================================== */
+
+.howIWork {
+  max-width: 720px;
+  margin: 0 auto var(--space-lg);
+  opacity: 0;
+  transform: translateY(16px);
+}
+
+.howIWork.visible {
+  animation: scrollReveal 700ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.sectionHeading {
+  font-family: var(--font-heading);
+  font-weight: 300;
+  font-variation-settings: var(--font-soft);
+  font-size: var(--text-h2);
+  color: var(--text-heading);
+  text-align: center;
+  margin-bottom: var(--space-lg);
+}
+
+.processBeats {
+  display: flex;
+  flex-direction: column;
+}
+
+/* ===========================================
+   BEAT ROW (shared by How I Work + Grounded In)
+   =========================================== */
+
+.beatRow {
+  display: flex;
+  gap: 28px;
+  opacity: 0;
+  transform: translateY(16px);
+}
+
+.visible .beatRow {
+  animation: scrollReveal 700ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  animation-delay: var(--delay, 0s);
+}
+
+.dotColumn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+  width: 14px;
+}
+
+/* ===========================================
+   DOTS
+   =========================================== */
+
+.dot {
+  display: block;
+  border-radius: 50%;
+  flex-shrink: 0;
+  animation: breathe 3.5s ease-in-out infinite;
+}
+
+.dotFilled {
+  width: 14px;
+  height: 14px;
+}
+
+.dotHollow {
+  width: 12px;
+  height: 12px;
+  background: transparent;
+  border-width: 2px;
+  border-style: solid;
+}
+
+/* Dot colors */
+.colorOlive {
+  color: var(--olive);
+}
+
+.dotFilled.colorOlive {
+  background-color: var(--olive);
+}
+
+.dotHollow.colorOlive {
+  border-color: var(--olive);
+}
+
+.colorTerracotta {
+  color: var(--terracotta);
+}
+
+.dotFilled.colorTerracotta {
+  background-color: var(--terracotta);
+}
+
+.dotHollow.colorTerracotta {
+  border-color: var(--terracotta);
+}
+
+.colorPlum {
+  color: var(--plum);
+}
+
+.dotFilled.colorPlum {
+  background-color: var(--plum);
+}
+
+.dotHollow.colorPlum {
+  border-color: var(--plum);
+}
+
+.colorSage {
+  color: var(--sage);
+}
+
+.dotFilled.colorSage {
+  background-color: var(--sage);
+}
+
+.dotHollow.colorSage {
+  border-color: var(--sage);
+}
+
+/* ===========================================
+   CONNECTORS
+   =========================================== */
+
+.connector {
+  width: 2px;
+  height: 44px;
+  border-left: 2px dashed currentColor;
+  opacity: 0.4;
+}
+
+.connectorOlive {
+  color: var(--olive);
+}
+
+.connectorTerracotta {
+  color: var(--terracotta);
+}
+
+.connectorPlum {
+  color: var(--plum);
+}
+
+.connectorSage {
+  color: var(--sage);
+}
+
+/* ===========================================
+   BEAT CONTENT
+   =========================================== */
+
+.beatContent {
+  flex: 1;
+  padding-bottom: var(--space-md);
+}
+
+.beatTitle {
+  font-family: var(--font-heading);
+  font-weight: 300;
+  font-variation-settings: var(--font-soft);
+  font-size: clamp(1.4rem, 2.5vw, 1.8rem);
+  line-height: var(--leading-tight);
+  margin-bottom: var(--space-xxs);
+}
+
+.paradox {
+  font-family: var(--font-heading);
+  font-style: italic;
+  font-variation-settings: var(--font-soft);
+  font-size: 0.95rem;
+  margin-bottom: var(--space-xs);
+}
+
+.description {
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  color: var(--text-heading);
+  line-height: var(--leading-normal);
+  margin-bottom: var(--space-xs);
+}
+
+.mantra {
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  line-height: var(--leading-normal);
+  margin-bottom: var(--space-xxs);
+}
+
+.mantraLabel {
+  font-weight: var(--weight-label);
+}
+
+.mantraRest {
+  color: var(--text-light);
+}
+
+.skills {
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  color: var(--text-light);
+  margin-bottom: 0;
+}
+
+/* ===========================================
+   SECTION 3: GROUNDED IN
+   =========================================== */
+
+.groundedIn {
+  background-color: rgba(45, 43, 30, 0.045);
+  padding: var(--space-lg) var(--container-padding);
+  margin: 0 calc(-1 * var(--container-padding));
+  opacity: 0;
+  transform: translateY(16px);
+}
+
+.groundedIn.visible {
+  animation: scrollReveal 700ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.groundedInInner {
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.experience {
+  font-family: var(--font-heading);
+  font-weight: 300;
+  font-variation-settings: var(--font-soft);
+  font-size: var(--text-body-large);
+  color: var(--text-light);
+  text-align: center;
+  margin-bottom: var(--space-lg);
+}
+
+.credentials {
+  display: flex;
+  flex-direction: column;
+}
+
+/* ===========================================
+   CREDENTIAL ROW
+   =========================================== */
+
+.credentialRow {
+  display: flex;
+  gap: 28px;
+  opacity: 0;
+  transform: translateY(16px);
+}
+
+.visible .credentialRow {
+  animation: scrollReveal 700ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  animation-delay: var(--delay, 0s);
+}
+
+.credentialContent {
+  flex: 1;
+  padding-bottom: var(--space-sm);
+}
+
+.credentialContent p {
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  color: var(--text-heading);
+  line-height: var(--leading-normal);
+  margin-bottom: 0;
+}
+
+.credentialContent strong {
+  font-weight: var(--weight-label);
+}
+
+/* ===========================================
+   KEYFRAMES
+   =========================================== */
+
+@keyframes breathe {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+}
+
+@keyframes scrollReveal {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ===========================================
+   REDUCED MOTION
+   =========================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .hero,
+  .howIWork,
+  .groundedIn,
+  .beatRow,
+  .credentialRow {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+
+  .dot {
+    animation: none;
+  }
+
+  .visible .beatRow,
+  .visible .credentialRow {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ===========================================
+   TABLET (900px)
+   =========================================== */
+
+@media (max-width: 900px) {
+  .hero {
+    max-width: 640px;
+  }
+
+  .howIWork,
+  .groundedInInner {
+    max-width: 600px;
+  }
+}
+
+/* ===========================================
+   MOBILE (600px)
+   =========================================== */
+
+@media (max-width: 600px) {
+  .photoWrap {
+    width: 140px;
+    height: 140px;
+  }
+
+  .beatRow,
+  .credentialRow {
+    gap: 20px;
+  }
+
+  .connector {
+    height: 36px;
+  }
+
+  .beatContent {
+    padding-bottom: var(--space-sm);
+  }
+}
