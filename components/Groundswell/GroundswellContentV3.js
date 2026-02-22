@@ -1,7 +1,6 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import Link from 'next/link'
 import styles from '@/styles/project.module.css'
 import { cloudImg, cloudVideo, cloudAudio, GS_IMAGES, GS_VIDEOS, GS_AUDIO } from '@/lib/cloudinary'
 
@@ -1358,12 +1357,6 @@ export default function GroundswellContent() {
         </div>
       </section>
 
-      {/* ==================== FOOTER NAV — next/prev hidden until case studies are built out ==================== */}
-      <nav className={styles.projectFooterNav}>
-        <Link href="/#work" className={styles.footerNavLink}>
-          &larr; All Work
-        </Link>
-      </nav>
     </div>
   )
 }
