@@ -7,23 +7,16 @@ export default function StandaloneNav() {
   const [visible, setVisible] = useState(false)
 
   useEffect(() => {
-    const vision = document.getElementById('vision')
-    if (!vision) return
+    const handleScroll = () => {
+      const scrollTop = window.scrollY || document.documentElement.scrollTop
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight
+      const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0
+      setVisible(progress > 3)
+    }
 
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (!entry.isIntersecting && entry.boundingClientRect.top < 0) {
-          setVisible(true)
-        }
-        if (entry.isIntersecting || entry.boundingClientRect.top > 0) {
-          setVisible(false)
-        }
-      },
-      { threshold: 0 }
-    )
-
-    observer.observe(vision)
-    return () => observer.disconnect()
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    handleScroll()
+    return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
   const scrollToTop = () => {
