@@ -1,4 +1,4 @@
-import GroundswellContent from './GroundswellContentV3'
+import GroundswellContent from '@/components/Groundswell/GroundswellContentV3'
 
 export const metadata = {
   title: 'Groundswell | Lorin Anderberg',

@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import AnimatedElement from '@/components/AnimatedElement/AnimatedElement'
-import styles from '@/app/page.module.css'
+import styles from '@/app/(portfolio)/page.module.css'
 
 function VideoOverlay({ src, onClose }) {
   return (
