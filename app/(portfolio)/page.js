@@ -1,8 +1,8 @@
 import Hero from '@/components/Hero/Hero'
+import Squiggle from '@/components/Squiggle/Squiggle'
 import FeaturedWork from '@/components/FeaturedWork/FeaturedWork'
 import BuildingNow from '@/components/BuildingNow/BuildingNow'
 import { cloudVideo, GS_VIDEOS, OTHER_VIDEOS } from '@/lib/cloudinary'
-import styles from './page.module.css'
 
 const buildingProjects = [
   {
@@ -38,17 +38,9 @@ const buildingProjects = [
 export default function Home() {
   return (
     <main>
-      {/* Hero - Typographic Title Sequence */}
       <Hero />
-
-      {/* Featured Work Label + Section */}
-      <div className={styles.featuredLabel} id="work">
-        <div className={styles.featuredDot} />
-        <span>Featured Work</span>
-      </div>
+      <Squiggle />
       <FeaturedWork />
-
-      {/* Building Now Section */}
       <BuildingNow projects={buildingProjects} />
     </main>
   )

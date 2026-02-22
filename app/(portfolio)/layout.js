@@ -1,4 +1,4 @@
-import './globals.css'
+import '../globals.css'
 import { Fraunces, Open_Sans } from 'next/font/google'
 import Nav from '@/components/Nav/Nav'
 import Footer from '@/components/Footer/Footer'
