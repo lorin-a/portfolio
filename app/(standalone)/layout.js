@@ -1,5 +1,6 @@
 import '../globals.css'
 import { Fraunces, Open_Sans } from 'next/font/google'
+import StandaloneNav from '@/components/StandaloneNav/StandaloneNav'
 
 const fraunces = Fraunces({
   subsets: ['latin'],
@@ -47,6 +48,7 @@ export default function StandaloneLayout({ children }) {
         <a href="#main-content" className="skip-link">
           Skip to content
         </a>
+        <StandaloneNav />
         <main id="main-content">
           {children}
         </main>
