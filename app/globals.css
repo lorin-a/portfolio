@@ -213,6 +213,30 @@
   --gutter: clamp(24px, 5vw, 80px);
 
   /* ===========================================
+     PROJECT CARD TINTS
+     =========================================== */
+  --gs-tint: #EDEAEF;
+  --bs-tint: #E8EDF8;
+  --sb-tint: #EAE9F4;
+  --td-tint: #EDEED8;
+
+  /* Project Accent Colors (WCAG AA compliant, 4.5:1+) */
+  --gs-accent: #554E65;
+  --bs-accent: #3D5A8A;
+  --sb-accent: #4A4298;
+  --td-accent: #4A5A1A;
+
+  /* Project Tag Border & Background */
+  --gs-tag-border: rgba(85,78,101,0.35);
+  --gs-tag-bg: rgba(85,78,101,0.08);
+  --bs-tag-border: rgba(61,90,138,0.35);
+  --bs-tag-bg: rgba(61,90,138,0.08);
+  --sb-tag-border: rgba(74,66,152,0.35);
+  --sb-tag-bg: rgba(74,66,152,0.08);
+  --td-tag-border: rgba(74,90,26,0.35);
+  --td-tag-bg: rgba(74,90,26,0.08);
+
+  /* ===========================================
      PILL / TAG SYSTEM (Frosted AA)
      =========================================== */
   --pill-font-size: 0.75rem;

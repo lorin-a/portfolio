@@ -1,105 +1,102 @@
 import Hero from '@/components/Hero/Hero'
+import SectionDivider from '@/components/SectionDivider/SectionDivider'
 import ProjectCard from '@/components/ProjectCard/ProjectCard'
 import AboutSection from '@/components/AboutSection/AboutSection'
-import { cloudImg, HOME_IMAGES } from '@/lib/cloudinary'
+import { cloudImg, cloudVideo, HOME_IMAGES, GS_VIDEOS } from '@/lib/cloudinary'
 import styles from './page.module.css'
 
 const PROJECTS = [
   {
     num: '01',
+    slug: 'groundswell',
     title: 'Groundswell',
     context: 'A participatory care ecosystem supporting oncology staff wellbeing. Grant-funded, co-designed with healthcare workers, now in institutional pilot.',
-    gradient: 'linear-gradient(170deg, var(--color-sage-muted), var(--color-plum-muted) 40%, var(--color-terracotta-muted))',
-    image: cloudImg(HOME_IMAGES['groundswell-hero'], 1200),
-    imageAlt: 'Groundswell ecosystem artifacts and healthcare care tools',
+    video: cloudVideo(GS_VIDEOS['gs-walkthrough-video']),
+    hoverVideo: cloudVideo(GS_VIDEOS['gs-card-flip']),
+    imageAlt: 'Groundswell digital ecosystem walkthrough',
     href: '/groundswell',
     variant: 'flagship',
     contributions: [
-      { label: 'Participatory Research', domain: 'sage' },
-      { label: 'Content Strategy', domain: 'plum' },
-      { label: 'Donor Outreach', domain: 'terracotta' },
-      { label: 'Facilitation Design', domain: 'sage' },
+      { label: 'Participatory Research' },
+      { label: 'Content Strategy' },
+      { label: 'Donor Outreach' },
+      { label: 'Facilitation Design' },
     ],
   },
   {
     num: '02',
+    slug: 'birthstory',
     title: 'BirthStory',
     context: 'Helping parents document and reflect on their birth experience. Real client, real constraints, shipped concept.',
-    gradient: 'linear-gradient(135deg, var(--color-chalcedony-muted), var(--color-cream-dark))',
     image: cloudImg(HOME_IMAGES['birthstory-cover'], 800),
     imageAlt: 'BirthStory app mockup on device',
     href: '/projects/birthstory',
     variant: 'standard',
-    flip: true,
     contributions: [
-      { label: 'UX Design', domain: 'sage' },
-      { label: 'Client Iteration', domain: 'plum' },
-      { label: 'Wireframing', domain: 'terracotta' },
+      { label: 'UX Design' },
+      { label: 'Client Iteration' },
+      { label: 'Wireframing' },
     ],
   },
   {
     num: '03',
+    slug: 'somebuddy',
     title: 'SomeBuddy',
     context: 'Brand identity, UX, and animation for a therapy companion app. Full creative range.',
-    gradient: 'linear-gradient(155deg, var(--color-terracotta-muted), var(--color-cream-dark))',
     image: cloudImg(HOME_IMAGES['somebuddy-cover'], 800),
     imageAlt: 'SomeBuddy brand identity and app screens',
     href: '/projects/somebuddy',
     variant: 'standard',
-    flip: false,
     contributions: [
-      { label: 'Brand Identity', domain: 'terracotta' },
-      { label: 'UX', domain: 'plum' },
-      { label: 'Animation', domain: 'terracotta' },
+      { label: 'Brand Identity' },
+      { label: 'UX' },
+      { label: 'Animation' },
     ],
   },
   {
     num: '04',
+    slug: 'transition-design',
     title: 'Transition Design',
     context: 'A systems-level design response to food insecurity in Pittsburgh. The lens widens.',
-    gradient: 'linear-gradient(140deg, var(--color-plum-muted), var(--color-chalcedony-muted))',
     image: cloudImg(HOME_IMAGES['transition-design-hero'], 800),
     imageAlt: 'Systems map showing interconnected food insecurity factors in Pittsburgh',
     href: '/projects/transition-design',
     variant: 'standard',
-    flip: true,
     contributions: [
-      { label: 'Systems Mapping', domain: 'plum' },
-      { label: 'Research Synthesis', domain: 'plum' },
+      { label: 'Systems Mapping' },
+      { label: 'Research Synthesis' },
     ],
   },
 ]
+
+/* Alternating pattern: SomeBuddy (index 2) is flipped */
+const FLIPPED = new Set(['somebuddy'])
 
 export default function Home() {
   return (
     <>
       <Hero />
 
-      {/* Cell Grid — Projects + About */}
-      <section className={styles.cellGrid} id="work">
-        <div className={styles.cellGridInner}>
-          {/* Top border with "Selected Work" label */}
-          <div className={styles.gridLabel} aria-hidden="true">
-            <span className={styles.gridLabelText}>Selected work</span>
-          </div>
+      {/* Selected Work */}
+      <section className={styles.selectedWork} id="work">
+        <SectionDivider label="Selected Work" />
 
-          {/* Cell 1: Flagship */}
-          <div className={`${styles.cell} ${styles.cellFlagship}`}>
-            <ProjectCard project={PROJECTS[0]} variant="flagship" />
-          </div>
-
-          {/* Cells 2–4: Standard */}
-          {PROJECTS.slice(1).map((project) => (
-            <div key={project.num} className={`${styles.cell} ${styles.cellStandard}`}>
-              <ProjectCard project={project} variant="standard" flip={project.flip} />
-            </div>
+        <div className={styles.projectsWrap}>
+          {PROJECTS.map((project, i) => (
+            <ProjectCard
+              key={project.num}
+              project={project}
+              flip={FLIPPED.has(project.slug)}
+              preload={i === 0}
+            />
           ))}
-
-          {/* Cell 5: About */}
-          <div className={`${styles.cell} ${styles.cellAbout}`}>
-            <AboutSection />
-          </div>
         </div>
+      </section>
+
+      {/* About */}
+      <section className={styles.aboutWrap}>
+        <SectionDivider label="About" />
+        <AboutSection />
       </section>
     </>
   )

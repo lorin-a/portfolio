@@ -10,6 +10,7 @@ export { default as Footer } from './Footer/Footer'
 
 // Homepage
 export { default as Hero } from './Hero/Hero'
+export { default as SectionDivider } from './SectionDivider/SectionDivider'
 export { default as InteractiveDial } from './InteractiveDial/InteractiveDial'
 export { default as Squiggle } from './Squiggle/Squiggle'
 export { default as FeaturedWork } from './FeaturedWork/FeaturedWork'

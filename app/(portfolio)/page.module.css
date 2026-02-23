@@ -3,82 +3,34 @@
    =========================================== */
 
 /* ===========================================
-   CELL GRID — unified border outline
+   SELECTED WORK — vertical card stack
    =========================================== */
-.cellGrid {
-  max-width: var(--max-width);
+.selectedWork {
+  margin-top: clamp(60px, 9vh, 120px);
+  padding-bottom: var(--space-xl);
+}
+
+.projectsWrap {
+  max-width: 1100px;
   margin: 0 auto;
   padding: 0 var(--gutter);
-}
-
-.cellGridInner {
-  border: 2px solid var(--color-border);
-  position: relative;
-}
-
-/* ===========================================
-   GRID LABEL — "Selected Work" interrupting top border
-   =========================================== */
-.gridLabel {
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-
-.gridLabelText {
-  font-family: var(--font-sans);
-  font-size: var(--text-body-small);
-  font-weight: var(--weight-label);
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--color-ink-faint);
-  white-space: nowrap;
-  background: var(--background);
-  padding: 0 var(--space-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
 }
 
 /* ===========================================
-   CELLS — shared vertical rhythm + borders
+   ABOUT SECTION WRAPPER
    =========================================== */
-.cell {
-  padding: clamp(40px, 6vh, 72px) clamp(20px, 3vw, 40px);
-}
-
-.cell + .cell {
-  border-top: 2px solid var(--color-border);
-}
-
-/* First cell — extra top padding to clear the label */
-.cellFlagship {
-  padding: clamp(48px, 7vh, 88px) clamp(20px, 3vw, 40px);
-}
-
-.cellStandard {
-  /* inherits .cell padding */
-}
-
-.cellAbout {
-  padding: clamp(44px, 6.5vh, 80px) clamp(20px, 3vw, 40px);
+.aboutWrap {
+  padding-bottom: var(--space-xl);
 }
 
 /* ===========================================
    RESPONSIVE — MOBILE (600px)
    =========================================== */
 @media (max-width: 600px) {
-  .cell {
-    padding: var(--space-lg) var(--space-md);
-  }
-
-  .cellFlagship {
-    padding: var(--space-xl) var(--space-md);
-  }
-
-  .cellAbout {
-    padding: var(--space-lg) var(--space-md);
-  }
-
-  .gridLabel {
-    padding: 0 var(--space-md);
+  .projectsWrap {
+    gap: 20px;
   }
 }

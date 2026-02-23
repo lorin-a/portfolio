@@ -1,86 +1,24 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import BlobLabels from '@/components/marks/BlobLabel'
 import styles from './ProjectCard.module.css'
 
-function FlagshipCard({ project }) {
-  const cardRef = useRef(null)
-
-  useEffect(() => {
-    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    if (prefersReduced) return
-
-    import('gsap').then(({ gsap }) => {
-      import('gsap/ScrollTrigger').then(({ ScrollTrigger }) => {
-        gsap.registerPlugin(ScrollTrigger)
-
-        gsap.fromTo(cardRef.current,
-          { opacity: 0, y: 40 },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.8,
-            ease: 'power3.out',
-            scrollTrigger: {
-              trigger: cardRef.current,
-              start: 'top 85%',
-              once: true,
-            },
-          }
-        )
-      })
-    })
-  }, [])
-
-  const content = (
-    <div className={styles.flagship} ref={cardRef}>
-      <div className={styles.flVisual}>
-        <div className={styles.flSurface} style={{ background: project.gradient }}>
-          {project.image ? (
-            <Image
-              src={project.image}
-              alt={project.imageAlt || project.title}
-              fill
-              sizes="(max-width: 900px) 100vw, 55vw"
-              className={styles.cardImage}
-            />
-          ) : (
-            <span className={styles.placeholderText}>{project.placeholder}</span>
-          )}
-        </div>
-      </div>
-      <div className={styles.flMeta}>
-        <span className={styles.flNum}>{project.num}</span>
-        <h2 className={styles.flTitle}>{project.title}</h2>
-        <p className={styles.flContext}>{project.context}</p>
-        <BlobLabels labels={project.contributions} />
-        {project.href && (
-          <span className={styles.cardCta}>
-            View Case Study &rarr;
-          </span>
-        )}
-      </div>
-    </div>
-  )
-
-  if (project.href) {
-    return (
-      <Link href={project.href} className={styles.cardLink}>
-        {content}
-      </Link>
-    )
-  }
-
-  return content
+/** Map project keys to CSS module class names for per-project theming */
+const THEME_MAP = {
+  groundswell: 'cardGroundswell',
+  birthstory: 'cardBirthstory',
+  somebuddy: 'cardSomebuddy',
+  'transition-design': 'cardTransition',
 }
 
-function StandardCard({ project, flip }) {
+export default function ProjectCard({ project, flip = false, preload = false }) {
   const cardRef = useRef(null)
+  const videoRef = useRef(null)
 
   useEffect(() => {
+    if (preload) return
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     if (prefersReduced) return
 
@@ -94,7 +32,7 @@ function StandardCard({ project, flip }) {
             opacity: 1,
             y: 0,
             duration: 0.8,
-            ease: 'power3.out',
+            ease: 'power2.out',
             scrollTrigger: {
               trigger: cardRef.current,
               start: 'top 85%',
@@ -104,36 +42,102 @@ function StandardCard({ project, flip }) {
         )
       })
     })
+  }, [preload])
+
+  /* Play video only when scrolled into view */
+  useEffect(() => {
+    const video = videoRef.current
+    if (!video) return
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          video.play().catch(() => {})
+        } else {
+          video.pause()
+        }
+      },
+      { threshold: 0.3 }
+    )
+
+    observer.observe(video)
+    return () => observer.disconnect()
   }, [])
 
-  const content = (
+  const [isHovered, setIsHovered] = useState(false)
+  const hoverVideoRef = useRef(null)
+
+  const themeClass = styles[THEME_MAP[project.slug]] || ''
+  const isPortrait = project.variant === 'flagship'
+
+  const handleMouseEnter = () => {
+    if (!project.hoverVideo) return
+    setIsHovered(true)
+    hoverVideoRef.current?.play().catch(() => {})
+  }
+
+  const handleMouseLeave = () => {
+    if (!project.hoverVideo) return
+    setIsHovered(false)
+  }
+
+  const card = (
     <div
-      className={`${styles.std} ${flip ? styles.stdFlip : ''}`}
+      className={`${styles.projectCard} ${themeClass} ${flip ? styles.flipped : ''}`}
       ref={cardRef}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
     >
-      <div className={styles.stdVisual}>
-        <div className={styles.stdSurface} style={{ background: project.gradient }}>
-          {project.image ? (
+      <div className={styles.cardMedia}>
+        {project.video ? (
+          <div className={isPortrait ? styles.portraitVideo : styles.landscapeImg}>
+            <video
+              ref={videoRef}
+              src={project.video}
+              loop
+              muted
+              playsInline
+              aria-label={project.imageAlt || project.title}
+              className={`${styles.mediaEl} ${isHovered ? styles.mediaHidden : ''}`}
+            />
+            {project.hoverVideo && (
+              <video
+                ref={hoverVideoRef}
+                src={project.hoverVideo}
+                autoPlay
+                loop
+                muted
+                playsInline
+                className={`${styles.mediaEl} ${styles.hoverMedia} ${isHovered ? styles.hoverMediaVisible : ''}`}
+              />
+            )}
+          </div>
+        ) : project.image ? (
+          <div className={styles.landscapeImg}>
             <Image
               src={project.image}
               alt={project.imageAlt || project.title}
               fill
               sizes="(max-width: 900px) 100vw, 50vw"
-              className={styles.cardImage}
+              className={styles.mediaEl}
             />
-          ) : (
-            <span className={styles.placeholderText}>{project.placeholder}</span>
-          )}
-        </div>
+          </div>
+        ) : null}
       </div>
-      <div className={styles.stdMeta}>
-        <span className={styles.stdNum}>{project.num}</span>
-        <h3 className={styles.stdTitle}>{project.title}</h3>
-        <p className={styles.stdContext}>{project.context}</p>
-        <BlobLabels labels={project.contributions} />
+      <div className={styles.cardContent}>
+        <span className={styles.cardNum}>{project.num}</span>
+        <h2 className={styles.cardTitle}>{project.title}</h2>
+        <p className={styles.cardDesc}>{project.context}</p>
+        <div className={styles.cardTags}>
+          {project.contributions.map((tag) => (
+            <span key={tag.label} className={styles.tag}>
+              {tag.label}
+            </span>
+          ))}
+        </div>
         {project.href && (
           <span className={styles.cardCta}>
-            View Case Study &rarr;
+            View Case Study<span className={styles.arrow}> &rarr;</span>
           </span>
         )}
       </div>
@@ -143,17 +147,10 @@ function StandardCard({ project, flip }) {
   if (project.href) {
     return (
       <Link href={project.href} className={styles.cardLink}>
-        {content}
+        {card}
       </Link>
     )
   }
 
-  return content
-}
-
-export default function ProjectCard({ project, variant = 'standard', flip = false }) {
-  if (variant === 'flagship') {
-    return <FlagshipCard project={project} />
-  }
-  return <StandardCard project={project} flip={flip} />
+  return card
 }

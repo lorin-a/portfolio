@@ -71,6 +71,7 @@
   font-family: var(--font-serif);
   font-size: clamp(18px, 2.2vw, 24px);
   font-weight: 300;
+  font-variation-settings: 'SOFT' 50, 'WONK' 0;
   line-height: var(--leading-normal);
   color: var(--color-ink-light);
   margin-bottom: 0;
