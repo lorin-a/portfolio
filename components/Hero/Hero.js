@@ -69,7 +69,7 @@ export default function Hero() {
         </span>
         <br />
         <span className={styles.titleLine} ref={line2Ref}>
-          <span className={styles.amp}>&amp;</span> Strategist
+          <span className={styles.amp}>&amp;</span> Creative Strategist
         </span>
       </h1>
       <FrameworkShuffle startDelay={2.4} itemStagger={0.6} />
