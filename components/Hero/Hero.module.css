@@ -26,8 +26,13 @@
    =========================================== */
 .titleLine {
   opacity: 0;
-  display: inline;
+  display: inline-block;
   clip-path: inset(0 100% 0 0);
+  /* Padding prevents clip-path from cutting off Fraunces WONK/SOFT glyphs
+     that extend beyond the inline box (descenders like "g", trailing chars).
+     Negative margin compensates so layout spacing is unchanged. */
+  padding: 0.15em 0.05em;
+  margin: -0.15em 0;
 }
 
 /* ===========================================

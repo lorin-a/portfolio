@@ -42,8 +42,9 @@
   text-align: center;
   clip-path: inset(0 100% 0 0);
   opacity: 0;
+  /* Easing matches hero title: calm, nearly linear with soft edges (power1.inOut) */
   transition: opacity 0.6s var(--ease-default),
-              clip-path 1.6s cubic-bezier(0.25, 0, 0.15, 1);
+              clip-path 1.6s cubic-bezier(0.42, 0, 0.58, 1);
 }
 
 /* Allow weave stacked words to wrap */

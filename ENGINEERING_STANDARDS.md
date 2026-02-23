@@ -3,125 +3,38 @@
 > If a developer cannot change a font, color, or spacing value in ONE place
 > and have it update everywhere, the architecture is broken. Fix it before building more.
 
----
-
-## The One Rule
-
-**Every visual property that appears more than once must be defined as a variable.**
-Fonts, colors, spacing, border radii, shadows, transition timing —
-all of it lives in ONE file as CSS custom properties. Components reference variables, never raw values.
-
-If you find yourself typing a hex code, a font name, or a spacing value directly
-into a component stylesheet and that same value exists elsewhere, stop.
-Reference the token.
-
-### One-offs Are Fine. Undocumented One-offs Are Not.
-
-Not every value needs to be a token. A decorative pull quote with a unique size,
-a page-specific accent color, a chart with 12 data colors — these are legitimate
-one-offs. The rule is: **if it's custom, comment why.**
-```css
-/* One-off: oversized pull quote unique to this case study hero */
-font-size: 2.4rem;
-```
-
-If you find yourself commenting the same "one-off" in three files, it's not
-a one-off anymore. Promote it to a token.
+**Design tokens (colors, typography, spacing, motion, layout) live in `DESIGN_SPEC.md` and are implemented in `globals.css`.** This document covers code craft, architecture, and engineering practices. It does not duplicate token values — when tokens change, only `DESIGN_SPEC.md` and `globals.css` need updating.
 
 ---
 
 ## 1. Design Token Architecture
 
-All shared tokens live in `globals.css` under `:root`. Organized by category.
+All shared tokens live in `globals.css` under `:root`, organized by category. Components reference variables, never raw values.
+
+### The One Rule
+
+**Every visual property that appears more than once must be defined as a variable.** Fonts, colors, spacing, border radii, shadows, transition timing — all of it lives in `globals.css`. Components reference tokens, never hex codes or pixel values.
+
+### One-offs Are Fine. Undocumented One-offs Are Not.
+
+Not every value needs to be a token. A decorative pull quote with a unique size, a page-specific accent color, a chart with project-specific data colors — these are legitimate one-offs. The rule: **if it's custom, comment why.**
+
 ```css
-:root {
-  /* === COLORS === */
-  --color-primary: #5C6B1F;
-  --color-secondary: #B85C38;
-  --color-accent: #7B5B7B;
-  --color-bg: #F8F6F0;
-  --color-bg-alt: #F5F4F1;
-  --color-text: #2C2C2C;
-  --color-text-light: #5A5A5A;
-  --color-border: #E0DDD8;
-
-  /* === TYPOGRAPHY === */
-  --font-serif: 'Fraunces', serif;
-  --font-sans: 'DM Sans', sans-serif;
-  --font-serif-soft: 'SOFT' 50, 'WONK' 0;
-  --font-serif-sharp: 'SOFT' 0, 'WONK' 0;
-
-  --text-h1: clamp(2rem, 5vw, 3.2rem);
-  --text-h2: 1.75rem;
-  --text-h3: 1.35rem;
-  --text-h4: 1.1rem;
-  --text-body: 1.05rem;
-  --text-small: 0.85rem;
-  --text-label: 0.7rem;
-
-  --weight-bold: 700;
-  --weight-semi: 600;
-  --weight-medium: 500;
-  --weight-regular: 400;
-
-  --leading-tight: 1.2;
-  --leading-normal: 1.65;
-  --leading-loose: 1.8;
-
-  /* === SPACING === */
-  --space-xs: 0.5rem;
-  --space-sm: 1rem;
-  --space-md: 2rem;
-  --space-lg: 4rem;
-  --space-xl: 6rem;
-
-  /* === LAYOUT === */
-  --max-width: 1200px;
-  --content-width: 900px;
-  --container-padding: 2rem;
-
-  /* === MOTION === */
-  --ease-default: cubic-bezier(0.42, 0, 0.58, 1);
-  --ease-bounce: cubic-bezier(0.34, 1.4, 0.64, 1);
-  --motion-fast: 300ms;
-  --motion-medium: 600ms;
-  --motion-slow: 900ms;
-
-  /* === BREAKPOINTS (reference — can't use vars in media queries) === */
-  /* Desktop: default styles */
-  /* Tablet: max-width: 900px */
-  /* Mobile: max-width: 600px */
-  /* Small: max-width: 400px */
-
-  /* === SURFACES === */
-  --radius-xs: 2px;
-  --radius-sm: 4px;
-  --radius-md: 8px;
-  --radius-lg: 12px;
-  --radius-pill: 9999px;
-  --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
-  --shadow-md: 0 2px 8px rgba(0,0,0,0.08);
-  --shadow-lg: 0 4px 16px rgba(0,0,0,0.10);
-}
+/* One-off: oversized pull quote unique to this case study hero */
+font-size: 2.4rem;
 ```
 
-### What Gets Tokenized vs. What Doesn't
-
-| Tokenize (global `:root`) | Don't tokenize |
-|---|---|
-| Brand colors, text colors, backgrounds | Data viz / chart-specific colors |
-| Font families and standard size scale | One-off decorative sizes |
-| Spacing scale used across components | Third-party embed overrides |
-| Shared motion values | Page-unique accent colors (use page-level vars instead) |
+If you find yourself commenting the same "one-off" in three files, it's not a one-off anymore. Promote it to a token.
 
 ### Page-Level Custom Properties
 
 When a page or case study needs its own accent colors, define them scoped to that page — not in the global `:root`.
+
 ```css
 /* At the top of a page's module.css */
 .page {
-  --page-accent: #B85C38;
-  --page-accent-light: #F5EDE8;
+  --page-accent: #554E65;
+  --page-accent-light: #E4E0EB;
 }
 
 /* Components on this page reference --page-accent */
@@ -132,11 +45,21 @@ When a page or case study needs its own accent colors, define them scoped to tha
 
 This keeps the global token system clean while giving individual pages their own identity.
 
+### What Gets Tokenized vs. What Doesn't
+
+| Tokenize (global `:root`) | Don't tokenize |
+|---|---|
+| Brand colors, text colors, backgrounds | Project-specific case study colors |
+| Font families and standard size scale | One-off decorative sizes (comment why) |
+| Spacing scale used across components | Third-party embed overrides |
+| Shared motion values | Data viz / chart-specific colors |
+
 ---
 
 ## 2. File Structure
 
 ### Components With Styles Get Folders
+
 ```
 ComponentName/
 ├── ComponentName.js
@@ -145,46 +68,23 @@ ComponentName/
 
 ### Utility Components Live Together
 
-Small, style-free utility components (under ~15 lines, no CSS) don't need individual folders. Group them:
+Small, style-free utility components (under ~15 lines, no CSS) don't need individual folders:
+
 ```
 components/
-├── index.js              <- barrel file for clean imports
+├── index.js              ← barrel file for clean imports
 ├── Nav/
 │   ├── Nav.js
 │   └── Nav.module.css
 ├── CardDeck/
 │   ├── CardDeck.js
 │   └── CardDeck.module.css
-├── utils/                <- style-free utilities
+├── utils/                ← style-free utilities
 │   ├── VisuallyHidden.js
-│   ├── SkipLink.js
 │   └── ConditionalWrap.js
 ```
 
 The test: does this component have its own CSS module? If yes, it gets a folder. If no, it lives in `utils/`.
-
-### Full Project Structure
-```
-app/
-├── globals.css           <- tokens ONLY, no component styles
-├── layout.js
-├── page.js
-├── page.module.css
-├── [route]/
-│   └── page.js
-components/
-├── index.js              <- barrel exports
-├── ComponentName/
-│   ├── ComponentName.js
-│   └── ComponentName.module.css
-├── utils/
-content/                  <- markdown, data files
-lib/                      <- utilities, helpers, constants
-public/
-├── images/
-│   ├── site/             <- logo, favicon, shared assets
-│   └── [project-name]/   <- grouped by project
-```
 
 ### Naming
 
@@ -193,7 +93,7 @@ public/
 | Components | PascalCase folder + file | `CardDeck/CardDeck.js` |
 | CSS Modules | Match component name | `CardDeck/CardDeck.module.css` |
 | CSS classes | camelCase | `.heroTitle` |
-| Routes/pages | kebab-case | `app/case-study/page.js` |
+| Routes/pages | kebab-case | `app/projects/[slug]/page.js` |
 | Images | kebab-case with project prefix | `gs-workshop-01.jpg` |
 | Constants | UPPER_SNAKE | `MAX_CAROUSEL_ITEMS` |
 
@@ -206,13 +106,14 @@ public/
 Every selector defined ONCE. Never append a second copy further down the file.
 
 ### Components Reference Tokens
+
 ```css
 /* CORRECT */
 .heading {
-  font-family: var(--font-serif);
+  font-family: var(--font-heading);
   font-size: var(--text-h2);
-  font-weight: var(--weight-semi);
-  color: var(--color-text);
+  font-weight: var(--weight-title);
+  color: var(--color-ink);
   margin-bottom: var(--space-sm);
 }
 
@@ -220,7 +121,7 @@ Every selector defined ONCE. Never append a second copy further down the file.
 .heading {
   font-family: 'Fraunces', serif;
   font-size: 1.75rem;
-  font-weight: 600;
+  font-weight: 400;
   color: #2C2C2C;
   margin-bottom: 1rem;
 }
@@ -228,7 +129,8 @@ Every selector defined ONCE. Never append a second copy further down the file.
 
 ### Responsive Styles: Depends on File Size
 
-**In shared/page-level stylesheets (100+ lines):** consolidate media queries at the bottom. Prevents scattershot breakpoints across a long file.
+**In shared/page-level stylesheets (100+ lines):** consolidate media queries at the bottom.
+
 ```css
 /* page.module.css — consolidate at bottom */
 .hero { ... }
@@ -246,7 +148,8 @@ Every selector defined ONCE. Never append a second copy further down the file.
 }
 ```
 
-**In component CSS modules (under ~100 lines):** co-locate media queries with their selectors. Keeps related styles together where the file is short enough to hold in your head.
+**In component CSS modules (under ~100 lines):** co-locate media queries with their selectors.
+
 ```css
 /* CardDeck.module.css — co-locate is fine */
 .grid {
@@ -267,7 +170,7 @@ Every selector defined ONCE. Never append a second copy further down the file.
 
 If you need `!important`, the specificity is wrong. Fix the selector hierarchy.
 
-**One exception:** the `prefers-reduced-motion` global override, where `!important` is the correct approach to ensure animations are truly disabled.
+**One exception:** the `prefers-reduced-motion` global override, where `!important` is correct to ensure animations are truly disabled.
 
 ### CSS Module Classes Only
 
@@ -280,6 +183,7 @@ No global class names in component files. Every class comes through the module.
 ### Component Documentation
 
 Every component gets a top comment explaining what it does, where it's used, and what it accepts.
+
 ```jsx
 /**
  * QuoteBlock — Styled pull quote with optional attribution.
@@ -316,78 +220,77 @@ Use the right element, not a styled div.
 
 ### Heading Levels and Reusable Components
 
-Strict h1->h2->h3 hierarchy must be maintained in the final rendered DOM. But reusable components should be flexible about which heading level they render. Use an `as` prop:
+Strict h1→h2→h3 hierarchy must be maintained in the rendered DOM. Reusable components should be flexible about which heading level they render via an `as` prop:
+
 ```jsx
 <SectionTitle as="h2">Research Approach</SectionTitle>
 <SectionTitle as="h3">Key Findings</SectionTitle>
 ```
 
-This lets the same component live at different depths in different page contexts without breaking the heading outline.
-
 ### Cleanup
 
 - Remove all `console.log` before committing
 - Remove all unused imports
-- No dead code in production — see commented code rules below
+- No dead code in production
 
 ---
 
 ## 5. Accessibility Baseline
 
-These ship with every component. Not optional.
+These ship with every component. Not optional. For comprehensive accessibility standards, see `DESIGN_SPEC.md` Section 9.
 
-### Required
+### Required on Every Component
 
 - All interactive elements: keyboard accessible
-- All focus states: visibly styled
+- All focus states: visibly styled via `:focus-visible`
 - Color contrast: WCAG AA minimum (4.5:1 body, 3:1 large text)
-- Touch targets: minimum 44x44px
-- Skip-to-content link on every page
+- Touch targets: minimum 44×44px
 - ARIA labels on icon-only buttons
 - `prefers-reduced-motion` respected for all animations
+- Hover effects gated behind `@media (hover: hover)`
 
 ### Images and Alt Text
 
-**Single content images:** descriptive alt text explaining what the image shows.
+**Content images:** descriptive alt text explaining what the image shows.
 
-**Galleries and carousels:** the container gets a descriptive `aria-label` explaining the collection ("Workshop photos from session 3"). Individual images get brief alt text — no need for 12 poetic descriptions, which creates screen reader fatigue.
+**Galleries and carousels:** the container gets a descriptive `aria-label` explaining the collection. Individual images get brief alt text — no need for 12 poetic descriptions, which creates screen reader fatigue.
 
 **Images with visible captions:** use `aria-describedby` pointing to the caption element. Don't duplicate the caption in the alt text.
 
 **Decorative images:** `alt=""` and `aria-hidden="true"`.
 
-### Headings
-
-No skipped levels in the final rendered page. h1 -> h2 -> h3, never h1 -> h3. Use the `as` prop pattern on reusable components to maintain this across different contexts.
+**Complex images (data visualizations, diagrams):** `aria-describedby` linking to a text description of the key insights.
 
 ---
 
 ## 6. Motion Standards
 
-All animations reference token values. No magic numbers in component files.
-
-| Pattern | Easing | Duration | Use for |
-|---------|--------|----------|---------|
-| Grow in | `--ease-bounce` | `--motion-medium` | Images, containers |
-| Write on | `--ease-default` | ~200ms/word | Headlines, sentences |
-| Soft appear | `--ease-default` | `--motion-fast` | Body text, labels |
-| Gentle pulse | `ease-in-out` | `--motion-slow` | Attention indicators |
+All animations reference token values from `globals.css`. No magic numbers in component files. For the full motion system (curves, durations, primitives), see `DESIGN_SPEC.md` Section 6.
 
 ### Rules
 
 - CSS handles animations. JS triggers state changes that CSS responds to.
 - Use `transform` and `opacity` for performance (GPU-accelerated).
 - Every animation must have a `prefers-reduced-motion` alternative.
-```css
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-  }
-}
+- Individual components must explicitly set `opacity: 1; transform: none;` in their reduced-motion block — the global override kills durations but components need to ensure content is visible in its final state.
+
+### Text Reveal Animations (clip-path wipes)
+
+**Never use fixed durations for text wipes.** Scale duration by character count so all text reveals at the same visual pace regardless of length:
+
+```js
+const perChar = 0.1  // seconds per character
+const minDuration = 1.0
+const duration = Math.max(minDuration, text.length * perChar)
+```
+
+**Easing:** Use `power1.inOut` (GSAP) or `cubic-bezier(0.42, 0, 0.58, 1)` (CSS). This produces a calm, nearly linear reveal with soft edges. Never use `power3`/`power4` for text — they create an aggressive wind-up/snap feel. Text should appear at a steady, readable pace.
+
+**For CSS transitions** where duration can't be set in the stylesheet (e.g., hover-triggered word swaps), calculate the clip-path duration in JS and apply it inline:
+
+```jsx
+const clipDur = Math.max(minDuration, word.length * perChar)
+<span style={{ transitionDuration: `0.9s, ${clipDur}s` }}> // opacity, clip-path
 ```
 
 ---
@@ -395,10 +298,12 @@ All animations reference token values. No magic numbers in component files.
 ## 7. Comments and Commented Code
 
 ### Good Comments Explain Why
+
 ```css
 /* Offset accounts for sticky nav height */
 scroll-margin-top: 4.5rem;
 ```
+
 ```jsx
 /* Delay ring animation until type-on sequence completes —
    rings compete for attention if they start simultaneously */
@@ -413,12 +318,13 @@ scroll-margin-top: 4.5rem;
 ### Commented-Out Code
 
 During **active development:** commented code is fine but must include a date and reason:
+
 ```jsx
 /* REMOVED 2026-02-16: previous spring animation, keeping until
    new easing is verified on mobile */
 ```
 
-**Before any handoff or release:** all commented code is removed. If you need it later, it's in git history.
+**Before any handoff or release:** all commented code is removed. It's in git history if needed.
 
 **Any commented code older than 2 weeks** without a clear reason gets deleted.
 
@@ -427,6 +333,7 @@ During **active development:** commented code is fine but must include a date an
 ## 8. Git Hygiene
 
 ### Conventional Commits
+
 ```
 type: concise description under 72 chars
 ```
@@ -443,6 +350,7 @@ type: concise description under 72 chars
 Body is optional. Use it for complex changes to explain reasoning.
 
 ### .gitignore
+
 ```
 node_modules/
 .next/
@@ -455,12 +363,6 @@ Thumbs.db
 *.log
 .vercel
 ```
-
-### package.json
-
-- Remove unused dependencies
-- Scripts: `dev`, `build`, `start`, `lint` at minimum
-- Include `engines` field specifying Node version
 
 ---
 
@@ -484,9 +386,13 @@ If any answer is no, it's not ready for handoff.
 - [ ] `npm run build` — zero errors
 - [ ] `npm run lint` — passes
 - [ ] No hardcoded values that duplicate existing tokens
-- [ ] No console.log statements
+- [ ] No `console.log` statements
 - [ ] No unused imports
 - [ ] All images have appropriate alt text
-- [ ] Checked at desktop, tablet, and mobile widths
+- [ ] Checked at desktop (>900), tablet (900), mobile (600), small (400)
 - [ ] New components have JSDoc comments
 - [ ] Commit message uses conventional format
+
+---
+
+*This document covers engineering craft. For design decisions (tokens, colors, typography, motion values, case study structure, accessibility feature toggles), see `DESIGN_SPEC.md`.*

@@ -47,7 +47,7 @@ function ShuffleWord({ item, delay = 0 }) {
         })
       }
       cycle()
-      intervalRef.current = setInterval(cycle, 2400)
+      intervalRef.current = setInterval(cycle, 2100)
     }, 300)
   }, [allWords.length])
 
@@ -100,8 +100,12 @@ function ShuffleWord({ item, delay = 0 }) {
           if (isRoot) className += ` ${styles.wordRoot}`
           else className += ` ${styles.wordSub}`
 
+          // Scale clip-path duration by character count for uniform reveal pace
+          const charCount = word.replace(/ & /g, '').length
+          const clipDur = Math.max(2.6, charCount * 0.26)
+
           return (
-            <span key={i} className={className}>
+            <span key={i} className={className} style={{ transitionDuration: `1.2s, ${clipDur}s` }}>
               {item.id === 'weave' && !isRoot ? (
                 <span className={styles.weaveStacked}>
                   {word.split(' & ').map((part, j) => (
@@ -122,7 +126,7 @@ function ShuffleWord({ item, delay = 0 }) {
   )
 }
 
-export default function FrameworkShuffle({ startDelay = 0, itemStagger = 0.6 }) {
+export default function FrameworkShuffle({ startDelay = 0, itemStagger = 0.3 }) {
   return (
     <div className={styles.fwRow}>
       {FRAMEWORK_ITEMS.map((item, i) => (

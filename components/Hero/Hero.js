@@ -40,21 +40,29 @@ export default function Hero() {
         },
       })
 
+      // Scale duration by character count so reveal pace feels uniform
+      const perChar = 0.1
+      const minDuration = 1.0
+      const line1Text = 'Design Researcher'
+      const line2Text = '& Creative Strategist'
+      const dur1 = Math.max(minDuration, line1Text.length * perChar)
+      const dur2 = Math.max(minDuration, line2Text.length * perChar)
+
       const tl = gsap.timeline()
 
-      // Line 1: "Design Researcher" wipes left → right
+      // Line 1: wipes left → right
       tl.set(line1Ref.current, { opacity: 1 })
       tl.fromTo(line1Ref.current,
         { clipPath: 'inset(0 100% 0 0)' },
-        { clipPath: 'inset(0 0% 0 0)', duration: 0.9, ease: 'power3.inOut' }
+        { clipPath: 'inset(0 0% 0 0)', duration: dur1, ease: 'power1.inOut' }
       )
 
-      // Line 2: "& Strategist" wipes left → right, slightly overlapping
+      // Line 2: wipes left → right, slightly overlapping
       tl.set(line2Ref.current, { opacity: 1 })
       tl.fromTo(line2Ref.current,
         { clipPath: 'inset(0 100% 0 0)' },
-        { clipPath: 'inset(0 0% 0 0)', duration: 0.8, ease: 'power3.inOut' },
-        '-=0.25'
+        { clipPath: 'inset(0 0% 0 0)', duration: dur2, ease: 'power1.inOut' },
+        '-=0.3'
       )
 
       // Framework icons pick up via their own startDelay
@@ -72,7 +80,7 @@ export default function Hero() {
           <span className={styles.amp}>&amp;</span> Creative Strategist
         </span>
       </h1>
-      <FrameworkShuffle startDelay={2.4} itemStagger={0.6} />
+      <FrameworkShuffle startDelay={2.4} itemStagger={0.3} />
     </section>
   )
 }
