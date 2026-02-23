@@ -2,8 +2,7 @@
    ABOUT SECTION — Circle photo + text
    =========================================== */
 .aboutSection {
-  padding: clamp(60px, 10vh, 120px) var(--gutter);
-  border-top: 1px solid rgba(44, 44, 44, 0.12);
+  padding: 0;
   display: flex;
   align-items: center;
   gap: clamp(32px, 5vw, 64px);
@@ -116,11 +115,7 @@
 /* ===========================================
    RESPONSIVE - MOBILE (600px)
    =========================================== */
-@media (max-width: 600px) {
-  .aboutSection {
-    padding: var(--space-xl) var(--container-padding);
-  }
-}
+/* 600px responsive padding handled by page grid cell */
 
 /* ===========================================
    ACCESSIBILITY - REDUCED MOTION
