@@ -6,8 +6,8 @@
    SELECTED WORK — vertical card stack
    =========================================== */
 .selectedWork {
-  margin-top: clamp(60px, 9vh, 120px);
-  padding-bottom: var(--space-xl);
+  margin-top: clamp(18px, 2.7vh, 36px);
+  padding-bottom: var(--space-lg);
 }
 
 .projectsWrap {

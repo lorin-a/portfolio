@@ -5,6 +5,11 @@
   text-decoration: none;
   color: inherit;
   display: block;
+  opacity: 1;
+}
+
+.cardLink:hover {
+  opacity: 1;
 }
 
 .cardLink:focus-visible {
@@ -23,13 +28,12 @@
   grid-template-columns: 1fr 1fr;
   gap: 56px;
   align-items: center;
-  transition: transform 0.5s var(--ease-in-out), box-shadow 0.5s var(--ease-in-out);
+  transition: transform 0.8s var(--ease-out);
 }
 
 @media (hover: hover) {
   .projectCard:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-lg);
+    transform: scale(1.015);
   }
 }
 
@@ -78,19 +82,31 @@
   position: absolute;
   top: 0;
   left: 0;
-  transition: opacity var(--motion-medium) var(--ease-out);
+  transition: opacity 200ms var(--ease-out), visibility 0s 200ms, transform 0.8s var(--ease-out);
+}
+
+@media (hover: hover) {
+  .projectCard:hover .mediaEl {
+    transform: scale(1.03);
+  }
 }
 
 .mediaHidden {
   opacity: 0;
+  visibility: hidden;
+  transition: opacity 200ms var(--ease-out), visibility 0s 200ms;
 }
 
 .hoverMedia {
   opacity: 0;
+  visibility: hidden;
+  transition: opacity 200ms var(--ease-out), visibility 0s 200ms;
 }
 
 .hoverMediaVisible {
   opacity: 1;
+  visibility: visible;
+  transition: opacity 200ms var(--ease-out), visibility 0s 0s;
 }
 
 /* ===========================================

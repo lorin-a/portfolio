@@ -44,10 +44,11 @@ export default function ProjectCard({ project, flip = false, preload = false }) 
     })
   }, [preload])
 
-  /* Play video only when scrolled into view */
+  /* Play video only when full card is visible */
   useEffect(() => {
     const video = videoRef.current
-    if (!video) return
+    const card = cardRef.current
+    if (!video || !card) return
 
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -57,10 +58,10 @@ export default function ProjectCard({ project, flip = false, preload = false }) 
           video.pause()
         }
       },
-      { threshold: 0.3 }
+      { threshold: 0.95 }
     )
 
-    observer.observe(video)
+    observer.observe(card)
     return () => observer.disconnect()
   }, [])
 

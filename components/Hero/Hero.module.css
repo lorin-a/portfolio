@@ -16,7 +16,7 @@
   line-height: 1.05;
   letter-spacing: -0.025em;
   color: var(--color-ink);
-  margin-bottom: clamp(56px, 8vh, 88px);
+  margin-bottom: clamp(34px, 4.8vh, 53px);
   /* Start at SOFT 0, WONK 1 — GSAP tweens SOFT to 100 */
   font-variation-settings: 'SOFT' 0, 'WONK' 1;
 }
