@@ -22,9 +22,8 @@ const featuredProjects = [
     heroAlt:
       'A healthcare worker walks down a hospital hallway toward a colorful mural installation',
     slug: '/projects/groundswell',
-    status: null,
-    layout: 'stacked',
     theme: 'groundswell',
+    size: 'large',
     ready: true,
   },
   {
@@ -41,10 +40,8 @@ const featuredProjects = [
     heroAlt:
       'Multiple mobile app screens showing the BirthStory journaling and documentation interface',
     slug: '/projects/birthstory',
-    status: null,
-    layout: 'side',
-    imageLeft: true,
     theme: 'birthstory',
+    size: 'standard',
     ready: false,
     oldPortfolioUrl: 'https://snail-squid-djta.squarespace.com/case-studies/birthstory',
   },
@@ -62,9 +59,8 @@ const featuredProjects = [
     heroAlt:
       'Systems map and data visualization showing interconnected food insecurity factors in Pittsburgh',
     slug: '/projects/transition-design',
-    status: null,
-    layout: 'side',
     theme: 'transitionDesign',
+    size: 'standard',
     ready: false,
     oldPortfolioUrl: 'https://snail-squid-djta.squarespace.com/case-studies/transitiondesign',
   },
@@ -123,7 +119,6 @@ const moreProjects = [
     theme: 'mindfulnest',
     ready: false,
     oldPortfolioUrl: 'https://snail-squid-djta.squarespace.com/case-studies/mindfulnest',
-    ready: false,
   },
 ]
 
@@ -137,9 +132,8 @@ function TagPill({ label, small, dark }) {
   )
 }
 
-function FeaturedCard({ project }) {
-  const isStacked = project.layout === 'stacked'
-  const sideClass = project.imageLeft ? styles.cardSideFlipped : styles.cardSide
+function FeaturedCard({ project, visibleOnLoad }) {
+  const isStandard = project.size === 'standard'
   const t = themes[project.theme]
 
   const cardStyle = {
@@ -159,45 +153,29 @@ function FeaturedCard({ project }) {
 
   const Wrapper = project.ready ? Link : 'div'
   const wrapperProps = project.ready
-    ? { href: project.slug, className: `${styles.cardLink} ${isStacked ? styles.cardStacked : sideClass}`, style: cardStyle }
-    : { className: `${styles.cardDiv} ${isStacked ? styles.cardStacked : sideClass}`, style: cardStyle }
+    ? { href: project.slug, className: `${styles.cardLink} ${styles.cardStacked}`, style: cardStyle }
+    : { className: `${styles.cardDiv} ${styles.cardStacked}`, style: cardStyle }
 
   return (
-    <article className={styles.featuredCard}>
+    <article className={`${styles.featuredCard} ${visibleOnLoad ? styles.featuredCardVisible : ''}`}>
       <Wrapper {...wrapperProps}>
-        <div
-          className={isStacked ? styles.imageStacked : styles.imageSide}
-        >
+        <div className={`${styles.imageStacked} ${isStandard ? styles.imageSizeStandard : ''}`}>
           <Image
             src={project.heroImage}
             alt={project.heroAlt}
             fill
-            sizes={
-              isStacked
-                ? '(max-width: 700px) 100vw, 1000px'
-                : '(max-width: 700px) 100vw, 420px'
-            }
+            sizes={isStandard ? '(max-width: 600px) 100vw, 50vw' : '(max-width: 700px) 100vw, 1000px'}
             className={styles.image}
           />
-          {project.status && (
-            <span
-              className={styles.statusBadge}
-              aria-label={`Project status: ${project.status}`}
-            >
-              {project.status}
-            </span>
-          )}
         </div>
 
-        <div
-          className={isStacked ? styles.contentStacked : styles.contentSide}
-        >
+        <div className={`${isStandard ? styles.contentStandard : styles.contentStacked}`}>
           <div>
-            <h3 className={`${styles.title} ${isStacked ? styles.titleStacked : styles.titleSide}`}>
+            <h3 className={`${styles.title} ${isStandard ? styles.titleStandard : styles.titleStacked}`}>
               {project.title}
             </h3>
             {project.subtitle && (
-              <p className={`${styles.subtitle} ${isStacked ? styles.subtitleStacked : styles.subtitleSide}`}>
+              <p className={`${styles.subtitle} ${isStandard ? styles.subtitleStandard : styles.subtitleStacked}`}>
                 {project.subtitle}
               </p>
             )}
@@ -206,25 +184,21 @@ function FeaturedCard({ project }) {
                 <TagPill key={tag.label} label={tag.label} dark={t.darkTheme} />
               ))}
             </div>
-            <p className={`${styles.description} ${isStacked ? styles.descriptionStacked : styles.descriptionSide}`}>
+            <p className={`${styles.description} ${isStandard ? styles.descriptionStandard : styles.descriptionStacked}`}>
               {project.description}
             </p>
           </div>
           <span className={styles.cta}>
-            {!project.ready && <span className={styles.ctaArrowText}>&rarr;</span>}
-            <span>{project.ready ? 'View case study' : 'Coming soon'}</span>
-            {project.ready && <span className={styles.ctaArrowText}>&rarr;</span>}
+            {project.ready ? (
+              <>
+                <span className={styles.ctaTextLink}>View case study</span>
+                <span className={styles.ctaArrowText}>&rarr;</span>
+              </>
+            ) : (
+              <span className={styles.ctaInProgress}>Case study in progress</span>
+            )}
           </span>
         </div>
-
-        {!project.ready && (
-          <div className={styles.hoverOverlay}>
-            <span className={styles.hoverOverlayTitle}>Case study coming soon</span>
-            <a href={project.oldPortfolioUrl} target="_blank" rel="noopener noreferrer" className={styles.hoverOverlayLink} onClick={(e) => e.stopPropagation()}>
-              View previous portfolio version &rarr;
-            </a>
-          </div>
-        )}
       </Wrapper>
     </article>
   )
@@ -285,20 +259,16 @@ function SmallCard({ project }) {
             <p className={styles.smallDescription}>{project.description}</p>
           </div>
           <span className={styles.smallCta}>
-            {!project.ready && <span className={styles.ctaArrowText}>&rarr;</span>}
-            <span>{project.ready ? 'View project' : 'Coming soon'}</span>
-            {project.ready && <span className={styles.ctaArrowText}>&rarr;</span>}
+            {project.ready ? (
+              <>
+                <span className={styles.ctaTextLink}>View project</span>
+                <span className={styles.ctaArrowText}>&rarr;</span>
+              </>
+            ) : (
+              <span className={styles.ctaInProgress}>Case study in progress</span>
+            )}
           </span>
         </div>
-
-        {!project.ready && (
-          <div className={styles.hoverOverlay}>
-            <span className={styles.hoverOverlayTitle}>Case study coming soon</span>
-            <a href={project.oldPortfolioUrl} target="_blank" rel="noopener noreferrer" className={styles.hoverOverlayLink} onClick={(e) => e.stopPropagation()}>
-              View previous portfolio version &rarr;
-            </a>
-          </div>
-        )}
       </Wrapper>
     </article>
   )
@@ -316,10 +286,11 @@ export default function FeaturedWork() {
     const section = sectionRef.current
     if (!section) return
 
-    // Featured cards — trigger with standard rootMargin
+    // Featured cards — skip index 0 (Groundswell, visible on load), observe cards 2 and 3
     const featuredElements = []
     section.querySelectorAll(`.${styles.featuredCard}`).forEach((el, i) => {
-      featuredElements.push({ el, visibleClass: styles.featuredCardVisible, groupDelay: i * 150 })
+      if (i === 0) return // Skip first card — already visible
+      featuredElements.push({ el, visibleClass: styles.featuredCardVisible, groupDelay: (i - 1) * 150 })
     })
 
     const makeCallback = (items) => (entries) => {
@@ -363,15 +334,30 @@ export default function FeaturedWork() {
   }, [])
 
   return (
-    <section className={styles.section} ref={sectionRef}>
+    <section className={styles.section} ref={sectionRef} id="work">
       <div className={styles.container}>
-        <div className={styles.featuredGrid}>
-          {featuredProjects.map((project) => (
-            <FeaturedCard key={project.slug} project={project} />
-          ))}
+        {/* Section label */}
+        <div className={styles.sectionLabel}>
+          <div className={styles.sectionDot} />
+          <span>Featured Work</span>
         </div>
 
-        <p className={styles.moreLabel}>More Work</p>
+        <div className={styles.featuredGrid}>
+          {/* Groundswell — large, full width, visible on load */}
+          <FeaturedCard project={featuredProjects[0]} visibleOnLoad />
+
+          {/* Secondary row — two column */}
+          <div className={styles.featuredSecondaryRow}>
+            <FeaturedCard project={featuredProjects[1]} />
+            <FeaturedCard project={featuredProjects[2]} />
+          </div>
+        </div>
+
+        {/* More Work */}
+        <div className={styles.moreLabel}>
+          <div className={styles.moreDot} />
+          <span>More Work</span>
+        </div>
 
         <div className={styles.moreGrid}>
           {moreProjects.map((project) => (

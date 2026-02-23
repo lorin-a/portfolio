@@ -75,27 +75,32 @@ export default function Home() {
     <>
       <Hero />
 
-      {/* Bridge — accordion to projects */}
-      <div className={styles.bridge}>
-        <span className={styles.bridgeText}>Selected work</span>
-        <span className={styles.bridgeLine} />
-      </div>
+      {/* Cell Grid — Projects + About */}
+      <section className={styles.cellGrid} id="work">
+        {/* Top border with "Selected Work" label */}
+        <div className={styles.gridLabel} aria-hidden="true">
+          <span className={styles.gridLabelLine} />
+          <span className={styles.gridLabelText}>Selected work</span>
+          <span className={styles.gridLabelLine} />
+        </div>
 
-      {/* Projects */}
-      <section className={styles.projects} id="work">
-        {PROJECTS.map((project, i) => (
-          <div key={project.num}>
-            {i > 0 && <div className={styles.cardDivider} aria-hidden="true" />}
-            <ProjectCard
-              project={project}
-              variant={project.variant}
-              flip={project.flip}
-            />
+        {/* Cell 1: Flagship */}
+        <div className={`${styles.cell} ${styles.cellFlagship}`}>
+          <ProjectCard project={PROJECTS[0]} variant="flagship" />
+        </div>
+
+        {/* Cells 2–4: Standard */}
+        {PROJECTS.slice(1).map((project) => (
+          <div key={project.num} className={`${styles.cell} ${styles.cellStandard}`}>
+            <ProjectCard project={project} variant="standard" flip={project.flip} />
           </div>
         ))}
-      </section>
 
-      <AboutSection />
+        {/* Cell 5: About */}
+        <div className={`${styles.cell} ${styles.cellAbout}`}>
+          <AboutSection />
+        </div>
+      </section>
     </>
   )
 }

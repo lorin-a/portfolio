@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>lorin.work — Consolidated</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,200;0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,200;1,9..144,300;1,9..144,400;1,9..144,500&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* Background */
+    --cream: #F7F4EF;
+    --cream-dark: #F0ECE4;
+
+    /* Sage — sense */
+    --sage: #5E6D52;              /* text-accessible (5.06:1) */
+    --sage-light: #7A8B6F;       /* sub-terms, large text (3.33:1) */
+    --sage-soft: #A0A88A;         /* decorative/icons */
+    --sage-muted: rgba(160, 168, 138, 0.10);
+
+    /* Plum/Mauve — weave */
+    --plum: #7A6680;              /* text-accessible (4.74:1) */
+    --plum-light: #8A7690;       /* sub-terms, large text (3.77:1) */
+    --plum-soft: #9B8A9E;         /* decorative/icons */
+    --plum-muted: rgba(155, 138, 158, 0.08);
+
+    /* Rose/Terracotta — shape */
+    --terracotta: #956058;        /* text-accessible (4.68:1) */
+    --terracotta-light: #A87068; /* sub-terms, large text (3.69:1) */
+    --terracotta-soft: #C4908A;   /* decorative/icons */
+    --terracotta-muted: rgba(196, 144, 138, 0.08);
+
+    /* Chalcedony — accent */
+    --chalcedony: #6E8FAE;
+    --chalcedony-muted: rgba(110, 143, 174, 0.10);
+
+    /* Ink — neutrals */
+    --ink: #2C2C2C;               /* headings (12.73:1) */
+    --ink-light: #5A5550;         /* body text (6.72:1) */
+    --ink-faint: #7A7570;         /* labels, large text only (4.16:1) */
+
+    --font-serif: 'Fraunces', Georgia, serif;
+    --font-sans: 'DM Sans', system-ui, sans-serif;
+
+    --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+
+    --gutter: clamp(24px, 5vw, 80px);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--cream);
+    color: var(--ink);
+    font-family: var(--font-sans);
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body::after {
+    content: '';
+    position: fixed; inset: 0;
+    opacity: 0.022; pointer-events: none; z-index: 50;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+    background-size: 256px;
+  }
+
+  .amp { color: var(--terracotta-light); margin: 0 2px; font-family: var(--font-serif); font-style: italic; }
+
+  /* ============================================
+     NAV
+     ============================================ */
+  .nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    padding: 20px var(--gutter);
+    display: flex; justify-content: space-between; align-items: center;
+    transition: background 0.5s ease, backdrop-filter 0.5s ease;
+  }
+  .nav.scrolled { background: rgba(245,240,232,0.92); backdrop-filter: blur(12px); }
+
+  .nav-name {
+    font-family: var(--font-serif);
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--ink);
+    text-decoration: none;
+  }
+
+  .nav-right { display: flex; gap: 28px; }
+  .nav-right a {
+    font-family: var(--font-sans);
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--ink-light);
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+  .nav-right a:hover { color: var(--ink); }
+
+  /* ============================================
+     HERO — Title-first, name in nav only
+     Matches Hero A from hero-hierarchy.html
+     ============================================ */
+  .hero {
+    padding: clamp(110px, 16vh, 160px) var(--gutter) clamp(40px, 5vh, 56px);
+    text-align: center;
+  }
+
+  .hero-title {
+    font-family: var(--font-serif);
+    font-size: clamp(36px, 6vw, 80px);
+    font-weight: 300;
+    line-height: 1.05;
+    letter-spacing: -0.025em;
+    color: var(--ink);
+    margin-bottom: clamp(28px, 4vh, 44px);
+  }
+
+  /* ============================================
+     FRAMEWORK ROW — icon placeholders + shuffle
+     ============================================ */
+  .fw-row {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    gap: clamp(40px, 7vw, 100px);
+  }
+
+  .fw-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    cursor: default;
+    min-width: clamp(80px, 10vw, 120px);
+  }
+
+  /* Icon placeholder — replace with your animated SVGs */
+  .fw-icon-placeholder {
+    width: clamp(48px, 5.5vw, 64px);
+    height: clamp(48px, 5.5vw, 64px);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-sans);
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .fw-item.is-sense .fw-icon-placeholder {
+    background: var(--sage-muted);
+    color: var(--sage-light);
+  }
+
+  .fw-item.is-weave .fw-icon-placeholder {
+    background: var(--plum-muted);
+    color: var(--plum-light);
+  }
+
+  .fw-item.is-shape .fw-icon-placeholder {
+    background: var(--terracotta-muted);
+    color: var(--terracotta-light);
+  }
+
+  /* Shuffle word container */
+  .c4-word-container {
+    height: clamp(22px, 2.8vw, 30px);
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 130px;
+  }
+
+  .c4-word {
+    font-family: var(--font-serif);
+    font-size: clamp(16px, 1.8vw, 21px);
+    font-weight: 400;
+    position: absolute;
+    white-space: nowrap;
+    transition: opacity 0.35s ease, transform 0.4s var(--ease-out-expo);
+  }
+
+  .c4-word.active { opacity: 1; transform: translateY(0); }
+  .c4-word.exit-up { opacity: 0; transform: translateY(-14px); }
+  .c4-word.enter-below { opacity: 0; transform: translateY(14px); }
+
+  /* Root word colors */
+  .fw-item.is-sense .c4-word.root { color: var(--sage); }
+  .fw-item.is-weave .c4-word.root { color: var(--plum); font-style: italic; font-weight: 500; }
+  .fw-item.is-shape .c4-word.root { color: var(--terracotta); }
+
+  /* Sub-term colors — lighter, italic */
+  .fw-item.is-sense .c4-word.sub { color: var(--sage-light); font-style: italic; font-weight: 300; }
+  .fw-item.is-weave .c4-word.sub { color: var(--plum-light); font-style: italic; font-weight: 300; font-size: clamp(13px, 1.5vw, 17px); }
+  .fw-item.is-shape .c4-word.sub { color: var(--terracotta-light); font-style: italic; font-weight: 300; }
+
+  /* ============================================
+     BRIDGE — accordion to projects
+     ============================================ */
+  .bridge {
+    padding: clamp(32px, 5vh, 52px) var(--gutter);
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .bridge-text {
+    font-family: var(--font-sans);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+
+  .bridge-line {
+    flex: 1;
+    max-width: 64px;
+    height: 1px;
+    background: var(--ink-faint);
+  }
+
+  /* ============================================
+     PROJECTS — Alternating layout
+     GS left, BS right, SB left, TD right
+     ============================================ */
+  .projects {
+    padding: 0 var(--gutter);
+    padding-bottom: clamp(80px, 12vh, 140px);
+  }
+
+  /* Flagship — Groundswell */
+  .flagship {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: clamp(32px, 5vw, 72px);
+    align-items: end;
+    margin-bottom: clamp(80px, 12vh, 160px);
+    cursor: pointer;
+  }
+
+  .flagship:hover .fl-title { color: var(--plum); }
+  .flagship:hover .fl-visual { transform: scale(1.01); }
+
+  .fl-visual {
+    aspect-ratio: 3 / 4;
+    border-radius: 4px;
+    overflow: hidden;
+    transition: transform 0.7s var(--ease-out-expo);
+  }
+
+  .fl-surface {
+    width: 100%; height: 100%;
+    display: flex; align-items: center; justify-content: center;
+    background: linear-gradient(170deg, var(--sage-muted), var(--plum-muted) 40%, var(--terracotta-muted));
+    border: 1px solid rgba(160,168,138,0.15);
+  }
+
+  .fl-meta { padding-bottom: 24px; }
+
+  .fl-num {
+    font-family: var(--font-serif);
+    font-size: 14px;
+    font-weight: 300;
+    color: var(--ink-light);
+    font-style: italic;
+    margin-bottom: 14px;
+  }
+
+  .fl-title {
+    font-family: var(--font-serif);
+    font-size: clamp(32px, 4.5vw, 56px);
+    font-weight: 400;
+    color: var(--ink);
+    line-height: 1.08;
+    letter-spacing: -0.015em;
+    margin-bottom: 14px;
+    transition: color 0.4s var(--ease-out-expo);
+  }
+
+  .fl-context {
+    font-family: var(--font-sans);
+    font-size: clamp(14px, 1.4vw, 16px);
+    color: var(--ink-light);
+    line-height: 1.6;
+    max-width: 400px;
+    margin-bottom: 16px;
+  }
+
+  /* Process mark — three dots, three colors, every card
+     PLACEHOLDER: Replace these SVGs with your hand-drawn 
+     brush-style dots from your icon session */
+  .process-mark {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 4px;
+  }
+
+  .process-mark .dot {
+    width: 8px;
+    height: 8px;
+  }
+
+  .process-mark .dot svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  /* Standard project cards */
+  .std {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(28px, 4.5vw, 64px);
+    align-items: center;
+    margin-bottom: clamp(72px, 10vh, 120px);
+    cursor: pointer;
+    max-width: 1000px;
+  }
+
+  .std:last-child { margin-bottom: 0; }
+  .std.flip { direction: rtl; }
+  .std.flip > * { direction: ltr; }
+  .std:hover .std-title { color: var(--plum); }
+  .std:hover .std-visual { transform: scale(1.02); }
+
+  .std-visual {
+    aspect-ratio: 4 / 3;
+    border-radius: 4px;
+    overflow: hidden;
+    transition: transform 0.6s var(--ease-out-expo);
+  }
+
+  .std-surface {
+    width: 100%; height: 100%;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  .std-meta { display: flex; flex-direction: column; gap: 10px; }
+
+  .std-num {
+    font-family: var(--font-serif);
+    font-size: 14px;
+    font-weight: 300;
+    color: var(--ink-light);
+    font-style: italic;
+  }
+
+  .std-title {
+    font-family: var(--font-serif);
+    font-size: clamp(24px, 3vw, 36px);
+    font-weight: 400;
+    color: var(--ink);
+    line-height: 1.12;
+    transition: color 0.4s var(--ease-out-expo);
+  }
+
+  .std-context {
+    font-family: var(--font-sans);
+    font-size: 14px;
+    color: var(--ink-light);
+    line-height: 1.6;
+    max-width: 340px;
+  }
+
+  .placeholder-text {
+    font-family: var(--font-serif);
+    font-size: 14px;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--ink-light);
+    text-align: center;
+    padding: 16px;
+    line-height: 1.5;
+  }
+
+  /* ============================================
+     ABOUT — circle photo + text
+     ============================================ */
+  .about-section {
+    padding: clamp(60px, 10vh, 120px) var(--gutter);
+    border-top: 1px solid rgba(44,44,44,0.12);
+    display: flex;
+    align-items: center;
+    gap: clamp(32px, 5vw, 64px);
+    max-width: 900px;
+  }
+
+  .about-photo {
+    flex-shrink: 0;
+    position: relative;
+    width: clamp(120px, 14vw, 172px);
+    height: clamp(120px, 14vw, 172px);
+  }
+
+  .about-photo-inner {
+    width: 100%; height: 100%;
+    border-radius: 50%;
+    background: var(--cream-dark);
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+    position: relative;
+    z-index: 2;
+  }
+
+  .about-photo-placeholder {
+    font-family: var(--font-serif);
+    font-size: 13px;
+    font-style: italic;
+    color: var(--ink-light);
+  }
+
+  /* Hand-drawn SVG circle border — replace with your drawn version */
+  .about-photo-border {
+    position: absolute;
+    inset: -8px;
+    z-index: 1;
+  }
+
+  .about-photo-border svg { width: 100%; height: 100%; }
+
+  .about-photo-border path {
+    fill: none;
+    stroke: var(--plum);
+    stroke-width: 1.5;
+    opacity: 0.5;
+  }
+
+  .about-text-block { flex: 1; }
+
+  .about-text {
+    font-family: var(--font-serif);
+    font-size: clamp(18px, 2.2vw, 24px);
+    font-weight: 300;
+    line-height: 1.6;
+    color: var(--ink-light);
+  }
+
+  .about-text em { color: var(--ink); }
+
+  .about-link {
+    display: inline-block;
+    margin-top: 20px;
+    font-family: var(--font-sans);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--plum);
+    text-decoration: none;
+    border-bottom: 1px solid var(--plum-light);
+    padding-bottom: 3px;
+    transition: border-color 0.4s ease;
+  }
+
+  .about-link:hover { border-color: var(--plum); }
+
+  /* ============================================
+     FOOTER
+     ============================================ */
+  .footer {
+    padding: 40px var(--gutter) 48px;
+    border-top: 1px solid rgba(44,44,44,0.12);
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+
+  .footer-warmth {
+    font-family: var(--font-serif);
+    font-size: clamp(15px, 1.6vw, 18px);
+    font-weight: 300;
+    font-style: italic;
+    color: var(--ink-light);
+  }
+
+  .footer-links { display: flex; gap: 28px; }
+  .footer-links a {
+    font-family: var(--font-sans);
+    font-size: 13px;
+    color: var(--ink-light);
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+  .footer-links a:hover { color: var(--ink); }
+
+  /* ============================================
+     RESPONSIVE
+     ============================================ */
+  @media (max-width: 768px) {
+    .fw-row { gap: 28px; flex-wrap: wrap; }
+    .flagship { grid-template-columns: 1fr; gap: 20px; }
+    .fl-visual { aspect-ratio: 4 / 3; }
+    .std { grid-template-columns: 1fr; gap: 16px; }
+    .std.flip { direction: ltr; }
+    .about-section { flex-direction: column; text-align: center; }
+    .about-photo { width: 120px; height: 120px; }
+  }
+
+  /* ============================================
+     LOAD ANIMATIONS
+     ============================================ */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero-title { animation: fadeUp 0.7s var(--ease-out-expo) 0.1s both; }
+  .fw-row { animation: fadeUp 0.7s var(--ease-out-expo) 0.25s both; }
+</style>
+</head>
+<body>
+
+<!-- NAV — name lives here only -->
+<nav class="nav" id="nav">
+  <a href="#" class="nav-name">Lorin Anderberg</a>
+  <div class="nav-right">
+    <a href="#">Work</a>
+    <a href="#">About</a>
+    <a href="#">Contact</a>
+  </div>
+</nav>
+
+<!-- ============================================
+     HERO
+     ============================================ -->
+<section class="hero">
+  <h1 class="hero-title">Design Researcher<br>& Strategist</h1>
+  <div class="fw-row">
+
+    <!-- SENSE -->
+    <div class="fw-item is-sense" onmouseenter="startShuffle(this)" onmouseleave="stopShuffle(this)">
+      <!-- PLACEHOLDER: Replace with your animated Sense icon SVG -->
+      <div class="fw-icon-placeholder">icon</div>
+      <div class="c4-word-container">
+        <span class="c4-word root active">sense</span>
+        <span class="c4-word sub enter-below">details</span>
+        <span class="c4-word sub enter-below">patterns</span>
+        <span class="c4-word sub enter-below">tensions</span>
+      </div>
+    </div>
+
+    <!-- WEAVE -->
+    <div class="fw-item is-weave" onmouseenter="startShuffle(this)" onmouseleave="stopShuffle(this)">
+      <!-- PLACEHOLDER: Replace with your animated Weave icon SVG -->
+      <div class="fw-icon-placeholder">icon</div>
+      <div class="c4-word-container">
+        <span class="c4-word root active">weave</span>
+        <span class="c4-word sub enter-below">stories <span class="amp">&</span> systems</span>
+        <span class="c4-word sub enter-below">empathy <span class="amp">&</span> evidence</span>
+        <span class="c4-word sub enter-below">details <span class="amp">&</span> dreams</span>
+      </div>
+    </div>
+
+    <!-- SHAPE -->
+    <div class="fw-item is-shape" onmouseenter="startShuffle(this)" onmouseleave="stopShuffle(this)">
+      <!-- PLACEHOLDER: Replace with your animated Shape icon SVG -->
+      <div class="fw-icon-placeholder">icon</div>
+      <div class="c4-word-container">
+        <span class="c4-word root active">shape</span>
+        <span class="c4-word sub enter-below">experiences</span>
+        <span class="c4-word sub enter-below">environments</span>
+        <span class="c4-word sub enter-below">culture</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- BRIDGE -->
+<div class="bridge">
+  <span class="bridge-text">Selected work</span>
+  <span class="bridge-line"></span>
+</div>
+
+<!-- ============================================
+     PROJECTS — Alternating
+     01 Groundswell: image LEFT (flagship)
+     02 BirthStory:  image RIGHT
+     03 SomeBuddy:   image LEFT
+     04 Transition:  image RIGHT
+     ============================================ -->
+<section class="projects">
+
+  <!-- 01 GROUNDSWELL — flagship, image left -->
+  <div class="flagship">
+    <div class="fl-visual">
+      <div class="fl-surface">
+        <span class="placeholder-text">Scanner collage or<br>video loop of<br>ecosystem artifacts</span>
+      </div>
+    </div>
+    <div class="fl-meta">
+      <span class="fl-num">01</span>
+      <h2 class="fl-title">Groundswell</h2>
+      <p class="fl-context">A participatory care ecosystem supporting oncology staff wellbeing. Grant-funded, co-designed with healthcare workers, now in institutional pilot.</p>
+      <div class="process-mark"><!-- PLACEHOLDER: Replace with your brush-style dots --><span class="dot"><svg viewBox="0 0 10 10"><circle cx="5" cy="5" r="4.5" fill="#A0A88A"/></svg></span><span class="dot"><svg viewBox="0 0 10 10"><circle cx="5" cy="5" r="4.5" fill="#9B8A9E"/></svg></span><span class="dot"><svg viewBox="0 0 10 10"><circle cx="5" cy="5" r="4.5" fill="#C4908A"/></svg></span></div>
+    </div>
+  </div>
+
+  <!-- 02 BIRTHSTORY — image right -->
+  <div class="std flip">
+    <div class="std-visual">
+      <div class="std-surface" style="background: linear-gradient(135deg, var(--chalcedony-muted), var(--cream-dark)); border: 1px solid rgba(110,143,174,0.15); border-radius: 4px;">
+        <span class="placeholder-text">App mockup<br>on device</span>
+      </div>
+    </div>
+    <div class="std-meta">
+      <span class="std-num">02</span>
+      <h3 class="std-title">BirthStory</h3>
+      <p class="std-context">Helping parents document and reflect on their birth experience. Real client, real constraints, shipped concept.</p>
+      <div class="process-mark"><!-- PLACEHOLDER: Replace with your brush-style dots --><span class="dot"><svg viewBox="0 0 10 10"><circle cx="5" cy="5" r="4.5" fill="#A0A88A"/></svg></span><span class="dot"><svg viewBox="0 0 10 10"><circle cx="5" cy="5" r="4.5" fill="#9B8A9E"/></svg></span><span class="dot"><svg viewBox="0 0 10 10"><circle cx="5" cy="5" r="4.5" fill="#C4908A"/></svg></span></div>
+    </div>
+  </div>
+
+  <!-- 03 SOMEBUDDY — image left -->
+  <div class="std">
+    <div class="std-visual">
+      <div class="std-surface" style="background: linear-gradient(155deg, var(--terracotta-muted), var(--cream-dark)); border: 1px solid rgba(196,144,138,0.15); border-radius: 4px;">
+        <span class="placeholder-text">Animated logo<br>or brand moment</span>
+      </div>
+    </div>
+    <div class="std-meta">
+      <span class="std-num">03</span>
+      <h3 class="std-title">SomeBuddy</h3>
+      <p class="std-context">Brand identity, UX, and animation for a therapy companion app. Full creative range.</p>
+      <div class="process-mark"><!-- PLACEHOLDER: Replace with your brush-style dots --><span class="dot"><svg viewBox="0 0 10 10"><circle cx="5" cy="5" r="4.5" fill="#A0A88A"/></svg></span><span class="dot"><svg viewBox="0 0 10 10"><circle cx="5" cy="5" r="4.5" fill="#9B8A9E"/></svg></span><span class="dot"><svg viewBox="0 0 10 10"><circle cx="5" cy="5" r="4.5" fill="#C4908A"/></svg></span></div>
+    </div>
+  </div>
+
+  <!-- 04 TRANSITION DESIGN — image right -->
+  <div class="std flip">
+    <div class="std-visual">
+      <div class="std-surface" style="background: linear-gradient(140deg, var(--plum-muted), var(--chalcedony-muted)); border: 1px solid rgba(155,138,158,0.12); border-radius: 4px;">
+        <span class="placeholder-text">Systems map<br>detail</span>
+      </div>
+    </div>
+    <div class="std-meta">
+      <span class="std-num">04</span>
+      <h3 class="std-title">Transition Design</h3>
+      <p class="std-context">A systems-level design response to food insecurity in Pittsburgh. The lens widens.</p>
+      <div class="process-mark"><!-- PLACEHOLDER: Replace with your brush-style dots --><span class="dot"><svg viewBox="0 0 10 10"><circle cx="5" cy="5" r="4.5" fill="#A0A88A"/></svg></span><span class="dot"><svg viewBox="0 0 10 10"><circle cx="5" cy="5" r="4.5" fill="#9B8A9E"/></svg></span><span class="dot"><svg viewBox="0 0 10 10"><circle cx="5" cy="5" r="4.5" fill="#C4908A"/></svg></span></div>
+    </div>
+  </div>
+
+</section>
+
+<!-- ============================================
+     ABOUT — photo circle + text
+     ============================================ -->
+<section class="about-section">
+  <div class="about-photo">
+    <div class="about-photo-border">
+      <!-- PLACEHOLDER: Replace with your hand-drawn circle SVG -->
+      <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+        <path d="M100 8 C 145 6, 188 38, 193 85 C 198 132, 168 180, 118 192 C 68 204, 15 175, 7 125 C -1 75, 30 18, 78 9 C 82 8.3, 90 7.5, 100 8 Z" />
+      </svg>
+    </div>
+    <div class="about-photo-inner">
+      <span class="about-photo-placeholder">photo</span>
+    </div>
+  </div>
+  <div class="about-text-block">
+    <p class="about-text">I came to design through journalism, caregiving, and a decade of asking <em>why does this system work this way?</em> My practice lives where structure meets heart — turning community wisdom into systemic change.</p>
+    <a href="#" class="about-link">More about my path →</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <span class="footer-warmth">Let's make something that matters.</span>
+  <div class="footer-links">
+    <a href="#">LinkedIn</a>
+    <a href="#">Resume</a>
+    <a href="#">Email</a>
+  </div>
+</footer>
+
+<!-- ============================================
+     SHUFFLE INTERACTION
+     
+     HOW IT WORKS:
+     On mouseenter (after 300ms pause), the current 
+     word exits upward (opacity→0, translateY→-14px) 
+     while the next word enters from below 
+     (translateY 14px→0, opacity→1). Cycles every 
+     1200ms through all sub-terms then back to root.
+     On mouseleave, resets immediately to root word.
+     
+     Cycle order:
+     sense → details → patterns → tensions → sense
+     weave → stories & systems → empathy & evidence → details & dreams → weave
+     shape → experiences → environments → culture → shape
+     ============================================ -->
+<script>
+  const shuffleTimers = new Map();
+
+  function startShuffle(el) {
+    const words = el.querySelectorAll('.c4-word');
+    let currentIndex = 0;
+
+    const cycle = () => {
+      const current = words[currentIndex];
+      const nextIndex = (currentIndex + 1) % words.length;
+      const next = words[nextIndex];
+
+      // Exit current upward
+      current.classList.remove('active');
+      current.classList.add('exit-up');
+
+      // Prepare next below
+      next.classList.remove('exit-up', 'enter-below');
+      next.classList.add('enter-below');
+
+      // Bring next in
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          next.classList.remove('enter-below');
+          next.classList.add('active');
+        });
+      });
+
+      // Reset exited word position
+      setTimeout(() => {
+        current.classList.remove('exit-up');
+        current.classList.add('enter-below');
+      }, 400);
+
+      currentIndex = nextIndex;
+    };
+
+    // Start after brief pause
+    const timer = setTimeout(() => {
+      cycle();
+      const interval = setInterval(cycle, 1200);
+      shuffleTimers.set(el, { interval });
+    }, 300);
+
+    shuffleTimers.set(el, { timeout: timer });
+  }
+
+  function stopShuffle(el) {
+    const timers = shuffleTimers.get(el);
+    if (timers) {
+      clearTimeout(timers.timeout);
+      clearInterval(timers.interval);
+    }
+
+    // Reset to root word
+    const words = el.querySelectorAll('.c4-word');
+    words.forEach((w, i) => {
+      w.classList.remove('active', 'exit-up');
+      if (i === 0) {
+        w.classList.add('active');
+        w.classList.remove('enter-below');
+      } else {
+        w.classList.add('enter-below');
+      }
+    });
+
+    shuffleTimers.delete(el);
+  }
+
+  // Nav scroll effect
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 60);
+  }, { passive: true });
+</script>
+
+</body>
+</html>

@@ -60,7 +60,7 @@
   --text-light: #666;
   --surface: #FBFBFB;
   --background: #FBFBFB;
-  --border: #E8E4D8;
+  --border: #DDD8CE;
 
   /* Legacy color aliases (for existing components) */
   --color-green-warm: var(--olive-light);

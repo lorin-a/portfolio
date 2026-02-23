@@ -17,13 +17,6 @@
 
 .senseDot {
   position: absolute;
-  opacity: 0;
-  transform: scale(0);
-}
-
-.senseDotVisible {
-  opacity: 1;
-  transform: scale(1);
 }
 
 /* Weave — clip-path reveal then crossfade */
@@ -127,9 +120,9 @@
    ACCESSIBILITY - REDUCED MOTION
    =========================================== */
 @media (prefers-reduced-motion: reduce) {
-  .senseDot {
-    opacity: 1;
-    transform: scale(1);
+  .senseDot path {
+    opacity: 1 !important;
+    transition: none !important;
   }
 
   .weaveStroke {

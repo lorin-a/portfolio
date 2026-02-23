@@ -1,15 +1,46 @@
 /* ===========================================
-   FEATURED WORK SECTION — EXPERIMENTAL (color-tinted cards)
+   FEATURED WORK SECTION
    =========================================== */
 
 .section {
   background-color: var(--surface);
-  padding: var(--space-xl) var(--container-padding) var(--space-xl);
+  padding: var(--space-lg) var(--container-padding) var(--space-xl);
 }
 
 .container {
   max-width: var(--max-width);
   margin: 0 auto;
+}
+
+/* ===========================================
+   SECTION LABEL (dot + text)
+   =========================================== */
+
+.sectionLabel {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: var(--space-content-gap);
+  padding-left: 0.25rem;
+}
+
+.sectionDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: var(--olive);
+  opacity: 0.8;
+  flex-shrink: 0;
+}
+
+.sectionLabel span {
+  font-family: var(--font-sans);
+  font-size: var(--text-body-small);
+  font-weight: var(--weight-label);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-heading);
+  opacity: 0.85;
 }
 
 /* ===========================================
@@ -21,6 +52,35 @@
   flex-direction: column;
   gap: var(--space-lg);
   margin-bottom: var(--space-xl);
+}
+
+.featuredSecondaryRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-content-gap);
+  align-items: stretch;
+}
+
+.featuredSecondaryRow .featuredCard {
+  display: flex;
+  flex-direction: column;
+}
+
+.featuredSecondaryRow .cardDiv,
+.featuredSecondaryRow .cardLink {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.featuredSecondaryRow .contentStandard {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.featuredSecondaryRow .contentStandard .cta {
+  margin-top: auto;
 }
 
 /* ===========================================
@@ -42,7 +102,7 @@
 }
 
 /* ===========================================
-   STACKED LAYOUT (Groundswell)
+   STACKED LAYOUT (all featured cards)
    =========================================== */
 
 .cardStacked {
@@ -55,9 +115,8 @@
   overflow: hidden;
 }
 
-.imageSide {
-  position: relative;
-  overflow: hidden;
+.imageSizeStandard {
+  height: 240px;
 }
 
 .image {
@@ -70,24 +129,7 @@
   transform: scale(1.03);
 }
 
-/* Status badge */
-.statusBadge {
-  position: absolute;
-  top: 18px;
-  right: 18px;
-  z-index: 2;
-  font-family: var(--font-sans);
-  font-size: var(--text-caption);
-  font-weight: var(--weight-body);
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  padding: 5px 14px;
-  border-radius: 100px;
-  background-color: var(--card-badge-bg, var(--olive));
-  color: var(--card-badge-text, var(--cream));
-}
-
-/* Stacked content */
+/* Stacked content — large (Groundswell) */
 .contentStacked {
   padding: 32px var(--space-lg) var(--space-md);
 }
@@ -104,48 +146,21 @@
   font-size: var(--text-body-large, 18px);
 }
 
-/* ===========================================
-   SIDE LAYOUT (BirthStory, Transition Design)
-   =========================================== */
-
-.cardSide {
-  display: grid;
-  grid-template-columns: 1fr 50%;
-  min-height: 400px;
+/* Standard cards — smaller typography */
+.contentStandard {
+  padding: 24px var(--space-content-gap) 20px;
 }
 
-.cardSide .imageSide {
-  order: 2;
+.titleStandard {
+  font-size: 28px;
 }
 
-/* Flipped: image on left, content on right */
-.cardSideFlipped {
-  display: grid;
-  grid-template-columns: 50% 1fr;
-  min-height: 400px;
-}
-
-.contentSide {
-  padding: 40px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.titleSide {
-  font-size: 32px;
-}
-
-.subtitleSide {
-  font-size: var(--text-body-large);
-}
-
-.descriptionSide {
+.subtitleStandard {
   font-size: var(--text-body);
 }
 
-.contentSide .cta {
-  margin-top: auto;
+.descriptionStandard {
+  font-size: var(--text-body-small);
 }
 
 /* ===========================================
@@ -197,8 +212,25 @@
   gap: 10px;
 }
 
+.ctaTextLink {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+}
+
 .ctaArrowText {
   transition: transform var(--motion-fast) var(--ease-out);
+}
+
+.ctaInProgress {
+  font-family: var(--font-sans);
+  font-size: var(--text-body-small);
+  font-style: italic;
+  font-weight: var(--weight-body);
+  color: var(--card-cta);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
 }
 
 /* ===========================================
@@ -240,13 +272,32 @@
    =========================================== */
 
 .moreLabel {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: var(--space-content-gap);
+  opacity: 0;
+  transform: translateY(10px);
+  will-change: opacity, transform;
+}
+
+.moreDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: var(--olive);
+  opacity: 0.8;
+  flex-shrink: 0;
+}
+
+.moreLabel span {
   font-family: var(--font-sans);
   font-size: var(--text-body-small);
   font-weight: var(--weight-label);
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
   color: var(--text-heading);
-  margin: 0 0 var(--space-content-gap);
+  opacity: 0.85;
 }
 
 .moreGrid {
@@ -355,10 +406,6 @@
   position: relative;
 }
 
-.cardDiv:hover .image {
-  transform: scale(1.03);
-}
-
 .smallCardDiv {
   display: flex;
   flex-direction: column;
@@ -371,74 +418,13 @@
   position: relative;
 }
 
-.smallCardDiv:hover .image {
-  transform: scale(1.04);
-}
-
 /* ===========================================
-   HOVER OVERLAY (coming soon)
-   =========================================== */
-
-.hoverOverlay {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  inset: 0;
-  z-index: 10;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  opacity: 0;
-  transition: opacity var(--motion-fast) var(--ease-default);
-  background: rgba(0, 0, 0, 0.78);
-  border-radius: var(--radius-lg);
-}
-
-.cardDiv:hover .hoverOverlay,
-.smallCardDiv:hover .hoverOverlay {
-  opacity: 1;
-}
-
-.hoverOverlayTitle {
-  font-family: var(--font-serif);
-  font-size: 24px;
-  font-weight: 300;
-  color: var(--cream);
-  margin-bottom: var(--space-xs);
-}
-
-.hoverOverlayLink {
-  font-family: var(--font-sans);
-  font-size: var(--text-body-small);
-  color: var(--cream);
-  text-decoration: underline;
-  text-underline-offset: 3px;
-  opacity: 0.85;
-  transition: opacity var(--motion-fast);
-}
-
-.hoverOverlayLink:hover {
-  opacity: 1;
-}
-
-/* ===========================================
-   RESPONSIVE — TABLET (≤900px)
+   RESPONSIVE — TABLET (<=900px)
    =========================================== */
 
 @media (max-width: 900px) {
   .imageStacked {
     height: 300px;
-  }
-
-  .cardSide {
-    grid-template-columns: 1fr 50%;
-  }
-
-  .cardSideFlipped {
-    grid-template-columns: 50% 1fr;
   }
 
   .moreGrid {
@@ -451,7 +437,7 @@
 }
 
 /* ===========================================
-   RESPONSIVE — MOBILE (≤600px)
+   RESPONSIVE — MOBILE (<=600px)
    =========================================== */
 
 @media (max-width: 600px) {
@@ -467,25 +453,13 @@
     font-size: 28px;
   }
 
-  .titleSide {
-    font-size: 26px;
+  .featuredSecondaryRow {
+    grid-template-columns: 1fr;
+    gap: var(--space-lg);
   }
 
-  /* Side cards become stacked on mobile */
-  .cardSide,
-  .cardSideFlipped {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .cardSide .imageSide,
-  .cardSideFlipped .imageSide {
-    order: -1;
+  .imageSizeStandard {
     height: 200px;
-  }
-
-  .contentSide {
-    padding: 28px 28px;
   }
 
   /* Small cards grid → single column, match featured card spacing */
@@ -518,14 +492,8 @@
 }
 
 /* "More Work" label: soft appear */
-.moreLabel {
-  opacity: 0;
-  transform: translateY(10px);
-  will-change: opacity, transform;
-}
-
 .moreLabelVisible {
-  opacity: 0.6;
+  opacity: 1;
   transform: translateY(0);
   transition: opacity var(--motion-medium) var(--ease-default),
               transform var(--motion-medium) var(--ease-default);
@@ -558,7 +526,7 @@
   }
 
   .moreLabel {
-    opacity: 0.6;
+    opacity: 1;
     transform: none;
     will-change: auto;
   }
@@ -574,9 +542,7 @@
   }
 
   .cardLink:hover .image,
-  .cardDiv:hover .image,
-  .smallCardLink:hover .image,
-  .smallCardDiv:hover .image {
+  .smallCardLink:hover .image {
     transform: none;
   }
 

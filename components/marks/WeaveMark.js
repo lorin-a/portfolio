@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import styles from './marks.module.css'
 
 // Inline path data from weave-stroke.svg
@@ -11,8 +11,8 @@ const WEAVE_BRUSH_PATH = "M64.0375 72.0728C57.0448 71.6262 50.8249 72.4462 44.16
 
 const PLUM_SOFT = '#9B8A9E'
 
-export default function WeaveMark({ animate = false, delay = 0 }) {
-  const [strokeRevealed, setStrokeRevealed] = useState(false)
+export default function WeaveMark({ animate = false, delay = 0, replay = 0 }) {
+  const svgRef = useRef(null)
   const [brushVisible, setBrushVisible] = useState(false)
 
   useEffect(() => {
@@ -24,39 +24,55 @@ export default function WeaveMark({ animate = false, delay = 0 }) {
       return
     }
 
-    const delayMs = delay * 1000
+    // Reset state for replay
+    setBrushVisible(false)
 
-    // Start clip-path reveal after delay
-    const startTimer = setTimeout(() => {
-      setStrokeRevealed(true)
-    }, delayMs)
+    import('gsap').then(({ gsap }) => {
+      const path = svgRef.current?.querySelector('path')
+      if (!path) return
 
-    // After reveal completes (1.8s + delay), crossfade to brush
-    const crossfadeTimer = setTimeout(() => {
-      setBrushVisible(true)
-    }, delayMs + 2000)
+      // Measure and set up strokeDasharray
+      const length = path.getTotalLength()
+      path.style.strokeDasharray = length
+      path.style.strokeDashoffset = length
 
-    return () => {
-      clearTimeout(startTimer)
-      clearTimeout(crossfadeTimer)
-    }
-  }, [animate, delay])
+      const effectiveDelay = replay > 0 ? 0 : delay
+
+      // Animate draw-on from top-left to bottom-right
+      gsap.to(path, {
+        strokeDashoffset: 0,
+        duration: 1.8,
+        ease: 'power2.inOut',
+        delay: effectiveDelay,
+        onComplete: () => {
+          setTimeout(() => setBrushVisible(true), 200)
+        },
+      })
+    })
+  }, [animate, delay, replay])
 
   return (
     <div className={styles.weaveContainer} aria-hidden="true">
-      {/* Stroke layer — clip-path wipe reveal, fades out when brush appears */}
-      <div
-        className={`${styles.weaveLayer} ${styles.weaveStroke} ${strokeRevealed ? styles.weaveStrokeRevealed : ''} ${brushVisible ? styles.weaveStrokeHidden : ''}`}
+      {/* Stroke layer — draw-on animation, fades out when brush appears */}
+      <svg
+        ref={svgRef}
+        className={`${styles.shapeStroke} ${brushVisible ? styles.shapeStrokeHidden : ''}`}
+        viewBox="0 0 199 135"
+        fill="none"
+        style={{ width: '100%', height: 'auto' }}
       >
-        <svg viewBox="0 0 199 135" fill="none" style={{ width: '100%', height: 'auto' }}>
-          <path d={WEAVE_STROKE_PATH} fill={PLUM_SOFT} />
-        </svg>
-      </div>
+        <path
+          d={WEAVE_STROKE_PATH}
+          stroke={PLUM_SOFT}
+          strokeWidth="3"
+          fill="none"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
 
-      {/* Brush layer — fades in after stroke reveal (final resting state) */}
-      <div
-        className={`${styles.weaveLayer} ${styles.weaveBrush} ${brushVisible ? styles.weaveBrushVisible : ''}`}
-      >
+      {/* Brush layer — fades in after draw-on (final resting state) */}
+      <div className={`${styles.shapeBrush} ${brushVisible ? styles.shapeBrushVisible : ''}`}>
         <svg viewBox="0 0 200 132" fill="none" style={{ width: '100%', height: 'auto' }}>
           <path d={WEAVE_BRUSH_PATH} fill={PLUM_SOFT} />
         </svg>
