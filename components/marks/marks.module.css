@@ -140,6 +140,16 @@
   animation-delay: 2s;
 }
 
+/* Enhanced pulse for hint state — more dramatic than breathing */
+@keyframes hintPulseScale {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+}
+
+.hintPulse {
+  animation: hintPulseScale 1.8s ease-in-out infinite;
+}
+
 /* ===========================================
    ACCESSIBILITY - REDUCED MOTION
    =========================================== */
@@ -184,6 +194,10 @@
   }
 
   .breathing {
+    animation: none;
+  }
+
+  .hintPulse {
     animation: none;
   }
 }
