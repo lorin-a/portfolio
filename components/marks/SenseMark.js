@@ -21,7 +21,7 @@ const DOT_POSITIONS = [
   { x: 73, y: 74, size: 12 },
 ]
 
-export default function SenseMark({ animate = false, delay = 0, replay = 0 }) {
+export default function SenseMark({ animate = false, delay = 0, replay = 0, className, onDrawComplete }) {
   const containerRef = useRef(null)
   const [brushVisible, setBrushVisible] = useState(false)
 
@@ -59,6 +59,7 @@ export default function SenseMark({ animate = false, delay = 0, replay = 0 }) {
         delay: effectiveDelay,
         onComplete: () => {
           setBrushVisible(true)
+          onDrawComplete?.()
         },
       })
 
@@ -75,7 +76,7 @@ export default function SenseMark({ animate = false, delay = 0, replay = 0 }) {
 
   return (
     <div
-      className={styles.senseContainer}
+      className={`${styles.senseContainer}${className ? ` ${className}` : ''}`}
       ref={containerRef}
       aria-hidden="true"
     >

@@ -11,7 +11,7 @@ const WEAVE_BRUSH_PATH = "M64.0375 72.0728C57.0448 71.6262 50.8249 72.4462 44.16
 
 const PLUM_SOFT = '#9B8A9E'
 
-export default function WeaveMark({ animate = false, delay = 0, replay = 0 }) {
+export default function WeaveMark({ animate = false, delay = 0, replay = 0, className, onDrawComplete }) {
   const svgRef = useRef(null)
   const [brushVisible, setBrushVisible] = useState(false)
 
@@ -45,14 +45,17 @@ export default function WeaveMark({ animate = false, delay = 0, replay = 0 }) {
         ease: 'power2.inOut',
         delay: effectiveDelay,
         onComplete: () => {
-          setTimeout(() => setBrushVisible(true), 200)
+          setTimeout(() => {
+            setBrushVisible(true)
+            onDrawComplete?.()
+          }, 200)
         },
       })
     })
   }, [animate, delay, replay])
 
   return (
-    <div className={styles.weaveContainer} aria-hidden="true">
+    <div className={`${styles.weaveContainer}${className ? ` ${className}` : ''}`} aria-hidden="true">
       {/* Stroke layer — draw-on animation, fades out when brush appears */}
       <svg
         ref={svgRef}

@@ -117,6 +117,30 @@
 }
 
 /* ===========================================
+   BREATHING PULSE — post-draw-on idle state
+   =========================================== */
+@keyframes breathe {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.03); }
+}
+
+.breathing {
+  animation: breathe 3.5s ease-in-out infinite;
+}
+
+.breatheDelay1 {
+  animation-delay: 0s;
+}
+
+.breatheDelay2 {
+  animation-delay: 1s;
+}
+
+.breatheDelay3 {
+  animation-delay: 2s;
+}
+
+/* ===========================================
    ACCESSIBILITY - REDUCED MOTION
    =========================================== */
 @media (prefers-reduced-motion: reduce) {
@@ -157,5 +181,9 @@
   .shapeStrokeHidden {
     opacity: 0;
     transition: none;
+  }
+
+  .breathing {
+    animation: none;
   }
 }

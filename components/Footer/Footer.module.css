@@ -3,7 +3,7 @@
    =========================================== */
 .footer {
   padding: 40px var(--gutter) 48px;
-  border-top: 1px solid rgba(44, 44, 44, 0.12);
+  /* border-top removed — cell grid frame handles separation */
   display: flex;
   justify-content: space-between;
   align-items: baseline;

@@ -4,6 +4,7 @@ import { useEffect, useRef, useState, useCallback } from 'react'
 import SenseMark from '@/components/marks/SenseMark'
 import WeaveMark from '@/components/marks/WeaveMark'
 import ShapeMark from '@/components/marks/ShapeMark'
+import markStyles from '@/components/marks/marks.module.css'
 import styles from './FrameworkShuffle.module.css'
 
 const FRAMEWORK_ITEMS = [
@@ -13,6 +14,7 @@ const FRAMEWORK_ITEMS = [
     subs: ['details', 'patterns', 'tensions'],
     Mark: SenseMark,
     colorClass: 'sense',
+    breatheDelay: 'breatheDelay1',
   },
   {
     id: 'weave',
@@ -20,6 +22,7 @@ const FRAMEWORK_ITEMS = [
     subs: ['stories & systems', 'empathy & evidence', 'details & dreams'],
     Mark: WeaveMark,
     colorClass: 'weave',
+    breatheDelay: 'breatheDelay2',
   },
   {
     id: 'shape',
@@ -27,39 +30,27 @@ const FRAMEWORK_ITEMS = [
     subs: ['experiences', 'environments', 'culture'],
     Mark: ShapeMark,
     colorClass: 'shape',
+    breatheDelay: 'breatheDelay3',
   },
 ]
 
-function ShuffleWord({ item, delay = 0 }) {
-  const [currentIndex, setCurrentIndex] = useState(0)
+function ShuffleWord({ item, delay = 0, isOpen, onOpen, onClose }) {
   const [replayCount, setReplayCount] = useState(0)
-  const intervalRef = useRef(null)
-  const timeoutRef = useRef(null)
-  const allWords = [item.root, ...item.subs]
-
-  const startShuffle = useCallback(() => {
-    setReplayCount(prev => prev + 1)
-    timeoutRef.current = setTimeout(() => {
-      const cycle = () => {
-        setCurrentIndex(prev => {
-          const next = (prev + 1) % allWords.length
-          return next
-        })
-      }
-      cycle()
-      intervalRef.current = setInterval(cycle, 2100)
-    }, 300)
-  }, [allWords.length])
-
-  const stopShuffle = useCallback(() => {
-    clearTimeout(timeoutRef.current)
-    clearInterval(intervalRef.current)
-    setCurrentIndex(0)
-  }, [])
+  const [drawComplete, setDrawComplete] = useState(false)
+  const isBreathing = drawComplete && !isOpen
 
   const itemRef = useRef(null)
+  const subsRef = useRef(null)
+  const canHoverRef = useRef(false)
+  const wasOpenRef = useRef(false)
   const [visible, setVisible] = useState(false)
 
+  // Detect hover capability once at mount
+  useEffect(() => {
+    canHoverRef.current = window.matchMedia('(hover: hover)').matches
+  }, [])
+
+  // Entrance animation
   useEffect(() => {
     if (delay <= 0) {
       setVisible(true)
@@ -81,52 +72,125 @@ function ShuffleWord({ item, delay = 0 }) {
     })
   }, [delay])
 
+  // Open/close animation via GSAP
+  useEffect(() => {
+    const wasOpen = wasOpenRef.current
+    wasOpenRef.current = isOpen
+
+    // Skip on mount
+    if (wasOpen === isOpen) return
+
+    const subsEl = subsRef.current
+    if (!subsEl) return
+
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
+    if (isOpen) {
+      if (prefersReduced) {
+        subsEl.style.height = 'auto'
+      } else {
+        import('gsap').then(({ gsap }) => {
+          gsap.fromTo(subsEl,
+            { height: 0 },
+            { height: 'auto', duration: 0.4, ease: 'power2.out' }
+          )
+        })
+      }
+    } else {
+      if (prefersReduced) {
+        subsEl.style.height = '0'
+      } else {
+        import('gsap').then(({ gsap }) => {
+          gsap.to(subsEl, {
+            height: 0,
+            duration: 0.3,
+            ease: 'power2.out',
+          })
+        })
+      }
+    }
+  }, [isOpen])
+
+  const handleOpen = useCallback(() => {
+    setReplayCount(prev => prev + 1)
+    onOpen()
+  }, [onOpen])
+
+  const handleMouseEnter = useCallback(() => {
+    if (canHoverRef.current) handleOpen()
+  }, [handleOpen])
+
+  const handleMouseLeave = useCallback(() => {
+    if (canHoverRef.current) onClose()
+  }, [onClose])
+
+  const handleClick = useCallback(() => {
+    if (!canHoverRef.current) {
+      if (isOpen) onClose()
+      else handleOpen()
+    }
+  }, [isOpen, onClose, handleOpen])
+
+  const handleKeyDown = useCallback((e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault()
+      if (isOpen) onClose()
+      else handleOpen()
+    }
+  }, [isOpen, onClose, handleOpen])
+
+  const handleDrawComplete = useCallback(() => {
+    setDrawComplete(true)
+  }, [])
+
+  // Build breathing className for mark
+  const breatheClass = isBreathing
+    ? `${markStyles.breathing} ${markStyles[item.breatheDelay]}`
+    : ''
+
   return (
     <div
       ref={itemRef}
       className={`${styles.fwItem} ${styles[item.colorClass]}`}
       style={delay > 0 ? { opacity: 0 } : undefined}
-      onMouseEnter={startShuffle}
-      onMouseLeave={stopShuffle}
+      role="button"
+      tabIndex={0}
+      aria-expanded={isOpen}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      onClick={handleClick}
+      onKeyDown={handleKeyDown}
     >
-      <item.Mark animate={visible} delay={delay} replay={replayCount} />
-      <div className={styles.wordContainer} aria-live="polite">
-        {allWords.map((word, i) => {
-          const isActive = i === currentIndex
-          const isRoot = i === 0
-          let className = styles.word
-          if (isActive) className += ` ${styles.wordActive}`
-          else className += ` ${styles.wordBelow}`
-          if (isRoot) className += ` ${styles.wordRoot}`
-          else className += ` ${styles.wordSub}`
-
-          // Scale clip-path duration by character count for uniform reveal pace
-          const charCount = word.replace(/ & /g, '').length
-          const clipDur = Math.max(2.6, charCount * 0.26)
-
-          return (
-            <span key={i} className={className} style={{ transitionDuration: `1.2s, ${clipDur}s` }}>
-              {item.id === 'weave' && !isRoot ? (
-                <span className={styles.weaveStacked}>
-                  {word.split(' & ').map((part, j) => (
-                    <span key={j}>
-                      {j > 0 && <span className={styles.weavePlus}>+</span>}
-                      <span>{part}</span>
-                    </span>
-                  ))}
-                </span>
-              ) : (
-                word
-              )}
-            </span>
-          )
-        })}
+      <item.Mark
+        animate={visible}
+        delay={delay}
+        replay={replayCount}
+        className={breatheClass}
+        onDrawComplete={handleDrawComplete}
+      />
+      <span className={styles.rootWord}>{item.root}</span>
+      <div
+        ref={subsRef}
+        className={styles.subsContainer}
+        aria-hidden={!isOpen}
+      >
+        {item.subs.map((sub, i) => (
+          <span
+            key={i}
+            className={`${styles.subTerm} ${isOpen ? styles.subTermVisible : ''}`}
+            style={isOpen ? { transitionDelay: `${i * 90}ms` } : { transitionDelay: '0ms' }}
+          >
+            {sub}
+          </span>
+        ))}
       </div>
     </div>
   )
 }
 
 export default function FrameworkShuffle({ startDelay = 0, itemStagger = 0.3 }) {
+  const [openItemId, setOpenItemId] = useState(null)
+
   return (
     <div className={styles.fwRow}>
       {FRAMEWORK_ITEMS.map((item, i) => (
@@ -134,6 +198,9 @@ export default function FrameworkShuffle({ startDelay = 0, itemStagger = 0.3 }) 
           key={item.id}
           item={item}
           delay={startDelay + i * itemStagger}
+          isOpen={openItemId === item.id}
+          onOpen={() => setOpenItemId(item.id)}
+          onClose={() => setOpenItemId(null)}
         />
       ))}
     </div>
