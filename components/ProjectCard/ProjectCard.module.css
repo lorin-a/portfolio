@@ -24,6 +24,25 @@
   line-height: var(--leading-normal);
 }
 
+.cardCta {
+  display: block;
+  width: fit-content;
+  margin-top: var(--space-md);
+  font-family: var(--font-sans);
+  font-size: var(--text-body-small);
+  font-weight: var(--weight-label);
+  color: var(--color-plum);
+  border-bottom: 1px solid var(--color-plum-light);
+  padding-bottom: 3px;
+  transition: border-color 0.4s var(--ease-default);
+}
+
+@media (hover: hover) {
+  .cardLink:hover .cardCta {
+    border-color: var(--color-plum);
+  }
+}
+
 /* ===========================================
    FLAGSHIP CARD — Groundswell
    =========================================== */

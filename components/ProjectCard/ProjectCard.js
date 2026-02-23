@@ -57,6 +57,11 @@ function FlagshipCard({ project }) {
         <h2 className={styles.flTitle}>{project.title}</h2>
         <p className={styles.flContext}>{project.context}</p>
         <BlobLabels labels={project.contributions} />
+        {project.href && (
+          <span className={styles.cardCta}>
+            View Case Study &rarr;
+          </span>
+        )}
       </div>
     </div>
   )
@@ -126,6 +131,11 @@ function StandardCard({ project, flip }) {
         <h3 className={styles.stdTitle}>{project.title}</h3>
         <p className={styles.stdContext}>{project.context}</p>
         <BlobLabels labels={project.contributions} />
+        {project.href && (
+          <span className={styles.cardCta}>
+            View Case Study &rarr;
+          </span>
+        )}
       </div>
     </div>
   )

@@ -28,7 +28,7 @@ const PROJECTS = [
     gradient: 'linear-gradient(135deg, var(--color-chalcedony-muted), var(--color-cream-dark))',
     image: cloudImg(HOME_IMAGES['birthstory-cover'], 800),
     imageAlt: 'BirthStory app mockup on device',
-    href: null,
+    href: '/projects/birthstory',
     variant: 'standard',
     flip: true,
     contributions: [
@@ -44,7 +44,7 @@ const PROJECTS = [
     gradient: 'linear-gradient(155deg, var(--color-terracotta-muted), var(--color-cream-dark))',
     image: cloudImg(HOME_IMAGES['somebuddy-cover'], 800),
     imageAlt: 'SomeBuddy brand identity and app screens',
-    href: null,
+    href: '/projects/somebuddy',
     variant: 'standard',
     flip: false,
     contributions: [
@@ -60,7 +60,7 @@ const PROJECTS = [
     gradient: 'linear-gradient(140deg, var(--color-plum-muted), var(--color-chalcedony-muted))',
     image: cloudImg(HOME_IMAGES['transition-design-hero'], 800),
     imageAlt: 'Systems map showing interconnected food insecurity factors in Pittsburgh',
-    href: null,
+    href: '/projects/transition-design',
     variant: 'standard',
     flip: true,
     contributions: [
@@ -77,28 +77,28 @@ export default function Home() {
 
       {/* Cell Grid — Projects + About */}
       <section className={styles.cellGrid} id="work">
-        {/* Top border with "Selected Work" label */}
-        <div className={styles.gridLabel} aria-hidden="true">
-          <span className={styles.gridLabelLine} />
-          <span className={styles.gridLabelText}>Selected work</span>
-          <span className={styles.gridLabelLine} />
-        </div>
-
-        {/* Cell 1: Flagship */}
-        <div className={`${styles.cell} ${styles.cellFlagship}`}>
-          <ProjectCard project={PROJECTS[0]} variant="flagship" />
-        </div>
-
-        {/* Cells 2–4: Standard */}
-        {PROJECTS.slice(1).map((project) => (
-          <div key={project.num} className={`${styles.cell} ${styles.cellStandard}`}>
-            <ProjectCard project={project} variant="standard" flip={project.flip} />
+        <div className={styles.cellGridInner}>
+          {/* Top border with "Selected Work" label */}
+          <div className={styles.gridLabel} aria-hidden="true">
+            <span className={styles.gridLabelText}>Selected work</span>
           </div>
-        ))}
 
-        {/* Cell 5: About */}
-        <div className={`${styles.cell} ${styles.cellAbout}`}>
-          <AboutSection />
+          {/* Cell 1: Flagship */}
+          <div className={`${styles.cell} ${styles.cellFlagship}`}>
+            <ProjectCard project={PROJECTS[0]} variant="flagship" />
+          </div>
+
+          {/* Cells 2–4: Standard */}
+          {PROJECTS.slice(1).map((project) => (
+            <div key={project.num} className={`${styles.cell} ${styles.cellStandard}`}>
+              <ProjectCard project={project} variant="standard" flip={project.flip} />
+            </div>
+          ))}
+
+          {/* Cell 5: About */}
+          <div className={`${styles.cell} ${styles.cellAbout}`}>
+            <AboutSection />
+          </div>
         </div>
       </section>
     </>

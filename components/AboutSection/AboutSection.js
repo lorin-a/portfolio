@@ -44,7 +44,7 @@ export default function AboutSection() {
               d="M100 8 C 145 6, 188 38, 193 85 C 198 132, 168 180, 118 192 C 68 204, 15 175, 7 125 C -1 75, 30 18, 78 9 C 82 8.3, 90 7.5, 100 8 Z"
               fill="none"
               stroke="var(--color-plum)"
-              strokeWidth="1.5"
+              strokeWidth="4.5"
               opacity="0.5"
             />
           </svg>
@@ -61,9 +61,9 @@ export default function AboutSection() {
       </div>
       <div className={styles.aboutTextBlock}>
         <p className={styles.aboutText}>
-          I came to design through journalism, caregiving, and a decade of asking{' '}
-          <em>why does this system work this way?</em> My practice lives where
-          structure meets heart — turning community wisdom into systemic change.
+          I&apos;m a deep feeler who came to design through journalism, caregiving,
+          and a decade of caring about how people experience the systems they hold
+          together.
         </p>
         <Link href="/about" className={styles.aboutLink}>
           More about my path &rarr;
