@@ -15,9 +15,14 @@ export default function Hero() {
       if (titleRef.current) {
         titleRef.current.style.fontVariationSettings = "'SOFT' 100, 'WONK' 1"
       }
-      // Show lines immediately
-      if (line1Ref.current) line1Ref.current.style.opacity = 1
-      if (line2Ref.current) line2Ref.current.style.opacity = 1
+      if (line1Ref.current) {
+        line1Ref.current.style.opacity = 1
+        line1Ref.current.style.clipPath = 'inset(0 0% 0 0)'
+      }
+      if (line2Ref.current) {
+        line2Ref.current.style.opacity = 1
+        line2Ref.current.style.clipPath = 'inset(0 0% 0 0)'
+      }
       return
     }
 
@@ -35,20 +40,24 @@ export default function Hero() {
         },
       })
 
-      // Sequenced entrance: line 1 → line 2
       const tl = gsap.timeline()
 
+      // Line 1: "Design Researcher" wipes left → right
+      tl.set(line1Ref.current, { opacity: 1 })
       tl.fromTo(line1Ref.current,
-        { opacity: 0, y: 16 },
-        { opacity: 1, y: 0, duration: 0.7, ease: 'expo.out' }
+        { clipPath: 'inset(0 100% 0 0)' },
+        { clipPath: 'inset(0 0% 0 0)', duration: 0.9, ease: 'power3.inOut' }
       )
 
+      // Line 2: "& Strategist" wipes left → right, slightly overlapping
+      tl.set(line2Ref.current, { opacity: 1 })
       tl.fromTo(line2Ref.current,
-        { opacity: 0, y: 16 },
-        { opacity: 1, y: 0, duration: 0.7, ease: 'expo.out' },
-        '-=0.2'
+        { clipPath: 'inset(0 100% 0 0)' },
+        { clipPath: 'inset(0 0% 0 0)', duration: 0.8, ease: 'power3.inOut' },
+        '-=0.25'
       )
-      // Framework items pick up from here via their own startDelay
+
+      // Framework icons pick up via their own startDelay
     })
   }, [])
 
@@ -63,7 +72,7 @@ export default function Hero() {
           <span className={styles.amp}>&amp;</span> Strategist
         </span>
       </h1>
-      <FrameworkShuffle startDelay={1.3} itemStagger={0.6} />
+      <FrameworkShuffle startDelay={2.4} itemStagger={0.6} />
     </section>
   )
 }

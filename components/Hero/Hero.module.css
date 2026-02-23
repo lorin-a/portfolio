@@ -16,14 +16,18 @@
   line-height: 1.05;
   letter-spacing: -0.025em;
   color: var(--color-ink);
-  margin-bottom: clamp(28px, 4vh, 44px);
+  margin-bottom: clamp(56px, 8vh, 88px);
   /* Start at SOFT 0, WONK 1 — GSAP tweens SOFT to 100 */
   font-variation-settings: 'SOFT' 0, 'WONK' 1;
 }
 
+/* ===========================================
+   TITLE LINES — clip-path wipe reveal
+   =========================================== */
 .titleLine {
   opacity: 0;
   display: inline;
+  clip-path: inset(0 100% 0 0);
 }
 
 /* ===========================================
@@ -32,18 +36,18 @@
 .amp {
   color: var(--color-terracotta-light);
   font-family: var(--font-serif);
-  font-style: italic;
-  font-size: 1.15em;
+  font-style: normal;
+  font-size: 1.08em;
   margin: 0 4px;
   display: inline-block;
   transition: transform 0.5s var(--ease-out-expo);
-  /* Inherit WONK 1 from parent for the wonky ampersand */
+  /* WONK 1 for decorative glyph, normal (not italic) to avoid oversized swash */
   font-variation-settings: 'SOFT' 100, 'WONK' 1;
 }
 
 @media (hover: hover) {
   .amp:hover {
-    transform: rotate(-4deg);
+    transform: rotate(-5deg);
   }
 }
 
@@ -66,6 +70,7 @@
 
   .titleLine {
     opacity: 1;
+    clip-path: none;
   }
 
   .amp {

@@ -12,7 +12,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--space-xs);
+  gap: calc(var(--space-xs) * 1.3);
   cursor: default;
   min-width: clamp(80px, 10vw, 120px);
 }
@@ -21,11 +21,11 @@
    WORD SHUFFLE
    =========================================== */
 .wordContainer {
-  height: clamp(22px, 2.8vw, 30px);
+  height: clamp(60px, 7vw, 76px);
   overflow: hidden;
   position: relative;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
   min-width: 130px;
 }
@@ -35,18 +35,30 @@
   font-size: clamp(16px, 1.8vw, 21px);
   font-weight: var(--weight-title);
   position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
   white-space: nowrap;
-  transition: opacity 0.35s var(--ease-default), transform 0.4s var(--ease-out-expo);
+  text-align: center;
+  clip-path: inset(0 100% 0 0);
+  opacity: 0;
+  transition: opacity 0.6s var(--ease-default),
+              clip-path 1.6s cubic-bezier(0.25, 0, 0.15, 1);
+}
+
+/* Allow weave stacked words to wrap */
+.word:has(.weaveStacked) {
+  white-space: normal;
 }
 
 .wordActive {
   opacity: 1;
-  transform: translateY(0);
+  clip-path: inset(0 0% 0 0);
 }
 
 .wordBelow {
   opacity: 0;
-  transform: translateY(14px);
+  clip-path: inset(0 100% 0 0);
 }
 
 /* Root word colors */
@@ -75,7 +87,27 @@
   color: var(--color-plum-light);
   font-style: italic;
   font-weight: 300;
-  font-size: clamp(14px, 1.5vw, 17px);
+}
+
+/* Weave subs: stacked word pairs with "+" separator */
+.weaveStacked {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  line-height: 1.15;
+  /* Nudge down to align first word with single-line sense/shape words */
+  padding-top: 0.15em;
+}
+
+.weavePlus {
+  display: block;
+  font-family: var(--font-sans);
+  font-size: clamp(12px, 1.2vw, 14px);
+  font-weight: var(--weight-body);
+  font-style: normal;
+  color: var(--color-plum-soft);
+  line-height: 1;
+  margin: 1px 0;
 }
 
 .shape .wordSub {

@@ -32,13 +32,13 @@ const FRAMEWORK_ITEMS = [
 
 function ShuffleWord({ item, delay = 0 }) {
   const [currentIndex, setCurrentIndex] = useState(0)
-  const [exitClass, setExitClass] = useState('')
-  const [enterClass, setEnterClass] = useState('')
+  const [replayCount, setReplayCount] = useState(0)
   const intervalRef = useRef(null)
   const timeoutRef = useRef(null)
   const allWords = [item.root, ...item.subs]
 
   const startShuffle = useCallback(() => {
+    setReplayCount(prev => prev + 1)
     timeoutRef.current = setTimeout(() => {
       const cycle = () => {
         setCurrentIndex(prev => {
@@ -47,7 +47,7 @@ function ShuffleWord({ item, delay = 0 }) {
         })
       }
       cycle()
-      intervalRef.current = setInterval(cycle, 1200)
+      intervalRef.current = setInterval(cycle, 2400)
     }, 300)
   }, [allWords.length])
 
@@ -89,7 +89,7 @@ function ShuffleWord({ item, delay = 0 }) {
       onMouseEnter={startShuffle}
       onMouseLeave={stopShuffle}
     >
-      <item.Mark animate={visible} delay={delay} />
+      <item.Mark animate={visible} delay={delay} replay={replayCount} />
       <div className={styles.wordContainer} aria-live="polite">
         {allWords.map((word, i) => {
           const isActive = i === currentIndex
@@ -103,14 +103,14 @@ function ShuffleWord({ item, delay = 0 }) {
           return (
             <span key={i} className={className}>
               {item.id === 'weave' && !isRoot ? (
-                <>
+                <span className={styles.weaveStacked}>
                   {word.split(' & ').map((part, j) => (
                     <span key={j}>
-                      {j > 0 && <span className={styles.amp}>&</span>}
-                      {part}
+                      {j > 0 && <span className={styles.weavePlus}>+</span>}
+                      <span>{part}</span>
                     </span>
                   ))}
-                </>
+                </span>
               ) : (
                 word
               )}

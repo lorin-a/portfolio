@@ -2,7 +2,8 @@
 
 import { useEffect, useRef } from 'react'
 import Link from 'next/link'
-import ProcessDot from '@/components/marks/ProcessDot'
+import Image from 'next/image'
+import BlobLabels from '@/components/marks/BlobLabel'
 import styles from './ProjectCard.module.css'
 
 function FlagshipCard({ project }) {
@@ -38,14 +39,24 @@ function FlagshipCard({ project }) {
     <div className={styles.flagship} ref={cardRef}>
       <div className={styles.flVisual}>
         <div className={styles.flSurface} style={{ background: project.gradient }}>
-          <span className={styles.placeholderText}>{project.placeholder}</span>
+          {project.image ? (
+            <Image
+              src={project.image}
+              alt={project.imageAlt || project.title}
+              fill
+              sizes="(max-width: 900px) 100vw, 55vw"
+              className={styles.cardImage}
+            />
+          ) : (
+            <span className={styles.placeholderText}>{project.placeholder}</span>
+          )}
         </div>
       </div>
       <div className={styles.flMeta}>
         <span className={styles.flNum}>{project.num}</span>
         <h2 className={styles.flTitle}>{project.title}</h2>
         <p className={styles.flContext}>{project.context}</p>
-        <ProcessDot />
+        <BlobLabels labels={project.contributions} />
       </div>
     </div>
   )
@@ -97,14 +108,24 @@ function StandardCard({ project, flip }) {
     >
       <div className={styles.stdVisual}>
         <div className={styles.stdSurface} style={{ background: project.gradient }}>
-          <span className={styles.placeholderText}>{project.placeholder}</span>
+          {project.image ? (
+            <Image
+              src={project.image}
+              alt={project.imageAlt || project.title}
+              fill
+              sizes="(max-width: 900px) 100vw, 50vw"
+              className={styles.cardImage}
+            />
+          ) : (
+            <span className={styles.placeholderText}>{project.placeholder}</span>
+          )}
         </div>
       </div>
       <div className={styles.stdMeta}>
         <span className={styles.stdNum}>{project.num}</span>
         <h3 className={styles.stdTitle}>{project.title}</h3>
         <p className={styles.stdContext}>{project.context}</p>
-        <ProcessDot />
+        <BlobLabels labels={project.contributions} />
       </div>
     </div>
   )

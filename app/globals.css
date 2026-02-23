@@ -58,8 +58,8 @@
   --text-heading: #2C2C28;
   --text-body: #4A4A46;
   --text-light: #666;
-  --surface: #F7F7F7;
-  --background: #F7F7F7;
+  --surface: #FBFBFB;
+  --background: #FBFBFB;
   --border: #E8E4D8;
 
   /* Legacy color aliases (for existing components) */
@@ -174,7 +174,7 @@
      V2 COLOR PALETTE
      =========================================== */
   /* Cream backgrounds */
-  --color-cream: #F7F4EF;
+  --color-cream: #FBF9F6;
   --color-cream-dark: #F0ECE4;
 
   /* Sage — sense */
@@ -197,6 +197,7 @@
 
   /* Chalcedony — accent */
   --color-chalcedony: #6E8FAE;
+  --color-chalcedony-soft: #8BAABE;
   --color-chalcedony-muted: rgba(110, 143, 174, 0.10);
 
   /* Ink — neutrals */

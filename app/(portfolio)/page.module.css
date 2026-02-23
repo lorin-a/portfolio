@@ -6,6 +6,8 @@
    BRIDGE — transition to projects
    =========================================== */
 .bridge {
+  max-width: var(--max-width);
+  margin: 0 auto;
   padding: clamp(32px, 5vh, 52px) var(--gutter);
   display: flex;
   align-items: center;
@@ -32,6 +34,29 @@
    PROJECTS SECTION
    =========================================== */
 .projects {
+  max-width: var(--max-width);
+  margin: 0 auto;
   padding: 0 var(--gutter);
   padding-bottom: clamp(80px, 12vh, 140px);
+}
+
+/* ===========================================
+   CARD DIVIDER — scanner texture placeholder
+   TODO: Replace gradient with actual scanned texture image (e.g., a faint
+   pencil/ink scan). Swap the background property for a background-image
+   pointing to the scanned asset once available.
+   =========================================== */
+.cardDivider {
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(160, 168, 138, 0.10) 15%,
+    rgba(160, 168, 138, 0.12) 40%,
+    rgba(247, 247, 247, 0.08) 60%,
+    rgba(160, 168, 138, 0.10) 85%,
+    transparent 100%
+  );
+  margin: var(--space-xs) 0;
 }

@@ -34,11 +34,8 @@
   z-index: 2;
 }
 
-.aboutPhotoPlaceholder {
-  font-family: var(--font-serif);
-  font-size: var(--text-body-small);
-  font-style: italic;
-  color: var(--color-ink-light);
+.aboutPhotoImage {
+  object-fit: cover;
 }
 
 .aboutPhotoBorder {

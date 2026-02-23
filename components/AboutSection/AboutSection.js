@@ -2,6 +2,8 @@
 
 import { useEffect, useRef } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
+import { cloudImg, HOME_IMAGES } from '@/lib/cloudinary'
 import styles from './AboutSection.module.css'
 
 export default function AboutSection() {
@@ -48,7 +50,13 @@ export default function AboutSection() {
           </svg>
         </div>
         <div className={styles.aboutPhotoInner}>
-          <span className={styles.aboutPhotoPlaceholder}>photo</span>
+          <Image
+            src={cloudImg(HOME_IMAGES['lorin-photo'], 400)}
+            alt="Lorin Anderberg"
+            fill
+            sizes="(max-width: 900px) 120px, 172px"
+            className={styles.aboutPhotoImage}
+          />
         </div>
       </div>
       <div className={styles.aboutTextBlock}>
