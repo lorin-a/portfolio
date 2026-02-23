@@ -3,254 +3,35 @@
    =========================================== */
 
 /* ===========================================
-   BUILDING NOW SECTION — Mini case studies
+   BRIDGE — transition to projects
    =========================================== */
-.building {
-  padding: var(--space-xl) var(--container-padding);
-  background-color: rgba(45, 43, 30, 0.05);
-}
-
-.buildingInner {
-  max-width: var(--max-width);
-  margin: 0 auto;
-}
-
-.buildingHeader {
-  text-align: center;
-  max-width: 600px;
-  margin: 0 auto 3rem;
-}
-
-.buildingTitle {
-  font-family: var(--font-serif);
-  font-size: var(--text-h2);
-  font-weight: 300;
-  color: var(--text-heading);
-  margin-bottom: 1rem;
-}
-
-.buildingDescription {
-  font-size: var(--text-body-large);
-  line-height: 1.6;
-  color: var(--text-heading);
-  margin: 0;
-}
-
-.buildingGrid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: var(--space-content-gap);
-}
-
-.buildingCard {
-  display: flex;
-  flex-direction: column;
-  background-color: var(--surface);
-  border: 1px solid var(--olive);
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-  height: 100%;
-}
-
-.buildingPreview {
-  position: relative;
-  height: 220px;
-  background-color: var(--background);
-  overflow: hidden;
-}
-
-.buildingPreviewImage {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.buildingPreviewVideo {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.buildingPreviewZoomed {
-  transform: scale(1.25);
-}
-
-.buildingPreviewPlaceholder {
-  width: 100%;
-  height: 100%;
+.bridge {
+  padding: clamp(32px, 5vh, 52px) var(--gutter);
   display: flex;
   align-items: center;
-  justify-content: center;
-  background-color: rgba(168, 181, 160, 0.3);
+  gap: var(--space-sm);
 }
 
-.placeholderText {
-  font-family: var(--font-serif);
-  font-size: var(--text-body-large);
-  font-style: italic;
-  color: var(--text-light);
-  opacity: 0.5;
+.bridgeText {
+  font-family: var(--font-sans);
+  font-size: var(--text-body-small);
+  font-weight: var(--weight-label);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-ink-faint);
 }
 
-.buildingCardContent {
-  padding: var(--space-md);
-  display: flex;
-  flex-direction: column;
+.bridgeLine {
   flex: 1;
-}
-
-.buildingCardTitle {
-  font-family: var(--font-serif);
-  font-size: var(--text-h4, 24px);
-  font-weight: 300;
-  color: var(--text-heading);
-  margin: 0 0 10px;
-}
-
-.buildingCardTags {
-  display: flex;
-  gap: var(--space-xs);
-  flex-wrap: wrap;
-  margin-bottom: 20px;
-}
-
-.buildingTag {
-  font-family: var(--font-sans);
-  font-size: var(--text-body-small);
-  font-weight: var(--weight-label);
-  letter-spacing: 0.02em;
-  padding: 0 16px;
-  height: 32px;
-  line-height: 32px;
-  border-radius: var(--radius-pill);
-  white-space: nowrap;
-  color: var(--stage-color);
-  background-color: color-mix(in srgb, var(--stage-color) 10%, transparent);
-  border: 1.5px dashed var(--stage-color);
-}
-
-.buildingCardDescription {
-  font-family: var(--font-sans);
-  font-size: var(--text-body, 16px);
-  line-height: 1.6;
-  color: var(--text-heading);
-  margin: 0 0 24px;
-}
-
-.stagePill {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  align-self: flex-start;
-  font-family: var(--font-sans);
-  font-size: var(--text-body-small);
-  font-weight: var(--weight-label);
-  letter-spacing: 0.02em;
-  color: var(--stage-color);
-  margin-top: auto;
-  text-decoration: underline;
-  text-underline-offset: 3px;
-  text-decoration-thickness: 1px;
-  text-decoration-color: var(--stage-color);
-}
-
-.stagePill::before {
-  content: '';
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background-color: var(--stage-color);
-  flex-shrink: 0;
+  max-width: 64px;
+  height: 1px;
+  background: var(--color-ink-faint);
 }
 
 /* ===========================================
-   RESPONSIVE - TABLET (900px)
+   PROJECTS SECTION
    =========================================== */
-@media (max-width: 900px) {
-  .buildingGrid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .buildingPreview {
-    height: 180px;
-  }
-
-  .buildingTitle {
-    font-size: 1.75rem;
-  }
+.projects {
+  padding: 0 var(--gutter);
+  padding-bottom: clamp(80px, 12vh, 140px);
 }
-
-/* ===========================================
-   RESPONSIVE - MOBILE (600px)
-   =========================================== */
-@media (max-width: 600px) {
-  .buildingTitle {
-    font-size: 1.5rem;
-  }
-
-  .buildingDescription {
-    font-size: 1rem;
-  }
-
-  .buildingGrid {
-    grid-template-columns: 1fr;
-    gap: var(--space-lg);
-  }
-
-  .buildingPreview {
-    height: 200px;
-  }
-}
-
-/* ===========================================
-   BUILDING NOW — VIDEO PREVIEW
-   =========================================== */
-.buildingPreviewClickable {
-  cursor: pointer;
-}
-
-.buildingPreviewClickable:focus-visible {
-  outline: 2px solid var(--olive);
-  outline-offset: 2px;
-}
-
-.videoOverlay {
-  position: fixed;
-  top: 0; right: 0; bottom: 0; left: 0;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.9);
-  z-index: 1000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: var(--space-md);
-}
-
-.videoOverlayClose {
-  position: absolute;
-  top: var(--space-md);
-  right: var(--space-md);
-  background: none;
-  border: none;
-  color: white;
-  cursor: pointer;
-  padding: var(--space-xs);
-  z-index: 1001;
-  min-width: var(--min-touch-target);
-  min-height: var(--min-touch-target);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.videoOverlayClose:focus-visible {
-  outline: 2px solid white;
-  outline-offset: 2px;
-}
-
-.videoOverlayPlayer {
-  max-width: 90vw;
-  max-height: 80vh;
-  border-radius: var(--radius-md);
-}
-

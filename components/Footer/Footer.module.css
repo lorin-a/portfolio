@@ -1,62 +1,67 @@
+/* ===========================================
+   FOOTER — Minimal, warm
+   =========================================== */
 .footer {
-  padding: var(--space-xl) var(--space-md);
-  text-align: center;
-}
-
-.container {
-  max-width: var(--content-width);
+  padding: 40px var(--gutter) 48px;
+  border-top: 1px solid rgba(44, 44, 44, 0.12);
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 20px;
+  max-width: var(--max-width);
   margin: 0 auto;
 }
 
-.heading {
+.warmth {
   font-family: var(--font-serif);
-  font-size: var(--text-h3);
-  font-weight: var(--weight-title);
-  margin-top: var(--space-md);
-  margin-bottom: var(--space-sm);
+  font-size: clamp(15px, 1.6vw, 18px);
+  font-weight: 300;
+  font-style: italic;
+  color: var(--color-ink-light);
 }
 
-.email {
-  display: inline-block;
-  font-size: var(--text-body);
-  margin-bottom: var(--space-md);
-  font-family: var(--font-sans);
-  text-underline-offset: 4px;
-}
-
-.social {
+.footerLinks {
   display: flex;
-  justify-content: center;
-  gap: var(--space-sm);
-  margin-bottom: var(--space-md);
+  gap: 28px;
 }
 
-.social a {
-  color: var(--color-text-light);
-  font-size: var(--text-body-small);
-}
-
-.copyright {
-  font-size: var(--text-label);
-  color: var(--color-text-light);
-  margin-bottom: 0;
+.footerLinks a {
   font-family: var(--font-sans);
+  font-size: var(--text-body-small);
+  color: var(--color-ink-light);
+  text-decoration: none;
+  transition: color var(--transition-smooth);
+  min-height: var(--min-touch-target);
+  display: inline-flex;
+  align-items: center;
+}
+
+.footerLinks a:focus-visible {
+  outline: 2px solid var(--color-ink);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+@media (hover: hover) {
+  .footerLinks a:hover {
+    color: var(--color-ink);
+    opacity: 1;
+  }
 }
 
 /* ===========================================
-   RESPONSIVE — MOBILE (≤600px)
+   RESPONSIVE - MOBILE (600px)
    =========================================== */
 @media (max-width: 600px) {
   .footer {
-    padding: var(--space-lg) var(--space-sm);
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: var(--space-lg) var(--container-padding) var(--space-lg);
   }
 
-  .heading {
-    font-size: var(--text-h4);
-  }
-
-  .social {
-    gap: var(--space-md);
-    flex-wrap: wrap;
+  .footerLinks {
+    gap: 20px;
   }
 }

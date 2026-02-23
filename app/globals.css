@@ -167,6 +167,49 @@
      EASING
      =========================================== */
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+
+  /* ===========================================
+     V2 COLOR PALETTE
+     =========================================== */
+  /* Cream backgrounds */
+  --color-cream: #F7F4EF;
+  --color-cream-dark: #F0ECE4;
+
+  /* Sage — sense */
+  --color-sage: #5E6D52;
+  --color-sage-light: #7A8B6F;
+  --color-sage-soft: #A0A88A;
+  --color-sage-muted: rgba(160, 168, 138, 0.10);
+
+  /* Plum — weave */
+  --color-plum: #7A6680;
+  --color-plum-light: #8A7690;
+  --color-plum-soft: #9B8A9E;
+  --color-plum-muted: rgba(155, 138, 158, 0.08);
+
+  /* Terracotta — shape */
+  --color-terracotta: #956058;
+  --color-terracotta-light: #A87068;
+  --color-terracotta-soft: #C4908A;
+  --color-terracotta-muted: rgba(196, 144, 138, 0.08);
+
+  /* Chalcedony — accent */
+  --color-chalcedony: #6E8FAE;
+  --color-chalcedony-muted: rgba(110, 143, 174, 0.10);
+
+  /* Ink — neutrals */
+  --color-ink: #2C2C2C;
+  --color-ink-light: #5A5550;
+  --color-ink-faint: #7A7570;
+
+  /* ===========================================
+     V2 TRANSITIONS
+     =========================================== */
+  --transition-gentle: 0.5s ease;
+  --transition-smooth: 0.3s ease;
+  --gutter: clamp(24px, 5vw, 80px);
 
   /* ===========================================
      PILL / TAG SYSTEM (Frosted AA)
@@ -256,8 +299,20 @@ body {
   font-size: var(--text-body);
   line-height: var(--leading-normal);
   color: var(--color-text);
-  background-color: var(--color-bg);
+  background-color: var(--color-cream);
   font-variation-settings: var(--font-soft);
+}
+
+body::after {
+  content: '';
+  position: fixed;
+  top: 0; right: 0; bottom: 0; left: 0;
+  inset: 0;
+  opacity: 0.022;
+  pointer-events: none;
+  z-index: 50;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  background-size: 256px;
 }
 
 /* ===========================================

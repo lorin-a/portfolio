@@ -1,0 +1,168 @@
+/* ===========================================
+   MARK COMPONENTS — Shared styles
+   =========================================== */
+.markContainer {
+  width: clamp(48px, 5.5vw, 64px);
+  height: clamp(48px, 5.5vw, 64px);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Sense — scattered dots */
+.senseContainer {
+  composes: markContainer;
+}
+
+.senseDot {
+  position: absolute;
+  opacity: 0;
+  transform: scale(0);
+}
+
+.senseDotVisible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Weave — clip-path reveal then crossfade */
+.weaveContainer {
+  composes: markContainer;
+}
+
+.weaveLayer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.weaveStroke {
+  clip-path: inset(0 100% 0 0);
+}
+
+.weaveStrokeRevealed {
+  clip-path: inset(0 0 0 0);
+  transition: clip-path 1.8s var(--ease-out-expo);
+}
+
+.weaveBrush {
+  opacity: 0;
+}
+
+.weaveBrushVisible {
+  opacity: 1;
+  transition: opacity var(--motion-medium) var(--ease-default);
+}
+
+.weaveStrokeHidden {
+  opacity: 0;
+  transition: opacity var(--motion-medium) var(--ease-default);
+}
+
+/* Shape — draw-on petals */
+.shapeContainer {
+  composes: markContainer;
+}
+
+.shapeStroke {
+  width: 100%;
+  height: 100%;
+}
+
+.shapeBrush {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.shapeBrushVisible {
+  opacity: 1;
+  transition: opacity var(--motion-medium) var(--ease-default);
+}
+
+.shapeStrokeHidden {
+  opacity: 0;
+  transition: opacity var(--motion-medium) var(--ease-default);
+}
+
+/* ProcessDot — three brush dots */
+.processMark {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  margin-top: var(--space-xxs);
+}
+
+.processDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.processDotSage {
+  background-color: var(--color-sage-soft);
+}
+
+.processDotPlum {
+  background-color: var(--color-plum-soft);
+}
+
+.processDotTerracotta {
+  background-color: var(--color-terracotta-soft);
+}
+
+/* ===========================================
+   ACCESSIBILITY - REDUCED MOTION
+   =========================================== */
+@media (prefers-reduced-motion: reduce) {
+  .senseDot {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  .weaveStroke {
+    clip-path: inset(0 0 0 0);
+  }
+
+  .weaveStrokeRevealed {
+    transition: none;
+  }
+
+  .weaveStrokeHidden {
+    opacity: 0;
+    transition: none;
+  }
+
+  .weaveBrush {
+    opacity: 1;
+  }
+
+  .weaveBrushVisible {
+    transition: none;
+  }
+
+  .shapeBrush {
+    opacity: 1;
+  }
+
+  .shapeBrushVisible {
+    transition: none;
+  }
+
+  .shapeStrokeHidden {
+    opacity: 0;
+    transition: none;
+  }
+}

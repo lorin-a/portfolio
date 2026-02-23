@@ -1,47 +1,74 @@
 import Hero from '@/components/Hero/Hero'
-import Squiggle from '@/components/Squiggle/Squiggle'
-import FeaturedWork from '@/components/FeaturedWork/FeaturedWork'
-import BuildingNow from '@/components/BuildingNow/BuildingNow'
-import { cloudVideo, GS_VIDEOS, OTHER_VIDEOS } from '@/lib/cloudinary'
+import ProjectCard from '@/components/ProjectCard/ProjectCard'
+import AboutSection from '@/components/AboutSection/AboutSection'
+import styles from './page.module.css'
 
-const buildingProjects = [
+const PROJECTS = [
   {
-    title: 'Groundswell Data Viz',
-    tags: ['Data Visualization', 'Research'],
-    stage: 'In Production',
-    stageColor: '#6B8F5E',
-    description: 'Interactive visualization of relationship patterns from healthcare worker QI study.',
-    previewType: 'video',
-    preview: cloudVideo(GS_VIDEOS['entrypage']),
+    num: '01',
+    title: 'Groundswell',
+    context: 'A participatory care ecosystem supporting oncology staff wellbeing. Grant-funded, co-designed with healthcare workers, now in institutional pilot.',
+    gradient: 'linear-gradient(170deg, var(--color-sage-muted), var(--color-plum-muted) 40%, var(--color-terracotta-muted))',
+    placeholder: 'Scanner collage or\nvideo loop of\necosystem artifacts',
+    href: '/groundswell',
+    variant: 'flagship',
   },
   {
-    title: 'Whelm',
-    tags: ['Mental Health', 'Web-App'],
-    stage: 'Active Development',
-    stageColor: '#7B6B8A',
-    description: 'Mental health app for untangling overwhelm with somatic self-awareness.',
-    previewType: 'video',
-    preview: cloudVideo(OTHER_VIDEOS['whelm-preview']),
-    videoZoom: true,
+    num: '02',
+    title: 'BirthStory',
+    context: 'Helping parents document and reflect on their birth experience. Real client, real constraints, shipped concept.',
+    gradient: 'linear-gradient(135deg, var(--color-chalcedony-muted), var(--color-cream-dark))',
+    placeholder: 'App mockup\non device',
+    href: null,
+    variant: 'standard',
+    flip: true,
   },
   {
-    title: 'TRO Tool',
-    tags: ['Documentation', 'Legal Access'],
-    stage: 'Concept Phase',
-    stageColor: '#B07255',
-    description: 'Documentation system for survivors of abuse navigating restraining orders.',
-    previewType: 'none',
-    preview: null,
+    num: '03',
+    title: 'SomeBuddy',
+    context: 'Brand identity, UX, and animation for a therapy companion app. Full creative range.',
+    gradient: 'linear-gradient(155deg, var(--color-terracotta-muted), var(--color-cream-dark))',
+    placeholder: 'Animated logo\nor brand moment',
+    href: null,
+    variant: 'standard',
+    flip: false,
+  },
+  {
+    num: '04',
+    title: 'Transition Design',
+    context: 'A systems-level design response to food insecurity in Pittsburgh. The lens widens.',
+    gradient: 'linear-gradient(140deg, var(--color-plum-muted), var(--color-chalcedony-muted))',
+    placeholder: 'Systems map\ndetail',
+    href: null,
+    variant: 'standard',
+    flip: true,
   },
 ]
 
 export default function Home() {
   return (
-    <main>
+    <>
       <Hero />
-      <Squiggle />
-      <FeaturedWork />
-      <BuildingNow projects={buildingProjects} />
-    </main>
+
+      {/* Bridge — accordion to projects */}
+      <div className={styles.bridge}>
+        <span className={styles.bridgeText}>Selected work</span>
+        <span className={styles.bridgeLine} />
+      </div>
+
+      {/* Projects */}
+      <section className={styles.projects} id="work">
+        {PROJECTS.map(project => (
+          <ProjectCard
+            key={project.num}
+            project={project}
+            variant={project.variant}
+            flip={project.flip}
+          />
+        ))}
+      </section>
+
+      <AboutSection />
+    </>
   )
 }

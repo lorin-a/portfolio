@@ -1,9 +1,17 @@
 .header {
-  position: sticky;
+  position: fixed;
   top: 0;
-  background-color: var(--color-bg);
+  left: 0;
+  right: 0;
   z-index: 100;
-  border-bottom: 1px solid var(--color-border);
+  padding: 20px var(--gutter);
+  transition: background var(--transition-gentle), backdrop-filter var(--transition-gentle);
+}
+
+.header.scrolled {
+  background: rgba(247, 244, 239, 0.92);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
 }
 
 .nav {
@@ -12,207 +20,79 @@
   align-items: center;
   max-width: var(--max-width);
   margin: 0 auto;
-  padding: var(--space-xs) var(--space-md);  /* Reduced vertical padding */
-  height: 60px;  /* Fixed height prevents bloating */
 }
 
-.logo {
+.navName {
+  font-family: var(--font-serif);
+  font-size: calc(var(--text-body) * 1.15);
+  font-weight: var(--weight-title);
+  color: var(--color-ink);
   text-decoration: none;
-  z-index: 101;
 }
 
-.logoPlaceholder {
-  width: 180px;
-  height: 60px;
-  background-color: var(--color-bg-alt);
-  border: 2px dashed var(--color-border);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: var(--text-label);
-  color: var(--color-text-light);
-}
-
-/* Mobile Menu Button */
-.menuButton {
-  display: none;
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 0.5rem;
-  z-index: 101;
-}
-
-.menuButton:focus-visible {
-  outline: 2px solid var(--color-green-dark);
+.navName:focus-visible {
+  outline: 2px solid var(--color-ink);
   outline-offset: 2px;
   border-radius: var(--radius-sm);
 }
 
-.menuIcon {
-  display: block;
-  width: 24px;
-  height: 2px;
-  background-color: var(--color-text);
-  position: relative;
-  transition: background-color var(--motion-fast) var(--ease-out);
-}
-
-.menuIcon::before,
-.menuIcon::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  width: 24px;
-  height: 2px;
-  background-color: var(--color-text);
-  transition: transform var(--motion-fast) var(--ease-out);
-}
-
-.menuIcon::before {
-  top: -7px;
-}
-
-.menuIcon::after {
-  top: 7px;
-}
-
-.menuIcon.open {
-  background-color: transparent;
-}
-
-.menuIcon.open::before {
-  transform: translateY(7px) rotate(45deg);
-}
-
-.menuIcon.open::after {
-  transform: translateY(-7px) rotate(-45deg);
-}
-
-/* Nav Links */
-.navLinks {
+.navRight {
   display: flex;
-  align-items: center;
-  gap: var(--space-md);
+  gap: 28px;
 }
 
 .navLink {
   font-family: var(--font-sans);
-  font-size: 1rem;
-  color: var(--color-text);
+  font-size: var(--text-body-small);
+  font-weight: var(--weight-body);
+  color: var(--color-ink-light);
   text-decoration: none;
-  position: relative;
-}
-
-.navLink::after {
-  content: '';
-  position: absolute;
-  bottom: -4px;
-  left: 0;
-  width: 0;
-  height: 1px;
-  background-color: var(--color-green-dark);
-  transition: width var(--motion-fast) var(--ease-out);
-}
-
-/* Only apply hover effect on devices that support hover */
-@media (hover: hover) {
-  .navLink:hover::after {
-    width: 100%;
-  }
-}
-
-.socialLinks {
+  transition: color var(--transition-smooth);
+  padding: var(--space-xs) 0;
+  min-height: var(--min-touch-target);
   display: flex;
   align-items: center;
-  gap: var(--space-sm);
 }
 
-.socialLink {
-  color: var(--color-text);
-  transition: color var(--motion-fast) var(--ease-out);
+.navLink:focus-visible {
+  outline: 2px solid var(--color-ink);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
 }
 
-/* Only apply hover effect on devices that support hover */
 @media (hover: hover) {
-  .socialLink:hover {
-    color: var(--color-green-dark);
+  .navLink:hover {
+    color: var(--color-ink);
     opacity: 1;
   }
 }
 
-/* Nav Logo Text */
-.logoText {
-  font-family: var(--font-serif);
-  font-size: var(--text-h4);
-  font-weight: 400;
-  color: var(--text-heading);
-  letter-spacing: 0.01em;
-}
-
-/* Tablet Styles */
+/* ===========================================
+   RESPONSIVE - TABLET (900px)
+   =========================================== */
 @media (max-width: 900px) {
-  .nav {
-    padding: var(--space-xs) var(--space-sm);
+  .header {
+    padding: 16px var(--container-padding);
   }
 
-  .navLinks {
-    gap: var(--space-sm);
+  .navRight {
+    gap: 20px;
   }
 }
 
-/* Mobile Styles */
+/* ===========================================
+   RESPONSIVE - MOBILE (600px)
+   =========================================== */
 @media (max-width: 600px) {
-  .nav {
-    padding: var(--space-xs) var(--space-sm);
-    height: 52px;  /* Slightly shorter on mobile */
+  .header {
+    padding: 14px var(--container-padding);
   }
 
-  .navLogo {
-    height: 32px;  /* Fixed smaller size on mobile */
-  }
-
-  .logoPlaceholder {
-    width: 120px;
-    height: 40px;
-  }
-
-  .menuButton {
-    display: block;
-  }
-
-  .navLinks {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: var(--color-bg);
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: var(--space-lg);
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity var(--motion-fast) var(--ease-out), visibility var(--motion-fast) var(--ease-out);
-  }
-
-  .navLinks.navOpen {
-    opacity: 1;
-    visibility: visible;
+  .navRight {
+    gap: 16px;
   }
 
   .navLink {
-    font-size: 1.5rem;
-  }
-
-  .socialLinks {
-    margin-top: var(--space-md);
-    gap: var(--space-md);
-  }
-
-  .socialLink svg {
-    width: 28px;
-    height: 28px;
+    font-size: var(--text-body-small);
   }
 }

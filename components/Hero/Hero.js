@@ -1,140 +1,69 @@
 'use client'
 
-import { useEffect, useState, useMemo } from 'react'
+import { useEffect, useRef } from 'react'
+import FrameworkShuffle from '@/components/FrameworkShuffle/FrameworkShuffle'
 import styles from './Hero.module.css'
 
-// Fixed duration for all lines (equal timing) - soft, readable pace
-const LINE_DURATION = 1.65 // seconds per line
-const OVERLAP = 0.35 // seconds of overlap between lines for continuous flow
-
 export default function Hero() {
-  const [started, setStarted] = useState(false)
-  const [nameVisible, setNameVisible] = useState(false)
-  const [underlineVisible, setUnderlineVisible] = useState(false)
-  const [credentialVisible, setCredentialVisible] = useState(false)
-  const [ctaVisible, setCtaVisible] = useState(false)
-  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false)
+  const titleRef = useRef(null)
+  const line1Ref = useRef(null)
+  const line2Ref = useRef(null)
 
-  // Define lines with their text content for duration calculation
-  const lines = useMemo(() => {
-    const lineData = [
-      { text: "I translate community wisdom" },
-      { text: "into systems change" },
-      { text: "through stories." },
-    ]
+  useEffect(() => {
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    if (prefersReduced) {
+      if (titleRef.current) {
+        titleRef.current.style.fontVariationSettings = "'SOFT' 100, 'WONK' 1"
+      }
+      // Show lines immediately
+      if (line1Ref.current) line1Ref.current.style.opacity = 1
+      if (line2Ref.current) line2Ref.current.style.opacity = 1
+      return
+    }
 
-    // Equal duration for most lines, longer line gets extra time
-    // Line 1 "I translate community wisdom" is longest, needs more time to match pace
-    let cumulativeDelay = 0
-    return lineData.map((line, index) => {
-      const duration = index === 0 ? LINE_DURATION + 0.8 : LINE_DURATION
-      const delay = cumulativeDelay
-      // Next line starts slightly before this one ends for continuous flow
-      cumulativeDelay += duration - (index < lineData.length - 1 ? OVERLAP : 0)
-      return { ...line, duration, delay }
+    import('gsap').then(({ gsap }) => {
+      // SOFT axis tween: sharp serifs → soft/wonky over 1.2s
+      const softObj = { soft: 0 }
+      gsap.to(softObj, {
+        soft: 100,
+        duration: 1.2,
+        ease: 'power2.out',
+        onUpdate: () => {
+          if (titleRef.current) {
+            titleRef.current.style.fontVariationSettings = `'SOFT' ${softObj.soft}, 'WONK' 1`
+          }
+        },
+      })
+
+      // Sequenced entrance: line 1 → line 2
+      const tl = gsap.timeline()
+
+      tl.fromTo(line1Ref.current,
+        { opacity: 0, y: 16 },
+        { opacity: 1, y: 0, duration: 0.7, ease: 'expo.out' }
+      )
+
+      tl.fromTo(line2Ref.current,
+        { opacity: 0, y: 16 },
+        { opacity: 1, y: 0, duration: 0.7, ease: 'expo.out' },
+        '-=0.2'
+      )
+      // Framework items pick up from here via their own startDelay
     })
   }, [])
 
-  // Calculate when last line finishes
-  const lastLineEnd = lines[2].delay + lines[2].duration
-
-  useEffect(() => {
-    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)')
-    setPrefersReducedMotion(mediaQuery.matches)
-    if (mediaQuery.matches) {
-      setStarted(true)
-      setNameVisible(true)
-      setUnderlineVisible(true)
-      setCredentialVisible(true)
-      setCtaVisible(true)
-    }
-  }, [])
-
-  useEffect(() => {
-    if (prefersReducedMotion) return
-
-    // Name arrives first, ~400ms before the tagline wipe begins
-    const nameTimer = setTimeout(() => setNameVisible(true), 500)
-    const startTimer = setTimeout(() => setStarted(true), 900)
-    // Underline appears shortly after the period shows
-    const underlineTime = 900 + (lastLineEnd * 1000) + 300
-    const underlineTimer = setTimeout(() => setUnderlineVisible(true), underlineTime)
-    // Credential fades in ~800ms after underline finishes drawing (1.2s draw)
-    const credentialTime = underlineTime + 1200 + 800
-    const credentialTimer = setTimeout(() => setCredentialVisible(true), credentialTime)
-    // CTA fades in ~600ms after credential
-    const ctaTime = credentialTime + 600
-    const ctaTimer = setTimeout(() => setCtaVisible(true), ctaTime)
-
-    return () => {
-      clearTimeout(nameTimer)
-      clearTimeout(startTimer)
-      clearTimeout(underlineTimer)
-      clearTimeout(credentialTimer)
-      clearTimeout(ctaTimer)
-    }
-  }, [prefersReducedMotion, lastLineEnd])
-
   return (
     <section className={styles.hero} id="hero">
-
-      {/* Name */}
-      <p className={`${styles.name} ${nameVisible ? styles.visible : ''}`}>
-        Lorin Anderberg
-      </p>
-
-      {/* Headline as separate lines */}
-      <h1 className={styles.headline}>
-        {/* Line 1 */}
-        <span className={`${styles.line} ${started ? styles.revealing : ''}`}
-              style={{ '--line-delay': `${lines[0].delay}s`, '--line-duration': `${lines[0].duration}s` }}>
-          I translate <span className={styles.olive}>community wisdom</span>
+      <h1 className={styles.heroTitle} ref={titleRef}>
+        <span className={styles.titleLine} ref={line1Ref}>
+          Design Researcher
         </span>
         <br />
-        {/* Line 2 */}
-        <span className={`${styles.line} ${started ? styles.revealing : ''}`}
-              style={{ '--line-delay': `${lines[1].delay}s`, '--line-duration': `${lines[1].duration}s` }}>
-          into <span className={styles.plum}>systems change</span>
-        </span>
-        <br />
-        {/* Line 3 */}
-        <span className={`${styles.line} ${started ? styles.revealing : ''}`}
-              style={{ '--line-delay': `${lines[2].delay}s`, '--line-duration': `${lines[2].duration}s` }}>
-          through{' '}
-          <span className={styles.storiesUnderline}>
-            stories
-            <svg
-              className={`${styles.underlineSvg} ${underlineVisible ? styles.visible : ''}`}
-              viewBox="0 0 120 10"
-              preserveAspectRatio="none"
-              aria-hidden="true"
-            >
-              <path d="M3 8 C30 5, 60 3.5, 90 4.5 C105 5.2, 114 6.5, 117 7" />
-            </svg>
-          </span>
-          .
+        <span className={styles.titleLine} ref={line2Ref}>
+          <span className={styles.amp}>&amp;</span> Strategist
         </span>
       </h1>
-
-      {/* Credential line */}
-      <p className={`${styles.credential} ${credentialVisible ? styles.visible : ''}`}>
-        Social Impact Designer &middot; CMU
-      </p>
-
-      {/* Scroll CTA */}
-      <button
-        className={`${styles.cta} ${ctaVisible ? styles.visible : ''}`}
-        onClick={() => {
-          document.getElementById('work')?.scrollIntoView({ behavior: 'smooth' })
-        }}
-        aria-label="Scroll to featured work"
-      >
-        <span className={styles.ctaText}>see my work</span>
-        <svg className={styles.ctaArrow} viewBox="0 0 20 24" fill="none" aria-hidden="true">
-          <path d="M10 4 L10 18 M4 14 L10 20 L16 14" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-        </svg>
-      </button>
-
+      <FrameworkShuffle startDelay={1.3} itemStagger={0.6} />
     </section>
   )
 }

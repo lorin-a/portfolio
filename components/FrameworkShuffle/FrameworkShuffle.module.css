@@ -1,0 +1,125 @@
+/* ===========================================
+   FRAMEWORK SHUFFLE — sense / weave / shape
+   =========================================== */
+.fwRow {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: clamp(40px, 7vw, 100px);
+}
+
+.fwItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-xs);
+  cursor: default;
+  min-width: clamp(80px, 10vw, 120px);
+}
+
+/* ===========================================
+   WORD SHUFFLE
+   =========================================== */
+.wordContainer {
+  height: clamp(22px, 2.8vw, 30px);
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 130px;
+}
+
+.word {
+  font-family: var(--font-serif);
+  font-size: clamp(16px, 1.8vw, 21px);
+  font-weight: var(--weight-title);
+  position: absolute;
+  white-space: nowrap;
+  transition: opacity 0.35s var(--ease-default), transform 0.4s var(--ease-out-expo);
+}
+
+.wordActive {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.wordBelow {
+  opacity: 0;
+  transform: translateY(14px);
+}
+
+/* Root word colors */
+.sense .wordRoot {
+  color: var(--color-sage);
+}
+
+.weave .wordRoot {
+  color: var(--color-plum);
+  font-style: italic;
+  font-weight: var(--weight-label);
+}
+
+.shape .wordRoot {
+  color: var(--color-terracotta);
+}
+
+/* Sub-term colors — lighter, italic */
+.sense .wordSub {
+  color: var(--color-sage-light);
+  font-style: italic;
+  font-weight: 300;
+}
+
+.weave .wordSub {
+  color: var(--color-plum-light);
+  font-style: italic;
+  font-weight: 300;
+  font-size: clamp(14px, 1.5vw, 17px);
+}
+
+.shape .wordSub {
+  color: var(--color-terracotta-light);
+  font-style: italic;
+  font-weight: 300;
+}
+
+/* Ampersand styling */
+.amp {
+  color: var(--color-terracotta-light);
+  margin: 0 2px;
+  font-family: var(--font-serif);
+  font-style: italic;
+}
+
+/* ===========================================
+   RESPONSIVE - TABLET (900px)
+   =========================================== */
+@media (max-width: 900px) {
+  .fwRow {
+    gap: 28px;
+    flex-wrap: wrap;
+  }
+}
+
+/* ===========================================
+   RESPONSIVE - MOBILE (600px)
+   =========================================== */
+@media (max-width: 600px) {
+  .fwRow {
+    gap: 24px;
+  }
+
+  .wordContainer {
+    min-width: 100px;
+  }
+}
+
+/* ===========================================
+   ACCESSIBILITY - REDUCED MOTION
+   =========================================== */
+@media (prefers-reduced-motion: reduce) {
+  .word {
+    transition: none;
+  }
+}
