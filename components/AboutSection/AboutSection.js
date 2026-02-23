@@ -61,7 +61,7 @@ export default function AboutSection() {
       </div>
       <div className={styles.aboutTextBlock}>
         <p className={styles.aboutText}>
-          I&apos;m a deep feeler who came to design through journalism, caregiving,
+          I am a deep feeler who came to design through journalism, caregiving,
           and a decade of caring about how people experience the systems they hold
           together.
         </p>

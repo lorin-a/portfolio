@@ -4,7 +4,7 @@ export default function Footer() {
   return (
     <footer className={styles.footer}>
       <span className={styles.warmth}>
-        Want to make something that matters? Reach out!
+        Want to make something meaningful? Reach out!
       </span>
       <div className={styles.footerLinks}>
         <a
