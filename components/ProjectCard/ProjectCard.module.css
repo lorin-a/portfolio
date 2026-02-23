@@ -32,7 +32,6 @@
   grid-template-columns: 1.1fr 1fr;
   gap: clamp(32px, 5vw, 72px);
   align-items: end;
-  margin-bottom: clamp(52px, 8vh, 104px);
 }
 
 .flVisual {
@@ -102,12 +101,7 @@
   grid-template-columns: 1fr 1fr;
   gap: clamp(28px, 4.5vw, 64px);
   align-items: center;
-  margin-bottom: clamp(48px, 7vh, 80px);
   max-width: 1000px;
-}
-
-.std:last-child {
-  margin-bottom: 0;
 }
 
 .stdFlip {
@@ -205,15 +199,7 @@
 /* ===========================================
    RESPONSIVE - MOBILE (600px)
    =========================================== */
-@media (max-width: 600px) {
-  .flagship {
-    margin-bottom: var(--space-xl);
-  }
-
-  .std {
-    margin-bottom: var(--space-xl);
-  }
-}
+/* 600px responsive handled by page grid cells */
 
 /* ===========================================
    ACCESSIBILITY - REDUCED MOTION
