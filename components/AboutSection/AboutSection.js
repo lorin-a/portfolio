@@ -66,6 +66,7 @@ export default function AboutSection() {
         </p>
         <span className={`${styles.aboutLink} ${styles.aboutLinkDisabled}`}>
           More about my path &rarr;
+          <span className={styles.comingSoon}>Coming soon</span>
         </span>
       </div>
     </section>

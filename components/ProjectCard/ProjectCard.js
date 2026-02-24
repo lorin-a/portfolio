@@ -87,11 +87,11 @@ export default function ProjectCard({ project, flip = false, preload = false }) 
     <div
       className={`${styles.projectCard} ${themeClass} ${flip ? styles.flipped : ''}`}
       ref={cardRef}
-      {...(project.href ? { onMouseEnter: handleMouseEnter, onMouseLeave: handleMouseLeave } : {})}
     >
       <div
         className={styles.cardMedia}
-        {...(!project.href ? { onMouseEnter: handleMouseEnter, onMouseLeave: handleMouseLeave } : {})}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
       >
         {project.video ? (
           <div className={isPortrait ? styles.portraitVideo : styles.landscapeImg}>

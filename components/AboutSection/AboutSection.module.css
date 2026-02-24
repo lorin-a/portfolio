@@ -68,7 +68,7 @@
 }
 
 .aboutText {
-  font-family: var(--font-serif);
+  font-family: var(--font-heading);
   font-size: clamp(18px, 2.2vw, 24px);
   font-weight: 300;
   font-variation-settings: 'SOFT' 50, 'WONK' 0;
@@ -85,14 +85,14 @@
   display: inline-flex;
   align-items: center;
   margin-top: 20px;
-  font-family: var(--font-sans);
+  font-family: var(--font-body);
   font-size: var(--text-body-small);
   font-weight: var(--weight-label);
   color: var(--color-plum);
   text-decoration: none;
   border-bottom: 1px solid var(--color-plum-light);
   padding-bottom: 3px;
-  transition: border-color 0.4s var(--ease-default);
+  transition: border-color 0.4s var(--ease-in-out);
   min-height: var(--min-touch-target);
 }
 
@@ -103,10 +103,22 @@
 }
 
 .aboutLinkDisabled {
-  opacity: 0.4;
+  opacity: 0.6;
   cursor: default;
   pointer-events: none;
   border-bottom: none;
+  gap: var(--space-xs);
+}
+
+.comingSoon {
+  font-size: var(--text-caption);
+  font-weight: var(--weight-body);
+  color: var(--color-ink-light);
+  background: var(--pill-bg-light);
+  border: 1px solid var(--pill-border-light);
+  border-radius: var(--radius-pill);
+  padding: 2px 10px;
+  margin-left: var(--space-xs);
 }
 
 @media (hover: hover) {
