@@ -1,7 +1,6 @@
 'use client'
 
 import { useEffect, useRef } from 'react'
-import Link from 'next/link'
 import Image from 'next/image'
 import { cloudImg, HOME_IMAGES } from '@/lib/cloudinary'
 import styles from './AboutSection.module.css'
@@ -65,9 +64,9 @@ export default function AboutSection() {
           and a decade of caring about how people experience the systems they hold
           together.
         </p>
-        <Link href="/about" className={styles.aboutLink}>
+        <span className={`${styles.aboutLink} ${styles.aboutLinkDisabled}`}>
           More about my path &rarr;
-        </Link>
+        </span>
       </div>
     </section>
   )

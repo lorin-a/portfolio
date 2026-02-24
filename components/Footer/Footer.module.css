@@ -43,6 +43,18 @@
   border-radius: var(--radius-sm);
 }
 
+.linkDisabled {
+  font-family: var(--font-sans);
+  font-size: var(--text-body-small);
+  color: var(--color-ink-light);
+  opacity: 0.4;
+  cursor: default;
+  pointer-events: none;
+  min-height: var(--min-touch-target);
+  display: inline-flex;
+  align-items: center;
+}
+
 @media (hover: hover) {
   .footerLinks a:hover {
     color: var(--color-ink);

@@ -25,9 +25,9 @@ export default function Nav() {
           <Link href="/#work" className={styles.navLink}>
             Work
           </Link>
-          <Link href="/about" className={styles.navLink}>
+          <span className={`${styles.navLink} ${styles.navLinkDisabled}`}>
             About
-          </Link>
+          </span>
           <a href="mailto:lorinanderberg1@gmail.com" className={styles.navLink}>
             Contact
           </a>

@@ -14,11 +14,9 @@ export default function Footer() {
         >
           LinkedIn
         </a>
-        <a
-          href="/resume"
-        >
+        <span className={styles.linkDisabled}>
           Resume
-        </a>
+        </span>
         <a href="mailto:lorinanderberg1@gmail.com">
           Email
         </a>

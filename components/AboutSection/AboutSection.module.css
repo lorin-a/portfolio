@@ -102,6 +102,13 @@
   border-radius: var(--radius-sm);
 }
 
+.aboutLinkDisabled {
+  opacity: 0.4;
+  cursor: default;
+  pointer-events: none;
+  border-bottom: none;
+}
+
 @media (hover: hover) {
   .aboutLink:hover {
     border-color: var(--color-plum);

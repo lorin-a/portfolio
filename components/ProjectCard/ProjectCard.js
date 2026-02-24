@@ -87,10 +87,12 @@ export default function ProjectCard({ project, flip = false, preload = false }) 
     <div
       className={`${styles.projectCard} ${themeClass} ${flip ? styles.flipped : ''}`}
       ref={cardRef}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
+      {...(project.href ? { onMouseEnter: handleMouseEnter, onMouseLeave: handleMouseLeave } : {})}
     >
-      <div className={styles.cardMedia}>
+      <div
+        className={styles.cardMedia}
+        {...(!project.href ? { onMouseEnter: handleMouseEnter, onMouseLeave: handleMouseLeave } : {})}
+      >
         {project.video ? (
           <div className={isPortrait ? styles.portraitVideo : styles.landscapeImg}>
             <video
@@ -137,11 +139,15 @@ export default function ProjectCard({ project, flip = false, preload = false }) 
             </span>
           ))}
         </div>
-        {project.href && (
+        {project.href ? (
           <span className={styles.cardCta}>
             View Case Study<span className={styles.arrow}> &rarr;</span>
           </span>
-        )}
+        ) : project.comingSoon ? (
+          <span className={styles.cardCtaComingSoon}>
+            Case study coming soon
+          </span>
+        ) : null}
       </div>
     </div>
   )

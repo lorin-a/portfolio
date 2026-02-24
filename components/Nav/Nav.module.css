@@ -60,6 +60,12 @@
   border-radius: var(--radius-sm);
 }
 
+.navLinkDisabled {
+  opacity: 0.4;
+  cursor: default;
+  pointer-events: none;
+}
+
 @media (hover: hover) {
   .navLink:hover {
     color: var(--color-ink);

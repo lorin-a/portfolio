@@ -32,12 +32,12 @@
 }
 
 @media (hover: hover) {
-  .projectCard:hover {
+  .cardLink:hover .projectCard {
     transform: scale(1.05);
   }
 
   /* Groundswell is taller (portrait), so less scale needed for same visual effect */
-  .cardGroundswell:hover {
+  .cardLink:hover .cardGroundswell {
     transform: scale(1.03);
   }
 }
@@ -173,6 +173,15 @@
 .arrow {
   margin-left: 6px;
   transition: margin-left var(--motion-fast) var(--ease-out);
+}
+
+.cardCtaComingSoon {
+  display: inline-block;
+  font-family: var(--font-serif);
+  font-size: 0.95rem;
+  font-style: italic;
+  font-variation-settings: var(--font-soft);
+  opacity: 0.6;
 }
 
 @media (hover: hover) {

@@ -14,7 +14,7 @@ const PROJECTS = [
     video: cloudVideo(GS_VIDEOS['gs-walkthrough-video']),
     hoverVideo: cloudVideo(GS_VIDEOS['gs-card-flip']),
     imageAlt: 'Groundswell digital ecosystem walkthrough',
-    href: '/groundswell',
+    href: '/projects/groundswell',
     variant: 'flagship',
     contributions: [
       { label: 'Participatory Research' },
@@ -31,7 +31,7 @@ const PROJECTS = [
     video: cloudVideo(HOME_VIDEOS['birthstory-default']),
     hoverVideo: cloudVideo(HOME_VIDEOS['birthstory-hover']),
     imageAlt: 'BirthStory app mockup on device',
-    href: '/projects/birthstory',
+    comingSoon: true, // TODO: remove when case study ships
     variant: 'standard',
     contributions: [
       { label: 'UX Design' },
@@ -47,7 +47,7 @@ const PROJECTS = [
     video: cloudVideo(HOME_VIDEOS['somebuddy-default']),
     hoverVideo: cloudVideo(HOME_VIDEOS['somebuddy-hover']),
     imageAlt: 'SomeBuddy brand identity and app screens',
-    href: '/projects/somebuddy',
+    comingSoon: true, // TODO: remove when case study ships
     variant: 'standard',
     contributions: [
       { label: 'Brand Identity' },
@@ -63,7 +63,7 @@ const PROJECTS = [
     video: cloudVideo(HOME_VIDEOS['transition-design-default']),
     hoverVideo: cloudVideo(HOME_VIDEOS['transition-design-hover']),
     imageAlt: 'Systems map showing interconnected food insecurity factors in Pittsburgh',
-    href: '/projects/transition-design',
+    comingSoon: true, // TODO: remove when case study ships
     variant: 'standard',
     contributions: [
       { label: 'Systems Mapping' },
@@ -78,7 +78,7 @@ const PROJECTS = [
     video: cloudVideo(HOME_VIDEOS['bridging-default']),
     hoverVideo: cloudVideo(HOME_VIDEOS['bridging-hover']),
     imageAlt: 'Bridging the G.A.P. trail rebrand campaign',
-    href: '/projects/bridging-the-gap',
+    comingSoon: true, // TODO: remove when case study ships
     variant: 'standard',
     contributions: [
       { label: 'UX Research' },
