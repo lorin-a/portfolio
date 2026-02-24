@@ -1055,11 +1055,11 @@ export default function GroundswellContent() {
                   <div className={styles.makingTimelineTitle}>Pre-Production</div>
                   <div className={styles.makingTimelineTime}>2 weeks</div>
                 </div>
-                <div className={styles.makingTimelineContext}>concept revision, project timeline, early sketches</div>
+                <div className={styles.makingTimelineContext}>Concept revision, project timeline, early sketches</div>
               </div>
               <div className={styles.makingTimelineRow}>
                 <div className={styles.makingTimelineLeft}>
-                  <div className={styles.makingTimelineTitle}>concept Revisions</div>
+                  <div className={styles.makingTimelineTitle}>Concept Revisions</div>
                   <div className={styles.makingTimelineTime}>2 weeks</div>
                 </div>
                 <div className={styles.makingTimelineContext}>Content feedback, donation outreach, presentation</div>
@@ -1069,7 +1069,7 @@ export default function GroundswellContent() {
                   <div className={styles.makingTimelineTitle}>Design</div>
                   <div className={styles.makingTimelineTime}>4 weeks</div>
                 </div>
-                <div className={styles.makingTimelineContext}>graphic design, vendor coordination, prototypes</div>
+                <div className={styles.makingTimelineContext}>Graphic design, vendor coordination, prototypes</div>
               </div>
               <div className={styles.makingTimelineRow}>
                 <div className={styles.makingTimelineLeft}>
