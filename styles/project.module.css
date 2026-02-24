@@ -2560,19 +2560,21 @@
   max-width: 1200px;
   margin: var(--space-lg) auto;
   outline: none;
+  overflow: hidden;
 }
 
+/* Grid stacking: all slots in the same cell — tallest card sets height */
 .playtestCarouselTrack {
+  display: grid;
   position: relative;
-  height: 572px;
   margin-bottom: var(--space-lg);
 }
 
 .playtestCarouselSlot {
-  position: absolute;
-  top: 0;
+  grid-row: 1;
+  grid-column: 1;
   width: 480px;
-  height: 100%;
+  justify-self: center;
   transition: all var(--motion-fast) var(--ease-default);
 }
 
@@ -2587,7 +2589,6 @@
   border-radius: var(--radius-lg);
   border-left: 3px solid var(--project-accent);
   padding: var(--space-lg);
-  height: 100%;
   box-sizing: border-box;
   box-shadow: var(--shadow-lg);
   display: flex;
@@ -2761,33 +2762,21 @@
   background: var(--project-accent);
 }
 
-/* Mobile adjustments */
-@media (max-width: 600px) {
-  .playtestCarouselContainer {
-    overflow: hidden;
-  }
-
-  .playtestCarouselTrack {
-    height: auto;
-    min-height: 680px;
-    overflow: visible;
-  }
-
+/* Tablet: narrower card width for deck fan */
+@media (min-width: 601px) and (max-width: 900px) {
   .playtestCarouselSlot {
-    width: 88vw;
-    height: auto;
+    width: 400px;
+  }
+}
+
+/* Mobile: full-width single card */
+@media (max-width: 600px) {
+  .playtestCarouselSlot {
+    width: 100%;
   }
 
   .playtestCarouselCard {
     padding: var(--space-md) var(--space-md) var(--space-lg);
-    height: auto;
-    min-height: 660px;
-  }
-}
-
-@media (min-width: 601px) and (max-width: 900px) {
-  .playtestCarouselSlot {
-    width: 400px;
   }
 }
 
@@ -2839,21 +2828,22 @@
   margin: 0 auto;
   margin-top: var(--space-md);
   outline: none;
+  overflow: hidden;
 }
 
-/* Card track — relative positioning context */
+/* Grid stacking: all slots in the same cell — tallest card sets height */
 .workshopCarouselTrack {
+  display: grid;
   position: relative;
-  height: 650px;
   margin-bottom: var(--space-md);
 }
 
-/* Individual card slot — absolutely positioned, JS controls left/transform/opacity */
+/* JS controls transform/opacity/zIndex for deck fan */
 .workshopCarouselSlot {
-  position: absolute;
-  top: 0;
+  grid-row: 1;
+  grid-column: 1;
   width: 524px;
-  height: 100%;
+  justify-self: center;
   transition: all var(--motion-fast) var(--ease-default);
 }
 
@@ -2868,13 +2858,11 @@
   background: var(--project-accent-pale);
   border-radius: var(--radius-lg);
   padding: var(--space-md) var(--space-lg);
-  height: 100%;
   box-sizing: border-box;
   box-shadow: var(--shadow-lg);
   border-left: 3px solid var(--project-accent);
   display: flex;
   flex-direction: column;
-  overflow: hidden;
 }
 
 /* Activity label pill */
@@ -3000,26 +2988,25 @@
   opacity: 0.8;
 }
 
-/* ---- Mobile ---- */
-@media (max-width: 600px) {
-  .workshopCarouselContainer {
-    overflow: hidden;
-  }
-
-  .workshopCarouselTrack {
-    height: auto;
-    min-height: 560px;
-    overflow: hidden;
-  }
-
+/* Tablet: narrower card width for deck fan */
+@media (min-width: 601px) and (max-width: 900px) {
   .workshopCarouselSlot {
-    width: 88vw;
+    width: 423px;
+  }
+
+  .workshopImageGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* Mobile: full-width single card */
+@media (max-width: 600px) {
+  .workshopCarouselSlot {
+    width: 100%;
   }
 
   .workshopCarouselCard {
     padding: var(--space-md) var(--space-md) var(--space-lg);
-    height: auto;
-    min-height: auto;
     gap: var(--space-content-gap);
   }
 
@@ -3060,17 +3047,6 @@
 
   .workshopCarouselInstruction {
     display: none;
-  }
-}
-
-/* ---- Tablet ---- */
-@media (min-width: 601px) and (max-width: 900px) {
-  .workshopCarouselSlot {
-    width: 423px;
-  }
-
-  .workshopImageGrid {
-    grid-template-columns: 1fr 1fr;
   }
 }
 

@@ -269,23 +269,31 @@ function WorkshopCarousel() {
     if (e.key === 'ArrowLeft') goPrev()
   }
 
-  const isMobile = typeof window !== 'undefined' && window.innerWidth <= 600
+  const w = typeof window !== 'undefined' ? window.innerWidth : 1200
+  const isMobile = w <= 600
+  const isTablet = w > 600 && w <= 900
 
   const getPosition = (index) => {
     const diff = index - current
     if (isMobile) {
-      // Mobile: only show active card, slide others off-screen
-      if (diff === 0)  return { left: '50%', scale: 1,    opacity: 1,    z: 3 }
-      if (diff === -1) return { left: '-50%', scale: 0.9, opacity: 0,    z: 1 }
-      if (diff === 1)  return { left: '150%', scale: 0.9, opacity: 0,    z: 1 }
-      return { left: '50%', scale: 0.8, opacity: 0, z: 0 }
+      if (diff === 0)  return { transform: 'translateX(0) scale(1)',       opacity: 1, z: 3 }
+      if (diff === -1) return { transform: 'translateX(-110%) scale(0.9)', opacity: 0, z: 1 }
+      if (diff === 1)  return { transform: 'translateX(110%) scale(0.9)',  opacity: 0, z: 1 }
+      return { transform: 'translateX(0) scale(0.8)', opacity: 0, z: 0 }
     }
-    if (diff === 0)  return { left: '50%', scale: 1,    opacity: 1,    z: 3 }
-    if (diff === -1) return { left: '16%', scale: 0.88, opacity: 0.65, z: 2 }
-    if (diff === 1)  return { left: '84%', scale: 0.88, opacity: 0.65, z: 2 }
-    if (diff === -2) return { left: '4%',  scale: 0.76, opacity: 0.3,  z: 1 }
-    if (diff === 2)  return { left: '96%', scale: 0.76, opacity: 0.3,  z: 1 }
-    return { left: '50%', scale: 0.7, opacity: 0, z: 0 }
+    if (isTablet) {
+      if (diff === 0)  return { transform: 'translateX(0) scale(1)',       opacity: 1,    z: 3 }
+      if (diff === -1) return { transform: 'translateX(-70%) scale(0.88)', opacity: 0.65, z: 2 }
+      if (diff === 1)  return { transform: 'translateX(70%) scale(0.88)',  opacity: 0.65, z: 2 }
+      return { transform: 'translateX(0) scale(0.7)', opacity: 0, z: 0 }
+    }
+    // Desktop: deck fan via translateX (grid handles height)
+    if (diff === 0)  return { transform: 'translateX(0) scale(1)',        opacity: 1,    z: 3 }
+    if (diff === -1) return { transform: 'translateX(-85%) scale(0.88)',  opacity: 0.65, z: 2 }
+    if (diff === 1)  return { transform: 'translateX(85%) scale(0.88)',   opacity: 0.65, z: 2 }
+    if (diff === -2) return { transform: 'translateX(-115%) scale(0.76)', opacity: 0.3,  z: 1 }
+    if (diff === 2)  return { transform: 'translateX(115%) scale(0.76)',  opacity: 0.3,  z: 1 }
+    return { transform: 'translateX(0) scale(0.7)', opacity: 0, z: 0 }
   }
 
   return (
@@ -304,8 +312,7 @@ function WorkshopCarousel() {
               key={i}
               className={styles.workshopCarouselSlot}
               style={{
-                left: pos.left,
-                transform: `translateX(-50%) scale(${pos.scale})`,
+                transform: pos.transform,
                 opacity: pos.opacity,
                 zIndex: pos.z,
                 cursor: i === current ? 'default' : 'pointer',
@@ -428,22 +435,31 @@ function PlaytestCarousel() {
     if (e.key === 'ArrowLeft') goPrev()
   }
 
-  const isMobile = typeof window !== 'undefined' && window.innerWidth <= 600
+  const w = typeof window !== 'undefined' ? window.innerWidth : 1200
+  const isMobile = w <= 600
+  const isTablet = w > 600 && w <= 900
 
   const getPosition = (index) => {
     const diff = index - current
     if (isMobile) {
-      if (diff === 0)  return { left: '50%', scale: 1,    opacity: 1,    z: 3 }
-      if (diff === -1) return { left: '-50%', scale: 0.9, opacity: 0,    z: 1 }
-      if (diff === 1)  return { left: '150%', scale: 0.9, opacity: 0,    z: 1 }
-      return { left: '50%', scale: 0.8, opacity: 0, z: 0 }
+      if (diff === 0)  return { transform: 'translateX(0) scale(1)',       opacity: 1, z: 3 }
+      if (diff === -1) return { transform: 'translateX(-110%) scale(0.9)', opacity: 0, z: 1 }
+      if (diff === 1)  return { transform: 'translateX(110%) scale(0.9)',  opacity: 0, z: 1 }
+      return { transform: 'translateX(0) scale(0.8)', opacity: 0, z: 0 }
     }
-    if (diff === 0)  return { left: '50%', scale: 1,    opacity: 1,    z: 3 }
-    if (diff === -1) return { left: '16%', scale: 0.88, opacity: 0.65, z: 2 }
-    if (diff === 1)  return { left: '84%', scale: 0.88, opacity: 0.65, z: 2 }
-    if (diff === -2) return { left: '4%',  scale: 0.76, opacity: 0.3,  z: 1 }
-    if (diff === 2)  return { left: '96%', scale: 0.76, opacity: 0.3,  z: 1 }
-    return { left: '50%', scale: 0.7, opacity: 0, z: 0 }
+    if (isTablet) {
+      if (diff === 0)  return { transform: 'translateX(0) scale(1)',       opacity: 1,    z: 3 }
+      if (diff === -1) return { transform: 'translateX(-70%) scale(0.88)', opacity: 0.65, z: 2 }
+      if (diff === 1)  return { transform: 'translateX(70%) scale(0.88)',  opacity: 0.65, z: 2 }
+      return { transform: 'translateX(0) scale(0.7)', opacity: 0, z: 0 }
+    }
+    // Desktop: deck fan via translateX (grid handles height)
+    if (diff === 0)  return { transform: 'translateX(0) scale(1)',        opacity: 1,    z: 3 }
+    if (diff === -1) return { transform: 'translateX(-85%) scale(0.88)',  opacity: 0.65, z: 2 }
+    if (diff === 1)  return { transform: 'translateX(85%) scale(0.88)',   opacity: 0.65, z: 2 }
+    if (diff === -2) return { transform: 'translateX(-115%) scale(0.76)', opacity: 0.3,  z: 1 }
+    if (diff === 2)  return { transform: 'translateX(115%) scale(0.76)',  opacity: 0.3,  z: 1 }
+    return { transform: 'translateX(0) scale(0.7)', opacity: 0, z: 0 }
   }
 
   return (
@@ -462,8 +478,7 @@ function PlaytestCarousel() {
               key={i}
               className={styles.playtestCarouselSlot}
               style={{
-                left: pos.left,
-                transform: `translateX(-50%) scale(${pos.scale})`,
+                transform: pos.transform,
                 opacity: pos.opacity,
                 zIndex: pos.z,
                 cursor: i === current ? 'default' : 'pointer',
