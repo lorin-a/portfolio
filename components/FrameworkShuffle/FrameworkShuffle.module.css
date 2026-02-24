@@ -74,6 +74,10 @@
    DROPDOWN SUB-TERMS
    =========================================== */
 .subsContainer {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
   height: 0;
   overflow: hidden;
   display: flex;

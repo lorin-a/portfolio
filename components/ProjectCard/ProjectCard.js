@@ -11,6 +11,7 @@ const THEME_MAP = {
   birthstory: 'cardBirthstory',
   somebuddy: 'cardSomebuddy',
   'transition-design': 'cardTransition',
+  'bridging-the-gap': 'cardBridging',
 }
 
 export default function ProjectCard({ project, flip = false, preload = false }) {

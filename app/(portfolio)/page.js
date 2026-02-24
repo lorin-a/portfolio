@@ -89,7 +89,7 @@ const PROJECTS = [
 ]
 
 /* Alternating pattern: odd-indexed cards are flipped (text left, image right) */
-const FLIPPED = new Set(['birthstory', 'transition-design', 'bridging-the-gap'])
+const FLIPPED = new Set(['birthstory', 'transition-design'])
 
 export default function Home() {
   return (

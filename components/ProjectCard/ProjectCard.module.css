@@ -33,7 +33,12 @@
 
 @media (hover: hover) {
   .projectCard:hover {
-    transform: scale(1.015);
+    transform: scale(1.05);
+  }
+
+  /* Groundswell is taller (portrait), so less scale needed for same visual effect */
+  .cardGroundswell:hover {
+    transform: scale(1.03);
   }
 }
 
@@ -87,11 +92,7 @@
   transition: opacity 200ms var(--ease-out), visibility 0s 200ms, transform 0.8s var(--ease-out);
 }
 
-@media (hover: hover) {
-  .projectCard:hover .mediaEl {
-    transform: scale(1.03);
-  }
-}
+/* Media scale removed — whole-card scale(1.015) handles uniform grow */
 
 .mediaHidden {
   opacity: 0;
