@@ -45,7 +45,12 @@ export default function ProjectCard({ project, flip = false, preload = false }) 
     })
   }, [preload])
 
-  /* Play video only when full card is visible */
+  /* Play main video when card is sufficiently visible; use a lower threshold
+     for the preloaded (first) card so playback begins sooner.
+     cardVisible also gates hover-video preloading so it doesn't compete
+     with initial page load but is buffered before the user hovers. */
+  const [cardVisible, setCardVisible] = useState(false)
+
   useEffect(() => {
     const video = videoRef.current
     const card = cardRef.current
@@ -55,16 +60,17 @@ export default function ProjectCard({ project, flip = false, preload = false }) 
       ([entry]) => {
         if (entry.isIntersecting) {
           video.play().catch(() => {})
+          setCardVisible(true)
         } else {
           video.pause()
         }
       },
-      { threshold: 0.95 }
+      { threshold: preload ? 0.3 : 0.95 }
     )
 
     observer.observe(card)
     return () => observer.disconnect()
-  }, [])
+  }, [preload])
 
   const [isHovered, setIsHovered] = useState(false)
   const hoverVideoRef = useRef(null)
@@ -98,6 +104,7 @@ export default function ProjectCard({ project, flip = false, preload = false }) 
             <video
               ref={videoRef}
               src={project.video}
+              preload={preload ? 'auto' : 'metadata'}
               loop
               muted
               playsInline
@@ -108,7 +115,7 @@ export default function ProjectCard({ project, flip = false, preload = false }) 
               <video
                 ref={hoverVideoRef}
                 src={project.hoverVideo}
-                autoPlay
+                preload={cardVisible ? 'auto' : 'none'}
                 loop
                 muted
                 playsInline
