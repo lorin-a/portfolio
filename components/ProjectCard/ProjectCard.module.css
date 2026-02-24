@@ -25,7 +25,7 @@
   border-radius: 16px;
   padding: 56px;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1.2fr 1fr;
   gap: 56px;
   align-items: center;
   transition: transform 0.8s var(--ease-out);
@@ -38,6 +38,7 @@
 }
 
 /* Alternating: flip image and text sides */
+.flipped { grid-template-columns: 1fr 1.2fr; }
 .flipped .cardMedia { order: 2; }
 .flipped .cardContent { order: 1; }
 
@@ -48,12 +49,13 @@
 .cardBirthstory  { background: var(--bs-tint); }
 .cardSomebuddy   { background: var(--sb-tint); }
 .cardTransition  { background: var(--td-tint); }
+.cardBridging    { background: var(--bg-tint); }
 
 /* ===========================================
    GROUNDSWELL — portrait video column
    =========================================== */
 .cardGroundswell {
-  grid-template-columns: 280px 1fr;
+  grid-template-columns: 340px 1fr;
 }
 
 /* ===========================================
@@ -69,7 +71,7 @@
 
 .landscapeImg {
   width: 100%;
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 16 / 9;
   border-radius: var(--radius-md);
   overflow: hidden;
   position: relative;
@@ -94,19 +96,19 @@
 .mediaHidden {
   opacity: 0;
   visibility: hidden;
-  transition: opacity 200ms var(--ease-out), visibility 0s 200ms;
+  transition: opacity 200ms var(--ease-out), visibility 0s 200ms, transform 0.8s var(--ease-out);
 }
 
 .hoverMedia {
   opacity: 0;
   visibility: hidden;
-  transition: opacity 200ms var(--ease-out), visibility 0s 200ms;
+  transition: opacity 200ms var(--ease-out), visibility 0s 200ms, transform 0.8s var(--ease-out);
 }
 
 .hoverMediaVisible {
   opacity: 1;
   visibility: visible;
-  transition: opacity 200ms var(--ease-out), visibility 0s 0s;
+  transition: opacity 200ms var(--ease-out), visibility 0s 0s, transform 0.8s var(--ease-out);
 }
 
 /* ===========================================
@@ -204,6 +206,11 @@
 .cardTransition .cardNum  { color: var(--td-accent); }
 .cardTransition .tag      { color: var(--td-accent); border-color: var(--td-tag-border); background: var(--td-tag-bg); }
 .cardTransition .cardCta  { color: var(--td-accent); }
+
+/* Bridging the G.A.P. */
+.cardBridging .cardNum  { color: var(--bg-accent); }
+.cardBridging .tag      { color: var(--bg-accent); border-color: var(--bg-tag-border); background: var(--bg-tag-bg); }
+.cardBridging .cardCta  { color: var(--bg-accent); }
 
 /* ===========================================
    RESPONSIVE — TABLET (900px)

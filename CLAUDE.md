@@ -37,6 +37,15 @@ You ask before implementing. You challenge ideas when they could be stronger. Yo
 - Remind Lorin of the audience when deep in creative weeds
 - Protect her strongest work from being diluted by volume
 
+### Before Proposing Any Fix or Change
+Before presenting a solution and asking Lorin to build/preview it, pause and scrutinize your own approach as a senior developer:
+- **Is this the best approach?** Not just a fix — the *right* fix.
+- **Is it organized?** Does it follow existing patterns, or does it introduce a one-off that'll need cleanup later?
+- **Does it unify across the codebase?** If this pattern exists elsewhere, are you solving it consistently — or creating divergence?
+- **How could it be better and more efficient?** Challenge your first instinct. A quick patch that causes two more issues is worse than taking a moment to get it right.
+
+If the answer to any of these is "no" or "I'm not sure," revise before proposing. Don't waste build cycles on half-solutions.
+
 ## Tech Stack
 
 - **Framework:** Next.js 14, App Router

@@ -2,7 +2,7 @@ import Hero from '@/components/Hero/Hero'
 import SectionDivider from '@/components/SectionDivider/SectionDivider'
 import ProjectCard from '@/components/ProjectCard/ProjectCard'
 import AboutSection from '@/components/AboutSection/AboutSection'
-import { cloudImg, cloudVideo, HOME_IMAGES, GS_VIDEOS } from '@/lib/cloudinary'
+import { cloudImg, cloudVideo, HOME_IMAGES, HOME_VIDEOS, GS_VIDEOS } from '@/lib/cloudinary'
 import styles from './page.module.css'
 
 const PROJECTS = [
@@ -28,7 +28,8 @@ const PROJECTS = [
     slug: 'birthstory',
     title: 'BirthStory',
     context: 'Helping parents document and reflect on their birth experience. Real client, real constraints, shipped concept.',
-    image: cloudImg(HOME_IMAGES['birthstory-cover'], 800),
+    video: cloudVideo(HOME_VIDEOS['birthstory-default']),
+    hoverVideo: cloudVideo(HOME_VIDEOS['birthstory-hover']),
     imageAlt: 'BirthStory app mockup on device',
     href: '/projects/birthstory',
     variant: 'standard',
@@ -43,7 +44,8 @@ const PROJECTS = [
     slug: 'somebuddy',
     title: 'SomeBuddy',
     context: 'Brand identity, UX, and animation for a therapy companion app. Full creative range.',
-    image: cloudImg(HOME_IMAGES['somebuddy-cover'], 800),
+    video: cloudVideo(HOME_VIDEOS['somebuddy-default']),
+    hoverVideo: cloudVideo(HOME_VIDEOS['somebuddy-hover']),
     imageAlt: 'SomeBuddy brand identity and app screens',
     href: '/projects/somebuddy',
     variant: 'standard',
@@ -58,7 +60,8 @@ const PROJECTS = [
     slug: 'transition-design',
     title: 'Transition Design',
     context: 'A systems-level design response to food insecurity in Pittsburgh. The lens widens.',
-    image: cloudImg(HOME_IMAGES['transition-design-hero'], 800),
+    video: cloudVideo(HOME_VIDEOS['transition-design-default']),
+    hoverVideo: cloudVideo(HOME_VIDEOS['transition-design-hover']),
     imageAlt: 'Systems map showing interconnected food insecurity factors in Pittsburgh',
     href: '/projects/transition-design',
     variant: 'standard',
@@ -67,10 +70,26 @@ const PROJECTS = [
       { label: 'Research Synthesis' },
     ],
   },
+  {
+    num: '05',
+    slug: 'bridging-the-gap',
+    title: 'Bridging the G.A.P.',
+    context: 'A comprehensive rebranding proposal for the Great Allegheny Passage featuring a campaign for inexperienced riders, GPS app prototype, and environmental graphics.',
+    video: cloudVideo(HOME_VIDEOS['bridging-default']),
+    hoverVideo: cloudVideo(HOME_VIDEOS['bridging-hover']),
+    imageAlt: 'Bridging the G.A.P. trail rebrand campaign',
+    href: '/projects/bridging-the-gap',
+    variant: 'standard',
+    contributions: [
+      { label: 'UX Research' },
+      { label: 'Brand Identity' },
+      { label: 'Animation' },
+    ],
+  },
 ]
 
 /* Alternating pattern: odd-indexed cards are flipped (text left, image right) */
-const FLIPPED = new Set(['birthstory', 'transition-design'])
+const FLIPPED = new Set(['birthstory', 'transition-design', 'bridging-the-gap'])
 
 export default function Home() {
   return (
