@@ -34,7 +34,6 @@ const metadata = [
 // ─── Sidebar sections ───
 const SIDEBAR_SECTIONS = [
   { id: 'hook', label: 'Groundswell', phase: null },
-  { id: 'context', label: 'The Context', phase: null },
   { id: 'stakes', label: 'The Stakes', phase: null },
   { id: 'sense', label: 'What We Heard', phase: 'sense' },
   { id: 'trust', label: 'Building Trust', phase: 'sense' },
@@ -227,49 +226,64 @@ export default function GroundswellCaseStudy() {
   return (
     <div className={styles.caseStudy}>
 
-      {/* ═══ FLEX WRAPPER: Sidebar + Content ═══ */}
+      {/* ═══ HERO ZONE — Full bleed, above sidebar ═══ */}
+      <section id="hook" data-section="hook" className={styles.heroZone}>
+        <div className={styles.hookText}>
+          <AnimatedElement>
+            <div className={styles.hookColumns}>
+              <div className={styles.hookLeft}>
+                <h1 className={styles.thresholdTitle}>Groundswell</h1>
+                <p className={styles.thresholdSubtitle}>Making Space to Restore, Together</p>
+              </div>
+              <div className={styles.hookDivider} />
+              <div className={styles.hookRight}>
+                <p className={styles.thresholdLabel}>A Design Ecology for Staff Well-Being</p>
+                <p className={styles.body}>
+                  A grant-funded ecology of emotional support for oncology healthcare workers, developed through participatory research with staff at UPMC Magee-Womens Hospital.
+                </p>
+              </div>
+            </div>
+          </AnimatedElement>
+        </div>
+
+        <AnimatedElement>
+          <div className={styles.heroBlock}>
+            <LightboxImage imageKey="gs-hero" width={1600} alt="Groundswell — pod and art wall installed at UPMC Magee-Womens Hospital" openLightbox={openLightbox} className={styles.heroImage} />
+            <div className={styles.metadataBar}>
+              {metadata.map((item, i) => (
+                <div key={i} className={styles.metadataCell}>
+                  <p className={styles.metadataLabel}>{item.label}</p>
+                  <p className={styles.metadataValue}>{item.value}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </AnimatedElement>
+
+      </section>
+
+      {/* ═══ SIDEBAR + CONTENT — starts with dark Stakes ═══ */}
       <div className={styles.sidebarLayout}>
         <ProjectSidebar sections={SIDEBAR_SECTIONS} />
 
         <div className={styles.content}>
 
-          {/* ═══ HOOK ═══ */}
-          <section id="hook" data-section="hook">
-            <div className={styles.wide} style={{ paddingTop: 'var(--space-lg)' }}>
+          {/* ═══ STAKES — DARK (first thing alongside sidebar) ═══ */}
+          <section
+            className={styles.sectionDark}
+            id="stakes"
+            data-section="stakes"
+            data-dark-section
+          >
+            <div className={styles.narrow} style={{ paddingTop: 'var(--space-xl)' }}>
               <AnimatedElement>
-                <LightboxImage imageKey="gs-hero" width={1200} alt="Groundswell — pod and art wall installed at UPMC Magee-Womens Hospital" openLightbox={openLightbox} style={{ height: 440, objectFit: 'cover', borderRadius: 'var(--radius-md)' }} />
-              </AnimatedElement>
-            </div>
-
-            <div className={`${styles.narrow} ${styles.threshold}`}>
-              <AnimatedElement>
-                <p className={styles.thresholdLabel}>A Design Ecology for Staff Well-Being</p>
-              </AnimatedElement>
-              <AnimatedElement delay={50}>
-                <h1 className={styles.thresholdTitle}>Groundswell</h1>
-              </AnimatedElement>
-              <AnimatedElement delay={100}>
-                <p className={styles.thresholdSubtitle}>Making Space to Restore, Together</p>
-              </AnimatedElement>
-              <AnimatedElement delay={150}>
-                <p className={styles.body} style={{ textAlign: 'center' }}>
-                  A grant-funded ecology of emotional support for oncology healthcare workers, developed through participatory research with staff at UPMC Magee-Womens Hospital.
+                <p className={styles.bodyDark} style={{ fontSize: 'var(--text-body-large)' }}>
+                  Groundswell began as a graduate-level participatory design course at Carnegie Mellon University. Our team chose the challenge of improving workplace culture for oncology staff at UPMC Magee-Womens Hospital. What started as a semester project earned grant funding, moved into production, and launched as a formal quality improvement study.
                 </p>
               </AnimatedElement>
-
-              <AnimatedElement delay={200}>
-                <div className={styles.metadataGrid}>
-                  {metadata.map((item, i) => (
-                    <div key={i} className={styles.metadataCell}>
-                      <p className={styles.metadataLabel}>{item.label}</p>
-                      <p className={styles.metadataValue}>{item.value}</p>
-                    </div>
-                  ))}
-                </div>
-              </AnimatedElement>
             </div>
 
-            <div className={styles.wide} style={{ paddingBottom: 'var(--space-xl)' }}>
+            <div className={styles.wide} style={{ paddingTop: 'var(--space-lg)', paddingBottom: 'var(--space-lg)' }}>
               <AnimatedElement>
                 <div className={styles.imageGridFeatured}>
                   <LightboxImage imageKey="gs-context-01" width={800} alt="Reflection Cards — close-up with language visible" openLightbox={openLightbox} style={{ height: 420, objectFit: 'cover' }} />
@@ -280,34 +294,6 @@ export default function GroundswellCaseStudy() {
                 </div>
               </AnimatedElement>
             </div>
-          </section>
-
-
-          {/* ═══ CONTEXT ═══ */}
-          <section className={styles.room} id="context" data-section="context">
-            <div className={styles.narrow}>
-              <AnimatedElement>
-                <p className={styles.body}>
-                  Groundswell began as a graduate-level participatory design course at Carnegie Mellon University. Our team chose the challenge of improving workplace culture for oncology staff at UPMC Magee-Womens Hospital.
-                </p>
-              </AnimatedElement>
-              <AnimatedElement>
-                <p className={styles.bodySpaced}>
-                  What started as a semester project earned grant funding, moved into production, and launched as a formal quality improvement study. Groundswell is what emerged: not a single product, but an interconnected ecology shaped by the people it serves.
-                </p>
-              </AnimatedElement>
-            </div>
-          </section>
-
-
-          {/* ═══ STAKES — DARK ═══ */}
-          <section
-            className={styles.sectionDark}
-            style={{ paddingTop: 'var(--space-xl)', paddingBottom: 'var(--space-xl)' }}
-            id="stakes"
-            data-section="stakes"
-            data-dark-section
-          >
             <div className={styles.narrow}>
               <AnimatedElement>
                 <p className={styles.bodyDark}>
@@ -345,6 +331,7 @@ export default function GroundswellCaseStudy() {
                 </div>
               </AnimatedElement>
             </div>
+            <div style={{ paddingBottom: 'var(--space-xl)' }} />
           </section>
 
 
