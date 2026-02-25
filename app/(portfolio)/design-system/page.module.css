@@ -67,7 +67,7 @@
   font-family: var(--font-sans);
   font-size: var(--text-label);
   font-weight: var(--weight-label);
-  font-variation-settings: var(--font-sharp);
+  font-variation-settings: var(--font-soft);
   text-transform: uppercase;
   letter-spacing: 0.05em;
   color: var(--text-body);
@@ -259,7 +259,7 @@
 .specimenCaption {
   font-family: var(--font-sans);
   font-size: var(--text-caption);
-  font-variation-settings: var(--font-sharp);
+  font-variation-settings: var(--font-soft);
   line-height: var(--leading-relaxed);
   color: var(--text-body);
 }
@@ -268,7 +268,7 @@
   font-family: var(--font-sans);
   font-size: var(--text-label);
   font-weight: var(--weight-label);
-  font-variation-settings: var(--font-sharp);
+  font-variation-settings: var(--font-soft);
   text-transform: uppercase;
   letter-spacing: 0.05em;
   color: var(--text-body);
@@ -278,7 +278,7 @@
   font-family: var(--font-serif);
   font-size: var(--text-body);
   font-weight: var(--weight-title);
-  font-variation-settings: var(--font-sharp);
+  font-variation-settings: var(--font-soft);
   text-transform: uppercase;
   letter-spacing: 0.1em;
   color: var(--project-accent);

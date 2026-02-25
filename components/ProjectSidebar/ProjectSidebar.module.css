@@ -33,7 +33,7 @@
 .metadataLabel {
   font-family: var(--font-body);
   font-size: var(--text-caption);
-  font-weight: 600;
+  font-weight: var(--weight-emphasis);
   color: var(--color-ink);
   margin: 0 0 2px;
   text-transform: uppercase;
@@ -61,7 +61,7 @@
 .phaseLabel {
   font-family: var(--font-body);
   font-size: var(--text-caption);
-  font-weight: 600;
+  font-weight: var(--weight-emphasis);
   text-transform: uppercase;
   letter-spacing: 0.1em;
 }
@@ -93,7 +93,7 @@
 .navLinkActive {
   color: var(--color-ink);
   background: rgba(0, 0, 0, 0.04);
-  font-weight: 600;
+  font-weight: var(--weight-emphasis);
 }
 
 .navLink:focus-visible {

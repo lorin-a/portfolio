@@ -177,7 +177,7 @@
 .metadataLabel {
   font-family: var(--font-body);
   font-size: var(--text-label);
-  font-weight: 700;
+  font-weight: var(--weight-strong);
   color: var(--color-ink);
   margin: 0 0 var(--space-xxs);
 }
@@ -348,7 +348,7 @@
 
 /* ─── Emphasis Span ─── */
 .em {
-  font-weight: 600;
+  font-weight: var(--weight-emphasis);
 }
 
 /* ─── Hero Quote ─── */
@@ -471,7 +471,7 @@
   display: inline-block;
   font-family: var(--font-body);
   font-size: var(--text-caption);
-  font-weight: 600;
+  font-weight: var(--weight-emphasis);
   text-transform: uppercase;
   letter-spacing: 0.12em;
   margin-bottom: var(--space-xs);
@@ -614,7 +614,7 @@
 .evolutionLabel {
   font-family: var(--font-body);
   font-size: var(--text-caption);
-  font-weight: 600;
+  font-weight: var(--weight-emphasis);
   text-transform: uppercase;
   letter-spacing: 0.1em;
   color: var(--color-terracotta);
@@ -654,7 +654,7 @@
   font-size: var(--text-body-small);
   color: var(--color-ink);
   margin: 0;
-  font-weight: 600;
+  font-weight: var(--weight-emphasis);
 }
 
 .evolutionWhy {
@@ -698,7 +698,7 @@
 .meditationLabel {
   font-family: var(--font-body);
   font-size: var(--text-caption);
-  font-weight: 600;
+  font-weight: var(--weight-emphasis);
   text-transform: uppercase;
   letter-spacing: 0.12em;
   color: var(--color-plum);
@@ -773,7 +773,7 @@
 .partnerGridLabel {
   font-family: var(--font-body);
   font-size: var(--text-caption);
-  font-weight: 600;
+  font-weight: var(--weight-emphasis);
   text-transform: uppercase;
   letter-spacing: 0.1em;
   color: var(--color-terracotta);
@@ -796,7 +796,7 @@
   font-size: var(--text-body-small);
   color: var(--color-ink);
   margin: 0;
-  font-weight: 600;
+  font-weight: var(--weight-emphasis);
 }
 
 .partnerRole {
@@ -830,7 +830,7 @@
   flex-shrink: 0;
   font-family: var(--font-body);
   font-size: var(--text-caption);
-  font-weight: 600;
+  font-weight: var(--weight-emphasis);
   color: var(--color-cream);
 }
 
@@ -931,7 +931,7 @@
 .dataVizLabel {
   font-family: var(--font-body);
   font-size: var(--text-caption);
-  font-weight: 600;
+  font-weight: var(--weight-emphasis);
   text-transform: uppercase;
   letter-spacing: 0.1em;
   color: var(--color-chalcedony);
@@ -968,7 +968,7 @@
 .sectionLabel {
   font-family: var(--font-body);
   font-size: var(--text-caption);
-  font-weight: 600;
+  font-weight: var(--weight-emphasis);
   text-transform: uppercase;
   letter-spacing: 0.12em;
   text-align: center;

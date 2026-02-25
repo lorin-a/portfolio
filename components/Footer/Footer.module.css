@@ -16,7 +16,7 @@
 .warmth {
   font-family: var(--font-heading);
   font-size: clamp(15px, 1.6vw, 18px);
-  font-weight: 300;
+  font-weight: var(--weight-display);
   font-style: italic;
   color: var(--color-ink-light);
 }

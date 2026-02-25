@@ -169,7 +169,7 @@
 
 .title {
   font-family: var(--font-serif);
-  font-weight: 300;
+  font-weight: var(--weight-display);
   color: var(--card-title);
   line-height: 1.1;
   margin: 0 0 10px;
@@ -177,7 +177,7 @@
 
 .subtitle {
   font-family: var(--font-serif);
-  font-weight: 300;
+  font-weight: var(--weight-display);
   font-style: italic;
   color: var(--card-subtitle);
   margin: 2px 0 10px;
@@ -347,7 +347,7 @@
 .smallTitle {
   font-family: var(--font-serif);
   font-size: 24px;
-  font-weight: 300;
+  font-weight: var(--weight-display);
   color: var(--card-title);
   line-height: 1.15;
   margin: 0 0 10px;
@@ -356,7 +356,7 @@
 .smallSubtitle {
   font-family: var(--font-serif);
   font-size: var(--text-body-large);
-  font-weight: 300;
+  font-weight: var(--weight-display);
   font-style: italic;
   color: var(--card-subtitle);
   margin: 2px 0 16px;

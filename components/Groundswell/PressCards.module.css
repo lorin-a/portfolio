@@ -45,7 +45,7 @@
 .cardSource {
   font-family: var(--font-body);
   font-size: var(--text-caption);
-  font-weight: 600;
+  font-weight: var(--weight-emphasis);
   text-transform: uppercase;
   letter-spacing: 0.08em;
   color: var(--color-plum-soft);

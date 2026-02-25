@@ -80,10 +80,13 @@
 
   /* Font Weight Hierarchy — change these to tune globally */
   --weight-hero: 200;      /* Hero intro, greeting, big display text */
+  --weight-display: 300;   /* Light serif for cards, footer, decorative headings */
   --weight-title: 400;     /* All headings: h1-h4, section titles, card titles */
   --weight-body: 400;      /* Body text */
   --weight-quote: 400;     /* Pull quotes, italic emphasis */
   --weight-label: 500;     /* Sans-serif UI: labels, badges, buttons */
+  --weight-emphasis: 600;  /* Semi-bold for metadata labels, active nav states */
+  --weight-strong: 700;    /* Bold emphasis (rare, metadata headers) */
   
   /* Type Scale - Desktop */
   --text-h1: 3rem;             /* 48px */
