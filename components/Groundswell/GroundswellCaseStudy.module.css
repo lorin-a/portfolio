@@ -706,8 +706,8 @@
 }
 
 .stakesVoice {
-  margin-top: var(--space-lg);
-  padding-top: var(--space-lg);
+  margin-top: var(--space-md);
+  padding-top: var(--space-sm);
 }
 
 .stakesQuote {
@@ -736,6 +736,21 @@
   margin-top: var(--space-xs);
 }
 
+.stakesCalloutWrap {
+  width: fit-content;
+  margin-top: var(--space-lg);
+}
+
+.calloutDivider.calloutDivider {
+  max-width: none;
+  padding: 0;
+  margin-top: var(--space-xs);
+}
+
+.calloutDivider .handUnderline {
+  opacity: 1;
+}
+
 .stakesCallout {
   font-family: var(--font-heading);
   font-size: var(--text-h3);
@@ -743,7 +758,11 @@
   font-variation-settings: var(--font-soft);
   color: var(--color-cream);
   line-height: var(--leading-tight);
-  margin: var(--space-lg) 0 0;
+  margin: 0;
+}
+
+.stakesCallout em {
+  font-style: italic;
 }
 
 /* ─── Stats Display ─── */

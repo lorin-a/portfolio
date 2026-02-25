@@ -102,7 +102,7 @@ function HandUnderline({ color = 'var(--color-sage)', animate = false }) {
 }
 
 // ─── Section divider: scroll-triggered wavy line ───
-function SectionDivider({ color = 'var(--color-cream-dark)' }) {
+function SectionDivider({ color = 'var(--color-cream-dark)', className }) {
   const [animate, setAnimate] = useState(false)
   const ref = useRef(null)
 
@@ -121,7 +121,7 @@ function SectionDivider({ color = 'var(--color-cream-dark)' }) {
   }, [])
 
   return (
-    <div ref={ref} className={styles.sectionDivider}>
+    <div ref={ref} className={`${styles.sectionDivider}${className ? ` ${className}` : ''}`}>
       <HandUnderline color={color} animate={animate} />
     </div>
   )
@@ -412,14 +412,16 @@ export default function GroundswellCaseStudy() {
                 </div>
               </AnimatedElement>
               <AnimatedElement>
-                <p className={styles.stakesCallout}>
-                  This is not an individual failure. It is a systemic one.
-                </p>
+                <div className={styles.stakesCalloutWrap}>
+                  <p className={styles.stakesCallout}>
+                    This is not an individual failure. It is a <em>systemic</em> one.
+                  </p>
+                  <SectionDivider color="var(--color-cream)" className={styles.calloutDivider} />
+                </div>
               </AnimatedElement>
 
               {/* Voice 2 — DESIGNER */}
               <div className={styles.stakesVoice}>
-                <SectionDivider color="var(--color-cream)" />
                 <AnimatedElement>
                   <p className={styles.voiceLabel}>What I Brought</p>
                 </AnimatedElement>
