@@ -28,13 +28,13 @@
 }
 
 /* ─── Sidebar Layout ─── */
-.sidebarLayout {
-  display: flex;
-  gap: 0;
+/* ─── Unified Page Grid ─── */
+.pageGrid {
+  display: grid;
+  grid-template-columns: 520px 1fr;
 }
 
 .content {
-  flex: 1;
   min-width: 0;
 }
 
@@ -100,61 +100,72 @@
   background: var(--color-cream-dark);
 }
 
-/* ─── Hero Zone (full-bleed, above sidebar) ─── */
-.heroZone {
-  max-width: var(--max-width);
-  margin: 0 auto;
-}
-
-/* ─── Hook Text (two-column above image) ─── */
-.hookText {
-  padding: var(--space-lg) var(--container-padding) var(--space-md);
-}
-
-.hookColumns {
-  display: flex;
-  align-items: stretch;
-  gap: var(--space-md);
-}
-
-.hookLeft {
-  flex: 1;
+/* ─── Hero — occupies first row of pageGrid ─── */
+.heroLeft {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  padding: calc(var(--space-xl) + 80px) var(--space-md) var(--space-lg);
 }
 
-.hookDivider {
-  width: 2px;
-  background: var(--color-ink);
-  align-self: stretch;
-  flex-shrink: 0;
+.heroRight {
+  padding-top: 80px;
+  height: 100vh;
+  height: 100dvh;
 }
 
-.hookRight {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-/* ─── Hook Body (below image) ─── */
-.hookBody {
-  max-width: 740px;
-  padding: var(--space-md) var(--container-padding) 0;
+.heroDivider.heroDivider {
+  max-width: none;
+  padding: 0;
+  margin: var(--space-md) 0;
 }
 
 /* ─── Hero Block (image + metadata as one unit) ─── */
 .heroBlock {
   overflow: hidden;
-  border-radius: var(--radius-md);
+  background: var(--project-accent-pale);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .heroImage {
   width: 100%;
-  height: 520px;
+  flex: 1;
   object-fit: cover;
   display: block;
+  min-height: 0;
+}
+
+.metadataWrap {
+  position: relative;
+}
+
+.scallops {
+  display: block;
+  width: 100%;
+  height: 48px;
+  margin-top: -48px;
+  position: relative;
+  z-index: 1;
+}
+
+.scallopDots {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 0;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.scallopDot {
+  position: absolute;
+  top: 0;
+  width: 14px;
+  height: 14px;
+  transform: translate(-50%, -50%);
 }
 
 .metadataBar {
@@ -165,7 +176,7 @@
 }
 
 .metadataBar .metadataCell {
-  background: var(--color-cream-dark);
+  background: var(--project-accent-pale);
   padding: var(--space-sm) var(--space-content-gap);
 }
 
@@ -1396,12 +1407,16 @@
    RESPONSIVE — TABLET (900px)
    =========================================== */
 @media (max-width: 900px) {
-  .sidebarLayout {
-    display: block;
+  .pageGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .heroLeft {
+    padding: var(--space-lg) var(--container-padding) var(--space-md);
   }
 
   .heroImage {
-    height: 380px;
+    height: 340px;
   }
 
   .metadataBar {
@@ -1471,19 +1486,8 @@
     font-size: var(--text-body-large);
   }
 
-  .hookColumns {
-    flex-direction: column;
-    gap: var(--space-sm);
-  }
-
-  .hookDivider {
-    width: 100%;
-    height: 1px;
-    align-self: auto;
-  }
-
   .heroImage {
-    height: 280px;
+    height: 260px;
   }
 
   .metadataBar {

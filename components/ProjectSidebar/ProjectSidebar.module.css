@@ -5,8 +5,8 @@
 .sidebar {
   position: sticky;
   top: 80px;
-  width: 360px;
-  min-width: 360px;
+  width: 520px;
+  min-width: 520px;
   height: calc(100vh - 80px);
   height: calc(100dvh - 80px);
   overflow-y: auto;
