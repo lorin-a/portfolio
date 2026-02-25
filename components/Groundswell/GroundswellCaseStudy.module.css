@@ -38,10 +38,7 @@
   min-width: 0;
 }
 
-/* ─── Mobile Metadata (visible only below 900px) ─── */
-.mobileMetadata {
-  display: none;
-}
+/* ─── Metadata Grid ─── (always visible in body) */
 
 /* ─── PivotQuote ─── */
 .pivotQuote {
@@ -1230,9 +1227,6 @@
     display: block;
   }
 
-  .mobileMetadata {
-    display: block;
-  }
 
   .componentBlock {
     grid-template-columns: 1fr;

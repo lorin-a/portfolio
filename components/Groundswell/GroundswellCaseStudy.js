@@ -229,7 +229,7 @@ export default function GroundswellCaseStudy() {
 
       {/* ═══ FLEX WRAPPER: Sidebar + Content ═══ */}
       <div className={styles.sidebarLayout}>
-        <ProjectSidebar sections={SIDEBAR_SECTIONS} metadata={metadata} />
+        <ProjectSidebar sections={SIDEBAR_SECTIONS} />
 
         <div className={styles.content}>
 
@@ -258,15 +258,13 @@ export default function GroundswellCaseStudy() {
               </AnimatedElement>
 
               <AnimatedElement delay={200}>
-                <div className={styles.mobileMetadata}>
-                  <div className={styles.metadataGrid}>
-                    {metadata.map((item, i) => (
-                      <div key={i} className={styles.metadataCell}>
-                        <p className={styles.metadataLabel}>{item.label}</p>
-                        <p className={styles.metadataValue}>{item.value}</p>
-                      </div>
-                    ))}
-                  </div>
+                <div className={styles.metadataGrid}>
+                  {metadata.map((item, i) => (
+                    <div key={i} className={styles.metadataCell}>
+                      <p className={styles.metadataLabel}>{item.label}</p>
+                      <p className={styles.metadataValue}>{item.value}</p>
+                    </div>
+                  ))}
                 </div>
               </AnimatedElement>
             </div>

@@ -2,20 +2,16 @@
 
 import { useState, useEffect, useRef } from 'react'
 import styles from './ProjectSidebar.module.css'
-import { SenseIcon, WeaveIcon, ShapeIcon } from '@/components/Groundswell/PhaseIcons'
 
-const PHASE_ICONS = { sense: SenseIcon, weave: WeaveIcon, shape: ShapeIcon }
-const PHASE_COLORS = {
-  sense: 'var(--color-sage)',
-  weave: 'var(--color-plum)',
-  shape: 'var(--color-terracotta)',
+const PHASE_META = {
+  sense: { label: 'Sense', color: 'var(--color-sage)' },
+  weave: { label: 'Weave', color: 'var(--color-plum)' },
+  shape: { label: 'Shape', color: 'var(--color-terracotta)' },
 }
 
-export default function ProjectSidebar({ sections, metadata }) {
+export default function ProjectSidebar({ sections }) {
   const [activeId, setActiveId] = useState(null)
-  const [pastHook, setPastHook] = useState(false)
   const observerRef = useRef(null)
-  const hookObserverRef = useRef(null)
 
   // Track active section via IntersectionObserver
   useEffect(() => {
@@ -24,7 +20,6 @@ export default function ProjectSidebar({ sections, metadata }) {
 
     observerRef.current = new IntersectionObserver(
       (entries) => {
-        // Find the topmost intersecting section
         const visible = entries
           .filter((e) => e.isIntersecting)
           .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top)
@@ -39,60 +34,75 @@ export default function ProjectSidebar({ sections, metadata }) {
     return () => observerRef.current?.disconnect()
   }, [])
 
-  // Track whether we're past the hook section
-  useEffect(() => {
-    const hookEl = document.getElementById('hook')
-    if (!hookEl) return
+  // Group sections: ungrouped items render directly, phase items render under phase labels
+  const groups = []
+  let currentPhase = null
 
-    hookObserverRef.current = new IntersectionObserver(
-      ([entry]) => {
-        setPastHook(!entry.isIntersecting)
-      },
-      { threshold: 0, rootMargin: '-80px 0px 0px 0px' }
-    )
-
-    hookObserverRef.current.observe(hookEl)
-    return () => hookObserverRef.current?.disconnect()
-  }, [])
-
-  // Determine current phase from active section
-  const activeSection = sections.find((s) => s.id === activeId)
-  const currentPhase = activeSection?.phase || null
-  const PhaseIconComponent = currentPhase ? PHASE_ICONS[currentPhase] : null
-  const phaseColor = currentPhase ? PHASE_COLORS[currentPhase] : null
+  sections.forEach((section) => {
+    if (section.phase && section.phase !== currentPhase) {
+      currentPhase = section.phase
+      groups.push({ type: 'phase', phase: section.phase, sections: [section] })
+    } else if (section.phase && section.phase === currentPhase) {
+      groups[groups.length - 1].sections.push(section)
+    } else {
+      currentPhase = null
+      groups.push({ type: 'link', section })
+    }
+  })
 
   return (
     <aside className={styles.sidebar} aria-label="Case study navigation">
-      {/* Metadata — always visible */}
-      {metadata && (
-        <div className={styles.metadataBlock}>
-          {metadata.map((item, i) => (
-            <div key={i} className={styles.metadataItem}>
-              <p className={styles.metadataLabel}>{item.label}</p>
-              <p className={styles.metadataValue}>{item.value}</p>
-            </div>
-          ))}
-        </div>
-      )}
-
-      {/* Section nav — always visible below metadata */}
       <nav>
         <ul className={styles.navList}>
-          {sections.map((section) => {
-            const isActive = section.id === activeId
+          {groups.map((group, i) => {
+            if (group.type === 'link') {
+              const { section } = group
+              const isActive = section.id === activeId
+              return (
+                <li key={section.id}>
+                  <a
+                    href={`#${section.id}`}
+                    className={`${styles.navLink} ${isActive ? styles.navLinkActive : ''}`}
+                    aria-current={isActive ? 'true' : undefined}
+                    onClick={(e) => {
+                      e.preventDefault()
+                      document.getElementById(section.id)?.scrollIntoView({ behavior: 'smooth' })
+                    }}
+                  >
+                    {section.label}
+                  </a>
+                </li>
+              )
+            }
+
+            // Phase group
+            const phase = PHASE_META[group.phase]
             return (
-              <li key={section.id}>
-                <a
-                  href={`#${section.id}`}
-                  className={`${styles.navLink} ${isActive ? styles.navLinkActive : ''}`}
-                  aria-current={isActive ? 'true' : undefined}
-                  onClick={(e) => {
-                    e.preventDefault()
-                    document.getElementById(section.id)?.scrollIntoView({ behavior: 'smooth' })
-                  }}
-                >
-                  {section.label}
-                </a>
+              <li key={group.phase} className={styles.phaseGroup}>
+                <p className={styles.phaseLabel} style={{ color: phase.color }}>
+                  <span className={styles.phaseDot} style={{ background: phase.color }} />
+                  {phase.label}
+                </p>
+                <ul className={styles.phaseLinks}>
+                  {group.sections.map((section) => {
+                    const isActive = section.id === activeId
+                    return (
+                      <li key={section.id}>
+                        <a
+                          href={`#${section.id}`}
+                          className={`${styles.navLink} ${isActive ? styles.navLinkActive : ''}`}
+                          aria-current={isActive ? 'true' : undefined}
+                          onClick={(e) => {
+                            e.preventDefault()
+                            document.getElementById(section.id)?.scrollIntoView({ behavior: 'smooth' })
+                          }}
+                        >
+                          {section.label}
+                        </a>
+                      </li>
+                    )
+                  })}
+                </ul>
               </li>
             )
           })}

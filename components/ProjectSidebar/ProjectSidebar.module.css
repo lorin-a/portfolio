@@ -1,79 +1,23 @@
 /* ===========================================
    ProjectSidebar — Sticky case study nav
-   Themed to match project card from homepage.
-   Colors set via CSS custom properties from parent.
+   Nav-only with phase group labels.
    =========================================== */
 .sidebar {
   position: sticky;
   top: 80px;
-  width: 440px;
-  min-width: 440px;
+  width: 360px;
+  min-width: 360px;
   height: calc(100vh - 80px);
   height: calc(100dvh - 80px);
   overflow-y: auto;
-  padding: var(--space-md) var(--space-sm) var(--space-md) var(--space-md);
+  padding: var(--space-md) var(--space-md);
   align-self: flex-start;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 
   /* Project-themed — matches homepage card tint */
   background: var(--sidebar-bg, var(--gs-tint));
-}
-
-/* ─── Metadata Block (pre-hook) ─── */
-.metadataBlock {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-sm);
-}
-
-.metadataItem {
-  padding-bottom: var(--space-xs);
-  border-bottom: 1px solid var(--sidebar-border, var(--gs-tag-border));
-}
-
-.metadataItem:last-child {
-  border-bottom: none;
-}
-
-.metadataBlock + nav {
-  margin-top: var(--space-md);
-  padding-top: var(--space-sm);
-  border-top: 1px solid var(--sidebar-border, var(--gs-tag-border));
-}
-
-.metadataLabel {
-  font-family: var(--font-body);
-  font-size: var(--text-caption);
-  font-weight: var(--weight-emphasis);
-  color: var(--sidebar-accent, var(--gs-accent));
-  margin: 0 0 2px;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-}
-
-.metadataValue {
-  font-family: var(--font-body);
-  font-size: var(--text-caption);
-  color: var(--color-ink-light);
-  line-height: 1.45;
-  margin: 0;
-}
-
-/* ─── Phase Indicator (post-hook) ─── */
-.phaseIndicator {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: var(--space-md);
-  padding-bottom: var(--space-sm);
-  border-bottom: 1px solid var(--sidebar-border, var(--gs-tag-border));
-}
-
-.phaseLabel {
-  font-family: var(--font-body);
-  font-size: var(--text-caption);
-  font-weight: var(--weight-emphasis);
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
 }
 
 /* ─── Nav List ─── */
@@ -102,7 +46,7 @@
               border-color var(--motion-fast) var(--ease-out);
 }
 
-/* Active state — exact match to homepage project card tag pills */
+/* Active state — matches homepage project card tag pills */
 .navLinkActive {
   color: var(--sidebar-accent, var(--gs-accent));
   background: var(--sidebar-tag-bg, var(--gs-tag-bg));
@@ -113,6 +57,50 @@
 .navLink:focus-visible {
   outline: 2px solid var(--sidebar-accent, var(--gs-accent));
   outline-offset: 2px;
+}
+
+/* ─── Phase Groups ─── */
+.phaseGroup {
+  list-style: none;
+  margin-top: var(--space-sm);
+  padding-top: var(--space-sm);
+  border-top: 1px solid var(--sidebar-border, var(--gs-tag-border));
+}
+
+.phaseGroup:first-child {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: none;
+}
+
+.phaseLabel {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-body);
+  font-size: var(--text-caption);
+  font-weight: var(--weight-emphasis);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin: 0 0 var(--space-xxs);
+  padding: 0 14px;
+}
+
+.phaseDot {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.phaseLinks {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
 }
 
 /* ─── Hide on tablet and below ─── */
@@ -129,7 +117,6 @@
     background: var(--sidebar-tag-bg, var(--gs-tag-bg));
   }
 
-  /* Don't weaken active pill on hover */
   .navLinkActive:hover {
     color: var(--sidebar-accent, var(--gs-accent));
   }
