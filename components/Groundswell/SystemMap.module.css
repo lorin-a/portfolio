@@ -1,0 +1,150 @@
+/* ===========================================
+   SYSTEM MAP — Interactive SVG + Mobile Accordion
+   =========================================== */
+
+.wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+/* ─── Desktop SVG ─── */
+.svg {
+  display: block;
+  width: 100%;
+}
+
+.node {
+  cursor: pointer;
+  transition: fill var(--motion-fast) var(--ease-out);
+}
+
+.nodeLabel {
+  transition: fill var(--motion-fast) var(--ease-out);
+  pointer-events: none;
+}
+
+.contextLabel {
+  pointer-events: none;
+}
+
+.connectionLine {
+  pointer-events: none;
+}
+
+/* ─── Tooltip ─── */
+.tooltip {
+  position: absolute;
+  top: 55%;
+  left: 50%;
+  transform: translate(-50%, 0);
+  background: #fff;
+  border-radius: var(--radius-md);
+  padding: var(--space-sm);
+  box-shadow: var(--shadow-lg);
+  max-width: 320px;
+  width: 90%;
+  z-index: 10;
+  opacity: 0;
+  animation: tooltipIn var(--motion-fast) var(--ease-out) forwards;
+}
+
+@keyframes tooltipIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 8px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+.tooltipImage {
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
+  border-radius: var(--radius-sm);
+  margin-bottom: var(--space-xs);
+}
+
+.tooltipDesc {
+  font-family: var(--font-body);
+  font-size: var(--text-body-small);
+  color: var(--color-ink-light);
+  line-height: 1.55;
+  margin: 0;
+}
+
+/* ─── Mobile Accordion ─── */
+.accordion {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  padding: 0 var(--container-padding);
+}
+
+.accordionButton {
+  background: var(--color-cream-dark);
+  border: 1.5px solid currentColor;
+  border-radius: var(--radius-md);
+  padding: var(--space-sm);
+  cursor: pointer;
+  text-align: left;
+  transition: background var(--motion-fast) var(--ease-out),
+              color var(--motion-fast) var(--ease-out);
+  min-height: var(--min-touch-target);
+}
+
+.accordionButtonActive {
+  color: var(--color-cream) !important;
+}
+
+.accordionButton:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}
+
+.accordionTitle {
+  font-family: var(--font-heading);
+  font-size: var(--text-body);
+  font-weight: var(--weight-title);
+  font-variation-settings: var(--font-soft);
+  margin: 0;
+}
+
+.accordionDetail {
+  margin-top: var(--space-xs);
+}
+
+.accordionImage {
+  width: 100%;
+  height: 100px;
+  object-fit: cover;
+  border-radius: var(--radius-sm);
+  margin-bottom: var(--space-xs);
+}
+
+.accordionDesc {
+  font-family: var(--font-body);
+  font-size: var(--text-caption);
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* ─── Accessibility ─── */
+@media (prefers-reduced-motion: reduce) {
+  .tooltip {
+    animation: none;
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+
+  .node,
+  .nodeLabel,
+  .accordionButton {
+    transition: none;
+  }
+}

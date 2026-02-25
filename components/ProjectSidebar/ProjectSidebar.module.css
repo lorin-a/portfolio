@@ -1,0 +1,124 @@
+/* ===========================================
+   ProjectSidebar — Sticky case study nav
+   =========================================== */
+.sidebar {
+  position: sticky;
+  top: 80px;
+  width: 440px;
+  min-width: 440px;
+  height: calc(100vh - 80px);
+  height: calc(100dvh - 80px);
+  overflow-y: auto;
+  padding: var(--space-md) var(--space-sm) var(--space-md) var(--space-md);
+  align-self: flex-start;
+  border-right: 2px solid rgba(0, 0, 0, 0.15);
+}
+
+/* ─── Metadata Block (pre-hook) ─── */
+.metadataBlock {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.metadataItem {
+  padding-bottom: var(--space-xs);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+}
+
+.metadataItem:last-child {
+  border-bottom: none;
+}
+
+.metadataLabel {
+  font-family: var(--font-body);
+  font-size: var(--text-caption);
+  font-weight: 600;
+  color: var(--color-ink);
+  margin: 0 0 2px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.metadataValue {
+  font-family: var(--font-body);
+  font-size: var(--text-caption);
+  color: var(--color-ink-light);
+  line-height: 1.45;
+  margin: 0;
+}
+
+/* ─── Phase Indicator (post-hook) ─── */
+.phaseIndicator {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: var(--space-md);
+  padding-bottom: var(--space-sm);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+}
+
+.phaseLabel {
+  font-family: var(--font-body);
+  font-size: var(--text-caption);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+/* ─── Nav List ─── */
+.navList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.navLink {
+  display: flex;
+  align-items: center;
+  font-family: var(--font-body);
+  font-size: var(--text-caption);
+  color: var(--color-ink-faint);
+  text-decoration: none;
+  padding: 6px 10px;
+  border-radius: var(--radius-sm);
+  min-height: var(--min-touch-target);
+  transition: color var(--motion-fast) var(--ease-out),
+              background var(--motion-fast) var(--ease-out);
+}
+
+.navLinkActive {
+  color: var(--color-ink);
+  background: rgba(0, 0, 0, 0.04);
+  font-weight: 600;
+}
+
+.navLink:focus-visible {
+  outline: 2px solid var(--color-plum);
+  outline-offset: 2px;
+}
+
+/* ─── Hide on tablet and below ─── */
+@media (max-width: 900px) {
+  .sidebar {
+    display: none;
+  }
+}
+
+/* ─── Hover states ─── */
+@media (hover: hover) {
+  .navLink:hover {
+    color: var(--color-ink-light);
+    background: rgba(0, 0, 0, 0.03);
+  }
+}
+
+/* ─── Reduced motion ─── */
+@media (prefers-reduced-motion: reduce) {
+  .navLink {
+    transition: none;
+  }
+}

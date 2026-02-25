@@ -1,0 +1,101 @@
+/* ===========================================
+   PRESS CARDS — Tilted article cards
+   =========================================== */
+
+.wrapper {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-md);
+  flex-wrap: wrap;
+  padding: 0 var(--container-padding);
+}
+
+.card {
+  display: block;
+  width: 260px;
+  min-height: 200px;
+  background: var(--color-plum-muted);
+  border: 1px solid rgba(155, 138, 158, 0.18);
+  border-radius: var(--radius-sm) var(--radius-sm) var(--radius-xs) var(--radius-xs);
+  padding: var(--space-md) 28px;
+  transition: transform var(--motion-fast) var(--ease-out),
+              box-shadow var(--motion-fast) var(--ease-out);
+  text-decoration: none;
+  box-shadow: var(--shadow-sm);
+  position: relative;
+}
+
+.card:focus-visible {
+  outline: 2px solid var(--color-plum);
+  outline-offset: 4px;
+  border-radius: var(--radius-sm);
+}
+
+/* Dog-ear corner fold */
+.cardFold {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 24px;
+  height: 24px;
+  background: linear-gradient(135deg, transparent 50%, var(--color-cream-dark) 50%);
+  border-radius: 0 var(--radius-sm) 0 0;
+}
+
+.cardSource {
+  font-family: var(--font-body);
+  font-size: var(--text-caption);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-plum-soft);
+  margin: 0 0 var(--space-sm);
+}
+
+.cardTitle {
+  font-family: var(--font-heading);
+  font-size: 17px;
+  font-weight: var(--weight-title);
+  font-variation-settings: var(--font-soft);
+  color: var(--color-ink);
+  line-height: 1.35;
+  margin: 0 0 var(--space-sm);
+}
+
+.cardLink {
+  font-family: var(--font-body);
+  font-size: var(--text-caption);
+  color: var(--color-plum);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* ─── Responsive ─── */
+@media (max-width: 600px) {
+  .wrapper {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .card {
+    width: 100%;
+    max-width: 320px;
+    transform: none !important;
+  }
+}
+
+/* ─── Hover ─── */
+@media (hover: hover) {
+  .card:hover {
+    transform: rotate(0deg) translateY(-4px) !important;
+    box-shadow: var(--shadow-lg);
+  }
+}
+
+/* ─── Accessibility ─── */
+@media (prefers-reduced-motion: reduce) {
+  .card {
+    transition: none;
+    transform: none !important;
+  }
+}

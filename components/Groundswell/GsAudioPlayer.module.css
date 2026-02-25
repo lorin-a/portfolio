@@ -1,0 +1,94 @@
+/* ===========================================
+   AUDIO PLAYER — Visual play/pause + waveform
+   =========================================== */
+
+.wrapper {
+  max-width: 480px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.playButton {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  border: 2px solid var(--color-plum);
+  background: transparent;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background var(--motion-fast) var(--ease-out),
+              border-color var(--motion-fast) var(--ease-out);
+  margin: 0 auto;
+  min-height: var(--min-touch-target);
+}
+
+.playButtonActive {
+  background: var(--color-plum);
+}
+
+.playButton:focus-visible {
+  outline: 2px solid var(--color-plum);
+  outline-offset: 4px;
+}
+
+.trackName {
+  font-family: var(--font-heading);
+  font-size: var(--text-body);
+  font-weight: var(--weight-title);
+  font-variation-settings: var(--font-soft);
+  color: var(--color-ink);
+  margin: var(--space-sm) 0 var(--space-xxs);
+  font-style: italic;
+}
+
+.trackArtist {
+  font-family: var(--font-body);
+  font-size: var(--text-caption);
+  color: var(--color-ink-faint);
+  margin: 0;
+}
+
+.waveform {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  margin: var(--space-sm) auto 0;
+  max-width: 240px;
+}
+
+.bar {
+  width: 3px;
+  border-radius: var(--radius-xs);
+  transition: background var(--motion-fast) var(--ease-out),
+              opacity var(--motion-fast) var(--ease-out);
+}
+
+.barActive {
+  background: var(--color-plum);
+}
+
+.barInactive {
+  background: var(--color-ink-faint);
+  opacity: 0.2;
+}
+
+/* ─── Accessibility ─── */
+@media (prefers-reduced-motion: reduce) {
+  .playButton,
+  .bar {
+    transition: none;
+  }
+}
+
+@media (hover: hover) {
+  .playButton:hover {
+    background: var(--color-plum);
+  }
+
+  .playButton:hover svg {
+    fill: var(--color-cream);
+  }
+}
