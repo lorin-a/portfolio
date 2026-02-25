@@ -28,7 +28,6 @@
   grid-template-columns: 1.2fr 1fr;
   gap: 56px;
   align-items: center;
-  color: var(--cream);
   transition: transform 0.8s var(--ease-out);
 }
 
@@ -132,13 +131,13 @@
   font-variation-settings: var(--font-soft);
   line-height: var(--leading-tight);
   margin-bottom: var(--space-sm);
-  color: var(--cream);
+  color: var(--color-ink);
 }
 
 .cardDesc {
   font-family: var(--font-body);
   font-size: 0.95rem;
-  color: rgba(247, 247, 247, 0.85);
+  color: var(--color-ink-light);
   line-height: var(--leading-normal);
   margin-bottom: 20px;
   max-width: 420px;
