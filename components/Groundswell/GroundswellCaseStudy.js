@@ -83,8 +83,8 @@ function HandUnderline({ color = 'var(--color-sage)', animate = false }) {
   return (
     <svg
       width="100%"
-      height="8"
-      viewBox="0 0 200 8"
+      height="16"
+      viewBox="0 0 434 41"
       preserveAspectRatio="none"
       fill="none"
       className={styles.handUnderline}
@@ -92,9 +92,9 @@ function HandUnderline({ color = 'var(--color-sage)', animate = false }) {
     >
       <path
         ref={pathRef}
-        d="M2 5Q40 2,70 5T130 4T198 5"
+        d="M1.00024 39.872C1.60103 37.7562 4.81253 32.3352 16.1098 23.0357C22.8059 17.5237 35.0775 14.369 59.67 10.6824C76.4605 8.16547 102.41 7.57668 151.846 9.71933C201.282 11.862 273.522 17.5822 318.479 19.6897C363.436 21.7972 378.92 20.1187 389.229 18.6058C404.202 15.7967 412.672 12.7717 420.015 9.02851C423.694 6.97479 427.275 4.60805 432.526 1"
         stroke={color}
-        strokeWidth={2}
+        strokeWidth={8.4}
         strokeLinecap="round"
       />
     </svg>

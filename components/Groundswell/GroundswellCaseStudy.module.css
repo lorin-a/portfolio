@@ -105,11 +105,17 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: calc(var(--space-xl) + 80px) var(--space-md) var(--space-lg);
+  min-height: 100vh;
+  min-height: 100dvh;
+  padding: 80px var(--space-md) var(--space-lg);
+  box-sizing: border-box;
 }
 
 .heroRight {
+  min-height: 100vh;
+  min-height: 100dvh;
   padding-top: 80px;
+  box-sizing: border-box;
 }
 
 .heroDivider.heroDivider {
@@ -122,13 +128,17 @@
 .heroBlock {
   overflow: hidden;
   background: var(--project-accent-pale);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .heroImage {
   width: 100%;
-  height: 420px;
+  flex: 1;
   object-fit: cover;
   display: block;
+  min-height: 0;
 }
 
 .metadataWrap {
@@ -1388,7 +1398,13 @@
   }
 
   .heroLeft {
+    min-height: auto;
     padding: var(--space-lg) var(--container-padding) var(--space-md);
+  }
+
+  .heroRight {
+    min-height: auto;
+    padding-top: 0;
   }
 
   .heroImage {
