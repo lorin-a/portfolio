@@ -63,8 +63,8 @@ export default function ProjectSidebar({ sections, metadata }) {
 
   return (
     <aside className={styles.sidebar} aria-label="Case study navigation">
-      {/* Pre-hook: show metadata */}
-      {!pastHook && metadata && (
+      {/* Metadata — always visible */}
+      {metadata && (
         <div className={styles.metadataBlock}>
           {metadata.map((item, i) => (
             <div key={i} className={styles.metadataItem}>
@@ -75,42 +75,29 @@ export default function ProjectSidebar({ sections, metadata }) {
         </div>
       )}
 
-      {/* Post-hook: show phase + section nav */}
-      {pastHook && (
-        <>
-          {PhaseIconComponent && (
-            <div className={styles.phaseIndicator}>
-              <PhaseIconComponent />
-              <span className={styles.phaseLabel} style={{ color: phaseColor }}>
-                {currentPhase}
-              </span>
-            </div>
-          )}
-
-          <nav>
-            <ul className={styles.navList}>
-              {sections.map((section) => {
-                const isActive = section.id === activeId
-                return (
-                  <li key={section.id}>
-                    <a
-                      href={`#${section.id}`}
-                      className={`${styles.navLink} ${isActive ? styles.navLinkActive : ''}`}
-                      aria-current={isActive ? 'true' : undefined}
-                      onClick={(e) => {
-                        e.preventDefault()
-                        document.getElementById(section.id)?.scrollIntoView({ behavior: 'smooth' })
-                      }}
-                    >
-                      {section.label}
-                    </a>
-                  </li>
-                )
-              })}
-            </ul>
-          </nav>
-        </>
-      )}
+      {/* Section nav — always visible below metadata */}
+      <nav>
+        <ul className={styles.navList}>
+          {sections.map((section) => {
+            const isActive = section.id === activeId
+            return (
+              <li key={section.id}>
+                <a
+                  href={`#${section.id}`}
+                  className={`${styles.navLink} ${isActive ? styles.navLinkActive : ''}`}
+                  aria-current={isActive ? 'true' : undefined}
+                  onClick={(e) => {
+                    e.preventDefault()
+                    document.getElementById(section.id)?.scrollIntoView({ behavior: 'smooth' })
+                  }}
+                >
+                  {section.label}
+                </a>
+              </li>
+            )
+          })}
+        </ul>
+      </nav>
     </aside>
   )
 }

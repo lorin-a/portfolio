@@ -34,6 +34,12 @@
   border-bottom: none;
 }
 
+.metadataBlock + nav {
+  margin-top: var(--space-md);
+  padding-top: var(--space-sm);
+  border-top: 1px solid var(--sidebar-border, var(--gs-tag-border));
+}
+
 .metadataLabel {
   font-family: var(--font-body);
   font-size: var(--text-caption);
