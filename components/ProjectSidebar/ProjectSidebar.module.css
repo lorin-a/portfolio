@@ -1,5 +1,6 @@
 /* ===========================================
    ProjectSidebar — Sticky case study nav
+   Themed to match project card color from homepage
    =========================================== */
 .sidebar {
   position: sticky;
@@ -11,7 +12,10 @@
   overflow-y: auto;
   padding: var(--space-md) var(--space-sm) var(--space-md) var(--space-md);
   align-self: flex-start;
-  border-right: 2px solid rgba(0, 0, 0, 0.15);
+
+  /* Project-themed background — set via CSS custom property from parent */
+  background: var(--sidebar-bg, #554E65);
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 /* ─── Metadata Block (pre-hook) ─── */
@@ -23,7 +27,7 @@
 
 .metadataItem {
   padding-bottom: var(--space-xs);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .metadataItem:last-child {
@@ -34,7 +38,7 @@
   font-family: var(--font-body);
   font-size: var(--text-caption);
   font-weight: var(--weight-emphasis);
-  color: var(--color-ink);
+  color: rgba(247, 247, 247, 0.92);
   margin: 0 0 2px;
   text-transform: uppercase;
   letter-spacing: 0.06em;
@@ -43,7 +47,7 @@
 .metadataValue {
   font-family: var(--font-body);
   font-size: var(--text-caption);
-  color: var(--color-ink-light);
+  color: rgba(247, 247, 247, 0.6);
   line-height: 1.45;
   margin: 0;
 }
@@ -55,7 +59,7 @@
   gap: 8px;
   margin-bottom: var(--space-md);
   padding-bottom: var(--space-sm);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .phaseLabel {
@@ -64,6 +68,11 @@
   font-weight: var(--weight-emphasis);
   text-transform: uppercase;
   letter-spacing: 0.1em;
+}
+
+/* Brighten phase icons for dark sidebar */
+.phaseIndicator svg {
+  filter: brightness(1.4);
 }
 
 /* ─── Nav List ─── */
@@ -81,23 +90,24 @@
   align-items: center;
   font-family: var(--font-body);
   font-size: var(--text-caption);
-  color: var(--color-ink-faint);
+  color: rgba(247, 247, 247, 0.5);
   text-decoration: none;
-  padding: 6px 10px;
-  border-radius: var(--radius-sm);
+  padding: 6px 12px;
+  border-radius: var(--radius-pill);
   min-height: var(--min-touch-target);
   transition: color var(--motion-fast) var(--ease-out),
               background var(--motion-fast) var(--ease-out);
 }
 
+/* Active state — pill shape */
 .navLinkActive {
-  color: var(--color-ink);
-  background: rgba(0, 0, 0, 0.04);
+  color: #2C2C28;
+  background: #F7F7F7;
   font-weight: var(--weight-emphasis);
 }
 
 .navLink:focus-visible {
-  outline: 2px solid var(--color-plum);
+  outline: 2px solid #F7F7F7;
   outline-offset: 2px;
 }
 
@@ -111,8 +121,14 @@
 /* ─── Hover states ─── */
 @media (hover: hover) {
   .navLink:hover {
-    color: var(--color-ink-light);
-    background: rgba(0, 0, 0, 0.03);
+    color: rgba(247, 247, 247, 0.85);
+    background: rgba(255, 255, 255, 0.08);
+  }
+
+  /* Don't override active pill on hover */
+  .navLinkActive:hover {
+    color: #2C2C28;
+    background: #F7F7F7;
   }
 }
 

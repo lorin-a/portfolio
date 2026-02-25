@@ -4,7 +4,7 @@ import { useState, useEffect, useRef, useCallback } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import styles from './GroundswellCaseStudy.module.css'
-import { cloudImg, GS_IMAGES } from '@/lib/cloudinary'
+import { cloudImg, GS_IMAGES, GS_CARDS } from '@/lib/cloudinary'
 import AnimatedElement from '@/components/AnimatedElement/AnimatedElement'
 import Lightbox from '@/components/Lightbox/Lightbox'
 import ProjectSidebar from '@/components/ProjectSidebar/ProjectSidebar'
@@ -13,6 +13,15 @@ gsap.registerPlugin(ScrollTrigger)
 
 // ─── Cloudinary helpers ───
 const gsImg = (key, w) => cloudImg(GS_IMAGES[key], w)
+const cardImg = (key, w) => cloudImg(GS_CARDS[key], w)
+
+// ─── Reflection card data (image-based flip) ───
+const FLIP_CARDS = [
+  { id: 'exhausted', frontKey: 'exhausted-front', backKey: 'exhausted-back' },
+  { id: 'invisible', frontKey: 'invisible-front', backKey: 'invisible-back' },
+  { id: 'valued', frontKey: 'valued-front', backKey: 'valued-back' },
+  { id: 'grateful', frontKey: 'grateful-front', backKey: 'grateful-back' },
+]
 
 // ─── Metadata ───
 const metadata = [
@@ -163,6 +172,46 @@ function LightboxImage({ imageKey, width, alt, className, style, openLightbox })
         style={style}
       />
     </button>
+  )
+}
+
+
+// ─── Image-based card flip (portfolio version) ───
+function CardFlipGrid() {
+  const [flipped, setFlipped] = useState({})
+  const toggle = (id) => setFlipped((prev) => ({ ...prev, [id]: !prev[id] }))
+
+  return (
+    <div className={styles.cardFlipGrid}>
+      {FLIP_CARDS.map((card) => {
+        const isFlipped = flipped[card.id]
+        return (
+          <button
+            key={card.id}
+            className={styles.cardFlipButton}
+            onClick={() => toggle(card.id)}
+            aria-label={`${card.id} reflection card — ${isFlipped ? 'showing exercise, click to flip back' : 'click to reveal exercise'}`}
+          >
+            <div className={`${styles.cardFlipInner} ${isFlipped ? styles.cardFlipInnerFlipped : ''}`}>
+              <div className={styles.cardFlipFace}>
+                <img
+                  src={cardImg(card.frontKey, 400)}
+                  alt={`${card.id} — front of reflection card`}
+                  loading="lazy"
+                />
+              </div>
+              <div className={`${styles.cardFlipFace} ${styles.cardFlipBack}`} aria-hidden={!isFlipped}>
+                <img
+                  src={cardImg(card.backKey, 400)}
+                  alt={`${card.id} — somatic exercise on back of card`}
+                  loading="lazy"
+                />
+              </div>
+            </div>
+          </button>
+        )
+      })}
+    </div>
   )
 }
 
@@ -505,14 +554,81 @@ export default function GroundswellCaseStudy() {
               </AnimatedElement>
               <AnimatedElement>
                 <p className={styles.body}>
-                  Four interconnected components, each addressing a different dimension of well-being.
+                  Four interconnected components, each addressing a different dimension of well-being. Not a product — an ecology, shaped by the people it serves.
                 </p>
               </AnimatedElement>
+            </div>
 
+            {/* ── Community Art Wall ── */}
+            <div className={styles.wide} style={{ marginTop: 'var(--space-lg)' }}>
               <AnimatedElement>
-                <p className={styles.bodySpaced} style={{ color: 'var(--color-ink-faint)', fontStyle: 'italic' }}>
-                  [ Art Wall, Restorative Pod, CTB Email, Reflection Cards + interactive card flip ]
+                <div className={styles.componentBlock}>
+                  <div className={styles.componentImages}>
+                    <LightboxImage imageKey="gs-artwall" width={700} alt="Community Art Wall installed at UPMC Magee — full view with staff contributions" openLightbox={openLightbox} className={styles.componentImagePrimary} />
+                    <LightboxImage imageKey="gs-artwall-detail-02" width={500} alt="Art Wall close-up — anonymous staff notes and expressions" openLightbox={openLightbox} className={styles.componentImageDetail} />
+                  </div>
+                  <div className={styles.componentText}>
+                    <h3 className={styles.componentTitle}>Community Art Wall</h3>
+                    <p className={styles.body}>
+                      An anonymous space for shared emotional expression across the full spectrum of oncology experiences. Staff reported discomfort expressing feelings due to fear of retaliation — the wall gave public, collective voice to what had been carried alone. We intentionally included family caregivers and patients because staff told us how much hearing gratitude mattered.
+                    </p>
+                  </div>
+                </div>
+              </AnimatedElement>
+            </div>
+
+            {/* ── Restorative Pod ── */}
+            <div className={styles.wide} style={{ marginTop: 'var(--space-lg)' }}>
+              <AnimatedElement>
+                <div className={styles.componentBlock}>
+                  <div className={styles.componentImages}>
+                    <LightboxImage imageKey="gs-pod-exterior" width={700} alt="Restorative Pod exterior — nestled in a former telephone booth alcove" openLightbox={openLightbox} className={styles.componentImagePrimary} />
+                    <LightboxImage imageKey="gs-pod-detail-02" width={500} alt="Pod interior — meditation stones, guided audio, soft lighting" openLightbox={openLightbox} className={styles.componentImageDetail} />
+                  </div>
+                  <div className={styles.componentText}>
+                    <h3 className={styles.componentTitle}>Restorative Pod</h3>
+                    <p className={styles.body}>
+                      A dedicated space for emotional decompression through guided meditation and stillness. We heard that staff save their tears for the car ride home or the bathroom stall. Nestled where telephone booths once stood, the pod reinforces a message the hospital had never sent: emotional labor is real work deserving of real space.
+                    </p>
+                  </div>
+                </div>
+              </AnimatedElement>
+            </div>
+
+            {/* ── Ceased to Breathe Email ── */}
+            <div className={styles.narrow} style={{ marginTop: 'var(--space-lg)' }}>
+              <AnimatedElement>
+                <div className={styles.componentBlockCompact}>
+                  <h3 className={styles.componentTitle}>Ceased to Breathe Email</h3>
+                  <p className={styles.body}>
+                    A redesign of the hospital&apos;s patient death notification, built entirely within Outlook. What we initially saw as a cold clinical protocol was actually a staff-created innovation — a nurse manager had built it to ensure colleagues learned about patient deaths with dignity. Groundswell honored that by integrating compassionate language and visuals into the existing workflow, a low-effort change that acknowledged the emotional weight of every loss.
+                  </p>
+                </div>
+              </AnimatedElement>
+            </div>
+
+            {/* ── Reflection Cards ── */}
+            <div className={styles.narrow} style={{ marginTop: 'var(--space-xl)' }}>
+              <AnimatedElement>
+                <h3 className={styles.componentTitle}>Reflection Cards</h3>
+              </AnimatedElement>
+              <AnimatedElement>
+                <p className={styles.body}>
+                  Guided reflection cards that help staff build a self-care practice through emotional validation and somatic exercises. By showing healthcare workers that the full spectrum of grief includes complex and contradictory emotions, the cards create a more holistic culture of care. Every staff member received their own deck; one set permanently lives in the pod.
                 </p>
+              </AnimatedElement>
+            </div>
+
+            <div className={styles.wide} style={{ marginTop: 'var(--space-md)' }}>
+              <AnimatedElement>
+                <LightboxImage imageKey="gs-cards" width={1000} alt="Staff member holding a set of Groundswell reflection cards" openLightbox={openLightbox} style={{ borderRadius: 'var(--radius-md)' }} />
+              </AnimatedElement>
+            </div>
+
+            <div className={styles.wide} style={{ marginTop: 'var(--space-md)', marginBottom: 'var(--space-sm)' }}>
+              <AnimatedElement>
+                <CardFlipGrid />
+                <p className={styles.cardFlipHint}>Click any card to see the somatic exercise on the back</p>
               </AnimatedElement>
             </div>
           </section>

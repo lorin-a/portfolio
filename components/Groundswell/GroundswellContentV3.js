@@ -1053,6 +1053,9 @@ export default function GroundswellContent() {
           <AnimatedElement>
             <img src={gsImg('gs-making-install-02', 1200)} alt="Final installed pod in hospital setting" className={styles.scrollImage} />
           </AnimatedElement>
+          <AnimatedElement>
+            <img src={gsImg('gs-cards', 1200)} alt="Reflection cards designed for the pod experience" className={styles.scrollImage} />
+          </AnimatedElement>
         </div>
 
         <div className={styles.parallaxSticky}>

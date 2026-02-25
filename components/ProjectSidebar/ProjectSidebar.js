@@ -5,10 +5,11 @@ import styles from './ProjectSidebar.module.css'
 import { SenseIcon, WeaveIcon, ShapeIcon } from '@/components/Groundswell/PhaseIcons'
 
 const PHASE_ICONS = { sense: SenseIcon, weave: WeaveIcon, shape: ShapeIcon }
+// Lightened phase colors for dark sidebar background
 const PHASE_COLORS = {
-  sense: 'var(--color-sage)',
-  weave: 'var(--color-plum)',
-  shape: 'var(--color-terracotta)',
+  sense: 'var(--color-sage-soft)',
+  weave: 'var(--color-plum-soft)',
+  shape: 'var(--color-terracotta-soft)',
 }
 
 export default function ProjectSidebar({ sections, metadata }) {
