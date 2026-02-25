@@ -268,7 +268,7 @@ export default function GroundswellCaseStudy() {
 
         <div className={styles.content}>
 
-          {/* ═══ STAKES — DARK (first thing alongside sidebar) ═══ */}
+          {/* ═══ STAKES — DARK (two voices: data + designer) ═══ */}
           <section
             className={styles.sectionDark}
             id="stakes"
@@ -276,60 +276,49 @@ export default function GroundswellCaseStudy() {
             data-dark-section
           >
             <div className={styles.narrow} style={{ paddingTop: 'var(--space-xl)' }}>
-              <AnimatedElement>
-                <p className={styles.bodyDark} style={{ fontSize: 'var(--text-body-large)' }}>
-                  Groundswell began as a graduate-level participatory design course at Carnegie Mellon University. Our team chose the challenge of improving workplace culture for oncology staff at UPMC Magee-Womens Hospital. What started as a semester project earned grant funding, moved into production, and launched as a formal quality improvement study.
-                </p>
-              </AnimatedElement>
-            </div>
 
-            <div className={styles.wide} style={{ paddingTop: 'var(--space-lg)', paddingBottom: 'var(--space-lg)' }}>
+              {/* Voice 1 — DATA */}
               <AnimatedElement>
-                <div className={styles.imageGridFeatured}>
-                  <LightboxImage imageKey="gs-context-01" width={800} alt="Reflection Cards — close-up with language visible" openLightbox={openLightbox} style={{ height: 420, objectFit: 'cover' }} />
-                  <div className={styles.imageGridFeaturedRight}>
-                    <LightboxImage imageKey="gs-pod" width={600} alt="Restorative Pod installed in hospital" openLightbox={openLightbox} style={{ flex: 1, objectFit: 'cover' }} />
-                    <LightboxImage imageKey="gs-artwall" width={600} alt="Community Art Wall" openLightbox={openLightbox} style={{ flex: 1, objectFit: 'cover' }} />
-                  </div>
-                </div>
+                <p className={styles.voiceLabel}>What the Data Says</p>
               </AnimatedElement>
-            </div>
-            <div className={styles.narrow}>
-              <AnimatedElement>
-                <p className={styles.bodyDark}>
-                  Healthcare, like many social systems in the United States, is built on structural inequity. My own encounters with these systems brought me to this project. I had no traditional healthcare experience, but I didn&apos;t need convincing that caregivers are failed by the institutions they serve.
-                </p>
-              </AnimatedElement>
-
               <AnimatedElement>
                 <div className={styles.statsRow}>
                   <div className={styles.statItem}>
                     <p className={styles.statNumber}>1 in 5</p>
                     <p className={styles.statDesc}>healthcare workers have experienced PTSD</p>
+                    <p className={styles.statSource}>↗ <a href="https://ndpanalytics.com/wp-content/uploads/HCW-Shortage-Final-Mar-2023.pdf" target="_blank" rel="noopener noreferrer">NDP Analytics, 2023</a></p>
                   </div>
-                  <div className={styles.statDivider} />
+                  <span className={styles.statPlus}>+</span>
                   <div className={styles.statItem}>
                     <p className={styles.statNumber}>73%</p>
                     <p className={styles.statDesc}>of emergency physicians report stigma around mental health</p>
+                    <p className={styles.statSource}>↗ <a href="https://www.emergencyphysicians.org/article/mental-health/poll-workplace-stigma-fear-of-professional-consequences-prevent-emergency-physicians-from-seeking-mental-health-care" target="_blank" rel="noopener noreferrer">ACEP, 2023</a></p>
                   </div>
                 </div>
               </AnimatedElement>
-
               <AnimatedElement>
-                <p className={`${styles.bodyDark} ${styles.bodyCenter}`}>
+                <p className={styles.stakesCallout}>
                   This is not an individual failure. It is a systemic one.
                 </p>
               </AnimatedElement>
 
-              <AnimatedElement>
-                <div className={styles.heroQuote}>
-                  <span className={styles.heroQuoteMark} style={{ color: 'var(--color-plum-soft)', opacity: 0.3 }}>&ldquo;</span>
-                  <p className={`${styles.heroQuoteText} ${styles.heroQuoteTextDark}`}>
-                    A special person can do this work forever, a good person can do it for a little while, most people couldn&apos;t do it for a day.
+              {/* Voice 2 — DESIGNER */}
+              <div className={styles.stakesVoice}>
+                <AnimatedElement>
+                  <p className={styles.voiceLabel}>What I Brought</p>
+                </AnimatedElement>
+                <AnimatedElement>
+                  <p className={styles.bodyDark}>
+                    As a masters student at Carnegie Mellon with a focus on mental health and structurally flawed systems, I was drawn to a participatory design course partnered with a local oncology unit. I had no idea it would reshape my career. What started as a semester of research became a grant-funded, 12-month quality improvement study at UPMC.
                   </p>
-                  <div className={styles.heroQuoteBar} style={{ background: 'var(--color-plum-soft)', opacity: 0.5 }} />
-                </div>
-              </AnimatedElement>
+                </AnimatedElement>
+                <AnimatedElement>
+                  <p className={styles.bodyDark}>
+                    My background in somatic psychology, emotional literacy, and trauma-informed design shaped every contribution I made, from the language on each reflection card to the systems-level thinking behind a multi-scale ecology that intervenes at both intimate and institutional scales.
+                  </p>
+                </AnimatedElement>
+              </div>
+
             </div>
             <div style={{ paddingBottom: 'var(--space-xl)' }} />
           </section>
@@ -347,6 +336,14 @@ export default function GroundswellCaseStudy() {
                   Over 15 weeks, my team and I shadowed nurses across multiple shifts, conducted contextual interviews, and facilitated a confidential conversation with a former employee who could speak freely.
                 </p>
               </AnimatedElement>
+
+              <AnimatedElement>
+                <div className={`${styles.inlineQuote} ${styles.inlineQuoteLight}`} style={{ borderLeftColor: 'var(--color-sage)' }}>
+                  <p className={styles.inlineQuoteText}>&ldquo;A special person can do this work forever, a good person can do it for a little while, most people couldn&apos;t do it for a day.&rdquo;</p>
+                  <p className={styles.inlineQuoteAttribution}>— Ex-UPMC Employee</p>
+                </div>
+              </AnimatedElement>
+
               <AnimatedElement>
                 <p className={styles.bodySpaced}>
                   The stories were enough to bring tears to our eyes, and the environment spoke volumes. We heard about immeasurable compassion and dedicated care but also immense pain from lack of structural support. The hallways were overflowing with supportive notes and personal touches, but the harsh lighting, windowless walls, and cramped desks revealed barriers that no amount of personal effort could overcome.
