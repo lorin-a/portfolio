@@ -374,9 +374,9 @@ export default function GroundswellCaseStudy() {
                 {/* Hand-drawn dots at scallop intersections */}
                 <div className={styles.scallopDots} aria-hidden="true">
                   {[
-                    { left: '25%', color: 'var(--color-sage)' },
-                    { left: '50%', color: 'var(--color-plum)' },
-                    { left: '75%', color: 'var(--color-terracotta)' },
+                    { left: '25%', color: 'var(--color-sage-soft)' },
+                    { left: '50%', color: 'var(--color-plum-soft)' },
+                    { left: '75%', color: 'var(--color-terracotta-soft)' },
                   ].map((dot, i) => (
                     <svg
                       key={i}
