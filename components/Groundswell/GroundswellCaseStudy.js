@@ -8,6 +8,8 @@ import { cloudImg, GS_IMAGES, GS_CARDS } from '@/lib/cloudinary'
 import AnimatedElement from '@/components/AnimatedElement/AnimatedElement'
 import Lightbox from '@/components/Lightbox/Lightbox'
 import ProjectSidebar from '@/components/ProjectSidebar/ProjectSidebar'
+import SenseMark from '@/components/marks/SenseMark'
+import markStyles from '@/components/marks/marks.module.css'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -53,19 +55,44 @@ const feedbackFixes = [
   { title: 'Entry Ritual', fix: 'Music set the tone for deeper engagement. We made it the first step.' },
 ]
 
-// ─── Hand-drawn SVG decorations ───
-function HandUnderline({ color = 'var(--color-sage)', width = 200 }) {
+// ─── Hand-drawn SVG underline (animated draw-on) ───
+function HandUnderline({ color = 'var(--color-sage)', animate = false }) {
+  const pathRef = useRef(null)
+
+  useEffect(() => {
+    const path = pathRef.current
+    if (!path) return
+    const length = path.getTotalLength()
+    path.style.strokeDasharray = length
+    path.style.strokeDashoffset = animate ? '0' : length
+
+    if (!animate) return
+
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    if (prefersReduced) {
+      path.style.strokeDashoffset = '0'
+      return
+    }
+
+    gsap.fromTo(path,
+      { strokeDashoffset: length },
+      { strokeDashoffset: 0, duration: 1.0, ease: 'power1.inOut', delay: 0.3 }
+    )
+  }, [animate])
+
   return (
     <svg
-      width={width}
+      width="100%"
       height="8"
-      viewBox={`0 0 ${width} 8`}
+      viewBox="0 0 200 8"
+      preserveAspectRatio="none"
       fill="none"
       className={styles.handUnderline}
       aria-hidden="true"
     >
       <path
-        d={`M2 5C${width * 0.15} 2,${width * 0.3} 7,${width * 0.5} 4S${width * 0.75} 2,${width - 2} 5`}
+        ref={pathRef}
+        d="M2 5Q40 2,70 5T130 4T198 5"
         stroke={color}
         strokeWidth={2}
         strokeLinecap="round"
@@ -74,12 +101,100 @@ function HandUnderline({ color = 'var(--color-sage)', width = 200 }) {
   )
 }
 
-// ─── Section heading: h2 + HandUnderline ───
-function SectionH2({ children, color, width = 200 }) {
+// ─── Section divider: scroll-triggered wavy line ───
+function SectionDivider({ color = 'var(--color-cream-dark)' }) {
+  const [animate, setAnimate] = useState(false)
+  const ref = useRef(null)
+
+  useEffect(() => {
+    if (!ref.current) return
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    if (prefersReduced) { setAnimate(true); return }
+
+    const st = ScrollTrigger.create({
+      trigger: ref.current,
+      start: 'top 90%',
+      once: true,
+      onEnter: () => setAnimate(true),
+    })
+    return () => st.kill()
+  }, [])
+
   return (
-    <div style={{ marginBottom: 'var(--space-md)' }}>
+    <div ref={ref} className={styles.sectionDivider}>
+      <HandUnderline color={color} animate={animate} />
+    </div>
+  )
+}
+
+// ─── Section heading: h2 + HandUnderline ───
+function SectionH2({ children, color }) {
+  const [animate, setAnimate] = useState(false)
+  const ref = useRef(null)
+
+  useEffect(() => {
+    if (!ref.current) return
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    if (prefersReduced) { setAnimate(true); return }
+
+    const st = ScrollTrigger.create({
+      trigger: ref.current,
+      start: 'top 80%',
+      once: true,
+      onEnter: () => setAnimate(true),
+    })
+    return () => st.kill()
+  }, [])
+
+  return (
+    <div ref={ref} className={styles.sectionH2Wrap}>
       <h2 className={styles.sectionHeading}>{children}</h2>
-      <HandUnderline color={color} width={width} />
+      <HandUnderline color={color} animate={animate} />
+    </div>
+  )
+}
+
+// ─── Sense heading: SenseMark + h2 + underline, with scroll trigger ───
+function SenseHeading({ children }) {
+  const [animate, setAnimate] = useState(false)
+  const [replayCount, setReplayCount] = useState(0)
+  const ref = useRef(null)
+
+  useEffect(() => {
+    if (!ref.current) return
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    if (prefersReduced) { setAnimate(true); return }
+
+    const st = ScrollTrigger.create({
+      trigger: ref.current,
+      start: 'top 80%',
+      once: true,
+      onEnter: () => setAnimate(true),
+    })
+    return () => st.kill()
+  }, [])
+
+  const handleHover = () => {
+    if (animate) setReplayCount((c) => c + 1)
+  }
+
+  return (
+    <div
+      ref={ref}
+      className={styles.senseHeadingWrap}
+      onMouseEnter={handleHover}
+    >
+      <div className={styles.senseMarkAlign}>
+        <SenseMark
+          animate={animate}
+          delay={0}
+          replay={replayCount}
+        />
+      </div>
+      <div className={styles.senseHeadingText}>
+        <h2 className={styles.sectionHeading}>{children}</h2>
+        <HandUnderline color="var(--color-sage)" animate={animate} />
+      </div>
     </div>
   )
 }
@@ -304,6 +419,7 @@ export default function GroundswellCaseStudy() {
 
               {/* Voice 2 — DESIGNER */}
               <div className={styles.stakesVoice}>
+                <SectionDivider color="var(--color-cream)" />
                 <AnimatedElement>
                   <p className={styles.voiceLabel}>What I Brought</p>
                 </AnimatedElement>
@@ -328,7 +444,7 @@ export default function GroundswellCaseStudy() {
           <section className={styles.room} id="sense" data-section="sense" data-phase="sense">
             <div className={styles.narrow}>
               <AnimatedElement>
-                <SectionH2 color="var(--color-sage)" width={220}>What We Heard</SectionH2>
+                <SenseHeading>What We Heard</SenseHeading>
               </AnimatedElement>
 
               <AnimatedElement>
@@ -381,11 +497,12 @@ export default function GroundswellCaseStudy() {
 
 
           {/* ═══ TRUST — Building Trust ═══ */}
+          <SectionDivider color="var(--color-sage-soft)" />
           <section
             id="trust"
             data-section="trust"
             data-phase="sense"
-            style={{ paddingTop: 'var(--space-xl)', paddingBottom: 'var(--space-xl)', borderTop: '1px solid var(--color-cream-dark)' }}
+            style={{ paddingTop: 'var(--space-xl)', paddingBottom: 'var(--space-xl)' }}
           >
             <div className={styles.narrow}>
               <AnimatedElement>
@@ -454,11 +571,12 @@ export default function GroundswellCaseStudy() {
 
 
           {/* ═══ WEAVE — The Synthesis ═══ */}
+          <SectionDivider color="var(--color-plum-soft)" />
           <section
             id="weave"
             data-section="weave"
             data-phase="weave"
-            style={{ paddingTop: 'var(--space-xl)', paddingBottom: 'var(--space-xl)', borderTop: '1px solid var(--color-cream-dark)' }}
+            style={{ paddingTop: 'var(--space-xl)', paddingBottom: 'var(--space-xl)' }}
           >
             <div className={styles.narrow}>
               <AnimatedElement>
@@ -488,11 +606,12 @@ export default function GroundswellCaseStudy() {
 
 
           {/* ═══ TURNING POINT ═══ */}
+          <SectionDivider color="var(--color-plum-soft)" />
           <section
             id="turning"
             data-section="turning"
             data-phase="weave"
-            style={{ paddingTop: 'var(--space-xl)', paddingBottom: 'var(--space-xl)', borderTop: '1px solid var(--color-cream-dark)' }}
+            style={{ paddingTop: 'var(--space-xl)', paddingBottom: 'var(--space-xl)' }}
           >
             <div className={styles.narrow}>
               <AnimatedElement>
@@ -523,12 +642,12 @@ export default function GroundswellCaseStudy() {
 
 
           {/* ═══ SHAPE — What We Built ═══ */}
+          <SectionDivider color="var(--color-terracotta-soft)" />
           <section
             className={styles.room}
             id="shape"
             data-section="shape"
             data-phase="shape"
-            style={{ borderTop: '1px solid var(--color-cream-dark)' }}
           >
             <div className={styles.narrow}>
               <AnimatedElement>
@@ -617,11 +736,12 @@ export default function GroundswellCaseStudy() {
 
 
           {/* ═══ MAKING ═══ */}
+          <SectionDivider color="var(--color-terracotta-soft)" />
           <section
             id="making"
             data-section="making"
             data-phase="shape"
-            style={{ paddingTop: 'var(--space-xl)', paddingBottom: 'var(--space-xl)', borderTop: '1px solid var(--color-cream-dark)' }}
+            style={{ paddingTop: 'var(--space-xl)', paddingBottom: 'var(--space-xl)' }}
           >
             <div className={styles.narrow}>
               <AnimatedElement>
@@ -643,8 +763,9 @@ export default function GroundswellCaseStudy() {
 
 
           {/* ═══ PLAY TESTING ═══ */}
+          <SectionDivider color="var(--color-terracotta-soft)" />
           <section
-            style={{ paddingTop: 'var(--space-xl)', paddingBottom: 'var(--space-xl)', borderTop: '1px solid var(--color-cream-dark)' }}
+            style={{ paddingTop: 'var(--space-xl)', paddingBottom: 'var(--space-xl)' }}
             id="testing"
             data-section="testing"
           >

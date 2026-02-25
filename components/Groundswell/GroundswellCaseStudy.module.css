@@ -453,6 +453,30 @@
   opacity: 0.5;
 }
 
+/* ─── Section H2 wrapper (default) ─── */
+.sectionH2Wrap {
+  margin-bottom: var(--space-md);
+}
+
+/* ─── Sense Heading — mark + text side by side ─── */
+.senseHeadingWrap {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-md);
+}
+
+.senseMarkAlign {
+  flex-shrink: 0;
+  /* Match homepage size — don't shrink the mark */
+  margin-top: -6px; /* optical align with cap height of W */
+}
+
+.senseHeadingText {
+  flex: 1;
+  min-width: 0;
+}
+
 .sectionHeading {
   font-family: var(--font-heading);
   font-size: var(--text-h2);
@@ -684,7 +708,6 @@
 .stakesVoice {
   margin-top: var(--space-lg);
   padding-top: var(--space-lg);
-  border-top: 1px solid var(--color-cream);
 }
 
 .stakesQuote {
@@ -1321,6 +1344,13 @@
   display: block;
   margin-top: var(--space-xxs);
   opacity: 0.5;
+}
+
+/* ─── Section Divider (full-width wavy line) ─── */
+.sectionDivider {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 var(--container-padding);
 }
 
 /* ─── System Map Hint ─── */
