@@ -18,7 +18,7 @@
 }
 
 .label {
-  font-family: var(--font-sans);
+  font-family: var(--font-body);
   font-size: var(--text-label);
   font-weight: var(--weight-label);
   letter-spacing: 0.14em;

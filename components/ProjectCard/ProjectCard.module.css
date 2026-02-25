@@ -28,6 +28,7 @@
   grid-template-columns: 1.2fr 1fr;
   gap: 56px;
   align-items: center;
+  color: var(--cream);
   transition: transform 0.8s var(--ease-out);
 }
 
@@ -116,7 +117,7 @@
    CARD CONTENT
    =========================================== */
 .cardNum {
-  font-family: var(--font-serif);
+  font-family: var(--font-heading);
   font-size: 0.9rem;
   font-style: italic;
   font-variation-settings: var(--font-soft);
@@ -125,19 +126,19 @@
 }
 
 .cardTitle {
-  font-family: var(--font-serif);
+  font-family: var(--font-heading);
   font-size: clamp(1.8rem, 3vw, 2.6rem);
   font-weight: var(--weight-title);
   font-variation-settings: var(--font-soft);
   line-height: var(--leading-tight);
   margin-bottom: var(--space-sm);
-  color: var(--color-ink);
+  color: var(--cream);
 }
 
 .cardDesc {
-  font-family: var(--font-sans);
+  font-family: var(--font-body);
   font-size: 0.95rem;
-  color: var(--color-ink-light);
+  color: rgba(247, 247, 247, 0.85);
   line-height: var(--leading-normal);
   margin-bottom: 20px;
   max-width: 420px;
@@ -151,7 +152,7 @@
 }
 
 .tag {
-  font-family: var(--font-sans);
+  font-family: var(--font-body);
   font-size: var(--text-body-small);
   padding: 5px 14px;
   border-radius: var(--radius-pill);
@@ -161,7 +162,7 @@
 
 .cardCta {
   display: inline-block;
-  font-family: var(--font-serif);
+  font-family: var(--font-heading);
   font-size: 0.95rem;
   font-variation-settings: var(--font-soft);
   text-decoration: none;
@@ -177,7 +178,7 @@
 
 .cardCtaComingSoon {
   display: inline-block;
-  font-family: var(--font-serif);
+  font-family: var(--font-heading);
   font-size: 0.95rem;
   font-style: italic;
   font-variation-settings: var(--font-soft);

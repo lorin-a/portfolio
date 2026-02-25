@@ -14,7 +14,7 @@
 }
 
 .warmth {
-  font-family: var(--font-serif);
+  font-family: var(--font-heading);
   font-size: clamp(15px, 1.6vw, 18px);
   font-weight: 300;
   font-style: italic;
@@ -27,11 +27,11 @@
 }
 
 .footerLinks a {
-  font-family: var(--font-sans);
+  font-family: var(--font-body);
   font-size: var(--text-body-small);
   color: var(--color-ink-light);
   text-decoration: none;
-  transition: color var(--transition-smooth);
+  transition: color var(--motion-fast) var(--ease-out);
   min-height: var(--min-touch-target);
   display: inline-flex;
   align-items: center;
@@ -44,7 +44,7 @@
 }
 
 .linkDisabled {
-  font-family: var(--font-sans);
+  font-family: var(--font-body);
   font-size: var(--text-body-small);
   color: var(--color-ink-light);
   opacity: 0.4;

@@ -39,7 +39,7 @@
   aspect-ratio: 4.5 / 7.25;
   border-radius: var(--radius-lg);
   overflow: hidden;
-  transition: all 1s var(--ease-default);
+  transition: all 1s var(--ease-in-out);
   box-shadow: var(--shadow-lg);
 }
 
@@ -48,14 +48,14 @@
   opacity: 0.3;
   transform: scale(0.85);
   filter: blur(1px);
-  animation: cardShift var(--motion-medium) var(--ease-default);
+  animation: cardShift var(--motion-medium) var(--ease-in-out);
 }
 
 .carouselCardSide {
   width: 180px;
   opacity: 0.6;
   transform: scale(0.92);
-  animation: cardShift var(--motion-medium) var(--ease-default);
+  animation: cardShift var(--motion-medium) var(--ease-in-out);
 }
 
 .carouselCardCenter {
@@ -65,7 +65,7 @@
   background: transparent;
   box-shadow: none;
   overflow: visible;
-  animation: cardShift var(--motion-medium) var(--ease-default);
+  animation: cardShift var(--motion-medium) var(--ease-in-out);
   /* Button reset */
   border: none;
   padding: 0;
@@ -120,7 +120,7 @@
   position: relative;
   width: 100%;
   height: 100%;
-  transition: transform var(--motion-medium) var(--ease-default);
+  transition: transform var(--motion-medium) var(--ease-in-out);
   -webkit-transform-style: preserve-3d;
   transform-style: preserve-3d;
   background: transparent;
@@ -176,7 +176,7 @@
   color: var(--project-accent);
   font-size: var(--text-body-large);
   cursor: pointer;
-  transition: all var(--motion-fast) var(--ease-default);
+  transition: all var(--motion-fast) var(--ease-in-out);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -204,14 +204,14 @@
 }
 
 .carouselInstruction {
-  font-family: var(--font-sans);
+  font-family: var(--font-body);
   font-size: var(--text-body-small);
   font-style: italic;
   color: var(--color-text-light);
 }
 
 .carouselCounter {
-  font-family: var(--font-sans);
+  font-family: var(--font-body);
   font-size: var(--text-caption);
   color: var(--color-text-light);
   opacity: 0.8;

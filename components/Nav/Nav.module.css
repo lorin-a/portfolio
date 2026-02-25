@@ -5,11 +5,11 @@
   right: 0;
   z-index: 100;
   padding: 20px var(--gutter);
-  transition: background var(--transition-gentle), backdrop-filter var(--transition-gentle);
+  transition: background 0.5s var(--ease-out), backdrop-filter 0.5s var(--ease-out);
 }
 
 .header.scrolled {
-  background: rgba(247, 244, 239, 0.92);
+  background: color-mix(in srgb, var(--color-cream) 92%, transparent);
   -webkit-backdrop-filter: blur(12px);
   backdrop-filter: blur(12px);
 }
@@ -23,7 +23,7 @@
 }
 
 .navName {
-  font-family: var(--font-serif);
+  font-family: var(--font-heading);
   font-size: calc(var(--text-body) * 1.15);
   font-weight: var(--weight-title);
   color: var(--color-ink);
@@ -42,12 +42,12 @@
 }
 
 .navLink {
-  font-family: var(--font-sans);
+  font-family: var(--font-body);
   font-size: var(--text-body-small);
   font-weight: var(--weight-body);
   color: var(--color-ink-light);
   text-decoration: none;
-  transition: color var(--transition-smooth);
+  transition: color var(--motion-fast) var(--ease-out);
   padding: var(--space-xs) 0;
   min-height: var(--min-touch-target);
   display: flex;

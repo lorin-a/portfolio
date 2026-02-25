@@ -34,7 +34,7 @@
 }
 
 .blurNotice span {
-  font-family: var(--font-sans);
+  font-family: var(--font-body);
   font-size: var(--text-body-small);
   color: rgba(255, 255, 255, 0.9);
   white-space: nowrap;
@@ -63,7 +63,7 @@
   background: rgba(0, 0, 0, 0.35);
   border: none;
   cursor: pointer;
-  transition: opacity var(--motion-fast) var(--ease-default), background var(--motion-fast) var(--ease-out);
+  transition: opacity var(--motion-fast) var(--ease-in-out), background var(--motion-fast) var(--ease-out);
 }
 
 .videoPlayOverlay:focus-visible {
@@ -94,7 +94,7 @@
 }
 
 .videoLabelOverlay {
-  font-family: var(--font-sans);
+  font-family: var(--font-body);
   font-size: var(--text-body-small);
   color: rgba(255, 255, 255, 0.85);
   opacity: 0;
@@ -117,7 +117,7 @@
 }
 
 .videoLabelBar span {
-  font-family: var(--font-sans);
+  font-family: var(--font-body);
   font-size: var(--text-body-small);
   color: rgba(255, 255, 255, 0.85);
 }

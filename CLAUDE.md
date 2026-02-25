@@ -4,13 +4,11 @@
 
 A design research portfolio for lorin.work. The audience is hiring managers who need to quickly understand what Lorin has done, how she thinks, and what her process is. The site must make a strong impression in 90 seconds and reward deeper exploration. It is built with Next.js, CSS Modules, and GSAP — no Tailwind, no styled-components.
 
-## Before Doing Any Work
+## Reference Files (read as needed, not every session)
 
-Read these three files. They are the complete project context:
-
-1. **`DESIGN_SPEC.md`** — All design tokens, engineering decisions, accessibility standards, motion system, case study structure. This is the source of truth. If something contradicts this file, this file wins.
-2. **`PORTFOLIO_STRATEGY_SUMMARY_v2.md`** — Creative direction, conceptual framework (four elemental energies), content strategy, interaction philosophy, visual language goals.
-3. **`WORKING_WITH_LORIN.md`** — How Lorin thinks, her creative taste, her strengths, her growth edges, and how to collaborate with her effectively.
+- **`DESIGN_SPEC.md`** — Source of truth for all tokens, accessibility, motion, case study structure. If anything contradicts this file, this file wins. Read before: new components, design system work, token questions.
+- **`PORTFOLIO_STRATEGY_SUMMARY_v2.md`** — Creative direction, conceptual framework (four elemental energies), interaction philosophy. Read before: content hierarchy, experiential decisions, new page structures.
+- **`WORKING_WITH_LORIN.md`** — How Lorin thinks, her creative taste, collaboration style. Read before: first session or when giving creative feedback.
 
 Do not reference any files in `docs/archive/`. They contain outdated values.
 
@@ -55,28 +53,37 @@ If the answer to any of these is "no" or "I'm not sure," revise before proposing
 - **Content:** Markdown + gray-matter + react-markdown
 - **Deployment:** Vercel → lorin.work
 
-## Commands
+## Dev Workflow
+
+**Do NOT use `npm run dev`** — CSS Module hot-reload bugs in Next.js 14 cause chunk corruption. Always preview with production builds.
 
 ```bash
-npm run dev          # Development server (port 3000)
-npm run build        # Production build — run before deploying
+npm run build        # Production build
+npm run start        # Serve production build (port 3000)
 npm run lint         # ESLint
-npm run lint:css     # Stylelint
+npm run lint:css     # Stylelint — run before every build
 ```
+
+### Build & Preview (3 steps, sequential — never skip)
+1. **Kill port:** `lsof -ti:3000 | xargs kill -9 2>/dev/null; sleep 2; lsof -ti:3000 || echo "PORT_FREE"`
+2. **Clean build:** `rm -rf .next node_modules/.cache && npm run build`
+3. **Start:** `npm run start &` — only after build succeeds and port is confirmed free
+
+Always clear `node_modules/.cache` alongside `.next` — without it, Next.js can serve stale CSS chunk hashes. After rebuild, remind user to hard refresh (`Cmd+Shift+R`). Never push to Vercel without local preview confirmation.
 
 ## Route Structure
 
 ```
 app/
 ├── (portfolio)/        → Nav + Footer (layout.js)
-│   ├── page.js         → Homepage (V2 in progress)
-│   ├── about/          → About page (V1, pending migration)
+│   ├── page.js         → Homepage (V2, active work)
+│   ├── about/          → About page (V1, pending V2 migration — don't add V1 patterns)
 │   ├── projects/
-│   │   ├── [slug]/     → Case study template (Sense → Weave → Shape)
-│   │   └── groundswell/
+│   │   ├── [slug]/     → Case study template (scaffold exists, uses V1 tokens — needs migration)
+│   │   └── groundswell/ → Live case study (V2, Sense → Weave → Shape)
 │   └── not-found.js
 ├── (standalone)/       → No chrome — DO NOT MODIFY without discussion
-│   └── groundswell/    → Stakeholder documentation site
+│   └── groundswell/    → Stakeholder documentation site (complete)
 └── globals.css
 ```
 
@@ -93,35 +100,48 @@ Use V2 tokens from `DESIGN_SPEC.md` Section 5 (color) and Section 6 (motion) for
 ## Quick Reference — Active Tokens
 
 ### Easing (3 curves only)
-```css
---ease-out:    cubic-bezier(0.22, 1, 0.36, 1);    /* Default: reveals, hovers */
---ease-in-out: cubic-bezier(0.42, 0, 0.58, 1);    /* Sustained: page transitions */
---ease-bounce: cubic-bezier(0.34, 1.4, 0.64, 1);  /* Sparingly: landing into place */
-```
+| Token | Value | Use |
+|-------|-------|-----|
+| `--ease-out` | `cubic-bezier(0.22, 1, 0.36, 1)` | Default: reveals, hovers |
+| `--ease-in-out` | `cubic-bezier(0.42, 0, 0.58, 1)` | Sustained: page transitions |
+| `--ease-bounce` | `cubic-bezier(0.34, 1.4, 0.64, 1)` | Sparingly: landing into place |
 
 ### Duration (anchors, not hard limits)
-```css
---motion-fast:   300ms   /* Hover, micro-interactions */
---motion-medium: 600ms   /* Scroll reveals, transitions */
---motion-slow:   900ms   /* Hero, dramatic moments */
-```
+| Token | Value | Use |
+|-------|-------|-----|
+| `--motion-fast` | `300ms` | Hover, micro-interactions |
+| `--motion-medium` | `600ms` | Scroll reveals, transitions |
+| `--motion-slow` | `900ms` | Hero, dramatic moments |
 
 ### Font Axes
-```css
---font-soft:  'SOFT' 50, 'WONK' 0   /* Site-wide default */
---font-wonky: 'SOFT' 50, 'WONK' 1   /* Hero only */
-```
+| Token | Value | Use |
+|-------|-------|-----|
+| `--font-soft` | `'SOFT' 50, 'WONK' 0` | Site-wide default |
+| `--font-wonky` | `'SOFT' 50, 'WONK' 1` | Hero only |
+
+## Pill/Tag System — Frosted AA
+
+All pills sitewide use outline + subtle frost fill, WCAG AA compliant (text >= 4.5:1, border >= 3:1).
+
+- **Light surfaces:** `--pill-border-light`, `--pill-text-light`, `--pill-bg-light`
+- **Dark surfaces:** `--pill-border-dark`, `--pill-text-dark`, `--pill-bg-dark`
+- Tokens defined in `globals.css :root`, referenced in CSS Modules per component
+- FeaturedWork: `.tag` (light) + `.tagDark` (dark), driven by `darkTheme` prop
+- Global utility classes `.pill` / `.pill--dark` available for non-module contexts
+- **In-progress cards** (dashed colored pills) are excluded from this system
+- When adding new pills, always use the pill tokens — never hardcode pill styles
 
 ## V1 → V2 Migration
 
-The site is mid-build. V1 is deployed and must not break. V2 is being built on the homepage first, then applied to other pages.
+The site is mid-build. V1 is deployed and must not break.
 
-- **Homepage:** Actively being rebuilt with V2 styles
-- **About page:** V1 styles, incomplete — do not modify with V1 patterns
-- **Case study template:** Not yet built — will use V2 + Sense/Weave/Shape structure
+- **Homepage:** V2 styles, active work
+- **Groundswell case study:** V2, live, Sense/Weave/Shape structure — the flagship
+- **About page:** V1, incomplete — do not add V1 patterns, will be migrated to V2
+- **`[slug]` template:** Scaffold exists but uses V1 tokens (`--ease-default`, legacy colors) — needs migration before new case studies launch
 - **Standalone Groundswell:** Complete. Do not touch.
 
-When V2 decisions are made during homepage work, update `DESIGN_SPEC.md` immediately.
+When V2 decisions are made during work, update `DESIGN_SPEC.md` immediately.
 
 ## Accessibility — Non-Negotiable
 
@@ -146,6 +166,7 @@ When V2 decisions are made during homepage work, update `DESIGN_SPEC.md` immedia
 | Orphaned words on mobile | Missing `text-wrap: pretty` or test at 400px |
 | Inconsistent easing | Using old 6+ curve system — only 3 active curves now |
 | Hardcoded spacing values | Should use tokens from `globals.css` unless one-off is justified |
+| CSS appears missing after rebuild | Browser cache — hard refresh (`Cmd+Shift+R`) first |
 
 ## The Feeling Test
 

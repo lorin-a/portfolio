@@ -41,7 +41,7 @@
 
 .weaveStrokeRevealed {
   clip-path: inset(0 0 0 0);
-  transition: clip-path 1.8s var(--ease-out-expo);
+  transition: clip-path 1.8s var(--ease-out);
 }
 
 .weaveBrush {
@@ -50,12 +50,12 @@
 
 .weaveBrushVisible {
   opacity: 1;
-  transition: opacity var(--motion-medium) var(--ease-default);
+  transition: opacity var(--motion-medium) var(--ease-in-out);
 }
 
 .weaveStrokeHidden {
   opacity: 0;
-  transition: opacity var(--motion-medium) var(--ease-default);
+  transition: opacity var(--motion-medium) var(--ease-in-out);
 }
 
 /* Shape — draw-on petals */
@@ -82,12 +82,12 @@
 
 .shapeBrushVisible {
   opacity: 1;
-  transition: opacity var(--motion-medium) var(--ease-default);
+  transition: opacity var(--motion-medium) var(--ease-in-out);
 }
 
 .shapeStrokeHidden {
   opacity: 0;
-  transition: opacity var(--motion-medium) var(--ease-default);
+  transition: opacity var(--motion-medium) var(--ease-in-out);
 }
 
 /* ProcessDot — three brush dots */
