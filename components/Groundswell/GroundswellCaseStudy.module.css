@@ -455,7 +455,12 @@
 
 /* ─── Section H2 wrapper (default) ─── */
 .sectionH2Wrap {
+  width: fit-content;
   margin-bottom: var(--space-md);
+}
+
+.sectionH2Wrap .handUnderline {
+  opacity: 1;
 }
 
 /* ─── Sense Heading — mark + text side by side ─── */
@@ -697,7 +702,7 @@
 /* ─── Stakes Voice Labels ─── */
 .voiceLabel {
   font-family: var(--font-body);
-  font-size: var(--text-label);
+  font-size: var(--text-body-small);
   font-weight: var(--weight-emphasis);
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -789,11 +794,10 @@
 
 .statDesc {
   font-family: var(--font-body);
-  font-size: var(--text-body-small);
+  font-size: var(--text-body);
   color: var(--color-cream);
-  line-height: 1.4;
+  line-height: 1.5;
   margin: 0;
-  max-width: 240px;
 }
 
 .statSource {

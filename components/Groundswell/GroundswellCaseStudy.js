@@ -192,8 +192,10 @@ function SenseHeading({ children }) {
         />
       </div>
       <div className={styles.senseHeadingText}>
-        <h2 className={styles.sectionHeading}>{children}</h2>
-        <HandUnderline color="var(--color-sage)" animate={animate} />
+        <div className={styles.sectionH2Wrap} style={{ marginBottom: 0 }}>
+          <h2 className={styles.sectionHeading}>{children}</h2>
+          <HandUnderline color="var(--color-sage)" animate={animate} />
+        </div>
       </div>
     </div>
   )
