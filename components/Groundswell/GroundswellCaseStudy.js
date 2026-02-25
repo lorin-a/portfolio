@@ -31,16 +31,16 @@ const metadata = [
 
 // ─── Sidebar sections ───
 const SIDEBAR_SECTIONS = [
-  { id: 'hook', label: 'The Work', phase: null },
-  { id: 'context', label: 'Context', phase: null },
-  { id: 'stakes', label: 'Stakes', phase: null },
-  { id: 'sense', label: 'Reading the Room', phase: 'sense' },
+  { id: 'hook', label: 'Groundswell', phase: null },
+  { id: 'context', label: 'The Context', phase: null },
+  { id: 'stakes', label: 'The Stakes', phase: null },
+  { id: 'sense', label: 'What We Heard', phase: 'sense' },
   { id: 'trust', label: 'Building Trust', phase: 'sense' },
-  { id: 'weave', label: 'Synthesis', phase: 'weave' },
+  { id: 'weave', label: 'The Synthesis', phase: 'weave' },
   { id: 'turning', label: 'The Turning Point', phase: 'weave' },
-  { id: 'shape', label: 'The Ecosystem', phase: 'shape' },
-  { id: 'making', label: 'Making It Real', phase: 'shape' },
-  { id: 'testing', label: 'Testing', phase: null },
+  { id: 'shape', label: 'What We Built', phase: 'shape' },
+  { id: 'making', label: 'The Making', phase: 'shape' },
+  { id: 'testing', label: 'Play Testing', phase: null },
   { id: 'impact', label: 'Impact', phase: null },
   { id: 'reflection', label: 'Reflection', phase: null },
 ]
@@ -83,28 +83,9 @@ const dimensions = [
 
 // ─── Feedback fixes ───
 const feedbackFixes = [
-  {
-    number: '01',
-    title: 'Accessibility',
-    problem: 'Participants with larger bodies reported discomfort with table positioning, limiting their ability to rest comfortably.',
-    quote: "Uncomfortable for larger people. I wished to rest my head on the table but couldn't get comfortable.",
-    solution: 'We sawed 2 inches from the table depth to accommodate a wider range of body sizes and postures.',
-  },
-  {
-    number: '02',
-    title: 'Wayfinding',
-    problem: 'Multiple participants expressed confusion about where to start, creating anxiety that undermined the calming intent.',
-    quote: "Not sure what to do first. I was worried about doing something wrong — eventually I let go of that, but it took time.",
-    solution: 'We added clear step-by-step instructions, making the digital meditation library the explicit first step to set intention.',
-  },
-  {
-    number: '03',
-    title: 'Entry Ritual',
-    problem: 'Participants who started with music reported significantly deeper engagement with all other pod activities.',
-    quote: "The music was wonderful — it really set the tone and helped me settle in.",
-    solution: 'We repositioned the table centerpiece and ensured music exploration was the first instruction step.',
-    isLast: true,
-  },
+  { title: 'Accessibility', fix: 'Table depth excluded larger bodies. We sawed 2 inches off.' },
+  { title: 'Wayfinding', fix: 'Confusion about where to start created anxiety. We added step-by-step instructions.' },
+  { title: 'Entry Ritual', fix: 'Music set the tone for deeper engagement. We made it the first step.' },
 ]
 
 // ─── Hand-drawn SVG decorations ───
@@ -163,7 +144,6 @@ function PivotQuote() {
   useEffect(() => {
     if (!containerRef.current) return
 
-    // Check reduced motion preference
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     if (prefersReducedMotion) return
 
@@ -194,13 +174,12 @@ function PivotQuote() {
     }
   }, [])
 
-  // Static text width for the strikethrough SVG
-  const strikeWidth = 320
+  const strikeWidth = 280
 
   return (
     <div ref={containerRef} className={styles.pivotQuote}>
       <div className={styles.pivotStruck}>
-        <span>Making Space for Grief, Together</span>
+        <span>&ldquo;the system has let you down&rdquo;</span>
         <svg
           width={strikeWidth}
           height="6"
@@ -218,9 +197,9 @@ function PivotQuote() {
           />
         </svg>
       </div>
-      <span ref={arrowRef} className={styles.pivotArrow}>→</span>
+      <span ref={arrowRef} className={styles.pivotArrow}>↓</span>
       <div ref={reframeRef} className={styles.pivotReframe}>
-        Making Space to Restore, Together
+        &ldquo;you have already created something remarkable&rdquo;
       </div>
     </div>
   )
@@ -250,7 +229,6 @@ function LightboxImage({ imageKey, width, alt, className, style, openLightbox })
 // MAIN COMPONENT
 // ═══════════════════════════════════════════
 export default function GroundswellCaseStudy() {
-  // ─── Lightbox ───
   const [lightboxSrc, setLightboxSrc] = useState(null)
   const openLightbox = useCallback((src) => setLightboxSrc(src), [])
   const closeLightbox = useCallback(() => setLightboxSrc(null), [])
@@ -264,28 +242,31 @@ export default function GroundswellCaseStudy() {
 
         <div className={styles.content}>
 
-          {/* ═══ SECTION 1: HOOK ═══ */}
+          {/* ═══ HOOK ═══ */}
           <section id="hook" data-section="hook">
+            <div className={styles.wide} style={{ paddingTop: 'var(--space-lg)' }}>
+              <AnimatedElement>
+                <LightboxImage imageKey="gs-hero" width={1200} alt="Groundswell — pod and art wall installed at UPMC Magee-Womens Hospital" openLightbox={openLightbox} style={{ height: 440, objectFit: 'cover', borderRadius: 'var(--radius-md)' }} />
+              </AnimatedElement>
+            </div>
+
             <div className={`${styles.narrow} ${styles.threshold}`}>
               <AnimatedElement>
                 <p className={styles.thresholdLabel}>A Design Ecology for Staff Well-Being</p>
               </AnimatedElement>
-              <AnimatedElement delay={100}>
+              <AnimatedElement delay={50}>
                 <h1 className={styles.thresholdTitle}>Groundswell</h1>
               </AnimatedElement>
-              <AnimatedElement delay={150}>
+              <AnimatedElement delay={100}>
                 <p className={styles.thresholdSubtitle}>Making Space to Restore, Together</p>
               </AnimatedElement>
-              <AnimatedElement delay={200}>
-                <div className={styles.thresholdTags}>
-                  {['Co-Production', 'Healthcare', 'Co-Design'].map((tag) => (
-                    <span key={tag} className={styles.tag}>{tag}</span>
-                  ))}
-                </div>
+              <AnimatedElement delay={150}>
+                <p className={styles.body} style={{ textAlign: 'center' }}>
+                  A grant-funded ecology of emotional support for oncology healthcare workers, developed through participatory research with staff at UPMC Magee-Womens Hospital.
+                </p>
               </AnimatedElement>
 
-              {/* Desktop metadata is in the sidebar; mobile metadata inline */}
-              <AnimatedElement delay={250}>
+              <AnimatedElement delay={200}>
                 <div className={styles.mobileMetadata}>
                   <div className={styles.metadataGrid}>
                     {metadata.map((item, i) => (
@@ -299,7 +280,6 @@ export default function GroundswellCaseStudy() {
               </AnimatedElement>
             </div>
 
-            {/* Image gallery */}
             <div className={styles.wide} style={{ paddingBottom: 'var(--space-xl)' }}>
               <AnimatedElement>
                 <div className={styles.imageGridFeatured}>
@@ -319,27 +299,25 @@ export default function GroundswellCaseStudy() {
             </div>
           </section>
 
-          {/* ═══ SECTION 2: CONTEXT ═══ */}
-          <section
-            className={styles.room}
-            id="context"
-            data-section="context"
-          >
+
+          {/* ═══ CONTEXT ═══ */}
+          <section className={styles.room} id="context" data-section="context">
             <div className={styles.narrow}>
               <AnimatedElement>
                 <p className={styles.body}>
-                  Healthcare workers in oncology carry a particular weight. They form deep relationships with patients over months of treatment — and then lose them. This grief accumulates without ceremony, without pause, without acknowledgment.
+                  Groundswell began as a graduate-level participatory design course at Carnegie Mellon University. Our team chose the challenge of improving workplace culture for oncology staff at UPMC Magee-Womens Hospital.
                 </p>
               </AnimatedElement>
               <AnimatedElement>
                 <p className={styles.bodySpaced}>
-                  We were asked to explore well-being support for the Gynecologic Oncology staff at UPMC Magee-Womens Hospital. What emerged was not a product or a service, but a <span className={styles.em} style={{ color: 'var(--color-sage)' }}>design ecology</span> — an interconnected system of touchpoints that gives staff permission to feel, restore, and reconnect on their own terms.
+                  What started as a semester project earned grant funding, moved into production, and launched as a formal quality improvement study. Groundswell is what emerged: not a single product, but an interconnected <span className={styles.em} style={{ color: 'var(--color-sage)' }}>design ecology</span> shaped by the people it serves.
                 </p>
               </AnimatedElement>
             </div>
           </section>
 
-          {/* ═══ SECTION 3: STAKES — DARK ═══ */}
+
+          {/* ═══ STAKES — DARK ═══ */}
           <section
             className={styles.sectionDark}
             style={{ paddingTop: 'var(--space-xl)', paddingBottom: 'var(--space-xl)' }}
@@ -349,22 +327,28 @@ export default function GroundswellCaseStudy() {
           >
             <div className={styles.narrow}>
               <AnimatedElement>
+                <p className={styles.bodyDark}>
+                  Healthcare, like many social systems in the United States, is built on structural inequity. My own encounters with these systems brought me to this project. I had no traditional healthcare experience, but I didn&apos;t need convincing that caregivers are failed by the institutions they serve.
+                </p>
+              </AnimatedElement>
+
+              <AnimatedElement>
                 <div className={styles.statsRow}>
                   <div className={styles.statItem}>
                     <p className={styles.statNumber}>1 in 5</p>
-                    <p className={styles.statDesc}>U.S. healthcare workers have experienced PTSD</p>
+                    <p className={styles.statDesc}>healthcare workers have experienced PTSD</p>
                   </div>
                   <div className={styles.statDivider} />
                   <div className={styles.statItem}>
                     <p className={styles.statNumber}>73%</p>
-                    <p className={styles.statDesc}>of emergency physicians report stigma around mental health treatment</p>
+                    <p className={styles.statDesc}>of emergency physicians report stigma around mental health</p>
                   </div>
                 </div>
               </AnimatedElement>
 
               <AnimatedElement>
                 <p className={`${styles.bodyDark} ${styles.bodyCenter}`}>
-                  Healthcare workers in oncology carry compounded grief — repeated exposure to loss that accumulates when not processed. This is not an individual failure. It is a <span className={styles.em} style={{ color: 'rgba(255,255,255,0.95)' }}>systemic</span> one.
+                  This is not an individual failure. It is a <span className={styles.em} style={{ color: 'rgba(255,255,255,0.95)' }}>systemic</span> one.
                 </p>
               </AnimatedElement>
 
@@ -372,16 +356,7 @@ export default function GroundswellCaseStudy() {
                 <div className={styles.heroQuote}>
                   <span className={styles.heroQuoteMark} style={{ color: 'var(--color-plum-soft)', opacity: 0.3 }}>&ldquo;</span>
                   <p className={`${styles.heroQuoteText} ${styles.heroQuoteTextDark}`}>
-                    I was not prepared for this. No one officially trained me on the emotional trauma that this job causes.
-                  </p>
-                  <div className={styles.heroQuoteBar} style={{ background: 'var(--color-plum-soft)', opacity: 0.5 }} />
-                </div>
-              </AnimatedElement>
-              <AnimatedElement>
-                <div className={styles.heroQuote}>
-                  <span className={styles.heroQuoteMark} style={{ color: 'var(--color-plum-soft)', opacity: 0.3 }}>&ldquo;</span>
-                  <p className={`${styles.heroQuoteText} ${styles.heroQuoteTextDark}`}>
-                    There is no time to grieve. Once someone passes there is no time to grieve the loss before another person comes in.
+                    A special person can do this work forever, a good person can do it for a little while, most people couldn&apos;t do it for a day.
                   </p>
                   <div className={styles.heroQuoteBar} style={{ background: 'var(--color-plum-soft)', opacity: 0.5 }} />
                 </div>
@@ -389,13 +364,9 @@ export default function GroundswellCaseStudy() {
             </div>
           </section>
 
-          {/* ═══ SECTION 4: SENSE ═══ */}
-          <section
-            className={styles.room}
-            id="sense"
-            data-section="sense"
-            data-phase="sense"
-          >
+
+          {/* ═══ SENSE — What We Heard ═══ */}
+          <section className={styles.room} id="sense" data-section="sense" data-phase="sense">
             <div className={styles.narrow}>
               <AnimatedElement>
                 <div style={{ marginBottom: 'var(--space-md)' }}>
@@ -403,19 +374,19 @@ export default function GroundswellCaseStudy() {
                     <SenseIcon />
                     <span className={styles.phaseLabel} style={{ color: 'var(--color-sage)' }}>Sense</span>
                   </div>
-                  <h2 className={styles.phaseTitle}>Reading the Room Before Designing Anything</h2>
+                  <h2 className={styles.phaseTitle}>What We Heard</h2>
                   <div className={styles.accentBar} style={{ background: 'var(--color-sage)' }} />
                 </div>
               </AnimatedElement>
 
               <AnimatedElement>
-                <p className={styles.body} style={{ marginTop: 'var(--space-xs)' }}>
-                  We were asked to explore well-being support for the Gynecologic Oncology staff. We came as outsiders — we named that from the start. We haven&apos;t lived this. We hadn&apos;t earned trust yet. So we started by <span className={styles.em} style={{ color: 'var(--color-sage)' }}>listening</span>.
+                <p className={styles.body}>
+                  Over 15 weeks, my team and I shadowed nurses across multiple shifts, conducted contextual interviews, and facilitated a confidential conversation with a former employee who could speak freely.
                 </p>
               </AnimatedElement>
               <AnimatedElement>
                 <p className={styles.bodySpaced}>
-                  Within minutes of holding space for conversation, tears surfaced. Staff saved their tears for the car ride home or the bathroom stall. Emotion was running just beneath the surface with nowhere to go.
+                  The stories were enough to bring tears to our eyes, and the environment spoke volumes. We heard about immeasurable compassion and dedicated care but also immense pain from lack of structural support. The hallways were overflowing with supportive notes and personal touches, but the harsh lighting, windowless walls, and cramped desks revealed barriers that no amount of personal effort could overcome.
                 </p>
               </AnimatedElement>
             </div>
@@ -423,79 +394,118 @@ export default function GroundswellCaseStudy() {
             <div className={styles.wide} style={{ marginTop: 'var(--space-lg)' }}>
               <AnimatedElement>
                 <figure className={styles.figure}>
-                  <LightboxImage imageKey="gs-workshop-flower-01" width={1200} alt="Workshop moment — participants in Nourishing the Flower activity" openLightbox={openLightbox} style={{ height: 400, objectFit: 'cover' }} />
-                  <figcaption className={styles.caption}>Nourishing the Flower and Women in White Coats — surfacing what sustains alongside what erodes</figcaption>
+                  <LightboxImage imageKey="gs-sense-affinity-01" width={1200} alt="Environment — the contrast between personal touches and institutional neglect" openLightbox={openLightbox} style={{ height: 380, objectFit: 'cover' }} />
+                  <figcaption className={styles.caption}>The contrast between personal touches and institutional neglect</figcaption>
                 </figure>
               </AnimatedElement>
             </div>
 
-            <div className={styles.narrow} style={{ marginTop: 'var(--space-lg)' }}>
+            <div className={styles.narrow} style={{ marginTop: 'var(--space-md)' }}>
               <AnimatedElement>
-                <p className={styles.body}>
-                  We partnered with CancerBridges to honor women in cancer care. Using the anatomy of a flower as a metaphor for workplace health, participants mapped their experiences — one flourishing, one wilting. Each received a hand-made orchid pin they could add to a shared poster.
-                </p>
+                <div className={`${styles.inlineQuote} ${styles.inlineQuoteLight}`} style={{ borderLeftColor: 'var(--color-sage)' }}>
+                  <span className={styles.inlineQuoteMark} style={{ color: 'var(--color-sage)', opacity: 0.12 }}>&ldquo;</span>
+                  <p className={styles.inlineQuoteText}>&ldquo;I feel trapped. If I leave my patients I will feel guilty. If I leave my workers in this mess I will feel guilty.&rdquo;</p>
+                </div>
               </AnimatedElement>
-            </div>
-
-            <div className={styles.wide} style={{ marginTop: 'var(--space-lg)' }}>
               <AnimatedElement>
-                <div className={styles.imageGrid2col}>
-                  <figure className={styles.figure}>
-                    <LightboxImage imageKey="gs-workshop-flower-02" width={600} alt="Orchid poster with participant handwriting" openLightbox={openLightbox} style={{ height: 300, objectFit: 'cover' }} />
-                    <figcaption className={styles.caption}>Orchid poster — reflections on care and self-care</figcaption>
-                  </figure>
-                  <figure className={styles.figure}>
-                    <LightboxImage imageKey="gs-workshop-coats-01" width={600} alt="Completed flower worksheets" openLightbox={openLightbox} style={{ height: 300, objectFit: 'cover' }} />
-                    <figcaption className={styles.caption}>Nourishing the Flower — what sustains and what erodes</figcaption>
-                  </figure>
+                <div className={`${styles.inlineQuote} ${styles.inlineQuoteLight}`} style={{ borderLeftColor: 'var(--color-sage)' }}>
+                  <span className={styles.inlineQuoteMark} style={{ color: 'var(--color-sage)', opacity: 0.12 }}>&ldquo;</span>
+                  <p className={styles.inlineQuoteText}>&ldquo;There is no time to grieve. Once someone passes there is no time before another person comes in.&rdquo;</p>
+                </div>
+              </AnimatedElement>
+              <AnimatedElement>
+                <div className={`${styles.inlineQuote} ${styles.inlineQuoteLight}`} style={{ borderLeftColor: 'var(--color-sage)' }}>
+                  <span className={styles.inlineQuoteMark} style={{ color: 'var(--color-sage)', opacity: 0.12 }}>&ldquo;</span>
+                  <p className={styles.inlineQuoteText}>&ldquo;I was not prepared for this. No one trained me on the emotional trauma that this job causes.&rdquo;</p>
                 </div>
               </AnimatedElement>
             </div>
           </section>
 
-          {/* ═══ SECTION 5: TRUST (Sense continued) ═══ */}
+
+          {/* ═══ TRUST — Building Trust ═══ */}
           <section
             id="trust"
             data-section="trust"
             data-phase="sense"
-            style={{ paddingBottom: 'var(--space-xl)' }}
+            style={{ paddingTop: 'var(--space-xl)', paddingBottom: 'var(--space-xl)', borderTop: '1px solid var(--color-cream-dark)' }}
           >
             <div className={styles.narrow}>
               <AnimatedElement>
+                <h2 className={styles.sectionHeading}>Building Trust</h2>
+                <div className={styles.accentBar} style={{ background: 'var(--color-sage)', marginBottom: 'var(--space-md)' }} />
+              </AnimatedElement>
+              <AnimatedElement>
                 <p className={styles.body}>
-                  But what struck me most was what they had already built. Every desk was decorated with cards from patients and families, photos, words of encouragement. These people love what they do. They care deeply.
+                  Three participatory activities, each deepening the relationship with staff and increasing the level of vulnerability we could hold together. The sequence was intentional: celebration first, then reflection, then grief.
+                </p>
+              </AnimatedElement>
+            </div>
+
+            {/* Women in White Coats */}
+            <div className={styles.wide} style={{ marginTop: 'var(--space-lg)' }}>
+              <AnimatedElement>
+                <div className={styles.imageGridStacked}>
+                  <LightboxImage imageKey="gs-workshop-coats-01" width={600} alt="Women in White Coats — orchid pins, shared poster" openLightbox={openLightbox} style={{ height: 280, objectFit: 'cover' }} />
+                  <div>
+                    <h3 className={styles.subHeading}>Women in White Coats</h3>
+                    <p className={styles.body}>
+                      In partnership with CancerBridges, we honored women in cancer care with handmade orchid pins and a shared poster. Public, celebratory, visible on the unit.
+                    </p>
+                  </div>
+                </div>
+              </AnimatedElement>
+            </div>
+
+            {/* Nourishing the Flower */}
+            <div className={styles.wide} style={{ marginTop: 'var(--space-lg)' }}>
+              <AnimatedElement>
+                <div className={styles.imageGridStackedReverse}>
+                  <div>
+                    <h3 className={styles.subHeading}>Nourishing the Flower</h3>
+                    <p className={styles.body}>
+                      Using a flower as metaphor for workplace health, staff mapped what sustains them and what quietly erodes them. Staff who had never named their working conditions started doing so through color and metaphor.
+                    </p>
+                  </div>
+                  <LightboxImage imageKey="gs-workshop-flower-01" width={600} alt="Flower worksheets — warm, tactile, real" openLightbox={openLightbox} style={{ height: 280, objectFit: 'cover' }} />
+                </div>
+              </AnimatedElement>
+            </div>
+
+            {/* Grief Workshop */}
+            <div className={styles.narrow} style={{ marginTop: 'var(--space-lg)' }}>
+              <AnimatedElement>
+                <h3 className={styles.subHeading}>Grief Workshop</h3>
+              </AnimatedElement>
+              <AnimatedElement>
+                <p className={styles.body}>
+                  I designed a trauma-responsive facilitation approach: a script that named our positionality directly, a stuffed rabbit as comfort object to abstract grief through safe distance, and a take-home integration packet so no one was left emotionally opened without support.
                 </p>
               </AnimatedElement>
               <AnimatedElement>
-                <div style={{ marginTop: 'var(--space-lg)' }}>
-                  <p style={{ fontFamily: 'var(--font-heading)', fontSize: 'var(--text-pull-quote)', fontWeight: 'var(--weight-title)', color: 'var(--color-ink)', lineHeight: 1.3, margin: 0 }}>
-                    They know what they need — <span style={{ position: 'relative', display: 'inline-block' }}>
-                      no one had asked.
-                      <span style={{ position: 'absolute', bottom: -4, left: 0 }}>
-                        <HandUnderline color="var(--color-sage)" width={180} />
-                      </span>
-                    </span>
-                  </p>
-                </div>
+                <p className={styles.bodySpaced}>
+                  The biggest takeaway across all three activities was the need for <span className={styles.em} style={{ color: 'var(--color-sage)' }}>validation and permission</span>. Staff needed to hear that their feelings were real and shared before they could engage with any kind of support. This became a design principle that threaded through everything we built.
+                </p>
               </AnimatedElement>
+            </div>
 
+            <div className={styles.wide} style={{ marginTop: 'var(--space-md)' }}>
               <AnimatedElement>
-                <div className={`${styles.lessonMoment} ${styles.lessonMomentLight}`}>
-                  <span className={`${styles.lessonLabel} ${styles.lessonLabelLight}`}>✦ Lesson</span>
-                  <p className={`${styles.lessonText} ${styles.lessonTextLight}`}>
-                    The most meaningful support emerges from within a community. Our job was amplification, not invention.
-                  </p>
-                </div>
+                <figure className={styles.figure}>
+                  <LightboxImage imageKey="gs-workshop-grief-01" width={1200} alt="Grief workshop — worksheet, comfort objects, integration packet" openLightbox={openLightbox} style={{ height: 340, objectFit: 'cover' }} />
+                  <figcaption className={styles.caption}>Every choice reflects facilitation intelligence — designing the emotional container, not just the questions</figcaption>
+                </figure>
               </AnimatedElement>
             </div>
           </section>
 
-          {/* ═══ SECTION 6: WEAVE ═══ */}
+
+          {/* ═══ WEAVE — The Synthesis ═══ */}
           <section
             id="weave"
             data-section="weave"
             data-phase="weave"
-            style={{ paddingTop: 'var(--space-xl)', paddingBottom: 0 }}
+            style={{ paddingTop: 'var(--space-xl)', paddingBottom: 'var(--space-xl)', borderTop: '1px solid var(--color-cream-dark)' }}
           >
             <div className={styles.narrow}>
               <AnimatedElement>
@@ -504,25 +514,18 @@ export default function GroundswellCaseStudy() {
                     <WeaveIcon />
                     <span className={styles.phaseLabel} style={{ color: 'var(--color-plum)' }}>Weave</span>
                   </div>
-                  <h2 className={styles.phaseTitle}>Where the Thinking Lives</h2>
+                  <h2 className={styles.phaseTitle}>The Synthesis</h2>
                   <div className={styles.accentBar} style={{ background: 'var(--color-plum)' }} />
                 </div>
               </AnimatedElement>
               <AnimatedElement>
-                <p className={styles.body} style={{ marginTop: 'var(--space-xs)' }}>
-                  We organized hundreds of observations and quotes through affinity mapping, searching for patterns across four dimensions.
+                <p className={styles.body}>
+                  I suggested we use a tetrahedron analysis to map findings across four dimensions: recognition, environment, culture, and systemic. The framework revealed what individual quotes couldn&apos;t: the problem was the compounding effect of all four pressing in at once.
                 </p>
               </AnimatedElement>
             </div>
-          </section>
 
-          {/* Weave — Dark Tetrahedron */}
-          <section
-            className={styles.sectionDark}
-            style={{ paddingTop: 80, paddingBottom: 80, marginTop: 'var(--space-lg)' }}
-            data-dark-section
-          >
-            <div className={styles.wide}>
+            <div className={styles.wide} style={{ marginTop: 'var(--space-lg)' }}>
               <AnimatedElement>
                 <div className={styles.dimensionsGrid}>
                   {dimensions.map((dim, i) => (
@@ -538,134 +541,59 @@ export default function GroundswellCaseStudy() {
               </AnimatedElement>
             </div>
 
-            <div className={styles.wide} style={{ marginTop: 'var(--space-lg)' }}>
+            <div className={styles.narrow} style={{ marginTop: 'var(--space-md)' }}>
               <AnimatedElement>
-                <div className={styles.voidBlock}>
-                  <img
-                    src={gsImg('gs-sense-affinity-01', 800)}
-                    alt="The Void — zoomed detail of synthesis"
-                    className={`${styles.projectImage} ${styles.voidImage}`}
-                    loading="lazy"
-                    style={{ height: 360, objectFit: 'cover' }}
-                  />
-                  <div className={styles.voidText}>
-                    <p className={styles.voidTitle}>The Void</p>
-                    <p className={styles.bodyDark}>
-                      While patient-centered care aims to improve health outcomes, it often neglects the well-being of healthcare workers. In a profit-driven, hierarchical system that treats staff as disposable, the intense focus on patients comes at the cost of worker support.
-                    </p>
-                  </div>
-                </div>
+                <p className={styles.body}>
+                  At the center of these dimensions, the methodology names a structural gap: the Void. The system optimizes for patients while treating staff as infinitely renewable. We couldn&apos;t fix that. But we could design within it.
+                </p>
               </AnimatedElement>
             </div>
           </section>
 
-          {/* ═══ SECTION 7: TURNING POINT (Weave continued) ═══ */}
+
+          {/* ═══ TURNING POINT ═══ */}
           <section
             id="turning"
             data-section="turning"
             data-phase="weave"
-            style={{ paddingTop: 'var(--space-xl)', paddingBottom: 'var(--space-xl)' }}
+            style={{ paddingTop: 'var(--space-xl)', paddingBottom: 'var(--space-xl)', borderTop: '1px solid var(--color-cream-dark)' }}
           >
             <div className={styles.narrow}>
               <AnimatedElement>
-                <h3 className={styles.subHeading}>The CTB Revelation</h3>
+                <h2 className={styles.sectionHeading}>The Turning Point</h2>
+                <div className={styles.accentBar} style={{ background: 'var(--color-plum)', marginBottom: 'var(--space-md)' }} />
               </AnimatedElement>
+
               <AnimatedElement>
                 <p className={styles.body}>
-                  We had been told the Ceased to Breathe email — the notification sent when a patient dies — was a cold clinical protocol. We presented it that way in a feedback session.
+                  One component was a redesign of the Ceased to Breathe email, the hospital&apos;s patient death notification, built entirely within Outlook.
                 </p>
               </AnimatedElement>
               <AnimatedElement>
                 <p className={styles.bodySpaced}>
-                  A nurse broke down in tears. She had created that protocol. It was her innovation — born from wanting colleagues to learn about patient deaths with <span className={styles.em} style={{ color: 'var(--color-plum)' }}>dignity</span>, not from a hallway whisper.
+                  We initially presented it as a correction to a cold clinical protocol. In a feedback session, the nurse who created it was moved to tears. She had poured care into that protocol, and we were dismissing her work.
+                </p>
+              </AnimatedElement>
+              <AnimatedElement>
+                <p className={styles.bodySpaced}>
+                  That rupture reframed the entire project: staff are already innovating. They don&apos;t need outsiders with solutions. They need their existing care work recognized and amplified.
                 </p>
               </AnimatedElement>
 
-              <AnimatedElement>
-                <div className={styles.heroQuote}>
-                  <span className={styles.heroQuoteMark} style={{ color: 'var(--color-plum)', opacity: 0.2 }}>&ldquo;</span>
-                  <p className={styles.heroQuoteText}>
-                    <span style={{ position: 'relative', display: 'inline' }}>
-                      They were already innovating
-                      <HandCircle color="var(--color-plum-soft)" width={260} height={38} />
-                    </span> — they lacked support to reach the full potential of their ideas.
-                  </p>
-                  <div className={styles.heroQuoteBar} style={{ background: 'var(--color-plum)', opacity: 0.35 }} />
-                </div>
-              </AnimatedElement>
-
-              <AnimatedElement>
-                <p className={styles.body}>
-                  We shifted our entire narrative: from &ldquo;the system let you down&rdquo; to <span className={styles.em} style={{ color: 'var(--color-plum)' }}>&ldquo;you have already created something remarkable — we want to amplify it.&rdquo;</span>
-                </p>
-              </AnimatedElement>
-
-              <AnimatedElement>
-                <div className={`${styles.lessonMoment} ${styles.lessonMomentLight}`}>
-                  <span className={`${styles.lessonLabel} ${styles.lessonLabelLight}`}>✦ Lesson</span>
-                  <p className={`${styles.lessonText} ${styles.lessonTextLight}`}>
-                    I would build in more assumption-testing before presenting interpretations of existing systems back to their creators.
-                  </p>
-                </div>
-              </AnimatedElement>
-            </div>
-
-            <div className={styles.narrow}>
-              <AnimatedElement>
-                <h3 className={styles.subHeading}>The Language Shift</h3>
-              </AnimatedElement>
-              <AnimatedElement>
-                <p className={styles.body}>
-                  A physician told us: oncology work involves more than grief. The word narrowed the focus and inadvertently pathologized their experience.
-                </p>
-              </AnimatedElement>
-
-              {/* PivotQuote animation */}
               <AnimatedElement>
                 <PivotQuote />
-              </AnimatedElement>
-
-              <AnimatedElement>
-                <div className={`${styles.lessonMoment} ${styles.lessonMomentLight}`}>
-                  <span className={`${styles.lessonLabel} ${styles.lessonLabelLight}`}>✦ Lesson</span>
-                  <p className={`${styles.lessonText} ${styles.lessonTextLight}`}>
-                    Listening isn&apos;t passive. A single word from a participant changed the entire frame of the project.
-                  </p>
-                </div>
-              </AnimatedElement>
-            </div>
-
-            <div className={styles.narrow}>
-              <AnimatedElement>
-                <h3 className={styles.subHeading}>Designing the Grief Workshop</h3>
-              </AnimatedElement>
-              <AnimatedElement>
-                <p className={styles.body}>
-                  We needed staff to share their deepest experiences with loss — people who pride themselves on toughness. Every facilitation choice had to honor that identity while creating genuine space for vulnerability.
-                </p>
-              </AnimatedElement>
-              <AnimatedElement>
-                <p className={styles.bodySpaced}>
-                  I wrote the introductory script, proposed a stuffed rabbit as a comfort object, and designed <span className={styles.em} style={{ color: 'var(--color-plum)' }}>emotional abstraction</span>: scenarios presented at a distance so staff could respond without reopening wounds. After testing, I advocated for splitting it into two focused sessions and created take-home integration packets.
-                </p>
-              </AnimatedElement>
-            </div>
-            <div className={styles.wide} style={{ marginTop: 'var(--space-md)' }}>
-              <AnimatedElement>
-                <figure className={styles.figure}>
-                  <LightboxImage imageKey="gs-workshop-grief-01" width={1200} alt="Grief workshop — worksheet, comfort objects, integration packet" openLightbox={openLightbox} style={{ height: 340, objectFit: 'cover' }} />
-                  <figcaption className={styles.caption}>Every choice reflects facilitation intelligence — designing the emotional container, not just the questions</figcaption>
-                </figure>
               </AnimatedElement>
             </div>
           </section>
 
-          {/* ═══ SECTION 8: SHAPE ═══ */}
+
+          {/* ═══ SHAPE — What We Built ═══ */}
           <section
             className={styles.room}
             id="shape"
             data-section="shape"
             data-phase="shape"
+            style={{ borderTop: '1px solid var(--color-cream-dark)' }}
           >
             <div className={styles.narrow}>
               <AnimatedElement>
@@ -674,18 +602,13 @@ export default function GroundswellCaseStudy() {
                     <ShapeIcon />
                     <span className={styles.phaseLabel} style={{ color: 'var(--color-terracotta)' }}>Shape</span>
                   </div>
-                  <h2 className={styles.phaseTitle}>Giving Form to What Was Already Trying to Surface</h2>
+                  <h2 className={styles.phaseTitle}>What We Built</h2>
                   <div className={styles.accentBar} style={{ background: 'var(--color-terracotta)' }} />
                 </div>
               </AnimatedElement>
               <AnimatedElement>
-                <p style={{ fontFamily: 'var(--font-heading)', fontSize: 'var(--text-h4)', fontWeight: 'var(--weight-title)', fontStyle: 'italic', color: 'var(--color-ink-light)', lineHeight: 1.5, margin: '0 0 var(--space-md)' }}>
-                  What we&apos;d pitched and what needed to be built were two different things.
-                </p>
-              </AnimatedElement>
-              <AnimatedElement>
                 <p className={styles.body}>
-                  The ecosystem was designed to meet staff wherever they are in their day. Together, the four components create conditions for <span className={styles.em} style={{ color: 'var(--color-terracotta)' }}>culture change to emerge from within</span>.
+                  Four interconnected components, each addressing a different dimension of well-being. The ecosystem was designed to meet staff wherever they are in their day — together creating conditions for <span className={styles.em} style={{ color: 'var(--color-terracotta)' }}>culture change to emerge from within</span>.
                 </p>
               </AnimatedElement>
 
@@ -722,7 +645,7 @@ export default function GroundswellCaseStudy() {
               </AnimatedElement>
               <AnimatedElement>
                 <p className={styles.body}>
-                  Meeting people in their bodies, not their heads. I drew on somatic bodywork training to root prompts in <span className={styles.em} style={{ color: 'var(--color-terracotta)' }}>embodied exercises</span> — breathing, movement, gentle touch — without naming them as such. I excluded the research-backed &ldquo;why it works&rdquo; framing — keeping staff in their emotional state rather than pulling them into cognitive mode.
+                  Meeting people in their bodies, not their heads. I drew on somatic bodywork training to root prompts in <span className={styles.em} style={{ color: 'var(--color-terracotta)' }}>embodied exercises</span> — breathing, movement, gentle touch — without naming them as such.
                 </p>
               </AnimatedElement>
             </div>
@@ -731,25 +654,36 @@ export default function GroundswellCaseStudy() {
                 <ReflectionCards />
               </AnimatedElement>
             </div>
-            <div className={styles.narrow} style={{ marginTop: 'var(--space-md)' }}>
-              <AnimatedElement>
-                <figure className={styles.figure}>
-                  <LightboxImage imageKey="gs-context-01" width={800} alt="User interacting with full card set — hands visible, cards spread" openLightbox={openLightbox} style={{ height: 280, objectFit: 'cover' }} />
-                  <figcaption className={styles.caption}>Every staff member received their own deck; one set permanently lives in the pod</figcaption>
-                </figure>
-              </AnimatedElement>
-            </div>
           </section>
 
-          {/* ═══ SECTION 9: MAKING IT REAL (Shape continued) ═══ */}
+
+          {/* ═══ MAKING ═══ */}
           <section
             id="making"
             data-section="making"
             data-phase="shape"
-            style={{ paddingBottom: 'var(--space-xl)' }}
+            style={{ paddingTop: 'var(--space-xl)', paddingBottom: 'var(--space-xl)', borderTop: '1px solid var(--color-cream-dark)' }}
           >
-            {/* Pod + Surveillance */}
-            <div className={styles.wide}>
+            <div className={styles.narrow}>
+              <AnimatedElement>
+                <h2 className={styles.sectionHeading}>The Making</h2>
+                <div className={styles.accentBar} style={{ background: 'var(--color-terracotta)', marginBottom: 'var(--space-md)' }} />
+              </AnimatedElement>
+
+              <AnimatedElement>
+                <p className={styles.body}>
+                  Ten weeks from concept to installation. I led donor outreach across Etsy, LinkedIn, email, and phone, securing <span className={styles.em} style={{ color: 'var(--color-terracotta)' }}>$30K+ in donated materials</span>: the NookPod ($13K), ceramic meditation stones, wood materials, volunteer fabrication, and more.
+                </p>
+              </AnimatedElement>
+              <AnimatedElement>
+                <p className={styles.bodySpaced}>
+                  Staff feedback shifted our language from &ldquo;grief&rdquo; to &ldquo;restoration,&rdquo; a change I translated as the team&apos;s primary copywriter. I named the project &ldquo;Groundswell&rdquo; — water that rises naturally from deep within the earth.
+                </p>
+              </AnimatedElement>
+            </div>
+
+            {/* Pod video */}
+            <div className={styles.wide} style={{ marginTop: 'var(--space-lg)' }}>
               <AnimatedElement>
                 <ScrollVideo
                   src={gsVid('gs-walkthrough-video')}
@@ -758,23 +692,19 @@ export default function GroundswellCaseStudy() {
               </AnimatedElement>
             </div>
 
+            {/* Surveillance story */}
             <div className={styles.narrow} style={{ marginTop: 'var(--space-md)' }}>
               <AnimatedElement>
                 <h3 className={styles.subHeading}>Trust, Not Surveillance</h3>
               </AnimatedElement>
               <AnimatedElement>
                 <p className={styles.body}>
-                  Staff had been saving tears for car rides and bathroom stalls — the pod says <span className={styles.em} style={{ color: 'var(--color-terracotta)' }}>emotional labor is real work</span> deserving of real space.
+                  When hospital administration required lockable doors on the pod, then proposed key-card monitoring to track access, we pushed back: care must include freedom to pause without guilt or surveillance.
                 </p>
               </AnimatedElement>
               <AnimatedElement>
                 <p className={styles.bodySpaced}>
-                  Administration required doors or the project wouldn&apos;t proceed. Then proposed key-card monitoring to track access. We pushed back: care must include freedom to pause without guilt or surveillance.
-                </p>
-              </AnimatedElement>
-              <AnimatedElement>
-                <p className={styles.bodySpaced}>
-                  I prepared polished documentation, prototypes, and pitch materials for our hospital champion Dr. Taylor — understanding that the person with institutional relationships needed to lead the conversation, not the design team. The resolution: an acrylic facade that serves privacy, aesthetics, and emotional safety simultaneously. LED lights subtly signal occupancy without surveillance.
+                  I prepared polished documentation, prototypes, and pitch materials for our hospital champion Dr. Taylor — understanding that the person with institutional relationships needed to lead the conversation, not the design team. The resolution: an acrylic facade that serves privacy, aesthetics, and emotional safety simultaneously.
                 </p>
               </AnimatedElement>
 
@@ -786,15 +716,6 @@ export default function GroundswellCaseStudy() {
                   <div style={{ margin: '6px auto 0', width: 280 }}>
                     <HandUnderline color="var(--color-terracotta)" width={280} />
                   </div>
-                </div>
-              </AnimatedElement>
-
-              <AnimatedElement>
-                <div className={`${styles.lessonMoment} ${styles.lessonMomentLight}`}>
-                  <span className={`${styles.lessonLabel} ${styles.lessonLabelLight}`}>✦ Lesson</span>
-                  <p className={`${styles.lessonText} ${styles.lessonTextLight}`}>
-                    Navigating institutional constraints means understanding power dynamics — knowing when to lead versus when to equip the right person with the tools to lead.
-                  </p>
                 </div>
               </AnimatedElement>
             </div>
@@ -846,7 +767,7 @@ export default function GroundswellCaseStudy() {
                     <div>
                       <h3 className={styles.subHeading}>Ceased to Breathe Email</h3>
                       <p className={styles.body}>
-                        A compassionate redesign honoring the nurse&apos;s original innovation. Updated language, timing, and tone — transforming a clinical notification into a moment of collective acknowledgment. The patient&apos;s name. A brief pause. Permission to feel.
+                        A compassionate redesign honoring the nurse&apos;s original innovation. Updated language, timing, and tone — transforming a clinical notification into a moment of collective acknowledgment.
                       </p>
                     </div>
                     <LightboxImage imageKey="gs-ctb-email" width={800} alt="CTB Email — compassionate redesign" openLightbox={openLightbox} style={{ height: 340, objectFit: 'cover' }} />
@@ -855,28 +776,8 @@ export default function GroundswellCaseStudy() {
               </div>
             </div>
 
-            {/* Naming + $30K */}
+            {/* Partners */}
             <div className={styles.narrow} style={{ marginTop: 'var(--space-xl)' }}>
-              <AnimatedElement>
-                <h3 className={styles.subHeading}>Naming &amp; Voice</h3>
-              </AnimatedElement>
-              <AnimatedElement>
-                <p className={styles.body}>
-                  I named the project &ldquo;Groundswell&rdquo; — water that rises naturally from deep within the earth. I drafted the original project poem, brand copy, phased email communications, and drove the language shift that permeated every component.
-                </p>
-              </AnimatedElement>
-
-              <AnimatedElement>
-                <div className={styles.donationDisplay}>
-                  <p className={styles.donationNumber}>$30K+</p>
-                  <p className={styles.donationLabel}>in donated materials and services</p>
-                  <div className={styles.donationBar} />
-                  <p className={styles.donationDesc}>
-                    I led cold outreach across Etsy, LinkedIn, email, and phone. This wasn&apos;t a fundraising department — it was a <span className={styles.em} style={{ color: 'var(--color-terracotta)' }}>design student picking up the phone</span>.
-                  </p>
-                </div>
-              </AnimatedElement>
-
               <AnimatedElement>
                 <div className={styles.partnerGrid}>
                   <p className={styles.partnerGridLabel}>Partners &amp; Donors</p>
@@ -893,7 +794,8 @@ export default function GroundswellCaseStudy() {
             </div>
           </section>
 
-          {/* ═══ SECTION 10: TESTING ═══ */}
+
+          {/* ═══ PLAY TESTING ═══ */}
           <section
             className={styles.sectionTinted}
             style={{ paddingTop: 'var(--space-xl)', paddingBottom: 'var(--space-xl)' }}
@@ -902,48 +804,31 @@ export default function GroundswellCaseStudy() {
           >
             <div className={styles.narrow}>
               <AnimatedElement>
-                <h2 className={styles.sectionHeading}>Testing With Real People</h2>
+                <h2 className={styles.sectionHeading}>Play Testing</h2>
                 <div className={styles.accentBar} style={{ background: 'var(--color-terracotta)', marginBottom: 'var(--space-md)' }} />
               </AnimatedElement>
               <AnimatedElement>
                 <p className={styles.body} style={{ marginBottom: 'var(--space-lg)' }}>
-                  Before hospital installation, we invited <span className={styles.em} style={{ color: 'var(--color-terracotta)' }}>30 participants</span> to test the pod experience — retired nurses, UPMC administrators, design professors, mental health professionals, and designers. Three patterns emerged.
+                  <span className={styles.em} style={{ color: 'var(--color-terracotta)' }}>30 participants</span> tested the pod before hospital installation — retired nurses, UPMC administrators, design professors, mental health professionals. Three issues, three fixes:
                 </p>
               </AnimatedElement>
 
-              {feedbackFixes.map((fix, i) => (
-                <AnimatedElement key={i}>
-                  <div className={styles.feedbackTimeline}>
-                    <div className={styles.feedbackDot}>
-                      <span className={styles.feedbackNumber}>{fix.number}</span>
-                      {!fix.isLast && <div className={styles.feedbackLine} />}
-                    </div>
-                    <div className={fix.isLast ? styles.feedbackContentLast : styles.feedbackContent}>
-                      <p className={styles.feedbackTitle}>{fix.title}</p>
-                      <p className={styles.body} style={{ marginBottom: 'var(--space-sm)' }}>{fix.problem}</p>
-
-                      <div className={`${styles.inlineQuote} ${styles.inlineQuoteLight}`} style={{ borderLeftColor: 'var(--color-terracotta)', background: 'var(--color-terracotta-muted)' }}>
-                        <span className={styles.inlineQuoteMark} style={{ color: 'var(--color-terracotta)', opacity: 0.12 }}>&ldquo;</span>
-                        <p className={styles.inlineQuoteText}>&ldquo;{fix.quote}&rdquo;</p>
-                      </div>
-
-                      <div className={styles.feedbackArrow}>
-                        <span className={styles.feedbackArrowIcon}>→</span>
-                        <p className={styles.body} style={{ color: 'var(--color-ink)' }}>{fix.solution}</p>
-                      </div>
-                    </div>
-                  </div>
-                </AnimatedElement>
-              ))}
-
               <AnimatedElement>
-                <div style={{ marginTop: 'var(--space-lg)', paddingTop: 'var(--space-md)', borderTop: '1px solid rgba(149,96,88,0.1)' }}>
-                  <p className={styles.sectionLabel} style={{ color: 'var(--color-terracotta)' }}>What participants said after</p>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-sm)' }}>
+                  {feedbackFixes.map((item, i) => (
+                    <div key={i} style={{ display: 'flex', alignItems: 'baseline', gap: 'var(--space-xs)' }}>
+                      <span style={{ fontFamily: 'var(--font-heading)', fontSize: 'var(--text-body-large)', fontVariationSettings: 'var(--font-soft)', color: 'var(--color-terracotta)', flexShrink: 0 }}>→</span>
+                      <div>
+                        <span style={{ fontWeight: 600, color: 'var(--color-ink)' }}>{item.title}: </span>
+                        <span className={styles.body}>{item.fix}</span>
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </AnimatedElement>
 
               <AnimatedElement>
-                <div className={styles.heroQuote}>
+                <div className={styles.heroQuote} style={{ marginTop: 'var(--space-lg)' }}>
                   <span className={styles.heroQuoteMark} style={{ color: 'var(--color-terracotta)', opacity: 0.2 }}>&ldquo;</span>
                   <p className={styles.heroQuoteText}>
                     As soon as I stepped inside, I almost teared up. You&apos;re not always aware of how frazzled you are until you stop.
@@ -951,19 +836,11 @@ export default function GroundswellCaseStudy() {
                   <div className={styles.heroQuoteBar} style={{ background: 'var(--color-terracotta)', opacity: 0.35 }} />
                 </div>
               </AnimatedElement>
-
-              <AnimatedElement>
-                <div className={`${styles.inlineQuote} ${styles.inlineQuoteLight}`} style={{ borderLeftColor: 'var(--color-terracotta)', background: 'var(--color-terracotta-muted)' }}>
-                  <span className={styles.inlineQuoteMark} style={{ color: 'var(--color-terracotta)', opacity: 0.12 }}>&ldquo;</span>
-                  <p className={styles.inlineQuoteText}>
-                    &ldquo;Being able to stop in the middle of the day and have the physical and mental space to get quiet and meditate is really helpful — much better than a bathroom stall.&rdquo;
-                  </p>
-                </div>
-              </AnimatedElement>
             </div>
           </section>
 
-          {/* ═══ SECTION 11: IMPACT ═══ */}
+
+          {/* ═══ IMPACT ═══ */}
           <section
             className={styles.sectionAccent}
             style={{ paddingTop: 'var(--space-xl)', paddingBottom: 'var(--space-xl)' }}
@@ -972,24 +849,24 @@ export default function GroundswellCaseStudy() {
           >
             <div className={styles.narrow}>
               <AnimatedElement>
-                <h2 className={styles.sectionHeading}>What Happened</h2>
+                <h2 className={styles.sectionHeading}>Impact</h2>
                 <div className={styles.accentBar} style={{ background: 'var(--color-plum)', marginBottom: 'var(--space-md)' }} />
               </AnimatedElement>
 
               <AnimatedElement>
-                <div className={styles.achievementList}>
-                  {achievements.map((fact, i) => (
-                    <div key={i} className={styles.achievementRow}>
-                      <span className={styles.achievementAccent}>{fact.accent}</span>
-                      <span className={styles.achievementRest}>{fact.rest}</span>
-                    </div>
-                  ))}
-                </div>
+                <p className={styles.body}>
+                  Groundswell is installed at UPMC Magee-Womens Hospital, running a 12-month quality improvement study measuring compassion fatigue, burnout, and intent to leave.
+                </p>
+              </AnimatedElement>
+              <AnimatedElement>
+                <p className={styles.bodySpaced}>
+                  To bridge qualitative research and clinical survey data, I taught myself to prompt engineer with Claude AI, building a custom data visualization platform. The platform translates participatory research into formats the clinical team can use.
+                </p>
               </AnimatedElement>
             </div>
 
             {/* Data viz card */}
-            <div className={styles.wide}>
+            <div className={styles.wide} style={{ marginTop: 'var(--space-md)' }}>
               <AnimatedElement>
                 <div className={styles.dataVizCard}>
                   <ScrollVideo
@@ -1002,7 +879,7 @@ export default function GroundswellCaseStudy() {
                     <div>
                       <p className={styles.dataVizLabel}>Self-taught</p>
                       <p className={styles.dataVizDesc}>
-                        I taught myself to vibe-code with Claude AI to build a custom data visualization dashboard — <span className={styles.em} style={{ color: 'var(--color-chalcedony)' }}>bridging qualitative conversations and clinical survey data</span> in a tool the research team could actually use.
+                        A custom data visualization dashboard — <span className={styles.em} style={{ color: 'var(--color-chalcedony)' }}>bridging qualitative conversations and clinical survey data</span> in a tool the research team could actually use.
                       </p>
                     </div>
                     <div className={styles.dataVizTags}>
@@ -1015,33 +892,21 @@ export default function GroundswellCaseStudy() {
               </AnimatedElement>
             </div>
 
-            {/* Stakeholder voices */}
             <div className={styles.narrow}>
               <AnimatedElement>
-                <div style={{ marginTop: 'var(--space-lg)', paddingTop: 'var(--space-md)' }}>
-                  <p className={styles.sectionLabel} style={{ color: 'var(--color-plum)' }}>Voices from the field</p>
-                </div>
-              </AnimatedElement>
-
-              <AnimatedElement>
-                <div className={styles.heroQuote}>
-                  <span className={styles.heroQuoteMark} style={{ color: 'var(--color-plum)', opacity: 0.2 }}>&ldquo;</span>
-                  <p className={styles.heroQuoteText}>
-                    Caring for people means seeing them as whole, complex, and beautiful human beings — not just as patients in need of medicine or surgery.
-                  </p>
-                  <div className={styles.heroQuoteBar} style={{ background: 'var(--color-plum)', opacity: 0.35 }} />
-                  <p className={styles.heroQuoteAttribution}>— Dr. Sarah Taylor, Gynecologic Oncology, UPMC</p>
-                </div>
-              </AnimatedElement>
-
-              <AnimatedElement>
-                <div className={`${styles.inlineQuote} ${styles.inlineQuoteLight}`}>
+                <div className={`${styles.inlineQuote} ${styles.inlineQuoteLight}`} style={{ marginTop: 'var(--space-lg)' }}>
                   <span className={styles.inlineQuoteMark} style={{ color: 'var(--color-plum)', opacity: 0.12 }}>&ldquo;</span>
                   <p className={styles.inlineQuoteText}>
                     &ldquo;Groundswell reminds us that caring for patients begins with caring for the people who serve them.&rdquo;
                   </p>
                   <p className={styles.inlineQuoteAttribution}>— Samantha Williams, Director of Women&apos;s Cancer Services, UPMC</p>
                 </div>
+              </AnimatedElement>
+
+              <AnimatedElement>
+                <p className={styles.body} style={{ marginTop: 'var(--space-sm)', fontSize: 'var(--text-body-small)', color: 'var(--color-ink-faint)' }}>
+                  Research paper under peer review. Expansion proposals submitted for additional hospital settings.
+                </p>
               </AnimatedElement>
 
               <AnimatedElement>
@@ -1053,38 +918,43 @@ export default function GroundswellCaseStudy() {
             </div>
           </section>
 
-          {/* ═══ SECTION 12: REFLECTION ═══ */}
-          <section
-            className={styles.room}
-            id="reflection"
-            data-section="reflection"
-          >
+
+          {/* ═══ REFLECTION ═══ */}
+          <section className={styles.room} id="reflection" data-section="reflection">
             <div className={styles.exitNarrow}>
               <AnimatedElement>
-                <div className={styles.honestyContainer}>
-                  <h2 className={styles.honestyTitle}>What I&apos;d Do Differently</h2>
-                  <p className={styles.body}>
-                    I&apos;d establish shared language between design research and clinical research teams earlier — the tension between generative qualitative methods and clinical protocols surfaced repeatedly and was never fully resolved. I&apos;d also build in more assumption-testing checkpoints. The CTB misstep taught me that secondhand accounts, no matter how consistent, can still miss the heart of the story.
-                  </p>
-                </div>
+                <h2 className={styles.sectionHeading}>Reflection</h2>
+                <div className={styles.accentBar} style={{ background: 'var(--color-ink-faint)', marginBottom: 'var(--space-md)' }} />
               </AnimatedElement>
 
               <AnimatedElement>
-                <div style={{ marginBottom: 'var(--space-lg)' }}>
-                  <h3 className={styles.whereTitle}>Where This Led</h3>
-                  <p className={styles.body}>
-                    This project gave me a passion for healthcare design and participatory research. It fundamentally shaped how I approach every project: listen first, amplify what&apos;s already there, design with the community not for them. It also led me to teach myself to code — because the work needed a bridge between qualitative and quantitative that didn&apos;t exist yet.
-                  </p>
-                </div>
+                <p className={styles.body}>
+                  The most meaningful support emerges from within a community. Our job was amplification, not invention.
+                </p>
+              </AnimatedElement>
+              <AnimatedElement>
+                <p className={styles.bodySpaced}>
+                  Groundswell was made possible by years of relational work between previous cohorts, Professor Kristin Hughes, and the UPMC staff. My team and I inherited that trust and had to steward it carefully.
+                </p>
+              </AnimatedElement>
+              <AnimatedElement>
+                <p className={styles.bodySpaced}>
+                  The CTB misstep taught me to test assumptions before presenting interpretations back to their creators. I would also establish shared language between design research and clinical research teams earlier. The tension between qualitative and quantitative methods is real. I would name it sooner.
+                </p>
+              </AnimatedElement>
+              <AnimatedElement>
+                <p className={styles.bodySpaced}>
+                  This project changed how I approach everything: listen first, amplify what&apos;s already there, design with the community rather than for them.
+                </p>
               </AnimatedElement>
 
               <AnimatedElement>
                 <div className={styles.teamCredits}>
                   <p className={styles.teamCreditsText}>
-                    <span style={{ fontWeight: 700 }}>Team:</span> Kristin Hughes (Project Lead), Elijah Benzon, Kelly McDowell, Robertus Sucahyo, Greg Baltus
+                    <span style={{ fontWeight: 700 }}>Team:</span> Kristin Hughes (Lead Designer), Elijah Benzon, Kelly McDowell, Robertus Sucahyo, Greg Baltus
                   </p>
                   <p className={styles.teamCreditsLink}>
-                    <a href="/groundswell">Read the full Groundswell story →</a> including all contributors, donors, and acknowledgements.
+                    A collaboration between CMU School of Design, University of Pittsburgh Schools of Medicine and Nursing, and UPMC Magee-Womens Hospital.
                   </p>
                 </div>
               </AnimatedElement>
@@ -1098,10 +968,6 @@ export default function GroundswellCaseStudy() {
                     Next: BirthStory <span className={styles.prevNextArrow}>→</span>
                   </a>
                 </div>
-              </AnimatedElement>
-
-              <AnimatedElement delay={100}>
-                <p className={styles.closing}>Thank you for spending time here.</p>
               </AnimatedElement>
             </div>
           </section>

@@ -1,6 +1,6 @@
 /* ===========================================
    GROUNDSWELL CASE STUDY — CSS MODULE
-   Rooms 0–8, V2 tokens, responsive + a11y
+   V2 tokens, responsive + a11y
    =========================================== */
 
 /* ─── Layout ─── */
@@ -38,8 +38,6 @@
   min-width: 0;
 }
 
-/* Dark/tinted sections fill content column naturally */
-
 /* ─── Mobile Metadata (visible only below 900px) ─── */
 .mobileMetadata {
   display: none;
@@ -63,7 +61,7 @@
   font-style: italic;
   font-variation-settings: var(--font-soft);
   color: var(--color-ink-faint);
-  line-height: 1.4;
+  line-height: var(--leading-relaxed);
 }
 
 .pivotStrikeSvg {
@@ -89,7 +87,7 @@
   font-style: italic;
   font-variation-settings: var(--font-soft);
   color: var(--color-plum);
-  line-height: 1.4;
+  line-height: var(--leading-relaxed);
 }
 
 /* ─── Section Variants ─── */
@@ -105,7 +103,7 @@
   background: var(--color-cream-dark);
 }
 
-/* ─── Room 0: Threshold ─── */
+/* ─── Threshold (Hook) ─── */
 .threshold {
   padding-top: var(--space-xl);
   padding-bottom: var(--space-lg);
@@ -123,7 +121,7 @@
 
 .thresholdTitle {
   font-family: var(--font-heading);
-  font-size: 4.5rem;
+  font-size: var(--text-h1);
   font-weight: var(--weight-hero);
   font-variation-settings: var(--font-soft);
   color: var(--color-ink);
@@ -173,7 +171,7 @@
 
 .metadataCell {
   background: var(--color-cream);
-  padding: var(--space-sm) var(--space-sm);
+  padding: var(--space-sm);
 }
 
 .metadataLabel {
@@ -233,7 +231,7 @@
   object-fit: cover;
 }
 
-/* ─── Lightbox Trigger — strips button chrome from clickable images ─── */
+/* ─── Lightbox Trigger ─── */
 .lightboxTrigger {
   display: block;
   width: 100%;
@@ -246,11 +244,11 @@
 
 .lightboxTrigger:focus-visible {
   outline: 2px solid var(--color-plum);
-  outline-offset: 4px;
+  outline-offset: var(--space-xxs);
   border-radius: var(--radius-sm);
 }
 
-/* ─── Figure — semantic image+caption container ─── */
+/* ─── Figure ─── */
 .figure {
   margin: 0;
 }
@@ -259,7 +257,7 @@
 .phaseRow {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: var(--space-xs);
   margin-bottom: var(--space-sm);
 }
 
@@ -284,7 +282,7 @@
   width: 48px;
   height: 2.5px;
   border-radius: var(--radius-xs);
-  margin-top: 14px;
+  margin-top: var(--space-sm);
   opacity: 0.5;
 }
 
@@ -304,7 +302,7 @@
   font-weight: var(--weight-title);
   font-variation-settings: var(--font-soft);
   color: var(--color-ink);
-  line-height: 1.25;
+  line-height: var(--leading-tight);
   margin: 0 0 var(--space-sm);
 }
 
@@ -344,15 +342,7 @@
   font-family: var(--font-body);
   font-size: var(--text-caption);
   color: var(--color-ink-faint);
-  margin-top: 10px;
-  line-height: 1.5;
-}
-
-.captionLight {
-  font-family: var(--font-body);
-  font-size: var(--text-caption);
-  color: rgba(255, 255, 255, 0.4);
-  margin-top: 10px;
+  margin-top: var(--space-xs);
   line-height: 1.5;
 }
 
@@ -370,11 +360,11 @@
 .heroQuoteMark {
   display: block;
   font-family: var(--font-heading);
-  font-size: 3rem;
+  font-size: var(--text-h1);
   font-weight: var(--weight-hero);
   font-variation-settings: var(--font-soft);
   line-height: 1;
-  margin-bottom: -4px;
+  margin-bottom: var(--space-xxs);
   user-select: none;
 }
 
@@ -399,7 +389,7 @@
 .heroQuoteBar {
   width: 32px;
   height: 2px;
-  border-radius: 1px;
+  border-radius: var(--radius-xs);
   margin: 0 auto var(--space-xs);
 }
 
@@ -410,21 +400,17 @@
   margin: 0;
 }
 
-.heroQuoteAttributionDark {
-  color: rgba(255, 255, 255, 0.4);
-}
-
 /* ─── Inline Quote ─── */
 .inlineQuote {
   position: relative;
   border-radius: 0 var(--radius-md) var(--radius-md) 0;
-  padding: 28px var(--space-md) var(--space-content-gap) var(--space-md);
+  padding: var(--space-content-gap) var(--space-md) var(--space-content-gap) var(--space-md);
   margin: var(--space-content-gap) 0;
 }
 
 .inlineQuoteLight {
   border-left: 3px solid var(--color-plum);
-  background: rgba(155, 138, 158, 0.08);
+  background: var(--color-plum-muted);
 }
 
 .inlineQuoteDark {
@@ -434,10 +420,10 @@
 
 .inlineQuoteMark {
   position: absolute;
-  top: 8px;
-  left: 16px;
+  top: var(--space-xs);
+  left: var(--space-sm);
   font-family: var(--font-heading);
-  font-size: 3.25rem;
+  font-size: var(--text-h1);
   font-weight: var(--weight-hero);
   font-variation-settings: var(--font-soft);
   line-height: 1;
@@ -452,12 +438,8 @@
   font-variation-settings: var(--font-soft);
   color: var(--color-ink);
   line-height: 1.5;
-  margin: 0 0 10px;
+  margin: 0 0 var(--space-xs);
   position: relative;
-}
-
-.inlineQuoteTextDark {
-  color: rgba(255, 255, 255, 0.88);
 }
 
 .inlineQuoteAttribution {
@@ -468,14 +450,10 @@
   position: relative;
 }
 
-.inlineQuoteAttributionDark {
-  color: rgba(255, 255, 255, 0.35);
-}
-
 /* ─── Lesson Moment ─── */
 .lessonMoment {
   margin: var(--space-lg) 0;
-  padding: var(--space-content-gap) 28px;
+  padding: var(--space-content-gap) var(--space-content-gap);
   border-radius: 0 var(--radius-md) var(--radius-md) 0;
 }
 
@@ -496,7 +474,7 @@
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.12em;
-  margin-bottom: 10px;
+  margin-bottom: var(--space-xs);
 }
 
 .lessonLabelLight {
@@ -509,7 +487,7 @@
 
 .lessonText {
   font-family: var(--font-heading);
-  font-size: 17px;
+  font-size: var(--text-body-large);
   font-weight: var(--weight-quote);
   font-style: italic;
   font-variation-settings: var(--font-soft);
@@ -525,7 +503,7 @@
   color: rgba(255, 255, 255, 0.85);
 }
 
-/* ─── Stats Display (Room 2) ─── */
+/* ─── Stats Display ─── */
 .statsRow {
   display: flex;
   gap: var(--space-lg);
@@ -540,7 +518,7 @@
 
 .statNumber {
   font-family: var(--font-heading);
-  font-size: 3.5rem;
+  font-size: var(--text-h1);
   font-weight: var(--weight-hero);
   font-variation-settings: var(--font-soft);
   color: var(--color-cream);
@@ -563,7 +541,7 @@
   align-self: stretch;
 }
 
-/* ─── Dimensions Grid (Room 4 dark) ─── */
+/* ─── Dimensions Grid ─── */
 .dimensionsGrid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -574,7 +552,7 @@
 .dimensionCard {
   background: rgba(255, 255, 255, 0.05);
   border-radius: 0 var(--radius-md) var(--radius-md) 0;
-  padding: 14px 18px;
+  padding: var(--space-sm);
 }
 
 .dimensionTitle {
@@ -583,7 +561,7 @@
   font-weight: var(--weight-title);
   font-variation-settings: var(--font-soft);
   color: var(--color-cream);
-  margin: 0 0 3px;
+  margin: 0 0 var(--space-xxs);
 }
 
 .dimensionDesc {
@@ -594,7 +572,7 @@
   line-height: var(--leading-relaxed);
 }
 
-/* The Void block */
+/* ─── The Void ─── */
 .voidBlock {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -608,7 +586,7 @@
 .voidText {
   background: rgba(255, 255, 255, 0.04);
   border-radius: 0 var(--radius-md) var(--radius-md) 0;
-  padding: 44px 36px;
+  padding: var(--space-lg) var(--space-md);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -624,12 +602,12 @@
   margin: 0 0 var(--space-sm);
 }
 
-/* ─── Evolution Table (Room 5) ─── */
+/* ─── Evolution Table ─── */
 .evolutionTable {
   margin: var(--space-lg) 0;
   background: var(--color-terracotta-muted);
-  border-radius: 10px;
-  padding: 28px var(--space-md);
+  border-radius: var(--radius-lg);
+  padding: var(--space-content-gap) var(--space-md);
   border: 1px solid rgba(149, 96, 88, 0.07);
 }
 
@@ -648,7 +626,7 @@
   grid-template-columns: 1fr 24px 1fr;
   gap: var(--space-xs);
   align-items: center;
-  padding: 10px 0;
+  padding: var(--space-xs) 0;
 }
 
 .evolutionRow + .evolutionRow {
@@ -683,7 +661,7 @@
   font-family: var(--font-body);
   font-size: var(--text-label);
   color: var(--color-ink-faint);
-  margin: 2px 0 0;
+  margin: var(--space-xxs) 0 0;
   font-style: italic;
 }
 
@@ -695,8 +673,8 @@
 
 .typoMomentText {
   font-family: var(--font-heading);
-  font-size: 1.75rem;
-  font-weight: 300;
+  font-size: var(--text-h3);
+  font-weight: var(--weight-hero);
   font-variation-settings: var(--font-soft);
   line-height: 1.3;
   margin: 0 auto;
@@ -714,7 +692,7 @@
     rgba(122, 102, 128, 0.04) 85%,
     var(--color-cream) 100%
   );
-  padding: 80px 0;
+  padding: var(--space-xl) 0;
 }
 
 .meditationLabel {
@@ -751,7 +729,7 @@
 
 .donationNumber {
   font-family: var(--font-heading);
-  font-size: 3.25rem;
+  font-size: var(--text-h1);
   font-weight: var(--weight-hero);
   font-variation-settings: var(--font-soft);
   color: var(--color-terracotta);
@@ -772,7 +750,7 @@
   background: var(--color-terracotta);
   opacity: 0.3;
   margin: 0 auto var(--space-content-gap);
-  border-radius: 1px;
+  border-radius: var(--radius-xs);
 }
 
 .donationDesc {
@@ -788,7 +766,7 @@
 .partnerGrid {
   background: var(--color-terracotta-muted);
   border-radius: var(--radius-md);
-  padding: var(--space-content-gap) 28px;
+  padding: var(--space-content-gap) var(--space-content-gap);
   border: 1px solid rgba(149, 96, 88, 0.06);
 }
 
@@ -799,7 +777,7 @@
   text-transform: uppercase;
   letter-spacing: 0.1em;
   color: var(--color-terracotta);
-  margin: 0 0 14px;
+  margin: 0 0 var(--space-sm);
 }
 
 .partnerList {
@@ -809,7 +787,7 @@
 }
 
 .partnerItem {
-  padding: 6px 0;
+  padding: var(--space-xs) 0;
   border-bottom: 1px solid rgba(149, 96, 88, 0.05);
 }
 
@@ -825,10 +803,10 @@
   font-family: var(--font-body);
   font-size: var(--text-label);
   color: var(--color-ink-faint);
-  margin: 1px 0 0;
+  margin: var(--space-xxs) 0 0;
 }
 
-/* ─── Feedback → Fix Timeline (Room 6) ─── */
+/* ─── Feedback Timeline ─── */
 .feedbackTimeline {
   display: grid;
   grid-template-columns: 40px 1fr;
@@ -885,7 +863,7 @@
 .feedbackArrow {
   display: flex;
   align-items: flex-start;
-  gap: 10px;
+  gap: var(--space-xs);
   margin-top: var(--space-sm);
 }
 
@@ -897,7 +875,7 @@
   line-height: var(--leading-relaxed);
 }
 
-/* ─── Achievement Rows (Room 7) ─── */
+/* ─── Achievement Rows ─── */
 .achievementList {
   display: flex;
   flex-direction: column;
@@ -934,7 +912,7 @@
   line-height: 1.5;
 }
 
-/* ─── Data Viz Feature Card (Room 7) ─── */
+/* ─── Data Viz Card ─── */
 .dataVizCard {
   background: var(--color-cream);
   border-radius: var(--radius-lg);
@@ -943,7 +921,7 @@
 }
 
 .dataVizMeta {
-  padding: 28px var(--space-md);
+  padding: var(--space-content-gap) var(--space-md);
   display: grid;
   grid-template-columns: 1fr auto;
   gap: var(--space-content-gap);
@@ -971,7 +949,7 @@
 .dataVizTags {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
+  gap: var(--space-xs);
   max-width: 200px;
   justify-content: flex-end;
 }
@@ -979,7 +957,7 @@
 .dataVizTag {
   font-family: var(--font-body);
   font-size: var(--text-caption);
-  padding: 3px 10px;
+  padding: var(--space-xxs) var(--space-xs);
   border-radius: var(--radius-pill);
   background: var(--color-cream-dark);
   color: var(--color-ink-faint);
@@ -996,12 +974,12 @@
   text-align: center;
 }
 
-/* ─── Honesty Container (Room 8) ─── */
+/* ─── Honesty Container ─── */
 .honestyContainer {
   background: rgba(122, 102, 128, 0.03);
   border: 1px solid rgba(122, 102, 128, 0.08);
-  border-radius: 10px;
-  padding: var(--space-md) 36px;
+  border-radius: var(--radius-lg);
+  padding: var(--space-md);
   margin-bottom: var(--space-lg);
 }
 
@@ -1022,7 +1000,7 @@
   font-weight: var(--weight-title);
   font-variation-settings: var(--font-soft);
   color: var(--color-ink);
-  line-height: 1.25;
+  line-height: var(--leading-tight);
   margin: 0 0 var(--space-xs);
 }
 
@@ -1075,7 +1053,7 @@
   text-decoration: none;
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: var(--space-xs);
   min-height: var(--min-touch-target);
   padding: var(--space-xs);
 }
@@ -1104,7 +1082,7 @@
 /* ─── Handmade SVG Decorations ─── */
 .handUnderline {
   display: block;
-  margin-top: 2px;
+  margin-top: var(--space-xxs);
   opacity: 0.5;
 }
 
@@ -1115,22 +1093,6 @@
   color: var(--color-ink-faint);
   text-align: center;
   margin-bottom: var(--space-sm);
-}
-
-/* ─── Strikethrough → Rename ─── */
-.strikethrough {
-  color: var(--color-ink-faint);
-  text-decoration: line-through;
-}
-
-.renameArrow {
-  color: var(--color-plum);
-}
-
-.renamed {
-  color: var(--color-ink);
-  font-weight: 600;
-  font-style: italic;
 }
 
 /* ─── Exit section narrower container ─── */
@@ -1150,18 +1112,6 @@
 
   .mobileMetadata {
     display: block;
-  }
-
-  .thresholdTitle {
-    font-size: 3.5rem;
-  }
-
-  .statsRow {
-    gap: var(--space-md);
-  }
-
-  .statNumber {
-    font-size: 2.75rem;
   }
 
   .imageGridFeatured {
@@ -1196,10 +1146,6 @@
     justify-content: flex-start;
   }
 
-  .donationNumber {
-    font-size: 2.75rem;
-  }
-
   .achievementAccent {
     min-width: 100px;
   }
@@ -1215,10 +1161,6 @@
 
   .pivotReframe {
     font-size: var(--text-body-large);
-  }
-
-  .thresholdTitle {
-    font-size: 2.75rem;
   }
 
   .metadataGrid {
@@ -1242,10 +1184,6 @@
   .statDivider {
     width: 48px;
     height: 1px;
-  }
-
-  .statNumber {
-    font-size: 2.5rem;
   }
 
   .evolutionRow {
@@ -1286,14 +1224,6 @@
     min-width: unset;
   }
 
-  .typoMomentText {
-    font-size: var(--text-h3);
-  }
-
-  .donationNumber {
-    font-size: 2.5rem;
-  }
-
   .honestyContainer {
     padding: var(--space-content-gap);
   }
@@ -1303,18 +1233,6 @@
    RESPONSIVE — SMALL MOBILE (400px)
    =========================================== */
 @media (max-width: 400px) {
-  .thresholdTitle {
-    font-size: 2.25rem;
-  }
-
-  .statNumber {
-    font-size: 2rem;
-  }
-
-  .donationNumber {
-    font-size: 2rem;
-  }
-
   .heroQuote {
     padding: var(--space-md) var(--space-sm);
   }
