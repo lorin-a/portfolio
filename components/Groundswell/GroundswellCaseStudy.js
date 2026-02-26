@@ -35,7 +35,6 @@ const metadata = [
 
 // ─── Sidebar sections ───
 const SIDEBAR_SECTIONS = [
-  { id: 'hook', label: 'Groundswell', phase: null },
   { id: 'stakes', label: 'The Stakes', phase: null },
   { id: 'sense', label: 'What We Heard', phase: 'sense' },
   { id: 'trust', label: 'Building Trust', phase: 'sense' },
@@ -194,7 +193,7 @@ function SenseHeading({ children }) {
       <div className={styles.senseHeadingText}>
         <div className={styles.sectionH2Wrap} style={{ marginBottom: 0 }}>
           <h2 className={styles.sectionHeading}>{children}</h2>
-          <HandUnderline color="var(--color-sage)" animate={animate} />
+          <HandUnderline color="var(--color-sage-soft)" animate={animate} />
         </div>
       </div>
     </div>
@@ -515,7 +514,7 @@ export default function GroundswellCaseStudy() {
           >
             <div className={styles.narrow}>
               <AnimatedElement>
-                <SectionH2 color="var(--color-sage)" width={220}>Building Trust</SectionH2>
+                <SectionH2 color="var(--color-cream)" width={220}>Building Trust</SectionH2>
               </AnimatedElement>
               <AnimatedElement>
                 <p className={styles.body}>
@@ -624,7 +623,7 @@ export default function GroundswellCaseStudy() {
           >
             <div className={styles.narrow}>
               <AnimatedElement>
-                <SectionH2 color="var(--color-plum)" width={260}>The Turning Point</SectionH2>
+                <SectionH2 color="var(--color-cream)" width={260}>The Turning Point</SectionH2>
               </AnimatedElement>
 
               <AnimatedElement>
@@ -754,7 +753,7 @@ export default function GroundswellCaseStudy() {
           >
             <div className={styles.narrow}>
               <AnimatedElement>
-                <SectionH2 color="var(--color-terracotta)" width={200}>The Making</SectionH2>
+                <SectionH2 color="var(--color-cream)" width={200}>The Making</SectionH2>
               </AnimatedElement>
 
               <AnimatedElement>
@@ -814,7 +813,7 @@ export default function GroundswellCaseStudy() {
           >
             <div className={styles.narrow}>
               <AnimatedElement>
-                <SectionH2 color="var(--color-plum-soft)" width={140}>Impact</SectionH2>
+                <SectionH2 color="var(--color-cream)" width={140}>Impact</SectionH2>
               </AnimatedElement>
 
               <AnimatedElement>
