@@ -346,25 +346,26 @@ export default function GroundswellCaseStudy() {
       {/* ═══ UNIFIED GRID — hero + sidebar + content share columns ═══ */}
       <div className={styles.pageGrid}>
 
-        {/* ─── Hero row: text in sidebar column, image in content column ─── */}
-        <section id="hook" data-section="hook" className={styles.heroLeft}>
-          <AnimatedElement>
-            <h1 className={styles.thresholdTitle}>Groundswell</h1>
-            <p className={styles.thresholdSubtitle}>Making Space to Restore, Together</p>
-          </AnimatedElement>
-          <AnimatedElement>
-            <SectionDivider color="var(--color-ink)" className={styles.heroDivider} />
-          </AnimatedElement>
-          <AnimatedElement>
-            <p className={styles.thresholdLabel}>A Design Ecology for Staff Well-Being</p>
-            <p className={styles.body}>
-              A grant-funded ecology of emotional support for oncology healthcare workers, developed through participatory research with staff at UPMC Magee-Womens Hospital.
-            </p>
-          </AnimatedElement>
-        </section>
+        {/* ─── Hero: unified viewport-height section ─── */}
+        <section id="hook" data-section="hook" className={styles.hero}>
+          <div className={styles.heroInner}>
+          <div className={styles.heroLeft}>
+            <AnimatedElement>
+              <h1 className={styles.thresholdTitle}>Groundswell</h1>
+              <p className={styles.thresholdSubtitle}>Making Space to Restore, Together</p>
+            </AnimatedElement>
+            <AnimatedElement>
+              <SectionDivider color="var(--color-ink)" className={styles.heroDivider} />
+            </AnimatedElement>
+            <AnimatedElement>
+              <p className={styles.thresholdLabel}>A Design Ecology for Staff Well-Being</p>
+              <p className={styles.body}>
+                A grant-funded ecology of emotional support for oncology healthcare workers, developed through participatory research with staff at UPMC Magee-Womens Hospital.
+              </p>
+            </AnimatedElement>
+          </div>
 
-        <div className={styles.heroRight}>
-          <AnimatedElement>
+          <div className={styles.heroRight}>
             <div className={styles.heroBlock}>
               <LightboxImage imageKey="gs-hero" width={1600} alt="Groundswell — pod and art wall installed at UPMC Magee-Womens Hospital" openLightbox={openLightbox} className={styles.heroImage} />
               <div className={styles.metadataWrap}>
@@ -381,8 +382,9 @@ export default function GroundswellCaseStudy() {
                 </div>
               </div>
             </div>
-          </AnimatedElement>
-        </div>
+          </div>
+          </div>{/* end .heroInner */}
+        </section>
 
         {/* ─── Sidebar + Content: same grid columns ─── */}
         <ProjectSidebar sections={SIDEBAR_SECTIONS} />
