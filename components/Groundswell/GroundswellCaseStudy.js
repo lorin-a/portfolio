@@ -470,7 +470,7 @@ export default function GroundswellCaseStudy() {
 
               <AnimatedElement>
                 <div className={`${styles.inlineQuote} ${styles.inlineQuoteSage}`}>
-                  <p className={styles.inlineQuoteText}>&ldquo;A special person can do this work forever, a good person can do it for a little while, most people couldn&apos;t do it for a day.&rdquo;</p>
+                  <p className={styles.inlineQuoteText} style={{ fontStyle: 'normal' }}>&ldquo;A special person can do this work forever, a good person can do it for a little while, <em>most people couldn&apos;t do it for a day.</em>&rdquo;</p>
                   <p className={styles.inlineQuoteAttribution}>— Ex-UPMC Employee</p>
                 </div>
               </AnimatedElement>
@@ -494,18 +494,21 @@ export default function GroundswellCaseStudy() {
                   <div className={styles.voiceCard}>
                     <p className={styles.voiceCardHeading}>&ldquo;I feel trapped.&rdquo;</p>
                     <p className={styles.voiceCardBody}>If I leave my patients I will feel guilty. If I leave my workers in this mess I will feel guilty.</p>
+                    <p className={styles.voiceCardAttribution}>— Composite from interviews</p>
                   </div>
                 </AnimatedElement>
                 <AnimatedElement delay={200}>
                   <div className={styles.voiceCard}>
                     <p className={styles.voiceCardHeading}>&ldquo;There is no time to grieve.&rdquo;</p>
                     <p className={styles.voiceCardBody}>Once someone passes there is no time before another person comes in.</p>
+                    <p className={styles.voiceCardAttribution}>— Composite from interviews</p>
                   </div>
                 </AnimatedElement>
                 <AnimatedElement delay={400}>
                   <div className={styles.voiceCard}>
                     <p className={styles.voiceCardHeading}>&ldquo;I was not prepared for this.&rdquo;</p>
                     <p className={styles.voiceCardBody}>No one trained me on the emotional trauma that this job causes.</p>
+                    <p className={styles.voiceCardAttribution}>— Composite from interviews</p>
                   </div>
                 </AnimatedElement>
               </div>
