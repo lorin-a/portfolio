@@ -70,6 +70,7 @@
   left: 50%;
   transform: translate(-50%, -50%);
   pointer-events: none;
+  color: var(--color-ink-faint);
 }
 
 .pivotArrow {
@@ -103,39 +104,72 @@
   background: var(--color-cream-dark);
 }
 
-/* ─── Hero — unified viewport-height wrapper ─── */
-.hero {
-  grid-column: 1 / -1;
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  min-height: 100dvh;
-  box-sizing: border-box;
+/* ─── Dark section text overrides (descendant selectors) ─── */
+.sectionDark .body,
+.sectionDark .bodySpaced {
+  color: var(--color-cream);
 }
 
-.heroInner {
-  display: flex;
-  flex: 1;
-  min-height: 0;
+.sectionDark .sectionHeading {
+  color: var(--color-cream);
 }
 
+.sectionDark .subHeading {
+  color: var(--color-cream);
+}
+
+.sectionDark .componentTitle {
+  color: var(--color-cream);
+}
+
+.sectionDark .inlineQuoteLight {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.sectionDark .inlineQuoteText {
+  color: var(--color-cream);
+}
+
+.sectionDark .inlineQuoteAttribution {
+  color: rgba(247, 247, 247, 0.6);
+}
+
+.sectionDark .pivotStruck {
+  color: rgba(247, 247, 247, 0.5);
+}
+
+.sectionDark .pivotStrikeSvg {
+  color: rgba(247, 247, 247, 0.3);
+}
+
+.sectionDark .pivotArrow {
+  color: var(--color-plum-soft);
+}
+
+.sectionDark .pivotReframe {
+  color: var(--color-plum-soft);
+}
+
+.sectionDark .cardFlipHint {
+  color: rgba(247, 247, 247, 0.5);
+}
+
+/* ─── Hero — occupies first row of pageGrid ─── */
 .heroLeft {
-  width: 520px;
-  flex-shrink: 0;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  min-height: 100vh;
+  min-height: 100dvh;
   padding: 80px var(--space-md) var(--space-lg);
   box-sizing: border-box;
 }
 
 .heroRight {
-  flex: 1;
-  min-width: 0;
+  min-height: 100vh;
+  min-height: 100dvh;
   padding-top: 80px;
   box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
 }
 
 .heroDivider.heroDivider {
@@ -148,16 +182,9 @@
 .heroBlock {
   overflow: hidden;
   background: var(--project-accent-pale);
-  flex: 1;
-  min-height: 0;
+  height: 100%;
   display: flex;
   flex-direction: column;
-}
-
-.heroBlock > .lightboxTrigger {
-  flex: 1;
-  min-height: 0;
-  display: flex;
 }
 
 .heroImage {
@@ -1424,20 +1451,13 @@
     grid-template-columns: 1fr;
   }
 
-  .hero {
-    min-height: auto;
-  }
-
-  .heroInner {
-    flex-direction: column;
-  }
-
   .heroLeft {
-    width: auto;
+    min-height: auto;
     padding: var(--space-lg) var(--container-padding) var(--space-md);
   }
 
   .heroRight {
+    min-height: auto;
     padding-top: 0;
   }
 

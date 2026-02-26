@@ -28,9 +28,9 @@ const FLIP_CARDS = [
 // ─── Metadata ───
 const metadata = [
   { label: 'Client', value: 'UPMC Magee-Womens Hospital, Cancer Services' },
-  { label: 'Duration', value: '15 wk research · 10 wk production · ongoing' },
+  { label: 'Duration', value: '5 month research · 3 month production' },
   { label: 'Role', value: 'Research, Co-Design, Copywriting, Coordination, Donor Outreach' },
-  { label: 'Status', value: '12-month Quality Improvement Study' },
+  { label: 'Status', value: 'Ongoing · 12-month Quality Improvement Study' },
 ]
 
 // ─── Sidebar sections ───
@@ -257,7 +257,7 @@ function PivotQuote() {
           <path
             ref={strikeRef}
             d={`M0 3C${strikeWidth * 0.2} 1,${strikeWidth * 0.4} 5,${strikeWidth * 0.6} 3S${strikeWidth * 0.8} 1,${strikeWidth} 3`}
-            stroke="var(--color-ink-faint)"
+            stroke="currentColor"
             strokeWidth={2}
             strokeLinecap="round"
             fill="none"
@@ -346,10 +346,8 @@ export default function GroundswellCaseStudy() {
       {/* ═══ UNIFIED GRID — hero + sidebar + content share columns ═══ */}
       <div className={styles.pageGrid}>
 
-        {/* ─── Hero: unified viewport-height section ─── */}
-        <section id="hook" data-section="hook" className={styles.hero}>
-          <div className={styles.heroInner}>
-          <div className={styles.heroLeft}>
+        {/* ─── Hero: two direct grid children, coordinated by grid row ─── */}
+        <section id="hook" data-section="hook" className={styles.heroLeft}>
             <AnimatedElement>
               <h1 className={styles.thresholdTitle}>Groundswell</h1>
               <p className={styles.thresholdSubtitle}>Making Space to Restore, Together</p>
@@ -363,9 +361,10 @@ export default function GroundswellCaseStudy() {
                 A grant-funded ecology of emotional support for oncology healthcare workers, developed through participatory research with staff at UPMC Magee-Womens Hospital.
               </p>
             </AnimatedElement>
-          </div>
+        </section>
 
-          <div className={styles.heroRight}>
+        <div className={styles.heroRight}>
+          <AnimatedElement>
             <div className={styles.heroBlock}>
               <LightboxImage imageKey="gs-hero" width={1600} alt="Groundswell — pod and art wall installed at UPMC Magee-Womens Hospital" openLightbox={openLightbox} className={styles.heroImage} />
               <div className={styles.metadataWrap}>
@@ -382,9 +381,8 @@ export default function GroundswellCaseStudy() {
                 </div>
               </div>
             </div>
-          </div>
-          </div>{/* end .heroInner */}
-        </section>
+          </AnimatedElement>
+        </div>
 
         {/* ─── Sidebar + Content: same grid columns ─── */}
         <ProjectSidebar sections={SIDEBAR_SECTIONS} />
@@ -506,12 +504,13 @@ export default function GroundswellCaseStudy() {
           </section>
 
 
-          {/* ═══ TRUST — Building Trust ═══ */}
-          <SectionDivider color="var(--color-sage-soft)" />
+          {/* ═══ TRUST — Building Trust (DARK) ═══ */}
           <section
+            className={styles.sectionDark}
             id="trust"
             data-section="trust"
             data-phase="sense"
+            data-dark-section
             style={{ paddingTop: 'var(--space-xl)', paddingBottom: 'var(--space-xl)' }}
           >
             <div className={styles.narrow}>
@@ -581,7 +580,6 @@ export default function GroundswellCaseStudy() {
 
 
           {/* ═══ WEAVE — The Synthesis ═══ */}
-          <SectionDivider color="var(--color-plum-soft)" />
           <section
             id="weave"
             data-section="weave"
@@ -615,12 +613,13 @@ export default function GroundswellCaseStudy() {
           </section>
 
 
-          {/* ═══ TURNING POINT ═══ */}
-          <SectionDivider color="var(--color-plum-soft)" />
+          {/* ═══ TURNING POINT (DARK) ═══ */}
           <section
+            className={styles.sectionDark}
             id="turning"
             data-section="turning"
             data-phase="weave"
+            data-dark-section
             style={{ paddingTop: 'var(--space-xl)', paddingBottom: 'var(--space-xl)' }}
           >
             <div className={styles.narrow}>
@@ -652,7 +651,6 @@ export default function GroundswellCaseStudy() {
 
 
           {/* ═══ SHAPE — What We Built ═══ */}
-          <SectionDivider color="var(--color-terracotta-soft)" />
           <section
             className={styles.room}
             id="shape"
@@ -745,12 +743,13 @@ export default function GroundswellCaseStudy() {
           </section>
 
 
-          {/* ═══ MAKING ═══ */}
-          <SectionDivider color="var(--color-terracotta-soft)" />
+          {/* ═══ MAKING (DARK) ═══ */}
           <section
+            className={styles.sectionDark}
             id="making"
             data-section="making"
             data-phase="shape"
+            data-dark-section
             style={{ paddingTop: 'var(--space-xl)', paddingBottom: 'var(--space-xl)' }}
           >
             <div className={styles.narrow}>
@@ -773,7 +772,6 @@ export default function GroundswellCaseStudy() {
 
 
           {/* ═══ PLAY TESTING ═══ */}
-          <SectionDivider color="var(--color-terracotta-soft)" />
           <section
             style={{ paddingTop: 'var(--space-xl)', paddingBottom: 'var(--space-xl)' }}
             id="testing"
@@ -806,16 +804,17 @@ export default function GroundswellCaseStudy() {
           </section>
 
 
-          {/* ═══ IMPACT ═══ */}
+          {/* ═══ IMPACT (DARK) ═══ */}
           <section
-            className={styles.sectionAccent}
+            className={styles.sectionDark}
             style={{ paddingTop: 'var(--space-xl)', paddingBottom: 'var(--space-xl)' }}
             id="impact"
             data-section="impact"
+            data-dark-section
           >
             <div className={styles.narrow}>
               <AnimatedElement>
-                <SectionH2 color="var(--color-plum)" width={140}>Impact</SectionH2>
+                <SectionH2 color="var(--color-plum-soft)" width={140}>Impact</SectionH2>
               </AnimatedElement>
 
               <AnimatedElement>
@@ -833,7 +832,7 @@ export default function GroundswellCaseStudy() {
             {/* Data viz placeholder */}
             <div className={styles.wide} style={{ marginTop: 'var(--space-md)' }}>
               <AnimatedElement>
-                <p className={styles.body} style={{ color: 'var(--color-ink-faint)', fontStyle: 'italic', textAlign: 'center' }}>
+                <p className={styles.body} style={{ color: 'rgba(247, 247, 247, 0.5)', fontStyle: 'italic', textAlign: 'center' }}>
                   [ Data visualization image placeholder ]
                 </p>
               </AnimatedElement>
@@ -851,7 +850,7 @@ export default function GroundswellCaseStudy() {
               </AnimatedElement>
 
               <AnimatedElement>
-                <p className={styles.body} style={{ marginTop: 'var(--space-sm)', fontSize: 'var(--text-body-small)', color: 'var(--color-ink-faint)' }}>
+                <p className={styles.body} style={{ marginTop: 'var(--space-sm)', fontSize: 'var(--text-body-small)' }}>
                   Research paper under peer review. Expansion proposals submitted for additional hospital settings.
                 </p>
               </AnimatedElement>
