@@ -845,7 +845,7 @@ export default function GroundswellContent() {
             </p>
 
             <p className={styles.stickyBodyLight}>
-              The study combines quantitative data with qualitative interviews, measuring compassion fatigue, burnout, culture of employee well-being, and intent to leave—before, during, and after the installation. I taught myself how to vibecode with Claude AI to create a data visualization website of our findings. It is created in Visual Studio Code, published to Vercel, using NEON database, and integrating YouTube API. Data is blurred to protect unpublished study findings.
+              The study combines quantitative data with qualitative interviews, measuring compassion fatigue, burnout, culture of employee well-being, and intent to leave—before, during, and after the installation. We built a data visualization website to track and communicate our findings, integrating survey data with video documentation. Data is blurred to protect unpublished study findings.
             </p>
 
             {/* Quote - Dr. Taylor */}
@@ -1059,7 +1059,7 @@ export default function GroundswellContent() {
           <div className={styles.stickyContentLight}>
             <h2 className={styles.stickyTitleLight}>The Making</h2>
             <p className={styles.stickyBodyLightBold}>
-              This was my first design production experience&mdash;a 10-week sprint to turn concept into installation. Working hybrid between remote coordination and on-site collaboration, I managed donor outreach, copywriting, and strategic partnerships that secured approximately $30,000 worth of donated materials and services.
+              Over a 10-week production sprint, we turned concept into installation. Working hybrid between remote coordination and on-site collaboration, the team managed donor outreach, copywriting, and strategic partnerships that secured approximately $30,000 worth of donated materials and services.
             </p>
             <p className={styles.stickyBodyLight}>
               The project required constant adaptation. Early staff feedback shifted our language from &ldquo;grief&rdquo; to &ldquo;restoration,&rdquo; reframing the messaging. Halfway through production, hospital administration required lockable doors on the pod. Our solution provided engagement, privacy, and emotional safety without surveillance&mdash;turning a constraint into an asset.
@@ -1166,7 +1166,7 @@ export default function GroundswellContent() {
           {/* Personal Reflection */}
           <AnimatedElement>
             <p className={styles.breakBody}>
-              Through Groundswell, I discovered a passion for healthcare design and participatory research. I learned how to navigate transdisciplinary collaboration&mdash;coordinating physicians, nurses, fabricators, donors, meditation teachers, and hospital administrators toward a shared vision. More importantly, I learned to attune my design process to amplify rather than impose, to honor existing community innovations, and to build trust through sustained presence. This project fundamentally shaped how I approach design: not as an outsider with solutions, but as a collaborator creating conditions for what&rsquo;s already trying to emerge.
+              Through Groundswell, we discovered what it means to practice healthcare design rooted in participatory research. We learned how to navigate transdisciplinary collaboration, coordinating physicians, nurses, fabricators, donors, meditation teachers, and hospital administrators toward a shared vision. More importantly, we learned to attune our design process to amplify rather than impose, to honor existing community innovations, and to build trust through sustained presence. This project fundamentally shaped how we approach design: not as outsiders with solutions, but as collaborators creating conditions for what&rsquo;s already trying to emerge.
             </p>
           </AnimatedElement>
 
