@@ -740,6 +740,7 @@
   font-size: var(--text-body-small);
   color: var(--color-ink-faint);
   margin: auto 0 0;
+  padding-top: var(--space-xs);
 }
 
 /* ─── Lesson Moment ─── */
