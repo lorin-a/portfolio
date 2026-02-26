@@ -531,7 +531,7 @@ export default function GroundswellCaseStudy() {
               </AnimatedElement>
               <AnimatedElement>
                 <p className={styles.body}>
-                  Three participatory activities, each deepening the relationship with staff and increasing the level of vulnerability we could hold together. The sequence was intentional: celebration first, then reflection, then grief.
+                  Before engaging deeply with the staff, we knew we needed to establish trust, intentions, and positionality. The potential of our relationships within the research context depended on it. We conducted three participatory activities across multiple contexts and groups, each one deepening the level of vulnerability we could hold together. The sequence was intentional: celebration first, then reflection, then grief.
                 </p>
               </AnimatedElement>
             </div>
@@ -539,14 +539,24 @@ export default function GroundswellCaseStudy() {
             {/* Women in White Coats */}
             <div className={styles.wide} style={{ marginTop: 'var(--space-lg)' }}>
               <AnimatedElement>
-                <div className={styles.imageGridStacked}>
-                  <LightboxImage imageKey="gs-workshop-coats-01" width={600} alt="Women in White Coats — orchid pins, shared poster" openLightbox={openLightbox} style={{ height: 280, objectFit: 'cover' }} />
-                  <div>
-                    <h3 className={styles.subHeading}>Women in White Coats</h3>
-                    <p className={styles.body}>
-                      In partnership with CancerBridges, we honored women in cancer care with handmade orchid pins and a shared poster. Public, celebratory, visible on the unit.
-                    </p>
-                  </div>
+                <div className={styles.imageGrid2col}>
+                  <LightboxImage imageKey="gs-workshop-coats-01" width={600} alt="Women in White Coats event, hand-colored orchid pins" openLightbox={openLightbox} style={{ height: 320, objectFit: 'cover', objectPosition: 'center 30%', borderRadius: 'var(--radius-md)' }} />
+                  <LightboxImage imageKey="gs-workshop-coats-03" width={600} alt="Research poster with participant responses on paper leaves" openLightbox={openLightbox} style={{ height: 320, objectFit: 'cover', borderRadius: 'var(--radius-md)' }} />
+                </div>
+              </AnimatedElement>
+            </div>
+            <div className={styles.narrow} style={{ marginTop: 'var(--space-md)' }}>
+              <AnimatedElement>
+                <h3 className={styles.subHeading}>Women in White Coats</h3>
+              </AnimatedElement>
+              <AnimatedElement>
+                <p className={styles.body}>
+                  We were invited to an intimate dinner celebrating approximately 40 women in oncology. We partnered with CancerBridges and designed our activity around the theme of reciprocity, a thread that ran through all of our workshops. We laser-printed and hand-colored orchid lapel pins as a gesture of gratitude for each guest. The orchid is a powerful symbol in the cancer community. Each pin had a paper leaf attached; we asked participants to write their answer on the leaf and pin it to a shared poster we designed asking: <em>How has your approach to patient care evolved over time to help you balance compassion with self-care?</em>
+                </p>
+              </AnimatedElement>
+              <AnimatedElement>
+                <div className={`${styles.inlineQuote} ${styles.inlineQuoteDark}`}>
+                  <p className={styles.inlineQuoteText}>&ldquo;Self-care to me is gifting time. &lsquo;Me&rsquo; time, &lsquo;she&rsquo; time, and &lsquo;we&rsquo; time.&rdquo;</p>
                 </div>
               </AnimatedElement>
             </div>
@@ -554,38 +564,50 @@ export default function GroundswellCaseStudy() {
             {/* Nourishing the Flower */}
             <div className={styles.wide} style={{ marginTop: 'var(--space-lg)' }}>
               <AnimatedElement>
-                <div className={styles.imageGridStackedReverse}>
-                  <div>
-                    <h3 className={styles.subHeading}>Nourishing the Flower</h3>
-                    <p className={styles.body}>
-                      Using a flower as metaphor for workplace health, staff mapped what sustains them and what quietly erodes them. Staff who had never named their working conditions started doing so through color and metaphor.
-                    </p>
-                  </div>
-                  <LightboxImage imageKey="gs-workshop-flower-01" width={600} alt="Flower worksheets — warm, tactile, real" openLightbox={openLightbox} style={{ height: 280, objectFit: 'cover' }} />
+                <div className={styles.imageGrid2col}>
+                  <LightboxImage imageKey="gs-workshop-flower-01" width={600} alt="Nourishing the Flower activity worksheets" openLightbox={openLightbox} style={{ height: 320, objectFit: 'cover', borderRadius: 'var(--radius-md)' }} />
+                  <LightboxImage imageKey="gs-workshop-flower-02" width={600} alt="Staff completing flower activity" openLightbox={openLightbox} style={{ height: 320, objectFit: 'cover', borderRadius: 'var(--radius-md)' }} />
+                </div>
+              </AnimatedElement>
+            </div>
+            <div className={styles.narrow} style={{ marginTop: 'var(--space-md)' }}>
+              <AnimatedElement>
+                <h3 className={styles.subHeading}>Nourishing the Flower</h3>
+              </AnimatedElement>
+              <AnimatedElement>
+                <p className={styles.body}>
+                  Using the anatomy of a flower as a metaphor for workplace health, participants mapped their experiences onto two worksheets, one flourishing, one wilting. The exercise surfaced what sustains people alongside what quietly erodes them. Staff who had never named their working conditions started doing so through color and metaphor. The session ended with the group voting on what resonated most.
+                </p>
+              </AnimatedElement>
+              <AnimatedElement>
+                <div className={`${styles.inlineQuote} ${styles.inlineQuoteDark}`}>
+                  <p className={styles.inlineQuoteText}>&ldquo;Positive atmosphere, positive energy. Team player. Support one another.&rdquo;</p>
                 </div>
               </AnimatedElement>
             </div>
 
             {/* Grief Workshop */}
-            <div className={styles.narrow} style={{ marginTop: 'var(--space-lg)' }}>
+            <div className={styles.wide} style={{ marginTop: 'var(--space-lg)' }}>
+              <AnimatedElement>
+                <div className={styles.imageGrid2col}>
+                  <LightboxImage imageKey="gs-workshop-grief-01" width={600} alt="Grief workshop with trauma-informed facilitation" openLightbox={openLightbox} style={{ height: 320, objectFit: 'cover', borderRadius: 'var(--radius-md)' }} />
+                  <LightboxImage imageKey="gs-workshop-grief-02" width={600} alt="Staff engaging with scenario-based discussion" openLightbox={openLightbox} style={{ height: 320, objectFit: 'cover', borderRadius: 'var(--radius-md)' }} />
+                </div>
+              </AnimatedElement>
+            </div>
+            <div className={styles.narrow} style={{ marginTop: 'var(--space-md)' }}>
               <AnimatedElement>
                 <h3 className={styles.subHeading}>Grief Workshop</h3>
               </AnimatedElement>
               <AnimatedElement>
                 <p className={styles.body}>
-                  I designed a trauma-responsive facilitation approach: a script that named our positionality directly, a stuffed rabbit as comfort object to abstract grief through safe distance, and a take-home integration packet so no one was left emotionally opened without support.
+                  We created a container for vulnerability, using a soft stuffed animal as a &ldquo;puppet&rdquo; to abstract the topic of grief. Staff were given scenarios and asked what they could do or say to support a struggling colleague. The session closed with voting on what resonated most, and we gave out integration packets so no one was left emotionally opened without support.
                 </p>
               </AnimatedElement>
               <AnimatedElement>
-                <p className={styles.bodySpaced}>
-                  The biggest takeaway across all three activities was the need for validation and permission. Staff needed to hear that their feelings were real and shared before they could engage with any kind of support. This became a design principle that threaded through everything we built.
-                </p>
-              </AnimatedElement>
-            </div>
-
-            <div className={styles.wide} style={{ marginTop: 'var(--space-md)' }}>
-              <AnimatedElement>
-                <LightboxImage imageKey="gs-workshop-grief-01" width={1200} alt="Grief workshop — worksheet, comfort objects, integration packet" openLightbox={openLightbox} style={{ height: 340, objectFit: 'cover' }} />
+                <div className={`${styles.inlineQuote} ${styles.inlineQuoteDark}`}>
+                  <p className={styles.inlineQuoteText}>&ldquo;A manager or team member asking, &lsquo;what can I do to help? I&apos;ve got you covered.&rsquo;&rdquo;</p>
+                </div>
               </AnimatedElement>
             </div>
           </section>
