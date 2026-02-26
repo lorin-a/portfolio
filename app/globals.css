@@ -204,6 +204,7 @@
   --color-ink: #2C2C2C;
   --color-ink-light: #5A5550;
   --color-ink-faint: #7A7570;
+  --color-ink-deep: #1A1918; /* Gathered page dark mode */
 
   /* ===========================================
      V2 TRANSITIONS

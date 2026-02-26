@@ -1,0 +1,485 @@
+/* ===========================================
+   GATHERED — Page Styles
+
+   Uses design tokens from globals.css.
+   Desktop: absolute-positioned scatter layout
+   Mobile: vertical reflow with organic offsets
+   =========================================== */
+
+/* ------------------------------------------
+   PAGE SHELL
+   ------------------------------------------ */
+.page {
+  position: relative;
+  width: 100%;
+  min-height: calc(100vh - 160px); /* viewport minus nav + footer */
+  min-height: calc(100dvh - 160px);
+  margin-top: 72px; /* clear fixed nav */
+  overflow: hidden;
+  transition: background var(--motion-slow) var(--ease-in-out);
+  border-radius: var(--radius-md);
+}
+
+.pageDark {
+  background: var(--color-ink-deep);
+}
+
+.pageLight {
+  background: var(--color-cream);
+}
+
+/* ------------------------------------------
+   GRAIN TEXTURE OVERLAY
+   ------------------------------------------ */
+.grain {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 200px;
+}
+
+.pageDark .grain {
+  opacity: 0.04;
+}
+
+.pageLight .grain {
+  opacity: 0.025;
+}
+
+/* ------------------------------------------
+   PAGE HEADER
+   ------------------------------------------ */
+.pageHeader {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  text-align: center;
+}
+
+.title {
+  font-family: var(--font-heading);
+  font-size: var(--text-h1);
+  font-weight: var(--weight-hero);
+  font-variation-settings: var(--font-soft);
+  letter-spacing: -0.01em;
+  margin: 0;
+  line-height: var(--leading-tight);
+  transition: color var(--motion-slow) var(--ease-in-out);
+}
+
+.pageDark .title {
+  color: var(--color-cream);
+}
+
+.pageLight .title {
+  color: var(--color-ink);
+}
+
+.subtitle {
+  font-family: var(--font-body);
+  font-size: var(--text-body-small);
+  margin-top: var(--space-xs);
+  max-width: 300px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: var(--leading-relaxed);
+  transition: color var(--motion-slow) var(--ease-in-out);
+}
+
+.pageDark .subtitle {
+  color: var(--color-cream);
+}
+
+.pageLight .subtitle {
+  color: var(--color-ink-faint);
+}
+
+/* ------------------------------------------
+   THEME TOGGLE
+   ------------------------------------------ */
+.toggleWrap {
+  position: absolute;
+  top: var(--space-md);
+  right: var(--gutter);
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.toggleLabel {
+  font-family: var(--font-body);
+  font-size: var(--text-caption);
+  letter-spacing: 0.02em;
+  transition: color var(--motion-slow) var(--ease-in-out);
+}
+
+.pageDark .toggleLabel {
+  color: var(--color-cream);
+}
+
+.pageLight .toggleLabel {
+  color: var(--color-ink-faint);
+}
+
+.toggle {
+  width: 48px;
+  height: 26px;
+  border-radius: var(--radius-pill);
+  border: 1.5px solid transparent;
+  cursor: pointer;
+  position: relative;
+  padding: 0;
+  transition: background var(--motion-medium) var(--ease-out),
+              border-color var(--motion-medium) var(--ease-out);
+}
+
+.toggle:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}
+
+.pageDark .toggle {
+  background: rgba(251, 249, 246, 0.08);
+  border-color: rgba(251, 249, 246, 0.2);
+}
+
+.pageLight .toggle {
+  background: rgba(44, 44, 44, 0.06);
+  border-color: rgba(44, 44, 44, 0.15);
+}
+
+.toggleThumb {
+  display: block;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  position: absolute;
+  top: 2px;
+  transition: left var(--motion-fast) var(--ease-out),
+              background var(--motion-fast) var(--ease-out);
+}
+
+.toggleThumbDark {
+  left: 2px;
+  background: var(--color-cream);
+}
+
+.toggleThumbLight {
+  left: 24px;
+  background: var(--color-ink);
+}
+
+/* ------------------------------------------
+   OBJECT FIELD — Desktop (scatter layout)
+   ------------------------------------------ */
+.field {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: calc(100vh - 232px); /* viewport minus nav + footer + margins */
+  min-height: calc(100dvh - 232px);
+  padding: var(--space-lg) var(--gutter);
+  box-sizing: border-box;
+}
+
+/* ------------------------------------------
+   INDIVIDUAL ITEM — Desktop
+   ------------------------------------------ */
+.item {
+  position: absolute;
+  left: var(--item-x);
+  top: var(--item-y);
+  transform: translate(-50%, -50%) rotate(var(--item-rotation));
+  z-index: var(--item-z);
+  cursor: pointer;
+  transition: transform var(--motion-fast) var(--ease-out);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.item:focus-visible {
+  outline: 2px solid var(--color-chalcedony);
+  outline-offset: 4px;
+  border-radius: var(--radius-sm);
+}
+
+.itemActive {
+  z-index: 50 !important;
+}
+
+@media (hover: hover) {
+  .item:hover {
+    transform: translate(-50%, -50%) rotate(var(--item-rotation)) translateY(-6px) scale(1.04);
+  }
+}
+
+.itemActive {
+  transform: translate(-50%, -50%) rotate(var(--item-rotation)) translateY(-6px) scale(1.04);
+}
+
+/* Image (when Cloudinary images are added) */
+.itemImage {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  pointer-events: none;
+}
+
+/* ------------------------------------------
+   TOOLTIP
+   ------------------------------------------ */
+.tooltip {
+  position: absolute;
+  width: 220px;
+  padding: 14px 16px;
+  border-radius: var(--radius-md);
+  z-index: 100;
+  pointer-events: none;
+  animation: tooltipIn var(--motion-fast) var(--ease-out) forwards;
+}
+
+.tooltipDark {
+  background: rgba(251, 249, 246, 0.95);
+}
+
+.tooltipLight {
+  background: rgba(44, 44, 44, 0.95);
+}
+
+.tooltipName {
+  display: block;
+  font-family: var(--font-heading);
+  font-size: 13px;
+  font-weight: 500;
+  font-variation-settings: var(--font-soft);
+  margin-bottom: 6px;
+  letter-spacing: 0.01em;
+}
+
+.tooltipDark .tooltipName {
+  color: var(--color-ink);
+}
+
+.tooltipLight .tooltipName {
+  color: var(--color-cream);
+}
+
+.tooltipNote {
+  display: block;
+  font-family: var(--font-body);
+  font-size: var(--text-caption);
+  line-height: 1.5;
+}
+
+.tooltipDark .tooltipNote {
+  color: var(--color-ink-light);
+}
+
+.tooltipLight .tooltipNote {
+  color: var(--color-cream);
+}
+
+.tooltipLink {
+  display: block;
+  margin-top: 8px;
+  font-family: var(--font-body);
+  font-size: 11px;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.tooltipDark .tooltipLink {
+  color: var(--color-sage);
+}
+
+.tooltipLight .tooltipLink {
+  color: var(--color-sage-light);
+}
+
+@keyframes tooltipIn {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ------------------------------------------
+   COLLECTION NOTE
+   ------------------------------------------ */
+.collectionNote {
+  position: absolute;
+  bottom: 28px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  z-index: 10;
+}
+
+.collectionNoteText {
+  font-family: var(--font-body);
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  transition: color var(--motion-slow) var(--ease-in-out);
+}
+
+.pageDark .collectionNoteText {
+  color: var(--color-cream);
+}
+
+.pageLight .collectionNoteText {
+  color: var(--color-ink-faint);
+  opacity: 0.5;
+}
+
+/* ===========================================
+   RESPONSIVE — TABLET (900px)
+   =========================================== */
+@media (max-width: 900px) {
+  .toggleWrap {
+    top: 84px;
+    right: var(--container-padding);
+  }
+
+  .title {
+    font-size: var(--text-h2);
+  }
+}
+
+/* ===========================================
+   RESPONSIVE — MOBILE (600px)
+   Reflow from scatter to loose vertical layout
+   =========================================== */
+@media (max-width: 600px) {
+  .page {
+    overflow: auto;
+    min-height: auto;
+  }
+
+  .pageHeader {
+    position: relative;
+    top: auto;
+    left: auto;
+    transform: none;
+    padding: 80px var(--container-padding) 0;
+  }
+
+  .toggleWrap {
+    position: relative;
+    top: auto;
+    right: auto;
+    padding: var(--space-sm) var(--container-padding) 0;
+    justify-content: flex-start;
+  }
+
+  .field {
+    position: relative;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: var(--space-lg) var(--container-padding) var(--space-xl);
+    gap: var(--space-md);
+  }
+
+  .item {
+    position: relative;
+    left: auto;
+    top: auto;
+    transform: rotate(var(--item-rotation));
+    z-index: auto;
+    order: var(--mobile-order);
+    transition: transform var(--motion-fast) var(--ease-out);
+    align-self: center;
+  }
+
+  /* Organic offsets — alternate items nudge left/right */
+  .item:nth-child(odd) {
+    margin-left: -8%;
+  }
+
+  .item:nth-child(even) {
+    margin-right: -8%;
+  }
+
+  .item:nth-child(3n) {
+    margin-left: 5%;
+  }
+
+  .itemActive {
+    z-index: auto;
+    transform: rotate(var(--item-rotation)) scale(1.04);
+  }
+
+  @media (hover: hover) {
+    .item:hover {
+      transform: rotate(var(--item-rotation)) scale(1.04);
+    }
+  }
+
+  /* Tooltip repositions below item on mobile */
+  .tooltip {
+    position: absolute;
+    left: 50%;
+    top: calc(100% + 12px);
+    right: auto;
+    bottom: auto;
+    transform: translateX(-50%);
+    width: min(220px, 80vw);
+  }
+
+  .collectionNote {
+    position: relative;
+    bottom: auto;
+    padding: var(--space-md) 0 var(--space-lg);
+  }
+}
+
+/* ===========================================
+   REDUCED MOTION
+   =========================================== */
+@media (prefers-reduced-motion: reduce) {
+  .page {
+    transition: none;
+  }
+
+  .item {
+    transition: none;
+  }
+
+  .toggle,
+  .toggleThumb {
+    transition: none;
+  }
+
+  .title,
+  .subtitle,
+  .toggleLabel,
+  .collectionNoteText {
+    transition: none;
+  }
+
+  .tooltip {
+    animation: none;
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @media (max-width: 600px) {
+    .tooltip {
+      transform: translateX(-50%);
+    }
+  }
+}
