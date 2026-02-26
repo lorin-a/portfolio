@@ -453,15 +453,23 @@ export default function GroundswellCaseStudy() {
               <AnimatedElement>
                 <SenseHeading>What We Heard</SenseHeading>
               </AnimatedElement>
+            </div>
 
+            <div className={styles.wide} style={{ marginTop: 'var(--space-sm)' }}>
+              <AnimatedElement>
+                <LightboxImage imageKey="gs-sense-affinity-03" width={1200} alt="Affinity mapping from nurse interviews and contextual research" openLightbox={openLightbox} style={{ height: 420, objectFit: 'cover', borderRadius: 'var(--radius-md)', width: '100%' }} />
+              </AnimatedElement>
+            </div>
+
+            <div className={styles.narrow} style={{ marginTop: 'var(--space-md)' }}>
               <AnimatedElement>
                 <p className={styles.body}>
-                  Over 15 weeks, my team and I shadowed nurses across multiple shifts, conducted contextual interviews, and facilitated a confidential conversation with a former employee who could speak freely.
+                  Over 15 weeks, my team and I shadowed staff of different roles across multiple shifts and contexts, conducted contextual interviews, and facilitated a confidential conversation with a former employee who could speak freely.
                 </p>
               </AnimatedElement>
 
               <AnimatedElement>
-                <div className={`${styles.inlineQuote} ${styles.inlineQuoteLight}`} style={{ borderLeftColor: 'var(--color-sage)' }}>
+                <div className={`${styles.inlineQuote} ${styles.inlineQuoteSage}`}>
                   <p className={styles.inlineQuoteText}>&ldquo;A special person can do this work forever, a good person can do it for a little while, most people couldn&apos;t do it for a day.&rdquo;</p>
                   <p className={styles.inlineQuoteAttribution}>— Ex-UPMC Employee</p>
                 </div>
@@ -469,36 +477,38 @@ export default function GroundswellCaseStudy() {
 
               <AnimatedElement>
                 <p className={styles.bodySpaced}>
-                  The stories were enough to bring tears to our eyes, and the environment spoke volumes. We heard about immeasurable compassion and dedicated care but also immense pain from lack of structural support. The hallways were overflowing with supportive notes and personal touches, but the harsh lighting, windowless walls, and cramped desks revealed barriers that no amount of personal effort could overcome.
+                  The stories were enough to bring tears to our eyes, and the environment spoke volumes. We heard about immeasurable compassion and dedicated care but also immense stress from lack of structural support. The hallways were overflowing with supportive notes and personal touches, but the harsh lighting, windowless walls, and cramped desks revealed barriers that no amount of personal effort could overcome.
                 </p>
               </AnimatedElement>
             </div>
 
             <div className={styles.wide} style={{ marginTop: 'var(--space-lg)' }}>
               <AnimatedElement>
-                <LightboxImage imageKey="gs-sense-affinity-01" width={1200} alt="Environment — the contrast between personal touches and institutional neglect" openLightbox={openLightbox} style={{ height: 380, objectFit: 'cover' }} />
+                <LightboxImage imageKey="gs-sense-affinity-01" width={1200} alt="Environment — the contrast between personal touches and institutional neglect" openLightbox={openLightbox} style={{ height: 420, objectFit: 'cover', borderRadius: 'var(--radius-md)', width: '100%' }} />
               </AnimatedElement>
             </div>
 
-            <div className={styles.narrow} style={{ marginTop: 'var(--space-md)' }}>
-              <AnimatedElement>
-                <div className={`${styles.inlineQuote} ${styles.inlineQuoteLight}`} style={{ borderLeftColor: 'var(--color-sage)' }}>
-                  <span className={styles.inlineQuoteMark} style={{ color: 'var(--color-sage)', opacity: 0.12 }}>&ldquo;</span>
-                  <p className={styles.inlineQuoteText}>&ldquo;I feel trapped. If I leave my patients I will feel guilty. If I leave my workers in this mess I will feel guilty.&rdquo;</p>
-                </div>
-              </AnimatedElement>
-              <AnimatedElement>
-                <div className={`${styles.inlineQuote} ${styles.inlineQuoteLight}`} style={{ borderLeftColor: 'var(--color-sage)' }}>
-                  <span className={styles.inlineQuoteMark} style={{ color: 'var(--color-sage)', opacity: 0.12 }}>&ldquo;</span>
-                  <p className={styles.inlineQuoteText}>&ldquo;There is no time to grieve. Once someone passes there is no time before another person comes in.&rdquo;</p>
-                </div>
-              </AnimatedElement>
-              <AnimatedElement>
-                <div className={`${styles.inlineQuote} ${styles.inlineQuoteLight}`} style={{ borderLeftColor: 'var(--color-sage)' }}>
-                  <span className={styles.inlineQuoteMark} style={{ color: 'var(--color-sage)', opacity: 0.12 }}>&ldquo;</span>
-                  <p className={styles.inlineQuoteText}>&ldquo;I was not prepared for this. No one trained me on the emotional trauma that this job causes.&rdquo;</p>
-                </div>
-              </AnimatedElement>
+            <div className={styles.wide} style={{ marginTop: 'var(--space-md)' }}>
+              <div className={styles.voiceCardRow}>
+                <AnimatedElement delay={0}>
+                  <div className={styles.voiceCard}>
+                    <p className={styles.voiceCardHeading}>&ldquo;I feel trapped.&rdquo;</p>
+                    <p className={styles.voiceCardBody}>If I leave my patients I will feel guilty. If I leave my workers in this mess I will feel guilty.</p>
+                  </div>
+                </AnimatedElement>
+                <AnimatedElement delay={200}>
+                  <div className={styles.voiceCard}>
+                    <p className={styles.voiceCardHeading}>&ldquo;There is no time to grieve.&rdquo;</p>
+                    <p className={styles.voiceCardBody}>Once someone passes there is no time before another person comes in.</p>
+                  </div>
+                </AnimatedElement>
+                <AnimatedElement delay={400}>
+                  <div className={styles.voiceCard}>
+                    <p className={styles.voiceCardHeading}>&ldquo;I was not prepared for this.&rdquo;</p>
+                    <p className={styles.voiceCardBody}>No one trained me on the emotional trauma that this job causes.</p>
+                  </div>
+                </AnimatedElement>
+              </div>
             </div>
           </section>
 
@@ -839,8 +849,7 @@ export default function GroundswellCaseStudy() {
 
             <div className={styles.narrow}>
               <AnimatedElement>
-                <div className={`${styles.inlineQuote} ${styles.inlineQuoteLight}`} style={{ marginTop: 'var(--space-lg)' }}>
-                  <span className={styles.inlineQuoteMark} style={{ color: 'var(--color-plum)', opacity: 0.12 }}>&ldquo;</span>
+                <div className={`${styles.inlineQuote} ${styles.inlineQuoteDark}`} style={{ marginTop: 'var(--space-lg)' }}>
                   <p className={styles.inlineQuoteText}>
                     &ldquo;Groundswell reminds us that caring for patients begins with caring for the people who serve them.&rdquo;
                   </p>
