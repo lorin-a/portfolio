@@ -34,50 +34,66 @@ const FRAMEWORK_ITEMS = [
   },
 ]
 
-function ShuffleWord({ item, delay = 0, isOpen, onOpen, onClose, showHint = false }) {
+/* ===========================================
+   DropdownSubTerms — extracted renderer
+   =========================================== */
+function DropdownSubTerms({ item, isOpen, subsRef }) {
+  return (
+    <div
+      ref={subsRef}
+      className={styles.subsContainer}
+      aria-hidden={!isOpen}
+    >
+      {item.subs.map((sub, i) => (
+        <span
+          key={i}
+          className={`${styles.subTerm} ${isOpen ? styles.subTermVisible : ''}`}
+          style={isOpen ? { transitionDelay: `${i * 90}ms` } : { transitionDelay: '0ms' }}
+        >
+          {sub}
+        </span>
+      ))}
+    </div>
+  )
+}
+
+function ShuffleWord({ item, phase, shouldAnimate, isOpen, onOpen, onClose, onStrokeComplete, itemRef, skipEntrance = false, delay = 0 }) {
   const [replayCount, setReplayCount] = useState(0)
   const [drawComplete, setDrawComplete] = useState(false)
   const isBreathing = drawComplete && !isOpen
 
-  const itemRef = useRef(null)
+  const internalRef = useRef(null)
   const subsRef = useRef(null)
   const canHoverRef = useRef(false)
   const wasOpenRef = useRef(false)
-  const [visible, setVisible] = useState(false)
 
-  // Detect hover capability once at mount
+  const setRef = useCallback((el) => {
+    internalRef.current = el
+    if (typeof itemRef === 'function') itemRef(el)
+  }, [itemRef])
+
   useEffect(() => {
     canHoverRef.current = window.matchMedia('(hover: hover)').matches
   }, [])
 
-  // Entrance animation
+  // Entrance animation (non-skipEntrance mode)
   useEffect(() => {
-    if (delay <= 0) {
-      setVisible(true)
-      return
-    }
+    if (skipEntrance || delay <= 0) return
 
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    if (prefersReduced) {
-      setVisible(true)
-      return
-    }
+    if (prefersReduced) return
 
     import('gsap').then(({ gsap }) => {
-      gsap.fromTo(itemRef.current,
+      gsap.fromTo(internalRef.current,
         { opacity: 0, y: 12 },
         { opacity: 1, y: 0, duration: 0.6, ease: 'expo.out', delay }
       )
-      setVisible(true)
     })
-  }, [delay])
+  }, [delay, skipEntrance])
 
-  // Open/close animation via GSAP
   useEffect(() => {
     const wasOpen = wasOpenRef.current
     wasOpenRef.current = isOpen
-
-    // Skip on mount
     if (wasOpen === isOpen) return
 
     const subsEl = subsRef.current
@@ -141,20 +157,18 @@ function ShuffleWord({ item, delay = 0, isOpen, onOpen, onClose, showHint = fals
 
   const handleDrawComplete = useCallback(() => {
     setDrawComplete(true)
-  }, [])
+    onStrokeComplete?.()
+  }, [onStrokeComplete])
 
-  // Build breathing className for mark — enhanced pulse when hint is active
   const breatheClass = isBreathing
-    ? showHint
-      ? markStyles.hintPulse
-      : `${markStyles.breathing} ${markStyles[item.breatheDelay]}`
+    ? `${markStyles.breathing} ${markStyles[item.breatheDelay]}`
     : ''
 
   return (
     <div
-      ref={itemRef}
+      ref={setRef}
       className={`${styles.fwItem} ${styles[item.colorClass]}`}
-      style={delay > 0 ? { opacity: 0 } : undefined}
+      style={skipEntrance ? undefined : (delay > 0 ? { opacity: 0 } : undefined)}
       role="button"
       tabIndex={0}
       aria-expanded={isOpen}
@@ -163,78 +177,72 @@ function ShuffleWord({ item, delay = 0, isOpen, onOpen, onClose, showHint = fals
       onClick={handleClick}
       onKeyDown={handleKeyDown}
     >
-      {showHint && (
-        <div className={styles.hintArrow} aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" width="36" height="36">
-            <path d="M4 12h16M14 6l6 6-6 6" stroke="currentColor" strokeWidth="1.25" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-        </div>
-      )}
       <item.Mark
-        animate={visible}
-        delay={delay}
+        animate={shouldAnimate}
+        delay={skipEntrance ? 0 : delay}
         replay={replayCount}
         className={breatheClass}
         onDrawComplete={handleDrawComplete}
       />
       <span className={styles.rootWord}>{item.root}</span>
-      <div
-        ref={subsRef}
-        className={styles.subsContainer}
-        aria-hidden={!isOpen}
-      >
-        {item.subs.map((sub, i) => (
-          <span
-            key={i}
-            className={`${styles.subTerm} ${isOpen ? styles.subTermVisible : ''}`}
-            style={isOpen ? { transitionDelay: `${i * 90}ms` } : { transitionDelay: '0ms' }}
-          >
-            {sub}
-          </span>
-        ))}
-      </div>
+      <DropdownSubTerms
+        item={item}
+        isOpen={isOpen}
+        subsRef={subsRef}
+      />
     </div>
   )
 }
 
-export default function FrameworkShuffle({ startDelay = 0, itemStagger = 0.3 }) {
+export default function FrameworkShuffle({ phase = 'idle', onMarksReady, visible = true, skipEntrance = false, startDelay = 0, itemStagger = 0.3 }) {
   const [openItemId, setOpenItemId] = useState(null)
-  const [hintActive, setHintActive] = useState(false)
-  const hasInteractedRef = useRef(false)
+  const marksReadyFiredRef = useRef(false)
+  const completedCountRef = useRef(0)
+  const [activated, setActivated] = useState(false)
 
-  // Activate hint after all draw-on animations + breathing established
+  const itemRefs = useRef([null, null, null])
+  const rowRef = useRef(null)
+
+  // Activate marks when phase leaves idle (or immediately if no phase system)
   useEffect(() => {
-    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    if (prefersReduced) return
-
-    const totalDelay = (startDelay + (FRAMEWORK_ITEMS.length - 1) * itemStagger + 2.0) * 1000
-    const timer = setTimeout(() => {
-      if (!hasInteractedRef.current) {
-        setHintActive(true)
-      }
-    }, totalDelay)
-    return () => clearTimeout(timer)
-  }, [startDelay, itemStagger])
-
-  // Dismiss hint permanently on first interaction
-  const dismissHint = useCallback(() => {
-    if (!hasInteractedRef.current) {
-      hasInteractedRef.current = true
-      setHintActive(false)
+    if (phase !== 'idle' && !activated) {
+      setActivated(true)
     }
-  }, [])
+  }, [phase, activated])
+
+  // Handle stroke completion: wait for all 3, then fire onMarksReady
+  const handleStrokeComplete = useCallback(() => {
+    completedCountRef.current++
+    if (completedCountRef.current >= FRAMEWORK_ITEMS.length) {
+      // Brief pause after last mark completes for fills to settle
+      setTimeout(() => {
+        if (!marksReadyFiredRef.current) {
+          marksReadyFiredRef.current = true
+          onMarksReady?.()
+        }
+      }, 300)
+    }
+  }, [onMarksReady])
 
   return (
-    <div className={styles.fwRow}>
+    <div
+      className={styles.fwRow}
+      ref={rowRef}
+      style={{ opacity: visible ? 1 : 0, transition: 'opacity 0.4s ease' }}
+    >
       {FRAMEWORK_ITEMS.map((item, i) => (
         <ShuffleWord
           key={item.id}
           item={item}
-          delay={startDelay + i * itemStagger}
+          phase={phase}
+          shouldAnimate={activated}
           isOpen={openItemId === item.id}
-          onOpen={() => { dismissHint(); setOpenItemId(item.id) }}
+          onOpen={() => setOpenItemId(item.id)}
           onClose={() => setOpenItemId(null)}
-          showHint={i === 0 && hintActive}
+          onStrokeComplete={handleStrokeComplete}
+          itemRef={el => itemRefs.current[i] = el}
+          skipEntrance={skipEntrance}
+          delay={skipEntrance ? 0 : startDelay + i * itemStagger}
         />
       ))}
     </div>

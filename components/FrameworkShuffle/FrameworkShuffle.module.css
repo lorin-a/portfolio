@@ -49,7 +49,7 @@
    =========================================== */
 .rootWord {
   font-family: var(--font-serif);
-  font-size: clamp(16px, 1.8vw, 21px);
+  font-size: clamp(18px, 2.2vw, 26px);
   font-weight: var(--weight-title);
   text-align: center;
   white-space: nowrap;

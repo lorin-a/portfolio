@@ -1,12 +1,105 @@
 /* ===========================================
-   HERO — Typography-forward, centered
+   HERO — Full viewport, phased reveal
    EXCEPTION: .heroTitle uses full wonky Fraunces
    (SOFT 100). This is the ONE expressive moment;
    rest of site uses default SOFT value.
    =========================================== */
 .hero {
-  padding: clamp(110px, 16vh, 160px) var(--gutter) clamp(40px, 5vh, 56px);
+  height: 100vh;
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0 var(--gutter);
+  overflow: hidden;
   text-align: center;
+}
+
+/* ===========================================
+   HERO CONTENT — flex column, centered group
+   =========================================== */
+.heroContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* ===========================================
+   INTRO WRAP — contains greeting + sentence.
+   Collapses to height: 0 during dissolve so
+   title slides up smoothly via flex recentering.
+   =========================================== */
+.introWrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: hidden;
+}
+
+/* ===========================================
+   GREETING — "Hi, I'm Lorin."
+   In flow within introWrap.
+   =========================================== */
+.greeting {
+  font-family: var(--font-serif);
+  font-size: clamp(36px, 6vw, 80px);
+  font-weight: 300;
+  line-height: 1.05;
+  color: var(--color-ink);
+  opacity: 0;
+  clip-path: inset(0 100% 0 0);
+  white-space: nowrap;
+  margin-bottom: clamp(8px, 1.5vw, 16px);
+  padding: 0.15em 0.05em;
+}
+
+/* ===========================================
+   SENTENCE — same size as greeting/title
+   =========================================== */
+.sentenceLine {
+  font-family: var(--font-serif);
+  font-size: clamp(36px, 6vw, 80px);
+  font-weight: 300;
+  line-height: 1.15;
+  color: var(--color-ink);
+  text-align: center;
+  max-width: 1100px;
+  opacity: 0;
+  padding: 0.15em 0.05em;
+}
+
+/* ===========================================
+   FRAMEWORK WORD COLORS in sentence
+   =========================================== */
+.senseColor { color: var(--color-sage); }
+.weaveColor { color: var(--color-plum); font-style: italic; }
+.shapeColor { color: var(--color-terracotta); }
+
+.fwWord { display: inline; }
+.connective { display: inline; }
+
+/* ===========================================
+   BLINKING CURSOR
+   =========================================== */
+.cursor {
+  color: var(--color-ink);
+  animation: cursorBlink 1s step-end infinite;
+  font-weight: 100;
+  margin-left: 2px;
+}
+
+@keyframes cursorBlink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* ===========================================
+   TITLE WRAP — height animates 0 → auto
+   =========================================== */
+.heroTitleWrap {
+  height: 0;
+  overflow: hidden;
 }
 
 .heroTitle {
@@ -17,7 +110,6 @@
   letter-spacing: -0.025em;
   color: var(--color-ink);
   margin-bottom: clamp(34px, 4.8vh, 53px);
-  /* Start at SOFT 0, WONK 1 — GSAP tweens SOFT to 100 */
   font-variation-settings: 'SOFT' 0, 'WONK' 1;
 }
 
@@ -28,15 +120,12 @@
   opacity: 0;
   display: inline-block;
   clip-path: inset(0 100% 0 0);
-  /* Padding prevents clip-path from cutting off Fraunces WONK/SOFT glyphs
-     that extend beyond the inline box (descenders like "g", trailing chars).
-     Negative margin compensates so layout spacing is unchanged. */
   padding: 0.15em 0.05em;
   margin: -0.15em 0;
 }
 
 /* ===========================================
-   AMPERSAND — the one moment of personality
+   AMPERSAND
    =========================================== */
 .amp {
   color: var(--color-terracotta-light);
@@ -45,8 +134,7 @@
   font-size: 1.08em;
   margin: 0 4px;
   display: inline-block;
-  transition: transform 0.5s var(--ease-out-expo);
-  /* WONK 1 for decorative glyph, normal (not italic) to avoid oversized swash */
+  transition: transform 0.5s var(--ease-out);
   font-variation-settings: 'SOFT' 100, 'WONK' 1;
 }
 
@@ -57,11 +145,43 @@
 }
 
 /* ===========================================
+   RESPONSIVE - TABLET (900px)
+   =========================================== */
+@media (max-width: 900px) {
+  .heroTitle {
+    font-size: clamp(32px, 5.5vw, 60px);
+  }
+
+  .greeting {
+    font-size: clamp(32px, 5.5vw, 60px);
+  }
+
+  .sentenceLine {
+    font-size: clamp(32px, 5.5vw, 60px);
+    max-width: 800px;
+  }
+}
+
+/* ===========================================
    RESPONSIVE - MOBILE (600px)
    =========================================== */
 @media (max-width: 600px) {
   .hero {
-    padding: clamp(90px, 14vh, 130px) var(--container-padding) clamp(28px, 4vh, 40px);
+    padding: 0 var(--container-padding);
+  }
+
+  .heroTitle {
+    font-size: clamp(28px, 8vw, 40px);
+    margin-bottom: clamp(20px, 3vh, 32px);
+  }
+
+  .greeting {
+    font-size: clamp(28px, 8vw, 40px);
+  }
+
+  .sentenceLine {
+    font-size: clamp(28px, 8vw, 40px);
+    max-width: 100%;
   }
 }
 
@@ -69,6 +189,19 @@
    ACCESSIBILITY - REDUCED MOTION
    =========================================== */
 @media (prefers-reduced-motion: reduce) {
+  .introWrap {
+    display: none;
+  }
+
+  .cursor {
+    display: none;
+  }
+
+  .heroTitleWrap {
+    height: auto;
+    overflow: visible;
+  }
+
   .heroTitle {
     font-variation-settings: 'SOFT' 100, 'WONK' 1;
   }
