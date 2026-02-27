@@ -109,8 +109,8 @@ export default function Hero() {
         },
       }, '<')
 
-      // Line 1 wipe: "Design Researcher"
-      const dur1 = Math.max(0.8, 17 * 0.06)
+      // Line 1 wipe: "Design Researcher" — sequential, readable pace
+      const dur1 = Math.max(1.0, 17 * 0.08)
       tl.set(titleLine1Ref.current, { opacity: 1 }, '<+=0.05')
       tl.fromTo(titleLine1Ref.current,
         { clipPath: 'inset(0 100% 0 0)' },
@@ -118,13 +118,12 @@ export default function Hero() {
         '<'
       )
 
-      // Line 2 wipe: "& Creative Strategist" — overlaps line 1
-      const dur2 = Math.max(0.8, 21 * 0.06)
-      tl.set(titleLine2Ref.current, { opacity: 1 }, '>-0.4')
+      // Line 2 wipe: "& Creative Strategist" — starts after line 1 finishes
+      const dur2 = Math.max(1.0, 21 * 0.08)
+      tl.set(titleLine2Ref.current, { opacity: 1 })
       tl.fromTo(titleLine2Ref.current,
         { clipPath: 'inset(0 100% 0 0)' },
-        { clipPath: 'inset(0 0% 0 0)', duration: dur2, ease: 'power1.inOut' },
-        '-=0.4'
+        { clipPath: 'inset(0 0% 0 0)', duration: dur2, ease: 'power1.inOut' }
       )
     })
   }, [setPhaseSync])
@@ -156,38 +155,42 @@ export default function Hero() {
       const heroEl = heroRef.current
 
       // ==========================================
-      // BEAT 1: "Hi, I'm Lorin." wipe
+      // BEAT 1: "Hi, I'm Lorin." wipe + cursor breathe
       // ==========================================
-      const greetingDur = Math.max(1.0, 14 * 0.08)
+      const greetingDur = Math.max(1.0, 14 * 0.1)
 
       tl.set(greetingEl, { opacity: 1 })
       tl.fromTo(greetingEl,
         { clipPath: 'inset(0 100% 0 0)' },
         { clipPath: 'inset(0 0% 0 0)', duration: greetingDur, ease: 'power1.inOut' }
       )
+      // Cursor blinks — give viewer time to read
+      tl.to({}, { duration: 1.2 })
 
       // ==========================================
-      // BEAT 2: Sentence wipe (breathes into greeting tail)
+      // BEAT 2: Sentence wipe + hold for reading
       // ==========================================
       tl.add(() => {
         if (phaseRef.current !== 'done') setPhaseSync('sentence')
-      }, '-=0.2')
+      })
 
       tl.set(greetingCursorEl, { display: 'none' })
       tl.set(sentenceEl, { opacity: 1 })
 
       const sentenceText = 'I sense, weave, and shape solutions to complex problems.'
-      const sentenceDur = Math.max(1.0, sentenceText.length * 0.035)
+      const sentenceDur = Math.max(1.0, sentenceText.length * 0.055)
 
       tl.fromTo(sentenceEl,
         { clipPath: 'inset(0 100% 0 0)' },
         { clipPath: 'inset(0 0% 0 0)', duration: sentenceDur, ease: 'power1.inOut' }
       )
+      // Hold — let the full sentence sit and be read
+      tl.to({}, { duration: 1.0 })
 
       // ==========================================
       // BEAT 3: Dissolve + FLIP (one fluid motion)
       // ==========================================
-      tl.to(sentenceCursorEl, { opacity: 0, duration: 0.1 })
+      tl.to(sentenceCursorEl, { opacity: 0, duration: 0.2 })
 
       tl.add(() => {
         if (phaseRef.current === 'done') return
@@ -259,7 +262,7 @@ export default function Hero() {
             rootWords.forEach(el => { el.style.visibility = 'hidden' })
 
             // 5. Single combined motion: fade, collapse, reposition
-            const flipDur = 0.9
+            const flipDur = 1.3
             const flipTl = gsap.timeline()
             timelineRef.current = flipTl
 
