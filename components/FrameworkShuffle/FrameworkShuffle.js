@@ -197,24 +197,29 @@ function ShuffleWord({ item, phase, shouldAnimate, isOpen, onOpen, onClose, onSt
 export default function FrameworkShuffle({ phase = 'idle', onMarksReady, visible = true, skipEntrance = false, startDelay = 0, itemStagger = 0.3 }) {
   const [openItemId, setOpenItemId] = useState(null)
   const marksReadyFiredRef = useRef(false)
-  const completedCountRef = useRef(0)
-  const [activated, setActivated] = useState(false)
+  // Sequential activation: -1 = none, 0 = sense, 1 = weave, 2 = shape
+  const [activeMarkIndex, setActiveMarkIndex] = useState(-1)
 
   const itemRefs = useRef([null, null, null])
   const rowRef = useRef(null)
 
-  // Activate marks when phase leaves idle (or immediately if no phase system)
+  // Start sequential mark activation when phase enters 'draw'
   useEffect(() => {
-    if (phase !== 'idle' && !activated) {
-      setActivated(true)
+    if (phase === 'draw' && activeMarkIndex === -1) {
+      // Brief delay to let FLIP clones settle before first mark draws
+      const t = setTimeout(() => setActiveMarkIndex(0), 600)
+      return () => clearTimeout(t)
     }
-  }, [phase, activated])
+  }, [phase, activeMarkIndex])
 
-  // Handle stroke completion: wait for all 3, then fire onMarksReady
-  const handleStrokeComplete = useCallback(() => {
-    completedCountRef.current++
-    if (completedCountRef.current >= FRAMEWORK_ITEMS.length) {
-      // Brief pause after last mark completes for fills to settle
+  // Handle stroke completion: advance to next mark or fire onMarksReady
+  const handleStrokeComplete = useCallback((completedIndex) => {
+    const nextIndex = completedIndex + 1
+    if (nextIndex < FRAMEWORK_ITEMS.length) {
+      // Short pause between marks for visual rhythm
+      setTimeout(() => setActiveMarkIndex(nextIndex), 200)
+    } else {
+      // All marks complete — brief pause for fills to settle
       setTimeout(() => {
         if (!marksReadyFiredRef.current) {
           marksReadyFiredRef.current = true
@@ -235,11 +240,11 @@ export default function FrameworkShuffle({ phase = 'idle', onMarksReady, visible
           key={item.id}
           item={item}
           phase={phase}
-          shouldAnimate={activated}
+          shouldAnimate={i <= activeMarkIndex}
           isOpen={openItemId === item.id}
           onOpen={() => setOpenItemId(item.id)}
           onClose={() => setOpenItemId(null)}
-          onStrokeComplete={handleStrokeComplete}
+          onStrokeComplete={() => handleStrokeComplete(i)}
           itemRef={el => itemRefs.current[i] = el}
           skipEntrance={skipEntrance}
           delay={skipEntrance ? 0 : startDelay + i * itemStagger}

@@ -26,20 +26,7 @@
 }
 
 /* ===========================================
-   INTRO WRAP — contains greeting + sentence.
-   Collapses to height: 0 during dissolve so
-   title slides up smoothly via flex recentering.
-   =========================================== */
-.introWrap {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  overflow: hidden;
-}
-
-/* ===========================================
    GREETING — "Hi, I'm Lorin."
-   In flow within introWrap.
    =========================================== */
 .greeting {
   font-family: var(--font-serif);
@@ -92,14 +79,6 @@
 @keyframes cursorBlink {
   0%, 100% { opacity: 1; }
   50% { opacity: 0; }
-}
-
-/* ===========================================
-   TITLE WRAP — height animates 0 → auto
-   =========================================== */
-.heroTitleWrap {
-  height: 0;
-  overflow: hidden;
 }
 
 .heroTitle {
@@ -189,17 +168,16 @@
    ACCESSIBILITY - REDUCED MOTION
    =========================================== */
 @media (prefers-reduced-motion: reduce) {
-  .introWrap {
+  .greeting {
+    display: none;
+  }
+
+  .sentenceLine {
     display: none;
   }
 
   .cursor {
     display: none;
-  }
-
-  .heroTitleWrap {
-    height: auto;
-    overflow: visible;
   }
 
   .heroTitle {
