@@ -178,22 +178,22 @@
   --color-cream-dark: #F0ECE4;
 
   /* Sage — sense */
-  --color-sage: #5E6D52;
-  --color-sage-light: #7A8B6F;
-  --color-sage-soft: #A0A88A;
-  --color-sage-muted: rgba(160, 168, 138, 0.10);
+  --color-sage: #5E6B54;
+  --color-sage-light: #78876E;
+  --color-sage-soft: #96A088;
+  --color-sage-muted: rgba(150, 160, 136, 0.10);
 
   /* Plum — weave */
-  --color-plum: #7A6680;
-  --color-plum-light: #8A7690;
-  --color-plum-soft: #9B8A9E;
-  --color-plum-muted: rgba(155, 138, 158, 0.08);
+  --color-plum: #746270;
+  --color-plum-light: #877686;
+  --color-plum-soft: #9A8E98;
+  --color-plum-muted: rgba(154, 142, 152, 0.08);
 
-  /* Terracotta — shape */
-  --color-terracotta: #956058;
-  --color-terracotta-light: #A87068;
-  --color-terracotta-soft: #C4908A;
-  --color-terracotta-muted: rgba(196, 144, 138, 0.08);
+  /* Terracotta — shape (cool blue tone, matching dark mode intent) */
+  --color-terracotta: #5E7E96;
+  --color-terracotta-light: #7A9AAE;
+  --color-terracotta-soft: #9AB4C6;
+  --color-terracotta-muted: rgba(110, 143, 174, 0.08);
 
   /* Chalcedony — accent */
   --color-chalcedony: #6E8FAE;
@@ -205,8 +205,8 @@
   --color-ink-light: #5A5550;
   --color-ink-faint: #7A7570;
 
-  /* Ampersand */
-  --color-ampersand: #F79C7E;
+  /* Ampersand — warm terracotta on cream, brighter coral on dark */
+  --color-ampersand: #C47A62;
 
   /* Layout — fluid gutter */
   --gutter: clamp(24px, 5vw, 80px);
@@ -259,6 +259,17 @@
   --pill-text-dark: rgba(255, 255, 255, 1.0);
   --pill-bg-dark: rgba(255, 255, 255, 0.12);
 
+  /* Mark-colored pills — light mode (earthy on cream) */
+  --pill-sense-text: #4A5940;
+  --pill-sense-border: rgba(94, 109, 82, 0.4);
+  --pill-sense-bg: rgba(94, 109, 82, 0.08);
+  --pill-weave-text: #5E4E65;
+  --pill-weave-border: rgba(122, 102, 128, 0.4);
+  --pill-weave-bg: rgba(122, 102, 128, 0.08);
+  --pill-shape-text: #3E5E72;
+  --pill-shape-border: rgba(94, 126, 150, 0.4);
+  --pill-shape-bg: rgba(94, 126, 150, 0.08);
+
 }
 
 /* ===========================================
@@ -270,6 +281,7 @@
   /* Backgrounds */
   --color-cream: #252525;
   --color-cream-dark: #333;
+  --nav-scrolled-bg: rgba(37, 37, 37, 0.92);
 
   /* Text */
   --color-ink: #E9E9E9;

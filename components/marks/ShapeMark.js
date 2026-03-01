@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react'
 import styles from './marks.module.css'
 
-const DEFAULT_COLOR = '#C4908A'
+const DEFAULT_COLOR = 'var(--color-terracotta)'
 
 // 8 sub-paths from shape-stroke.svg, separated at Z boundaries
 const PETAL_PATHS = [
