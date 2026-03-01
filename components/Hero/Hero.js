@@ -20,6 +20,10 @@ export default function Hero() {
   const [weaveAnimate, setWeaveAnimate] = useState(false)
   const [shapeAnimate, setShapeAnimate] = useState(false)
 
+  const [senseReplay, setSenseReplay] = useState(0)
+  const [weaveReplay, setWeaveReplay] = useState(0)
+  const [shapeReplay, setShapeReplay] = useState(0)
+
   const timelineRef = useRef(null)
   const entranceDoneRef = useRef(false)
 
@@ -164,21 +168,33 @@ export default function Hero() {
 
         {/* Right column: marks with labels */}
         <div className={styles.marksColumn} aria-hidden="true">
-          <div className={styles.markItem} ref={senseWrapRef}>
+          <div
+            className={styles.markItem}
+            ref={senseWrapRef}
+            onMouseEnter={() => entranceDoneRef.current && setSenseReplay(r => r + 1)}
+          >
             <div className={styles.markIcon}>
-              <SenseMark animate={senseAnimate} showBrush color="#C5CFA6" />
+              <SenseMark animate={senseAnimate} replay={senseReplay} showBrush color="#C5CFA6" />
             </div>
             <span className={`${styles.markLabel} ${styles.markLabelSense}`}>Sense</span>
           </div>
-          <div className={styles.markItem} ref={weaveWrapRef}>
+          <div
+            className={styles.markItem}
+            ref={weaveWrapRef}
+            onMouseEnter={() => entranceDoneRef.current && setWeaveReplay(r => r + 1)}
+          >
             <div className={styles.markIcon}>
-              <WeaveMark animate={weaveAnimate} showBrush color="#C7AAD1" />
+              <WeaveMark animate={weaveAnimate} replay={weaveReplay} showBrush color="#C7AAD1" />
             </div>
             <span className={`${styles.markLabel} ${styles.markLabelWeave}`}>Weave</span>
           </div>
-          <div className={styles.markItem} ref={shapeWrapRef}>
+          <div
+            className={styles.markItem}
+            ref={shapeWrapRef}
+            onMouseEnter={() => entranceDoneRef.current && setShapeReplay(r => r + 1)}
+          >
             <div className={styles.markIcon}>
-              <ShapeMark animate={shapeAnimate} showBrush color="#C6DCF6" />
+              <ShapeMark animate={shapeAnimate} replay={shapeReplay} showBrush color="#C6DCF6" />
             </div>
             <span className={`${styles.markLabel} ${styles.markLabelShape}`}>Shape</span>
           </div>

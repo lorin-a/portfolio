@@ -59,7 +59,7 @@
   }
 
   .titleAmpReady:hover {
-    transform: rotate(-8deg) scale(1.04);
+    transform: rotate(-8deg);
   }
 }
 

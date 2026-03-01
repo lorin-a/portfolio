@@ -46,7 +46,7 @@
   font-family: var(--font-sans);
   font-size: var(--text-body-small);
   font-weight: var(--weight-body);
-  color: var(--color-ink-light);
+  color: var(--color-ink);
   text-decoration: none;
   transition: color var(--transition-smooth);
   padding: var(--space-xs) 0;
