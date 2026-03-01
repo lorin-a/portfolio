@@ -1,5 +1,4 @@
 import Hero from '@/components/Hero/Hero'
-import ThemeSetter from '@/components/ThemeSetter'
 import Squiggle from '@/components/Squiggle/Squiggle'
 import ProjectSection from '@/components/ProjectSection/ProjectSection'
 import AboutSection from '@/components/AboutSection/AboutSection'
@@ -108,7 +107,6 @@ const BRIDGING_TILES = [
 export default function Home() {
   return (
     <>
-      <ThemeSetter />
       <Hero />
 
       <Squiggle />

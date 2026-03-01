@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
+import ThemeToggle from '@/components/ThemeToggle/ThemeToggle'
 import styles from './Nav.module.css'
 
 export default function Nav() {
@@ -31,6 +32,7 @@ export default function Nav() {
           <a href="mailto:lorinanderberg1@gmail.com" className={styles.navLink}>
             Contact
           </a>
+          <ThemeToggle />
         </div>
       </nav>
     </header>
