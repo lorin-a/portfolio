@@ -3,73 +3,67 @@
 import { useState, useEffect, useRef } from 'react'
 import styles from './Squiggle.module.css'
 
-export default function Squiggle({ color = "var(--color-green-dark)" }) {
+export default function Squiggle({ color = "var(--color-ink-faint)" }) {
   const [offset, setOffset] = useState(0)
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false)
   const lastScrollY = useRef(0)
   const ref = useRef(null)
-  
+
   useEffect(() => {
     const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)')
     setPrefersReducedMotion(mediaQuery.matches)
-    
+
     const handleChange = (e) => setPrefersReducedMotion(e.matches)
     mediaQuery.addEventListener('change', handleChange)
-    
+
     return () => mediaQuery.removeEventListener('change', handleChange)
   }, [])
-  
+
   useEffect(() => {
     if (prefersReducedMotion) return
-    
+
     lastScrollY.current = window.scrollY
-    
+
     const handleScroll = () => {
       if (!ref.current) return
-      
-      // Check if squiggle is in viewport
+
       const rect = ref.current.getBoundingClientRect()
       const inViewport = rect.top < window.innerHeight && rect.bottom > 0
-      
+
       if (!inViewport) {
         lastScrollY.current = window.scrollY
         return
       }
-      
-      // Calculate scroll delta and direction
+
       const currentScrollY = window.scrollY
       const delta = currentScrollY - lastScrollY.current
       lastScrollY.current = currentScrollY
-      
-      // Adjust offset based on scroll direction
-      // Positive delta (scroll down) = move right (decrease offset)
-      // Negative delta (scroll up) = move left (increase offset)
+
       setOffset(prev => prev - delta * 0.3)
     }
-    
+
     window.addEventListener('scroll', handleScroll, { passive: true })
-    
+
     return () => window.removeEventListener('scroll', handleScroll)
   }, [prefersReducedMotion])
-  
+
   return (
     <div className={styles.container} ref={ref}>
-      <svg 
-        width="120" 
-        height="20" 
-        viewBox="0 0 120 20"
+      <svg
+        viewBox="0 0 1440 24"
         className={styles.svg}
         aria-hidden="true"
+        preserveAspectRatio="none"
       >
         <path
-          d="M 0 10 Q 15 3, 30 10 T 60 10 T 90 10 T 120 10"
+          d="M 0 12 Q 30 4, 60 12 T 120 12 T 180 12 T 240 12 T 300 12 T 360 12 T 420 12 T 480 12 T 540 12 T 600 12 T 660 12 T 720 12 T 780 12 T 840 12 T 900 12 T 960 12 T 1020 12 T 1080 12 T 1140 12 T 1200 12 T 1260 12 T 1320 12 T 1380 12 T 1440 12"
           fill="none"
           stroke={color}
           strokeWidth="2"
           strokeLinecap="round"
           strokeDasharray="6 5"
           style={{
-            strokeDashoffset: offset
+            strokeDashoffset: offset,
           }}
         />
       </svg>

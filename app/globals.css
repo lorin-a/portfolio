@@ -205,11 +205,10 @@
   --color-ink-light: #5A5550;
   --color-ink-faint: #7A7570;
 
-  /* ===========================================
-     V2 TRANSITIONS
-     =========================================== */
-  --transition-gentle: 0.5s ease;
-  --transition-smooth: 0.3s ease;
+  /* Ampersand */
+  --color-ampersand: #F79C7E;
+
+  /* Layout — fluid gutter */
   --gutter: clamp(24px, 5vw, 80px);
 
   /* ===========================================
@@ -253,6 +252,59 @@
   --pill-text-dark: rgba(255, 255, 255, 1.0);
   --pill-bg-dark: rgba(255, 255, 255, 0.12);
 
+}
+
+/* ===========================================
+   DARK THEME — Homepage only (scoped via data attribute)
+   Promotion path: when full site goes dark, move
+   these overrides into :root and delete this block.
+   =========================================== */
+:root[data-theme="dark"] {
+  /* Backgrounds */
+  --color-cream: #1E1E1E;
+  --color-cream-dark: #2A2A2A;
+
+  /* Text */
+  --color-ink: #E9E9E9;
+  --color-ink-light: #B0B0B0;
+  --color-ink-faint: #888;
+
+  /* Ampersand */
+  --color-ampersand: #F79C7E;
+
+  /* Sense */
+  --color-sage: #8A9B6E;
+  --color-sage-light: #A8B88C;
+  --color-sage-soft: #C5CFA6;
+  --color-sage-muted: rgba(197, 207, 166, 0.10);
+
+  /* Weave */
+  --color-plum: #9B7DAA;
+  --color-plum-light: #B194BD;
+  --color-plum-soft: #C7AAD1;
+  --color-plum-muted: rgba(199, 170, 209, 0.10);
+
+  /* Shape */
+  --color-terracotta: #8AACCC;
+  --color-terracotta-light: #A8C4DE;
+  --color-terracotta-soft: #C6DCF6;
+  --color-terracotta-muted: rgba(198, 220, 246, 0.10);
+
+  /* Shadows (lighter on dark) */
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.20);
+  --shadow-md: 0 2px 8px rgba(0,0,0,0.25);
+  --shadow-lg: 0 4px 16px rgba(0,0,0,0.30);
+
+  /* Mark-colored pills */
+  --pill-sense-text: #C5CFA6;
+  --pill-sense-border: rgba(197, 207, 166, 0.5);
+  --pill-sense-bg: rgba(197, 207, 166, 0.15);
+  --pill-weave-text: #C7AAD1;
+  --pill-weave-border: rgba(199, 170, 209, 0.5);
+  --pill-weave-bg: rgba(199, 170, 209, 0.15);
+  --pill-shape-text: #C6DCF6;
+  --pill-shape-border: rgba(198, 220, 246, 0.5);
+  --pill-shape-bg: rgba(198, 220, 246, 0.15);
 }
 
 /* ===========================================
@@ -337,7 +389,7 @@ body::after {
   position: fixed;
   top: 0; right: 0; bottom: 0; left: 0;
   inset: 0;
-  opacity: 0.022;
+  opacity: 0.012;
   pointer-events: none;
   z-index: 50;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");

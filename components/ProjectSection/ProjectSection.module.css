@@ -1,0 +1,220 @@
+/* ===========================================
+   PROJECT SECTION — Bento layout for dark homepage
+   =========================================== */
+
+.section {
+  padding: var(--space-lg) 0;
+}
+
+.inner {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
+  gap: var(--space-lg);
+  align-items: start;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+
+/* Flipped: bento left, text right */
+.sectionFlip .inner {
+  grid-template-columns: 1.4fr 1fr;
+}
+
+.sectionFlip .textColumn {
+  order: 2;
+}
+
+.sectionFlip .bentoGrid {
+  order: 1;
+}
+
+/* ===========================================
+   TEXT COLUMN
+   =========================================== */
+.textColumn {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  padding-top: var(--space-sm);
+}
+
+.projectNum {
+  font-family: var(--font-body);
+  font-size: var(--text-caption);
+  font-weight: var(--weight-label);
+  color: var(--color-ink-faint);
+  letter-spacing: 0.05em;
+}
+
+.title {
+  font-family: var(--font-heading);
+  font-size: var(--text-h2);
+  font-weight: var(--weight-title);
+  font-variation-settings: var(--font-soft);
+  color: var(--color-ink);
+  margin: 0;
+  line-height: var(--leading-tight);
+}
+
+.tagline {
+  font-family: var(--font-heading);
+  font-size: var(--text-body-large);
+  font-weight: var(--weight-display);
+  font-variation-settings: var(--font-soft);
+  font-style: italic;
+  color: var(--color-ink-light);
+  margin: 0;
+}
+
+.description {
+  font-size: var(--text-body);
+  color: var(--color-ink-light);
+  line-height: var(--leading-normal);
+  margin: var(--space-xs) 0 0;
+  text-wrap: pretty;
+}
+
+/* ===========================================
+   PILLS — mark-colored
+   =========================================== */
+.pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+  margin-top: var(--space-xs);
+}
+
+.pill {
+  font-family: var(--font-body);
+  font-size: var(--pill-font-size);
+  padding: var(--pill-padding);
+  border-radius: var(--pill-radius);
+  white-space: nowrap;
+  line-height: 1;
+  display: inline-block;
+}
+
+.pillSense {
+  color: var(--pill-sense-text, var(--pill-text-dark));
+  border: 1px solid var(--pill-sense-border, var(--pill-border-dark));
+  background: var(--pill-sense-bg, var(--pill-bg-dark));
+}
+
+.pillWeave {
+  color: var(--pill-weave-text, var(--pill-text-dark));
+  border: 1px solid var(--pill-weave-border, var(--pill-border-dark));
+  background: var(--pill-weave-bg, var(--pill-bg-dark));
+}
+
+.pillShape {
+  color: var(--pill-shape-text, var(--pill-text-dark));
+  border: 1px solid var(--pill-shape-border, var(--pill-border-dark));
+  background: var(--pill-shape-bg, var(--pill-bg-dark));
+}
+
+/* ===========================================
+   CTA LINK
+   =========================================== */
+.cta {
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  font-weight: var(--weight-label);
+  color: var(--color-ink);
+  text-decoration: none;
+  margin-top: var(--space-sm);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3em;
+  transition: opacity var(--motion-fast) var(--ease-out);
+}
+
+@media (hover: hover) {
+  .cta:hover {
+    opacity: 0.7;
+  }
+}
+
+.cta:focus-visible {
+  outline: 2px solid var(--color-plum-light);
+  outline-offset: 2px;
+}
+
+.comingSoon {
+  font-size: var(--text-body-small);
+  color: var(--color-ink-faint);
+  font-style: italic;
+  margin-top: var(--space-sm);
+}
+
+/* ===========================================
+   BENTO GRID
+   =========================================== */
+.bentoGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-xs);
+}
+
+.tile {
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  aspect-ratio: 1;
+}
+
+.tileWide {
+  grid-column: span 2;
+  aspect-ratio: 2 / 1;
+}
+
+.tileMedia {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* ===========================================
+   RESPONSIVE — TABLET (<=900px)
+   =========================================== */
+@media (max-width: 900px) {
+  .inner {
+    grid-template-columns: 1fr;
+    gap: var(--space-md);
+  }
+
+  .sectionFlip .inner {
+    grid-template-columns: 1fr;
+  }
+
+  .sectionFlip .textColumn {
+    order: 1;
+  }
+
+  .sectionFlip .bentoGrid {
+    order: 2;
+  }
+}
+
+/* ===========================================
+   RESPONSIVE — MOBILE (<=600px)
+   =========================================== */
+@media (max-width: 600px) {
+  .bentoGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .tileWide {
+    grid-column: span 2;
+  }
+}
+
+/* ===========================================
+   ACCESSIBILITY — REDUCED MOTION
+   =========================================== */
+@media (prefers-reduced-motion: reduce) {
+  .tile {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}

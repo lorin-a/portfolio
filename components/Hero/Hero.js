@@ -1,86 +1,181 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
-import FrameworkShuffle from '@/components/FrameworkShuffle/FrameworkShuffle'
+import { useEffect, useRef, useState, useCallback } from 'react'
+import gsap from 'gsap'
+import SenseMark from '@/components/marks/SenseMark'
+import WeaveMark from '@/components/marks/WeaveMark'
+import ShapeMark from '@/components/marks/ShapeMark'
 import styles from './Hero.module.css'
 
 export default function Hero() {
-  const titleRef = useRef(null)
   const line1Ref = useRef(null)
   const line2Ref = useRef(null)
+  const ampRef = useRef(null)
+  const senseWrapRef = useRef(null)
+  const weaveWrapRef = useRef(null)
+  const shapeWrapRef = useRef(null)
+  const subtitleRef = useRef(null)
+
+  const [senseAnimate, setSenseAnimate] = useState(false)
+  const [weaveAnimate, setWeaveAnimate] = useState(false)
+  const [shapeAnimate, setShapeAnimate] = useState(false)
+
+  const timelineRef = useRef(null)
+  const entranceDoneRef = useRef(false)
+
+  /* ===== Scroll escape: snap to final state ===== */
+  const snapEntrance = useCallback(() => {
+    if (entranceDoneRef.current) return
+    entranceDoneRef.current = true
+    if (timelineRef.current) {
+      timelineRef.current.progress(1).kill()
+      timelineRef.current = null
+    }
+    setSenseAnimate(true)
+    setWeaveAnimate(true)
+    setShapeAnimate(true)
+  }, [])
 
   useEffect(() => {
-    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    const prefersReduced = window.matchMedia(
+      '(prefers-reduced-motion: reduce)'
+    ).matches
+
     if (prefersReduced) {
-      if (titleRef.current) {
-        titleRef.current.style.fontVariationSettings = "'SOFT' 100, 'WONK' 1"
-      }
-      if (line1Ref.current) {
-        line1Ref.current.style.opacity = 1
-        line1Ref.current.style.clipPath = 'inset(0 0% 0 0)'
-      }
-      if (line2Ref.current) {
-        line2Ref.current.style.opacity = 1
-        line2Ref.current.style.clipPath = 'inset(0 0% 0 0)'
-      }
+      setSenseAnimate(true)
+      setWeaveAnimate(true)
+      setShapeAnimate(true)
+      entranceDoneRef.current = true
       return
     }
 
-    import('gsap').then(({ gsap }) => {
-      // SOFT axis tween: sharp serifs → soft/wonky over 1.2s
-      const softObj = { soft: 0 }
-      gsap.to(softObj, {
-        soft: 100,
-        duration: 1.2,
-        ease: 'power2.out',
-        onUpdate: () => {
-          if (titleRef.current) {
-            titleRef.current.style.fontVariationSettings = `'SOFT' ${softObj.soft}, 'WONK' 1`
-          }
-        },
-      })
-
-      // Scale duration by character count so reveal pace feels uniform
-      const perChar = 0.1
-      const minDuration = 1.0
-      const line1Text = 'Design Researcher'
-      const line2Text = '& Creative Strategist'
-      const dur1 = Math.max(minDuration, line1Text.length * perChar)
-      const dur2 = Math.max(minDuration, line2Text.length * perChar)
-
-      const tl = gsap.timeline()
-
-      // Line 1: wipes left → right
-      tl.set(line1Ref.current, { opacity: 1 })
-      tl.fromTo(line1Ref.current,
-        { clipPath: 'inset(0 100% 0 0)' },
-        { clipPath: 'inset(0 0% 0 0)', duration: dur1, ease: 'power1.inOut' }
-      )
-
-      // Line 2: wipes left → right, slightly overlapping
-      tl.set(line2Ref.current, { opacity: 1 })
-      tl.fromTo(line2Ref.current,
-        { clipPath: 'inset(0 100% 0 0)' },
-        { clipPath: 'inset(0 0% 0 0)', duration: dur2, ease: 'power1.inOut' },
-        '-=0.3'
-      )
-
-      // Framework icons pick up via their own startDelay
+    /* =========================================
+       Cinematic entrance — ~2.6s
+       ========================================= */
+    const tl = gsap.timeline({
+      onComplete: () => {
+        entranceDoneRef.current = true
+      },
     })
-  }, [])
+    timelineRef.current = tl
+
+    // Beat 1 (0s): "UX Researcher" slides up + fades
+    tl.to(line1Ref.current, {
+      opacity: 1,
+      y: 0,
+      duration: 0.6,
+      ease: 'power2.out',
+    }, 0)
+
+    // Beat 2 (0.15s): "Design Strategist" slides up
+    tl.to(line2Ref.current, {
+      opacity: 1,
+      y: 0,
+      duration: 0.6,
+      ease: 'power2.out',
+    }, 0.15)
+
+    // Beat 3 (0.3s): & bounces in
+    tl.to(ampRef.current, {
+      opacity: 1,
+      scale: 1,
+      duration: 0.7,
+      ease: 'back.out(2.5)',
+    }, 0.3)
+
+    // Beat 4 (1.0-1.4s): Marks pop in with bounce, staggered 200ms
+    tl.to(senseWrapRef.current, {
+      opacity: 1,
+      scale: 1,
+      duration: 0.5,
+      ease: 'back.out(2)',
+    }, 1.0)
+    tl.call(() => setSenseAnimate(true), null, 1.0)
+
+    tl.to(weaveWrapRef.current, {
+      opacity: 1,
+      scale: 1,
+      duration: 0.5,
+      ease: 'back.out(2)',
+    }, 1.2)
+    tl.call(() => setWeaveAnimate(true), null, 1.2)
+
+    tl.to(shapeWrapRef.current, {
+      opacity: 1,
+      scale: 1,
+      duration: 0.5,
+      ease: 'back.out(2)',
+    }, 1.4)
+    tl.call(() => setShapeAnimate(true), null, 1.4)
+
+    // Beat 5 (1.8s): Subtitle fades up
+    tl.to(subtitleRef.current, {
+      opacity: 1,
+      y: 0,
+      duration: 0.8,
+      ease: 'power1.inOut',
+    }, 1.8)
+
+    /* ===== Scroll escape ===== */
+    function onScroll() {
+      if (!entranceDoneRef.current && window.scrollY > 10) {
+        snapEntrance()
+      }
+    }
+    window.addEventListener('scroll', onScroll, { passive: true })
+
+    return () => {
+      window.removeEventListener('scroll', onScroll)
+      if (timelineRef.current) {
+        timelineRef.current.kill()
+        timelineRef.current = null
+      }
+    }
+  }, [snapEntrance])
 
   return (
-    <section className={styles.hero} id="hero">
-      <h1 className={styles.heroTitle} ref={titleRef}>
-        <span className={styles.titleLine} ref={line1Ref}>
-          Design Researcher
-        </span>
-        <br />
-        <span className={styles.titleLine} ref={line2Ref}>
-          <span className={styles.amp}>&amp;</span> Creative Strategist
-        </span>
-      </h1>
-      <FrameworkShuffle startDelay={2.4} itemStagger={0.3} />
+    <section className={styles.hero} aria-label="Introduction">
+      <div className={styles.heroContent}>
+        {/* Left column: title + subtitle */}
+        <div className={styles.left}>
+          <h1 className={styles.title}>
+            <span className={styles.titleAmp} ref={ampRef} aria-hidden="true">
+              &amp;
+            </span>
+            <span className={styles.titleLine} ref={line1Ref}>
+              UX Researcher
+            </span>
+            <span className={styles.titleLine} ref={line2Ref}>
+              Design Strategist
+            </span>
+          </h1>
+          <p className={styles.subtitle} ref={subtitleRef}>
+            Thoughtful design for social impact
+          </p>
+        </div>
+
+        {/* Right column: marks with labels */}
+        <div className={styles.marksColumn} aria-hidden="true">
+          <div className={styles.markItem} ref={senseWrapRef}>
+            <div className={styles.markIcon}>
+              <SenseMark animate={senseAnimate} showBrush color="#C5CFA6" />
+            </div>
+            <span className={styles.markLabel}>Sense</span>
+          </div>
+          <div className={styles.markItem} ref={weaveWrapRef}>
+            <div className={styles.markIcon}>
+              <WeaveMark animate={weaveAnimate} showBrush color="#C7AAD1" />
+            </div>
+            <span className={styles.markLabel}>Weave</span>
+          </div>
+          <div className={styles.markItem} ref={shapeWrapRef}>
+            <div className={styles.markIcon}>
+              <ShapeMark animate={shapeAnimate} showBrush color="#C6DCF6" />
+            </div>
+            <span className={styles.markLabel}>Shape</span>
+          </div>
+        </div>
+      </div>
     </section>
   )
 }

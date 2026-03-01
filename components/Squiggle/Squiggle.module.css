@@ -1,9 +1,13 @@
+/* Full-width squiggle divider */
 .container {
-  display: flex;
-  justify-content: center;
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+  overflow: hidden;
   padding: 1.5rem 0;
 }
 
 .svg {
   display: block;
+  width: 100%;
+  height: 24px;
 }
