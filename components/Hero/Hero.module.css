@@ -53,6 +53,14 @@
   transform: none;
 }
 
+/* Dark mode: 3-color gradient on the ampersand (sage → plum → coral) */
+:global(:root[data-theme="dark"]) .titleAmp {
+  background: linear-gradient(154.6deg, #C5CFA6 15.5%, #C7AAD1 52.1%, #F79C7E 89.7%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
 @media (hover: hover) {
   .titleAmpReady {
     transition: transform var(--motion-fast) var(--ease-bounce);

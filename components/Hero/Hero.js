@@ -24,6 +24,17 @@ export default function Hero() {
   const [weaveReplay, setWeaveReplay] = useState(0)
   const [shapeReplay, setShapeReplay] = useState(0)
 
+  /* Theme detection for gradient colors */
+  const [isDark, setIsDark] = useState(true)
+  useEffect(() => {
+    const root = document.documentElement
+    const check = () => setIsDark(root.dataset.theme === 'dark')
+    check()
+    const observer = new MutationObserver(check)
+    observer.observe(root, { attributes: true, attributeFilter: ['data-theme'] })
+    return () => observer.disconnect()
+  }, [])
+
   const timelineRef = useRef(null)
   const entranceDoneRef = useRef(false)
 
@@ -143,8 +154,25 @@ export default function Hero() {
     }
   }, [snapEntrance])
 
+  const markColor = isDark ? 'url(#hero-mark-gradient)' : undefined
+
   return (
     <section className={styles.hero} aria-label="Introduction">
+      {/* Shared SVG gradient definition for dark-mode marks */}
+      {isDark && (
+        <svg width="0" height="0" aria-hidden="true" style={{ position: 'absolute' }}>
+          <defs>
+            <linearGradient
+              id="hero-mark-gradient"
+              x1="28.5%" y1="5%" x2="71.5%" y2="95%"
+            >
+              <stop offset="15.5%" stopColor="#C5CFA6" />
+              <stop offset="52.1%" stopColor="#C7AAD1" />
+              <stop offset="89.7%" stopColor="#F79C7E" />
+            </linearGradient>
+          </defs>
+        </svg>
+      )}
       <div className={styles.heroContent}>
         {/* Left column: & beside title lines, subtitle below */}
         <div className={styles.left}>
@@ -174,7 +202,7 @@ export default function Hero() {
             onMouseEnter={() => entranceDoneRef.current && setSenseReplay(r => r + 1)}
           >
             <div className={styles.markIcon}>
-              <SenseMark animate={senseAnimate} replay={senseReplay} showBrush color="#C5CFA6" />
+              <SenseMark animate={senseAnimate} replay={senseReplay} showBrush color={markColor || "#C5CFA6"} />
             </div>
             <span className={`${styles.markLabel} ${styles.markLabelSense}`}>Sense</span>
           </div>
@@ -184,7 +212,7 @@ export default function Hero() {
             onMouseEnter={() => entranceDoneRef.current && setWeaveReplay(r => r + 1)}
           >
             <div className={styles.markIcon}>
-              <WeaveMark animate={weaveAnimate} replay={weaveReplay} showBrush color="#C7AAD1" />
+              <WeaveMark animate={weaveAnimate} replay={weaveReplay} showBrush color={markColor || "#C7AAD1"} />
             </div>
             <span className={`${styles.markLabel} ${styles.markLabelWeave}`}>Weave</span>
           </div>
@@ -194,7 +222,7 @@ export default function Hero() {
             onMouseEnter={() => entranceDoneRef.current && setShapeReplay(r => r + 1)}
           >
             <div className={styles.markIcon}>
-              <ShapeMark animate={shapeAnimate} replay={shapeReplay} showBrush color="#C6DCF6" />
+              <ShapeMark animate={shapeAnimate} replay={shapeReplay} showBrush color={markColor || "#C6DCF6"} />
             </div>
             <span className={`${styles.markLabel} ${styles.markLabelShape}`}>Shape</span>
           </div>
