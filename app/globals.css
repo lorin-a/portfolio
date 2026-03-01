@@ -189,11 +189,11 @@
   --color-plum-soft: #9A8E98;
   --color-plum-muted: rgba(154, 142, 152, 0.08);
 
-  /* Terracotta — shape (cool blue tone, matching dark mode intent) */
-  --color-terracotta: #5E7E96;
-  --color-terracotta-light: #7A9AAE;
-  --color-terracotta-soft: #9AB4C6;
-  --color-terracotta-muted: rgba(110, 143, 174, 0.08);
+  /* Terracotta — shape (warm, same family as ampersand) */
+  --color-terracotta: #A0644E;
+  --color-terracotta-light: #C47A62;
+  --color-terracotta-soft: #D9A08C;
+  --color-terracotta-muted: rgba(196, 122, 98, 0.08);
 
   /* Chalcedony — accent */
   --color-chalcedony: #6E8FAE;

@@ -53,12 +53,16 @@
   transform: none;
 }
 
-/* Dark mode: 3-color gradient on the ampersand (sage → plum → coral) */
-:global(:root[data-theme="dark"]) .titleAmp {
-  background: linear-gradient(154.6deg, #C5CFA6 15.5%, #C7AAD1 52.1%, #F79C7E 89.7%);
+/* 3-color gradient on the ampersand (sage → plum → terracotta) */
+.titleAmp {
+  background: linear-gradient(154.6deg, #ACB592 15.5%, #B098B7 52.1%, #C97E65 89.7%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+}
+
+:global(:root[data-theme="dark"]) .titleAmp {
+  background-image: linear-gradient(154.6deg, #C5CFA6 15.5%, #C7AAD1 52.1%, #F79C7E 89.7%);
 }
 
 @media (hover: hover) {
@@ -144,9 +148,13 @@
   color: var(--color-ink-light);
 }
 
-.markLabelSense { color: var(--color-sage-light); }
-.markLabelWeave { color: var(--color-plum-light); }
-.markLabelShape { color: var(--color-terracotta-light); }
+.markLabelSense { color: #ACB592; }
+.markLabelWeave { color: #B098B7; }
+.markLabelShape { color: #C97E65; }
+
+:global(:root[data-theme="dark"]) .markLabelSense { color: #C5CFA6; }
+:global(:root[data-theme="dark"]) .markLabelWeave { color: #C7AAD1; }
+:global(:root[data-theme="dark"]) .markLabelShape { color: #F79C7E; }
 
 /* ===========================================
    RESPONSIVE — TABLET (<=900px)
