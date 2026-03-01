@@ -33,7 +33,35 @@ export default function GroundswellSection() {
     setReducedMotion(window.matchMedia('(prefers-reduced-motion: reduce)').matches)
   }, [])
 
-  /* ── GSAP scroll-triggered tile fade-in ── */
+  const row2Ref = useRef(null)
+
+  /* ── Row 1: animate on page load ── */
+  useEffect(() => {
+    if (reducedMotion) return
+
+    const timeout = setTimeout(() => {
+      import('gsap').then(({ gsap }) => {
+        const row1Items = sectionRef.current?.querySelectorAll('[data-row1]')
+        if (!row1Items?.length) return
+
+        gsap.fromTo(
+          row1Items,
+          { opacity: 0, scale: 0.97 },
+          {
+            opacity: 1,
+            scale: 1,
+            duration: 0.8,
+            stagger: 0.15,
+            ease: 'power1.inOut',
+          }
+        )
+      })
+    }, 300)
+
+    return () => clearTimeout(timeout)
+  }, [reducedMotion])
+
+  /* ── Row 2: scroll-triggered reveal ── */
   useEffect(() => {
     if (reducedMotion) return
 
@@ -43,26 +71,63 @@ export default function GroundswellSection() {
         observer.disconnect()
 
         import('gsap').then(({ gsap }) => {
-          const items = sectionRef.current?.querySelectorAll('[data-tile]')
-          if (!items?.length) return
+          const el = row2Ref.current
+          if (!el) return
 
-          gsap.fromTo(
-            items,
-            { opacity: 0, y: 12 },
-            {
-              opacity: 1,
-              y: 0,
-              duration: 0.6,
-              stagger: 0.1,
-              ease: 'power1.inOut',
-            }
-          )
+          /* Text children stagger in softly */
+          const textChildren = el.querySelector('[data-text]')?.children
+          if (textChildren?.length) {
+            gsap.fromTo(
+              textChildren,
+              { opacity: 0, y: 10 },
+              {
+                opacity: 1,
+                y: 0,
+                duration: 0.6,
+                stagger: 0.08,
+                ease: 'power1.inOut',
+              }
+            )
+          }
+
+          /* iPhone settles in */
+          const phone = el.querySelector('[data-phone]')
+          if (phone) {
+            gsap.fromTo(
+              phone,
+              { opacity: 0, y: 14, scale: 0.98 },
+              {
+                opacity: 1,
+                y: 0,
+                scale: 1,
+                duration: 0.7,
+                delay: 0.2,
+                ease: 'power1.inOut',
+              }
+            )
+          }
+
+          /* Flip card fades in (its own flip animation handles the rest) */
+          const card = el.querySelector('[data-card]')
+          if (card) {
+            gsap.fromTo(
+              card,
+              { opacity: 0, y: 10 },
+              {
+                opacity: 1,
+                y: 0,
+                duration: 0.6,
+                delay: 0.3,
+                ease: 'power1.inOut',
+              }
+            )
+          }
         })
       },
       { threshold: 0.15 }
     )
 
-    if (sectionRef.current) observer.observe(sectionRef.current)
+    if (row2Ref.current) observer.observe(row2Ref.current)
 
     return () => observer.disconnect()
   }, [reducedMotion])
@@ -78,14 +143,14 @@ export default function GroundswellSection() {
     }
   }, [])
 
-  const initialOpacity = reducedMotion ? undefined : { opacity: 0 }
+  const hidden = reducedMotion ? undefined : { opacity: 0 }
 
   return (
     <section className={styles.section} aria-label="Groundswell">
       <div className={styles.inner} ref={sectionRef}>
 
         {/* ── Row 1: Hero image ── */}
-        <div className={styles.heroImage} data-tile style={initialOpacity}>
+        <div className={styles.heroImage} data-row1 style={hidden}>
           <img
             src={cloudImg(GS_IMAGES['gs-hero'], 900)}
             alt="Groundswell installation overview"
@@ -97,8 +162,8 @@ export default function GroundswellSection() {
         {/* ── Row 1: Walkthrough video ── */}
         <div
           className={styles.walkthroughSlot}
-          data-tile
-          style={initialOpacity}
+          data-row1
+          style={hidden}
           onClick={() => toggleVideo(walkthroughRef)}
         >
           <video
@@ -112,67 +177,71 @@ export default function GroundswellSection() {
           />
         </div>
 
-        {/* ── Row 2: Text column ── */}
-        <div className={styles.textColumn} data-tile style={initialOpacity}>
-          <span className={styles.projectNum}>01</span>
-          <h2 className={styles.title}>Groundswell</h2>
-          <p className={styles.tagline}>Making Space to Restore, Together</p>
-          <p className={styles.description}>
-            A multi-suite design intervention built to support the complex
-            emotional reality of oncology care. Co-designed with healthcare
-            workers.
-          </p>
-          <div className={styles.pills}>
-            {CONTRIBUTIONS.map((c) => (
-              <span
-                key={c.label}
-                className={`${styles.pill} ${styles[PILL_MAP[c.label]]}`}
-              >
-                {c.label}
-              </span>
-            ))}
-          </div>
-          <a href="/projects/groundswell" className={styles.cta}>
-            View Case Study <span aria-hidden="true">&rarr;</span>
-          </a>
-        </div>
+        {/* ── Row 2 wrapper for scroll-triggered reveal ── */}
+        <div className={styles.row2} ref={row2Ref}>
 
-        {/* ── Row 2: iPhone mockup with QR library video ── */}
-        <div className={styles.iphoneSlot} data-tile style={initialOpacity}>
-          <div
-            className={styles.iphoneFrame}
-            onClick={() => toggleVideo(qrVideoRef)}
-          >
-            <video
-              ref={qrVideoRef}
-              src={cloudVideo(GS_VIDEOS['gs-qr-library'], 480)}
-              autoPlay={!reducedMotion}
-              muted
-              loop
-              playsInline
-              className={styles.iphoneVideo}
+          {/* Text column — children stagger individually */}
+          <div className={styles.textColumn} data-text>
+            <span className={styles.projectNum}>01</span>
+            <h2 className={styles.title}>Groundswell</h2>
+            <p className={styles.tagline}>Making Space to Restore, Together</p>
+            <p className={styles.description}>
+              A multi-suite design intervention built to support the complex
+              emotional reality of oncology care. Co-designed with healthcare
+              workers.
+            </p>
+            <div className={styles.pills}>
+              {CONTRIBUTIONS.map((c) => (
+                <span
+                  key={c.label}
+                  className={`${styles.pill} ${styles[PILL_MAP[c.label]]}`}
+                >
+                  {c.label}
+                </span>
+              ))}
+            </div>
+            <a href="/projects/groundswell" className={styles.cta}>
+              View Case Study <span aria-hidden="true">&rarr;</span>
+            </a>
+          </div>
+
+          {/* iPhone mockup */}
+          <div className={styles.iphoneSlot} data-phone style={hidden}>
+            <div
+              className={styles.iphoneFrame}
+              onClick={() => toggleVideo(qrVideoRef)}
+            >
+              <video
+                ref={qrVideoRef}
+                src={cloudVideo(GS_VIDEOS['gs-qr-library'], 480)}
+                autoPlay={!reducedMotion}
+                muted
+                loop
+                playsInline
+                className={styles.iphoneVideo}
+              />
+            </div>
+          </div>
+
+          {/* Exhausted flip card */}
+          <div className={styles.flipCardSlot} data-card style={hidden}>
+            <FlipCard
+              front={
+                <img
+                  src={cloudImg(GS_CARDS['exhausted-front'], 400)}
+                  alt="Exhausted reflection card, front"
+                  className={styles.cardImage}
+                />
+              }
+              back={
+                <img
+                  src={cloudImg(GS_CARDS['exhausted-back'], 400)}
+                  alt="Exhausted reflection card, back"
+                  className={styles.cardImage}
+                />
+              }
             />
           </div>
-        </div>
-
-        {/* ── Row 2: Exhausted flip card ── */}
-        <div className={styles.flipCardSlot} data-tile style={initialOpacity}>
-          <FlipCard
-            front={
-              <img
-                src={cloudImg(GS_CARDS['exhausted-front'], 400)}
-                alt="Exhausted reflection card, front"
-                className={styles.cardImage}
-              />
-            }
-            back={
-              <img
-                src={cloudImg(GS_CARDS['exhausted-back'], 400)}
-                alt="Exhausted reflection card, back"
-                className={styles.cardImage}
-              />
-            }
-          />
         </div>
       </div>
     </section>
