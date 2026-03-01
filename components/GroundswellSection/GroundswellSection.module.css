@@ -1,0 +1,337 @@
+/* ===========================================
+   GROUNDSWELL SECTION — Custom 2-row layout
+   =========================================== */
+
+.section {
+  padding: var(--space-lg) 0;
+}
+
+.inner {
+  composes: grid from global;
+  row-gap: var(--space-sm);
+  align-items: start;
+}
+
+/* ===========================================
+   ROW 1 — Full-width media (3 items)
+   =========================================== */
+.heroImage {
+  grid-column: 1 / 8;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  aspect-ratio: 4 / 3;
+}
+
+.flipCardSlotA {
+  grid-column: 8 / 10;
+  aspect-ratio: 2 / 3;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+/* Force FlipCard to fill its aspect-ratio slot */
+.flipCardSlotA > div,
+.flipCardSlotB > div {
+  width: 100%;
+  height: 100%;
+}
+
+.walkthroughSlot {
+  grid-column: 10 / 13;
+  aspect-ratio: 2 / 3;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+}
+
+/* ===========================================
+   ROW 2 — Text + media
+   =========================================== */
+.textColumn {
+  grid-column: 1 / 8;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  padding-top: var(--space-sm);
+  padding-right: var(--space-md);
+}
+
+.iphoneSlot {
+  grid-column: 8 / 10;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.flipCardSlotB {
+  grid-column: 10 / 13;
+  aspect-ratio: 2 / 3;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+/* ===========================================
+   MEDIA — Shared image/video styles
+   =========================================== */
+.media {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.cardImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* ===========================================
+   VIDEO — Tap-to-pause overlay
+   =========================================== */
+.videoWrap {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+
+.videoWrap video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* ===========================================
+   iPHONE FRAME
+   =========================================== */
+.iphoneFrame {
+  position: relative;
+  width: 100%;
+  max-width: 240px;
+  aspect-ratio: 280 / 600;
+  background: var(--color-device-dark);
+  border-radius: 40px;
+  padding: 12px;
+  box-shadow:
+    0 0 0 2px #3a3a3a,
+    0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+.iphoneFrame::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 24px;
+  background: var(--color-device-dark);
+  border-radius: 0 0 16px 16px;
+  z-index: 2;
+}
+
+.iphoneVideo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 32px;
+  background: #000;
+  display: block;
+}
+
+/* ===========================================
+   TYPOGRAPHY — Matches ProjectSection tokens
+   =========================================== */
+.projectNum {
+  font-family: var(--font-heading);
+  font-size: clamp(14px, 1.2vw, 18px);
+  font-weight: var(--weight-label);
+  font-variation-settings: var(--font-soft);
+  color: var(--color-ink);
+  opacity: 0.6;
+}
+
+.title {
+  font-family: var(--font-heading);
+  font-size: clamp(28px, 3.2vw, 48px);
+  font-weight: var(--weight-title);
+  font-variation-settings: var(--font-soft);
+  color: var(--color-ink);
+  margin: 0;
+  line-height: var(--leading-tight);
+}
+
+.tagline {
+  font-family: var(--font-heading);
+  font-size: clamp(16px, 1.5vw, 22px);
+  font-weight: var(--weight-display);
+  font-variation-settings: var(--font-soft);
+  font-style: italic;
+  color: var(--color-ink);
+  opacity: 0.85;
+  margin: 0;
+}
+
+.description {
+  font-size: clamp(14px, 1.3vw, 18px);
+  color: var(--color-ink);
+  opacity: 0.85;
+  line-height: var(--leading-normal);
+  margin: var(--space-xs) 0 0;
+  text-wrap: pretty;
+}
+
+/* ===========================================
+   PILLS — Per-pill variant colors
+   =========================================== */
+.pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+  margin-top: var(--space-xs);
+}
+
+.pill {
+  font-family: var(--font-body);
+  font-size: clamp(13px, 1.1vw, 16px);
+  padding: 0.35em 1em;
+  border-radius: var(--pill-radius);
+  white-space: nowrap;
+  line-height: 1;
+  display: inline-block;
+}
+
+.pillSense {
+  color: var(--pill-sense-text, var(--pill-text-dark));
+  border: 2px solid var(--pill-sense-border, var(--pill-border-dark));
+  background: var(--pill-sense-bg, var(--pill-bg-dark));
+}
+
+.pillWeave {
+  color: var(--pill-weave-text, var(--pill-text-dark));
+  border: 2px solid var(--pill-weave-border, var(--pill-border-dark));
+  background: var(--pill-weave-bg, var(--pill-bg-dark));
+}
+
+.pillShape {
+  color: var(--pill-shape-text, var(--pill-text-dark));
+  border: 2px solid var(--pill-shape-border, var(--pill-border-dark));
+  background: var(--pill-shape-bg, var(--pill-bg-dark));
+}
+
+/* ===========================================
+   CTA LINK
+   =========================================== */
+.cta {
+  font-family: var(--font-heading);
+  font-size: clamp(16px, 1.5vw, 22px);
+  font-weight: var(--weight-label);
+  font-style: italic;
+  font-variation-settings: var(--font-soft);
+  color: var(--color-ink);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  margin-top: var(--space-sm);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3em;
+  transition: opacity var(--motion-fast) var(--ease-out);
+}
+
+@media (hover: hover) {
+  .cta:hover {
+    opacity: 0.7;
+  }
+}
+
+.cta:focus-visible {
+  outline: 2px solid var(--color-plum-light);
+  outline-offset: 2px;
+}
+
+/* ===========================================
+   RESPONSIVE — TABLET (<=900px)
+   =========================================== */
+@media (max-width: 900px) {
+  .inner {
+    row-gap: var(--space-md);
+  }
+
+  /* Row 1: hero full-width, flip + video side-by-side */
+  .heroImage {
+    grid-column: 1 / -1;
+  }
+
+  .flipCardSlotA {
+    grid-column: 1 / 7;
+  }
+
+  .walkthroughSlot {
+    grid-column: 7 / 13;
+  }
+
+  /* Row 2: text full-width, then iPhone + flip side-by-side */
+  .textColumn {
+    grid-column: 1 / -1;
+  }
+
+  .iphoneSlot {
+    grid-column: 1 / 7;
+  }
+
+  .flipCardSlotB {
+    grid-column: 7 / 13;
+  }
+}
+
+/* ===========================================
+   RESPONSIVE — MOBILE (<=600px)
+   =========================================== */
+@media (max-width: 600px) {
+  .heroImage,
+  .flipCardSlotA,
+  .walkthroughSlot,
+  .textColumn,
+  .iphoneSlot,
+  .flipCardSlotB {
+    grid-column: 1 / -1;
+  }
+
+  .flipCardSlotA,
+  .flipCardSlotB {
+    max-width: 300px;
+    justify-self: center;
+  }
+
+  .walkthroughSlot {
+    max-width: 300px;
+    justify-self: center;
+  }
+
+  .iphoneFrame {
+    max-width: 200px;
+  }
+
+  .iphoneSlot {
+    justify-content: center;
+  }
+}
+
+/* ===========================================
+   ACCESSIBILITY — REDUCED MOTION
+   =========================================== */
+@media (prefers-reduced-motion: reduce) {
+  .heroImage,
+  .flipCardSlotA,
+  .walkthroughSlot,
+  .textColumn,
+  .iphoneSlot,
+  .flipCardSlotB {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}

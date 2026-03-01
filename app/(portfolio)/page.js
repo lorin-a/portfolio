@@ -1,34 +1,12 @@
 import Hero from '@/components/Hero/Hero'
 import Squiggle from '@/components/Squiggle/Squiggle'
 import ProjectSection from '@/components/ProjectSection/ProjectSection'
+import GroundswellSection from '@/components/GroundswellSection/GroundswellSection'
 import AboutSection from '@/components/AboutSection/AboutSection'
-import { cloudImg, cloudVideo, HOME_IMAGES, HOME_VIDEOS, GS_VIDEOS } from '@/lib/cloudinary'
+import { cloudVideo, HOME_VIDEOS } from '@/lib/cloudinary'
 import styles from './page.module.css'
 
 /* ─── Project data ─── */
-const GROUNDSWELL = {
-  num: '01',
-  title: 'Groundswell',
-  tagline: 'Making Space to Restore, Together',
-  description:
-    'A multi-suite design intervention built to support the complex emotional reality of oncology care. Co-designed with healthcare workers.',
-  href: '/projects/groundswell',
-  contributions: [
-    { label: 'Participatory Research' },
-    { label: 'Content Strategy' },
-    { label: 'Facilitation Design' },
-  ],
-}
-
-const GROUNDSWELL_TILES = [
-  { src: cloudImg('gs-context-01_hnvnm2', 400), alt: 'Groundswell context photo', span: 1 },
-  { src: cloudImg('gs-artwall_kfw1u7', 400), alt: 'Art wall installation', span: 1 },
-  { src: cloudVideo(GS_VIDEOS['gs-walkthrough-video'], 680), alt: 'Groundswell walkthrough', type: 'video', span: 1 },
-  { src: cloudImg('gs-context-02_wqdbg7', 400), alt: 'Oncology care context', span: 1 },
-  { src: cloudImg('gs-artwall-detail-01_p3xfco', 400), alt: 'Art wall detail', span: 1 },
-  { src: cloudImg('gs-making-facade_ahgln6', 400), alt: 'Installation facade', span: 1 },
-]
-
 const BIRTHSTORY = {
   num: '02',
   title: 'BirthStory',
@@ -110,7 +88,7 @@ export default function Home() {
       <Hero />
 
       <Squiggle />
-      <ProjectSection project={GROUNDSWELL} tiles={GROUNDSWELL_TILES} pillVariant="weave" />
+      <GroundswellSection />
 
       <Squiggle />
       <ProjectSection project={BIRTHSTORY} tiles={BIRTHSTORY_TILES} flip pillVariant="shape" />
