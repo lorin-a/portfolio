@@ -5,26 +5,22 @@
    =========================================== */
 
 .hero {
-  padding: clamp(80px, 15vh, 160px) var(--gutter) clamp(60px, 10vh, 120px);
+  padding: clamp(80px, 15vh, 160px) 0 clamp(60px, 10vh, 120px);
 }
 
 /* ===========================================
-   CONTENT — two-column layout
+   CONTENT — 12-column grid layout
    =========================================== */
 .heroContent {
-  display: flex;
+  composes: grid from global;
   align-items: center;
-  justify-content: space-between;
-  gap: var(--space-lg);
-  max-width: 1200px;
-  margin: 0 auto;
 }
 
 /* ===========================================
-   LEFT COLUMN
+   LEFT COLUMN — spans columns 1-7
    =========================================== */
 .left {
-  flex: 1;
+  grid-column: 1 / 8;
   min-width: 0;
 }
 
@@ -88,10 +84,10 @@
    MARKS COLUMN — horizontal marks with labels
    =========================================== */
 .marksColumn {
+  grid-column: 9 / -1;
   display: flex;
   align-items: flex-start;
   gap: clamp(24px, 3vw, 40px);
-  flex-shrink: 0;
 }
 
 .markItem {
@@ -123,22 +119,20 @@
   color: var(--color-ink-light);
 }
 
-.markLabelSense { color: var(--color-sage-soft); }
-.markLabelWeave { color: var(--color-plum-soft); }
-.markLabelShape { color: var(--color-terracotta-soft); }
+.markLabelSense { color: var(--color-sage-light); }
+.markLabelWeave { color: var(--color-plum-light); }
+.markLabelShape { color: var(--color-terracotta-light); }
 
 /* ===========================================
    RESPONSIVE — TABLET (<=900px)
    =========================================== */
 @media (max-width: 900px) {
-  .heroContent {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: var(--space-lg);
+  .left {
+    grid-column: 1 / -1;
   }
 
   .marksColumn {
-    align-self: flex-start;
+    grid-column: 1 / -1;
   }
 }
 
@@ -147,7 +141,7 @@
    =========================================== */
 @media (max-width: 600px) {
   .hero {
-    padding: clamp(64px, 12vh, 120px) var(--gutter) clamp(48px, 8vh, 96px);
+    padding: clamp(64px, 12vh, 120px) 0 clamp(48px, 8vh, 96px);
   }
 
   .titleAmp {

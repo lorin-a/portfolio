@@ -147,7 +147,7 @@
   /* ===========================================
      LAYOUT
      =========================================== */
-  --max-width: 1200px;
+  --max-width: 1400px;
   --content-width: 900px;
   --container-padding: var(--space-md);
   
@@ -210,6 +210,13 @@
 
   /* Layout — fluid gutter */
   --gutter: clamp(24px, 5vw, 80px);
+
+  /* ===========================================
+     12-COLUMN GRID SYSTEM
+     =========================================== */
+  --grid-columns: 12;
+  --grid-gutter: clamp(16px, 2vw, 24px);
+  --grid-margin: var(--gutter);
 
   /* ===========================================
      PROJECT CARD TINTS
@@ -318,6 +325,9 @@
     --text-pull-quote: 1.375rem; /* 22px */
     --space-lg: 3rem;
     --space-xl: 5rem;
+    --grid-columns: 8;
+    --grid-gutter: 16px;
+    --grid-margin: clamp(20px, 4vw, 40px);
   }
 }
 
@@ -335,6 +345,9 @@
     --space-lg: 2.5rem;
     --space-xl: 4rem;
     --container-padding: var(--space-sm);
+    --grid-columns: 4;
+    --grid-gutter: 12px;
+    --grid-margin: 20px;
   }
 }
 
@@ -345,6 +358,8 @@
   :root {
     --space-lg: 2rem;
     --space-xl: 3rem;
+    --grid-gutter: 10px;
+    --grid-margin: 16px;
   }
 }
 
@@ -540,6 +555,17 @@ a:focus-visible {
   max-width: var(--content-width);
   margin: 0 auto;
   padding: 0 var(--container-padding);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(var(--grid-columns), 1fr);
+  column-gap: var(--grid-gutter);
+  max-width: var(--max-width);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--grid-margin);
+  padding-right: var(--grid-margin);
 }
 
 section {

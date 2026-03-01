@@ -4,7 +4,7 @@
   left: 0;
   right: 0;
   z-index: 100;
-  padding: 20px var(--gutter);
+  padding: 20px 0;
   transition: background var(--transition-gentle), backdrop-filter var(--transition-gentle);
 }
 
@@ -20,6 +20,7 @@
   align-items: center;
   max-width: var(--max-width);
   margin: 0 auto;
+  padding: 0 var(--grid-margin);
 }
 
 .navName {
@@ -78,7 +79,7 @@
    =========================================== */
 @media (max-width: 900px) {
   .header {
-    padding: 16px var(--container-padding);
+    padding: 16px 0;
   }
 
   .navRight {
@@ -91,7 +92,7 @@
    =========================================== */
 @media (max-width: 600px) {
   .header {
-    padding: 14px var(--container-padding);
+    padding: 14px 0;
   }
 
   .navRight {

@@ -7,36 +7,31 @@
 }
 
 .inner {
-  display: grid;
-  grid-template-columns: 1fr 1.4fr;
-  gap: var(--space-lg);
+  composes: grid from global;
+  row-gap: var(--space-lg);
   align-items: start;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 var(--gutter);
-}
-
-/* Flipped: bento left, text right */
-.sectionFlip .inner {
-  grid-template-columns: 1.4fr 1fr;
-}
-
-.sectionFlip .textColumn {
-  order: 2;
-}
-
-.sectionFlip .bentoGrid {
-  order: 1;
 }
 
 /* ===========================================
-   TEXT COLUMN
+   TEXT COLUMN — spans columns 1-5
    =========================================== */
 .textColumn {
+  grid-column: 1 / 6;
   display: flex;
   flex-direction: column;
   gap: var(--space-xs);
   padding-top: var(--space-sm);
+}
+
+/* Flipped: bento left (cols 1-7), text right (cols 8-12) */
+.sectionFlip .textColumn {
+  grid-column: 8 / -1;
+  order: 2;
+}
+
+.sectionFlip .bentoGrid {
+  grid-column: 1 / 8;
+  order: 1;
 }
 
 .projectNum {
@@ -154,6 +149,7 @@
    BENTO GRID
    =========================================== */
 .bentoGrid {
+  grid-column: 6 / -1;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: var(--space-xs);
@@ -182,12 +178,12 @@
    =========================================== */
 @media (max-width: 900px) {
   .inner {
-    grid-template-columns: 1fr;
-    gap: var(--space-md);
+    row-gap: var(--space-md);
   }
 
-  .sectionFlip .inner {
-    grid-template-columns: 1fr;
+  .textColumn,
+  .bentoGrid {
+    grid-column: 1 / -1;
   }
 
   .sectionFlip .textColumn {
