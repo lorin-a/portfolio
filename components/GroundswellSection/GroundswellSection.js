@@ -18,9 +18,9 @@ const CONTRIBUTIONS = [
 ]
 
 /**
- * GroundswellSection — Custom 2-row media-first layout for the Groundswell
- * homepage block. Row 1: hero image, flip card, walkthrough video.
- * Row 2: text column, iPhone mockup with video, flip card.
+ * GroundswellSection — Custom 2-row layout for the Groundswell homepage block.
+ * Row 1: hero image (cols 1–8) + walkthrough video (cols 9–12).
+ * Row 2: text (cols 1–5) + iPhone mockup (cols 6–8) + flip card (cols 9–12).
  */
 export default function GroundswellSection() {
   const sectionRef = useRef(null)
@@ -94,26 +94,6 @@ export default function GroundswellSection() {
           />
         </div>
 
-        {/* ── Row 1: Heartbroken flip card ── */}
-        <div className={styles.flipCardSlotA} data-tile style={initialOpacity}>
-          <FlipCard
-            front={
-              <img
-                src={cloudImg(GS_CARDS['heartbroken-front'], 400)}
-                alt="Heartbroken reflection card, front"
-                className={styles.cardImage}
-              />
-            }
-            back={
-              <img
-                src={cloudImg(GS_CARDS['heartbroken-back'], 400)}
-                alt="Heartbroken reflection card, back"
-                className={styles.cardImage}
-              />
-            }
-          />
-        </div>
-
         {/* ── Row 1: Walkthrough video ── */}
         <div
           className={styles.walkthroughSlot}
@@ -175,20 +155,20 @@ export default function GroundswellSection() {
           </div>
         </div>
 
-        {/* ── Row 2: Grateful flip card ── */}
-        <div className={styles.flipCardSlotB} data-tile style={initialOpacity}>
+        {/* ── Row 2: Exhausted flip card ── */}
+        <div className={styles.flipCardSlot} data-tile style={initialOpacity}>
           <FlipCard
             front={
               <img
-                src={cloudImg(GS_CARDS['grateful-front'], 400)}
-                alt="Grateful reflection card, front"
+                src={cloudImg(GS_CARDS['exhausted-front'], 400)}
+                alt="Exhausted reflection card, front"
                 className={styles.cardImage}
               />
             }
             back={
               <img
-                src={cloudImg(GS_CARDS['grateful-back'], 400)}
-                alt="Grateful reflection card, back"
+                src={cloudImg(GS_CARDS['exhausted-back'], 400)}
+                alt="Exhausted reflection card, back"
                 className={styles.cardImage}
               />
             }

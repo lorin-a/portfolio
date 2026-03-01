@@ -1,5 +1,7 @@
 /* ===========================================
-   GROUNDSWELL SECTION — Custom 2-row layout
+   GROUNDSWELL SECTION — 2-row layout
+   Row 1: hero (1–8) + walkthrough video (9–12)
+   Row 2: text (1–5) + iPhone (6–8) + flip card (9–12)
    =========================================== */
 
 .section {
@@ -9,66 +11,59 @@
 .inner {
   composes: grid from global;
   row-gap: var(--space-sm);
-  align-items: start;
+  align-items: stretch;
 }
 
 /* ===========================================
-   ROW 1 — Full-width media (3 items)
+   ROW 1 — Hero image + walkthrough video
    =========================================== */
 .heroImage {
-  grid-column: 1 / 8;
+  grid-column: 1 / 9;
+  grid-row: 1;
   border-radius: var(--radius-md);
   overflow: hidden;
-  aspect-ratio: 4 / 3;
-}
-
-.flipCardSlotA {
-  grid-column: 8 / 10;
-  aspect-ratio: 2 / 3;
-  border-radius: var(--radius-md);
-  overflow: hidden;
-}
-
-/* Force FlipCard to fill its aspect-ratio slot */
-.flipCardSlotA > div,
-.flipCardSlotB > div {
-  width: 100%;
-  height: 100%;
 }
 
 .walkthroughSlot {
-  grid-column: 10 / 13;
-  aspect-ratio: 2 / 3;
+  grid-column: 9 / 13;
+  grid-row: 1;
   border-radius: var(--radius-md);
   overflow: hidden;
-  position: relative;
   cursor: pointer;
 }
 
 /* ===========================================
-   ROW 2 — Text + media
+   ROW 2 — Text + iPhone + flip card
    =========================================== */
 .textColumn {
-  grid-column: 1 / 8;
+  grid-column: 1 / 6;
+  grid-row: 2;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   gap: var(--space-xs);
-  padding-top: var(--space-sm);
-  padding-right: var(--space-md);
 }
 
 .iphoneSlot {
-  grid-column: 8 / 10;
+  grid-column: 6 / 9;
+  grid-row: 2;
   display: flex;
   justify-content: center;
-  align-items: flex-start;
+  align-items: center;
 }
 
-.flipCardSlotB {
-  grid-column: 10 / 13;
-  aspect-ratio: 2 / 3;
+.flipCardSlot {
+  grid-column: 9 / 13;
+  grid-row: 2;
   border-radius: var(--radius-md);
   overflow: hidden;
+  aspect-ratio: 1350 / 2175;
+}
+
+/* Force FlipCard to fill its slot */
+.flipCardSlot > div {
+  width: 100%;
+  height: 100%;
 }
 
 /* ===========================================
@@ -89,23 +84,6 @@
 }
 
 /* ===========================================
-   VIDEO — Tap-to-pause overlay
-   =========================================== */
-.videoWrap {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  cursor: pointer;
-}
-
-.videoWrap video {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
-/* ===========================================
    iPHONE FRAME
    =========================================== */
 .iphoneFrame {
@@ -119,6 +97,7 @@
   box-shadow:
     0 0 0 2px #3a3a3a,
     0 20px 60px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
 }
 
 .iphoneFrame::before {
@@ -144,7 +123,7 @@
 }
 
 /* ===========================================
-   TYPOGRAPHY — Matches ProjectSection tokens
+   TYPOGRAPHY
    =========================================== */
 .projectNum {
   font-family: var(--font-heading);
@@ -261,20 +240,17 @@
     row-gap: var(--space-md);
   }
 
-  /* Row 1: hero full-width, flip + video side-by-side */
   .heroImage {
     grid-column: 1 / -1;
   }
 
-  .flipCardSlotA {
-    grid-column: 1 / 7;
-  }
-
   .walkthroughSlot {
-    grid-column: 7 / 13;
+    grid-column: 1 / -1;
+    max-width: 400px;
+    justify-self: center;
+    aspect-ratio: 9 / 16;
   }
 
-  /* Row 2: text full-width, then iPhone + flip side-by-side */
   .textColumn {
     grid-column: 1 / -1;
   }
@@ -283,7 +259,7 @@
     grid-column: 1 / 7;
   }
 
-  .flipCardSlotB {
+  .flipCardSlot {
     grid-column: 7 / 13;
   }
 }
@@ -293,21 +269,19 @@
    =========================================== */
 @media (max-width: 600px) {
   .heroImage,
-  .flipCardSlotA,
   .walkthroughSlot,
   .textColumn,
   .iphoneSlot,
-  .flipCardSlotB {
+  .flipCardSlot {
     grid-column: 1 / -1;
   }
 
-  .flipCardSlotA,
-  .flipCardSlotB {
+  .walkthroughSlot {
     max-width: 300px;
     justify-self: center;
   }
 
-  .walkthroughSlot {
+  .flipCardSlot {
     max-width: 300px;
     justify-self: center;
   }
@@ -326,11 +300,10 @@
    =========================================== */
 @media (prefers-reduced-motion: reduce) {
   .heroImage,
-  .flipCardSlotA,
   .walkthroughSlot,
   .textColumn,
   .iphoneSlot,
-  .flipCardSlotB {
+  .flipCardSlot {
     opacity: 1 !important;
     transform: none !important;
   }
