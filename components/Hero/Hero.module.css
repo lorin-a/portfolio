@@ -113,10 +113,10 @@
    MARKS COLUMN — horizontal marks with labels
    =========================================== */
 .marksColumn {
-  grid-column: 9 / -1;
+  grid-column: 8 / -1;
   display: flex;
+  justify-content: space-between;
   align-items: flex-start;
-  gap: clamp(24px, 3vw, 40px);
 }
 
 .markItem {
