@@ -44,6 +44,23 @@
   flex-shrink: 0;
   opacity: 0;
   transform: scale(0);
+  cursor: default;
+}
+
+/* After GSAP entrance completes, inline styles are cleared and this takes over */
+.titleAmpReady {
+  opacity: 1;
+  transform: none;
+}
+
+@media (hover: hover) {
+  .titleAmpReady {
+    transition: transform var(--motion-fast) var(--ease-bounce);
+  }
+
+  .titleAmpReady:hover {
+    transform: rotate(-8deg) scale(1.04);
+  }
 }
 
 /* Wrapper for title lines + subtitle, stacked vertically */

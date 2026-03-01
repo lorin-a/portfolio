@@ -55,6 +55,12 @@ export default function Hero() {
     const tl = gsap.timeline({
       onComplete: () => {
         entranceDoneRef.current = true
+        // Clear inline styles so CSS :hover transition can take over
+        if (ampRef.current) {
+          ampRef.current.style.opacity = ''
+          ampRef.current.style.transform = ''
+          ampRef.current.classList.add(styles.titleAmpReady)
+        }
       },
     })
     timelineRef.current = tl
