@@ -261,8 +261,8 @@
    =========================================== */
 :root[data-theme="dark"] {
   /* Backgrounds */
-  --color-cream: #1E1E1E;
-  --color-cream-dark: #2A2A2A;
+  --color-cream: #252525;
+  --color-cream-dark: #333;
 
   /* Text */
   --color-ink: #E9E9E9;
@@ -296,15 +296,15 @@
   --shadow-lg: 0 4px 16px rgba(0,0,0,0.30);
 
   /* Mark-colored pills */
-  --pill-sense-text: #C5CFA6;
+  --pill-sense-text: #f3ffce;
   --pill-sense-border: rgba(197, 207, 166, 0.5);
-  --pill-sense-bg: rgba(197, 207, 166, 0.15);
-  --pill-weave-text: #C7AAD1;
+  --pill-sense-bg: rgba(197, 207, 166, 0.35);
+  --pill-weave-text: #fcf1ff;
   --pill-weave-border: rgba(199, 170, 209, 0.5);
-  --pill-weave-bg: rgba(199, 170, 209, 0.15);
-  --pill-shape-text: #C6DCF6;
+  --pill-weave-bg: rgba(199, 170, 209, 0.35);
+  --pill-shape-text: #ffffff;
   --pill-shape-border: rgba(198, 220, 246, 0.5);
-  --pill-shape-bg: rgba(198, 220, 246, 0.15);
+  --pill-shape-bg: rgba(198, 220, 246, 0.35);
 }
 
 /* ===========================================

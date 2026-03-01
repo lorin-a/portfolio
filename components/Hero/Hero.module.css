@@ -1,6 +1,6 @@
 /* ===========================================
    HERO — Two-column, dark-ready
-   Left: & + title + subtitle
+   Left: & beside title lines, subtitle below
    Right: three marks with labels
    =========================================== */
 
@@ -21,41 +21,44 @@
 }
 
 /* ===========================================
-   LEFT COLUMN — title + subtitle
+   LEFT COLUMN
    =========================================== */
 .left {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-md);
   flex: 1;
   min-width: 0;
 }
 
 /* ===========================================
-   TITLE — stacked with decorative &
+   TITLE — & on left, text lines on right
    =========================================== */
 .title {
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 0;
+  align-items: center;
+  gap: clamp(8px, 1.5vw, 24px);
   margin: 0;
-  position: relative;
 }
 
 .titleAmp {
   font-family: var(--font-heading);
-  font-size: clamp(48px, 8vw, 96px);
+  font-size: clamp(56px, 13vw, 190px);
   font-weight: var(--weight-display);
   font-variation-settings: var(--font-wonky);
   color: var(--color-ampersand);
-  line-height: 1;
+  line-height: 0.85;
+  flex-shrink: 0;
   opacity: 0;
   transform: scale(0);
 }
 
+/* Wrapper for title lines + subtitle, stacked vertically */
+.titleText {
+  display: flex;
+  flex-direction: column;
+}
+
 .titleLine {
   font-family: var(--font-heading);
+  font-size: clamp(28px, 3.5vw, 48px);
   font-weight: var(--weight-title);
   font-variation-settings: var(--font-wonky);
   line-height: 1.1;
@@ -64,35 +67,25 @@
   transform: translateY(12px);
 }
 
-/* First line "UX Researcher" — larger anchor */
-.titleLine:first-of-type {
-  font-size: clamp(32px, 5vw, 56px);
-}
-
-/* Second line "Design Strategist" — slightly smaller */
-.titleLine:last-of-type {
-  font-size: clamp(28px, 4.5vw, 48px);
-}
-
 /* ===========================================
-   SUBTITLE
+   SUBTITLE — sits below the title lines
    =========================================== */
 .subtitle {
+  display: block;
   font-family: var(--font-heading);
-  font-size: clamp(17px, 2vw, 24px);
-  font-weight: var(--weight-display);
-  font-variation-settings: var(--font-soft);
-  color: var(--color-ink-light);
+  font-size: clamp(16px, 1.5vw, 24px);
+  font-weight: 300;
+  font-variation-settings: var(--font-wonky);
+  color: var(--color-ink);
   line-height: 1.5;
-  max-width: 480px;
   text-wrap: pretty;
   opacity: 0;
   transform: translateY(10px);
-  margin: 0;
+  margin-top: clamp(8px, 1vw, 16px);
 }
 
 /* ===========================================
-   MARKS COLUMN — vertical or horizontal marks
+   MARKS COLUMN — horizontal marks with labels
    =========================================== */
 .marksColumn {
   display: flex;
@@ -111,8 +104,8 @@
 }
 
 .markIcon {
-  width: clamp(56px, 8vw, 88px);
-  height: clamp(56px, 8vw, 88px);
+  width: clamp(64px, 9vw, 120px);
+  height: clamp(64px, 9vw, 120px);
   flex-shrink: 0;
 }
 
@@ -123,12 +116,16 @@
 
 .markLabel {
   font-family: var(--font-heading);
-  font-size: var(--text-caption);
-  font-weight: var(--weight-label);
-  font-variation-settings: var(--font-soft);
+  font-size: clamp(18px, 2vw, 32px);
+  font-weight: 300;
+  font-style: italic;
+  font-variation-settings: var(--font-wonky);
   color: var(--color-ink-light);
-  letter-spacing: 0.04em;
 }
+
+.markLabelSense { color: var(--color-sage-soft); }
+.markLabelWeave { color: var(--color-plum-soft); }
+.markLabelShape { color: var(--color-terracotta-soft); }
 
 /* ===========================================
    RESPONSIVE — TABLET (<=900px)
@@ -153,20 +150,12 @@
     padding: clamp(64px, 12vh, 120px) var(--gutter) clamp(48px, 8vh, 96px);
   }
 
-  .left {
-    gap: var(--space-sm);
-  }
-
   .titleAmp {
-    font-size: clamp(36px, 10vw, 56px);
+    font-size: clamp(48px, 12vw, 72px);
   }
 
-  .titleLine:first-of-type {
-    font-size: clamp(24px, 7vw, 36px);
-  }
-
-  .titleLine:last-of-type {
-    font-size: clamp(22px, 6vw, 32px);
+  .titleLine {
+    font-size: clamp(28px, 7vw, 40px);
   }
 
   .markIcon {
@@ -179,7 +168,7 @@
   }
 
   .subtitle {
-    font-size: clamp(15px, 4vw, 20px);
+    font-size: clamp(16px, 4vw, 22px);
   }
 }
 

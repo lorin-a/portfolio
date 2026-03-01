@@ -136,22 +136,24 @@ export default function Hero() {
   return (
     <section className={styles.hero} aria-label="Introduction">
       <div className={styles.heroContent}>
-        {/* Left column: title + subtitle */}
+        {/* Left column: & beside title lines, subtitle below */}
         <div className={styles.left}>
           <h1 className={styles.title}>
             <span className={styles.titleAmp} ref={ampRef} aria-hidden="true">
               &amp;
             </span>
-            <span className={styles.titleLine} ref={line1Ref}>
-              UX Researcher
-            </span>
-            <span className={styles.titleLine} ref={line2Ref}>
-              Design Strategist
+            <span className={styles.titleText}>
+              <span className={styles.titleLine} ref={line1Ref}>
+                UX Researcher
+              </span>
+              <span className={styles.titleLine} ref={line2Ref}>
+                Design Strategist
+              </span>
+              <span className={styles.subtitle} ref={subtitleRef}>
+                Thoughtful design for social impact
+              </span>
             </span>
           </h1>
-          <p className={styles.subtitle} ref={subtitleRef}>
-            Thoughtful design for social impact
-          </p>
         </div>
 
         {/* Right column: marks with labels */}
@@ -160,19 +162,19 @@ export default function Hero() {
             <div className={styles.markIcon}>
               <SenseMark animate={senseAnimate} showBrush color="#C5CFA6" />
             </div>
-            <span className={styles.markLabel}>Sense</span>
+            <span className={`${styles.markLabel} ${styles.markLabelSense}`}>Sense</span>
           </div>
           <div className={styles.markItem} ref={weaveWrapRef}>
             <div className={styles.markIcon}>
               <WeaveMark animate={weaveAnimate} showBrush color="#C7AAD1" />
             </div>
-            <span className={styles.markLabel}>Weave</span>
+            <span className={`${styles.markLabel} ${styles.markLabelWeave}`}>Weave</span>
           </div>
           <div className={styles.markItem} ref={shapeWrapRef}>
             <div className={styles.markIcon}>
               <ShapeMark animate={shapeAnimate} showBrush color="#C6DCF6" />
             </div>
-            <span className={styles.markLabel}>Shape</span>
+            <span className={`${styles.markLabel} ${styles.markLabelShape}`}>Shape</span>
           </div>
         </div>
       </div>
