@@ -20,9 +20,14 @@ const CONTRIBUTIONS = [
 export default function GroundswellSection() {
   const sectionRef = useRef(null)
   const [reducedMotion, setReducedMotion] = useState(false)
+  const [gsapControlled, setGsapControlled] = useState(true)
   const walkthroughRef = useRef(null)
   const qrVideoRef = useRef(null)
   const row2Ref = useRef(null)
+
+  /* Refs for FlipCard imperative handles + inner divs */
+  const cardRefs = useRef([null, null, null, null])
+  const innerRefs = useRef([null, null, null, null])
 
   useEffect(() => {
     setReducedMotion(window.matchMedia('(prefers-reduced-motion: reduce)').matches)
@@ -100,9 +105,12 @@ export default function GroundswellSection() {
     return () => ctx?.revert()
   }, [reducedMotion])
 
-  /* ── Row 2: scroll-triggered card reveal ── */
+  /* ── Row 2: scroll-triggered fan-out + sequential 3D flips ── */
   useEffect(() => {
-    if (reducedMotion) return
+    if (reducedMotion) {
+      setGsapControlled(false)
+      return
+    }
     if (!row2Ref.current) return
 
     let ctx
@@ -117,19 +125,56 @@ export default function GroundswellSection() {
         if (!el) return
 
         const cards = el.querySelectorAll('[data-card]')
-        if (!cards.length) return
+        const inners = innerRefs.current.filter(Boolean)
+        if (!cards.length || inners.length !== 4) return
 
-        gsap.set(cards, { opacity: 0, y: 12, scale: 0.97 })
+        /* Fan-out starting positions: cards stacked near center */
+        const fanOffsets = [60, 20, -20, -60]
+        gsap.set(cards, (i) => ({
+          xPercent: fanOffsets[i],
+          opacity: 0,
+          scale: 0.92,
+        }))
+        gsap.set(inners, { rotateY: 0 })
+
+        /* Build timeline — plays once on scroll entry, not scrub-driven */
+        const tl = gsap.timeline({ paused: true })
+
+        /* Phase 1 — Fan-out to grid positions */
+        tl.to(cards, {
+          xPercent: 0,
+          opacity: 1,
+          scale: 1,
+          duration: 0.7,
+          stagger: 0.08,
+          ease: 'power1.inOut',
+        })
+
+        /* Breathing room */
+        tl.to({}, { duration: 0.4 })
+
+        /* Phase 2 — Sequential 3D flips */
+        inners.forEach((inner, i) => {
+          tl.to(inner, {
+            rotateY: 180,
+            duration: 0.6,
+            ease: 'power1.inOut',
+          }, i === 0 ? '>' : `-=${0.6 - 0.18}`)
+        })
+
+        /* After all flips complete, hand control to CSS */
+        tl.call(() => {
+          setGsapControlled(false)
+          cardRefs.current.forEach((ref) => ref?.setFlipped(true))
+          gsap.set(inners, { clearProps: 'transform' })
+        })
+
+        /* Trigger once when row2 enters viewport */
         ScrollTrigger.create({
           trigger: el,
           start: 'top 85%',
           once: true,
-          onEnter: () => {
-            gsap.to(cards, {
-              opacity: 1, y: 0, scale: 1,
-              duration: 0.7, stagger: 0.1, ease: 'power1.inOut',
-            })
-          },
+          onEnter: () => tl.play(),
         })
       }, sectionRef.current)
     }
@@ -203,7 +248,10 @@ export default function GroundswellSection() {
         <div className={styles.row2} ref={row2Ref}>
           <div className={styles.cardSlot} data-card>
             <FlipCard
+              ref={(el) => { cardRefs.current[0] = el }}
+              innerRef={(el) => { innerRefs.current[0] = el }}
               clickOnly
+              gsapControlled={gsapControlled}
               front={<img src={cloudImg(GS_CARDS['grateful-front'], 400)} alt="Grateful reflection card, front" className={styles.cardImage} />}
               back={<img src={cloudImg(GS_CARDS['grateful-back'], 400)} alt="Grateful reflection card, back" className={styles.cardImage} />}
             />
@@ -211,7 +259,10 @@ export default function GroundswellSection() {
 
           <div className={styles.cardSlot} data-card>
             <FlipCard
+              ref={(el) => { cardRefs.current[1] = el }}
+              innerRef={(el) => { innerRefs.current[1] = el }}
               clickOnly
+              gsapControlled={gsapControlled}
               front={<img src={cloudImg(GS_CARDS['heartbroken-front'], 400)} alt="Heartbroken reflection card, front" className={styles.cardImage} />}
               back={<img src={cloudImg(GS_CARDS['heartbroken-back'], 400)} alt="Heartbroken reflection card, back" className={styles.cardImage} />}
             />
@@ -219,7 +270,10 @@ export default function GroundswellSection() {
 
           <div className={styles.cardSlot} data-card>
             <FlipCard
+              ref={(el) => { cardRefs.current[2] = el }}
+              innerRef={(el) => { innerRefs.current[2] = el }}
               clickOnly
+              gsapControlled={gsapControlled}
               front={<img src={cloudImg(GS_CARDS['valued-front'], 400)} alt="Valued reflection card, front" className={styles.cardImage} />}
               back={<img src={cloudImg(GS_CARDS['valued-back'], 400)} alt="Valued reflection card, back" className={styles.cardImage} />}
             />
@@ -227,7 +281,10 @@ export default function GroundswellSection() {
 
           <div className={styles.cardSlot} data-card>
             <FlipCard
+              ref={(el) => { cardRefs.current[3] = el }}
+              innerRef={(el) => { innerRefs.current[3] = el }}
               clickOnly
+              gsapControlled={gsapControlled}
               front={<img src={cloudImg(GS_CARDS['exhausted-front'], 400)} alt="Exhausted reflection card, front" className={styles.cardImage} />}
               back={<img src={cloudImg(GS_CARDS['exhausted-back'], 400)} alt="Exhausted reflection card, back" className={styles.cardImage} />}
             />
