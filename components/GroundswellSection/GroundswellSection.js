@@ -22,7 +22,7 @@ export default function GroundswellSection() {
   const [reducedMotion, setReducedMotion] = useState(false)
   const walkthroughRef = useRef(null)
   const qrVideoRef = useRef(null)
-  const row2Ref = useRef(null)
+  const row3Ref = useRef(null)
 
   useEffect(() => {
     setReducedMotion(window.matchMedia('(prefers-reduced-motion: reduce)').matches)
@@ -44,10 +44,10 @@ export default function GroundswellSection() {
     return () => clearTimeout(timeout)
   }, [reducedMotion])
 
-  /* ── Row 2: scroll-triggered card reveal ── */
+  /* ── Row 2: text reveal ── */
   useEffect(() => {
     if (reducedMotion) return
-    if (!row2Ref.current) return
+    if (!sectionRef.current) return
 
     let ctx
 
@@ -57,7 +57,42 @@ export default function GroundswellSection() {
       gsap.registerPlugin(ScrollTrigger)
 
       ctx = gsap.context(() => {
-        const el = row2Ref.current
+        const textItems = sectionRef.current?.querySelectorAll('[data-text-item]')
+        if (!textItems?.length) return
+
+        gsap.set(textItems, { opacity: 0, y: 10 })
+        ScrollTrigger.create({
+          trigger: sectionRef.current.querySelector('[data-text-left]'),
+          start: 'top 90%',
+          once: true,
+          onEnter: () => {
+            gsap.to(textItems, {
+              opacity: 1, y: 0,
+              duration: 0.6, stagger: 0.06, ease: 'power1.inOut',
+            })
+          },
+        })
+      }, sectionRef.current)
+    }
+
+    loadGsap()
+    return () => ctx?.revert()
+  }, [reducedMotion])
+
+  /* ── Row 3: scroll-triggered card reveal ── */
+  useEffect(() => {
+    if (reducedMotion) return
+    if (!row3Ref.current) return
+
+    let ctx
+
+    const loadGsap = async () => {
+      const { gsap } = await import('gsap')
+      const { ScrollTrigger } = await import('gsap/ScrollTrigger')
+      gsap.registerPlugin(ScrollTrigger)
+
+      ctx = gsap.context(() => {
+        const el = row3Ref.current
         if (!el) return
 
         /* Phone fades in */
@@ -99,7 +134,6 @@ export default function GroundswellSection() {
         const rightCard = el.querySelector('[data-card-right]')
 
         if (leftCard && rightCard && centerCard) {
-          /* Get center card's grid position for starting point */
           ScrollTrigger.create({
             trigger: el,
             start: 'top 60%',
@@ -109,7 +143,6 @@ export default function GroundswellSection() {
               const leftRect = leftCard.getBoundingClientRect()
               const rightRect = rightCard.getBoundingClientRect()
 
-              /* Offset = how far each side card needs to travel from center */
               const leftOffset = centerRect.left - leftRect.left
               const rightOffset = centerRect.left - rightRect.left
 
@@ -124,41 +157,6 @@ export default function GroundswellSection() {
             },
           })
         }
-      }, sectionRef.current)
-    }
-
-    loadGsap()
-    return () => ctx?.revert()
-  }, [reducedMotion])
-
-  /* ── Row 3: text reveal ── */
-  useEffect(() => {
-    if (reducedMotion) return
-    if (!sectionRef.current) return
-
-    let ctx
-
-    const loadGsap = async () => {
-      const { gsap } = await import('gsap')
-      const { ScrollTrigger } = await import('gsap/ScrollTrigger')
-      gsap.registerPlugin(ScrollTrigger)
-
-      ctx = gsap.context(() => {
-        const textItems = sectionRef.current?.querySelectorAll('[data-text-item]')
-        if (!textItems?.length) return
-
-        gsap.set(textItems, { opacity: 0, y: 10 })
-        ScrollTrigger.create({
-          trigger: sectionRef.current.querySelector('[data-row3]'),
-          start: 'top 90%',
-          once: true,
-          onEnter: () => {
-            gsap.to(textItems, {
-              opacity: 1, y: 0,
-              duration: 0.6, stagger: 0.06, ease: 'power1.inOut',
-            })
-          },
-        })
       }, sectionRef.current)
     }
 
@@ -205,8 +203,34 @@ export default function GroundswellSection() {
           />
         </div>
 
-        {/* ── Row 2: Phone + 3 cards (4 equal items) ── */}
-        <div className={styles.row2} ref={row2Ref}>
+        {/* ── Row 2: Text (directly on 12-col grid) ── */}
+        <div className={styles.textLeft} data-text-left>
+          <h2 className={styles.title} data-text-item>Groundswell</h2>
+          <p className={styles.tagline} data-text-item>Making Space to Restore, Together</p>
+          <div className={styles.pills} data-text-item>
+            {CONTRIBUTIONS.map((c) => (
+              <span
+                key={c.label}
+                className={`${styles.pill} ${styles[PILL_MAP[c.label]]}`}
+              >
+                {c.label}
+              </span>
+            ))}
+          </div>
+        </div>
+
+        <div className={styles.textRight}>
+          <p className={styles.description} data-text-item>
+            A multi-suite design intervention built to support the complex
+            emotional reality of oncology care. Co-designed with healthcare workers.
+          </p>
+          <a href="/projects/groundswell" className={styles.cta} data-text-item>
+            <span className={styles.ctaText}>View Case Study</span> <span className={styles.ctaArrow} aria-hidden="true">&rarr;</span>
+          </a>
+        </div>
+
+        {/* ── Row 3: Phone + 3 cards (equal height) ── */}
+        <div className={styles.row3} ref={row3Ref}>
 
           <div className={styles.phoneSlot} data-phone>
             <div className={styles.iphoneFrame} onClick={() => toggleVideo(qrVideoRef)}>
@@ -246,30 +270,6 @@ export default function GroundswellSection() {
             />
           </div>
 
-        </div>
-
-        {/* ── Row 3: Horizontal text strip ── */}
-        <div className={styles.row3} data-row3>
-          <span className={styles.projectNum} data-text-item>01</span>
-          <h2 className={styles.title} data-text-item>Groundswell</h2>
-          <p className={styles.tagline} data-text-item>Making Space to Restore, Together</p>
-          <p className={styles.description} data-text-item>
-            A multi-suite design intervention built to support the complex
-            emotional reality of oncology care. Co-designed with healthcare workers.
-          </p>
-          <div className={styles.pills} data-text-item>
-            {CONTRIBUTIONS.map((c) => (
-              <span
-                key={c.label}
-                className={`${styles.pill} ${styles[PILL_MAP[c.label]]}`}
-              >
-                {c.label}
-              </span>
-            ))}
-          </div>
-          <a href="/projects/groundswell" className={styles.cta} data-text-item>
-            View Case Study <span aria-hidden="true">&rarr;</span>
-          </a>
         </div>
 
       </div>
