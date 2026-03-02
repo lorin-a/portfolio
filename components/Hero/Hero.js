@@ -123,7 +123,7 @@ export default function Hero() {
       ease: 'power1.inOut',
     }, 1.5)
 
-    // Beat 4 (2.8s): "Thoughtful design for social impact" types on
+    // Beat 4 (2.8s): "Thoughtful Design + Meaningful Impact" types on
     tl.to(subtitleChars.current, {
       opacity: 1,
       duration: 0.08,
@@ -178,14 +178,14 @@ export default function Hero() {
       <div className={styles.heroContent}>
         {/* Left column: & beside title lines, subtitle below */}
         <div className={styles.left}>
-          <h1 className={styles.title} aria-label="UX Researcher & Design Strategist. Thoughtful design for social impact.">
+          <h1 className={styles.title} aria-label="UX Researcher & Design Strategist. Thoughtful Design + Meaningful Impact.">
             <span className={styles.titleAmp} ref={ampRef} aria-hidden="true">
               &amp;
             </span>
             <span className={styles.titleText}>
               <CharSpans text="UX Researcher" charsRef={line1Chars} className={styles.titleLine} />
               <CharSpans text="Design Strategist" charsRef={line2Chars} className={styles.titleLine} />
-              <CharSpans text="Thoughtful design for social impact" charsRef={subtitleChars} className={styles.subtitle} />
+              <CharSpans text="Thoughtful Design + Meaningful Impact" charsRef={subtitleChars} className={styles.subtitle} />
             </span>
           </h1>
         </div>
