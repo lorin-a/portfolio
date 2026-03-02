@@ -131,6 +131,7 @@
   height: clamp(56px, 7.5vw, 105px);
   flex-shrink: 0;
   margin-top: 24px;
+  transform: translateY(-8px);
 }
 
 .markIcon > * {
