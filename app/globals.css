@@ -162,6 +162,9 @@
      COLORS — DEVICE CHROME
      =========================================== */
   --color-device-dark: #1a1a1a;
+  --color-device-bezel: #1a1a1a;
+  --color-device-ring: #3a3a3a;
+  --color-device-inner: #1a1a1a;
 
   /* ===========================================
      EASING
@@ -308,6 +311,11 @@
   --color-terracotta-light: #E08D72;
   --color-terracotta-soft: #F79C7E;
   --color-terracotta-muted: rgba(247, 156, 126, 0.10);
+
+  /* Device chrome — titanium silver */
+  --color-device-bezel: #d1d1d6;
+  --color-device-ring: #b8b8bd;
+  --color-device-inner: #1a1a1a;
 
   /* Shadows (lighter on dark) */
   --shadow-sm: 0 1px 3px rgba(0,0,0,0.20);

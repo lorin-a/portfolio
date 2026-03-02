@@ -28,20 +28,41 @@ export default function GroundswellSection() {
     setReducedMotion(window.matchMedia('(prefers-reduced-motion: reduce)').matches)
   }, [])
 
-  /* ── Row 1: animate on page load ── */
+  /* ── Row 1: scroll-triggered reveal + video play ── */
   useEffect(() => {
     if (reducedMotion) return
-    const timeout = setTimeout(() => {
-      import('gsap').then(({ gsap }) => {
+    if (!sectionRef.current) return
+
+    let ctx
+
+    const loadGsap = async () => {
+      const { gsap } = await import('gsap')
+      const { ScrollTrigger } = await import('gsap/ScrollTrigger')
+      gsap.registerPlugin(ScrollTrigger)
+
+      ctx = gsap.context(() => {
+        const row1 = sectionRef.current?.querySelector('[data-row1-wrap]')
         const items = sectionRef.current?.querySelectorAll('[data-row1]')
-        if (!items?.length) return
-        gsap.fromTo(items,
-          { opacity: 0, scale: 0.97 },
-          { opacity: 1, scale: 1, duration: 0.8, stagger: 0.15, ease: 'power1.inOut' }
-        )
-      })
-    }, 300)
-    return () => clearTimeout(timeout)
+        if (!row1 || !items?.length) return
+
+        gsap.set(items, { opacity: 0, scale: 0.97 })
+        ScrollTrigger.create({
+          trigger: row1,
+          start: 'top 85%',
+          once: true,
+          onEnter: () => {
+            gsap.to(items, {
+              opacity: 1, scale: 1, duration: 0.8, stagger: 0.15, ease: 'power1.inOut',
+            })
+            walkthroughRef.current?.play()
+            qrVideoRef.current?.play()
+          },
+        })
+      }, sectionRef.current)
+    }
+
+    loadGsap()
+    return () => ctx?.revert()
   }, [reducedMotion])
 
   /* ── Text reveal ── */
@@ -130,7 +151,7 @@ export default function GroundswellSection() {
       <div className={styles.inner} ref={sectionRef}>
 
         {/* ── Row 1: Walkthrough + Hero + Phone ── */}
-        <div className={styles.row1}>
+        <div className={styles.row1} data-row1-wrap>
           <div
             className={styles.walkthroughSlot}
             data-row1
@@ -140,7 +161,7 @@ export default function GroundswellSection() {
             <video
               ref={walkthroughRef}
               src={cloudVideo(GS_VIDEOS['gs-walkthrough-video'], 480)}
-              autoPlay={!reducedMotion}
+              autoPlay={false}
               muted
               loop
               playsInline
@@ -163,15 +184,17 @@ export default function GroundswellSection() {
             style={hidden}
           >
             <div className={styles.iphoneFrame} onClick={() => toggleVideo(qrVideoRef)}>
-              <video
-                ref={qrVideoRef}
-                src={cloudVideo(GS_VIDEOS['gs-qr-library'], 480)}
-                autoPlay={!reducedMotion}
-                muted
-                loop
-                playsInline
-                className={styles.iphoneVideo}
-              />
+              <div className={styles.iphoneInner}>
+                <video
+                  ref={qrVideoRef}
+                  src={cloudVideo(GS_VIDEOS['gs-qr-library'], 480)}
+                  autoPlay={false}
+                  muted
+                  loop
+                  playsInline
+                  className={styles.iphoneVideo}
+                />
+              </div>
             </div>
           </div>
         </div>

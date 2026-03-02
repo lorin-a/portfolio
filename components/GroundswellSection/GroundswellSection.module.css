@@ -103,24 +103,34 @@
   position: relative;
   width: 100%;
   aspect-ratio: 9 / 19.5;
-  background: var(--color-device-dark);
+  background: var(--color-device-bezel);
   border-radius: 40px;
-  padding: 12px;
+  padding: 4px;
   box-shadow:
-    0 0 0 2px #3a3a3a,
-    0 20px 60px rgba(0, 0, 0, 0.3);
+    inset 0 1px 0 rgba(255, 255, 255, 0.15),
+    0 0 0 1.5px var(--color-device-ring),
+    0 12px 40px rgba(0, 0, 0, 0.25);
+}
+
+.iphoneInner {
+  width: 100%;
+  height: 100%;
+  background: var(--color-device-inner);
+  border-radius: 37px;
+  padding: 8px;
+  overflow: hidden;
 }
 
 .iphoneFrame::before {
   content: '';
   position: absolute;
-  top: 0;
+  top: 4px;
   left: 50%;
   transform: translateX(-50%);
-  width: 100px;
-  height: 24px;
-  background: var(--color-device-dark);
-  border-radius: 0 0 16px 16px;
+  width: 80px;
+  height: 20px;
+  background: var(--color-device-inner);
+  border-radius: 0 0 14px 14px;
   z-index: 2;
 }
 
@@ -128,7 +138,7 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border-radius: 32px;
+  border-radius: 30px;
   background: #000;
   display: block;
 }
