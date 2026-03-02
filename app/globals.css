@@ -303,11 +303,11 @@
   --color-plum-soft: #C7AAD1;
   --color-plum-muted: rgba(199, 170, 209, 0.10);
 
-  /* Shape */
-  --color-terracotta: #8AACCC;
-  --color-terracotta-light: #A8C4DE;
-  --color-terracotta-soft: #C6DCF6;
-  --color-terracotta-muted: rgba(198, 220, 246, 0.10);
+  /* Shape — warm terracotta */
+  --color-terracotta: #C97E65;
+  --color-terracotta-light: #E08D72;
+  --color-terracotta-soft: #F79C7E;
+  --color-terracotta-muted: rgba(247, 156, 126, 0.10);
 
   /* Shadows (lighter on dark) */
   --shadow-sm: 0 1px 3px rgba(0,0,0,0.20);
@@ -321,9 +321,9 @@
   --pill-weave-text: #fcf1ff;
   --pill-weave-border: rgba(199, 170, 209, 0.5);
   --pill-weave-bg: rgba(199, 170, 209, 0.35);
-  --pill-shape-text: #ffffff;
-  --pill-shape-border: rgba(198, 220, 246, 0.5);
-  --pill-shape-bg: rgba(198, 220, 246, 0.35);
+  --pill-shape-text: #fff0e8;
+  --pill-shape-border: rgba(247, 156, 126, 0.5);
+  --pill-shape-bg: rgba(247, 156, 126, 0.35);
 }
 
 /* ===========================================
