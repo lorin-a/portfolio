@@ -7,14 +7,32 @@ import WeaveMark from '@/components/marks/WeaveMark'
 import ShapeMark from '@/components/marks/ShapeMark'
 import styles from './Hero.module.css'
 
+/* Split text into per-character spans for type-on animation */
+function CharSpans({ text, charsRef, startIndex = 0, className }) {
+  return (
+    <span className={className}>
+      {text.split('').map((char, i) => (
+        <span
+          key={i}
+          ref={el => { if (charsRef) charsRef.current[startIndex + i] = el }}
+          style={{ opacity: 0, display: 'inline-block' }}
+          aria-hidden="true"
+        >
+          {char === ' ' ? '\u00A0' : char}
+        </span>
+      ))}
+    </span>
+  )
+}
+
 export default function Hero() {
-  const line1Ref = useRef(null)
-  const line2Ref = useRef(null)
+  const line1Chars = useRef([])
+  const line2Chars = useRef([])
+  const subtitleChars = useRef([])
   const ampRef = useRef(null)
   const senseWrapRef = useRef(null)
   const weaveWrapRef = useRef(null)
   const shapeWrapRef = useRef(null)
-  const subtitleRef = useRef(null)
 
   const [senseAnimate, setSenseAnimate] = useState(false)
   const [weaveAnimate, setWeaveAnimate] = useState(false)
@@ -72,6 +90,7 @@ export default function Hero() {
         entranceDoneRef.current = true
         // Clear inline styles so CSS :hover transition can take over
         if (ampRef.current) {
+          ampRef.current.style.clipPath = ''
           ampRef.current.style.opacity = ''
           ampRef.current.style.transform = ''
           ampRef.current.classList.add(styles.titleAmpReady)
@@ -80,62 +99,62 @@ export default function Hero() {
     })
     timelineRef.current = tl
 
-    // Beat 1 (0s): "UX Researcher" slides up + fades
-    tl.to(line1Ref.current, {
+    const stagger = 0.06
+
+    // Beat 1 (0s): "UX Researcher" types on
+    tl.to(line1Chars.current, {
       opacity: 1,
-      y: 0,
-      duration: 0.6,
-      ease: 'power2.out',
+      duration: 0.08,
+      stagger: stagger,
+      ease: 'power1.inOut',
     }, 0)
 
-    // Beat 2 (0.15s): "Design Strategist" slides up
-    tl.to(line2Ref.current, {
-      opacity: 1,
-      y: 0,
-      duration: 0.6,
-      ease: 'power2.out',
-    }, 0.15)
+    // Beat 2 (0.8s): & wipes on left-to-right
+    tl.fromTo(ampRef.current,
+      { clipPath: 'inset(0 100% 0 0)', opacity: 1 },
+      { clipPath: 'inset(0 0% 0 0)', duration: 0.9, ease: 'power1.inOut' },
+    0.8)
 
-    // Beat 3 (0.3s): & bounces in
-    tl.to(ampRef.current, {
+    // Beat 3 (1.5s): "Design Strategist" types on
+    tl.to(line2Chars.current, {
       opacity: 1,
-      scale: 1,
-      duration: 0.7,
-      ease: 'back.out(2.5)',
-    }, 0.3)
+      duration: 0.08,
+      stagger: stagger,
+      ease: 'power1.inOut',
+    }, 1.5)
 
-    // Beat 4 (1.0-1.4s): Marks pop in with bounce, staggered 200ms
+    // Beat 4 (2.8s): "Thoughtful design for social impact" types on
+    tl.to(subtitleChars.current, {
+      opacity: 1,
+      duration: 0.08,
+      stagger: stagger,
+      ease: 'power1.inOut',
+    }, 2.8)
+
+    // Beat 5 (4.8-5.4s): Sense, Weave, Shape pop in staggered
     tl.to(senseWrapRef.current, {
       opacity: 1,
       scale: 1,
-      duration: 0.5,
+      duration: 0.7,
       ease: 'back.out(2)',
-    }, 1.0)
-    tl.call(() => setSenseAnimate(true), null, 1.0)
+    }, 4.8)
+    tl.call(() => setSenseAnimate(true), null, 4.8)
 
     tl.to(weaveWrapRef.current, {
       opacity: 1,
       scale: 1,
-      duration: 0.5,
+      duration: 0.7,
       ease: 'back.out(2)',
-    }, 1.2)
-    tl.call(() => setWeaveAnimate(true), null, 1.2)
+    }, 5.1)
+    tl.call(() => setWeaveAnimate(true), null, 5.1)
 
     tl.to(shapeWrapRef.current, {
       opacity: 1,
       scale: 1,
-      duration: 0.5,
+      duration: 0.7,
       ease: 'back.out(2)',
-    }, 1.4)
-    tl.call(() => setShapeAnimate(true), null, 1.4)
-
-    // Beat 5 (1.8s): Subtitle fades up
-    tl.to(subtitleRef.current, {
-      opacity: 1,
-      y: 0,
-      duration: 0.8,
-      ease: 'power1.inOut',
-    }, 1.8)
+    }, 5.4)
+    tl.call(() => setShapeAnimate(true), null, 5.4)
 
     /* ===== Scroll escape ===== */
     function onScroll() {
@@ -159,20 +178,14 @@ export default function Hero() {
       <div className={styles.heroContent}>
         {/* Left column: & beside title lines, subtitle below */}
         <div className={styles.left}>
-          <h1 className={styles.title}>
+          <h1 className={styles.title} aria-label="UX Researcher & Design Strategist. Thoughtful design for social impact.">
             <span className={styles.titleAmp} ref={ampRef} aria-hidden="true">
               &amp;
             </span>
             <span className={styles.titleText}>
-              <span className={styles.titleLine} ref={line1Ref}>
-                UX Researcher
-              </span>
-              <span className={styles.titleLine} ref={line2Ref}>
-                Design Strategist
-              </span>
-              <span className={styles.subtitle} ref={subtitleRef}>
-                Thoughtful design for social impact
-              </span>
+              <CharSpans text="UX Researcher" charsRef={line1Chars} className={styles.titleLine} />
+              <CharSpans text="Design Strategist" charsRef={line2Chars} className={styles.titleLine} />
+              <CharSpans text="Thoughtful design for social impact" charsRef={subtitleChars} className={styles.subtitle} />
             </span>
           </h1>
         </div>

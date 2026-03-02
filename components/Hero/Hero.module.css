@@ -43,7 +43,7 @@
   line-height: 0.85;
   flex-shrink: 0;
   opacity: 0;
-  transform: scale(0);
+  clip-path: inset(0 100% 0 0);
   cursor: default;
 }
 
@@ -51,6 +51,7 @@
 .titleAmpReady {
   opacity: 1;
   transform: none;
+  clip-path: none;
 }
 
 /* 3-color gradient on the ampersand (sage → plum → terracotta) */
@@ -88,8 +89,6 @@
   font-variation-settings: var(--font-wonky);
   line-height: 1.1;
   color: var(--color-ink);
-  opacity: 0;
-  transform: translateY(12px);
 }
 
 /* ===========================================
@@ -105,8 +104,6 @@
   color: var(--color-ink);
   line-height: 1.5;
   text-wrap: pretty;
-  opacity: 0;
-  transform: translateY(10px);
   margin-top: clamp(8px, 1vw, 16px);
 }
 
@@ -205,11 +202,12 @@
    ACCESSIBILITY — REDUCED MOTION
    =========================================== */
 @media (prefers-reduced-motion: reduce) {
-  .titleLine,
+  .titleLine span,
+  .subtitle span,
   .titleAmp,
-  .markItem,
-  .subtitle {
-    opacity: 1;
+  .markItem {
+    opacity: 1 !important;
     transform: none;
+    clip-path: none;
   }
 }
