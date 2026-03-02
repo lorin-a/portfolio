@@ -105,7 +105,7 @@ export default function GroundswellSection() {
     return () => ctx?.revert()
   }, [reducedMotion])
 
-  /* ── Row 2: scroll-triggered fan-out + sequential 3D flips ── */
+  /* ── Row 2: scrub-driven fan-out + sequential 3D flips ── */
   useEffect(() => {
     if (reducedMotion) {
       setGsapControlled(false)
@@ -128,8 +128,8 @@ export default function GroundswellSection() {
         const inners = innerRefs.current.filter(Boolean)
         if (!cards.length || inners.length !== 4) return
 
-        /* Fan-out starting positions: cards stacked near center */
-        const fanOffsets = [60, 20, -20, -60]
+        /* Cards start stacked at center, invisible */
+        const fanOffsets = [50, 18, -18, -50]
         gsap.set(cards, (i) => ({
           xPercent: fanOffsets[i],
           opacity: 0,
@@ -137,44 +137,50 @@ export default function GroundswellSection() {
         }))
         gsap.set(inners, { rotateY: 0 })
 
-        /* Build timeline — plays once on scroll entry, not scrub-driven */
-        const tl = gsap.timeline({ paused: true })
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: el,
+            start: 'top 90%',
+            end: 'center 25%',
+            scrub: 0.4,
+            onLeave: () => {
+              setGsapControlled(false)
+              cardRefs.current.forEach((ref) => ref?.setFlipped(true))
+              gsap.set(inners, { clearProps: 'transform' })
+            },
+            onEnterBack: () => {
+              setGsapControlled(true)
+            },
+          },
+        })
 
-        /* Phase 1 — Fan-out to grid positions */
+        /* Phase 1a — Opacity pop so fan-out is visible */
         tl.to(cards, {
-          xPercent: 0,
           opacity: 1,
-          scale: 1,
-          duration: 0.7,
-          stagger: 0.08,
+          duration: 0.15,
+          stagger: 0.03,
           ease: 'power1.inOut',
         })
 
+        /* Phase 1b — Fan-out slide to grid positions */
+        tl.to(cards, {
+          xPercent: 0,
+          scale: 1,
+          duration: 0.35,
+          stagger: 0.04,
+          ease: 'power1.inOut',
+        }, 0.05)
+
         /* Breathing room */
-        tl.to({}, { duration: 0.4 })
+        tl.to({}, { duration: 0.1 })
 
         /* Phase 2 — Sequential 3D flips */
         inners.forEach((inner, i) => {
           tl.to(inner, {
             rotateY: 180,
-            duration: 0.6,
+            duration: 0.3,
             ease: 'power1.inOut',
-          }, i === 0 ? '>' : `-=${0.6 - 0.18}`)
-        })
-
-        /* After all flips complete, hand control to CSS */
-        tl.call(() => {
-          setGsapControlled(false)
-          cardRefs.current.forEach((ref) => ref?.setFlipped(true))
-          gsap.set(inners, { clearProps: 'transform' })
-        })
-
-        /* Trigger once when row2 enters viewport */
-        ScrollTrigger.create({
-          trigger: el,
-          start: 'top 85%',
-          once: true,
-          onEnter: () => tl.play(),
+          }, i === 0 ? '>' : `-=${0.3 - 0.1}`)
         })
       }, sectionRef.current)
     }
