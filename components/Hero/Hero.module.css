@@ -145,7 +145,7 @@
   font-style: italic;
   font-variation-settings: var(--font-wonky);
   color: var(--color-ink-light);
-  margin-top: calc(var(--space-sm) + 10px);
+  margin-top: 4px;
 }
 
 .markLabelSense { color: #ACB592; }
