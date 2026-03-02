@@ -36,7 +36,7 @@
 
 .titleAmp {
   font-family: var(--font-heading);
-  font-size: clamp(56px, 13vw, 190px);
+  font-size: clamp(62px, 14vw, 210px);
   font-weight: var(--weight-display);
   font-variation-settings: var(--font-wonky);
   color: var(--color-ampersand);
@@ -130,6 +130,7 @@
   width: clamp(56px, 7.5vw, 105px);
   height: clamp(56px, 7.5vw, 105px);
   flex-shrink: 0;
+  margin-top: 24px;
 }
 
 .markIcon > * {
