@@ -1,7 +1,8 @@
 /* ===========================================
-   GROUNDSWELL SECTION — 2-row layout
-   Row 1: hero (1–8) + walkthrough video (9–12)
-   Row 2: text (1–5) + iPhone (6–8) + flip card (9–12)
+   GROUNDSWELL SECTION
+   Row 1: hero + walkthrough video
+   Row 2: phone + 3 cards (4 equal items)
+   Row 3: horizontal text strip
    =========================================== */
 
 .section {
@@ -15,7 +16,7 @@
 }
 
 /* ===========================================
-   ROW 1 — Hero image + walkthrough video
+   ROW 1
    =========================================== */
 .heroImage {
   grid-column: 1 / 9;
@@ -35,64 +36,46 @@
 }
 
 /* ===========================================
-   ROW 2 — Text + iPhone + flip card
+   ROW 2 — 4 equal items: phone + 3 cards
    =========================================== */
 .row2 {
   grid-column: 1 / -1;
   grid-row: 2;
   display: grid;
-  grid-template-columns: subgrid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-sm);
   align-items: center;
 }
 
-.textColumn {
-  grid-column: 1 / 6;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: var(--space-xs);
-}
-
-.textColumn > * {
-  opacity: 0;
-  transform: translateY(10px);
-}
-
-.iphoneSlot {
-  grid-column: 6 / 9;
+.phoneSlot {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.flipCardSlot {
-  grid-column: 9 / 13;
+.cardSlot {
+  aspect-ratio: 1350 / 2175;
   border-radius: var(--radius-md);
   overflow: hidden;
-  aspect-ratio: 1350 / 2175;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
 }
 
-/* Force FlipCard to fill its slot */
-.flipCardSlot > div {
+.cardSlot > div {
   width: 100%;
   height: 100%;
 }
 
 /* ===========================================
-   MEDIA — Shared image/video styles
+   ROW 3 — Horizontal text strip
    =========================================== */
-.media {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
-.cardImage {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
+.row3 {
+  grid-column: 1 / -1;
+  grid-row: 3;
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: var(--space-xs) var(--space-md);
+  padding-top: var(--space-sm);
 }
 
 /* ===========================================
@@ -101,7 +84,7 @@
 .iphoneFrame {
   position: relative;
   width: 100%;
-  max-width: 240px;
+  max-width: 200px;
   aspect-ratio: 280 / 600;
   background: var(--color-device-dark);
   border-radius: 40px;
@@ -135,7 +118,24 @@
 }
 
 /* ===========================================
-   TYPOGRAPHY
+   MEDIA
+   =========================================== */
+.media {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.cardImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* ===========================================
+   TYPOGRAPHY — horizontal layout
    =========================================== */
 .projectNum {
   font-family: var(--font-heading);
@@ -148,17 +148,17 @@
 
 .title {
   font-family: var(--font-heading);
-  font-size: clamp(28px, 3.2vw, 48px);
+  font-size: clamp(24px, 2.8vw, 40px);
   font-weight: var(--weight-title);
   font-variation-settings: var(--font-soft);
   color: var(--color-ink);
   margin: 0;
-  line-height: var(--leading-tight);
+  line-height: 1;
 }
 
 .tagline {
   font-family: var(--font-heading);
-  font-size: clamp(16px, 1.5vw, 22px);
+  font-size: clamp(14px, 1.3vw, 20px);
   font-weight: var(--weight-display);
   font-variation-settings: var(--font-soft);
   font-style: italic;
@@ -168,28 +168,28 @@
 }
 
 .description {
-  font-size: clamp(14px, 1.3vw, 18px);
+  font-size: clamp(13px, 1.2vw, 17px);
   color: var(--color-ink);
   opacity: 0.85;
   line-height: var(--leading-normal);
-  margin: var(--space-xs) 0 0;
+  margin: 0;
+  max-width: 40ch;
   text-wrap: pretty;
 }
 
 /* ===========================================
-   PILLS — Per-pill variant colors
+   PILLS
    =========================================== */
 .pills {
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-xs);
-  margin-top: var(--space-xs);
 }
 
 .pill {
   font-family: var(--font-body);
-  font-size: clamp(13px, 1.1vw, 16px);
-  padding: 0.35em 1em;
+  font-size: clamp(12px, 1vw, 14px);
+  padding: 0.3em 0.8em;
   border-radius: var(--pill-radius);
   white-space: nowrap;
   line-height: 1;
@@ -219,14 +219,13 @@
    =========================================== */
 .cta {
   font-family: var(--font-heading);
-  font-size: clamp(16px, 1.5vw, 22px);
+  font-size: clamp(14px, 1.3vw, 20px);
   font-weight: var(--weight-label);
   font-style: italic;
   font-variation-settings: var(--font-soft);
   color: var(--color-ink);
   text-decoration: underline;
   text-underline-offset: 4px;
-  margin-top: var(--space-sm);
   display: inline-flex;
   align-items: center;
   gap: 0.3em;
@@ -254,30 +253,24 @@
 
   .heroImage {
     grid-column: 1 / -1;
+    max-height: none;
   }
 
   .walkthroughSlot {
     grid-column: 1 / -1;
+    max-height: none;
     max-width: 400px;
     justify-self: center;
     aspect-ratio: 9 / 16;
   }
 
   .row2 {
-    grid-template-columns: repeat(12, 1fr);
-    gap: var(--space-sm);
+    grid-template-columns: repeat(2, 1fr);
   }
 
-  .textColumn {
-    grid-column: 1 / -1;
-  }
-
-  .iphoneSlot {
-    grid-column: 1 / 7;
-  }
-
-  .flipCardSlot {
-    grid-column: 7 / 13;
+  .row3 {
+    flex-direction: column;
+    align-items: flex-start;
   }
 }
 
@@ -285,35 +278,17 @@
    RESPONSIVE — MOBILE (<=600px)
    =========================================== */
 @media (max-width: 600px) {
-  .heroImage,
-  .walkthroughSlot,
-  .textColumn,
-  .iphoneSlot,
-  .flipCardSlot {
-    grid-column: 1 / -1;
-  }
-
-  .walkthroughSlot {
-    max-width: 300px;
-    justify-self: center;
-  }
-
   .row2 {
-    grid-template-columns: 1fr;
-    gap: var(--space-md);
-  }
-
-  .flipCardSlot {
-    max-width: 300px;
-    justify-self: center;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-xs);
   }
 
   .iphoneFrame {
-    max-width: 200px;
+    max-width: 160px;
   }
 
-  .iphoneSlot {
-    justify-content: center;
+  .description {
+    max-width: none;
   }
 }
 
@@ -323,15 +298,10 @@
 @media (prefers-reduced-motion: reduce) {
   .heroImage,
   .walkthroughSlot,
-  .textColumn,
-  .textColumn > *,
-  .iphoneSlot,
-  .flipCardSlot {
+  .phoneSlot,
+  .cardSlot,
+  .row3 > * {
     opacity: 1 !important;
     transform: none !important;
-  }
-
-  .row2 {
-    opacity: 1 !important;
   }
 }
