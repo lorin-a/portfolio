@@ -83,8 +83,8 @@
 
 .titleLine {
   font-family: var(--font-heading);
-  font-size: clamp(28px, 3.5vw, 48px);
-  font-weight: var(--weight-title);
+  font-size: clamp(32px, 4.2vw, 56px);
+  font-weight: 300;
   font-variation-settings: var(--font-wonky);
   line-height: 1.1;
   color: var(--color-ink);
@@ -99,8 +99,9 @@
   display: block;
   font-family: var(--font-heading);
   font-size: clamp(16px, 1.5vw, 24px);
-  font-weight: 300;
+  font-weight: 200;
   font-variation-settings: var(--font-wonky);
+  letter-spacing: 0.04em;
   color: var(--color-ink);
   line-height: 1.5;
   text-wrap: pretty;
@@ -116,7 +117,7 @@
   grid-column: 8 / -1;
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
+  align-items: flex-end;
 }
 
 .markItem {
@@ -129,8 +130,8 @@
 }
 
 .markIcon {
-  width: clamp(64px, 9vw, 120px);
-  height: clamp(64px, 9vw, 120px);
+  width: clamp(56px, 7.5vw, 105px);
+  height: clamp(56px, 7.5vw, 105px);
   flex-shrink: 0;
 }
 
@@ -141,11 +142,12 @@
 
 .markLabel {
   font-family: var(--font-heading);
-  font-size: clamp(18px, 2vw, 32px);
-  font-weight: 300;
+  font-size: clamp(16px, 1.5vw, 24px);
+  font-weight: 200;
   font-style: italic;
   font-variation-settings: var(--font-wonky);
   color: var(--color-ink-light);
+  margin-top: calc(var(--space-sm) + 10px);
 }
 
 .markLabelSense { color: #ACB592; }
