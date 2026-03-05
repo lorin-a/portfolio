@@ -136,6 +136,7 @@
   text-wrap: pretty;
   margin: 0;
   transform: translateY(-1.5px);
+  max-width: calc(100% - 50px);
 }
 
 :global(:root[data-theme="dark"]) .subtitle {
