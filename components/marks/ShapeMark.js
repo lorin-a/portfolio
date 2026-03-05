@@ -6,14 +6,17 @@ import styles from './marks.module.css'
 const DEFAULT_COLOR = 'var(--color-terracotta)'
 const GRADIENT_ID = 'shapeGrad'
 
-function GradientDef({ colors }) {
-  if (!colors) return null
+function GradientDef({ colors, viewBox }) {
+  if (!colors || !viewBox) return null
+  const [, , w, h] = viewBox
+  // Corner-to-corner diagonal gradient (upper-left → lower-right)
   return (
     <defs>
-      <linearGradient id={GRADIENT_ID} x1="41%" y1="1%" x2="59%" y2="99%">
-        <stop offset="15.5%" stopColor={colors[0]} />
-        <stop offset="52.1%" stopColor={colors[1]} />
-        <stop offset="89.7%" stopColor={colors[2]} />
+      <linearGradient id={GRADIENT_ID} gradientUnits="userSpaceOnUse"
+        x1={0} y1={0} x2={w} y2={h}>
+        <stop offset="5%" stopColor={colors[0]} />
+        <stop offset="45%" stopColor={colors[1]} />
+        <stop offset="88%" stopColor={colors[2]} />
       </linearGradient>
     </defs>
   )
@@ -99,7 +102,7 @@ export default function ShapeMark({ animate = false, delay = 0, replay = 0, clas
         viewBox="0 0 189 191"
         fill="none"
       >
-        <GradientDef colors={gradientColors} />
+        <GradientDef colors={gradientColors} viewBox={[0, 0, 189, 191]} />
         {PETAL_PATHS.map((d, i) => (
           <path
             key={i}
@@ -115,7 +118,7 @@ export default function ShapeMark({ animate = false, delay = 0, replay = 0, clas
       {/* Brush layer — fades in after draw-on (final resting state) */}
       <div className={`${styles.shapeBrush} ${brushVisible ? styles.shapeBrushVisible : ''}`}>
         <svg viewBox="0 0 191 192" fill="none" style={{ width: '100%', height: 'auto' }}>
-          <GradientDef colors={gradientColors} />
+          <GradientDef colors={gradientColors} viewBox={[0, 0, 191, 192]} />
           <path d={SHAPE_BRUSH_PATH} fill={fillColor} />
         </svg>
       </div>

@@ -181,7 +181,7 @@ export default function GroundswellSection() {
           // Lift up + deepen shadow
           tl.to(card, {
             scale: 1.05,
-            boxShadow: '0 12px 40px rgba(0, 0, 0, 0.3)',
+            boxShadow: '0 8px 28px rgba(0, 0, 0, 0.15)',
             duration: 0.25,
             ease: 'power1.inOut',
           }, flipStart)
@@ -196,7 +196,7 @@ export default function GroundswellSection() {
           // Settle back down
           tl.to(card, {
             scale: 1,
-            boxShadow: '0 4px 16px rgba(0, 0, 0, 0.15)',
+            boxShadow: '0 2px 10px rgba(0, 0, 0, 0.08)',
             duration: 0.25,
             ease: 'power1.inOut',
           }, `>-${0.1}`)

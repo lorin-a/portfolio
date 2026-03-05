@@ -32,20 +32,64 @@ const DOT_POSITIONS = [
 
 const GRADIENT_ID = 'senseGrad'
 
+/* ── Per-dot color sampling ──
+   In Figma the gradient spans the entire dot cluster as one fill, so each
+   dot picks up a different slice of the 109° gradient.  We replicate this
+   by projecting each dot's centre onto the gradient line and interpolating
+   between the three colour stops. */
+const GRADIENT_ANGLE_DEG = 135
+const GRADIENT_STOPS = [0.05, 0.45, 0.88]
+
+function hexToRgb(hex) {
+  return [parseInt(hex.slice(1, 3), 16), parseInt(hex.slice(3, 5), 16), parseInt(hex.slice(5, 7), 16)]
+}
+
+function lerpColor(rgbA, rgbB, t) {
+  return rgbA.map((c, i) => Math.round(c + (rgbB[i] - c) * t))
+}
+
+function sampleGradient(rgbColors, t) {
+  if (t <= GRADIENT_STOPS[0]) return rgbColors[0]
+  if (t >= GRADIENT_STOPS[2]) return rgbColors[2]
+  if (t <= GRADIENT_STOPS[1]) {
+    const seg = (t - GRADIENT_STOPS[0]) / (GRADIENT_STOPS[1] - GRADIENT_STOPS[0])
+    return lerpColor(rgbColors[0], rgbColors[1], seg)
+  }
+  const seg = (t - GRADIENT_STOPS[1]) / (GRADIENT_STOPS[2] - GRADIENT_STOPS[1])
+  return lerpColor(rgbColors[1], rgbColors[2], seg)
+}
+
+function computeDotColors(hexColors) {
+  const rgbColors = hexColors.map(hexToRgb)
+  const rad = (GRADIENT_ANGLE_DEG * Math.PI) / 180
+  const dx = Math.sin(rad)
+  const dy = -Math.cos(rad)
+  const projections = DOT_POSITIONS.map(p => p.x * dx + p.y * dy)
+  const minP = Math.min(...projections)
+  const maxP = Math.max(...projections)
+  const range = maxP - minP || 1
+  return DOT_POSITIONS.map((_, i) => {
+    const t = (projections[i] - minP) / range
+    const [r, g, b] = sampleGradient(rgbColors, t)
+    return `rgb(${r},${g},${b})`
+  })
+}
+
 function GradientDef({ colors }) {
   if (!colors) return null
   return (
     <defs>
-      <linearGradient id={GRADIENT_ID} x1="41%" y1="1%" x2="59%" y2="99%">
-        <stop offset="15.5%" stopColor={colors[0]} />
-        <stop offset="52.1%" stopColor={colors[1]} />
-        <stop offset="89.7%" stopColor={colors[2]} />
+      <linearGradient id={GRADIENT_ID} x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="5%" stopColor={colors[0]} />
+        <stop offset="45%" stopColor={colors[1]} />
+        <stop offset="88%" stopColor={colors[2]} />
       </linearGradient>
     </defs>
   )
 }
 
 export default function SenseMark({ animate = false, delay = 0, replay = 0, className, onDrawComplete, showBrush = false, color, gradientColors }) {
+  const dotColors = gradientColors ? computeDotColors(gradientColors) : null
   const fillColor = gradientColors ? `url(#${GRADIENT_ID})` : (color || DEFAULT_COLOR)
   const containerRef = useRef(null)
   const [brushVisible, setBrushVisible] = useState(false)
@@ -153,8 +197,7 @@ export default function SenseMark({ animate = false, delay = 0, replay = 0, clas
               height: `${DOT_SIZE}%`,
             }}
           >
-            <GradientDef colors={gradientColors} />
-            <path d={DOT_BRUSH_PATH} fill={fillColor} />
+            <path d={DOT_BRUSH_PATH} fill={dotColors ? dotColors[i] : fillColor} />
           </svg>
         ))}
       </div>

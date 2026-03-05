@@ -38,6 +38,7 @@
   -webkit-backface-visibility: hidden;
   border-radius: var(--radius-md);
   overflow: hidden;
+  background-color: var(--color-cream);
 }
 
 .back {

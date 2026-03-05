@@ -63,7 +63,10 @@
 }
 
 .titleLine2 .heroChar {
-  color: #BB7258;
+  background: linear-gradient(to bottom right, #8A9263 5%, #9F84A9 45%, #C97D64 88%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
 :global(:root[data-theme="dark"]) .titleLine1 {

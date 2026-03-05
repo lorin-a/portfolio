@@ -12,14 +12,17 @@ const WEAVE_BRUSH_PATH = "M64.0375 72.0728C57.0448 71.6262 50.8249 72.4462 44.16
 const DEFAULT_COLOR = 'var(--color-plum)'
 const GRADIENT_ID = 'weaveGrad'
 
-function GradientDef({ colors }) {
-  if (!colors) return null
+function GradientDef({ colors, viewBox }) {
+  if (!colors || !viewBox) return null
+  const [, , w, h] = viewBox
+  // Corner-to-corner diagonal gradient (upper-left → lower-right)
   return (
     <defs>
-      <linearGradient id={GRADIENT_ID} x1="41%" y1="1%" x2="59%" y2="99%">
-        <stop offset="15.5%" stopColor={colors[0]} />
-        <stop offset="52.1%" stopColor={colors[1]} />
-        <stop offset="89.7%" stopColor={colors[2]} />
+      <linearGradient id={GRADIENT_ID} gradientUnits="userSpaceOnUse"
+        x1={0} y1={0} x2={w} y2={h}>
+        <stop offset="5%" stopColor={colors[0]} />
+        <stop offset="45%" stopColor={colors[1]} />
+        <stop offset="88%" stopColor={colors[2]} />
       </linearGradient>
     </defs>
   )
@@ -82,7 +85,7 @@ export default function WeaveMark({ animate = false, delay = 0, replay = 0, clas
         fill="none"
         style={{ width: '100%', height: 'auto' }}
       >
-        <GradientDef colors={gradientColors} />
+        <GradientDef colors={gradientColors} viewBox={[0, 0, 199, 135]} />
         <path
           d={WEAVE_STROKE_PATH}
           stroke={fillColor}
@@ -96,7 +99,7 @@ export default function WeaveMark({ animate = false, delay = 0, replay = 0, clas
       {/* Brush layer — fades in after draw-on (final resting state) */}
       <div className={`${styles.shapeBrush} ${brushVisible ? styles.shapeBrushVisible : ''}`}>
         <svg viewBox="0 0 200 132" fill="none" style={{ width: '100%', height: 'auto' }}>
-          <GradientDef colors={gradientColors} />
+          <GradientDef colors={gradientColors} viewBox={[0, 0, 200, 132]} />
           <path d={WEAVE_BRUSH_PATH} fill={fillColor} />
         </svg>
       </div>
