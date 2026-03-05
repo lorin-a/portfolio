@@ -317,6 +317,7 @@ export default function GroundswellSection() {
 
         {/* ── Row 3: Text ── */}
         <div className={styles.textLeft} data-text-left>
+          <span className={styles.projectNum} data-text-item>01</span>
           <h2 className={styles.title} data-text-item>Groundswell</h2>
           <p className={styles.tagline} data-text-item>Making Space to Restore, Together</p>
           <div className={styles.pills} data-text-item>

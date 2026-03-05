@@ -169,6 +169,14 @@
 /* ===========================================
    TYPOGRAPHY
    =========================================== */
+.projectNum {
+  font-family: var(--font-heading);
+  font-size: clamp(16px, 1.5vw, 24px);
+  font-weight: 400;
+  font-variation-settings: var(--font-soft);
+  color: var(--color-ink);
+}
+
 .title {
   font-family: var(--font-heading);
   font-size: clamp(32px, 4.5vw, 68px);
@@ -181,8 +189,8 @@
 
 .tagline {
   font-family: var(--font-heading);
-  font-size: clamp(16px, 2vw, 28px);
-  font-weight: 300;
+  font-size: clamp(16px, 2.3vw, 35px);
+  font-weight: 150;
   font-variation-settings: 'SOFT' 100, 'WONK' 1;
   font-style: italic;
   color: var(--color-ink);
