@@ -1,31 +1,13 @@
 import Hero from '@/components/Hero/Hero'
 import Squiggle from '@/components/Squiggle/Squiggle'
 import ProjectSection from '@/components/ProjectSection/ProjectSection'
+import BirthStorySection from '@/components/BirthStorySection/BirthStorySection'
 import GroundswellSection from '@/components/GroundswellSection/GroundswellSection'
 import AboutSection from '@/components/AboutSection/AboutSection'
 import { cloudVideo, HOME_VIDEOS } from '@/lib/cloudinary'
 import styles from './page.module.css'
 
 /* ─── Project data ─── */
-const BIRTHSTORY = {
-  num: '02',
-  title: 'BirthStory',
-  tagline: 'A micro-app for birthing parents',
-  description:
-    'Helping parents document and reflect on their birth experience for University of Pittsburgh Women\'s Health.',
-  comingSoon: true,
-  contributions: [
-    { label: 'UX Research' },
-    { label: 'UX Design' },
-    { label: 'Client Iteration' },
-  ],
-}
-
-const BIRTHSTORY_TILES = [
-  { src: cloudVideo(HOME_VIDEOS['birthstory-default'], 680), alt: 'BirthStory app preview', type: 'video', span: 2 },
-  { src: cloudVideo(HOME_VIDEOS['birthstory-hover'], 400), alt: 'BirthStory interaction', type: 'video', span: 1 },
-]
-
 const SOMEBUDDY = {
   num: '03',
   title: 'SomeBuddy',
@@ -91,7 +73,7 @@ export default function Home() {
       <GroundswellSection />
 
       <Squiggle />
-      <ProjectSection project={BIRTHSTORY} tiles={BIRTHSTORY_TILES} flip pillVariant="shape" />
+      <BirthStorySection />
 
       <Squiggle />
       <ProjectSection project={SOMEBUDDY} tiles={SOMEBUDDY_TILES} pillVariant="sense" />
