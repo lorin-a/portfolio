@@ -37,7 +37,7 @@
   opacity: 0;
 }
 
-/* "Designing" — plain text */
+/* "Designing" — wipe-on via clip-path */
 .titleLine1 {
   font-family: var(--font-heading);
   font-size: clamp(48px, 8vw, 112px);
@@ -45,6 +45,11 @@
   font-variation-settings: 'SOFT' 100, 'WONK' 1;
   line-height: 0.92;
   color: var(--color-ink);
+  clip-path: inset(-0.2em 100% -0.2em 0);
+}
+
+.titleLine1 .heroChar {
+  opacity: 1;
 }
 
 /* "Connection" — gradient applied per-character so opacity animation works.
@@ -187,5 +192,9 @@
   .markItem {
     opacity: 1 !important;
     transform: none !important;
+  }
+
+  .titleLine1 {
+    clip-path: none !important;
   }
 }

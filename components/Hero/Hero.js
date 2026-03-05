@@ -10,9 +10,9 @@ import styles from './Hero.module.css'
 /* Split text into per-character spans for type-on animation.
    Initial opacity is set via CSS (.heroChar), NOT React inline styles,
    so GSAP has sole control over opacity and React re-renders won't reset it. */
-function CharSpans({ text, charsRef, startIndex = 0, className, kerning, charStyles }) {
+function CharSpans({ text, charsRef, wrapRef, startIndex = 0, className, kerning, charStyles }) {
   return (
-    <span className={className}>
+    <span className={className} ref={wrapRef}>
       {text.split('').map((char, i) => {
         const kern = kerning?.[i]
         const extra = charStyles?.[i]
@@ -46,7 +46,7 @@ const SUBTITLE_CHAR_STYLES = {
 }
 
 export default function Hero() {
-  const line1Chars = useRef([])
+  const line1Ref = useRef(null)
   const line2Chars = useRef([])
   const subtitleChars = useRef([])
   const senseWrapRef = useRef(null)
@@ -113,11 +113,12 @@ export default function Hero() {
 
     const stagger = 0.06
 
-    // Beat 1 (0s): "Designing" types on
-    tl.to(line1Chars.current, {
-      opacity: 1,
-      duration: 0.08,
-      stagger: stagger,
+    // Beat 1 (0s): "Designing" wipes on left-to-right
+    tl.fromTo(line1Ref.current, {
+      clipPath: 'inset(-0.2em 100% -0.2em 0)',
+    }, {
+      clipPath: 'inset(-0.2em 0% -0.2em 0)',
+      duration: 1.0,
       ease: 'power1.inOut',
     }, 0)
 
@@ -188,7 +189,7 @@ export default function Hero() {
         {/* Left column: title */}
         <div className={styles.left}>
           <h1 className={styles.title} aria-label="Designing Connection. Emotion-Centered Research, Strategy and Design.">
-            <CharSpans text="Designing" charsRef={line1Chars} className={styles.titleLine1} kerning={KERN_DESIGNING} />
+            <CharSpans text="Designing" wrapRef={line1Ref} className={styles.titleLine1} kerning={KERN_DESIGNING} />
             <CharSpans text="Connection" charsRef={line2Chars} className={styles.titleLine2} kerning={KERN_CONNECTION} />
           </h1>
         </div>
