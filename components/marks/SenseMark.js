@@ -30,8 +30,23 @@ const DOT_POSITIONS = [
   { x: 90.9, y: 47.3 },
 ]
 
-export default function SenseMark({ animate = false, delay = 0, replay = 0, className, onDrawComplete, showBrush = false, color }) {
-  const fillColor = color || DEFAULT_COLOR
+const GRADIENT_ID = 'senseGrad'
+
+function GradientDef({ colors }) {
+  if (!colors) return null
+  return (
+    <defs>
+      <linearGradient id={GRADIENT_ID} x1="41%" y1="1%" x2="59%" y2="99%">
+        <stop offset="15.5%" stopColor={colors[0]} />
+        <stop offset="52.1%" stopColor={colors[1]} />
+        <stop offset="89.7%" stopColor={colors[2]} />
+      </linearGradient>
+    </defs>
+  )
+}
+
+export default function SenseMark({ animate = false, delay = 0, replay = 0, className, onDrawComplete, showBrush = false, color, gradientColors }) {
+  const fillColor = gradientColors ? `url(#${GRADIENT_ID})` : (color || DEFAULT_COLOR)
   const containerRef = useRef(null)
   const [brushVisible, setBrushVisible] = useState(false)
 
@@ -106,6 +121,7 @@ export default function SenseMark({ animate = false, delay = 0, replay = 0, clas
               height: `${DOT_SIZE}%`,
             }}
           >
+            <GradientDef colors={gradientColors} />
             <path
               data-sense-stroke
               d={DOT_STROKE_PATH}
@@ -134,6 +150,7 @@ export default function SenseMark({ animate = false, delay = 0, replay = 0, clas
               height: `${DOT_SIZE}%`,
             }}
           >
+            <GradientDef colors={gradientColors} />
             <path d={DOT_BRUSH_PATH} fill={fillColor} />
           </svg>
         ))}

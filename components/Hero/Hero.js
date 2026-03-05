@@ -7,29 +7,48 @@ import WeaveMark from '@/components/marks/WeaveMark'
 import ShapeMark from '@/components/marks/ShapeMark'
 import styles from './Hero.module.css'
 
-/* Split text into per-character spans for type-on animation */
-function CharSpans({ text, charsRef, startIndex = 0, className }) {
+/* Split text into per-character spans for type-on animation.
+   Initial opacity is set via CSS (.heroChar), NOT React inline styles,
+   so GSAP has sole control over opacity and React re-renders won't reset it. */
+function CharSpans({ text, charsRef, startIndex = 0, className, kerning, charStyles }) {
   return (
     <span className={className}>
-      {text.split('').map((char, i) => (
-        <span
-          key={i}
-          ref={el => { if (charsRef) charsRef.current[startIndex + i] = el }}
-          style={{ opacity: 0, display: 'inline-block' }}
-          aria-hidden="true"
-        >
-          {char === ' ' ? '\u00A0' : char}
-        </span>
-      ))}
+      {text.split('').map((char, i) => {
+        const kern = kerning?.[i]
+        const extra = charStyles?.[i]
+        return (
+          <span
+            key={i}
+            ref={el => { if (charsRef) charsRef.current[startIndex + i] = el }}
+            className={styles.heroChar}
+            style={{
+              ...(kern ? { marginRight: `${kern}px` } : undefined),
+              ...extra,
+            }}
+            aria-hidden="true"
+          >
+            {char === ' ' ? '\u00A0' : char}
+          </span>
+        )
+      })}
     </span>
   )
+}
+
+/* Per-character kerning from Figma (px values at 112px) */
+const KERN_DESIGNING = { 0: -1.12, 3: -1.12, 4: 2.24, 5: 2.24, 6: 1.12 }
+const KERN_CONNECTION = { 0: 1.12, 1: -2.24, 2: 2.24, 3: -2.24, 6: 1.12, 7: -2.24, 8: -2.24 }
+
+/* Ampersand style override — non-italic, weight 333 per Figma */
+// "Emotion-Centered Research, Strategy & Design" → & is at index 36
+const SUBTITLE_CHAR_STYLES = {
+  36: { fontStyle: 'normal', fontWeight: 333 },
 }
 
 export default function Hero() {
   const line1Chars = useRef([])
   const line2Chars = useRef([])
   const subtitleChars = useRef([])
-  const ampRef = useRef(null)
   const senseWrapRef = useRef(null)
   const weaveWrapRef = useRef(null)
   const shapeWrapRef = useRef(null)
@@ -83,25 +102,18 @@ export default function Hero() {
     }
 
     /* =========================================
-       Cinematic entrance — ~2.6s
+       Cinematic entrance — ~4s
        ========================================= */
     const tl = gsap.timeline({
       onComplete: () => {
         entranceDoneRef.current = true
-        // Clear inline styles so CSS :hover transition can take over
-        if (ampRef.current) {
-          ampRef.current.style.clipPath = ''
-          ampRef.current.style.opacity = ''
-          ampRef.current.style.transform = ''
-          ampRef.current.classList.add(styles.titleAmpReady)
-        }
       },
     })
     timelineRef.current = tl
 
     const stagger = 0.06
 
-    // Beat 1 (0s): "UX Researcher" types on
+    // Beat 1 (0s): "Designing" types on
     tl.to(line1Chars.current, {
       opacity: 1,
       duration: 0.08,
@@ -109,52 +121,49 @@ export default function Hero() {
       ease: 'power1.inOut',
     }, 0)
 
-    // Beat 2 (0.8s): & wipes on left-to-right
-    tl.fromTo(ampRef.current,
-      { clipPath: 'inset(0 100% 0 0)', opacity: 1 },
-      { clipPath: 'inset(0 0% 0 0)', duration: 0.9, ease: 'power1.inOut' },
-    0.8)
-
-    // Beat 3 (1.5s): "Design Strategist" types on
-    tl.to(line2Chars.current, {
+    // Beat 2 (0.8s): "Connection" wave entrance — each letter rises into place
+    const line2Els = line2Chars.current.filter(Boolean)
+    gsap.set(line2Els, { y: 28 })
+    tl.to(line2Els, {
       opacity: 1,
-      duration: 0.08,
-      stagger: stagger,
-      ease: 'power1.inOut',
-    }, 1.5)
+      y: 0,
+      duration: 0.6,
+      stagger: 0.07,
+      ease: 'back.out(1.4)',
+    }, 0.8)
 
-    // Beat 4 (2.8s): "Thoughtful Design + Meaningful Impact" types on
+    // Beat 3 (2.2s): Subtitle types on
     tl.to(subtitleChars.current, {
       opacity: 1,
       duration: 0.08,
       stagger: stagger,
       ease: 'power1.inOut',
-    }, 2.8)
+    }, 2.2)
 
-    // Beat 5 (4.8-5.4s): Sense, Weave, Shape pop in staggered
+    // Beat 4 (3.2-3.8s): Sense, Weave, Shape pop in staggered
     tl.to(senseWrapRef.current, {
       opacity: 1,
       scale: 1,
       duration: 0.7,
       ease: 'back.out(2)',
-    }, 4.8)
-    tl.call(() => setSenseAnimate(true), null, 4.8)
+    }, 3.2)
+    tl.call(() => setSenseAnimate(true), null, 3.2)
 
     tl.to(weaveWrapRef.current, {
       opacity: 1,
       scale: 1,
       duration: 0.7,
       ease: 'back.out(2)',
-    }, 5.1)
-    tl.call(() => setWeaveAnimate(true), null, 5.1)
+    }, 3.5)
+    tl.call(() => setWeaveAnimate(true), null, 3.5)
 
     tl.to(shapeWrapRef.current, {
       opacity: 1,
       scale: 1,
       duration: 0.7,
       ease: 'back.out(2)',
-    }, 5.4)
-    tl.call(() => setShapeAnimate(true), null, 5.4)
+    }, 3.8)
+    tl.call(() => setShapeAnimate(true), null, 3.8)
 
     /* ===== Scroll escape ===== */
     function onScroll() {
@@ -176,52 +185,48 @@ export default function Hero() {
   return (
     <section className={styles.hero} aria-label="Introduction">
       <div className={styles.heroContent}>
-        {/* Left column: & beside title lines, subtitle below */}
+        {/* Left column: title */}
         <div className={styles.left}>
-          <h1 className={styles.title} aria-label="UX Researcher & Design Strategist. Thoughtful Design + Meaningful Impact.">
-            <span className={styles.titleAmp} ref={ampRef} aria-hidden="true">
-              &amp;
-            </span>
-            <span className={styles.titleText}>
-              <CharSpans text="UX Researcher" charsRef={line1Chars} className={styles.titleLine} />
-              <CharSpans text="Design Strategist" charsRef={line2Chars} className={styles.titleLine} />
-              <CharSpans text="Thoughtful Design + Meaningful Impact" charsRef={subtitleChars} className={styles.subtitle} />
-            </span>
+          <h1 className={styles.title} aria-label="Designing Connection. Emotion-Centered Research, Strategy and Design.">
+            <CharSpans text="Designing" charsRef={line1Chars} className={styles.titleLine1} kerning={KERN_DESIGNING} />
+            <CharSpans text="Connection" charsRef={line2Chars} className={styles.titleLine2} kerning={KERN_CONNECTION} />
           </h1>
         </div>
 
-        {/* Right column: marks with labels */}
-        <div className={styles.marksColumn} aria-hidden="true">
-          <div
-            className={styles.markItem}
-            ref={senseWrapRef}
-            onMouseEnter={() => entranceDoneRef.current && setSenseReplay(r => r + 1)}
-          >
-            <div className={styles.markIcon}>
-              <SenseMark animate={senseAnimate} replay={senseReplay} showBrush color={isDark ? "#C5CFA6" : "#ACB592"} />
+        {/* Right column: marks + subtitle */}
+        <div className={styles.right}>
+          <div className={styles.marksRow} aria-hidden="true">
+            <div
+              className={styles.markItem}
+              ref={senseWrapRef}
+              onMouseEnter={() => entranceDoneRef.current && setSenseReplay(r => r + 1)}
+            >
+              <div className={styles.markIcon}>
+                <SenseMark animate={senseAnimate} replay={senseReplay} showBrush gradientColors={isDark ? ['#C5CFA6', '#C7AAD1', '#F79C7E'] : ['#ACB592', '#B098B7', '#C97E65']} />
+              </div>
             </div>
-            <span className={`${styles.markLabel} ${styles.markLabelSense}`}>Sense</span>
-          </div>
-          <div
-            className={styles.markItem}
-            ref={weaveWrapRef}
-            onMouseEnter={() => entranceDoneRef.current && setWeaveReplay(r => r + 1)}
-          >
-            <div className={styles.markIcon}>
-              <WeaveMark animate={weaveAnimate} replay={weaveReplay} showBrush color={isDark ? "#C7AAD1" : "#B098B7"} />
+            <div
+              className={styles.markItem}
+              ref={weaveWrapRef}
+              onMouseEnter={() => entranceDoneRef.current && setWeaveReplay(r => r + 1)}
+            >
+              <div className={styles.markIcon}>
+                <WeaveMark animate={weaveAnimate} replay={weaveReplay} showBrush gradientColors={isDark ? ['#C5CFA6', '#C7AAD1', '#F79C7E'] : ['#ACB592', '#B098B7', '#C97E65']} />
+              </div>
             </div>
-            <span className={`${styles.markLabel} ${styles.markLabelWeave}`}>Weave</span>
-          </div>
-          <div
-            className={styles.markItem}
-            ref={shapeWrapRef}
-            onMouseEnter={() => entranceDoneRef.current && setShapeReplay(r => r + 1)}
-          >
-            <div className={styles.markIcon}>
-              <ShapeMark animate={shapeAnimate} replay={shapeReplay} showBrush color={isDark ? "#F79C7E" : "#C97E65"} />
+            <div
+              className={styles.markItem}
+              ref={shapeWrapRef}
+              onMouseEnter={() => entranceDoneRef.current && setShapeReplay(r => r + 1)}
+            >
+              <div className={styles.markIcon}>
+                <ShapeMark animate={shapeAnimate} replay={shapeReplay} showBrush gradientColors={isDark ? ['#C5CFA6', '#C7AAD1', '#F79C7E'] : ['#ACB592', '#B098B7', '#C97E65']} />
+              </div>
             </div>
-            <span className={`${styles.markLabel} ${styles.markLabelShape}`}>Shape</span>
           </div>
+          <p className={styles.subtitle}>
+            <CharSpans text="Emotion-Centered Research, Strategy & Design" charsRef={subtitleChars} className={styles.subtitleText} charStyles={SUBTITLE_CHAR_STYLES} />
+          </p>
         </div>
       </div>
     </section>
