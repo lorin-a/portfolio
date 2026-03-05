@@ -41,6 +41,7 @@ export default function WeaveMark({ animate = false, delay = 0, replay = 0, clas
 
     // Reset state for replay
     setBrushVisible(false)
+    let tween
 
     import('gsap').then(({ gsap }) => {
       const path = svgRef.current?.querySelector('path')
@@ -54,7 +55,7 @@ export default function WeaveMark({ animate = false, delay = 0, replay = 0, clas
       const effectiveDelay = replay > 0 ? 0 : delay
 
       // Animate draw-on from top-left to bottom-right
-      gsap.to(path, {
+      tween = gsap.to(path, {
         strokeDashoffset: 0,
         duration: 1.8,
         ease: 'power2.inOut',
@@ -67,6 +68,8 @@ export default function WeaveMark({ animate = false, delay = 0, replay = 0, clas
         },
       })
     })
+
+    return () => { tween?.kill() }
   }, [animate, delay, replay])
 
   return (

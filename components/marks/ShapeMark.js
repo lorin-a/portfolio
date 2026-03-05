@@ -51,6 +51,8 @@ export default function ShapeMark({ animate = false, delay = 0, replay = 0, clas
     // Reset state for replay
     setBrushVisible(false)
 
+    let tl
+
     import('gsap').then(({ gsap }) => {
       const paths = svgRef.current?.querySelectorAll('path')
       if (!paths?.length) return
@@ -65,7 +67,7 @@ export default function ShapeMark({ animate = false, delay = 0, replay = 0, clas
       const effectiveDelay = replay > 0 ? 0 : delay
 
       // Animate draw-on sequentially with delay
-      const tl = gsap.timeline({
+      tl = gsap.timeline({
         delay: effectiveDelay,
         onComplete: () => {
           setTimeout(() => {
@@ -84,6 +86,8 @@ export default function ShapeMark({ animate = false, delay = 0, replay = 0, clas
         }, i * 0.2)
       })
     })
+
+    return () => { tl?.kill() }
   }, [animate, delay, replay])
 
   return (

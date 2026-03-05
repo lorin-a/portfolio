@@ -13,7 +13,7 @@
    =========================================== */
 .heroContent {
   composes: grid from global;
-  align-items: center;
+  align-items: end;
 }
 
 /* ===========================================
@@ -102,8 +102,8 @@
 }
 
 .markIcon {
-  width: clamp(72px, 10vw, 150px);
-  height: clamp(72px, 10vw, 150px);
+  width: clamp(67px, 9.3vw, 140px);
+  height: clamp(67px, 9.3vw, 140px);
   flex-shrink: 0;
 }
 

@@ -17,6 +17,21 @@ const CONTRIBUTIONS = [
   { label: 'Experience Design' },
 ]
 
+/* Load GSAP + ScrollTrigger once, shared across all effects */
+let gsapReady
+function loadGsapWithScrollTrigger() {
+  if (!gsapReady) {
+    gsapReady = Promise.all([
+      import('gsap'),
+      import('gsap/ScrollTrigger'),
+    ]).then(([{ gsap }, { ScrollTrigger }]) => {
+      gsap.registerPlugin(ScrollTrigger)
+      return { gsap, ScrollTrigger }
+    })
+  }
+  return gsapReady
+}
+
 export default function GroundswellSection() {
   const sectionRef = useRef(null)
   const [reducedMotion, setReducedMotion] = useState(false)
@@ -40,11 +55,7 @@ export default function GroundswellSection() {
 
     let ctx
 
-    const loadGsap = async () => {
-      const { gsap } = await import('gsap')
-      const { ScrollTrigger } = await import('gsap/ScrollTrigger')
-      gsap.registerPlugin(ScrollTrigger)
-
+    loadGsapWithScrollTrigger().then(({ gsap, ScrollTrigger }) => {
       ctx = gsap.context(() => {
         const row1 = sectionRef.current?.querySelector('[data-row1-wrap]')
         const items = sectionRef.current?.querySelectorAll('[data-row1]')
@@ -64,9 +75,7 @@ export default function GroundswellSection() {
           },
         })
       }, sectionRef.current)
-    }
-
-    loadGsap()
+    })
     return () => ctx?.revert()
   }, [reducedMotion])
 
@@ -77,11 +86,7 @@ export default function GroundswellSection() {
 
     let ctx
 
-    const loadGsap = async () => {
-      const { gsap } = await import('gsap')
-      const { ScrollTrigger } = await import('gsap/ScrollTrigger')
-      gsap.registerPlugin(ScrollTrigger)
-
+    loadGsapWithScrollTrigger().then(({ gsap }) => {
       ctx = gsap.context(() => {
         const textItems = sectionRef.current?.querySelectorAll('[data-text-item]')
         if (!textItems?.length) return
@@ -99,9 +104,7 @@ export default function GroundswellSection() {
           },
         })
       }, sectionRef.current)
-    }
-
-    loadGsap()
+    })
     return () => ctx?.revert()
   }, [reducedMotion])
 
@@ -115,11 +118,7 @@ export default function GroundswellSection() {
 
     let ctx
 
-    const loadGsap = async () => {
-      const { gsap } = await import('gsap')
-      const { ScrollTrigger } = await import('gsap/ScrollTrigger')
-      gsap.registerPlugin(ScrollTrigger)
-
+    loadGsapWithScrollTrigger().then(({ gsap }) => {
       ctx = gsap.context(() => {
         const el = row2Ref.current
         if (!el) return
@@ -183,9 +182,8 @@ export default function GroundswellSection() {
           }, i === 0 ? '>' : `-=${0.3 - 0.1}`)
         })
       }, sectionRef.current)
-    }
+    })
 
-    loadGsap()
     return () => ctx?.revert()
   }, [reducedMotion])
 

@@ -61,6 +61,7 @@ export default function SenseMark({ animate = false, delay = 0, replay = 0, clas
 
     // Reset for replay
     setBrushVisible(false)
+    let tl
 
     import('gsap').then(({ gsap }) => {
       const strokePaths = containerRef.current?.querySelectorAll('[data-sense-stroke]')
@@ -76,7 +77,7 @@ export default function SenseMark({ animate = false, delay = 0, replay = 0, clas
 
       const effectiveDelay = replay > 0 ? 0 : delay
 
-      const tl = gsap.timeline({
+      tl = gsap.timeline({
         delay: effectiveDelay,
         onComplete: () => {
           setTimeout(() => {
@@ -95,6 +96,8 @@ export default function SenseMark({ animate = false, delay = 0, replay = 0, clas
         }, i * 0.14)
       })
     })
+
+    return () => { tl?.kill() }
   }, [animate, delay, replay])
 
   return (
