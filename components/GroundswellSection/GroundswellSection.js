@@ -156,8 +156,8 @@ export default function GroundswellSection() {
         /* Phase 1a — Opacity pop so fan-out is visible */
         tl.to(cards, {
           opacity: 1,
-          duration: 0.15,
-          stagger: 0.03,
+          duration: 0.3,
+          stagger: 0.06,
           ease: 'power1.inOut',
         })
 
@@ -165,21 +165,41 @@ export default function GroundswellSection() {
         tl.to(cards, {
           xPercent: 0,
           scale: 1,
-          duration: 0.35,
-          stagger: 0.04,
+          duration: 0.6,
+          stagger: 0.08,
           ease: 'power1.inOut',
         }, 0.05)
 
         /* Breathing room */
-        tl.to({}, { duration: 0.1 })
+        tl.to({}, { duration: 0.15 })
 
-        /* Phase 2 — Sequential 3D flips */
+        /* Phase 2 — Sequential 3D flips with lift */
         inners.forEach((inner, i) => {
+          const flipStart = i === 0 ? '>' : `-=${0.5 - 0.15}`
+          const card = cards[i]
+
+          // Lift up + deepen shadow
+          tl.to(card, {
+            scale: 1.05,
+            boxShadow: '0 12px 40px rgba(0, 0, 0, 0.3)',
+            duration: 0.25,
+            ease: 'power1.inOut',
+          }, flipStart)
+
+          // Flip
           tl.to(inner, {
             rotateY: 180,
-            duration: 0.3,
+            duration: 0.5,
             ease: 'power1.inOut',
-          }, i === 0 ? '>' : `-=${0.3 - 0.1}`)
+          }, flipStart)
+
+          // Settle back down
+          tl.to(card, {
+            scale: 1,
+            boxShadow: '0 4px 16px rgba(0, 0, 0, 0.15)',
+            duration: 0.25,
+            ease: 'power1.inOut',
+          }, `>-${0.1}`)
         })
       }, sectionRef.current)
     })

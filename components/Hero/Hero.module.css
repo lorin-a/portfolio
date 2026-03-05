@@ -132,7 +132,7 @@
   text-align: center;
   text-wrap: pretty;
   margin: 0;
-  transform: translateY(-1px);
+  transform: translateY(-1.5px);
 }
 
 :global(:root[data-theme="dark"]) .subtitle {

@@ -133,13 +133,13 @@ export default function Hero() {
       ease: 'back.out(1.4)',
     }, 0.8)
 
-    // Beat 3 (2.2s): Subtitle types on
+    // Beat 3 (1.8s): Subtitle types on with soft ramp-in
     tl.to(subtitleChars.current, {
       opacity: 1,
-      duration: 0.08,
+      duration: 0.12,
       stagger: stagger,
       ease: 'power1.inOut',
-    }, 2.2)
+    }, 1.8)
 
     // Beat 4 (3.2-3.8s): Sense, Weave, Shape pop in staggered
     tl.to(senseWrapRef.current, {
