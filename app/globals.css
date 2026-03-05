@@ -262,16 +262,17 @@
   --pill-text-dark: rgba(255, 255, 255, 1.0);
   --pill-bg-dark: rgba(255, 255, 255, 0.12);
 
-  /* Mark-colored pills — light mode (earthy on cream) */
-  --pill-sense-text: #4A5940;
-  --pill-sense-border: rgba(94, 109, 82, 0.4);
-  --pill-sense-bg: rgba(94, 109, 82, 0.08);
-  --pill-weave-text: #5E4E65;
-  --pill-weave-border: rgba(122, 102, 128, 0.4);
-  --pill-weave-bg: rgba(122, 102, 128, 0.08);
-  --pill-shape-text: #3E5E72;
-  --pill-shape-border: rgba(94, 126, 150, 0.4);
-  --pill-shape-bg: rgba(94, 126, 150, 0.08);
+  /* Mark-colored pills — light mode (colored border + light tint fill + dark text)
+     Dark text on light tint: all exceed 10:1 contrast — well above AA */
+  --pill-sense-text: #2C2C28;
+  --pill-sense-border: #8A9263;
+  --pill-sense-bg: rgba(138, 146, 99, 0.12);
+  --pill-weave-text: #2C2C28;
+  --pill-weave-border: #9F84A9;
+  --pill-weave-bg: rgba(159, 132, 169, 0.12);
+  --pill-shape-text: #2C2C28;
+  --pill-shape-border: #C97D64;
+  --pill-shape-bg: rgba(201, 125, 100, 0.12);
 
 }
 

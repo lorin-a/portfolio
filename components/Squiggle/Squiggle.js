@@ -65,19 +65,27 @@ export default function Squiggle({ color = "var(--color-ink-faint)" }) {
         aria-hidden="true"
         preserveAspectRatio="none"
       >
-        {isDark && (
-          <defs>
-            <linearGradient id="squiggle-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="#C5CFA6" />
-              <stop offset="50%" stopColor="#C7AAD1" />
-              <stop offset="100%" stopColor="#F79C7E" />
-            </linearGradient>
-          </defs>
-        )}
+        <defs>
+          <linearGradient id="squiggle-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+            {isDark ? (
+              <>
+                <stop offset="5%" stopColor="#C5CFA6" />
+                <stop offset="45%" stopColor="#C7AAD1" />
+                <stop offset="88%" stopColor="#F79C7E" />
+              </>
+            ) : (
+              <>
+                <stop offset="5%" stopColor="#8A9263" />
+                <stop offset="45%" stopColor="#9F84A9" />
+                <stop offset="88%" stopColor="#C97D64" />
+              </>
+            )}
+          </linearGradient>
+        </defs>
         <path
           d="M 0 12 Q 30 4, 60 12 T 120 12 T 180 12 T 240 12 T 300 12 T 360 12 T 420 12 T 480 12 T 540 12 T 600 12 T 660 12 T 720 12 T 780 12 T 840 12 T 900 12 T 960 12 T 1020 12 T 1080 12 T 1140 12 T 1200 12 T 1260 12 T 1320 12 T 1380 12 T 1440 12"
           fill="none"
-          stroke={isDark ? "url(#squiggle-gradient)" : color}
+          stroke="url(#squiggle-gradient)"
           strokeWidth="2"
           strokeLinecap="round"
           strokeDasharray="6 5"
