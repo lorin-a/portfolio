@@ -1,7 +1,7 @@
 /* ===========================================
-   BIRTHSTORY SECTION — 2×2 grid layout
-   Top-left: video, Top-right: image
-   Bottom-left: video, Bottom-right: text
+   BIRTHSTORY SECTION
+   Row 1: full-width video
+   Row 2: sticky gallery + text (Groundswell layout)
    =========================================== */
 
 .section {
@@ -13,36 +13,13 @@
 }
 
 /* ===========================================
-   2×2 MEDIA + TEXT GRID
+   ROW 1 — Full-width video
    =========================================== */
-.grid {
+.videoRow {
   grid-column: 1 / -1;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: auto auto;
-  gap: var(--grid-gutter);
-}
-
-.mediaSlot {
   border-radius: var(--radius-md);
   overflow: hidden;
-}
-
-.topLeft {
-  aspect-ratio: 677 / 381;
-}
-
-.topRight {
-  aspect-ratio: 677 / 381;
-}
-
-.topRight .media {
-  object-fit: contain;
-  background: var(--color-surface-raised, #1a1a1a);
-}
-
-.bottomLeft {
-  aspect-ratio: 680 / 462;
+  aspect-ratio: 16 / 9;
 }
 
 .media {
@@ -53,14 +30,65 @@
 }
 
 /* ===========================================
-   TEXT BLOCK — bottom-right cell
+   ROW 2 — Sticky gallery + text
    =========================================== */
-.textBlock {
+.galleryWrap {
+  max-width: var(--max-width);
+  margin: var(--grid-gutter) auto 0;
+  padding: 0 var(--grid-margin);
+}
+
+.galleryRunway {
+  position: relative;
+}
+
+.gallerySticky {
+  position: sticky;
+  top: var(--space-sm);
+}
+
+.gallery {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--radius-md);
+  overflow: clip;
+}
+
+.galleryLayer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ===========================================
+   TEXT ROW — Groundswell two-column layout
+   Sits inside sticky container, visible during gallery scroll
+   =========================================== */
+.textRow {
+  display: grid;
+  grid-template-columns: repeat(var(--grid-columns), 1fr);
+  column-gap: var(--grid-gutter);
+  margin-top: var(--grid-gutter);
+}
+
+.textLeft {
+  grid-column: 1 / 7;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  gap: var(--space-xs);
-  padding: var(--space-sm) 0;
+  gap: var(--space-sm);
+  align-self: center;
+}
+
+.textRight {
+  grid-column: 7 / 12;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  align-self: end;
 }
 
 /* ===========================================
@@ -102,7 +130,7 @@
   color: var(--color-ink-light);
   opacity: 0.85;
   line-height: 1.5;
-  margin: var(--space-xs) 0 0;
+  margin: 0;
   text-wrap: pretty;
 }
 
@@ -145,61 +173,23 @@
   background: var(--pill-shape-bg, var(--pill-bg-dark));
 }
 
-/* ===========================================
-   CTA LINK
-   =========================================== */
-.cta {
-  font-family: var(--font-heading);
-  font-size: 20px;
-  font-weight: 300;
-  font-style: italic;
-  font-variation-settings: 'SOFT' 100, 'WONK' 1;
-  color: var(--color-ink);
-  text-decoration: none;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.3em;
-  margin-top: var(--space-sm);
-  transition: opacity var(--motion-fast) var(--ease-out);
-}
-
-.ctaText {
-  text-decoration: underline;
-  text-underline-offset: 4px;
-}
-
-.ctaArrow {
-  text-decoration: none;
-}
-
-@media (hover: hover) {
-  .cta:hover {
-    opacity: 0.7;
-  }
-}
-
-.cta:focus-visible {
-  outline: 2px solid var(--color-plum-light);
-  outline-offset: 2px;
-}
-
 .comingSoon {
   font-size: var(--text-body-small);
   color: var(--color-ink-faint);
   font-style: italic;
-  margin-top: var(--space-sm);
 }
 
 /* ===========================================
    RESPONSIVE — TABLET (<=900px)
    =========================================== */
 @media (max-width: 900px) {
-  .grid {
+  .textRow {
     grid-template-columns: 1fr;
   }
 
-  .textBlock {
-    padding: 0;
+  .textLeft,
+  .textRight {
+    grid-column: 1 / -1;
   }
 }
 
@@ -207,8 +197,12 @@
    ACCESSIBILITY — REDUCED MOTION
    =========================================== */
 @media (prefers-reduced-motion: reduce) {
-  .mediaSlot,
-  .textBlock > * {
+  .gallerySticky {
+    position: relative;
+  }
+
+  .galleryLayer,
+  .videoRow {
     opacity: 1 !important;
     transform: none !important;
   }
