@@ -86,7 +86,7 @@ export default function GroundswellSection() {
 
     let ctx
 
-    loadGsapWithScrollTrigger().then(({ gsap }) => {
+    loadGsapWithScrollTrigger().then(({ gsap, ScrollTrigger }) => {
       ctx = gsap.context(() => {
         const textItems = sectionRef.current?.querySelectorAll('[data-text-item]')
         if (!textItems?.length) return
