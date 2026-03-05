@@ -333,7 +333,7 @@ export default function GroundswellSection() {
 
         <div className={styles.textRight}>
           <p className={styles.description} data-text-item>
-            A multi-suite design intervention built to support the complex
+            A multi-scale design ecology built to support the complex
             emotional reality of oncology care. Co-designed with healthcare workers.
           </p>
           <a href="/projects/groundswell" className={styles.cta} data-text-item>
