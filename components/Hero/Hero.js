@@ -35,6 +35,13 @@ function CharSpans({ text, charsRef, wrapRef, startIndex = 0, className, kerning
   )
 }
 
+/* Light-mode solid colors for marks (from design tokens) */
+const LIGHT_MARK_COLORS = {
+  sense: '#ACB592',
+  weave: '#B098B7',
+  shape: '#C97E65',
+}
+
 /* Per-character kerning from Figma (px values at 112px) */
 const KERN_DESIGNING = { 0: -1.12, 3: -1.12, 4: 2.24, 5: 2.24, 6: 1.12 }
 const KERN_CONNECTION = { 0: 1.12, 1: -2.24, 2: 2.24, 3: -2.24, 6: 1.12, 7: -2.24, 8: -2.24 }
@@ -203,7 +210,7 @@ export default function Hero() {
               onMouseEnter={() => entranceDoneRef.current && setSenseReplay(r => r + 1)}
             >
               <div className={styles.markIcon}>
-                <SenseMark animate={senseAnimate} replay={senseReplay} showBrush gradientColors={isDark ? ['#C5CFA6', '#C7AAD1', '#F79C7E'] : ['#ACB592', '#B098B7', '#C97E65']} />
+                <SenseMark animate={senseAnimate} replay={senseReplay} showBrush gradientColors={isDark ? ['#C5CFA6', '#C7AAD1', '#F79C7E'] : undefined} color={isDark ? undefined : LIGHT_MARK_COLORS.sense} />
               </div>
             </div>
             <div
@@ -212,7 +219,7 @@ export default function Hero() {
               onMouseEnter={() => entranceDoneRef.current && setWeaveReplay(r => r + 1)}
             >
               <div className={styles.markIcon}>
-                <WeaveMark animate={weaveAnimate} replay={weaveReplay} showBrush gradientColors={isDark ? ['#C5CFA6', '#C7AAD1', '#F79C7E'] : ['#ACB592', '#B098B7', '#C97E65']} />
+                <WeaveMark animate={weaveAnimate} replay={weaveReplay} showBrush gradientColors={isDark ? ['#C5CFA6', '#C7AAD1', '#F79C7E'] : undefined} color={isDark ? undefined : LIGHT_MARK_COLORS.weave} />
               </div>
             </div>
             <div
@@ -221,7 +228,7 @@ export default function Hero() {
               onMouseEnter={() => entranceDoneRef.current && setShapeReplay(r => r + 1)}
             >
               <div className={styles.markIcon}>
-                <ShapeMark animate={shapeAnimate} replay={shapeReplay} showBrush gradientColors={isDark ? ['#C5CFA6', '#C7AAD1', '#F79C7E'] : ['#ACB592', '#B098B7', '#C97E65']} />
+                <ShapeMark animate={shapeAnimate} replay={shapeReplay} showBrush gradientColors={isDark ? ['#C5CFA6', '#C7AAD1', '#F79C7E'] : undefined} color={isDark ? undefined : LIGHT_MARK_COLORS.shape} />
               </div>
             </div>
           </div>

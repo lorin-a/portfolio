@@ -63,10 +63,7 @@
 }
 
 .titleLine2 .heroChar {
-  background: linear-gradient(169.3deg, #ACB592 15.5%, #B098B7 52.1%, #C97E65 89.7%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  color: #BB7258;
 }
 
 :global(:root[data-theme="dark"]) .titleLine1 {
@@ -74,7 +71,10 @@
 }
 
 :global(:root[data-theme="dark"]) .titleLine2 .heroChar {
-  background-image: linear-gradient(169.3deg, #C5CFA6 15.5%, #C7AAD1 52.1%, #F79C7E 89.7%);
+  background: linear-gradient(169.3deg, #C5CFA6 15.5%, #C7AAD1 52.1%, #F79C7E 89.7%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
 /* ===========================================
