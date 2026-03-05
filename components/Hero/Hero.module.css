@@ -91,6 +91,7 @@
   justify-content: center;
   align-items: flex-end;
   gap: clamp(16px, 2.5vw, 40px);
+  transform: translateY(12px);
 }
 
 .markItem {
@@ -126,6 +127,7 @@
   text-align: center;
   text-wrap: pretty;
   margin: 0;
+  transform: translateY(-1px);
 }
 
 :global(:root[data-theme="dark"]) .subtitle {
