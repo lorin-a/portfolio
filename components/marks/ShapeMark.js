@@ -152,6 +152,7 @@ export default function ShapeMark({ animate = false, delay = 0, replay = 0, clas
         className={`${styles.shapeStroke} ${brushVisible ? styles.shapeStrokeHidden : ''} ${strokeReady ? styles.shapeStrokeReady : ''}`}
         viewBox="0 0 189 191"
         fill="none"
+        overflow="hidden"
       >
         <GradientDef colors={gradientColors} viewBox={[0, 0, 189, 191]} />
         {PETAL_PATHS.map((d, i) => (
@@ -168,7 +169,7 @@ export default function ShapeMark({ animate = false, delay = 0, replay = 0, clas
 
       {/* Brush layer — fades in after draw-on, or sweep-reveals in fillReveal mode */}
       <div ref={brushRef} className={`${styles.shapeBrush} ${brushVisible ? styles.shapeBrushVisible : ''}`}>
-        <svg viewBox="0 0 191 192" fill="none" style={{ width: '100%', height: 'auto' }}>
+        <svg viewBox="0 0 191 192" fill="none" overflow="hidden" style={{ width: '100%', height: 'auto' }}>
           <GradientDef colors={gradientColors} viewBox={[0, 0, 191, 192]} />
           <path d={SHAPE_BRUSH_PATH} fill={fillColor} />
         </svg>
