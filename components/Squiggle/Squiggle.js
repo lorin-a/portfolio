@@ -1,61 +1,42 @@
 'use client'
 
-import { useState, useEffect, useRef } from 'react'
+import { useState, useRef } from 'react'
+import { gsap, ScrollTrigger } from '@/lib/gsap'
+import { useGSAP } from '@gsap/react'
 import styles from './Squiggle.module.css'
 
-export default function Squiggle({ color = "var(--color-ink-faint)" }) {
-  const [offset, setOffset] = useState(0)
-  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false)
-  const [isDark, setIsDark] = useState(false)
-  const lastScrollY = useRef(0)
-  const ref = useRef(null)
+gsap.registerPlugin(useGSAP)
 
-  useEffect(() => {
+export default function Squiggle() {
+  const ref = useRef(null)
+  const pathRef = useRef(null)
+  const [isDark, setIsDark] = useState(false)
+
+  useGSAP(() => {
+    /* Theme detection */
     const root = document.documentElement
     const check = () => setIsDark(root.dataset.theme === 'dark')
     check()
     const observer = new MutationObserver(check)
     observer.observe(root, { attributes: true, attributeFilter: ['data-theme'] })
+
+    /* ScrollTrigger-driven dash offset — no manual scroll listener, no setState */
+    const path = pathRef.current
+    if (!path) return
+
+    gsap.to(path, {
+      strokeDashoffset: -200,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: ref.current,
+        start: 'top bottom',
+        end: 'bottom top',
+        scrub: 0.3,
+      },
+    })
+
     return () => observer.disconnect()
-  }, [])
-
-  useEffect(() => {
-    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)')
-    setPrefersReducedMotion(mediaQuery.matches)
-
-    const handleChange = (e) => setPrefersReducedMotion(e.matches)
-    mediaQuery.addEventListener('change', handleChange)
-
-    return () => mediaQuery.removeEventListener('change', handleChange)
-  }, [])
-
-  useEffect(() => {
-    if (prefersReducedMotion) return
-
-    lastScrollY.current = window.scrollY
-
-    const handleScroll = () => {
-      if (!ref.current) return
-
-      const rect = ref.current.getBoundingClientRect()
-      const inViewport = rect.top < window.innerHeight && rect.bottom > 0
-
-      if (!inViewport) {
-        lastScrollY.current = window.scrollY
-        return
-      }
-
-      const currentScrollY = window.scrollY
-      const delta = currentScrollY - lastScrollY.current
-      lastScrollY.current = currentScrollY
-
-      setOffset(prev => prev - delta * 0.3)
-    }
-
-    window.addEventListener('scroll', handleScroll, { passive: true })
-
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [prefersReducedMotion])
+  }, { scope: ref })
 
   return (
     <div className={styles.container} ref={ref}>
@@ -83,15 +64,13 @@ export default function Squiggle({ color = "var(--color-ink-faint)" }) {
           </linearGradient>
         </defs>
         <path
+          ref={pathRef}
           d="M 0 12 Q 30 4, 60 12 T 120 12 T 180 12 T 240 12 T 300 12 T 360 12 T 420 12 T 480 12 T 540 12 T 600 12 T 660 12 T 720 12 T 780 12 T 840 12 T 900 12 T 960 12 T 1020 12 T 1080 12 T 1140 12 T 1200 12 T 1260 12 T 1320 12 T 1380 12 T 1440 12"
           fill="none"
           stroke="url(#squiggle-gradient)"
           strokeWidth="2"
           strokeLinecap="round"
           strokeDasharray="6 5"
-          style={{
-            strokeDashoffset: offset,
-          }}
         />
       </svg>
     </div>

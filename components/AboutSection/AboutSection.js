@@ -1,38 +1,33 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { useRef } from 'react'
 import Image from 'next/image'
+import { gsap, ScrollTrigger } from '@/lib/gsap'
+import { useGSAP } from '@gsap/react'
 import { cloudImg, HOME_IMAGES } from '@/lib/cloudinary'
 import styles from './AboutSection.module.css'
+
+gsap.registerPlugin(useGSAP)
 
 export default function AboutSection() {
   const sectionRef = useRef(null)
 
-  useEffect(() => {
+  useGSAP(() => {
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     if (prefersReduced) return
 
-    import('gsap').then(({ gsap }) => {
-      import('gsap/ScrollTrigger').then(({ ScrollTrigger }) => {
-        gsap.registerPlugin(ScrollTrigger)
-
-        gsap.fromTo(sectionRef.current,
-          { opacity: 0, y: 30 },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.8,
-            ease: 'power2.out',
-            scrollTrigger: {
-              trigger: sectionRef.current,
-              start: 'top 85%',
-              once: true,
-            },
-          }
-        )
-      })
+    gsap.from(sectionRef.current, {
+      autoAlpha: 0,
+      y: 30,
+      duration: 0.8,
+      ease: 'power1.inOut',
+      scrollTrigger: {
+        trigger: sectionRef.current,
+        start: 'top 85%',
+        once: true,
+      },
     })
-  }, [])
+  }, { scope: sectionRef })
 
   return (
     <section className={styles.aboutSection} ref={sectionRef}>

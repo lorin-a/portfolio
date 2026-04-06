@@ -1,7 +1,11 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useRef } from 'react'
+import { gsap, ScrollTrigger } from '@/lib/gsap'
+import { useGSAP } from '@gsap/react'
 import styles from './ProjectSection.module.css'
+
+gsap.registerPlugin(useGSAP)
 
 /**
  * ProjectSection — bento-style project display for the dark homepage.
@@ -13,49 +17,37 @@ import styles from './ProjectSection.module.css'
  *  pillVariant — 'sense' | 'weave' | 'shape' (maps to mark-colored pill tokens)
  */
 export default function ProjectSection({ project, tiles = [], flip = false, pillVariant = 'weave' }) {
-  const tilesRef = useRef(null)
-  const [reducedMotion, setReducedMotion] = useState(false)
+  const sectionRef = useRef(null)
 
-  useEffect(() => {
+  useGSAP(() => {
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    setReducedMotion(prefersReduced)
     if (prefersReduced) return
 
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (!entry.isIntersecting) return
-        observer.disconnect()
+    /* Set initial hidden state via GSAP (not inline styles) */
+    gsap.set('[data-tile]', { autoAlpha: 0, y: 12 })
 
-        import('gsap').then(({ gsap }) => {
-          const items = tilesRef.current?.querySelectorAll('[data-tile]')
-          if (!items?.length) return
-
-          gsap.fromTo(
-            items,
-            { opacity: 0, y: 12 },
-            {
-              opacity: 1,
-              y: 0,
-              duration: 0.6,
-              stagger: 0.1,
-              ease: 'power1.inOut',
-            }
-          )
+    /* ScrollTrigger-driven reveal — replaces IntersectionObserver */
+    ScrollTrigger.batch('[data-tile]', {
+      start: 'top 85%',
+      onEnter: (tiles) => {
+        gsap.to(tiles, {
+          autoAlpha: 1,
+          y: 0,
+          duration: 0.6,
+          stagger: 0.1,
+          ease: 'power1.inOut',
         })
       },
-      { threshold: 0.15 }
-    )
-
-    if (tilesRef.current) observer.observe(tilesRef.current)
-
-    return () => observer.disconnect()
-  }, [])
+      once: true,
+    })
+  }, { scope: sectionRef })
 
   const pillClass = styles[`pill${pillVariant.charAt(0).toUpperCase() + pillVariant.slice(1)}`] || styles.pillWeave
 
   return (
     <section
       className={`${styles.section} ${flip ? styles.sectionFlip : ''}`}
+      ref={sectionRef}
       aria-label={project.title}
     >
       <div className={styles.inner}>
@@ -89,18 +81,17 @@ export default function ProjectSection({ project, tiles = [], flip = false, pill
         </div>
 
         {/* Bento grid */}
-        <div className={styles.bentoGrid} ref={tilesRef}>
+        <div className={styles.bentoGrid}>
           {tiles.map((tile, i) => (
             <div
               key={i}
               className={`${styles.tile} ${tile.span === 2 ? styles.tileWide : ''}`}
               data-tile
-              style={reducedMotion ? undefined : { opacity: 0 }}
             >
               {tile.type === 'video' ? (
                 <video
                   src={tile.src}
-                  autoPlay={!reducedMotion}
+                  autoPlay
                   muted
                   loop
                   playsInline

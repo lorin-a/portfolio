@@ -1,19 +1,20 @@
 'use client'
 
 import { useRef, useState, useCallback } from 'react'
-import gsap from 'gsap'
+import { gsap, SplitText } from '@/lib/gsap'
 import { useGSAP } from '@gsap/react'
-import { SplitText } from 'gsap/SplitText'
 import SenseMark from '@/components/marks/SenseMark'
 import WeaveMark from '@/components/marks/WeaveMark'
 import ShapeMark from '@/components/marks/ShapeMark'
 import { useHeroIntro } from '@/components/HeroIntroContext'
 import styles from './Hero.module.css'
 
-gsap.registerPlugin(useGSAP, SplitText)
+gsap.registerPlugin(useGSAP)
 
 const LIGHT_GRADIENT = ['#8A9263', '#9F84A9', '#C97D64']
 const DARK_GRADIENT = ['#C5CFA6', '#C7AAD1', '#F79C7E']
+const LIGHT_GRAD_CSS = 'linear-gradient(to bottom right, #6B8245 5%, #8B6899 45%, #B86048 88%)'
+const DARK_GRAD_CSS = 'linear-gradient(169.3deg, #C5CFA6 15.5%, #C7AAD1 52.1%, #F79C7E 89.7%)'
 
 export default function Hero() {
   const heroRef = useRef(null)
@@ -46,18 +47,16 @@ export default function Hero() {
     return () => observer.disconnect()
   }, { scope: heroRef })
 
-  /* Scroll escape — contextSafe so it can be called from event handler */
+  /* Scroll escape */
   const { contextSafe } = useGSAP({ scope: heroRef })
-
   const snapEntrance = contextSafe(() => {
     if (entranceDoneRef.current) return
     entranceDoneRef.current = true
-    gsap.killTweensOf(gsap.utils.toArray('[data-hero-animate]', heroRef.current))
+    gsap.killTweensOf('*')
     setSenseAnimate(true)
     setWeaveAnimate(true)
     setShapeAnimate(true)
     shapeDrawDone.current?.()
-    /* Snap all to final state using autoAlpha */
     gsap.set('.heroContent', { autoAlpha: 1 })
     gsap.set('.introFlower', { autoAlpha: 0 })
     gsap.set('.markItem', { autoAlpha: 1 })
@@ -69,13 +68,14 @@ export default function Hero() {
 
   /* ═══ MAIN ANIMATION ═══ */
   useGSAP(() => {
-    if (!resolved) return
-    if (entranceDoneRef.current) return
+    if (!resolved || entranceDoneRef.current) return
 
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     if (prefersReduced) {
       gsap.set('.heroContent', { autoAlpha: 1 })
       gsap.set('.titleLine1, .titleLine2', { visibility: 'visible' })
+      gsap.set('.markItem', { autoAlpha: 1 })
+      gsap.set('.subtitle', { autoAlpha: 1 })
       setSenseAnimate(true)
       setWeaveAnimate(true)
       setShapeAnimate(true)
@@ -83,30 +83,31 @@ export default function Hero() {
       return
     }
 
-    /* Scroll escape listener */
+    /* Scroll escape */
     const onScroll = () => {
       if (!entranceDoneRef.current && window.scrollY > 10) snapEntrance()
     }
     window.addEventListener('scroll', onScroll, { passive: true })
 
     if (isIntro) {
-      cinematicIntro()
+      buildCinematicIntro()
     } else {
-      standardEntrance()
+      buildStandardEntrance()
     }
 
     return () => window.removeEventListener('scroll', onScroll)
 
     /* ─────────────────────────────────────────
-       CINEMATIC INTRO — first visit
+       CINEMATIC INTRO — One master timeline
        ───────────────────────────────────────── */
-    async function cinematicIntro() {
+    async function buildCinematicIntro() {
       setPhase('playing')
 
       const flower = introFlowerRef.current
       const flowerInner = introFlowerInnerRef.current
+      const gradient = isDark ? DARK_GRAD_CSS : LIGHT_GRAD_CSS
 
-      /* Initial state — everything hidden, flower centered */
+      /* Initial state */
       gsap.set('.heroContent', { autoAlpha: 1 })
       gsap.set('.titleWrap', { height: 0, overflow: 'hidden' })
       gsap.set('.subtitle', { height: 0, overflow: 'hidden' })
@@ -115,33 +116,17 @@ export default function Hero() {
 
       /* Wait for fonts before SplitText */
       await document.fonts.ready
-      await new Promise(r => requestAnimationFrame(r))
       if (entranceDoneRef.current) return
 
-      /* Flower fill + spin */
+      /* Flower fill + spin (driven by ShapeMark internally) */
       const drawPromise = new Promise(r => { shapeDrawDone.current = r })
       setShapeAnimate(true)
       await drawPromise
       if (entranceDoneRef.current) return
 
-      /* Bounce → shrink */
-      await gsap.to(flowerInner, { scale: 1.3, duration: 0.35, ease: 'power2.out' })
-      if (entranceDoneRef.current) return
+      /* ─── Master timeline: everything from bounce to marks ─── */
 
-      await gsap.to(flowerInner, { scale: 0, autoAlpha: 0, duration: 0.7, ease: 'power2.inOut' })
-      if (entranceDoneRef.current) return
-
-      gsap.set(flower, { autoAlpha: 0, pointerEvents: 'none' })
-
-      /* ─── Text reveal ─── */
-      triggerTransition()
-
-      gsap.set('.titleWrap', { height: 'auto', overflow: 'visible', autoAlpha: 1, y: 0 })
-      gsap.set('.titleLine1', { visibility: 'visible' })
-      gsap.set('.titleLine2', { visibility: 'visible' })
-
-      /* SplitText with mask — proper character reveal.
-         Extend mask padding so descenders (g, y) aren't clipped. */
+      /* Prepare SplitText */
       const splitOpts = {
         type: 'chars',
         mask: 'chars',
@@ -152,58 +137,82 @@ export default function Hero() {
       const split1 = SplitText.create('.titleLine1', splitOpts)
       const split2 = SplitText.create('.titleLine2', splitOpts)
 
-      /* Apply gradient to each Connection character with spanning */
+      /* Apply gradient spanning to Connection chars */
       const line2El = heroRef.current.querySelector('.titleLine2')
-      const gradient = isDark
-        ? 'linear-gradient(169.3deg, #C5CFA6 15.5%, #C7AAD1 52.1%, #F79C7E 89.7%)'
-        : 'linear-gradient(to bottom right, #6B8245 5%, #8B6899 45%, #B86048 88%)'
       const wrapRect = line2El.getBoundingClientRect()
       split2.chars.forEach(char => {
         const charRect = char.getBoundingClientRect()
-        char.style.background = gradient
-        char.style.backgroundSize = `${wrapRect.width}px ${wrapRect.height}px`
-        char.style.backgroundPosition = `-${charRect.left - wrapRect.left}px 0px`
-        char.style.webkitBackgroundClip = 'text'
-        char.style.backgroundClip = 'text'
-        char.style.color = 'transparent'
+        Object.assign(char.style, {
+          background: gradient,
+          backgroundSize: `${wrapRect.width}px ${wrapRect.height}px`,
+          backgroundPosition: `-${charRect.left - wrapRect.left}px 0px`,
+          webkitBackgroundClip: 'text',
+          backgroundClip: 'text',
+          color: 'transparent',
+        })
       })
 
-      const revealTl = gsap.timeline({
+      /* Prepare title/subtitle for reveal */
+      gsap.set('.titleWrap', { height: 'auto', overflow: 'visible', autoAlpha: 1, y: 0 })
+      gsap.set('.titleLine1', { visibility: 'visible' })
+      gsap.set('.titleLine2', { visibility: 'visible' })
+      gsap.set('.subtitle', { height: 'auto', overflow: 'visible',
+        clipPath: 'inset(-0.2em 100% -0.2em 0)' })
+
+      const master = gsap.timeline({
         onComplete: () => { entranceDoneRef.current = true },
       })
 
-      /* "Designing" — chars rise from behind mask */
-      revealTl.from(split1.chars, {
-        y: '100%', duration: 0.8, stagger: 0.04, ease: 'power1.inOut',
+      /* ─── Flower exit ─── */
+      // 0s: bounce
+      master.to(flowerInner, {
+        scale: 1.3, duration: 0.35, ease: 'power2.out',
       }, 0)
+      // 0.35s: shrink away from peak
+      master.to(flowerInner, {
+        scale: 0, autoAlpha: 0, duration: 0.7, ease: 'power2.inOut',
+        onComplete: () => gsap.set(flower, { autoAlpha: 0, pointerEvents: 'none' }),
+      }, 0.35)
 
-      /* "Connection" — same, staggered after */
-      revealTl.from(split2.chars, {
+      /* ─── Nav transition (overlaps with flower exit) ─── */
+      master.call(() => triggerTransition(), null, 0.5)
+
+      /* ─── Text reveals ─── */
+      // 0.8s: "Designing" chars rise from mask
+      master.from(split1.chars, {
         y: '100%', duration: 0.8, stagger: 0.04, ease: 'power1.inOut',
-      }, 0.6)
+      }, 0.8)
 
-      /* Subtitle — fade up */
-      gsap.set('.subtitle', { height: 'auto', overflow: 'visible' })
-      revealTl.to('.subtitle', {
-        autoAlpha: 1, y: 0, duration: 0.8, ease: 'power1.inOut',
+      // 1.4s: "Connection" chars rise from mask
+      master.from(split2.chars, {
+        y: '100%', duration: 0.8, stagger: 0.04, ease: 'power1.inOut',
       }, 1.4)
 
-      /* Marks cascade left to right */
-      revealTl.call(() => {
+      // 2.0s: Subtitle wipes in
+      master.to('.subtitle', {
+        autoAlpha: 1,
+        clipPath: 'inset(-0.2em 0% -0.2em 0)', duration: 1.0, ease: 'power1.inOut',
+      }, 2.0)
+
+      /* ─── Marks cascade ─── */
+      // 2.6s: trigger draw-on + fade in left to right
+      master.call(() => {
         setSenseAnimate(true)
         setWeaveAnimate(true)
         setShapeAnimate(true)
-      }, null, 2.0)
+      }, null, 2.6)
 
-      revealTl.to('.markItem', {
+      master.to('.markItem', {
         autoAlpha: 1, duration: 0.4, stagger: 0.2, ease: 'power1.inOut',
-      }, 2.0)
+      }, 2.6)
     }
 
     /* ─────────────────────────────────────────
-       STANDARD ENTRANCE — return visits
+       STANDARD ENTRANCE — One timeline, return visits
        ───────────────────────────────────────── */
-    function standardEntrance() {
+    function buildStandardEntrance() {
+      const gradient = isDark ? DARK_GRAD_CSS : LIGHT_GRAD_CSS
+
       gsap.set('.heroContent', { autoAlpha: 1 })
       gsap.set('.titleLine1', { visibility: 'visible' })
       gsap.set('.titleLine2', { visibility: 'visible' })
@@ -221,50 +230,45 @@ export default function Hero() {
       const split1 = SplitText.create('.titleLine1', splitOpts)
       const split2 = SplitText.create('.titleLine2', splitOpts)
 
-      /* Apply gradient to Connection characters */
+      /* Gradient spanning */
       const line2El = heroRef.current.querySelector('.titleLine2')
-      const gradient = isDark
-        ? 'linear-gradient(169.3deg, #C5CFA6 15.5%, #C7AAD1 52.1%, #F79C7E 89.7%)'
-        : 'linear-gradient(to bottom right, #6B8245 5%, #8B6899 45%, #B86048 88%)'
       const wrapRect = line2El.getBoundingClientRect()
       split2.chars.forEach(char => {
         const charRect = char.getBoundingClientRect()
-        char.style.background = gradient
-        char.style.backgroundSize = `${wrapRect.width}px ${wrapRect.height}px`
-        char.style.backgroundPosition = `-${charRect.left - wrapRect.left}px 0px`
-        char.style.webkitBackgroundClip = 'text'
-        char.style.backgroundClip = 'text'
-        char.style.color = 'transparent'
+        Object.assign(char.style, {
+          background: gradient,
+          backgroundSize: `${wrapRect.width}px ${wrapRect.height}px`,
+          backgroundPosition: `-${charRect.left - wrapRect.left}px 0px`,
+          webkitBackgroundClip: 'text',
+          backgroundClip: 'text',
+          color: 'transparent',
+        })
       })
 
       const tl = gsap.timeline({
         onComplete: () => { entranceDoneRef.current = true },
       })
 
-      /* Marks */
+      /* 0s: marks draw on + fade in */
       tl.call(() => setSenseAnimate(true), null, 0)
       tl.call(() => setWeaveAnimate(true), null, 0.15)
       tl.call(() => setShapeAnimate(true), null, 0.3)
-
       tl.to('.markItem', {
         autoAlpha: 1, duration: 0.5, stagger: 0.12, ease: 'power1.inOut',
       }, 0.3)
 
-      /* Title wrapper */
+      /* 0.8s: title wrapper + text reveals */
       tl.to('.titleWrap', {
         autoAlpha: 1, y: 0, duration: 0.6, ease: 'power1.inOut',
       }, 0.8)
-
-      /* Text reveals */
       tl.from(split1.chars, {
         y: '100%', duration: 0.6, stagger: 0.03, ease: 'power1.inOut',
       }, 0.8)
-
       tl.from(split2.chars, {
         y: '100%', duration: 0.6, stagger: 0.03, ease: 'power1.inOut',
       }, 1.0)
 
-      /* Subtitle */
+      /* 1.6s: subtitle */
       tl.to('.subtitle', {
         autoAlpha: 1, y: 0, duration: 0.6, ease: 'power1.inOut',
       }, 1.6)
@@ -290,28 +294,22 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* Marks row */}
+        {/* Marks */}
         <div className={styles.marksRow} aria-hidden="true">
-          <div
-            className={`${styles.markItem} markItem`}
-            onMouseEnter={() => entranceDoneRef.current && setSenseReplay(r => r + 1)}
-          >
+          <div className={`${styles.markItem} markItem`}
+            onMouseEnter={() => entranceDoneRef.current && setSenseReplay(r => r + 1)}>
             <div className={styles.markIcon}>
               <SenseMark animate={senseAnimate} replay={senseReplay} showBrush gradientColors={isDark ? DARK_GRADIENT : LIGHT_GRADIENT} />
             </div>
           </div>
-          <div
-            className={`${styles.markItem} markItem`}
-            onMouseEnter={() => entranceDoneRef.current && setWeaveReplay(r => r + 1)}
-          >
+          <div className={`${styles.markItem} markItem`}
+            onMouseEnter={() => entranceDoneRef.current && setWeaveReplay(r => r + 1)}>
             <div className={styles.markIconWeave}>
               <WeaveMark animate={weaveAnimate} replay={weaveReplay} showBrush gradientColors={isDark ? DARK_GRADIENT : LIGHT_GRADIENT} />
             </div>
           </div>
-          <div
-            className={`${styles.markItem} markItem`}
-            onMouseEnter={() => entranceDoneRef.current && setShapeReplay(r => r + 1)}
-          >
+          <div className={`${styles.markItem} markItem`}
+            onMouseEnter={() => entranceDoneRef.current && setShapeReplay(r => r + 1)}>
             <div className={styles.markIcon}>
               <ShapeMark animate={shapeAnimate && !isIntro} replay={shapeReplay} showBrush gradientColors={isDark ? DARK_GRADIENT : LIGHT_GRADIENT} />
             </div>
