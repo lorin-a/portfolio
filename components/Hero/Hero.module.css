@@ -1,8 +1,6 @@
 /* ===========================================
-   HERO — Centered, marks-first reveal
-   Beat 1: Marks draw on at large scale with labels
-   Beat 2: Marks shrink + lift, title wipes in
-   Beat 3: Subtitle fades up
+   HERO — Centered layout
+   Intro: flower fill-reveal → text reveal → marks appear
    =========================================== */
 
 .hero {
@@ -23,17 +21,14 @@
   width: 100%;
 }
 
-
 /* ===========================================
    INTRO FLOWER — large Shape mark, centered
    Only visible during cinematic intro
    =========================================== */
-/* Centered in the full viewport, independent of other content.
-   Uses margin centering instead of transform so GSAP can own transform fully. */
 .introFlower {
   width: clamp(168px, 24vw, 300px);
   height: clamp(168px, 24vw, 300px);
-  opacity: 0;
+  visibility: hidden;
   position: fixed;
   top: 0;
   left: 0;
@@ -43,65 +38,61 @@
   z-index: 10;
 }
 
-/* Override mark's internal size constraint so it fills the intro container */
-.introFlower > * {
+.introFlowerInner {
+  width: 100%;
+  height: 100%;
+}
+
+.introFlowerInner > * {
   width: 100% !important;
   height: 100% !important;
 }
 
 /* ===========================================
-   MARKS ROW — three marks, horizontal
+   MARKS ROW — three small marks above title
+   Spans 75% of the title width, evenly spaced
    =========================================== */
 .marksRow {
   display: flex;
   justify-content: center;
-  align-items: flex-end;
-  gap: clamp(32px, 6vw, 80px);
-  margin-bottom: clamp(24px, 4vh, 48px);
+  align-items: center;
+  gap: clamp(20px, 3vw, 40px);
+  margin-bottom: clamp(16px, 2.5vh, 32px);
   position: relative;
 }
 
 .markItem {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  gap: 12px;
+  justify-content: center;
 }
 
 .markIcon {
-  width: clamp(80px, 10vw, 140px);
-  height: clamp(80px, 10vw, 140px);
+  width: clamp(52px, 5.8vw, 83px);
+  height: clamp(52px, 5.8vw, 83px);
   flex-shrink: 0;
 }
 
+/* Weave has a wider aspect ratio (199:135) — stretch container so its
+   visual height matches Sense and Shape */
+.markIconWeave {
+  composes: markIcon;
+  width: clamp(69px, 7.7vw, 111px);
+}
 
 .markIcon > * {
   width: 100% !important;
   height: 100% !important;
 }
 
-.markLabel {
-  font-family: var(--font-heading);
-  font-size: clamp(14px, 1.6vw, 24px);
-  font-weight: 300;
-  font-variation-settings: 'SOFT' 100, 'WONK' 1;
-  color: var(--color-ink);
-  line-height: 1;
-  opacity: 0;
-}
-
+/* Labels hidden — no longer shown */
+.markLabel,
 .markLabelWeave {
-  composes: markLabel;
-  font-style: italic;
-}
-
-:global(:root[data-theme="dark"]) .markLabel,
-:global(:root[data-theme="dark"]) .markLabelWeave {
-  color: #e9e9e9;
+  display: none;
 }
 
 /* ===========================================
-   TITLE — centered, stacked
+   TITLE — centered, bigger
    =========================================== */
 .title {
   display: flex;
@@ -110,8 +101,7 @@
   margin: 0;
 }
 
-/* Individual character spans — hidden by CSS so GSAP owns opacity.
-   React never sets inline opacity, preventing re-render conflicts. */
+/* Individual character spans — hidden by CSS so GSAP owns opacity. */
 .heroChar {
   display: inline-block;
   opacity: 0;
@@ -120,7 +110,7 @@
 /* "Designing" — wipe-on via clip-path */
 .titleLine1 {
   font-family: var(--font-heading);
-  font-size: clamp(48px, 8vw, 112px);
+  font-size: clamp(56px, 10vw, 140px);
   font-weight: 300;
   font-variation-settings: 'SOFT' 100, 'WONK' 1;
   line-height: 0.92;
@@ -132,13 +122,18 @@
   opacity: 1;
 }
 
-/* "Connection" — gradient applied per-character so opacity animation works. */
+/* "Connection" — gradient applied per-character, wipe controlled by clip-path on wrapper. */
 .titleLine2 {
   font-family: var(--font-heading);
-  font-size: clamp(48px, 8vw, 112px);
+  font-size: clamp(56px, 10vw, 140px);
   font-weight: 300;
   font-variation-settings: 'SOFT' 100, 'WONK' 1;
   line-height: 0.92;
+  clip-path: inset(-0.2em 100% -0.2em 0);
+}
+
+.titleLine2 .heroChar {
+  opacity: 1;
 }
 
 .titleLine2 .heroChar {
@@ -160,20 +155,21 @@
 }
 
 /* ===========================================
-   SUBTITLE — below title, italic
+   SUBTITLE — spans full width of title
    =========================================== */
 .subtitle {
   font-family: var(--font-heading);
-  font-size: clamp(16px, 1.8vw, 26px);
   font-weight: 300;
   font-style: italic;
   font-variation-settings: 'SOFT' 100, 'WONK' 1;
   color: var(--color-ink);
   line-height: 1.4;
   text-align: center;
-  text-wrap: pretty;
   margin: 0;
   margin-top: clamp(12px, 2vh, 24px);
+  width: 100%;
+  /* Size will be set to fill the title width naturally */
+  font-size: clamp(16px, 2vw, 28px);
 }
 
 :global(:root[data-theme="dark"]) .subtitle {
@@ -181,20 +177,16 @@
 }
 
 .subtitleText {
-  /* inherits from .subtitle */
+  white-space: nowrap;
 }
 
 /* ===========================================
    RESPONSIVE — TABLET (<=900px)
    =========================================== */
 @media (max-width: 900px) {
-  .marksRow {
-    gap: clamp(24px, 5vw, 48px);
-  }
-
   .markIcon {
-    width: clamp(64px, 14vw, 100px);
-    height: clamp(64px, 14vw, 100px);
+    width: clamp(32px, 8vw, 56px);
+    height: clamp(32px, 8vw, 56px);
   }
 }
 
@@ -208,20 +200,21 @@
 
   .titleLine1,
   .titleLine2 {
-    font-size: clamp(36px, 12vw, 56px);
+    font-size: clamp(40px, 13vw, 64px);
   }
 
   .markIcon {
-    width: clamp(56px, 16vw, 80px);
-    height: clamp(56px, 16vw, 80px);
-  }
-
-  .marksRow {
-    gap: clamp(20px, 6vw, 36px);
+    width: clamp(28px, 10vw, 44px);
+    height: clamp(28px, 10vw, 44px);
   }
 
   .subtitle {
-    font-size: clamp(14px, 3.5vw, 20px);
+    font-size: clamp(14px, 4.5vw, 22px);
+  }
+
+  .subtitleText {
+    white-space: normal;
+    text-wrap: pretty;
   }
 }
 
@@ -230,9 +223,7 @@
    =========================================== */
 @media (prefers-reduced-motion: reduce) {
   .heroChar,
-  .markItem,
-  .markLabel,
-  .markLabelWeave {
+  .markItem {
     opacity: 1 !important;
     transform: none !important;
   }

@@ -87,7 +87,7 @@ export default function ShapeMark({ animate = false, delay = 0, replay = 0, clas
           onComplete: () => {
             setBrushVisible(true)
             gsap.set(brushEl, { clearProps: 'clipPath' })
-            /* One full spin after fill completes */
+            /* Spin, then signal complete (bounce + shrink handled by parent) */
             gsap.to(containerEl, {
               rotation: 360,
               duration: 0.9,
