@@ -55,6 +55,7 @@ export default function Hero() {
   const shapeLabelRef = useRef(null)
   const titleWrapRef = useRef(null)
   const subtitleRef = useRef(null)
+  const heroContentRef = useRef(null)
   const introFlowerRef = useRef(null)
   const introFlowerInnerRef = useRef(null)
 
@@ -69,29 +70,6 @@ export default function Hero() {
   const onShapeDrawComplete = useCallback(() => shapeDrawDone.current?.(), [])
 
   const { phase, setPhase, triggerTransition } = useHeroIntro()
-
-  /* Gradient span for "Connection" */
-  const [line2BgSpan, setLine2BgSpan] = useState(null)
-  useEffect(() => {
-    const measure = () => {
-      const wrap = line2WrapRef.current
-      const chars = line2Chars.current.filter(Boolean)
-      if (!wrap || !chars.length) return
-      const wrapRect = wrap.getBoundingClientRect()
-      const bgStyles = {}
-      chars.forEach((el, i) => {
-        const charRect = el.getBoundingClientRect()
-        bgStyles[i] = {
-          backgroundSize: `${wrapRect.width}px ${wrapRect.height}px`,
-          backgroundPosition: `-${charRect.left - wrapRect.left}px 0px`,
-        }
-      })
-      setLine2BgSpan(bgStyles)
-    }
-    requestAnimationFrame(measure)
-    window.addEventListener('resize', measure)
-    return () => window.removeEventListener('resize', measure)
-  }, [])
 
   /* Theme detection */
   const [isDark, setIsDark] = useState(true)
@@ -120,6 +98,7 @@ export default function Hero() {
     setShapeAnimate(true)
     shapeDrawDone.current?.()
     /* Snap everything to final state */
+    if (heroContentRef.current) gsap.set(heroContentRef.current, { visibility: 'visible' })
     if (introFlowerRef.current) gsap.set(introFlowerRef.current, { visibility: 'hidden' })
     if (introFlowerInnerRef.current) gsap.set(introFlowerInnerRef.current, { opacity: 0, scale: 0 })
     ;[senseItemRef, weaveItemRef, shapeItemRef].forEach(ref => {
@@ -129,7 +108,9 @@ export default function Hero() {
     if (subtitleRef.current) gsap.set(subtitleRef.current, { opacity: 1, y: 0, height: 'auto', overflow: 'visible' })
     line2Chars.current.filter(Boolean).forEach(el => gsap.set(el, { opacity: 1, y: 0 }))
     subtitleChars.current.filter(Boolean).forEach(el => gsap.set(el, { opacity: 1 }))
-    if (line1Ref.current) gsap.set(line1Ref.current, { clipPath: 'inset(-0.2em 0% -0.2em 0)' })
+    if (line1Ref.current) gsap.set(line1Ref.current, { visibility: 'visible', clipPath: 'inset(-0.2em 0% -0.2em 0)' })
+    const snapChars = line2WrapRef.current?.querySelectorAll('.' + styles.heroChar)
+    if (snapChars) gsap.set(snapChars, { opacity: 1, y: 0 })
     if (isIntro) triggerTransition()
   }, [isIntro, triggerTransition])
 
@@ -140,6 +121,7 @@ export default function Hero() {
 
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     if (prefersReduced) {
+      gsap.set(heroContentRef.current, { visibility: 'visible' })
       setSenseAnimate(true)
       setWeaveAnimate(true)
       setShapeAnimate(true)
@@ -170,13 +152,14 @@ export default function Hero() {
 
       const flower = introFlowerRef.current
 
-      /* Hide everything except the intro flower */
-      gsap.set([senseItemRef.current, weaveItemRef.current, shapeItemRef.current], { opacity: 0 })
-      gsap.set([senseLabelRef.current, weaveLabelRef.current, shapeLabelRef.current], { opacity: 0 })
-      gsap.set(titleWrapRef.current, { opacity: 0, y: 20, height: 0, overflow: 'hidden' })
-      gsap.set(subtitleRef.current, { opacity: 0, y: 12, height: 0, overflow: 'hidden' })
+      /* Make hero content container visible (was hidden via CSS to prevent flash) */
+      gsap.set(heroContentRef.current, { visibility: 'visible' })
 
-      /* Show the intro flower large and centered */
+      /* Collapse title/subtitle so marks center properly */
+      gsap.set(titleWrapRef.current, { height: 0, overflow: 'hidden' })
+      gsap.set(subtitleRef.current, { height: 0, overflow: 'hidden' })
+
+      /* Show the intro flower */
       gsap.set(flower, { visibility: 'visible' })
       gsap.set(introFlowerInnerRef.current, { opacity: 1, scale: 1 })
 
@@ -211,9 +194,23 @@ export default function Hero() {
       triggerTransition()
 
       gsap.set(titleWrapRef.current, { height: 'auto', overflow: 'visible', opacity: 1, y: 0 })
+      gsap.set(line1Ref.current, { visibility: 'visible', clipPath: 'inset(-0.2em 100% -0.2em 0)' })
       gsap.set(subtitleRef.current, { height: 'auto', overflow: 'visible', opacity: 1, y: 0,
         clipPath: 'inset(-0.2em 100% -0.2em 0)' })
       gsap.set(subtitleChars.current, { opacity: 1 })
+
+      /* Get Connection chars via DOM query (not React refs, avoids re-render conflicts) */
+      const connectionChars = line2WrapRef.current?.querySelectorAll('.' + styles.heroChar)
+      if (connectionChars) {
+        /* Span gradient across all chars so they show one continuous gradient */
+        const wrapRect = line2WrapRef.current.getBoundingClientRect()
+        connectionChars.forEach(el => {
+          const charRect = el.getBoundingClientRect()
+          el.style.backgroundSize = `${wrapRect.width}px ${wrapRect.height}px`
+          el.style.backgroundPosition = `-${charRect.left - wrapRect.left}px 0px`
+        })
+        gsap.set(connectionChars, { opacity: 0, y: 20 })
+      }
 
       const revealTl = gsap.timeline({
         onComplete: () => { entranceDoneRef.current = true },
@@ -224,18 +221,21 @@ export default function Hero() {
         clipPath: 'inset(-0.2em 0% -0.2em 0)', duration: 1.2, ease: 'power1.inOut',
       }, 0)
 
-      /* 1.0s — "Connection" wipes on */
-      revealTl.to(line2WrapRef.current, {
-        clipPath: 'inset(-0.2em 0% -0.2em 0)', duration: 1.2, ease: 'power1.inOut',
-      }, 1.0)
+      /* 1.0s — "Connection" staggered wave reveal */
+      if (connectionChars) {
+        revealTl.to(connectionChars, {
+          opacity: 1, y: 0, duration: 0.8,
+          stagger: 0.07, ease: 'power1.inOut',
+        }, 1.0)
+      }
 
       /* 2.0s — Subtitle wipes on */
       revealTl.to(subtitleRef.current, {
         clipPath: 'inset(-0.2em 0% -0.2em 0)', duration: 1.0, ease: 'power1.inOut',
       }, 2.0)
 
-      /* 2.8s — Marks grow into place */
-      gsap.set([senseItemRef.current, weaveItemRef.current, shapeItemRef.current], { opacity: 1, scale: 0.5 })
+      /* 2.8s — Marks cascade on left to right at full size */
+      const markEls = [senseItemRef.current, weaveItemRef.current, shapeItemRef.current]
 
       revealTl.call(() => {
         setSenseAnimate(true)
@@ -243,15 +243,30 @@ export default function Hero() {
         setShapeAnimate(true)
       }, null, 2.8)
 
-      revealTl.to([senseItemRef.current, weaveItemRef.current, shapeItemRef.current], {
-        scale: 1, duration: 0.7, stagger: 0.15, ease: 'back.out(1.4)',
-      }, 2.8)
+      markEls.forEach((el, i) => {
+        revealTl.to(el, {
+          opacity: 1, duration: 0.4, ease: 'power1.inOut',
+        }, 2.8 + i * 0.2)
+      })
     }
 
     function standardEntrance() {
+      gsap.set(heroContentRef.current, { visibility: 'visible' })
+      gsap.set(line1Ref.current, { visibility: 'visible', clipPath: 'inset(-0.2em 100% -0.2em 0)' })
       gsap.set(titleWrapRef.current, { opacity: 0, y: 20 })
       gsap.set(subtitleRef.current, { opacity: 0, y: 12 })
-      gsap.set(introFlowerRef.current, { opacity: 0, scale: 0 })
+      gsap.set(introFlowerRef.current, { visibility: 'hidden' })
+
+      const connectionChars = line2WrapRef.current?.querySelectorAll('.' + styles.heroChar)
+      if (connectionChars) {
+        const wrapRect = line2WrapRef.current.getBoundingClientRect()
+        connectionChars.forEach(el => {
+          const charRect = el.getBoundingClientRect()
+          el.style.backgroundSize = `${wrapRect.width}px ${wrapRect.height}px`
+          el.style.backgroundPosition = `-${charRect.left - wrapRect.left}px 0px`
+        })
+        gsap.set(connectionChars, { opacity: 0, y: 20 })
+      }
 
       const tl = gsap.timeline({
         onComplete: () => { entranceDoneRef.current = true },
@@ -261,8 +276,7 @@ export default function Hero() {
       tl.call(() => setWeaveAnimate(true), null, 0.15)
       tl.call(() => setShapeAnimate(true), null, 0.3)
 
-      const labels = [senseLabelRef.current, weaveLabelRef.current, shapeLabelRef.current]
-      tl.to(labels, {
+      tl.to([senseItemRef.current, weaveItemRef.current, shapeItemRef.current], {
         opacity: 1, duration: 0.5, stagger: 0.12, ease: 'power1.inOut',
       }, 0.3)
 
@@ -276,9 +290,11 @@ export default function Hero() {
         0.8,
       )
 
-      tl.to(line2WrapRef.current, {
-        clipPath: 'inset(-0.2em 0% -0.2em 0)', duration: 0.8, ease: 'power1.inOut',
-      }, 1.0)
+      if (connectionChars) {
+        tl.to(connectionChars, {
+          opacity: 1, y: 0, duration: 0.6, stagger: 0.05, ease: 'power1.inOut',
+        }, 1.0)
+      }
 
       tl.to(subtitleRef.current, {
         opacity: 1, y: 0, duration: 0.6, ease: 'power1.inOut',
@@ -289,7 +305,7 @@ export default function Hero() {
 
   return (
     <section className={styles.hero} aria-label="Introduction">
-      <div className={styles.heroContent}>
+      <div className={styles.heroContent} ref={heroContentRef}>
         {/* Intro flower — large, centered, only visible during cinematic intro */}
         <div className={styles.introFlower} ref={introFlowerRef} aria-hidden="true">
           <div className={styles.introFlowerInner} ref={introFlowerInnerRef}>
@@ -340,7 +356,7 @@ export default function Hero() {
         <div ref={titleWrapRef}>
           <h1 className={styles.title} aria-label="Designing Connection. Emotion-Centered Research, Strategy and Design.">
             <CharSpans text="Designing" wrapRef={line1Ref} className={styles.titleLine1} kerning={KERN_DESIGNING} />
-            <CharSpans text="Connection" charsRef={line2Chars} wrapRef={line2WrapRef} className={styles.titleLine2} kerning={KERN_CONNECTION} bgSpan={line2BgSpan} />
+            <CharSpans text="Connection" wrapRef={line2WrapRef} className={styles.titleLine2} kerning={KERN_CONNECTION} />
           </h1>
         </div>
 

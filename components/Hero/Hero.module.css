@@ -19,6 +19,8 @@
   text-align: center;
   max-width: var(--max-width);
   width: 100%;
+  /* Hidden until GSAP is ready — prevents single-frame flash on page load */
+  visibility: hidden;
 }
 
 /* ===========================================
@@ -65,6 +67,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  opacity: 0;
 }
 
 .markIcon {
@@ -107,7 +110,7 @@
   opacity: 0;
 }
 
-/* "Designing" — wipe-on via clip-path */
+/* "Designing" — clip-path set by GSAP to avoid React reset conflicts. */
 .titleLine1 {
   font-family: var(--font-heading);
   font-size: clamp(56px, 10vw, 140px);
@@ -115,27 +118,23 @@
   font-variation-settings: 'SOFT' 100, 'WONK' 1;
   line-height: 0.92;
   color: var(--color-ink);
-  clip-path: inset(-0.2em 100% -0.2em 0);
+  visibility: hidden;
 }
 
 .titleLine1 .heroChar {
   opacity: 1;
 }
 
-/* "Connection" — gradient applied per-character, wipe controlled by clip-path on wrapper. */
+/* "Connection" — per-character wave reveal with gradient on each char. */
 .titleLine2 {
   font-family: var(--font-heading);
   font-size: clamp(56px, 10vw, 140px);
   font-weight: 300;
   font-variation-settings: 'SOFT' 100, 'WONK' 1;
   line-height: 0.92;
-  clip-path: inset(-0.2em 100% -0.2em 0);
 }
 
-.titleLine2 .heroChar {
-  opacity: 1;
-}
-
+/* Gradient applied per-character so each can animate independently. */
 .titleLine2 .heroChar {
   background: linear-gradient(to bottom right, #6B8245 5%, #8B6899 45%, #B86048 88%);
   -webkit-background-clip: text;
@@ -151,7 +150,6 @@
   background: linear-gradient(169.3deg, #C5CFA6 15.5%, #C7AAD1 52.1%, #F79C7E 89.7%);
   -webkit-background-clip: text;
   background-clip: text;
-  color: transparent;
 }
 
 /* ===========================================
@@ -168,6 +166,7 @@
   margin: 0;
   margin-top: clamp(12px, 2vh, 24px);
   width: 100%;
+  opacity: 0;
   /* Size will be set to fill the title width naturally */
   font-size: clamp(16px, 2vw, 28px);
 }
@@ -223,12 +222,14 @@
    =========================================== */
 @media (prefers-reduced-motion: reduce) {
   .heroChar,
-  .markItem {
+  .markItem,
+  .subtitle {
     opacity: 1 !important;
     transform: none !important;
   }
 
   .titleLine1 {
+    visibility: visible !important;
     clip-path: none !important;
   }
 }
