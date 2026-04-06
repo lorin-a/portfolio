@@ -1,7 +1,6 @@
 import '../globals.css'
 import { Fraunces, Open_Sans } from 'next/font/google'
-import Nav from '@/components/Nav/Nav'
-import Footer from '@/components/Footer/Footer'
+import PortfolioShell from './PortfolioShell'
 
 const fraunces = Fraunces({
   subsets: ['latin'],
@@ -55,11 +54,9 @@ export default function RootLayout({ children }) {
         <a href="#main-content" className="skip-link">
           Skip to content
         </a>
-        <Nav />
-        <main id="main-content">
+        <PortfolioShell>
           {children}
-        </main>
-        <Footer />
+        </PortfolioShell>
       </body>
     </html>
   )

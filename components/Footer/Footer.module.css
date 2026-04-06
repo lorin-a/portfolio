@@ -31,7 +31,7 @@
   font-size: var(--text-body-small);
   color: var(--color-ink-light);
   text-decoration: none;
-  transition: color var(--transition-smooth);
+  transition: color var(--motion-fast) var(--ease-in-out);
   min-height: var(--min-touch-target);
   display: inline-flex;
   align-items: center;

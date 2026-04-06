@@ -536,7 +536,7 @@
   text-decoration: underline;
   text-decoration-color: rgba(85, 77, 101, 0.3);
   text-underline-offset: 3px;
-  transition: text-decoration-color var(--motion-fast) var(--ease-default);
+  transition: text-decoration-color var(--motion-fast) var(--ease-in-out);
 }
 
 .inlineLink:hover {
@@ -919,9 +919,9 @@
   background: transparent;
   color: var(--project-accent);
   cursor: pointer;
-  transition: background-color var(--motion-fast) var(--ease-default),
-              color var(--motion-fast) var(--ease-default),
-              box-shadow var(--motion-fast) var(--ease-default);
+  transition: background-color var(--motion-fast) var(--ease-in-out),
+              color var(--motion-fast) var(--ease-in-out),
+              box-shadow var(--motion-fast) var(--ease-in-out);
 }
 
 .segmentedButton:hover:not(.segmentedButtonActive) {
@@ -948,7 +948,7 @@
   width: 100%;
   top: 0;
   left: 0;
-  transition: opacity var(--motion-fast) var(--ease-default);
+  transition: opacity var(--motion-fast) var(--ease-in-out);
 }
 
 .valuesInline {
@@ -1030,7 +1030,7 @@
   font-size: var(--text-body);
   color: var(--project-accent);
   text-decoration: none;
-  transition: opacity var(--motion-fast) var(--ease-default);
+  transition: opacity var(--motion-fast) var(--ease-in-out);
 }
 
 .footerNavLink:hover {
@@ -1178,7 +1178,7 @@
   width: 1px;
   height: 50px;
   background: linear-gradient(to bottom, var(--color-bg), transparent);
-  animation: scrollPulse 2.5s var(--ease-default) infinite; /* 2.5s: choreographed scroll pulse */
+  animation: scrollPulse 2.5s var(--ease-in-out) infinite; /* 2.5s: choreographed scroll pulse */
 }
 
 @keyframes scrollPulse {
@@ -1468,8 +1468,8 @@
   border-radius: var(--radius-md);
   overflow: hidden;
   text-decoration: none;
-  transition: transform var(--motion-fast) var(--ease-default),
-              box-shadow var(--motion-fast) var(--ease-default);
+  transition: transform var(--motion-fast) var(--ease-in-out),
+              box-shadow var(--motion-fast) var(--ease-in-out);
 }
 
 .componentPreviewCard:hover {
@@ -1486,7 +1486,7 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform var(--motion-medium) var(--ease-default);
+  transition: transform var(--motion-medium) var(--ease-in-out);
 }
 
 .componentPreviewCard:hover .componentPreviewImage img {
@@ -1916,7 +1916,7 @@
   display: flex;
   width: 380px;
   max-width: 45vw;
-  transition: transform var(--motion-fast) var(--ease-default), z-index var(--motion-fast) var(--ease-default);
+  transition: transform var(--motion-fast) var(--ease-in-out), z-index var(--motion-fast) var(--ease-in-out);
 }
 
 .reflectionPressCard {
@@ -1929,7 +1929,7 @@
   flex-direction: column;
   position: relative;
   box-shadow: var(--shadow-lg);
-  transition: all var(--motion-fast) var(--ease-default);
+  transition: all var(--motion-fast) var(--ease-in-out);
   width: 100%;
 }
 
@@ -2026,7 +2026,7 @@
   padding-top: var(--space-sm);
   border-top: 1px solid rgba(85, 77, 101, 0.4);
   display: inline-block;
-  transition: transform var(--motion-fast) var(--ease-default);
+  transition: transform var(--motion-fast) var(--ease-in-out);
 }
 
 .reflectionPressCard:hover .reflectionPressLink {
@@ -2575,7 +2575,7 @@
   grid-column: 1;
   width: 480px;
   justify-self: center;
-  transition: all var(--motion-fast) var(--ease-default);
+  transition: all var(--motion-fast) var(--ease-in-out);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -2685,7 +2685,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: opacity var(--motion-fast) var(--ease-default), background-color var(--motion-fast) var(--ease-default);
+  transition: opacity var(--motion-fast) var(--ease-in-out), background-color var(--motion-fast) var(--ease-in-out);
 }
 
 .playtestCarouselArrow:disabled,
@@ -2844,7 +2844,7 @@
   grid-column: 1;
   width: 524px;
   justify-self: center;
-  transition: all var(--motion-fast) var(--ease-default);
+  transition: all var(--motion-fast) var(--ease-in-out);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -2942,7 +2942,7 @@
   object-fit: cover;
   object-position: top;
   display: block;
-  transition: transform var(--motion-fast) var(--ease-default);
+  transition: transform var(--motion-fast) var(--ease-in-out);
 }
 
 .workshopImage:hover img {
@@ -2967,7 +2967,7 @@
   object-fit: cover;
   object-position: top;
   display: block;
-  transition: transform var(--motion-fast) var(--ease-default);
+  transition: transform var(--motion-fast) var(--ease-in-out);
 }
 
 .workshopImageButton:hover img {
@@ -3178,7 +3178,7 @@
   position: relative;
   width: 100%;
   height: 100%;
-  transition: transform var(--motion-medium) var(--ease-default);
+  transition: transform var(--motion-medium) var(--ease-in-out);
   -webkit-transform-style: preserve-3d;
   transform-style: preserve-3d;
 }
@@ -3292,7 +3292,7 @@
   color: var(--project-accent);
   font-size: var(--text-body-large);
   cursor: pointer;
-  transition: all var(--motion-fast) var(--ease-default);
+  transition: all var(--motion-fast) var(--ease-in-out);
   display: flex;
   align-items: center;
   justify-content: center;

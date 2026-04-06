@@ -322,7 +322,7 @@
   height: 24px;
   background: var(--lavender);
   border-radius: var(--radius-sm);
-  transition: width var(--motion-fast) var(--ease-default);
+  transition: width var(--motion-fast) var(--ease-in-out);
 }
 
 .spacingLabel {
@@ -387,7 +387,7 @@
   border: none;
   border-radius: var(--radius-md);
   cursor: pointer;
-  transition: transform var(--motion-fast) var(--ease-default), box-shadow var(--motion-fast) var(--ease-default);
+  transition: transform var(--motion-fast) var(--ease-in-out), box-shadow var(--motion-fast) var(--ease-in-out);
   min-height: var(--min-touch-target);
 }
 
@@ -415,7 +415,7 @@
   border: 1.5px solid var(--olive);
   border-radius: var(--radius-md);
   cursor: pointer;
-  transition: all var(--motion-fast) var(--ease-default);
+  transition: all var(--motion-fast) var(--ease-in-out);
   min-height: var(--min-touch-target);
 }
 
@@ -436,7 +436,7 @@
   color: var(--text-heading);
   font-size: 1.25rem;
   cursor: pointer;
-  transition: all var(--motion-fast) var(--ease-default);
+  transition: all var(--motion-fast) var(--ease-in-out);
   min-height: var(--min-touch-target);
 }
 
@@ -462,7 +462,7 @@
   background: transparent;
   color: var(--text-body);
   cursor: pointer;
-  transition: all var(--motion-fast) var(--ease-default);
+  transition: all var(--motion-fast) var(--ease-in-out);
 }
 
 .tab:hover {
@@ -576,7 +576,7 @@
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   padding: var(--space-md);
-  transition: transform var(--motion-fast) var(--ease-default), box-shadow var(--motion-fast) var(--ease-default);
+  transition: transform var(--motion-fast) var(--ease-in-out), box-shadow var(--motion-fast) var(--ease-in-out);
 }
 
 .card:hover {
@@ -604,7 +604,7 @@
   background: var(--surface);
   border-left: 4px solid var(--lavender-dark);
   padding: var(--space-md) var(--space-content-gap);
-  transition: all var(--motion-fast) var(--ease-default);
+  transition: all var(--motion-fast) var(--ease-in-out);
 }
 
 .valueCard:hover {
@@ -725,7 +725,7 @@
   background: var(--lavender);
   border-radius: var(--radius-md);
   margin: 0 auto var(--space-sm);
-  transition-timing-function: var(--ease-default);
+  transition-timing-function: var(--ease-in-out);
 }
 
 .motionBox:hover .motionTargetGrow {
@@ -736,12 +736,12 @@
 .motionBox:hover .motionTargetSlide {
   transform: translateY(-8px);
   opacity: 1;
-  transition: transform var(--motion-fast) var(--ease-default),
-              opacity var(--motion-fast) var(--ease-default);
+  transition: transform var(--motion-fast) var(--ease-in-out),
+              opacity var(--motion-fast) var(--ease-in-out);
 }
 
 .motionBox:hover .motionTargetPulse {
-  animation: gentlePulse 1.2s var(--ease-pulse) infinite;
+  animation: gentlePulse 1.2s var(--ease-in-out) infinite;
 }
 
 .motionLabel {

@@ -5,7 +5,7 @@
   right: 0;
   z-index: 100;
   padding: 20px 0;
-  transition: background var(--transition-gentle), backdrop-filter var(--transition-gentle);
+  transition: background var(--motion-fast) var(--ease-out), backdrop-filter var(--motion-fast) var(--ease-out);
 }
 
 .header.scrolled {
@@ -48,7 +48,7 @@
   font-weight: var(--weight-body);
   color: var(--color-ink);
   text-decoration: none;
-  transition: color var(--transition-smooth);
+  transition: color var(--motion-fast) var(--ease-in-out);
   padding: var(--space-xs) 0;
   min-height: var(--min-touch-target);
   display: flex;

@@ -487,7 +487,7 @@
 .featuredCardVisible {
   opacity: 1;
   transform: scale(1) translateY(0);
-  transition: opacity var(--motion-medium) var(--ease-default),
+  transition: opacity var(--motion-medium) var(--ease-in-out),
               transform var(--motion-medium) var(--ease-bounce);
 }
 
@@ -495,8 +495,8 @@
 .moreLabelVisible {
   opacity: 1;
   transform: translateY(0);
-  transition: opacity var(--motion-medium) var(--ease-default),
-              transform var(--motion-medium) var(--ease-default);
+  transition: opacity var(--motion-medium) var(--ease-in-out),
+              transform var(--motion-medium) var(--ease-in-out);
 }
 
 /* Small cards: soft appear */
@@ -509,8 +509,8 @@
 .smallCardVisible {
   opacity: 1;
   transform: translateY(0);
-  transition: opacity var(--motion-medium) var(--ease-default),
-              transform var(--motion-medium) var(--ease-default);
+  transition: opacity var(--motion-medium) var(--ease-in-out),
+              transform var(--motion-medium) var(--ease-in-out);
 }
 
 /* ===========================================

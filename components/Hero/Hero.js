@@ -5,6 +5,7 @@ import gsap from 'gsap'
 import SenseMark from '@/components/marks/SenseMark'
 import WeaveMark from '@/components/marks/WeaveMark'
 import ShapeMark from '@/components/marks/ShapeMark'
+import { useHeroIntro } from '@/components/HeroIntroContext'
 import styles from './Hero.module.css'
 
 /* Split text into per-character spans for type-on animation.
@@ -46,7 +47,6 @@ const KERN_DESIGNING = { 0: -1.12, 3: -1.12, 4: 2.24, 5: 2.24, 6: 1.12 }
 const KERN_CONNECTION = { 0: 1.12, 1: -2.24, 2: 2.24, 3: -2.24, 6: 1.12, 7: -2.24, 8: -2.24 }
 
 /* Ampersand style override — non-italic, weight 333 per Figma */
-// "Emotion-Centered Research, Strategy & Design" → & is at index 36
 const SUBTITLE_CHAR_STYLES = {
   36: { fontStyle: 'normal', fontWeight: 333 },
 }
@@ -56,9 +56,15 @@ export default function Hero() {
   const line2WrapRef = useRef(null)
   const line2Chars = useRef([])
   const subtitleChars = useRef([])
-  const senseWrapRef = useRef(null)
-  const weaveWrapRef = useRef(null)
-  const shapeWrapRef = useRef(null)
+  const marksRowRef = useRef(null)
+  const senseItemRef = useRef(null)
+  const weaveItemRef = useRef(null)
+  const shapeItemRef = useRef(null)
+  const senseLabelRef = useRef(null)
+  const weaveLabelRef = useRef(null)
+  const shapeLabelRef = useRef(null)
+  const titleWrapRef = useRef(null)
+  const subtitleRef = useRef(null)
 
   const [senseAnimate, setSenseAnimate] = useState(false)
   const [weaveAnimate, setWeaveAnimate] = useState(false)
@@ -68,9 +74,9 @@ export default function Hero() {
   const [weaveReplay, setWeaveReplay] = useState(0)
   const [shapeReplay, setShapeReplay] = useState(0)
 
-  /* Span the gradient across the entire "Connection" word so each
-     character shows a different slice, not the same independent gradient.
-     Stores background-size/position in state so React controls the styles. */
+  const { phase, setPhase, triggerTransition } = useHeroIntro()
+
+  /* Span the gradient across the entire "Connection" word */
   const [line2BgSpan, setLine2BgSpan] = useState(null)
   useEffect(() => {
     const measure = () => {
@@ -78,15 +84,15 @@ export default function Hero() {
       const chars = line2Chars.current.filter(Boolean)
       if (!wrap || !chars.length) return
       const wrapRect = wrap.getBoundingClientRect()
-      const styles = {}
+      const bgStyles = {}
       chars.forEach((el, i) => {
         const charRect = el.getBoundingClientRect()
-        styles[i] = {
+        bgStyles[i] = {
           backgroundSize: `${wrapRect.width}px ${wrapRect.height}px`,
           backgroundPosition: `-${charRect.left - wrapRect.left}px 0px`,
         }
       })
-      setLine2BgSpan(styles)
+      setLine2BgSpan(bgStyles)
     }
     requestAnimationFrame(measure)
     window.addEventListener('resize', measure)
@@ -106,6 +112,7 @@ export default function Hero() {
 
   const timelineRef = useRef(null)
   const entranceDoneRef = useRef(false)
+  const isIntro = phase === 'waiting' || phase === 'playing'
 
   /* ===== Scroll escape: snap to final state ===== */
   const snapEntrance = useCallback(() => {
@@ -118,7 +125,8 @@ export default function Hero() {
     setSenseAnimate(true)
     setWeaveAnimate(true)
     setShapeAnimate(true)
-  }, [])
+    if (isIntro) triggerTransition()
+  }, [isIntro, triggerTransition])
 
   useEffect(() => {
     const prefersReduced = window.matchMedia(
@@ -133,70 +141,174 @@ export default function Hero() {
       return
     }
 
-    /* =========================================
-       Cinematic entrance — ~4s
-       ========================================= */
-    const tl = gsap.timeline({
-      onComplete: () => {
-        entranceDoneRef.current = true
-      },
-    })
-    timelineRef.current = tl
+    /* Title and subtitle start hidden regardless of intro mode */
+    gsap.set(titleWrapRef.current, { opacity: 0, y: 20 })
+    gsap.set(subtitleRef.current, { opacity: 0, y: 12 })
 
-    const stagger = 0.06
+    if (isIntro) {
+      /* =========================================
+         CINEMATIC INTRO — first visit only (~4.5s)
+         Scene 1: Marks spread from center + draw on
+         Scene 2: Nav transitions, title + subtitle reveal
+         ========================================= */
+      setPhase('playing')
 
-    // Beat 1 (0s): "Designing" wipes on left-to-right
-    tl.fromTo(line1Ref.current, {
-      clipPath: 'inset(-0.2em 100% -0.2em 0)',
-    }, {
-      clipPath: 'inset(-0.2em 0% -0.2em 0)',
-      duration: 1.0,
-      ease: 'power1.inOut',
-    }, 0)
+      const senseItem = senseItemRef.current
+      const weaveItem = weaveItemRef.current
+      const shapeItem = shapeItemRef.current
 
-    // Beat 2 (0.8s): "Connection" wave entrance — each letter rises into place
-    const line2Els = line2Chars.current.filter(Boolean)
-    gsap.set(line2Els, { y: 28 })
-    tl.to(line2Els, {
-      opacity: 1,
-      y: 0,
-      duration: 0.6,
-      stagger: 0.07,
-      ease: 'back.out(1.4)',
-    }, 0.8)
+      /* Start marks clustered in center, small */
+      gsap.set([senseItem, weaveItem, shapeItem], {
+        scale: 0.4,
+        opacity: 0,
+      })
+      gsap.set(senseItem, { x: 60 })
+      gsap.set(shapeItem, { x: -60 })
 
-    // Beat 3 (1.8s): Subtitle types on with soft ramp-in
-    tl.to(subtitleChars.current, {
-      opacity: 1,
-      duration: 0.12,
-      stagger: stagger,
-      ease: 'power1.inOut',
-    }, 1.8)
+      const tl = gsap.timeline({
+        onComplete: () => { entranceDoneRef.current = true },
+      })
+      timelineRef.current = tl
 
-    // Beat 4 (3.2-3.8s): Sense, Weave, Shape pop in staggered
-    tl.to(senseWrapRef.current, {
-      opacity: 1,
-      scale: 1,
-      duration: 0.7,
-      ease: 'back.out(2)',
-    }, 3.2)
-    tl.call(() => setSenseAnimate(true), null, 3.2)
+      /* Scene 1: Marks emerge and spread (0–2s) */
 
-    tl.to(weaveWrapRef.current, {
-      opacity: 1,
-      scale: 1,
-      duration: 0.7,
-      ease: 'back.out(2)',
-    }, 3.5)
-    tl.call(() => setWeaveAnimate(true), null, 3.5)
+      // Fade in from center
+      tl.to([senseItem, weaveItem, shapeItem], {
+        opacity: 1,
+        scale: 1,
+        duration: 0.8,
+        stagger: 0.12,
+        ease: 'power1.inOut',
+      }, 0.2)
 
-    tl.to(shapeWrapRef.current, {
-      opacity: 1,
-      scale: 1,
-      duration: 0.7,
-      ease: 'back.out(2)',
-    }, 3.8)
-    tl.call(() => setShapeAnimate(true), null, 3.8)
+      // Spread apart to natural positions
+      tl.to(senseItem, { x: 0, duration: 0.7, ease: 'power1.inOut' }, 0.6)
+      tl.to(shapeItem, { x: 0, duration: 0.7, ease: 'power1.inOut' }, 0.6)
+
+      // Trigger draw-on as they settle
+      tl.call(() => setSenseAnimate(true), null, 0.7)
+      tl.call(() => setWeaveAnimate(true), null, 0.85)
+      tl.call(() => setShapeAnimate(true), null, 1.0)
+
+      // Labels fade in
+      const labels = [senseLabelRef.current, weaveLabelRef.current, shapeLabelRef.current]
+      tl.to(labels, {
+        opacity: 1,
+        duration: 0.5,
+        stagger: 0.12,
+        ease: 'power1.inOut',
+      }, 1.4)
+
+      /* Hold — let marks breathe (1.8–2.4s) */
+
+      /* Scene 2: Transition to full hero (2.4s+) */
+      tl.call(() => triggerTransition(), null, 2.4)
+
+      // Title reveals
+      tl.to(titleWrapRef.current, {
+        opacity: 1,
+        y: 0,
+        duration: 0.6,
+        ease: 'power1.inOut',
+      }, 2.6)
+
+      // "Designing" wipes on
+      tl.fromTo(line1Ref.current, {
+        clipPath: 'inset(-0.2em 100% -0.2em 0)',
+      }, {
+        clipPath: 'inset(-0.2em 0% -0.2em 0)',
+        duration: 0.8,
+        ease: 'power1.inOut',
+      }, 2.6)
+
+      // "Connection" wave entrance
+      const line2Els = line2Chars.current.filter(Boolean)
+      gsap.set(line2Els, { y: 28 })
+      tl.to(line2Els, {
+        opacity: 1,
+        y: 0,
+        duration: 0.5,
+        stagger: 0.05,
+        ease: 'back.out(1.4)',
+      }, 2.9)
+
+      // Subtitle types on
+      tl.to(subtitleRef.current, {
+        opacity: 1,
+        y: 0,
+        duration: 0.4,
+        ease: 'power1.inOut',
+      }, 3.6)
+      tl.to(subtitleChars.current, {
+        opacity: 1,
+        duration: 0.08,
+        stagger: 0.03,
+        ease: 'power1.inOut',
+      }, 3.6)
+
+    } else {
+      /* =========================================
+         STANDARD ENTRANCE — return visits (~2.5s)
+         ========================================= */
+      const tl = gsap.timeline({
+        onComplete: () => { entranceDoneRef.current = true },
+      })
+      timelineRef.current = tl
+
+      // Marks draw on
+      tl.call(() => setSenseAnimate(true), null, 0)
+      tl.call(() => setWeaveAnimate(true), null, 0.15)
+      tl.call(() => setShapeAnimate(true), null, 0.3)
+
+      // Labels fade in
+      const labels = [senseLabelRef.current, weaveLabelRef.current, shapeLabelRef.current]
+      tl.to(labels, {
+        opacity: 1,
+        duration: 0.5,
+        stagger: 0.12,
+        ease: 'power1.inOut',
+      }, 0.3)
+
+      // Title reveals
+      tl.to(titleWrapRef.current, {
+        opacity: 1,
+        y: 0,
+        duration: 0.6,
+        ease: 'power1.inOut',
+      }, 0.8)
+
+      tl.fromTo(line1Ref.current, {
+        clipPath: 'inset(-0.2em 100% -0.2em 0)',
+      }, {
+        clipPath: 'inset(-0.2em 0% -0.2em 0)',
+        duration: 0.8,
+        ease: 'power1.inOut',
+      }, 0.8)
+
+      const line2Els = line2Chars.current.filter(Boolean)
+      gsap.set(line2Els, { y: 28 })
+      tl.to(line2Els, {
+        opacity: 1,
+        y: 0,
+        duration: 0.5,
+        stagger: 0.05,
+        ease: 'back.out(1.4)',
+      }, 1.0)
+
+      // Subtitle
+      tl.to(subtitleRef.current, {
+        opacity: 1,
+        y: 0,
+        duration: 0.4,
+        ease: 'power1.inOut',
+      }, 1.8)
+      tl.to(subtitleChars.current, {
+        opacity: 1,
+        duration: 0.08,
+        stagger: 0.03,
+        ease: 'power1.inOut',
+      }, 1.8)
+    }
 
     /* ===== Scroll escape ===== */
     function onScroll() {
@@ -213,54 +325,57 @@ export default function Hero() {
         timelineRef.current = null
       }
     }
-  }, [snapEntrance])
+  }, [isIntro, setPhase, triggerTransition, snapEntrance])
 
   return (
     <section className={styles.hero} aria-label="Introduction">
       <div className={styles.heroContent}>
-        {/* Left column: title */}
-        <div className={styles.left}>
+        {/* Marks row */}
+        <div className={styles.marksRow} ref={marksRowRef} aria-hidden="true">
+          <div
+            className={styles.markItem}
+            ref={senseItemRef}
+            onMouseEnter={() => entranceDoneRef.current && setSenseReplay(r => r + 1)}
+          >
+            <div className={styles.markIcon}>
+              <SenseMark animate={senseAnimate} replay={senseReplay} showBrush gradientColors={isDark ? DARK_GRADIENT : LIGHT_GRADIENT} />
+            </div>
+            <span className={styles.markLabel} ref={senseLabelRef}>Sense</span>
+          </div>
+          <div
+            className={styles.markItem}
+            ref={weaveItemRef}
+            onMouseEnter={() => entranceDoneRef.current && setWeaveReplay(r => r + 1)}
+          >
+            <div className={styles.markIcon}>
+              <WeaveMark animate={weaveAnimate} replay={weaveReplay} showBrush gradientColors={isDark ? DARK_GRADIENT : LIGHT_GRADIENT} />
+            </div>
+            <span className={styles.markLabelWeave} ref={weaveLabelRef}>Weave</span>
+          </div>
+          <div
+            className={styles.markItem}
+            ref={shapeItemRef}
+            onMouseEnter={() => entranceDoneRef.current && setShapeReplay(r => r + 1)}
+          >
+            <div className={styles.markIcon}>
+              <ShapeMark animate={shapeAnimate} replay={shapeReplay} showBrush gradientColors={isDark ? DARK_GRADIENT : LIGHT_GRADIENT} />
+            </div>
+            <span className={styles.markLabel} ref={shapeLabelRef}>Shape</span>
+          </div>
+        </div>
+
+        {/* Title */}
+        <div ref={titleWrapRef}>
           <h1 className={styles.title} aria-label="Designing Connection. Emotion-Centered Research, Strategy and Design.">
             <CharSpans text="Designing" wrapRef={line1Ref} className={styles.titleLine1} kerning={KERN_DESIGNING} />
             <CharSpans text="Connection" charsRef={line2Chars} wrapRef={line2WrapRef} className={styles.titleLine2} kerning={KERN_CONNECTION} bgSpan={line2BgSpan} />
           </h1>
         </div>
 
-        {/* Right column: marks + subtitle */}
-        <div className={styles.right}>
-          <div className={styles.marksRow} aria-hidden="true">
-            <div
-              className={styles.markItem}
-              ref={senseWrapRef}
-              onMouseEnter={() => entranceDoneRef.current && setSenseReplay(r => r + 1)}
-            >
-              <div className={styles.markIcon}>
-                <SenseMark animate={senseAnimate} replay={senseReplay} showBrush gradientColors={isDark ? DARK_GRADIENT : LIGHT_GRADIENT} />
-              </div>
-            </div>
-            <div
-              className={styles.markItem}
-              ref={weaveWrapRef}
-              onMouseEnter={() => entranceDoneRef.current && setWeaveReplay(r => r + 1)}
-            >
-              <div className={styles.markIcon}>
-                <WeaveMark animate={weaveAnimate} replay={weaveReplay} showBrush gradientColors={isDark ? DARK_GRADIENT : LIGHT_GRADIENT} />
-              </div>
-            </div>
-            <div
-              className={styles.markItem}
-              ref={shapeWrapRef}
-              onMouseEnter={() => entranceDoneRef.current && setShapeReplay(r => r + 1)}
-            >
-              <div className={styles.markIcon}>
-                <ShapeMark animate={shapeAnimate} replay={shapeReplay} showBrush gradientColors={isDark ? DARK_GRADIENT : LIGHT_GRADIENT} />
-              </div>
-            </div>
-          </div>
-          <p className={styles.subtitle}>
-            <CharSpans text="Emotion-Centered Research, Strategy & Design" charsRef={subtitleChars} className={styles.subtitleText} charStyles={SUBTITLE_CHAR_STYLES} />
-          </p>
-        </div>
+        {/* Subtitle */}
+        <p className={styles.subtitle} ref={subtitleRef}>
+          <CharSpans text="Emotion-Centered Research, Strategy & Design" charsRef={subtitleChars} className={styles.subtitleText} charStyles={SUBTITLE_CHAR_STYLES} />
+        </p>
       </div>
     </section>
   )

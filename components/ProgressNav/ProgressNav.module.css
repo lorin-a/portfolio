@@ -9,7 +9,7 @@
   height: 3px;
   z-index: 99;
   pointer-events: none;
-  transition: opacity var(--motion-fast) var(--ease-default);
+  transition: opacity var(--motion-fast) var(--ease-in-out);
 }
 
 .progressLineHidden {
@@ -19,7 +19,7 @@
 .progressLineFill {
   height: 100%;
   background: var(--project-accent);
-  transition: width var(--motion-fast) linear, background var(--motion-fast) var(--ease-default);
+  transition: width var(--motion-fast) linear, background var(--motion-fast) var(--ease-in-out);
 }
 
 .progressLineFillLight {

@@ -6,13 +6,12 @@ A design research portfolio for lorin.work. The audience is hiring managers who 
 
 ## Before Doing Any Work
 
-Read these three files. They are the complete project context:
+Read these two files. They are the complete project context:
 
 1. **`DESIGN_SPEC.md`** — All design tokens, engineering decisions, accessibility standards, motion system, case study structure. This is the source of truth. If something contradicts this file, this file wins.
-2. **`PORTFOLIO_STRATEGY_SUMMARY_v2.md`** — Creative direction, conceptual framework (four elemental energies), content strategy, interaction philosophy, visual language goals.
-3. **`WORKING_WITH_LORIN.md`** — How Lorin thinks, her creative taste, her strengths, her growth edges, and how to collaborate with her effectively.
+2. **`docs/WORKING_WITH_LORIN.md`** — How Lorin thinks, her creative taste, her strengths, her growth edges, and how to collaborate with her effectively.
 
-Do not reference any files in `docs/archive/`. They contain outdated values.
+Do not reference any files in `docs/archive/`. They contain outdated values from earlier project phases.
 
 ## Your Role
 

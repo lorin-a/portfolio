@@ -16,7 +16,7 @@
   position: relative;
   width: 520px;
   height: 260px;
-  transition: height var(--motion-slow) var(--ease-default);
+  transition: height var(--motion-slow) var(--ease-in-out);
 }
 
 .dial.dialActive {
@@ -112,7 +112,7 @@
   border-radius: 50%;
   background: rgba(45, 43, 30, 0.55);
   opacity: 0;
-  transition: opacity var(--motion-medium) var(--ease-default);
+  transition: opacity var(--motion-medium) var(--ease-in-out);
   z-index: 1;
   pointer-events: none;
 }
@@ -134,8 +134,8 @@
   text-align: center;
   line-height: 1.5;
   opacity: 0;
-  transition: opacity var(--motion-medium) var(--ease-default),
-              transform var(--motion-medium) var(--ease-default);
+  transition: opacity var(--motion-medium) var(--ease-in-out),
+              transform var(--motion-medium) var(--ease-in-out);
   pointer-events: none;
 }
 
@@ -158,8 +158,8 @@
   text-align: center;
   line-height: 1.5;
   opacity: 0;
-  transition: opacity var(--motion-fast) var(--ease-default),
-              transform var(--motion-fast) var(--ease-default);
+  transition: opacity var(--motion-fast) var(--ease-in-out),
+              transform var(--motion-fast) var(--ease-in-out);
   pointer-events: none;
 }
 
@@ -177,8 +177,8 @@
   opacity: 0;
   transform: translate(-50%, -50%);
   transition: opacity 0.45s ease,
-              box-shadow var(--motion-fast) var(--ease-default),
-              transform var(--motion-fast) var(--ease-default);
+              box-shadow var(--motion-fast) var(--ease-in-out),
+              transform var(--motion-fast) var(--ease-in-out);
   border: none;
   background: none;
   padding: 0;
@@ -232,7 +232,7 @@
 
 /* ===== DOT BREATHING PULSE ===== */
 .dot.breathing {
-  animation: dotBreathe 3.5s var(--ease-pulse) infinite;
+  animation: dotBreathe 3.5s var(--ease-in-out) infinite;
 }
 
 @keyframes dotBreathe {
@@ -308,7 +308,7 @@
   letter-spacing: 0.01em;
   white-space: nowrap;
   opacity: 0;
-  transition: opacity var(--motion-medium) var(--ease-default);
+  transition: opacity var(--motion-medium) var(--ease-in-out);
   pointer-events: none;
 }
 

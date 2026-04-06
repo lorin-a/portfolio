@@ -10,16 +10,16 @@
   --motion-medium: 600ms;
   --motion-slow: 900ms;
 
-  /* Easing — ease-in-out is the default for everything */
-  --ease-default: cubic-bezier(0.42, 0, 0.58, 1);
-
-  /* Soft bounce — slight overshoot then settle, for elements landing into place */
+  /* ─── Easing: 3 curves only ─── */
+  /* The workhorse. Most transitions, scroll reveals, hover states. */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  /* Sustained movement. Page transitions, scroll-driven animation. */
+  --ease-in-out: cubic-bezier(0.42, 0, 0.58, 1);
+  /* Soft arrival with slight overshoot. Elements landing into place. Use sparingly. */
   --ease-bounce: cubic-bezier(0.34, 1.4, 0.64, 1);
 
-  /* Gentle pulse — for looping attention indicators like the rings */
-  --ease-pulse: ease-in-out;
 
-  /* Hero Animation Colors */
+  /* ═══ V1 ONLY — remove after about page and case study template migrate ═══ */
   --cream: #F7F7F7;
   --hero-olive: #8B8525;
   --hero-olive-dark: #3C3A1F;
@@ -28,41 +28,27 @@
   --plum: #8B5E83;
   --terracotta: #B5654A;
   --sage: #A8B5A0;
-
-  /* Olive (Primary Brand) */
   --olive-light: #D8DBA0;
   --olive: #898B27;
   --olive-dark: #6F6D1F;
-
-  /* Lavender (Soft accent) */
   --lavender-light: #E8E4F0;
   --lavender: #C4BCE0;
   --lavender-dark: #8B7EB8;
-
-  /* Sky (Soft accent) */
   --sky-light: #E4EBF0;
   --sky: #B8CCD9;
   --sky-dark: #7A9DB8;
-
-  /* Adobe (Secondary Accent - use sparingly) */
   --adobe-light: #F5D4C8;
   --adobe: #E69A7B;
   --adobe-dark: #D67A5A;
-
-  /* Dusty Rose (Alternative accent) */
   --rose-light: #F0E4E8;
   --rose: #D4A5B0;
   --rose-dark: #B87A8B;
-
-  /* Neutrals */
   --text-heading: #2C2C28;
   --text-body: #4A4A46;
   --text-light: #666;
   --surface: #FBFBFB;
   --background: #FBFBFB;
   --border: #DDD8CE;
-
-  /* Legacy color aliases (for existing components) */
   --color-green-warm: var(--olive-light);
   --color-green-sage: var(--olive);
   --color-green-dark: var(--olive-dark);
@@ -72,6 +58,7 @@
   --color-text: var(--text-heading);
   --color-text-light: var(--text-body);
   --color-border: var(--border);
+  /* ═══ END V1 BLOCK ═══ */
 
   /* Project Accent Colors (overridden per-project) */
   --project-accent: var(--olive-dark);
@@ -166,12 +153,6 @@
   --color-device-ring: #3a3a3a;
   --color-device-inner: #1a1a1a;
 
-  /* ===========================================
-     EASING
-     =========================================== */
-  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
-  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
-  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
 
   /* ===========================================
      V2 COLOR PALETTE
