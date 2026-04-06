@@ -5,8 +5,8 @@ import { createContext, useContext, useState, useEffect, useCallback } from 'rea
 const INTRO_KEY = 'hero-intro-played'
 
 const HeroIntroContext = createContext({
-  /** 'waiting' | 'playing' | 'transitioning' | 'done' */
-  phase: 'done',
+  /** null (loading) | 'waiting' | 'playing' | 'transitioning' | 'done' */
+  phase: null,
   triggerTransition: () => {},
 })
 
@@ -16,28 +16,52 @@ export function useHeroIntro() {
 
 /**
  * Provides hero intro state to Nav and Hero components.
- * Only activates on homepage, first visit per session,
- * and when reduced motion is not preferred.
+ * Phase starts as null until client-side check completes.
  */
 export function HeroIntroProvider({ children, isHomepage }) {
-  const [phase, setPhase] = useState('done')
+  const [phase, setPhase] = useState(null)
 
   useEffect(() => {
-    if (!isHomepage) return
     const played = sessionStorage.getItem(INTRO_KEY)
-    if (played) return
+    if (!isHomepage) {
+      setPhase('done')
+      return
+    }
+    if (played) {
+      setPhase('done')
+      return
+    }
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    if (prefersReduced) return
+    if (prefersReduced) {
+      setPhase('done')
+      return
+    }
     setPhase('waiting')
   }, [isHomepage])
 
   const triggerTransition = useCallback(() => {
     setPhase('transitioning')
-    sessionStorage.setItem(INTRO_KEY, '1')
+    /* Don't set sessionStorage here — wait until the intro fully completes.
+       This prevents React strict mode's double-fire from permanently
+       marking the intro as played before it ever visually runs. */
   }, [])
 
   const markDone = useCallback(() => {
     setPhase('done')
+    sessionStorage.setItem(INTRO_KEY, '1')
+  }, [])
+
+  /* Dev only: press Shift+R to reset and replay intro */
+  useEffect(() => {
+    if (process.env.NODE_ENV !== 'development') return
+    const onKey = (e) => {
+      if (e.shiftKey && e.key === 'R') {
+        sessionStorage.removeItem(INTRO_KEY)
+        window.location.reload()
+      }
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
   }, [])
 
   return (

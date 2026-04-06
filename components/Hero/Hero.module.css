@@ -23,9 +23,34 @@
   width: 100%;
 }
 
+
+/* ===========================================
+   INTRO FLOWER — large Shape mark, centered
+   Only visible during cinematic intro
+   =========================================== */
+/* Centered in the full viewport, independent of other content.
+   Uses margin centering instead of transform so GSAP can own transform fully. */
+.introFlower {
+  width: clamp(168px, 24vw, 300px);
+  height: clamp(168px, 24vw, 300px);
+  opacity: 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  z-index: 10;
+}
+
+/* Override mark's internal size constraint so it fills the intro container */
+.introFlower > * {
+  width: 100% !important;
+  height: 100% !important;
+}
+
 /* ===========================================
    MARKS ROW — three marks, horizontal
-   Large initial scale, shrink during reveal
    =========================================== */
 .marksRow {
   display: flex;
@@ -33,6 +58,7 @@
   align-items: flex-end;
   gap: clamp(32px, 6vw, 80px);
   margin-bottom: clamp(24px, 4vh, 48px);
+  position: relative;
 }
 
 .markItem {
@@ -47,6 +73,7 @@
   height: clamp(80px, 10vw, 140px);
   flex-shrink: 0;
 }
+
 
 .markIcon > * {
   width: 100% !important;

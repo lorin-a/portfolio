@@ -90,6 +90,12 @@
   transition: opacity var(--motion-medium) var(--ease-in-out);
 }
 
+/* fillReveal mode: stroke paths fully visible immediately (no dash animation) */
+.shapeStrokeReady path {
+  stroke-dashoffset: 0 !important;
+  stroke-dasharray: none !important;
+}
+
 /* ProcessDot — three brush dots */
 .processMark {
   display: flex;
