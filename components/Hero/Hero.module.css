@@ -1,6 +1,6 @@
 /* ===========================================
    HERO — Centered layout
-   Intro: flower fill-reveal → text reveal → marks appear
+   GSAP: useGSAP + SplitText + autoAlpha
    =========================================== */
 
 .hero {
@@ -12,6 +12,7 @@
   padding: clamp(80px, 10vh, 140px) var(--gutter);
 }
 
+/* Hidden until GSAP reveals via autoAlpha */
 .heroContent {
   display: flex;
   flex-direction: column;
@@ -19,13 +20,11 @@
   text-align: center;
   max-width: var(--max-width);
   width: 100%;
-  /* Hidden until GSAP is ready — prevents single-frame flash on page load */
   visibility: hidden;
 }
 
 /* ===========================================
-   INTRO FLOWER — large Shape mark, centered
-   Only visible during cinematic intro
+   INTRO FLOWER
    =========================================== */
 .introFlower {
   width: clamp(168px, 24vw, 300px);
@@ -51,8 +50,7 @@
 }
 
 /* ===========================================
-   MARKS ROW — three small marks above title
-   Spans 75% of the title width, evenly spaced
+   MARKS ROW
    =========================================== */
 .marksRow {
   display: flex;
@@ -60,27 +58,20 @@
   align-items: center;
   gap: clamp(20px, 3vw, 40px);
   margin-bottom: clamp(16px, 2.5vh, 32px);
-  position: relative;
 }
 
+/* Hidden via visibility so autoAlpha can control it */
 .markItem {
   display: flex;
   align-items: center;
   justify-content: center;
-  opacity: 0;
+  visibility: hidden;
 }
 
 .markIcon {
-  width: clamp(52px, 5.8vw, 83px);
-  height: clamp(52px, 5.8vw, 83px);
+  width: clamp(55px, 6.1vw, 87px);
+  height: clamp(55px, 6.1vw, 87px);
   flex-shrink: 0;
-}
-
-/* Weave has a wider aspect ratio (199:135) — stretch container so its
-   visual height matches Sense and Shape */
-.markIconWeave {
-  composes: markIcon;
-  width: clamp(69px, 7.7vw, 111px);
 }
 
 .markIcon > * {
@@ -88,14 +79,13 @@
   height: 100% !important;
 }
 
-/* Labels hidden — no longer shown */
-.markLabel,
-.markLabelWeave {
-  display: none;
+.markIconWeave {
+  composes: markIcon;
+  width: clamp(69px, 7.7vw, 111px);
 }
 
 /* ===========================================
-   TITLE — centered, bigger
+   TITLE
    =========================================== */
 .title {
   display: flex;
@@ -104,13 +94,7 @@
   margin: 0;
 }
 
-/* Individual character spans — hidden by CSS so GSAP owns opacity. */
-.heroChar {
-  display: inline-block;
-  opacity: 0;
-}
 
-/* "Designing" — clip-path set by GSAP to avoid React reset conflicts. */
 .titleLine1 {
   font-family: var(--font-heading);
   font-size: clamp(56px, 10vw, 140px);
@@ -118,47 +102,41 @@
   font-variation-settings: 'SOFT' 100, 'WONK' 1;
   line-height: 0.92;
   color: var(--color-ink);
+  display: block;
   visibility: hidden;
+  overflow: visible;
 }
 
-.titleLine1 .heroChar {
-  opacity: 1;
-}
-
-/* "Connection" — per-character wave reveal with gradient on each char. */
+/* Connection: gradient must be inherited by SplitText's child divs.
+   color: transparent + background-clip: text on the span,
+   children inherit via color: inherit + background: inherit */
 .titleLine2 {
   font-family: var(--font-heading);
   font-size: clamp(56px, 10vw, 140px);
   font-weight: 300;
   font-variation-settings: 'SOFT' 100, 'WONK' 1;
   line-height: 0.92;
-}
-
-/* Gradient applied per-character so each can animate independently. */
-.titleLine2 .heroChar {
-  background: linear-gradient(to bottom right, #6B8245 5%, #8B6899 45%, #B86048 88%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  display: block;
+  visibility: hidden;
+  overflow: visible;
+  color: var(--color-ink);
 }
 
 :global(:root[data-theme="dark"]) .titleLine1 {
   color: #e9e9e9;
 }
 
-:global(:root[data-theme="dark"]) .titleLine2 .heroChar {
-  background: linear-gradient(169.3deg, #C5CFA6 15.5%, #C7AAD1 52.1%, #F79C7E 89.7%);
-  -webkit-background-clip: text;
-  background-clip: text;
+:global(:root[data-theme="dark"]) .titleLine2 {
+  color: #e9e9e9;
 }
 
 /* ===========================================
-   SUBTITLE — spans full width of title
+   SUBTITLE
    =========================================== */
 .subtitle {
   font-family: var(--font-heading);
   font-weight: 300;
-  font-style: italic;
+  font-style: normal;
   font-variation-settings: 'SOFT' 100, 'WONK' 1;
   color: var(--color-ink);
   line-height: 1.4;
@@ -166,8 +144,7 @@
   margin: 0;
   margin-top: clamp(12px, 2vh, 24px);
   width: 100%;
-  opacity: 0;
-  /* Size will be set to fill the title width naturally */
+  visibility: hidden;
   font-size: clamp(16px, 2vw, 28px);
 }
 
@@ -175,12 +152,8 @@
   color: #e9e9e9;
 }
 
-.subtitleText {
-  white-space: nowrap;
-}
-
 /* ===========================================
-   RESPONSIVE — TABLET (<=900px)
+   RESPONSIVE
    =========================================== */
 @media (max-width: 900px) {
   .markIcon {
@@ -189,9 +162,6 @@
   }
 }
 
-/* ===========================================
-   RESPONSIVE — MOBILE (<=600px)
-   =========================================== */
 @media (max-width: 600px) {
   .hero {
     padding: clamp(64px, 12vh, 120px) var(--gutter);
@@ -210,26 +180,18 @@
   .subtitle {
     font-size: clamp(14px, 4.5vw, 22px);
   }
-
-  .subtitleText {
-    white-space: normal;
-    text-wrap: pretty;
-  }
 }
 
 /* ===========================================
-   ACCESSIBILITY — REDUCED MOTION
+   REDUCED MOTION
    =========================================== */
 @media (prefers-reduced-motion: reduce) {
-  .heroChar,
+  .heroContent,
   .markItem,
-  .subtitle {
-    opacity: 1 !important;
-    transform: none !important;
-  }
-
-  .titleLine1 {
+  .subtitle,
+  .titleLine1,
+  .titleLine2 {
     visibility: visible !important;
-    clip-path: none !important;
+    opacity: 1 !important;
   }
 }
