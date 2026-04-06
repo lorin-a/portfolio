@@ -291,4 +291,199 @@ gsap.to('.items', { y: 0, stagger: { amount: 0.8, ease: 'power2.inOut' } })
 
 ---
 
+## ScrollSmoother Setup
+
+Requires specific HTML wrapper structure:
+```html
+<div id="smooth-wrapper">
+  <div id="smooth-content">
+    <!-- ALL content here -->
+  </div>
+</div>
+<!-- position: fixed elements OUTSIDE wrapper (nav, modals) -->
+```
+
+```js
+import { ScrollSmoother } from 'gsap/ScrollSmoother'
+gsap.registerPlugin(ScrollTrigger, ScrollSmoother)
+
+ScrollSmoother.create({
+  smooth: 1,            // seconds to catch up (0.8 default)
+  effects: true,        // enables data-speed and data-lag attributes
+  normalizeScroll: true, // prevents address bar shifts on mobile
+})
+```
+
+**Parallax via data attributes:**
+```html
+<div data-speed="0.5">slower</div>    <!-- half speed -->
+<div data-speed="2">faster</div>      <!-- double speed -->
+<div data-lag="0.5">lazy</div>        <!-- 0.5s lag -->
+<div data-speed="clamp(0.5)">safe</div> <!-- clamped to viewport -->
+```
+
+**Warning:** `position: fixed` elements inside the wrapper become fixed to content, not viewport. Place nav/modals outside.
+
+---
+
+## Responsive Animations: matchMedia
+
+```js
+const mm = gsap.matchMedia()
+
+mm.add({
+  isDesktop: '(min-width: 901px)',
+  isTablet: '(max-width: 900px)',
+  isMobile: '(max-width: 600px)',
+  reduceMotion: '(prefers-reduced-motion: reduce)',
+}, (context) => {
+  const { isDesktop, isMobile, reduceMotion } = context.conditions
+
+  gsap.to('.box', {
+    x: isDesktop ? 200 : 50,
+    duration: reduceMotion ? 0 : 1,
+  })
+
+  // Automatically reverts when conditions change
+})
+```
+
+---
+
+## Reusable Effects: registerEffect
+
+```js
+gsap.registerEffect({
+  name: 'fadeUp',
+  effect: (targets, config) => {
+    return gsap.from(targets, {
+      y: config.y,
+      autoAlpha: 0,
+      duration: config.duration,
+      stagger: config.stagger,
+    })
+  },
+  defaults: { y: 30, duration: 0.6, stagger: 0.1 },
+  extendTimeline: true,  // adds as timeline method
+})
+
+// Usage
+gsap.effects.fadeUp('.cards')
+// Or in timeline
+tl.fadeUp('.cards', { y: 50 })
+```
+
+---
+
+## Performance: quickTo & quickSetter
+
+For high-frequency updates (mousemove, scroll-driven values):
+
+```js
+// quickTo — creates reusable tween for one property
+const xTo = gsap.quickTo('.cursor', 'x', { duration: 0.3, ease: 'power2.out' })
+const yTo = gsap.quickTo('.cursor', 'y', { duration: 0.3, ease: 'power2.out' })
+
+document.addEventListener('mousemove', (e) => {
+  xTo(e.clientX)
+  yTo(e.clientY)
+})
+
+// quickSetter — instant set, no animation (50-250% faster than gsap.set)
+const setX = gsap.quickSetter('.element', 'x', 'px')
+const setRotation = gsap.quickSetter('.element', 'rotation', 'deg')
+```
+
+---
+
+## ScrollTrigger.batch — Batched Reveals
+
+For revealing multiple elements as they scroll into view (cards, grid items):
+
+```js
+ScrollTrigger.batch('.card', {
+  onEnter: (elements) => {
+    gsap.to(elements, {
+      autoAlpha: 1,
+      y: 0,
+      stagger: 0.15,
+      ease: 'power1.inOut',
+    })
+  },
+  start: 'top 85%',
+})
+```
+
+---
+
+## Organic Easing: RoughEase
+
+For hand-drawn, organic feeling motion (matches our natural material aesthetic):
+
+```js
+import { EasePack } from 'gsap/EasePack'
+gsap.registerPlugin(EasePack)
+
+gsap.to('.element', {
+  x: 100,
+  ease: 'rough({ strength: 1.5, points: 20, taper: "out" })',
+})
+```
+
+---
+
+## ScrollTrigger Mistakes to Avoid
+
+1. **Never nest ScrollTriggers inside timeline tweens** — use one ScrollTrigger on the parent timeline
+2. **Loop through elements** for individual triggers — don't apply one trigger to multiple sections
+3. **Use function-based start/end values** for responsive measurements: `end: () => "+=" + el.offsetHeight`
+4. **Call `ScrollTrigger.refresh()`** after dynamically loaded content
+5. **Create ScrollTriggers in scroll order** (top to bottom) when pinning
+6. **Set `immediateRender: false`** when multiple tweens target the same property
+
+---
+
+## Utility Methods (most useful)
+
+```js
+// Convert anything to array
+const boxes = gsap.utils.toArray('.box')
+
+// Map one range to another
+const mapProgress = gsap.utils.mapRange(0, 500, 0, 1)
+
+// Clamp values
+const clampedValue = gsap.utils.clamp(0, 100, rawValue)
+
+// Snap to nearest increment or array value
+const snapped = gsap.utils.snap(50, value)        // nearest 50
+const snapped = gsap.utils.snap([0, 25, 75, 100], value) // nearest in array
+
+// Pipe multiple utils together
+const transform = gsap.utils.pipe(
+  gsap.utils.clamp(0, 100),
+  gsap.utils.snap(5),
+  gsap.utils.mapRange(0, 100, -1, 1)
+)
+
+// Random value
+const r = gsap.utils.random(0, 100)              // number
+const r = gsap.utils.random([1, 5, 10, 20])       // from array
+const randomFunc = gsap.utils.random(0, 100, true) // reusable function
+```
+
+---
+
+## CSS Properties Quick Reference
+
+**GPU-accelerated (prefer these):** `x`, `y`, `z`, `rotation`, `scale`, `scaleX`, `scaleY`, `skewX`, `skewY`, `autoAlpha`
+
+**Use percentage versions:** `xPercent`, `yPercent` (not `x: '-50%'`)
+
+**Special:** `autoAlpha` (opacity + visibility), `clearProps` (remove inline styles), `force3D` (GPU promotion, auto by default)
+
+**Naming:** CSS hyphenated names → camelCase (`background-color` → `backgroundColor`)
+
+---
+
 *This file is project-specific. Update it when patterns change or new conventions are established.*
