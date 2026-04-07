@@ -110,26 +110,75 @@
 /* ===========================================
    SCROLL ARROW
    =========================================== */
-.arrow {
+.welcomeGroup {
   position: absolute;
   left: 50%;
-  bottom: 8%;
+  top: 70%;
   transform: translateX(-50%);
-  width: 24px;
-  height: 28px;
-  color: var(--color-ink);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
   visibility: hidden;
   z-index: 3;
+}
+
+.welcomeText {
+  font-family: var(--font-heading);
+  font-size: clamp(14px, 1.4vw, 20px);
+  font-weight: 300;
+  font-style: italic;
+  font-variation-settings: 'SOFT' 100, 'WONK' 1;
+  color: #e9e9e9;
+  margin: 0;
+  letter-spacing: 0.05em;
+}
+
+.arrow {
+  width: 24px;
+  height: 28px;
+  color: #e9e9e9;
   animation: bobDown 2s ease-in-out infinite;
 }
 
-:global(:root[data-theme="dark"]) .arrow {
-  color: #e9e9e9;
+@keyframes bobDown {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(6px); }
 }
 
-@keyframes bobDown {
-  0%, 100% { transform: translateX(-50%) translateY(0); }
-  50% { transform: translateX(-50%) translateY(6px); }
+/* ===========================================
+   VIEW WORK CTA
+   =========================================== */
+.cta {
+  position: absolute;
+  left: 50%;
+  top: 80%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-heading);
+  font-size: clamp(16px, 1.6vw, 22px);
+  font-weight: 300;
+  font-style: italic;
+  font-variation-settings: 'SOFT' 100, 'WONK' 1;
+  color: #e9e9e9;
+  text-decoration: none;
+  visibility: hidden;
+  z-index: 3;
+  cursor: pointer;
+}
+
+.cta:hover {
+  opacity: 0.8;
+}
+
+.ctaArrow {
+  width: 20px;
+  height: 24px;
+  color: #e9e9e9;
+  animation: bobDown 2s ease-in-out infinite;
 }
 
 /* ===========================================

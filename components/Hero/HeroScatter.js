@@ -69,9 +69,10 @@ const C_SCATTER = [
   ALL_POSITIONS[17],  // o
   ALL_POSITIONS[19],  // n
 ]
+/* Put marks on opposite sides — sense left, weave right */
 const MARK_SCATTER = {
   sense: ALL_POSITIONS[12],
-  weave: ALL_POSITIONS[20],
+  weave: ALL_POSITIONS[21],
 }
 
 /*
@@ -104,6 +105,7 @@ export default function HeroScatter() {
   const flowerRef = useRef(null)
   const arrowRef = useRef(null)
   const subtitleRef = useRef(null)
+  const ctaRef = useRef(null)
   const dRefs = useRef([])
   const cRefs = useRef([])
   const senseRef = useRef(null)
@@ -112,6 +114,9 @@ export default function HeroScatter() {
   const idleTweens = useRef([])
 
   const [shapeAnimate, setShapeAnimate] = useState(false)
+  const [senseReplay, setSenseReplay] = useState(0)
+  const [weaveReplay, setWeaveReplay] = useState(0)
+  const flowerHoverable = useRef(false)
   const shapeDrawDone = useRef(null)
   const onShapeDrawComplete = useCallback(() => shapeDrawDone.current?.(), [])
 
@@ -124,6 +129,31 @@ export default function HeroScatter() {
     observer.observe(root, { attributes: true, attributeFilter: ['data-theme'] })
     return () => observer.disconnect()
   }, [])
+
+  /* Hover handlers — each element type responds differently */
+  const { contextSafe } = useGSAP({ scope: heroRef })
+
+  const hoverDesigning = contextSafe((el) => {
+    /* Check if scale is already animating (not left/top from scrub) */
+    if (el._hoverActive) return
+    el._hoverActive = true
+    gsap.to(el, { scale: 1.2, duration: 0.2, ease: 'power1.out',
+      onComplete: () => gsap.to(el, { scale: 1, duration: 0.4, ease: 'power1.inOut',
+        onComplete: () => { el._hoverActive = false },
+      }),
+    })
+  })
+
+  const hoverConnection = contextSafe((el) => {
+    if (el._hoverActive) return
+    el._hoverActive = true
+    gsap.to(el, { rotation: '+=12', duration: 0.25, ease: 'power1.out',
+      onComplete: () => gsap.to(el, { rotation: '-=12', duration: 0.4, ease: 'power1.inOut',
+        onComplete: () => { el._hoverActive = false },
+      }),
+    })
+  })
+
 
   useGSAP(() => {
     const section = sectionRef.current
@@ -143,10 +173,10 @@ export default function HeroScatter() {
       return
     }
 
-    window.scrollTo(0, 0)
-
-    /* Hide everything below the hero to prevent flash of content */
+    /* Lock scroll state before any visual setup */
+    ScrollTrigger.normalizeScroll(true)
     document.body.classList.add('hero-loading')
+    window.scrollTo(0, 0)
 
     /* ─── INITIAL STATE: everything offscreen, flower centered ─── */
     const flowerSize = Math.min(Math.max(window.innerWidth * 0.22, 160), 280)
@@ -166,20 +196,18 @@ export default function HeroScatter() {
     if (weaveRef.current) gsap.set(weaveRef.current, { left: MARK_OFFSCREEN.weave[0] + '%', top: MARK_OFFSCREEN.weave[1] + '%', autoAlpha: 1 })
 
     gsap.set(subtitleRef.current, { autoAlpha: 0 })
+    gsap.set(ctaRef.current, { autoAlpha: 0 })
     gsap.set(arrowRef.current, { autoAlpha: 0 })
     gsap.set(measureRef.current, { autoAlpha: 0 })
 
     /* ─── FLOWER OPENER (time-based) ─── */
     setShapeAnimate(true)
-    /* Prevent elastic overscroll that fights with ScrollTrigger */
-    ScrollTrigger.normalizeScroll(true)
-
     shapeDrawDone.current = () => {
       /* Bounce after spin — invitational pulse */
       const bounceTl = gsap.timeline({
         onComplete: () => {
-          gsap.to(arrowRef.current, { autoAlpha: 0.5, duration: 0.5, ease: 'power1.inOut' })
-          window.scrollTo(0, 0)
+          flowerHoverable.current = true
+          gsap.to(arrowRef.current, { autoAlpha: 1, duration: 0.5, ease: 'power1.inOut' })
           buildScrollTimeline()
           /* Reveal content below after pin is established */
           document.body.classList.remove('hero-loading')
@@ -225,7 +253,7 @@ export default function HeroScatter() {
         scrollTrigger: {
           trigger: wrapperRef.current,
           start: 'top top',
-          end: '+=400%',
+          end: '+=500%',
           pin: sectionRef.current,
           pinType: 'transform',
           scrub: 1.5,
@@ -343,10 +371,17 @@ export default function HeroScatter() {
         }, 0.36)
       }
 
-      /* ── 82–100%: Subtitle ── */
+      /* ── 70–80%: Subtitle fades in ── */
       tl.to(subtitleRef.current, {
-        autoAlpha: 1, duration: 0.15, ease: 'power1.inOut',
-      }, 0.84)
+        autoAlpha: 1, duration: 0.10, ease: 'power1.inOut',
+      }, 0.70)
+
+      /* ── 78–88%: "View Work" CTA appears ── */
+      tl.to(ctaRef.current, {
+        autoAlpha: 1, duration: 0.10, ease: 'power1.inOut',
+      }, 0.78)
+
+      /* ── 88–100%: Hold — let the composed state breathe ── */
     }
 
     return () => {
@@ -361,7 +396,16 @@ export default function HeroScatter() {
       <div ref={wrapperRef}>
         <section ref={sectionRef} className={styles.hero} aria-label="Introduction">
 
-          <div ref={flowerRef} className={styles.flower}>
+          <div ref={flowerRef} className={styles.flower}
+            onMouseEnter={() => {
+              if (!flowerHoverable.current) return
+              const el = flowerRef.current
+              if (!el || el._hoverActive) return
+              el._hoverActive = true
+              gsap.to(el, { rotation: '+=360', duration: 0.8, ease: 'power1.inOut',
+                onComplete: () => { el._hoverActive = false },
+              })
+            }}>
             <ShapeMark animate={shapeAnimate} showBrush fillReveal
               gradientColors={isDark ? DARK_GRADIENT : LIGHT_GRADIENT}
               onDrawComplete={onShapeDrawComplete} />
@@ -369,19 +413,23 @@ export default function HeroScatter() {
 
           {'Designing'.split('').map((c, i) => (
             <div key={`d${i}`} ref={el => { dRefs.current[i] = el }}
-              className={styles.scatterChar}>{c}</div>
+              className={styles.scatterChar}
+              onMouseEnter={(e) => hoverDesigning(e.currentTarget)}>{c}</div>
           ))}
 
           {'Connection'.split('').map((c, i) => (
             <div key={`c${i}`} ref={el => { cRefs.current[i] = el }}
-              className={`${styles.scatterChar} ${styles.gradient}`}>{c}</div>
+              className={`${styles.scatterChar} ${styles.gradient}`}
+              onMouseEnter={(e) => hoverConnection(e.currentTarget)}>{c}</div>
           ))}
 
-          <div ref={senseRef} className={styles.mark}>
-            <SenseMark animate showBrush gradientColors={isDark ? DARK_GRADIENT : LIGHT_GRADIENT} />
+          <div ref={senseRef} className={styles.mark}
+            onMouseEnter={() => setSenseReplay(r => r + 1)}>
+            <SenseMark animate showBrush replay={senseReplay} gradientColors={isDark ? DARK_GRADIENT : LIGHT_GRADIENT} />
           </div>
-          <div ref={weaveRef} className={styles.mark}>
-            <WeaveMark animate showBrush gradientColors={isDark ? DARK_GRADIENT : LIGHT_GRADIENT} />
+          <div ref={weaveRef} className={styles.mark}
+            onMouseEnter={() => setWeaveReplay(r => r + 1)}>
+            <WeaveMark animate showBrush replay={weaveReplay} gradientColors={isDark ? DARK_GRADIENT : LIGHT_GRADIENT} />
           </div>
 
           <p ref={subtitleRef} className={styles.subtitle}>
@@ -389,8 +437,16 @@ export default function HeroScatter() {
             <span style={{ fontStyle: 'normal', fontWeight: 333 }}>&amp;</span> Design
           </p>
 
-          <div ref={arrowRef} className={styles.arrow}>
-            <svg viewBox="0 0 20 24" fill="none" aria-hidden="true">
+          <a ref={ctaRef} href="#work" className={styles.cta}>
+            View Work
+            <svg viewBox="0 0 20 24" fill="none" className={styles.ctaArrow} aria-hidden="true">
+              <path d="M10 2v18M5 14l5 6 5-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </a>
+
+          <div ref={arrowRef} className={styles.welcomeGroup}>
+            <p className={styles.welcomeText}>Welcome</p>
+            <svg className={styles.arrow} viewBox="0 0 20 24" fill="none" aria-hidden="true">
               <path d="M10 2v18M5 14l5 6 5-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           </div>
