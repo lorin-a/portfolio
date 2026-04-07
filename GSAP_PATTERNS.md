@@ -486,4 +486,140 @@ const randomFunc = gsap.utils.random(0, 100, true) // reusable function
 
 ---
 
+## Accessible Animation with GSAP
+
+All GSAP animation in this project must degrade gracefully under `prefers-reduced-motion: reduce`. This section covers the GSAP-specific implementation.
+
+### gsap.matchMedia() for Reduced Motion
+
+This is the primary tool. It handles setup and automatic cleanup when conditions change:
+
+```js
+const mm = gsap.matchMedia()
+
+mm.add('(prefers-reduced-motion: no-preference)', () => {
+  // Full animation: transforms, staggers, scroll-driven motion
+  gsap.from('.element', {
+    y: 30, autoAlpha: 0, duration: 0.8, ease: 'power1.inOut'
+  })
+})
+
+mm.add('(prefers-reduced-motion: reduce)', () => {
+  // Safe alternative: opacity only, or instant reveal
+  gsap.set('.element', { autoAlpha: 1 })
+})
+```
+
+**Combined with other conditions:**
+```js
+mm.add({
+  isDesktop: '(min-width: 901px)',
+  isMobile: '(max-width: 600px)',
+  reduceMotion: '(prefers-reduced-motion: reduce)',
+}, (context) => {
+  const { isDesktop, isMobile, reduceMotion } = context.conditions
+
+  if (reduceMotion) {
+    gsap.set('.element', { autoAlpha: 1 })
+    return  // skip all motion
+  }
+
+  gsap.from('.element', {
+    y: isDesktop ? 30 : 15,
+    autoAlpha: 0,
+    duration: 0.8,
+  })
+})
+```
+
+### FOUC Prevention + Reduced Motion
+
+The standard FOUC pattern (`visibility: hidden` in CSS, `autoAlpha: 1` in GSAP) creates invisible content if GSAP never runs. Under reduced motion, you must still reveal content:
+
+```css
+.gsap-hidden { visibility: hidden; }
+
+@media (prefers-reduced-motion: reduce) {
+  .gsap-hidden { visibility: visible; }
+}
+```
+
+Or handle it in GSAP's matchMedia:
+```js
+mm.add('(prefers-reduced-motion: reduce)', () => {
+  gsap.set('.gsap-hidden', { autoAlpha: 1 })
+})
+```
+
+### SplitText Accessibility
+
+**Built-in ARIA (v3.13.0+):** SplitText auto-adds `aria-label` to the parent element and `aria-hidden="true"` to all split children. Screen readers announce the full text, not individual letters/words.
+
+```html
+<!-- After SplitText.create('.heading', { type: 'chars' }) -->
+<h2 aria-label="Groundswell">
+  <div aria-hidden="true">G</div>
+  <div aria-hidden="true">r</div>
+  <div aria-hidden="true">o</div>
+  <!-- ... -->
+</h2>
+```
+
+**Nested interactive content:** If the text contains links, `<em>`, `<strong>`, or other semantic elements, the auto-ARIA breaks them for screen readers. Use `aria: false` and provide a screenreader-only duplicate:
+
+```jsx
+{/* Visible: animated split text */}
+<p className="split-target">Read about <a href="/groundswell">Groundswell</a></p>
+
+{/* Accessible: hidden duplicate with working links */}
+<p className="visually-hidden">Read about <a href="/groundswell">Groundswell</a></p>
+```
+
+```js
+SplitText.create('.split-target', {
+  type: 'chars',
+  mask: 'chars',
+  aria: false,  // disable auto-ARIA since we have a duplicate
+})
+```
+
+### ScrollTrigger and Screen Readers
+
+ScrollTrigger animations reveal content visually but screen readers read the DOM in source order regardless of scroll position. Considerations:
+
+- Content hidden with `autoAlpha: 0` for scroll reveals is invisible to screen readers until GSAP sets it visible. Under reduced motion, ensure all content starts visible.
+- Don't use ScrollTrigger to reorder or move content. DOM order must match logical reading order.
+- For significant content that appears on scroll (not just decorative motion), consider an `aria-live="polite"` container so screen readers are notified.
+
+### Reduction vs. Removal Decision Guide
+
+| Animation type | Reduced motion behavior |
+|---------------|------------------------|
+| Hero text reveal (SplitText) | Show instantly, no stagger |
+| Scroll-triggered fade-up | Show all content visible, no animation |
+| Parallax / data-speed | Remove. Static positioning. |
+| Hover micro-interaction | Keep if opacity/color only. Remove if transform-based. |
+| Page transition | Instant crossfade or no transition |
+| Loading spinner / progress | Keep. Functional animation is exempt. |
+| Continuous background motion | Remove entirely |
+| Scale-in (images, cards) | Show at full scale, no animation |
+
+### UI Animation Toggle
+
+Beyond system `prefers-reduced-motion`, consider providing a site-level toggle for users who want reduced motion only on your site:
+
+```js
+// Custom toggle feeds into matchMedia conditions
+mm.add({
+  systemReduced: '(prefers-reduced-motion: reduce)',
+  userReduced: '(prefers-reduced-motion: reduce)', // replace with custom class check
+}, (context) => {
+  // Responds to either system or user preference
+})
+```
+
+For this project, the site-wide toggle is TBD. System preference support is required immediately.
+
+---
+
 *This file is project-specific. Update it when patterns change or new conventions are established.*
