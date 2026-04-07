@@ -242,8 +242,15 @@
   line-height: 1.4;
   text-align: center;
   margin: 0;
-  margin-top: clamp(8px, 1.2vh, 16px);
+  margin-top: clamp(16px, 2.5vh, 24px);
   font-size: clamp(16px, 2vw, 28px);
+}
+
+@media (max-width: 768px) {
+  .measureSubtitle {
+    margin-top: clamp(24px, 4vh, 40px);
+    font-size: clamp(13px, 3.5vw, 18px);
+  }
 }
 
 /* ===========================================
@@ -264,5 +271,11 @@
     width: clamp(35px, 8vw, 50px);
     height: clamp(35px, 8vw, 50px);
   }
-  .subtitle { font-size: clamp(13px, 3.5vw, 18px); }
+  .subtitle {
+    font-size: clamp(13px, 3.5vw, 18px);
+    white-space: normal;
+    text-wrap: pretty;
+    max-width: 280px;
+    top: 82%;
+  }
 }
