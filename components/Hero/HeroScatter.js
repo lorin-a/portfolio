@@ -258,12 +258,29 @@ export default function HeroScatter() {
           pinType: 'transform',
           scrub: 1.5,
           onUpdate: (self) => {
-            /* Kill floats just as gather begins — reset y so final positions are clean */
-            if (self.progress > 0.30 && idleTweens.current.length) {
+            const inScatter = self.progress > 0.05 && self.progress < 0.30
+
+            /* Restart floats when scrolling back into scatter range */
+            if (inScatter && idleTweens.current.length === 0) {
+              allScatter.forEach(el => {
+                if (!el) return
+                idleTweens.current.push(gsap.to(el, {
+                  y: '+=14', duration: gsap.utils.random(2, 3.5),
+                  ease: 'sine.inOut', repeat: -1, yoyo: true,
+                }))
+              })
+              idleTweens.current.push(gsap.to(flower, {
+                y: '+=10', duration: 3,
+                ease: 'sine.inOut', repeat: -1, yoyo: true,
+              }))
+            }
+
+            /* Kill floats when leaving scatter range */
+            if (!inScatter && idleTweens.current.length > 0) {
               idleTweens.current.forEach(t => t.kill())
               idleTweens.current = []
-              allScatter.forEach(el => { if (el) gsap.to(el, { y: 0, duration: 0.3, ease: 'power1.out' }) })
-              gsap.to(flower, { y: 0, duration: 0.3, ease: 'power1.out' })
+              allScatter.forEach(el => { if (el) gsap.set(el, { y: 0 }) })
+              gsap.set(flower, { y: 0 })
             }
           },
         },
@@ -311,22 +328,7 @@ export default function HeroScatter() {
         }, 0.04)
       }
 
-      /* Idle float — starts immediately, runs until near end of gather.
-         Uses y transform which is independent of left/top positioning. */
-      allScatter.forEach(el => {
-        if (!el) return
-        idleTweens.current.push(gsap.to(el, {
-          y: '+=14',
-          duration: gsap.utils.random(2, 3.5),
-          ease: 'sine.inOut', repeat: -1, yoyo: true,
-          delay: gsap.utils.random(0, 2),
-        }))
-      })
-      idleTweens.current.push(gsap.to(flower, {
-        y: '+=10',
-        duration: 3,
-        ease: 'sine.inOut', repeat: -1, yoyo: true,
-      }))
+      /* Idle float is managed by onUpdate — starts/stops based on scroll progress */
 
       /* ── 22–32%: Brief scatter hold ── */
 
