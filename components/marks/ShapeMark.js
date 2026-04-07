@@ -62,7 +62,7 @@ export default function ShapeMark({ animate = false, delay = 0, replay = 0, clas
     }
 
     if (fillReveal) {
-      /* ── Fill reveal mode: stroke visible immediately, fill sweeps in ── */
+      /* ── Fill reveal: stroke visible, color fill sweeps bottom to top ── */
       setStrokeReady(true)
       setBrushVisible(false)
 
@@ -72,14 +72,9 @@ export default function ShapeMark({ animate = false, delay = 0, replay = 0, clas
         const brushEl = brushRef.current
         if (!brushEl) return
 
-        /* Start with fill clipped from top, sweep upward (bottom to top) */
-        gsap.set(brushEl, {
-          opacity: 1,
-          clipPath: 'inset(100% 0 0 0)',
-        })
+        gsap.set(brushEl, { opacity: 1, clipPath: 'inset(100% 0 0 0)' })
 
         const effectiveDelay = replay > 0 ? 0 : delay
-
         const containerEl = brushEl.parentElement
 
         tween = gsap.to(brushEl, {
@@ -90,7 +85,6 @@ export default function ShapeMark({ animate = false, delay = 0, replay = 0, clas
           onComplete: () => {
             setBrushVisible(true)
             gsap.set(brushEl, { clearProps: 'clipPath' })
-            /* Spin, then signal complete (bounce + shrink handled by parent) */
             gsap.to(containerEl, {
               rotation: 360,
               duration: 0.9,
@@ -149,7 +143,7 @@ export default function ShapeMark({ animate = false, delay = 0, replay = 0, clas
 
   return (
     <div className={`${styles.shapeContainer}${className ? ` ${className}` : ''}`} aria-hidden="true">
-      {/* Stroke layer — visible immediately in fillReveal mode, draw-on otherwise */}
+      {/* Stroke layer */}
       <svg
         ref={svgRef}
         className={`${styles.shapeStroke} ${brushVisible ? styles.shapeStrokeHidden : ''} ${strokeReady ? styles.shapeStrokeReady : ''}`}
@@ -176,9 +170,9 @@ export default function ShapeMark({ animate = false, delay = 0, replay = 0, clas
         </g>
       </svg>
 
-      {/* Brush layer — fades in after draw-on, or sweep-reveals in fillReveal mode */}
+      {/* Brush layer */}
       <div ref={brushRef} className={`${styles.shapeBrush} ${brushVisible ? styles.shapeBrushVisible : ''}`}>
-        <svg viewBox="-4 -4 199 200" fill="none" style={{ width: '100%', height: 'auto' }}>
+        <svg viewBox="-4 -4 199 200" fill="none" overflow="hidden" style={{ width: '100%', height: 'auto' }}>
           <defs>
             <clipPath id={brushClipId}>
               <rect x="-2" y="-2" width="195" height="196" />

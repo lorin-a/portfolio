@@ -177,11 +177,17 @@ export default function Hero() {
       /* ─── Step 2: Now that flower is gone, prepare text ─── */
       triggerTransition()
 
+      /* Title lines stay visibility:hidden (from CSS).
+         SplitText inherits that — no chars visible during setup. */
+      gsap.set('.titleWrap', { height: 'auto', overflow: 'visible', autoAlpha: 1, y: 0 })
+
       const splitOpts = {
         type: 'chars',
         mask: 'chars',
         onSplit(self) {
           self.masks.forEach(m => {
+            m.style.paddingTop = '0.25em'
+            m.style.marginTop = '-0.25em'
             m.style.paddingBottom = '0.2em'
             m.style.marginBottom = '-0.12em'
           })
@@ -190,19 +196,17 @@ export default function Hero() {
       const split1 = SplitText.create('.titleLine1', splitOpts)
       const split2 = SplitText.create('.titleLine2', splitOpts)
 
-      /* Position chars behind masks FIRST, then make visible */
+      /* Set chars behind masks while parent is still visibility:hidden */
       gsap.set(split1.chars, { y: '100%' })
       gsap.set(split2.chars, { y: '100%' })
-      gsap.set('.titleWrap', { height: 'auto', overflow: 'visible', autoAlpha: 1, y: 0 })
-      gsap.set('.titleLine1', { visibility: 'visible' })
-      gsap.set('.titleLine2', { visibility: 'visible' })
 
-      /* Apply gradient spanning + store ref for theme updates */
+      /* Apply gradient + kerning (still invisible) */
       connectionCharsRef.current = split2.chars
       applyKerning(split1.chars, KERN_DESIGNING)
       applyKerning(split2.chars, KERN_CONNECTION)
       const line2El = heroRef.current.querySelector('.titleLine2')
       applyGradientSpan(line2El, split2.chars, isDark)
+
       gsap.set('.subtitle', { height: 'auto', overflow: 'visible',
         clipPath: 'inset(-0.2em 100% -0.2em 0)' })
 
@@ -210,6 +214,11 @@ export default function Hero() {
       const master = gsap.timeline({
         onComplete: () => { entranceDoneRef.current = true },
       })
+
+      /* Make lines visible + start animation in the SAME timeline tick.
+         Chars are already at y:100% so nothing shows above the masks. */
+      master.set('.titleLine1', { visibility: 'visible' }, 0)
+      master.set('.titleLine2', { visibility: 'visible' }, 0)
 
       /* "Designing" chars rise from mask */
       master.to(split1.chars, {
@@ -257,6 +266,8 @@ export default function Hero() {
         mask: 'chars',
         onSplit(self) {
           self.masks.forEach(m => {
+            m.style.paddingTop = '0.25em'
+            m.style.marginTop = '-0.25em'
             m.style.paddingBottom = '0.2em'
             m.style.marginBottom = '-0.12em'
           })
