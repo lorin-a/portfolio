@@ -42,7 +42,6 @@
 .introFlowerInner {
   width: 100%;
   height: 100%;
-  overflow: hidden;
 }
 
 .introFlowerInner > * {
@@ -62,7 +61,8 @@
   margin-bottom: clamp(16px, 2.5vh, 32px);
 }
 
-/* Hidden via visibility so autoAlpha can control it */
+/* Hidden via visibility so autoAlpha can control it.
+   display:none during intro prevents any bleed-through behind the flower. */
 .markItem {
   display: flex;
   align-items: center;

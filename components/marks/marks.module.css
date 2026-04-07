@@ -62,6 +62,7 @@
 /* Shape — draw-on petals */
 .shapeContainer {
   composes: markContainer;
+  clip-path: inset(0);
 }
 
 .shapeStroke {

@@ -6,19 +6,16 @@ import styles from './marks.module.css'
 const DEFAULT_COLOR = 'var(--color-terracotta)'
 const GRADIENT_ID = 'shapeGrad'
 
-function GradientDef({ colors, viewBox }) {
+function GradientDef({ id, colors, viewBox }) {
   if (!colors || !viewBox) return null
   const [, , w, h] = viewBox
-  // Corner-to-corner diagonal gradient (upper-left → lower-right)
   return (
-    <defs>
-      <linearGradient id={GRADIENT_ID} gradientUnits="userSpaceOnUse"
-        x1={0} y1={0} x2={w} y2={h}>
-        <stop offset="5%" stopColor={colors[0]} />
-        <stop offset="45%" stopColor={colors[1]} />
-        <stop offset="88%" stopColor={colors[2]} />
-      </linearGradient>
-    </defs>
+    <linearGradient id={id} gradientUnits="userSpaceOnUse"
+      x1={0} y1={0} x2={w} y2={h}>
+      <stop offset="5%" stopColor={colors[0]} />
+      <stop offset="45%" stopColor={colors[1]} />
+      <stop offset="88%" stopColor={colors[2]} />
+    </linearGradient>
   )
 }
 
@@ -41,8 +38,14 @@ const SHAPE_BRUSH_PATH = "M107.841 8.56629C104.406 10.6962 104.975 14.9687 102.7
  * @param {boolean} fillReveal — Skip stroke draw-on; show stroke immediately,
  *   animate the brush fill sweeping in like a loading bar.
  */
+let instanceCount = 0
+
 export default function ShapeMark({ animate = false, delay = 0, replay = 0, className, onDrawComplete, showBrush = false, color, gradientColors, fillReveal = false }) {
-  const fillColor = gradientColors ? `url(#${GRADIENT_ID})` : (color || DEFAULT_COLOR)
+  const [instanceId] = useState(() => ++instanceCount)
+  const strokeClipId = `shapeStrokeClip-${instanceId}`
+  const brushClipId = `shapeBrushClip-${instanceId}`
+  const gradId = `${GRADIENT_ID}-${instanceId}`
+  const fillColor = gradientColors ? `url(#${gradId})` : (color || DEFAULT_COLOR)
   const svgRef = useRef(null)
   const brushRef = useRef(null)
   const [brushVisible, setBrushVisible] = useState(false)
@@ -150,28 +153,41 @@ export default function ShapeMark({ animate = false, delay = 0, replay = 0, clas
       <svg
         ref={svgRef}
         className={`${styles.shapeStroke} ${brushVisible ? styles.shapeStrokeHidden : ''} ${strokeReady ? styles.shapeStrokeReady : ''}`}
-        viewBox="0 0 189 191"
+        viewBox="-4 -4 197 199"
         fill="none"
-        overflow="hidden"
       >
-        <GradientDef colors={gradientColors} viewBox={[0, 0, 189, 191]} />
-        {PETAL_PATHS.map((d, i) => (
-          <path
-            key={i}
-            d={d}
-            stroke={fillColor}
-            strokeWidth="3"
-            fill="none"
-            strokeLinejoin="round"
-          />
-        ))}
+        <defs>
+          <clipPath id={strokeClipId}>
+            <rect x="-2" y="-2" width="193" height="195" />
+          </clipPath>
+          <GradientDef id={gradId} colors={gradientColors} viewBox={[-4, -4, 197, 199]} />
+        </defs>
+        <g clipPath={`url(#${strokeClipId})`}>
+          {PETAL_PATHS.map((d, i) => (
+            <path
+              key={i}
+              d={d}
+              stroke={fillColor}
+              strokeWidth="3"
+              fill="none"
+              strokeLinejoin="round"
+            />
+          ))}
+        </g>
       </svg>
 
       {/* Brush layer — fades in after draw-on, or sweep-reveals in fillReveal mode */}
       <div ref={brushRef} className={`${styles.shapeBrush} ${brushVisible ? styles.shapeBrushVisible : ''}`}>
-        <svg viewBox="0 0 191 192" fill="none" overflow="hidden" style={{ width: '100%', height: 'auto' }}>
-          <GradientDef colors={gradientColors} viewBox={[0, 0, 191, 192]} />
-          <path d={SHAPE_BRUSH_PATH} fill={fillColor} />
+        <svg viewBox="-4 -4 199 200" fill="none" style={{ width: '100%', height: 'auto' }}>
+          <defs>
+            <clipPath id={brushClipId}>
+              <rect x="-2" y="-2" width="195" height="196" />
+            </clipPath>
+            <GradientDef id={gradId} colors={gradientColors} viewBox={[-4, -4, 199, 200]} />
+          </defs>
+          <g clipPath={`url(#${brushClipId})`}>
+            <path d={SHAPE_BRUSH_PATH} fill={fillColor} />
+          </g>
         </svg>
       </div>
     </div>
