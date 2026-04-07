@@ -106,7 +106,6 @@
   color: var(--color-ink);
   display: block;
   visibility: hidden;
-  overflow: visible;
 }
 
 /* Connection: gradient must be inherited by SplitText's child divs.
@@ -120,7 +119,6 @@
   line-height: 0.92;
   display: block;
   visibility: hidden;
-  overflow: visible;
   color: var(--color-ink);
 }
 

@@ -124,9 +124,18 @@ export default function Hero() {
       await drawPromise
       if (entranceDoneRef.current) return
 
-      /* ─── Master timeline: everything from bounce to marks ─── */
+      /* ─── Step 1: Flower bounce + shrink ─── */
+      await gsap.to(flowerInner, { scale: 1.3, duration: 0.35, ease: 'power2.out' })
+      if (entranceDoneRef.current) return
 
-      /* Prepare SplitText */
+      await gsap.to(flowerInner, { scale: 0, autoAlpha: 0, duration: 0.7, ease: 'power2.inOut' })
+      if (entranceDoneRef.current) return
+
+      gsap.set(flower, { autoAlpha: 0, pointerEvents: 'none' })
+
+      /* ─── Step 2: Now that flower is gone, prepare text ─── */
+      triggerTransition()
+
       const splitOpts = {
         type: 'chars',
         mask: 'chars',
@@ -139,6 +148,20 @@ export default function Hero() {
 
       /* Apply gradient spanning to Connection chars */
       const line2El = heroRef.current.querySelector('.titleLine2')
+
+      /* Position chars behind masks FIRST, then make visible — all before next paint */
+      gsap.set(split1.chars, { y: '100%' })
+      gsap.set(split2.chars, { y: '100%' })
+      gsap.set('.titleWrap', { height: 'auto', overflow: 'visible', autoAlpha: 1, y: 0 })
+      gsap.set('.titleLine1', { visibility: 'visible' })
+      gsap.set('.titleLine2', { visibility: 'visible' })
+      gsap.set('.subtitle', { height: 'auto', overflow: 'visible',
+        clipPath: 'inset(-0.2em 100% -0.2em 0)' })
+
+      /* Apply gradient (chars are behind masks, safe to style) */
+      await new Promise(r => requestAnimationFrame(r))
+      if (entranceDoneRef.current) return
+
       const wrapRect = line2El.getBoundingClientRect()
       split2.chars.forEach(char => {
         const charRect = char.getBoundingClientRect()
@@ -152,59 +175,37 @@ export default function Hero() {
         })
       })
 
-      /* Prepare title/subtitle for reveal */
-      gsap.set('.titleWrap', { height: 'auto', overflow: 'visible', autoAlpha: 1, y: 0 })
-      gsap.set('.titleLine1', { visibility: 'visible' })
-      gsap.set('.titleLine2', { visibility: 'visible' })
-      gsap.set('.subtitle', { height: 'auto', overflow: 'visible',
-        clipPath: 'inset(-0.2em 100% -0.2em 0)' })
-
+      /* ─── Step 3: Text + marks reveal timeline ─── */
       const master = gsap.timeline({
         onComplete: () => { entranceDoneRef.current = true },
       })
 
-      /* ─── Flower exit ─── */
-      // 0s: bounce
-      master.to(flowerInner, {
-        scale: 1.3, duration: 0.35, ease: 'power2.out',
+      /* "Designing" chars rise from mask */
+      master.to(split1.chars, {
+        y: '0%', duration: 0.8, stagger: 0.04, ease: 'power1.inOut',
       }, 0)
-      // 0.35s: shrink away from peak
-      master.to(flowerInner, {
-        scale: 0, autoAlpha: 0, duration: 0.7, ease: 'power2.inOut',
-        onComplete: () => gsap.set(flower, { autoAlpha: 0, pointerEvents: 'none' }),
-      }, 0.35)
 
-      /* ─── Nav transition (overlaps with flower exit) ─── */
-      master.call(() => triggerTransition(), null, 0.5)
+      /* "Connection" chars rise from mask */
+      master.to(split2.chars, {
+        y: '0%', duration: 0.8, stagger: 0.04, ease: 'power1.inOut',
+      }, 0.6)
 
-      /* ─── Text reveals ─── */
-      // 0.8s: "Designing" chars rise from mask
-      master.from(split1.chars, {
-        y: '100%', duration: 0.8, stagger: 0.04, ease: 'power1.inOut',
-      }, 0.8)
-
-      // 1.4s: "Connection" chars rise from mask
-      master.from(split2.chars, {
-        y: '100%', duration: 0.8, stagger: 0.04, ease: 'power1.inOut',
-      }, 1.4)
-
-      // 2.0s: Subtitle wipes in
+      /* Subtitle wipes in */
       master.to('.subtitle', {
         autoAlpha: 1,
         clipPath: 'inset(-0.2em 0% -0.2em 0)', duration: 1.0, ease: 'power1.inOut',
-      }, 2.0)
+      }, 1.4)
 
-      /* ─── Marks cascade ─── */
-      // 2.6s: trigger draw-on + fade in left to right
+      /* Marks cascade left to right */
       master.call(() => {
         setSenseAnimate(true)
         setWeaveAnimate(true)
         setShapeAnimate(true)
-      }, null, 2.6)
+      }, null, 2.0)
 
       master.to('.markItem', {
         autoAlpha: 1, duration: 0.4, stagger: 0.2, ease: 'power1.inOut',
-      }, 2.6)
+      }, 2.0)
     }
 
     /* ─────────────────────────────────────────
