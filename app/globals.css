@@ -617,3 +617,14 @@ img {
   color: var(--pill-text-dark);
   background: var(--pill-bg-dark);
 }
+
+/* Hero loading state — hides content below hero during opener */
+body.hero-loading > * > main > *:not(:first-child) {
+  visibility: hidden !important;
+}
+
+/* Prevent horizontal scroll site-wide */
+html, body {
+  overflow-x: hidden;
+  overscroll-behavior-x: none;
+}

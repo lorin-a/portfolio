@@ -6,6 +6,7 @@
   z-index: 100;
   padding: 20px 0;
   transition: background var(--motion-fast) var(--ease-out), backdrop-filter var(--motion-fast) var(--ease-out);
+  visibility: hidden;
 }
 
 .header.scrolled {
@@ -37,6 +38,7 @@
   height: 56px;
   cursor: pointer;
   visibility: hidden;
+  opacity: 0;
   background: none;
   border: none;
   padding: 0;
