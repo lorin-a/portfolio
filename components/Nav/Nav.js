@@ -29,43 +29,46 @@ export default function Nav() {
     const observer = new MutationObserver(check)
     observer.observe(root, { attributes: true, attributeFilter: ['data-theme'] })
 
-    /* Hide nav during intro */
-    if (phase === 'waiting' || phase === 'playing') {
+    /* Hide nav during intro (also hide when phase is null/resolving) */
+    if (phase === null || phase === 'waiting' || phase === 'playing') {
       gsap.set(headerRef.current, { autoAlpha: 0, pointerEvents: 'none' })
     }
 
-    /* Fade nav in when intro transitions */
+    /* Nav reveal is handled by the hero scroll timeline.
+       Just mark the intro as done when transitioning. */
     if (phase === 'transitioning') {
-      gsap.to(headerRef.current, {
-        autoAlpha: 1,
-        pointerEvents: 'auto',
-        duration: 0.6,
-        ease: 'power1.inOut',
-        onComplete: markDone,
-      })
+      markDone()
     }
 
-    /* Nav flower: appears when hero exits viewport */
+    /* Nav flower: appears only after scrolling past the entire hero.
+       Uses scroll listener instead of ScrollTrigger (pinned sections
+       create timing issues with trigger-based detection). */
     gsap.set(flowerRef.current, { autoAlpha: 0, scale: 0.5 })
+    let flowerVisible = false
 
-    /* Find the hero content element globally (not scoped to nav) */
-    const heroContent = document.querySelector('.heroContent')
-    if (heroContent) {
-      ScrollTrigger.create({
-        trigger: heroContent,
-        start: 'bottom top+=80',
-        onEnter: () => {
-          gsap.to(flowerRef.current, {
-            autoAlpha: 1, scale: 1, duration: 0.4, ease: 'back.out(1.4)',
-          })
-        },
-        onLeaveBack: () => {
-          gsap.to(flowerRef.current, {
-            autoAlpha: 0, scale: 0.5, duration: 0.3, ease: 'power1.inOut',
-          })
-        },
-      })
+    const checkFlower = () => {
+      /* Hero pin ends at ~500vh of scroll. Check if we're past it. */
+      const heroSection = document.querySelector('[aria-label="Introduction"]')
+      if (!heroSection) return
+
+      const heroBottom = heroSection.getBoundingClientRect().bottom
+      const pastHero = heroBottom < 80
+
+      if (pastHero && !flowerVisible) {
+        flowerVisible = true
+        gsap.to(flowerRef.current, {
+          autoAlpha: 1, scale: 1, duration: 0.4, ease: 'back.out(1.4)',
+        })
+      } else if (!pastHero && flowerVisible) {
+        flowerVisible = false
+        gsap.to(flowerRef.current, {
+          autoAlpha: 0, scale: 0.5, duration: 0.3, ease: 'power1.inOut',
+        })
+      }
     }
+
+    ScrollTrigger.addEventListener('refresh', checkFlower)
+    window.addEventListener('scroll', checkFlower, { passive: true })
 
     /* Scroll background */
     const handleScroll = () => setScrolled(window.scrollY > 60)
@@ -74,6 +77,8 @@ export default function Nav() {
     return () => {
       observer.disconnect()
       window.removeEventListener('scroll', handleScroll)
+      window.removeEventListener('scroll', checkFlower)
+      ScrollTrigger.removeEventListener('refresh', checkFlower)
     }
   }, {
     scope: headerRef,
@@ -106,7 +111,16 @@ export default function Nav() {
           className={styles.navFlower}
           ref={flowerRef}
           onMouseEnter={handleFlowerHover}
-          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+          onClick={() => {
+            /* Scroll to the composed hero state (80% of pin distance), not the top */
+            const heroPin = ScrollTrigger.getAll().find(st => st.pin)
+            if (heroPin) {
+              const composedPosition = heroPin.start + (heroPin.end - heroPin.start) * 0.98
+              window.scrollTo({ top: composedPosition, behavior: 'smooth' })
+            } else {
+              window.scrollTo({ top: 0, behavior: 'smooth' })
+            }
+          }}
           aria-label="Back to top"
         >
           <div ref={flowerInnerRef} className={styles.navFlowerInner}>

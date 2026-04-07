@@ -173,8 +173,6 @@ export default function HeroScatter() {
       return
     }
 
-    /* Lock scroll state before any visual setup */
-    ScrollTrigger.normalizeScroll(true)
     document.body.classList.add('hero-loading')
     window.scrollTo(0, 0)
 
@@ -200,6 +198,13 @@ export default function HeroScatter() {
     gsap.set(arrowRef.current, { autoAlpha: 0 })
     gsap.set(measureRef.current, { autoAlpha: 0 })
 
+    /* Lock scrolling during flower opener */
+    document.body.style.overflow = 'hidden'
+
+    /* Build the scroll timeline immediately (establishes the pin)
+       but user can't scroll until flower completes */
+    buildScrollTimeline()
+
     /* ─── FLOWER OPENER (time-based) ─── */
     setShapeAnimate(true)
     shapeDrawDone.current = () => {
@@ -207,9 +212,10 @@ export default function HeroScatter() {
       const bounceTl = gsap.timeline({
         onComplete: () => {
           flowerHoverable.current = true
+          /* Unlock scrolling + enable normalizeScroll for smooth experience */
+          document.body.style.overflow = ''
+          ScrollTrigger.normalizeScroll(true)
           gsap.to(arrowRef.current, { autoAlpha: 1, duration: 0.5, ease: 'power1.inOut' })
-          buildScrollTimeline()
-          /* Reveal content below after pin is established */
           document.body.classList.remove('hero-loading')
         },
       })
@@ -256,7 +262,7 @@ export default function HeroScatter() {
           end: '+=500%',
           pin: sectionRef.current,
           pinType: 'transform',
-          scrub: 1.5,
+          scrub: 0.8,
           onUpdate: (self) => {
             const inScatter = self.progress > 0.05 && self.progress < 0.30
 
@@ -302,30 +308,30 @@ export default function HeroScatter() {
       dChars.forEach((el, i) => {
         tl.to(el, {
           left: D_SCATTER[i][0] + '%', top: D_SCATTER[i][1] + '%',
-          duration: 0.22, ease: 'power1.out',
-        }, i * 0.005)
+          duration: 0.28, ease: 'power1.inOut',
+        }, i * 0.004)
       })
 
       /* Each Connection char drags from offscreen to scatter position */
       cChars.forEach((el, i) => {
         tl.to(el, {
           left: C_SCATTER[i][0] + '%', top: C_SCATTER[i][1] + '%',
-          duration: 0.22, ease: 'power1.out',
-        }, 0.02 + i * 0.005)
+          duration: 0.28, ease: 'power1.inOut',
+        }, 0.015 + i * 0.004)
       })
 
       /* Marks drag in */
       if (senseRef.current) {
         tl.to(senseRef.current, {
           left: MARK_SCATTER.sense[0] + '%', top: MARK_SCATTER.sense[1] + '%',
-          duration: 0.20, ease: 'power1.out',
-        }, 0.03)
+          duration: 0.26, ease: 'power1.inOut',
+        }, 0.02)
       }
       if (weaveRef.current) {
         tl.to(weaveRef.current, {
           left: MARK_SCATTER.weave[0] + '%', top: MARK_SCATTER.weave[1] + '%',
-          duration: 0.20, ease: 'power1.out',
-        }, 0.04)
+          duration: 0.26, ease: 'power1.inOut',
+        }, 0.03)
       }
 
       /* Idle float is managed by onUpdate — starts/stops based on scroll progress */
@@ -378,10 +384,18 @@ export default function HeroScatter() {
         autoAlpha: 1, duration: 0.10, ease: 'power1.inOut',
       }, 0.70)
 
-      /* ── 78–88%: "View Work" CTA appears ── */
+      /* ── 78–88%: "View Work" CTA + nav appear ── */
       tl.to(ctaRef.current, {
         autoAlpha: 1, duration: 0.10, ease: 'power1.inOut',
       }, 0.78)
+
+      const header = document.querySelector('header')
+      if (header) {
+        tl.to(header, {
+          autoAlpha: 1, pointerEvents: 'auto',
+          duration: 0.10, ease: 'power1.inOut',
+        }, 0.78)
+      }
 
       /* ── 88–100%: Hold — let the composed state breathe ── */
     }
@@ -390,6 +404,7 @@ export default function HeroScatter() {
       idleTweens.current.forEach(t => t.kill())
       idleTweens.current = []
       document.body.classList.remove('hero-loading')
+      document.body.style.overflow = ''
     }
   }, { scope: heroRef })
 
@@ -436,7 +451,7 @@ export default function HeroScatter() {
 
           <p ref={subtitleRef} className={styles.subtitle}>
             Emotion-Centered Research, Strategy{' '}
-            <span style={{ fontStyle: 'normal', fontWeight: 333 }}>&amp;</span> Design
+            <span style={{ fontStyle: 'normal', fontWeight: 333, fontVariationSettings: "'SOFT' 100, 'WONK' 1, 'opsz' 72" }}>&amp;</span> Design
           </p>
 
           <a ref={ctaRef} href="#work" className={styles.cta}>

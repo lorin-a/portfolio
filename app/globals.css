@@ -622,3 +622,9 @@ img {
 body.hero-loading > * > main > *:not(:first-child) {
   visibility: hidden !important;
 }
+
+/* Prevent horizontal scroll site-wide */
+html, body {
+  overflow-x: hidden;
+  overscroll-behavior-x: none;
+}

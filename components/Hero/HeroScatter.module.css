@@ -15,6 +15,7 @@
   position: relative;
   overflow: hidden;
   overscroll-behavior: none;
+  touch-action: pan-y;
 }
 
 /* ===========================================
@@ -22,7 +23,10 @@
    =========================================== */
 .flower {
   position: absolute;
+  left: 50%;
+  top: 50%;
   z-index: 5;
+  visibility: hidden;
 }
 
 .flower > * {
@@ -125,7 +129,7 @@
 
 .welcomeText {
   font-family: var(--font-heading);
-  font-size: clamp(14px, 1.4vw, 20px);
+  font-size: clamp(18px, 1.8vw, 24px);
   font-weight: 300;
   font-style: italic;
   font-variation-settings: 'SOFT' 100, 'WONK' 1;
@@ -159,8 +163,10 @@
   align-items: center;
   gap: 8px;
   font-family: var(--font-heading);
-  font-size: clamp(16px, 1.6vw, 22px);
+  font-size: clamp(20px, 2vw, 26px);
   font-weight: 300;
+  min-height: var(--min-touch-target, 44px);
+  padding: var(--space-xs, 8px) var(--space-sm, 16px);
   font-style: italic;
   font-variation-settings: 'SOFT' 100, 'WONK' 1;
   color: #e9e9e9;

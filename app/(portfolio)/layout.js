@@ -54,6 +54,8 @@ export default function RootLayout({ children }) {
             var t = localStorage.getItem('theme-preference');
             if (t) document.documentElement.dataset.theme = t;
           } catch(e) {}
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          window.scrollTo(0, 0);
         `}} />
       </head>
       <body>
