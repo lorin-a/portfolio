@@ -49,6 +49,12 @@ export default function RootLayout({ children }) {
     <html lang="en" className={`${fraunces.variable} ${openSans.variable}`}>
       <head>
         <link rel="icon" href="/favicon.ico" sizes="any" />
+        <script dangerouslySetInnerHTML={{ __html: `
+          try {
+            var t = localStorage.getItem('theme-preference');
+            if (t) document.documentElement.dataset.theme = t;
+          } catch(e) {}
+        `}} />
       </head>
       <body>
         <a href="#main-content" className="skip-link">

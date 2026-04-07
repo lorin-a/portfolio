@@ -16,6 +16,26 @@ const DARK_GRADIENT = ['#C5CFA6', '#C7AAD1', '#F79C7E']
 const LIGHT_GRAD_CSS = 'linear-gradient(to bottom right, #6B8245 5%, #8B6899 45%, #B86048 88%)'
 const DARK_GRAD_CSS = 'linear-gradient(169.3deg, #C5CFA6 15.5%, #C7AAD1 52.1%, #F79C7E 89.7%)'
 
+/**
+ * Apply gradient spanning across SplitText chars.
+ * Each char shows its slice of one continuous gradient.
+ */
+function applyGradientSpan(wrapEl, chars, dark) {
+  const gradient = dark ? DARK_GRAD_CSS : LIGHT_GRAD_CSS
+  const wrapRect = wrapEl.getBoundingClientRect()
+  chars.forEach(char => {
+    const charRect = char.getBoundingClientRect()
+    Object.assign(char.style, {
+      background: gradient,
+      backgroundSize: `${wrapRect.width}px ${wrapRect.height}px`,
+      backgroundPosition: `-${charRect.left - wrapRect.left}px 0px`,
+      webkitBackgroundClip: 'text',
+      backgroundClip: 'text',
+      color: 'transparent',
+    })
+  })
+}
+
 export default function Hero() {
   const heroRef = useRef(null)
   const introFlowerRef = useRef(null)
@@ -36,11 +56,22 @@ export default function Hero() {
   const isIntro = phase === 'waiting' || phase === 'playing'
   const resolved = phase !== null
 
-  /* Theme detection */
+  /* Track split chars for theme-responsive gradient updates */
+  const connectionCharsRef = useRef(null)
+
+  /* Theme detection — also re-applies gradient when theme changes */
   const [isDark, setIsDark] = useState(true)
   useGSAP(() => {
     const root = document.documentElement
-    const check = () => setIsDark(root.dataset.theme === 'dark')
+    const check = () => {
+      const dark = root.dataset.theme === 'dark'
+      setIsDark(dark)
+      /* Re-apply gradient if chars exist */
+      const line2El = heroRef.current?.querySelector('.titleLine2')
+      if (line2El && connectionCharsRef.current) {
+        applyGradientSpan(line2El, connectionCharsRef.current, dark)
+      }
+    }
     check()
     const observer = new MutationObserver(check)
     observer.observe(root, { attributes: true, attributeFilter: ['data-theme'] })
@@ -105,7 +136,7 @@ export default function Hero() {
 
       const flower = introFlowerRef.current
       const flowerInner = introFlowerInnerRef.current
-      const gradient = isDark ? DARK_GRAD_CSS : LIGHT_GRAD_CSS
+
 
       /* Initial state */
       gsap.set('.heroContent', { autoAlpha: 1 })
@@ -140,40 +171,28 @@ export default function Hero() {
         type: 'chars',
         mask: 'chars',
         onSplit(self) {
-          self.masks.forEach(m => { m.style.paddingBottom = '0.15em' })
+          self.masks.forEach(m => {
+            m.style.paddingBottom = '0.2em'
+            m.style.marginBottom = '-0.12em'
+          })
         },
       }
       const split1 = SplitText.create('.titleLine1', splitOpts)
       const split2 = SplitText.create('.titleLine2', splitOpts)
 
-      /* Apply gradient spanning to Connection chars */
-      const line2El = heroRef.current.querySelector('.titleLine2')
-
-      /* Position chars behind masks FIRST, then make visible — all before next paint */
+      /* Position chars behind masks FIRST, then make visible */
       gsap.set(split1.chars, { y: '100%' })
       gsap.set(split2.chars, { y: '100%' })
       gsap.set('.titleWrap', { height: 'auto', overflow: 'visible', autoAlpha: 1, y: 0 })
       gsap.set('.titleLine1', { visibility: 'visible' })
       gsap.set('.titleLine2', { visibility: 'visible' })
+
+      /* Apply gradient spanning + store ref for theme updates */
+      connectionCharsRef.current = split2.chars
+      const line2El = heroRef.current.querySelector('.titleLine2')
+      applyGradientSpan(line2El, split2.chars, isDark)
       gsap.set('.subtitle', { height: 'auto', overflow: 'visible',
         clipPath: 'inset(-0.2em 100% -0.2em 0)' })
-
-      /* Apply gradient (chars are behind masks, safe to style) */
-      await new Promise(r => requestAnimationFrame(r))
-      if (entranceDoneRef.current) return
-
-      const wrapRect = line2El.getBoundingClientRect()
-      split2.chars.forEach(char => {
-        const charRect = char.getBoundingClientRect()
-        Object.assign(char.style, {
-          background: gradient,
-          backgroundSize: `${wrapRect.width}px ${wrapRect.height}px`,
-          backgroundPosition: `-${charRect.left - wrapRect.left}px 0px`,
-          webkitBackgroundClip: 'text',
-          backgroundClip: 'text',
-          color: 'transparent',
-        })
-      })
 
       /* ─── Step 3: Text + marks reveal timeline ─── */
       const master = gsap.timeline({
@@ -212,7 +231,7 @@ export default function Hero() {
        STANDARD ENTRANCE — One timeline, return visits
        ───────────────────────────────────────── */
     function buildStandardEntrance() {
-      const gradient = isDark ? DARK_GRAD_CSS : LIGHT_GRAD_CSS
+
 
       gsap.set('.heroContent', { autoAlpha: 1 })
       gsap.set('.titleLine1', { visibility: 'visible' })
@@ -225,26 +244,19 @@ export default function Hero() {
         type: 'chars',
         mask: 'chars',
         onSplit(self) {
-          self.masks.forEach(m => { m.style.paddingBottom = '0.15em' })
+          self.masks.forEach(m => {
+            m.style.paddingBottom = '0.2em'
+            m.style.marginBottom = '-0.12em'
+          })
         },
       }
       const split1 = SplitText.create('.titleLine1', splitOpts)
       const split2 = SplitText.create('.titleLine2', splitOpts)
 
-      /* Gradient spanning */
+      /* Apply gradient spanning + store ref for theme updates */
+      connectionCharsRef.current = split2.chars
       const line2El = heroRef.current.querySelector('.titleLine2')
-      const wrapRect = line2El.getBoundingClientRect()
-      split2.chars.forEach(char => {
-        const charRect = char.getBoundingClientRect()
-        Object.assign(char.style, {
-          background: gradient,
-          backgroundSize: `${wrapRect.width}px ${wrapRect.height}px`,
-          backgroundPosition: `-${charRect.left - wrapRect.left}px 0px`,
-          webkitBackgroundClip: 'text',
-          backgroundClip: 'text',
-          color: 'transparent',
-        })
-      })
+      applyGradientSpan(line2El, split2.chars, isDark)
 
       const tl = gsap.timeline({
         onComplete: () => { entranceDoneRef.current = true },
@@ -327,7 +339,7 @@ export default function Hero() {
 
         {/* Subtitle */}
         <p className={`${styles.subtitle} subtitle`}>
-          Emotion-Centered Research, Strategy &amp; Design
+          Emotion-Centered Research, Strategy <span style={{ fontStyle: 'normal', fontWeight: 333 }}>&amp;</span> Design
         </p>
       </div>
     </section>
