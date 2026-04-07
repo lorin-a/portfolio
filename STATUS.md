@@ -103,6 +103,7 @@ Earlier hero concept: 3-beat typewriter with greeting, title, sentence, FLIP wor
 - [x] Phase 3: Sweep deprecated token usage
 - [x] Phase 4: ~~Standardize GSAP easing (lib/motion.js)~~ SKIPPED — easing strings are just strings, GSAP is dynamically imported, centralizing adds indirection without benefit
 - [x] Phase 5: Extract homepage data to lib/homeProjects.js, archive FeaturedWork (dead code), rename GroundswellContentV3 → GroundswellContent
+- [x] Hero scatter-gather rebuild (merged from hero-scatter-gather branch 2026-04-07)
 - [x] Phase 6: ~~Consolidate animation patterns~~ SKIPPED — breathing animation scale differences are intentional (1.03 idle vs 1.15 hint)
 - [x] Phase 7: Archive orphaned components (ThemeSetter, BuildingNow, ProcessDot), clean up barrel exports
 
@@ -123,3 +124,5 @@ Earlier hero concept: 3-beat typewriter with greeting, title, sentence, FLIP wor
 | 2026-04-06 | Archive FeaturedWork | Exported in barrel but never imported anywhere — dead code |
 | 2026-04-06 | Rename GroundswellContentV3 → GroundswellContent | V3 suffix is versioning noise. Decomposition deferred — touches standalone Groundswell site |
 | 2026-04-06 | .DS_Store cleanup unnecessary | Already in .gitignore, not tracked in git |
+| 2026-04-07 | Scatter-gather hero merged | Scroll-driven letter constellation replaces time-based hero |
+| 2026-04-07 | Hero approach: cinematic hero, restrained body | Hero does the heavy animation lifting, rest of page should be impressive but not over-animated |
