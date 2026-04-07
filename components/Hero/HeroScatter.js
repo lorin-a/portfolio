@@ -18,12 +18,6 @@ const KERN_D = { 0: -1.12, 3: -1.12, 4: 2.24, 5: 2.24, 6: 1.12 }
 const KERN_C = { 0: 1.12, 1: -2.24, 2: 2.24, 3: -2.24, 6: 1.12, 7: -2.24, 8: -2.24 }
 
 /*
- * SCATTER positions — even distribution across the full viewport.
- * Grid-like thinking: divide viewport into a 5×4 grid, place one element per cell
- * with organic offset so it doesn't look mechanical.
- * Values are % of section width/height.
- */
-/*
  * Scatter: golden angle spiral distribution.
  * Places 22 elements (all chars + marks) using the golden angle (~137.5°)
  * at increasing radius from center. This creates a natural, sunflower-like
@@ -79,8 +73,6 @@ const MARK_SCATTER = {
   sense: ALL_POSITIONS[12],
   weave: ALL_POSITIONS[20],
 }
-/* Flower (shape mark) goes to ALL_POSITIONS[21] during shrink */
-const FLOWER_SCATTER = ALL_POSITIONS[21]
 
 /*
  * OFFSCREEN starting positions — where letters come from before scatter.
@@ -153,12 +145,8 @@ export default function HeroScatter() {
 
     window.scrollTo(0, 0)
 
-    /* Hide everything below the hero immediately to prevent flash */
-    let sibling = wrapperRef.current?.nextElementSibling
-    while (sibling) {
-      gsap.set(sibling, { autoAlpha: 0 })
-      sibling = sibling.nextElementSibling
-    }
+    /* Hide everything below the hero to prevent flash of content */
+    document.body.classList.add('hero-loading')
 
     /* ─── INITIAL STATE: everything offscreen, flower centered ─── */
     const flowerSize = Math.min(Math.max(window.innerWidth * 0.22, 160), 280)
@@ -194,8 +182,7 @@ export default function HeroScatter() {
           window.scrollTo(0, 0)
           buildScrollTimeline()
           /* Reveal content below after pin is established */
-          let s = wrapperRef.current?.nextElementSibling
-          while (s) { gsap.set(s, { autoAlpha: 1 }); s = s.nextElementSibling }
+          document.body.classList.remove('hero-loading')
         },
       })
       bounceTl.to(flower, { scale: 1.15, duration: 0.25, ease: 'power2.out' })
@@ -243,12 +230,12 @@ export default function HeroScatter() {
           pinType: 'transform',
           scrub: 1.5,
           onUpdate: (self) => {
-            /* Kill floats only when gather is nearly done */
-            if (self.progress > 0.75 && idleTweens.current.length) {
+            /* Kill floats just as gather begins — reset y so final positions are clean */
+            if (self.progress > 0.30 && idleTweens.current.length) {
               idleTweens.current.forEach(t => t.kill())
               idleTweens.current = []
-              allScatter.forEach(el => { if (el) gsap.set(el, { y: 0 }) })
-              gsap.set(flower, { y: 0 })
+              allScatter.forEach(el => { if (el) gsap.to(el, { y: 0, duration: 0.3, ease: 'power1.out' }) })
+              gsap.to(flower, { y: 0, duration: 0.3, ease: 'power1.out' })
             }
           },
         },
@@ -347,6 +334,8 @@ export default function HeroScatter() {
         }, 0.36)
       }
       if (mFinals[2]) {
+        /* Flower uses xPercent/yPercent for centering, which is already applied.
+           The measurement gives us center coordinates, so left/top targets are correct. */
         tl.to(flower, {
           left: mFinals[2].left + '%', top: mFinals[2].top + '%',
           width: mFinals[2].w, height: mFinals[2].h,
@@ -363,6 +352,7 @@ export default function HeroScatter() {
     return () => {
       idleTweens.current.forEach(t => t.kill())
       idleTweens.current = []
+      document.body.classList.remove('hero-loading')
     }
   }, { scope: heroRef })
 

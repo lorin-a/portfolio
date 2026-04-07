@@ -87,7 +87,7 @@
 .subtitle {
   position: absolute;
   left: 50%;
-  top: 68%;
+  top: 72%;
   transform: translate(-50%, -50%);
   font-family: var(--font-heading);
   font-weight: 250;
