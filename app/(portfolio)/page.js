@@ -1,4 +1,4 @@
-import Hero from '@/components/Hero/Hero'
+import Hero from '@/components/Hero/HeroScatter'
 import Squiggle from '@/components/Squiggle/Squiggle'
 import ProjectSection from '@/components/ProjectSection/ProjectSection'
 import BirthStorySection from '@/components/BirthStorySection/BirthStorySection'
