@@ -16,6 +16,16 @@ const DARK_GRADIENT = ['#C5CFA6', '#C7AAD1', '#F79C7E']
 const LIGHT_GRAD_CSS = 'linear-gradient(to bottom right, #6B8245 5%, #8B6899 45%, #B86048 88%)'
 const DARK_GRAD_CSS = 'linear-gradient(169.3deg, #C5CFA6 15.5%, #C7AAD1 52.1%, #F79C7E 89.7%)'
 
+/* Per-character kerning from Figma (px at 112px base, scales with font size) */
+const KERN_DESIGNING = { 0: -1.12, 3: -1.12, 4: 2.24, 5: 2.24, 6: 1.12 }
+const KERN_CONNECTION = { 0: 1.12, 1: -2.24, 2: 2.24, 3: -2.24, 6: 1.12, 7: -2.24, 8: -2.24 }
+
+function applyKerning(chars, kernMap) {
+  Object.entries(kernMap).forEach(([i, px]) => {
+    if (chars[i]) chars[i].style.marginRight = `${px}px`
+  })
+}
+
 /**
  * Apply gradient spanning across SplitText chars.
  * Each char shows its slice of one continuous gradient.
@@ -189,6 +199,8 @@ export default function Hero() {
 
       /* Apply gradient spanning + store ref for theme updates */
       connectionCharsRef.current = split2.chars
+      applyKerning(split1.chars, KERN_DESIGNING)
+      applyKerning(split2.chars, KERN_CONNECTION)
       const line2El = heroRef.current.querySelector('.titleLine2')
       applyGradientSpan(line2El, split2.chars, isDark)
       gsap.set('.subtitle', { height: 'auto', overflow: 'visible',
@@ -255,6 +267,8 @@ export default function Hero() {
 
       /* Apply gradient spanning + store ref for theme updates */
       connectionCharsRef.current = split2.chars
+      applyKerning(split1.chars, KERN_DESIGNING)
+      applyKerning(split2.chars, KERN_CONNECTION)
       const line2El = heroRef.current.querySelector('.titleLine2')
       applyGradientSpan(line2El, split2.chars, isDark)
 
