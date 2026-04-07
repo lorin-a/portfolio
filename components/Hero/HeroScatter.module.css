@@ -129,7 +129,7 @@
 
 .welcomeText {
   font-family: var(--font-heading);
-  font-size: clamp(18px, 1.8vw, 24px);
+  font-size: clamp(20px, 2vw, 26px);
   font-weight: 300;
   font-style: italic;
   font-variation-settings: 'SOFT' 100, 'WONK' 1;
@@ -257,7 +257,12 @@
 /* ===========================================
    RESPONSIVE
    =========================================== */
-@media (max-width: 600px) {
-  .scatterChar { font-size: clamp(40px, 13vw, 64px); }
-  .measureTitle { font-size: clamp(40px, 13vw, 64px); }
+@media (max-width: 768px) {
+  .scatterChar { font-size: clamp(40px, 12vw, 64px); }
+  .measureTitle { font-size: clamp(40px, 12vw, 64px); }
+  .mark {
+    width: clamp(35px, 8vw, 50px);
+    height: clamp(35px, 8vw, 50px);
+  }
+  .subtitle { font-size: clamp(13px, 3.5vw, 18px); }
 }

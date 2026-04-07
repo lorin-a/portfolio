@@ -29,50 +29,58 @@ const KERN_C = { 0: 1.12, 1: -2.24, 2: 2.24, 3: -2.24, 6: 1.12, 7: -2.24, 8: -2.
 function generateScatterPositions(count) {
   const goldenAngle = 137.508 * (Math.PI / 180)
   const positions = []
+  /* Adjust spread based on viewport aspect ratio */
+  const isNarrow = typeof window !== 'undefined' && window.innerWidth < 700
+  const spreadX = isNarrow ? 38 : 42
+  const spreadY = isNarrow ? 36 : 40
   for (let i = 0; i < count; i++) {
     const angle = i * goldenAngle
-    /* Radius increases with sqrt for even area distribution */
     const r = Math.sqrt((i + 0.5) / count)
-    /* Map to viewport: center at 50,50 with range 5-95% */
-    const x = 50 + r * 42 * Math.cos(angle)
-    const y = 50 + r * 40 * Math.sin(angle)
-    positions.push([Math.round(x * 10) / 10, Math.round(y * 10) / 10])
+    const x = 50 + r * spreadX * Math.cos(angle)
+    const y = 50 + r * spreadY * Math.sin(angle)
+    /* Clamp to 6-94% to keep chars fully visible */
+    positions.push([
+      Math.round(Math.max(6, Math.min(94, x)) * 10) / 10,
+      Math.round(Math.max(6, Math.min(94, y)) * 10) / 10,
+    ])
   }
   return positions
 }
 
-/* Generate 22 positions, then assign to elements with color interleaving */
-const ALL_POSITIONS = generateScatterPositions(22)
+/* Generate 23 positions, skip index 0 (too close to center flower) */
+const RAW_POSITIONS = generateScatterPositions(23)
+const ALL_POSITIONS = RAW_POSITIONS.slice(1)
 
 /* Interleave: D, C, D, C, mark, D, C, D, C, mark, D, C, D, C, D, C, D, C, D, C, D, mark */
 /* Pick positions that spread D and C chars across the spiral */
+/* Interleave D and C chars across the spiral for color balance.
+   All positions are safely away from center (index 0 was removed). */
 const D_SCATTER = [
-  ALL_POSITIONS[4],   // D — pushed further from center
+  ALL_POSITIONS[0],   // D
   ALL_POSITIONS[2],   // e
-  ALL_POSITIONS[5],   // s
-  ALL_POSITIONS[7],   // i
-  ALL_POSITIONS[9],   // g
-  ALL_POSITIONS[11],  // n
-  ALL_POSITIONS[14],  // i
-  ALL_POSITIONS[16],  // n
-  ALL_POSITIONS[18],  // g
+  ALL_POSITIONS[4],   // s
+  ALL_POSITIONS[6],   // i
+  ALL_POSITIONS[8],   // g
+  ALL_POSITIONS[10],  // n
+  ALL_POSITIONS[13],  // i
+  ALL_POSITIONS[15],  // n
+  ALL_POSITIONS[17],  // g
 ]
 const C_SCATTER = [
   ALL_POSITIONS[1],   // C
   ALL_POSITIONS[3],   // o
-  ALL_POSITIONS[0],   // n — takes D's old inner position
-  ALL_POSITIONS[6],   // n
-  ALL_POSITIONS[8],   // e
-  ALL_POSITIONS[10],  // c
-  ALL_POSITIONS[13],  // t
-  ALL_POSITIONS[15],  // i
-  ALL_POSITIONS[17],  // o
+  ALL_POSITIONS[5],   // n
+  ALL_POSITIONS[7],   // n
+  ALL_POSITIONS[9],   // e
+  ALL_POSITIONS[12],  // c
+  ALL_POSITIONS[14],  // t
+  ALL_POSITIONS[16],  // i
+  ALL_POSITIONS[18],  // o
   ALL_POSITIONS[19],  // n
 ]
-/* Put marks on opposite sides — sense left, weave right */
 const MARK_SCATTER = {
-  sense: ALL_POSITIONS[12],
-  weave: ALL_POSITIONS[21],
+  sense: ALL_POSITIONS[11],
+  weave: ALL_POSITIONS[20],
 }
 
 /*
@@ -201,9 +209,9 @@ export default function HeroScatter() {
     /* Lock scrolling during flower opener */
     document.body.style.overflow = 'hidden'
 
-    /* Build the scroll timeline immediately (establishes the pin)
-       but user can't scroll until flower completes */
-    buildScrollTimeline()
+    /* Build scroll timeline (establishes pin) but disable it until flower completes */
+    const heroST = buildScrollTimeline()
+    if (heroST) heroST.disable()
 
     /* ─── FLOWER OPENER (time-based) ─── */
     setShapeAnimate(true)
@@ -212,9 +220,11 @@ export default function HeroScatter() {
       const bounceTl = gsap.timeline({
         onComplete: () => {
           flowerHoverable.current = true
-          /* Unlock scrolling + enable normalizeScroll for smooth experience */
+          /* Enable the scroll timeline + unlock scrolling */
           document.body.style.overflow = ''
+          if (heroST) heroST.enable()
           ScrollTrigger.normalizeScroll(true)
+          ScrollTrigger.refresh()
           gsap.to(arrowRef.current, { autoAlpha: 1, duration: 0.5, ease: 'power1.inOut' })
           document.body.classList.remove('hero-loading')
         },
@@ -264,6 +274,15 @@ export default function HeroScatter() {
           pinType: 'transform',
           scrub: 0.8,
           onUpdate: (self) => {
+            /* Show welcome only when at the very start (flower state) */
+            if (arrowRef.current) {
+              if (self.progress < 0.005) {
+                gsap.set(arrowRef.current, { autoAlpha: 1 })
+              } else {
+                gsap.set(arrowRef.current, { autoAlpha: 0 })
+              }
+            }
+
             const inScatter = self.progress > 0.05 && self.progress < 0.30
 
             /* Restart floats when scrolling back into scatter range */
@@ -292,8 +311,7 @@ export default function HeroScatter() {
         },
       })
 
-      /* ── 0–3%: Hide arrow ── */
-      tl.to(arrowRef.current, { autoAlpha: 0, duration: 0.02 }, 0)
+      /* Welcome arrow hidden via onUpdate callback (handles all scroll states) */
 
       /* ── 0–25%: DRAG IN — letters travel from offscreen to scatter positions.
            Flower shrinks simultaneously. Same scroll range = same gesture. ── */
@@ -398,6 +416,8 @@ export default function HeroScatter() {
       }
 
       /* ── 88–100%: Hold — let the composed state breathe ── */
+
+      return tl.scrollTrigger
     }
 
     return () => {
