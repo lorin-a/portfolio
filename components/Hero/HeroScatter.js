@@ -283,20 +283,24 @@ export default function HeroScatter() {
               }
             }
 
-            const inScatter = self.progress > 0.05 && self.progress < 0.30
+            /* Float starts after drag-in is fully settled (including scrub lag) */
+            const inScatter = self.progress > 0.24 && self.progress < 0.30
 
-            /* Restart floats when scrolling back into scatter range */
+            /* Start floats when settled in scatter range */
             if (inScatter && idleTweens.current.length === 0) {
               allScatter.forEach(el => {
                 if (!el) return
+                /* Start from current y (0) with a gentle ramp — no sudden jump */
                 idleTweens.current.push(gsap.to(el, {
-                  y: '+=14', duration: gsap.utils.random(2, 3.5),
+                  y: '+=12', duration: gsap.utils.random(2.5, 4),
                   ease: 'sine.inOut', repeat: -1, yoyo: true,
+                  delay: gsap.utils.random(0, 1),
                 }))
               })
               idleTweens.current.push(gsap.to(flower, {
-                y: '+=10', duration: 3,
+                y: '+=8', duration: 3,
                 ease: 'sine.inOut', repeat: -1, yoyo: true,
+                delay: 0.5,
               }))
             }
 
@@ -322,19 +326,20 @@ export default function HeroScatter() {
         duration: 0.22, ease: 'power1.inOut',
       }, 0)
 
-      /* Each Designing char drags from offscreen to scatter position */
+      /* Each Designing char drags from offscreen to scatter position.
+         power2.out = pure deceleration, no bounce or direction change at end */
       dChars.forEach((el, i) => {
         tl.to(el, {
           left: D_SCATTER[i][0] + '%', top: D_SCATTER[i][1] + '%',
-          duration: 0.28, ease: 'power1.inOut',
+          duration: 0.24, ease: 'power2.out',
         }, i * 0.004)
       })
 
-      /* Each Connection char drags from offscreen to scatter position */
+      /* Each Connection char */
       cChars.forEach((el, i) => {
         tl.to(el, {
           left: C_SCATTER[i][0] + '%', top: C_SCATTER[i][1] + '%',
-          duration: 0.28, ease: 'power1.inOut',
+          duration: 0.24, ease: 'power2.out',
         }, 0.015 + i * 0.004)
       })
 
@@ -342,13 +347,13 @@ export default function HeroScatter() {
       if (senseRef.current) {
         tl.to(senseRef.current, {
           left: MARK_SCATTER.sense[0] + '%', top: MARK_SCATTER.sense[1] + '%',
-          duration: 0.26, ease: 'power1.inOut',
+          duration: 0.22, ease: 'power2.out',
         }, 0.02)
       }
       if (weaveRef.current) {
         tl.to(weaveRef.current, {
           left: MARK_SCATTER.weave[0] + '%', top: MARK_SCATTER.weave[1] + '%',
-          duration: 0.26, ease: 'power1.inOut',
+          duration: 0.22, ease: 'power2.out',
         }, 0.03)
       }
 
