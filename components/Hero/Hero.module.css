@@ -21,6 +21,7 @@
   max-width: var(--max-width);
   width: 100%;
   visibility: hidden;
+  overflow: visible;
 }
 
 /* ===========================================
@@ -120,6 +121,7 @@
   display: block;
   visibility: hidden;
   color: var(--color-ink);
+  overflow: visible;
 }
 
 :global(:root[data-theme="dark"]) .titleLine1 {

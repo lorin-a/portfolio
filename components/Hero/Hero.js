@@ -181,7 +181,8 @@ export default function Hero() {
          SplitText inherits that — no chars visible during setup. */
       gsap.set('.titleWrap', { height: 'auto', overflow: 'visible', autoAlpha: 1, y: 0 })
 
-      const splitOpts = {
+      /* Designing: masked for rise-from-below reveal */
+      const split1Opts = {
         type: 'chars',
         mask: 'chars',
         onSplit(self) {
@@ -193,14 +194,49 @@ export default function Hero() {
           })
         },
       }
-      const split1 = SplitText.create('.titleLine1', splitOpts)
-      const split2 = SplitText.create('.titleLine2', splitOpts)
+      const split1 = SplitText.create('.titleLine1', split1Opts)
 
-      /* Set chars behind masks while parent is still visibility:hidden */
+      /* Connection: NO mask — chars need to scatter across viewport */
+      const split2 = SplitText.create('.titleLine2', { type: 'chars' })
+
+      /* Hide Designing chars behind masks */
       gsap.set(split1.chars, { y: '100%' })
-      gsap.set(split2.chars, { y: '100%' })
 
-      /* Apply gradient + kerning (still invisible) */
+      /* Scatter Connection chars across full viewport in a deliberate ring.
+         Positions inspired by Figma mockup — letters placed around the
+         center composition, not randomly scattered. */
+      const vw = window.innerWidth
+      const vh = window.innerHeight
+      /* Scatter chars using position:fixed so they escape ALL overflow containers.
+         Positions are absolute viewport coordinates forming a ring around center. */
+      const cx = vw / 2
+      const cy = vh / 2
+      const scatterPositions = [
+        { left: vw * 0.06, top: vh * 0.2 },   // C — far left, upper
+        { left: vw * 0.22, top: vh * 0.08 },  // o — upper left
+        { left: vw * 0.68, top: vh * 0.1 },   // n — upper right
+        { left: vw * 0.85, top: vh * 0.2 },   // n — far right, upper
+        { left: vw * 0.05, top: vh * 0.6 },   // e — far left, lower
+        { left: vw * 0.82, top: vh * 0.45 },  // c — far right, middle
+        { left: vw * 0.25, top: vh * 0.72 },  // t — lower left
+        { left: vw * 0.73, top: vh * 0.5 },   // i — right of center
+        { left: vw * 0.6,  top: vh * 0.75 },  // o — lower right
+        { left: vw * 0.88, top: vh * 0.68 },  // n — far right, lower
+      ]
+      split2.chars.forEach((char, i) => {
+        const pos = scatterPositions[i] || { left: cx, top: cy }
+        gsap.set(char, {
+          position: 'fixed',
+          left: pos.left,
+          top: pos.top,
+          x: 0, y: 0,
+          rotation: gsap.utils.random(-8, 8),
+          autoAlpha: 0,
+          zIndex: 50,
+        })
+      })
+
+      /* Apply gradient + kerning (chars are invisible) */
       connectionCharsRef.current = split2.chars
       applyKerning(split1.chars, KERN_DESIGNING)
       applyKerning(split2.chars, KERN_CONNECTION)
@@ -225,10 +261,57 @@ export default function Hero() {
         y: '0%', duration: 0.8, stagger: 0.04, ease: 'power1.inOut',
       }, 0)
 
-      /* "Connection" chars rise from mask */
+      /* "Connection" — gather: scattered fixed chars fade in then pull to final position */
+      master.set('.titleLine2', { visibility: 'visible' }, 0.6)
+
+      /* Fade in at scattered positions */
       master.to(split2.chars, {
-        y: '0%', duration: 0.8, stagger: 0.04, ease: 'power1.inOut',
+        autoAlpha: 1, duration: 0.5,
+        stagger: { each: 0.03, from: 'random' },
+        ease: 'power1.in',
       }, 0.6)
+
+      /* Gather: measure each char's final position, animate from fixed to there */
+      master.call(() => {
+        /* Get each char's natural position in the flow */
+        const targets = split2.chars.map(char => {
+          /* Temporarily remove fixed positioning to measure natural position */
+          const savedStyles = {
+            position: char.style.position,
+            left: char.style.left,
+            top: char.style.top,
+            zIndex: char.style.zIndex,
+          }
+          gsap.set(char, { position: 'relative', left: 'auto', top: 'auto', zIndex: 'auto' })
+          const rect = char.getBoundingClientRect()
+          /* Restore fixed positioning */
+          gsap.set(char, savedStyles)
+          return { x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 }
+        })
+
+        /* Animate each char from its fixed position to its natural center */
+        split2.chars.forEach((char, i) => {
+          const charRect = char.getBoundingClientRect()
+          const fromX = charRect.left + charRect.width / 2
+          const fromY = charRect.top + charRect.height / 2
+          const dx = targets[i].x - fromX
+          const dy = targets[i].y - fromY
+
+          gsap.to(char, {
+            x: `+=${dx}`, y: `+=${dy}`, rotation: 0,
+            duration: 1.0,
+            delay: i * 0.03,
+            ease: 'power2.inOut',
+            onComplete: () => {
+              /* Snap to flow position */
+              gsap.set(char, {
+                position: 'relative', left: 'auto', top: 'auto',
+                x: 0, y: 0, zIndex: 'auto', clearProps: 'rotation',
+              })
+            },
+          })
+        })
+      }, null, 1.2)
 
       /* Subtitle wipes in */
       master.to('.subtitle', {
@@ -302,9 +385,39 @@ export default function Hero() {
       tl.from(split1.chars, {
         y: '100%', duration: 0.6, stagger: 0.03, ease: 'power1.inOut',
       }, 0.8)
-      tl.from(split2.chars, {
-        y: '100%', duration: 0.6, stagger: 0.03, ease: 'power1.inOut',
+      const vwStd = window.innerWidth
+      const vhStd = window.innerHeight
+      const scatterStd = [
+        { x: -vwStd * 0.38, y: -vhStd * 0.25 },
+        { x: -vwStd * 0.2,  y: -vhStd * 0.38 },
+        { x: vwStd * 0.25,  y: -vhStd * 0.35 },
+        { x: vwStd * 0.38,  y: -vhStd * 0.15 },
+        { x: -vwStd * 0.38, y: vhStd * 0.15 },
+        { x: vwStd * 0.35,  y: vhStd * 0.05 },
+        { x: -vwStd * 0.15, y: vhStd * 0.25 },
+        { x: vwStd * 0.2,   y: vhStd * 0.0 },
+        { x: vwStd * 0.1,   y: vhStd * 0.3 },
+        { x: vwStd * 0.35,  y: vhStd * 0.25 },
+      ]
+      split2.chars.forEach((char, i) => {
+        const pos = scatterStd[i] || { x: 0, y: 0 }
+        gsap.set(char, {
+          x: pos.x, y: pos.y,
+          rotation: gsap.utils.random(-8, 8),
+          autoAlpha: 0,
+        })
+      })
+      tl.set('.titleLine2', { visibility: 'visible' }, 1.0)
+      tl.to(split2.chars, {
+        autoAlpha: 1, duration: 0.3,
+        stagger: { each: 0.02, from: 'random' },
+        ease: 'power1.in',
       }, 1.0)
+      tl.to(split2.chars, {
+        x: 0, y: 0, rotation: 0, scale: 1, duration: 0.8,
+        stagger: { each: 0.03, from: 'edges' },
+        ease: 'power2.inOut',
+      }, 1.1)
 
       /* 1.6s: subtitle */
       tl.to('.subtitle', {
@@ -358,7 +471,45 @@ export default function Hero() {
         <div className="titleWrap">
           <h1 className={styles.title} aria-label="Designing Connection">
             <span className={`${styles.titleLine1} titleLine1`}>Designing</span>
-            <span className={`${styles.titleLine2} titleLine2`}>Connection</span>
+            <span
+              className={`${styles.titleLine2} titleLine2`}
+              onMouseEnter={() => {
+                if (!entranceDoneRef.current || !connectionCharsRef.current) return
+                const chars = connectionCharsRef.current
+                if (gsap.isTweening(chars[0])) return
+                /* Gather: chars scatter to deliberate ring then reform */
+                const vw = window.innerWidth
+                const vh = window.innerHeight
+                const hoverPositions = [
+                  { x: -vw * 0.3, y: -vh * 0.2 },
+                  { x: -vw * 0.15, y: -vh * 0.3 },
+                  { x: vw * 0.2, y: -vh * 0.28 },
+                  { x: vw * 0.3, y: -vh * 0.1 },
+                  { x: -vw * 0.3, y: vh * 0.12 },
+                  { x: vw * 0.28, y: vh * 0.05 },
+                  { x: -vw * 0.12, y: vh * 0.2 },
+                  { x: vw * 0.15, y: vh * 0.0 },
+                  { x: vw * 0.08, y: vh * 0.25 },
+                  { x: vw * 0.28, y: vh * 0.2 },
+                ]
+                const tl = gsap.timeline()
+                chars.forEach((char, i) => {
+                  const pos = hoverPositions[i] || { x: 0, y: 0 }
+                  tl.to(char, {
+                    x: pos.x, y: pos.y,
+                    rotation: gsap.utils.random(-8, 8),
+                    duration: 0.5,
+                    ease: 'power1.out',
+                  }, i * 0.02)
+                })
+                tl.to(chars, {
+                  x: 0, y: 0, rotation: 0,
+                  duration: 0.8,
+                  stagger: { each: 0.02, from: 'edges' },
+                  ease: 'power2.inOut',
+                })
+              }}
+            >Connection</span>
           </h1>
         </div>
 
