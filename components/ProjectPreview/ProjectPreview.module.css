@@ -1,0 +1,248 @@
+/* ===========================================
+   PROJECT PREVIEW — scroll-driven shrink-and-reveal
+   Image starts large with padding + border-radius,
+   shrinks to one side as text reveals on the other.
+   =========================================== */
+
+.section {
+  position: relative;
+  min-height: 90vh;
+  display: flex;
+  align-items: center;
+  padding: var(--space-lg) var(--gutter);
+  gap: clamp(24px, 4vw, 64px);
+}
+
+/* Default: media left, text right */
+.section:not(.flip) {
+  flex-direction: row;
+}
+
+.flip {
+  flex-direction: row-reverse;
+}
+
+/* ===========================================
+   MEDIA STRIP — main image + peek images in a row
+   =========================================== */
+.mediaStrip {
+  width: 95%;
+  flex-shrink: 0;
+  display: flex;
+  gap: clamp(8px, 1vw, 16px);
+  align-items: stretch;
+}
+
+.media {
+  flex: 1 0 auto;
+  border-radius: 16px;
+  overflow: hidden;
+  position: relative;
+  aspect-ratio: 16 / 10;
+  transition: box-shadow var(--motion-medium) var(--ease-out);
+}
+
+.mediaInner {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Peek cards — sit beside main media, hidden until hover */
+.peekCard {
+  flex: 0 0 28%;
+  border-radius: 12px;
+  overflow: hidden;
+  visibility: hidden;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  transition: transform var(--motion-fast) var(--ease-out);
+  cursor: pointer;
+}
+
+@media (hover: hover) {
+  .peekCard:hover {
+    transform: scale(1.03);
+    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.3);
+  }
+}
+
+.peekImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* ===========================================
+   TEXT — reveals from the side on scroll
+   =========================================== */
+.text {
+  flex: 1;
+  min-width: 280px;
+  visibility: hidden;
+}
+
+.num {
+  font-family: var(--font-heading);
+  font-size: clamp(14px, 1.5vw, 20px);
+  font-weight: 340;
+  font-variation-settings: 'SOFT' 100, 'WONK' 1;
+  color: var(--color-ink-faint);
+  display: block;
+  margin-bottom: var(--space-xs);
+}
+
+:global(:root[data-theme="dark"]) .num {
+  color: var(--color-ink-faint);
+}
+
+.title {
+  font-family: var(--font-heading);
+  font-size: clamp(28px, 4vw, 56px);
+  font-weight: 200;
+  font-variation-settings: 'SOFT' 100, 'WONK' 1;
+  line-height: 1.05;
+  color: var(--color-ink);
+  margin: 0 0 var(--space-xs);
+}
+
+:global(:root[data-theme="dark"]) .title {
+  color: #e9e9e9;
+}
+
+.tagline {
+  font-family: var(--font-heading);
+  font-size: clamp(16px, 2vw, 24px);
+  font-weight: 300;
+  font-style: italic;
+  font-variation-settings: 'SOFT' 100, 'WONK' 1;
+  color: var(--color-ink);
+  line-height: 1.3;
+  margin: 0 0 var(--space-sm);
+}
+
+:global(:root[data-theme="dark"]) .tagline {
+  color: #c8c8c8;
+}
+
+.description {
+  font-family: var(--font-body);
+  font-size: clamp(15px, 1.2vw, 18px);
+  font-weight: 400;
+  line-height: 1.6;
+  color: var(--color-ink-light);
+  margin: 0 0 var(--space-sm);
+  opacity: 0.85;
+}
+
+:global(:root[data-theme="dark"]) .description {
+  color: #b0b0b0;
+}
+
+/* ===========================================
+   PILLS
+   =========================================== */
+.pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: var(--space-sm);
+}
+
+.pill {
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 400;
+  padding: 4px 12px;
+  border-radius: var(--radius-pill);
+  border: 1.5px solid;
+  white-space: nowrap;
+}
+
+.pillSense {
+  composes: pill;
+  color: var(--pill-sense-text);
+  border-color: var(--pill-sense-border);
+  background: var(--pill-sense-bg);
+}
+
+.pillWeave {
+  composes: pill;
+  color: var(--pill-weave-text);
+  border-color: var(--pill-weave-border);
+  background: var(--pill-weave-bg);
+}
+
+.pillShape {
+  composes: pill;
+  color: var(--pill-shape-text);
+  border-color: var(--pill-shape-border);
+  background: var(--pill-shape-bg);
+}
+
+/* ===========================================
+   CTA
+   =========================================== */
+.cta {
+  font-family: var(--font-heading);
+  font-size: clamp(16px, 1.5vw, 20px);
+  font-weight: 300;
+  font-style: italic;
+  font-variation-settings: 'SOFT' 100, 'WONK' 1;
+  color: var(--color-ink);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  display: inline-block;
+  min-height: var(--min-touch-target, 44px);
+  padding: var(--space-xs) 0;
+}
+
+:global(:root[data-theme="dark"]) .cta {
+  color: #e9e9e9;
+}
+
+@media (hover: hover) {
+  .cta:hover { opacity: 0.7; }
+}
+
+.comingSoon {
+  font-family: var(--font-body);
+  font-size: var(--text-body-small);
+  color: var(--color-ink-faint);
+  font-style: italic;
+}
+
+/* ===========================================
+   RESPONSIVE
+   =========================================== */
+@media (max-width: 900px) {
+  .section {
+    flex-direction: column !important;
+    min-height: auto;
+    padding: var(--space-md) var(--gutter);
+  }
+
+  .mediaStrip {
+    width: 100%;
+  }
+
+  .text {
+    min-width: 0;
+  }
+
+  .peekCard {
+    display: none;
+  }
+}
+
+/* ===========================================
+   REDUCED MOTION
+   =========================================== */
+@media (prefers-reduced-motion: reduce) {
+  .text {
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+}

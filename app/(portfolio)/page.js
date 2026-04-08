@@ -1,14 +1,7 @@
 import Hero from '@/components/Hero/HeroScatter'
-import Squiggle from '@/components/Squiggle/Squiggle'
-import ProjectSection from '@/components/ProjectSection/ProjectSection'
-import BirthStorySection from '@/components/BirthStorySection/BirthStorySection'
-import GroundswellSection from '@/components/GroundswellSection/GroundswellSection'
+import ProjectPreview from '@/components/ProjectPreview/ProjectPreview'
 import AboutSection from '@/components/AboutSection/AboutSection'
-import {
-  SOMEBUDDY, SOMEBUDDY_TILES,
-  TRANSITION_DESIGN, TRANSITION_TILES,
-  BRIDGING, BRIDGING_TILES,
-} from '@/lib/homeProjects'
+import { cloudImg, cloudVideo, HOME_IMAGES, GS_IMAGES, GS_CARDS, GS_VIDEOS } from '@/lib/cloudinary'
 import styles from './page.module.css'
 
 export default function Home() {
@@ -16,22 +9,99 @@ export default function Home() {
     <>
       <Hero />
 
-      <Squiggle />
-      <GroundswellSection />
+      <div id="work">
+        <ProjectPreview
+          num="01"
+          title="Groundswell"
+          tagline="Making Space to Restore, Together"
+          description="A multi-scale design ecology built to support the complex emotional reality of oncology care. Co-designed with healthcare workers."
+          contributions={[
+            { label: 'Participatory Research' },
+            { label: 'Copywriting' },
+            { label: 'Experience Design' },
+          ]}
+          pillVariant="sense"
+          mediaSrc={cloudVideo(GS_VIDEOS['gs-walkthrough-video'], 1200)}
+          mediaType="video"
+          mediaAlt="Groundswell walkthrough"
+          peekImages={[
+            { src: cloudImg(GS_CARDS['heartbroken-front'], 600), alt: 'Reflection card' },
+            { src: cloudImg(GS_IMAGES['gs-pod'], 600), alt: 'Restorative pod' },
+            { src: cloudImg(GS_IMAGES['gs-artwall'], 600), alt: 'Community art wall' },
+          ]}
+          href="/projects/groundswell"
+        />
 
-      <Squiggle />
-      <BirthStorySection />
+        <ProjectPreview
+          num="02"
+          title="BirthStory"
+          tagline="A micro-app for birthing parents"
+          description="Helping parents document and reflect on their birth experience for University of Pittsburgh Women's Health."
+          contributions={[
+            { label: 'UX Research' },
+            { label: 'UX Design' },
+            { label: 'Client Iteration' },
+          ]}
+          pillVariant="weave"
+          mediaSrc={cloudImg(HOME_IMAGES['bs'], 1200)}
+          mediaType="image"
+          mediaAlt="BirthStory app screens"
+          comingSoon
+          flip
+        />
 
-      <Squiggle />
-      <ProjectSection project={SOMEBUDDY} tiles={SOMEBUDDY_TILES} pillVariant="sense" />
+        <ProjectPreview
+          num="03"
+          title="SomeBuddy"
+          tagline="A therapy companion app"
+          description="Brand identity, UX, and animation for a therapy companion app. Full creative range."
+          contributions={[
+            { label: 'Brand Identity' },
+            { label: 'UX' },
+            { label: 'Animation' },
+          ]}
+          pillVariant="sense"
+          mediaSrc={cloudImg(HOME_IMAGES['somebuddy-cover'], 1200)}
+          mediaType="image"
+          mediaAlt="SomeBuddy app preview"
+          comingSoon
+        />
 
-      <Squiggle />
-      <ProjectSection project={TRANSITION_DESIGN} tiles={TRANSITION_TILES} flip pillVariant="sense" />
+        <ProjectPreview
+          num="04"
+          title="Transition Design"
+          tagline="Systems-level design for food insecurity"
+          description="A systems-level design response to food insecurity in Pittsburgh. The lens widens."
+          contributions={[
+            { label: 'Systems Mapping' },
+            { label: 'Research Synthesis' },
+          ]}
+          pillVariant="sense"
+          mediaSrc={cloudImg(HOME_IMAGES['transition-design-hero'], 1200)}
+          mediaType="image"
+          mediaAlt="Transition design systems map"
+          comingSoon
+          flip
+        />
 
-      <Squiggle />
-      <ProjectSection project={BRIDGING} tiles={BRIDGING_TILES} pillVariant="shape" />
+        <ProjectPreview
+          num="05"
+          title="Bridging the G.A.P."
+          tagline="Trail rebrand and campaign"
+          description="A comprehensive rebranding proposal for the Great Allegheny Passage featuring a campaign for inexperienced riders."
+          contributions={[
+            { label: 'UX Research' },
+            { label: 'Brand Identity' },
+            { label: 'Animation' },
+          ]}
+          pillVariant="shape"
+          mediaSrc={cloudImg(HOME_IMAGES['bridging-cover'], 1200)}
+          mediaType="image"
+          mediaAlt="Bridging the G.A.P. campaign"
+          comingSoon
+        />
+      </div>
 
-      {/* About */}
       <section className={styles.aboutWrap}>
         <AboutSection />
       </section>
