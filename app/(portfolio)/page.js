@@ -13,7 +13,7 @@ export default function Home() {
         <ProjectPreview
           num="01"
           title="Groundswell"
-          tagline="Making Space to Restore, Together"
+          tagline="Making Space to Restore, Together."
           description="A multi-scale design ecology built to support the complex emotional reality of oncology care. Co-designed with healthcare workers."
           contributions={[
             { label: 'Participatory Research' },

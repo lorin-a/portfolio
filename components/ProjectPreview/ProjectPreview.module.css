@@ -41,7 +41,9 @@
 }
 
 /* Each media slide fills the frame. Stacked absolutely so later slides
-   sit on top of earlier ones — GSAP fades them in on scroll. */
+   sit on top of earlier ones — GSAP lifts them in from below on scroll.
+   Clips its own content so per-slide transforms (zoom crops) stay within
+   the slide's bounds and don't peek past the frame while parked. */
 .slide {
   position: absolute;
   top: 0;
@@ -50,6 +52,14 @@
   bottom: 0;
   width: 100%;
   height: 100%;
+  overflow: hidden;
+}
+
+/* Rotation slides hidden during SSR and before GSAP hydrates so the
+   DOM-last slide doesn't flash on top of the first. GSAP reveals them
+   via autoAlpha as part of its initial set. */
+.slide:not(:first-child) {
+  visibility: hidden;
 }
 
 .slideInner {
@@ -108,7 +118,7 @@
 }
 
 :global(:root[data-theme="dark"]) .tagline {
-  color: #c8c8c8;
+  color: #ffffff;
 }
 
 .description {
@@ -118,11 +128,10 @@
   line-height: 1.6;
   color: var(--color-ink-light);
   margin: 0 0 var(--space-sm);
-  opacity: 0.85;
 }
 
 :global(:root[data-theme="dark"]) .description {
-  color: #b0b0b0;
+  color: #ffffff;
 }
 
 /* ===========================================

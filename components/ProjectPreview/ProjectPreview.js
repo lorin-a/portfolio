@@ -43,19 +43,25 @@ export default function ProjectPreview({
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     if (prefersReduced) {
       gsap.set(text, { autoAlpha: 1 })
-      /* Rotation slides parked below the frame — not shown under reduced motion */
-      rotationSlides.forEach(s => gsap.set(s, { yPercent: 100 }))
+      /* Rotation slides parked below the frame and hidden under reduced motion */
+      rotationSlides.forEach(s => gsap.set(s, { yPercent: 101, autoAlpha: 0 }))
       return
     }
 
-    /* Initial state: text hidden, rotation slides parked below the frame */
+    /* Initial state: text hidden, rotation slides revealed (CSS hid them
+       pre-hydration) and parked just below the frame. yPercent: 101 gives
+       a 1% buffer so sub-pixel rounding and tiny scroll deltas can't flash
+       a sliver of the slide above the bottom edge. */
     gsap.set(text, { autoAlpha: 0, x: flip ? -40 : 40 })
-    rotationSlides.forEach(s => gsap.set(s, { yPercent: 100 }))
+    rotationSlides.forEach(s => gsap.set(s, { yPercent: 101, autoAlpha: 1 }))
 
-    /* Pin length: 100% viewport for compose phase + 160% viewport per
-       rotation slide. More scroll distance makes each slide feel sticky —
-       a gentle scroll only nudges it, not shifts it fully. */
-    const pinUnits = 100 + rotationSlides.length * 160
+    /* Pin length: 100vh compose + 160vh per rotation slide + 100vh final
+       hold after the last slide settles, so the user can dwell on it
+       before the section releases. */
+    const composeUnits = 100
+    const perSlideUnits = 160
+    const finalHoldUnits = rotationSlides.length > 0 ? 100 : 0
+    const pinUnits = composeUnits + rotationSlides.length * perSlideUnits + finalHoldUnits
 
     const tl = gsap.timeline({
       scrollTrigger: {
@@ -69,7 +75,7 @@ export default function ProjectPreview({
     })
 
     /* Compose: media shrinks and text reveals */
-    const composeEnd = 100 / pinUnits
+    const composeEnd = composeUnits / pinUnits
     tl.to(media, {
       width: '55%',
       duration: composeEnd,
@@ -88,7 +94,8 @@ export default function ProjectPreview({
        its segment so the glide feels continuous with a short settle. */
     if (rotationSlides.length > 0) {
       const rotateStart = composeEnd + (20 / pinUnits) /* small pause after compose */
-      const rotateSpan = 1 - rotateStart
+      const rotateEnd = 1 - (finalHoldUnits / pinUnits) /* leaves a hold after the last slide */
+      const rotateSpan = rotateEnd - rotateStart
       const perSlide = rotateSpan / rotationSlides.length
 
       rotationSlides.forEach((slide, i) => {
