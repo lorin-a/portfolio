@@ -70,12 +70,25 @@
 }
 
 /* ===========================================
-   TEXT — reveals from the side on scroll
+   TEXT — positioned absolutely so it stays in its final layout
+   from first paint. Media shrinking doesn't reflow the text column;
+   the text just fades in at its final size and position.
    =========================================== */
 .text {
-  flex: 1;
-  min-width: 280px;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: var(--gutter);
+  width: 32%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   visibility: hidden;
+}
+
+.flip .text {
+  right: auto;
+  left: var(--gutter);
 }
 
 .num {
@@ -119,6 +132,7 @@
 
 :global(:root[data-theme="dark"]) .tagline {
   color: #ffffff;
+  opacity: 0.92;
 }
 
 .description {
@@ -132,6 +146,7 @@
 
 :global(:root[data-theme="dark"]) .description {
   color: #ffffff;
+  opacity: 0.75;
 }
 
 /* ===========================================
@@ -222,7 +237,11 @@
   }
 
   .text {
+    position: static;
+    width: 100%;
     min-width: 0;
+    right: auto;
+    left: auto;
   }
 }
 
