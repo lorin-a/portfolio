@@ -136,7 +136,12 @@
      =========================================== */
   --max-width: 1400px;
   --content-width: 900px;
-  --container-padding: var(--space-md);
+
+  /* Canonical horizontal page margin. Every section, nav, footer, and
+     container aligns to this value at every breakpoint so vertical
+     edges match. Legacy names below alias to it. */
+  --page-gutter: clamp(24px, 5vw, 80px);
+  --container-padding: var(--page-gutter);
   
   /* ===========================================
      SHADOWS
@@ -192,15 +197,15 @@
   /* Ampersand — warm terracotta on cream, brighter coral on dark */
   --color-ampersand: #C47A62;
 
-  /* Layout — fluid gutter */
-  --gutter: clamp(24px, 5vw, 80px);
+  /* Legacy alias — use --page-gutter in new code */
+  --gutter: var(--page-gutter);
 
   /* ===========================================
      12-COLUMN GRID SYSTEM
      =========================================== */
   --grid-columns: 12;
   --grid-gutter: clamp(16px, 2vw, 24px);
-  --grid-margin: var(--gutter);
+  --grid-margin: var(--page-gutter);
 
   /* ===========================================
      PROJECT CARD TINTS
@@ -329,7 +334,6 @@
     --space-xl: 5rem;
     --grid-columns: 8;
     --grid-gutter: 16px;
-    --grid-margin: clamp(20px, 4vw, 40px);
   }
 }
 
@@ -346,10 +350,8 @@
     --text-pull-quote: 1.25rem; /* 20px */
     --space-lg: 2.5rem;
     --space-xl: 4rem;
-    --container-padding: var(--space-sm);
     --grid-columns: 4;
     --grid-gutter: 12px;
-    --grid-margin: 20px;
   }
 }
 
@@ -361,7 +363,6 @@
     --space-lg: 2rem;
     --space-xl: 3rem;
     --grid-gutter: 10px;
-    --grid-margin: 16px;
   }
 }
 
