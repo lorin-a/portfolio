@@ -95,6 +95,40 @@ Earlier hero concept: 3-beat typewriter with greeting, title, sentence, FLIP wor
 
 ---
 
+## Pending Upgrades
+
+### Next.js 14 → 16 (deferred)
+
+**When to do it:** after V1 late-stage edits are finished, before V2 case study template is built. Single focused window, not mid-design. Whelm is on a different stack (CRA), zero impact there.
+
+**Why:** Next 14 has known DoS/RSC vulnerabilities patched in 15.5.10+. Next 16 also brings Cache Components, useful for the content-driven case study template not yet built. React 19 changes will affect any new components, so V2 work benefits from being on the new foundation from the start.
+
+**Risk for this codebase: low.** Verified 2026-04-22:
+- `[slug]/page.js` already uses `await params` (Next 15+ async pattern done)
+- No `cookies()`, `headers()`, `searchParams` usage anywhere
+- No `forwardRef`, `useFormState`, `useFormStatus` in direct code
+- `next.config.js` minimal (just images + Cloudinary remotePatterns)
+- GSAP via `@gsap/react` — framework-agnostic, unaffected
+- gray-matter, react-markdown@9 — both stable across React 19
+
+**Known issue: `next-cloudinary` peer deps.**
+- v6.17.5 (installed) and v7-beta.11 both cap peer deps at Next ^15
+- Will throw peer dep warning on Next 16 install
+- Will likely work in practice (no breaking API surface), but verify all Cloudinary-rendered images after upgrade
+- Check the next-cloudinary GitHub before upgrading for an official Next 16 release; otherwise install with `--legacy-peer-deps` and test
+
+**Steps when ready:**
+1. Branch off `main` (not the V2 feature branch): `git checkout main && git checkout -b nextjs-16-upgrade`
+2. Run codemod: `npx @next/codemod@latest upgrade`
+3. Test: every page in dev, especially `[slug]/*` routes and any page using Cloudinary
+4. Bump GSAP if not current (already done 2026-04-22)
+5. Merge to main, let Vercel deploy V1 on Next 16
+6. Rebase `homepage-dark-redesign` onto upgraded main, continue V2
+
+**Estimated time:** 30 min codemod + 1 hr verification, +30 min if Cloudinary needs intervention. Half-day total.
+
+---
+
 ## Overhaul Progress
 
 - [x] Phase 0: Protect existing work (push, clean branches, drop duplicate stash)
