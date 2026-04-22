@@ -137,7 +137,7 @@ export default function ProjectPreview({
               {slide.type === 'video' ? (
                 <video
                   src={slide.src}
-                  autoPlay muted defaultMuted loop playsInline
+                  autoPlay muted loop playsInline
                   ref={el => { if (el) el.muted = true }}
                   preload={i === 0 ? 'auto' : 'metadata'}
                   className={styles.slideInner}

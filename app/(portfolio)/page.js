@@ -45,14 +45,12 @@ export default function Home() {
             { label: 'Client Iteration' },
           ]}
           pillVariant="weave"
-          mediaSrc={cloudImg(HOME_IMAGES['bs'], 1600)}
-          mediaType="image"
-          mediaAlt="BirthStory cover"
+          mediaSrc={cloudVideo(HOME_VIDEOS['birthstory-default'], 1600)}
+          mediaType="video"
+          mediaAlt="BirthStory default preview"
           mediaSequence={[
-            { src: cloudImg(HOME_IMAGES['bs-2'], 1200), type: 'image', alt: 'BirthStory app screen' },
-            { src: cloudImg(HOME_IMAGES['bs-3'], 1200), type: 'image', alt: 'BirthStory app screen' },
-            { src: cloudImg(HOME_IMAGES['bs-4'], 1200), type: 'image', alt: 'BirthStory app screen' },
-            { src: cloudImg(HOME_IMAGES['bs-5'], 1200), type: 'image', alt: 'BirthStory app screen' },
+            { src: cloudVideo(HOME_VIDEOS['birthstory-hover'], 1200), type: 'video', alt: 'BirthStory hover preview' },
+            { src: cloudImg(HOME_IMAGES['bs'], 1200), type: 'image', alt: 'BirthStory cover' },
           ]}
           comingSoon
           flip
