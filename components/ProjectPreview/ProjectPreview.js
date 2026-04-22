@@ -137,7 +137,8 @@ export default function ProjectPreview({
               {slide.type === 'video' ? (
                 <video
                   src={slide.src}
-                  autoPlay muted loop playsInline
+                  autoPlay muted defaultMuted loop playsInline
+                  ref={el => { if (el) el.muted = true }}
                   preload={i === 0 ? 'auto' : 'metadata'}
                   className={styles.slideInner}
                   style={slide.zoom ? { transform: `scale(${slide.zoom})` } : undefined}

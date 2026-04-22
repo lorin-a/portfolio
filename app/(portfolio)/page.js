@@ -21,14 +21,15 @@ export default function Home() {
             { label: 'Experience Design' },
           ]}
           pillVariant="sense"
-          mediaSrc={cloudImg(GS_IMAGES['gs-hero'], 1600)}
-          mediaType="image"
-          mediaAlt="Groundswell installation"
+          mediaSrc={cloudVideo(GS_VIDEOS['gs-opener'], 1600)}
+          mediaType="video"
+          mediaAlt="Groundswell opener"
           mediaSequence={[
-            { src: cloudVideo(GS_VIDEOS['gs-walkthrough-video'], 1200), type: 'video', alt: 'Groundswell walkthrough' },
+            { src: cloudImg(GS_IMAGES['gs-hero'], 1200), type: 'image', alt: 'Groundswell installation in hospital corridor' },
+            { src: cloudVideo(GS_VIDEOS['gs-pod-data'], 1200), type: 'video', alt: 'Groundswell pod data view' },
             { src: cloudImg(GS_IMAGES['gs-cards'], 1200), type: 'image', alt: 'Groundswell reflection cards', zoom: 1.1 },
-            { src: cloudImg(GS_IMAGES['gs-artwall'], 1200), type: 'image', alt: 'Groundswell community art wall' },
-            { src: cloudImg(GS_IMAGES['groundswell-ctb-docs'], 1200), type: 'image', alt: 'Groundswell care-through-books documentation' },
+            { src: cloudVideo(GS_VIDEOS['gs-walkthrough-video'], 1200), type: 'video', alt: 'Groundswell walkthrough' },
+            { src: cloudImg(GS_IMAGES['gs-ctb-email'], 1200), type: 'image', alt: 'Groundswell care-through-books email in use' },
           ]}
           href="/projects/groundswell"
         />
