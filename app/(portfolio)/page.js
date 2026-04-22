@@ -1,7 +1,7 @@
 import Hero from '@/components/Hero/HeroScatter'
 import ProjectPreview from '@/components/ProjectPreview/ProjectPreview'
 import AboutSection from '@/components/AboutSection/AboutSection'
-import { cloudImg, cloudVideo, HOME_IMAGES, GS_IMAGES, GS_CARDS, GS_VIDEOS } from '@/lib/cloudinary'
+import { cloudImg, cloudVideo, HOME_IMAGES, GS_CARDS, GS_VIDEOS } from '@/lib/cloudinary'
 import styles from './page.module.css'
 
 export default function Home() {
@@ -24,11 +24,14 @@ export default function Home() {
           mediaSrc={cloudVideo(GS_VIDEOS['gs-walkthrough-video'], 1200)}
           mediaType="video"
           mediaAlt="Groundswell walkthrough"
-          peekImages={[
-            { src: cloudImg(GS_CARDS['heartbroken-front'], 600), alt: 'Reflection card' },
-            { src: cloudImg(GS_IMAGES['gs-pod'], 600), alt: 'Restorative pod' },
-            { src: cloudImg(GS_IMAGES['gs-artwall'], 600), alt: 'Community art wall' },
-          ]}
+          peek={{
+            src: cloudImg(GS_CARDS['heartbroken-front'], 400),
+            alt: 'Groundswell reflection card',
+            corner: 'bottom-left',
+            rotation: -8,
+            width: '20%',
+            aspectRatio: '3 / 4',
+          }}
           href="/projects/groundswell"
         />
 

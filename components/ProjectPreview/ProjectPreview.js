@@ -8,68 +8,50 @@ import styles from './ProjectPreview.module.css'
 gsap.registerPlugin(useGSAP)
 
 /**
- * ProjectPreview — scroll-driven project showcase.
+ * ProjectPreview — scroll-driven project showcase with peek artifact.
  *
- * Starts as a large rounded image filling most of the viewport.
- * On scroll: image shrinks and slides to one side,
- * text reveals on the other side.
- * On hover: secondary images fan out from behind the main image
- * like a stack of cards, revealing project depth.
+ * On scroll: media shrinks and text reveals on the other side.
+ * After composed state settles: a single physical artifact peeks from
+ * behind the media edge — a subtle easter egg grounded in the project's
+ * real deliverables. Hover lifts the artifact slightly.
  *
- * @param {string} num — project number ("01")
- * @param {string} title — project title
- * @param {string} tagline — one-line description
- * @param {string} description — longer description
- * @param {Array} contributions — [{ label }] pills
- * @param {string} pillVariant — 'sense' | 'weave' | 'shape'
- * @param {string} mediaSrc — image or video URL
- * @param {string} mediaType — 'image' | 'video'
- * @param {string} mediaAlt — alt text
- * @param {Array} peekImages — [{src, alt}] secondary images that fan on hover
- * @param {string} href — case study link
- * @param {boolean} comingSoon — disable CTA
- * @param {boolean} flip — image right, text left
+ * @param {Object} peek — single artifact that peeks from the media edge
+ *   @param {string} peek.src — image URL
+ *   @param {string} peek.alt — alt text
+ *   @param {'bottom-left'|'bottom-right'|'top-right'|'top-left'} peek.corner — where it peeks from
+ *   @param {number} peek.rotation — tilt angle in degrees (e.g. -8)
+ *   @param {string} [peek.width] — CSS width (default '22%')
+ *   @param {string} [peek.aspectRatio] — CSS aspect-ratio (default '3 / 4')
  */
 export default function ProjectPreview({
   num, title, tagline, description, contributions = [],
   pillVariant = 'weave', mediaSrc, mediaType = 'image', mediaAlt = '',
-  peekImages = [], href, comingSoon = false, flip = false,
+  peek, href, comingSoon = false, flip = false,
 }) {
   const sectionRef = useRef(null)
   const mediaRef = useRef(null)
   const textRef = useRef(null)
-  const stackRef = useRef(null)
-  const peekRefs = useRef([])
+  const peekRef = useRef(null)
 
-  /* Hover: fan out peek images from behind the main media */
   const { contextSafe } = useGSAP({ scope: sectionRef })
 
-  const peekOut = contextSafe(() => {
-    const peeks = peekRefs.current.filter(Boolean)
-    if (!peeks.length) return
-
-    /* Peek images slide out to the right, forming a horizontal strip */
-    peeks.forEach((el, i) => {
-      gsap.to(el, {
-        autoAlpha: 1,
-        x: 0,
-        duration: 0.4,
-        ease: 'power1.out',
-        delay: i * 0.08,
-      })
+  const peekLift = contextSafe(() => {
+    if (!peekRef.current || !peek) return
+    gsap.to(peekRef.current, {
+      y: -10,
+      rotation: peek.rotation * 0.4,
+      duration: 0.35,
+      ease: 'power2.out',
     })
   })
 
-  const peekIn = contextSafe(() => {
-    const peeks = peekRefs.current.filter(Boolean)
-    if (!peeks.length) return
-
-    gsap.to(peeks, {
-      autoAlpha: 0,
-      x: -20,
-      duration: 0.25,
-      ease: 'power1.inOut',
-      stagger: 0.03,
+  const peekSettle = contextSafe(() => {
+    if (!peekRef.current || !peek) return
+    gsap.to(peekRef.current, {
+      y: 0,
+      rotation: peek.rotation,
+      duration: 0.4,
+      ease: 'power2.out',
     })
   })
 
@@ -82,14 +64,23 @@ export default function ProjectPreview({
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     if (prefersReduced) {
       gsap.set(text, { autoAlpha: 1 })
+      if (peekRef.current) {
+        gsap.set(peekRef.current, { autoAlpha: 1, rotation: peek?.rotation || 0 })
+      }
       return
     }
 
-    /* Initial state: text hidden, media at full size */
+    /* Initial state: text hidden, peek hidden behind media */
     gsap.set(text, { autoAlpha: 0, x: flip ? -40 : 40 })
+    if (peekRef.current && peek) {
+      gsap.set(peekRef.current, {
+        autoAlpha: 0,
+        rotation: peek.rotation,
+        y: 24,
+      })
+    }
 
-    /* Scroll-driven timeline with pin — section stays while composition reveals,
-       holds for reading, then releases */
+    /* Scroll-driven timeline with pin */
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: section,
@@ -101,14 +92,14 @@ export default function ProjectPreview({
       },
     })
 
-    /* 0–40%: Media stack shrinks from full-width to contained card */
+    /* 0–40%: Media shrinks from full-width to contained card */
     tl.to(media, {
       width: '55%',
       duration: 0.40,
       ease: 'power1.inOut',
     }, 0)
 
-    /* 20–60%: Text fades in from the side */
+    /* 20–55%: Text fades in from the side */
     tl.to(text, {
       autoAlpha: 1,
       x: 0,
@@ -116,12 +107,26 @@ export default function ProjectPreview({
       ease: 'power1.inOut',
     }, 0.20)
 
-    /* 60–100%: Hold — the composed state sits for the user to read and engage.
-       No tweens here, the timeline just holds. */
+    /* 60–80%: Peek artifact slides in from behind — the easter egg,
+       only appearing once the composed state has settled */
+    if (peekRef.current && peek) {
+      tl.to(peekRef.current, {
+        autoAlpha: 1,
+        y: 0,
+        duration: 0.20,
+        ease: 'power2.out',
+      }, 0.60)
+    }
 
-  }, { scope: sectionRef })
+    /* 80–100%: Hold — composed state with peek sits for the user to engage */
+
+  }, { scope: sectionRef, dependencies: [peek?.src] })
 
   const pillClass = styles[`pill${pillVariant.charAt(0).toUpperCase() + pillVariant.slice(1)}`] || styles.pillWeave
+
+  const peekCornerClass = peek
+    ? styles[`peek${peek.corner.split('-').map(s => s.charAt(0).toUpperCase() + s.slice(1)).join('')}`]
+    : ''
 
   return (
     <section
@@ -129,14 +134,8 @@ export default function ProjectPreview({
       className={`${styles.section} ${flip ? styles.flip : ''}`}
       aria-label={title}
     >
-      {/* Media strip — main image + peek images extending horizontally */}
-      <div
-        ref={mediaRef}
-        className={styles.mediaStrip}
-        onMouseEnter={peekOut}
-        onMouseLeave={peekIn}
-      >
-        {/* Main media */}
+      {/* Media wrapper — holds the rounded media + the peeking artifact */}
+      <div ref={mediaRef} className={styles.mediaWrap}>
         <div className={styles.media}>
           {mediaType === 'video' ? (
             <video
@@ -154,16 +153,21 @@ export default function ProjectPreview({
           )}
         </div>
 
-        {/* Peek images — slide out beside the main media on hover */}
-        {peekImages.map((img, i) => (
+        {peek && (
           <div
-            key={i}
-            ref={el => { peekRefs.current[i] = el }}
-            className={styles.peekCard}
+            ref={peekRef}
+            className={`${styles.peek} ${peekCornerClass}`}
+            style={{
+              width: peek.width || '22%',
+              aspectRatio: peek.aspectRatio || '3 / 4',
+            }}
+            onMouseEnter={peekLift}
+            onMouseLeave={peekSettle}
+            aria-hidden="true"
           >
-            <img src={img.src} alt={img.alt || ''} className={styles.peekImg} />
+            <img src={peek.src} alt={peek.alt || ''} className={styles.peekImg} />
           </div>
-        ))}
+        )}
       </div>
 
       {/* Text — hidden initially, reveals on scroll */}
