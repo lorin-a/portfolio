@@ -8,52 +8,28 @@ import styles from './ProjectPreview.module.css'
 gsap.registerPlugin(useGSAP)
 
 /**
- * ProjectPreview — scroll-driven project showcase with peek artifact.
+ * ProjectPreview — scroll-driven project showcase.
  *
  * On scroll: media shrinks and text reveals on the other side.
- * After composed state settles: a single physical artifact peeks from
- * behind the media edge — a subtle easter egg grounded in the project's
- * real deliverables. Hover lifts the artifact slightly.
+ * Once composed, continued scrolling rotates through additional media
+ * in-place (each new slide crossfades in over the previous).
  *
- * @param {Object} peek — single artifact that peeks from the media edge
- *   @param {string} peek.src — image URL
- *   @param {string} peek.alt — alt text
- *   @param {'bottom-left'|'bottom-right'|'top-right'|'top-left'} peek.corner — where it peeks from
- *   @param {number} peek.rotation — tilt angle in degrees (e.g. -8)
- *   @param {string} [peek.width] — CSS width (default '22%')
- *   @param {string} [peek.aspectRatio] — CSS aspect-ratio (default '3 / 4')
+ * @param {string} mediaSrc — initial media src (image or video)
+ * @param {'image'|'video'} mediaType — initial media type
+ * @param {string} mediaAlt — alt text for initial media
+ * @param {Array<{src,type,alt}>} [mediaSequence] — additional slides that
+ *   crossfade in-place after the composed state, in scroll order
  */
 export default function ProjectPreview({
   num, title, tagline, description, contributions = [],
   pillVariant = 'weave', mediaSrc, mediaType = 'image', mediaAlt = '',
-  peek, href, comingSoon = false, flip = false,
+  mediaSequence = [],
+  href, comingSoon = false, flip = false,
 }) {
   const sectionRef = useRef(null)
   const mediaRef = useRef(null)
   const textRef = useRef(null)
-  const peekRef = useRef(null)
-
-  const { contextSafe } = useGSAP({ scope: sectionRef })
-
-  const peekLift = contextSafe(() => {
-    if (!peekRef.current || !peek) return
-    gsap.to(peekRef.current, {
-      y: -10,
-      rotation: peek.rotation * 0.4,
-      duration: 0.35,
-      ease: 'power2.out',
-    })
-  })
-
-  const peekSettle = contextSafe(() => {
-    if (!peekRef.current || !peek) return
-    gsap.to(peekRef.current, {
-      y: 0,
-      rotation: peek.rotation,
-      duration: 0.4,
-      ease: 'power2.out',
-    })
-  })
+  const slidesRef = useRef([])
 
   useGSAP(() => {
     const section = sectionRef.current
@@ -61,72 +37,79 @@ export default function ProjectPreview({
     const text = textRef.current
     if (!section || !media || !text) return
 
+    const slides = slidesRef.current.filter(Boolean)
+    const rotationSlides = slides.slice(1) /* slides that lift in after the initial */
+
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     if (prefersReduced) {
       gsap.set(text, { autoAlpha: 1 })
-      if (peekRef.current) {
-        gsap.set(peekRef.current, { autoAlpha: 1, rotation: peek?.rotation || 0 })
-      }
+      /* Rotation slides parked below the frame — not shown under reduced motion */
+      rotationSlides.forEach(s => gsap.set(s, { yPercent: 100 }))
       return
     }
 
-    /* Initial state: text hidden, peek hidden behind media */
+    /* Initial state: text hidden, rotation slides parked below the frame */
     gsap.set(text, { autoAlpha: 0, x: flip ? -40 : 40 })
-    if (peekRef.current && peek) {
-      gsap.set(peekRef.current, {
-        autoAlpha: 0,
-        rotation: peek.rotation,
-        y: 24,
-      })
-    }
+    rotationSlides.forEach(s => gsap.set(s, { yPercent: 100 }))
 
-    /* Scroll-driven timeline with pin */
+    /* Pin length: 100% viewport for compose phase + 160% viewport per
+       rotation slide. More scroll distance makes each slide feel sticky —
+       a gentle scroll only nudges it, not shifts it fully. */
+    const pinUnits = 100 + rotationSlides.length * 160
+
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: section,
         start: 'top top',
-        end: '+=150%',
+        end: `+=${pinUnits}%`,
         pin: true,
         pinType: 'transform',
-        scrub: 0.6,
+        scrub: 1, /* heavier — scroll and motion feel weighted together */
       },
     })
 
-    /* 0–40%: Media shrinks from full-width to contained card */
+    /* Compose: media shrinks and text reveals */
+    const composeEnd = 100 / pinUnits
     tl.to(media, {
       width: '55%',
-      duration: 0.40,
+      duration: composeEnd,
       ease: 'power1.inOut',
     }, 0)
 
-    /* 20–55%: Text fades in from the side */
     tl.to(text, {
       autoAlpha: 1,
       x: 0,
-      duration: 0.35,
+      duration: composeEnd * 0.75,
       ease: 'power1.inOut',
-    }, 0.20)
+    }, composeEnd * 0.30)
 
-    /* 60–80%: Peek artifact slides in from behind — the easter egg,
-       only appearing once the composed state has settled */
-    if (peekRef.current && peek) {
-      tl.to(peekRef.current, {
-        autoAlpha: 1,
-        y: 0,
-        duration: 0.20,
-        ease: 'power2.out',
-      }, 0.60)
+    /* Rotate: each subsequent slide lifts up from below the frame,
+       stacking on top of the previous one. Each slide occupies 90% of
+       its segment so the glide feels continuous with a short settle. */
+    if (rotationSlides.length > 0) {
+      const rotateStart = composeEnd + (20 / pinUnits) /* small pause after compose */
+      const rotateSpan = 1 - rotateStart
+      const perSlide = rotateSpan / rotationSlides.length
+
+      rotationSlides.forEach((slide, i) => {
+        const enterAt = rotateStart + i * perSlide
+        tl.to(slide, {
+          yPercent: 0,
+          duration: perSlide * 0.95, /* near-full segment so slide is almost always in motion while within its scroll range */
+          ease: 'power2.inOut', /* stronger S-curve — slide resists at start and settles at end */
+        }, enterAt)
+      })
     }
 
-    /* 80–100%: Hold — composed state with peek sits for the user to engage */
-
-  }, { scope: sectionRef, dependencies: [peek?.src] })
+  }, { scope: sectionRef, dependencies: [mediaSrc, mediaSequence.length] })
 
   const pillClass = styles[`pill${pillVariant.charAt(0).toUpperCase() + pillVariant.slice(1)}`] || styles.pillWeave
 
-  const peekCornerClass = peek
-    ? styles[`peek${peek.corner.split('-').map(s => s.charAt(0).toUpperCase() + s.slice(1)).join('')}`]
-    : ''
+  /* Build the ordered slide list: initial media first, then rotation slides */
+  const allSlides = [
+    { src: mediaSrc, type: mediaType, alt: mediaAlt },
+    ...mediaSequence,
+  ]
 
   return (
     <section
@@ -134,40 +117,37 @@ export default function ProjectPreview({
       className={`${styles.section} ${flip ? styles.flip : ''}`}
       aria-label={title}
     >
-      {/* Media wrapper — holds the rounded media + the peeking artifact */}
+      {/* Media wrapper — the sizing element GSAP shrinks on scroll */}
       <div ref={mediaRef} className={styles.mediaWrap}>
         <div className={styles.media}>
-          {mediaType === 'video' ? (
-            <video
-              src={mediaSrc}
-              autoPlay muted loop playsInline
-              className={styles.mediaInner}
-            />
-          ) : (
-            <img
-              src={mediaSrc}
-              alt={mediaAlt}
-              className={styles.mediaInner}
-              loading="lazy"
-            />
-          )}
+          {allSlides.map((slide, i) => (
+            <div
+              key={i}
+              ref={el => { slidesRef.current[i] = el }}
+              className={styles.slide}
+              aria-hidden={i > 0 ? 'true' : undefined}
+            >
+              {slide.type === 'video' ? (
+                <video
+                  src={slide.src}
+                  autoPlay muted loop playsInline
+                  preload={i === 0 ? 'auto' : 'metadata'}
+                  className={styles.slideInner}
+                  style={slide.zoom ? { transform: `scale(${slide.zoom})` } : undefined}
+                  aria-label={slide.alt}
+                />
+              ) : (
+                <img
+                  src={slide.src}
+                  alt={i === 0 ? slide.alt : ''}
+                  className={styles.slideInner}
+                  style={slide.zoom ? { transform: `scale(${slide.zoom})` } : undefined}
+                  loading={i === 0 ? 'eager' : 'lazy'}
+                />
+              )}
+            </div>
+          ))}
         </div>
-
-        {peek && (
-          <div
-            ref={peekRef}
-            className={`${styles.peek} ${peekCornerClass}`}
-            style={{
-              width: peek.width || '22%',
-              aspectRatio: peek.aspectRatio || '3 / 4',
-            }}
-            onMouseEnter={peekLift}
-            onMouseLeave={peekSettle}
-            aria-hidden="true"
-          >
-            <img src={peek.src} alt={peek.alt || ''} className={styles.peekImg} />
-          </div>
-        )}
       </div>
 
       {/* Text — hidden initially, reveals on scroll */}

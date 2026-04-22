@@ -1,7 +1,7 @@
 import Hero from '@/components/Hero/HeroScatter'
 import ProjectPreview from '@/components/ProjectPreview/ProjectPreview'
 import AboutSection from '@/components/AboutSection/AboutSection'
-import { cloudImg, cloudVideo, HOME_IMAGES, GS_CARDS, GS_VIDEOS } from '@/lib/cloudinary'
+import { cloudImg, cloudVideo, HOME_IMAGES, GS_IMAGES, GS_VIDEOS } from '@/lib/cloudinary'
 import styles from './page.module.css'
 
 export default function Home() {
@@ -21,17 +21,15 @@ export default function Home() {
             { label: 'Experience Design' },
           ]}
           pillVariant="sense"
-          mediaSrc={cloudVideo(GS_VIDEOS['gs-walkthrough-video'], 1200)}
-          mediaType="video"
-          mediaAlt="Groundswell walkthrough"
-          peek={{
-            src: cloudImg(GS_CARDS['heartbroken-front'], 400),
-            alt: 'Groundswell reflection card',
-            corner: 'bottom-left',
-            rotation: -8,
-            width: '20%',
-            aspectRatio: '3 / 4',
-          }}
+          mediaSrc={cloudImg(GS_IMAGES['gs-hero'], 1600)}
+          mediaType="image"
+          mediaAlt="Groundswell installation"
+          mediaSequence={[
+            { src: cloudVideo(GS_VIDEOS['gs-walkthrough-video'], 1200), type: 'video', alt: 'Groundswell walkthrough' },
+            { src: cloudImg(GS_IMAGES['gs-cards'], 1200), type: 'image', alt: 'Groundswell reflection cards', zoom: 1.1 },
+            { src: cloudImg(GS_IMAGES['gs-artwall'], 1200), type: 'image', alt: 'Groundswell community art wall' },
+            { src: cloudImg(GS_IMAGES['groundswell-ctb-docs'], 1200), type: 'image', alt: 'Groundswell care-through-books documentation' },
+          ]}
           href="/projects/groundswell"
         />
 

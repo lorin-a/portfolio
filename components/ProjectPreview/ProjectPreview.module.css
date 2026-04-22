@@ -1,8 +1,8 @@
 /* ===========================================
-   PROJECT PREVIEW — scroll-driven shrink-and-reveal
-   Media starts wide, shrinks to one side as text reveals
-   on the other. A single artifact peeks from behind the
-   media edge after the composed state settles.
+   PROJECT PREVIEW — scroll-driven shrink, reveal,
+   and media rotation. Media starts wide, shrinks
+   to one side as text reveals on the other. Continued
+   scrolling crossfades through additional media in-place.
    =========================================== */
 
 .section {
@@ -23,8 +23,8 @@
 }
 
 /* ===========================================
-   MEDIA WRAP — relative container so the peek
-   artifact can extend beyond the media's rounded frame
+   MEDIA WRAP + FRAME — the sizing element GSAP
+   shrinks. Slides stack absolutely inside the frame.
    =========================================== */
 .mediaWrap {
   position: relative;
@@ -40,55 +40,23 @@
   transition: box-shadow var(--motion-medium) var(--ease-out);
 }
 
-.mediaInner {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
-/* ===========================================
-   PEEK ARTIFACT — single easter egg that peeks
-   from behind the media. GSAP owns all transforms
-   (rotation + y + autoAlpha). Position via corner class.
-   =========================================== */
-.peek {
+/* Each media slide fills the frame. Stacked absolutely so later slides
+   sit on top of earlier ones — GSAP fades them in on scroll. */
+.slide {
   position: absolute;
-  visibility: hidden;
-  border-radius: 10px;
-  overflow: hidden;
-  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.28);
-  cursor: pointer;
-  z-index: 2;
-  will-change: transform, opacity;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
 }
 
-.peekImg {
+.slideInner {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
-}
-
-/* Corner variants — how much the peek extends beyond the media edge */
-.peekBottomLeft {
-  bottom: -10%;
-  left: -5%;
-}
-
-.peekBottomRight {
-  bottom: -10%;
-  right: -5%;
-}
-
-.peekTopRight {
-  top: -8%;
-  right: -5%;
-}
-
-.peekTopLeft {
-  top: -8%;
-  left: -5%;
 }
 
 /* ===========================================
@@ -247,11 +215,6 @@
   .text {
     min-width: 0;
   }
-
-  /* Hide the peek on mobile — hover doesn't exist and space is tight */
-  .peek {
-    display: none;
-  }
 }
 
 /* ===========================================
@@ -259,11 +222,6 @@
    =========================================== */
 @media (prefers-reduced-motion: reduce) {
   .text {
-    visibility: visible !important;
-    opacity: 1 !important;
-  }
-
-  .peek {
     visibility: visible !important;
     opacity: 1 !important;
   }
