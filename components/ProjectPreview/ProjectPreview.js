@@ -40,9 +40,18 @@ export default function ProjectPreview({
     const slides = slidesRef.current.filter(Boolean)
     const rotationSlides = slides.slice(1) /* slides that lift in after the initial */
 
+    /* Initial mediaWrap centering. At 95% width with flex-start anchoring
+       there's a 5% gap on the opposite side, which reads as off-center.
+       Shifting the wrap by 2.5% of section width (≈ 2.632% of its own
+       95%-of-section width) puts it visually centered. During compose,
+       xPercent tweens back to 0 so the final 55% width lands flush at
+       its natural flex anchor. */
+    const centerShift = flip ? -2.632 : 2.632
+
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     if (prefersReduced) {
       gsap.set(text, { autoAlpha: 1 })
+      gsap.set(media, { xPercent: centerShift })
       /* Rotation slides parked below the frame and hidden under reduced motion */
       rotationSlides.forEach(s => gsap.set(s, { yPercent: 101, autoAlpha: 0 }))
       return
@@ -53,6 +62,7 @@ export default function ProjectPreview({
        a 1% buffer so sub-pixel rounding and tiny scroll deltas can't flash
        a sliver of the slide above the bottom edge. */
     gsap.set(text, { autoAlpha: 0, x: flip ? -40 : 40 })
+    gsap.set(media, { xPercent: centerShift })
     rotationSlides.forEach(s => gsap.set(s, { yPercent: 101, autoAlpha: 1 }))
 
     /* Pin length: 100vh compose + 160vh per rotation slide + 100vh final
@@ -78,6 +88,7 @@ export default function ProjectPreview({
     const composeEnd = composeUnits / pinUnits
     tl.to(media, {
       width: '55%',
+      xPercent: 0,
       duration: composeEnd,
       ease: 'power1.inOut',
     }, 0)
