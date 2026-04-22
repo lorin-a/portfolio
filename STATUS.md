@@ -1,5 +1,5 @@
 # Project Status
-### Last updated: 2026-04-06
+### Last updated: 2026-04-22
 
 This is the living status doc for the lorin.work portfolio redesign. Updated at the end of every working session.
 
@@ -106,6 +106,8 @@ Earlier hero concept: 3-beat typewriter with greeting, title, sentence, FLIP wor
 - [x] Hero scatter-gather rebuild (merged from hero-scatter-gather branch 2026-04-07)
 - [x] Phase 6: ~~Consolidate animation patterns~~ SKIPPED — breathing animation scale differences are intentional (1.03 idle vs 1.15 hint)
 - [x] Phase 7: Archive orphaned components (ThemeSetter, BuildingNow, ProcessDot), clean up barrel exports
+- [x] ProjectPreview component (2026-04-22): scroll-driven carousel — hero image composes, then rotation slides lift up from below one by one on continued scroll. Pin scales with slide count, sticky ease, final dwell, white text with subtle opacity, fixed-width text column (no reflow)
+- [x] Homepage grid unification (2026-04-22): single `--page-gutter` canonical variable; `--gutter`, `--grid-margin`, `--container-padding` all alias. Breakpoint-divergent overrides removed so every edge aligns at every viewport
 
 ---
 
@@ -126,3 +128,6 @@ Earlier hero concept: 3-beat typewriter with greeting, title, sentence, FLIP wor
 | 2026-04-06 | .DS_Store cleanup unnecessary | Already in .gitignore, not tracked in git |
 | 2026-04-07 | Scatter-gather hero merged | Scroll-driven letter constellation replaces time-based hero |
 | 2026-04-07 | Hero approach: cinematic hero, restrained body | Hero does the heavy animation lifting, rest of page should be impressive but not over-animated |
+| 2026-04-22 | Drop peek-artifact concept | Tried and rejected in favor of full-media rotation (commit 7a5db8a still in history) |
+| 2026-04-22 | ProjectPreview media rotation | Hero image composes, then 2-4 rotation slides lift up in-place on continued scroll. Real assets used where available; placeholders for non-Groundswell projects pending Lorin's image swap |
+| 2026-04-22 | Grid path 1 (margins only, defer columns) | Unify horizontal margins now via `--page-gutter`; full 12-column grid adoption deferred until case study template is designed |
