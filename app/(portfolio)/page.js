@@ -67,14 +67,12 @@ export default function Home() {
             { label: 'Animation' },
           ]}
           pillVariant="sense"
-          mediaSrc={cloudImg(HOME_IMAGES['somebuddy-cover'], 1600)}
-          mediaType="image"
-          mediaAlt="SomeBuddy cover"
+          mediaSrc={cloudVideo(HOME_VIDEOS['somebuddy-logo'], 1600)}
+          mediaType="video"
+          mediaAlt="SomeBuddy animated logo"
           mediaSequence={[
-            { src: cloudVideo(HOME_VIDEOS['somebuddy-default'], 1200), type: 'video', alt: 'SomeBuddy app preview' },
-            { src: cloudVideo(HOME_VIDEOS['somebuddy-hover'], 1200), type: 'video', alt: 'SomeBuddy interaction' },
-            { src: cloudImg(HOME_IMAGES['somebuddy-cover'], 1200), type: 'image', alt: 'SomeBuddy placeholder' },
-            { src: cloudImg(HOME_IMAGES['somebuddy-cover'], 1200), type: 'image', alt: 'SomeBuddy placeholder' },
+            { src: cloudVideo(HOME_VIDEOS['somebuddy-reel'], 1200), type: 'video', alt: 'SomeBuddy reel' },
+            { src: cloudVideo(HOME_VIDEOS['somebuddy-reel-2'], 1200), type: 'video', alt: 'SomeBuddy reel continued' },
           ]}
           comingSoon
         />

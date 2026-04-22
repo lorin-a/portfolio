@@ -36,7 +36,7 @@
   border-radius: 16px;
   overflow: hidden;
   position: relative;
-  aspect-ratio: 16 / 10;
+  aspect-ratio: 16 / 9;
   transition: box-shadow var(--motion-medium) var(--ease-out);
 }
 
