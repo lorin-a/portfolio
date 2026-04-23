@@ -9,7 +9,7 @@
    =========================================== */
 .aboutWrap {
   position: relative;
-  padding: var(--space-xl) 0;
+  padding: var(--space-sm) 0 var(--space-xl);
 }
 
 /* Subtle hairline above the section — separates it from the last

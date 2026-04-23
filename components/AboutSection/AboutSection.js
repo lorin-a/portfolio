@@ -2,7 +2,7 @@
 
 import { useCallback, useRef, useState } from 'react'
 import Image from 'next/image'
-import { gsap, ScrollTrigger } from '@/lib/gsap'
+import { gsap, ScrollTrigger, SplitText, DrawSVGPlugin } from '@/lib/gsap'
 import { useGSAP } from '@gsap/react'
 import SenseMark from '@/components/marks/SenseMark'
 import WeaveMark from '@/components/marks/WeaveMark'
@@ -66,11 +66,15 @@ export default function AboutSection() {
 
   const wrapperRef = useRef(null)
   const sectionRef = useRef(null)
-  const bylineRef = useRef(null)
+  const photoInnerRef = useRef(null)
+  const wigglePathRef = useRef(null)
+  const bylineTextRef = useRef(null)
   const ledeRef = useRef(null)
   const cardRefs = useRef([])
-  const practiceRef = useRef(null)
+  const practiceLabelRef = useRef(null)
+  const practiceMarkRefs = useRef([])
   const contactRef = useRef(null)
+  const pillRefs = useRef([])
 
   const toggleCard = useCallback((id) => {
     setOpenCards((prev) => {
@@ -102,44 +106,156 @@ export default function AboutSection() {
   useGSAP(
     () => {
       const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
       const cards = cardRefs.current.filter(Boolean)
-      const elements = [
-        bylineRef.current,
+      const marks = practiceMarkRefs.current.filter(Boolean)
+      const pills = pillRefs.current.filter(Boolean)
+      const allTargets = [
+        photoInnerRef.current,
+        bylineTextRef.current,
         ledeRef.current,
         ...cards,
-        practiceRef.current,
-        contactRef.current,
+        practiceLabelRef.current,
+        ...marks,
+        ...pills,
       ].filter(Boolean)
 
       if (prefersReduced) {
-        gsap.set(elements, { autoAlpha: 1, y: 0, scale: 1 })
+        gsap.set(allTargets, { autoAlpha: 1, y: 0, x: 0, scale: 1, rotation: 0 })
+        gsap.set(photoInnerRef.current, { clipPath: 'circle(75% at 50% 50%)' })
+        if (wigglePathRef.current) gsap.set(wigglePathRef.current, { drawSVG: '100%' })
         return
       }
 
-      // Initial hidden state for each element
-      gsap.set(bylineRef.current, { autoAlpha: 0, y: 40, scale: 0.96 })
-      gsap.set(ledeRef.current, { autoAlpha: 0, y: 40 })
-      cards.forEach((el) => gsap.set(el, { autoAlpha: 0, y: 40 }))
-      gsap.set(practiceRef.current, { autoAlpha: 0, y: 40 })
-      gsap.set(contactRef.current, { autoAlpha: 0, y: 40 })
+      // SplitText on the lede (char-by-char mask reveal).
+      let ledeSplit = null
+      if (ledeRef.current) {
+        ledeSplit = SplitText.create(ledeRef.current, {
+          type: 'chars',
+          mask: 'chars',
+          autoSplit: true,
+        })
+      }
 
-      // Per-element scroll-driven reveal.
-      // Each element animates as it crosses the 90% → 50% viewport band.
-      // scrub:1 ties motion to scroll position with light smoothing.
-      elements.forEach((el) => {
-        gsap.to(el, {
+      // Initial hidden states. Each element starts off-position/invisible;
+      // the timeline animates them in as the section enters view.
+      gsap.set(photoInnerRef.current, { clipPath: 'circle(0% at 50% 50%)' })
+      if (wigglePathRef.current) gsap.set(wigglePathRef.current, { drawSVG: '50% 50%' })
+      gsap.set(bylineTextRef.current, { autoAlpha: 0, x: -24 })
+      if (ledeSplit) gsap.set(ledeSplit.chars, { yPercent: 110 })
+      gsap.set(cards, { autoAlpha: 0, y: -80 })
+      gsap.set(practiceLabelRef.current, { autoAlpha: 0, y: 16 })
+      gsap.set(marks, { autoAlpha: 0, scale: 0.4 })
+      gsap.set(pills, { autoAlpha: 0, scale: 0.8, y: 20 })
+
+      const master = gsap.timeline({
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: 'top top',
+          end: '+=150%',
+          pin: true,
+          pinType: 'transform',
+          scrub: 1.2,
+          anticipatePin: 1,
+        },
+      })
+
+      // Beat 1 — Photo iris opens + wiggle ring draws on (0 → 1.5s)
+      master
+        .to(
+          photoInnerRef.current,
+          {
+            clipPath: 'circle(75% at 50% 50%)',
+            duration: 1.2,
+            ease: 'power3.out',
+          },
+          0
+        )
+        .to(
+          wigglePathRef.current,
+          {
+            drawSVG: '0% 100%',
+            duration: 1.4,
+            ease: 'power2.inOut',
+          },
+          0.2
+        )
+        // Beat 2 — Byline text slides in from left
+        .to(
+          bylineTextRef.current,
+          {
+            autoAlpha: 1,
+            x: 0,
+            duration: 0.7,
+            ease: 'power2.out',
+          },
+          0.8
+        )
+
+      // Beat 3 — Lede chars type on with mask reveal
+      if (ledeSplit) {
+        master.to(
+          ledeSplit.chars,
+          {
+            yPercent: 0,
+            duration: 0.8,
+            ease: 'power1.inOut',
+            stagger: 0.025,
+          },
+          1.0
+        )
+      }
+
+      // Beat 4 — Cards fall in from above with slight overshoot
+      master.to(
+        cards,
+        {
           autoAlpha: 1,
           y: 0,
-          scale: 1,
-          ease: 'power1.inOut',
-          scrollTrigger: {
-            trigger: el,
-            start: 'top 90%',
-            end: 'top 50%',
-            scrub: 1,
+          duration: 0.7,
+          ease: 'back.out(1.15)',
+          stagger: 0.12,
+        },
+        '>-0.4'
+      )
+
+      // Beat 5 — Practice label fades up, marks pop in with bounce
+      master
+        .to(
+          practiceLabelRef.current,
+          {
+            autoAlpha: 1,
+            y: 0,
+            duration: 0.5,
+            ease: 'power2.out',
           },
-        })
-      })
+          '>-0.1'
+        )
+        .to(
+          marks,
+          {
+            autoAlpha: 1,
+            scale: 1,
+            duration: 0.6,
+            ease: 'back.out(1.4)',
+            stagger: 0.1,
+          },
+          '>-0.2'
+        )
+
+      // Beat 6 — Contact pills land
+      master.to(
+        pills,
+        {
+          autoAlpha: 1,
+          scale: 1,
+          y: 0,
+          duration: 0.5,
+          ease: 'back.out(1.2)',
+          stagger: 0.08,
+        },
+        '>-0.1'
+      )
     },
     { scope: wrapperRef, dependencies: [] }
   )
@@ -157,21 +273,53 @@ export default function AboutSection() {
 
         <div className={styles.inner}>
           {/* ── Byline: photo + name + meta ── */}
-          <div ref={bylineRef} className={styles.byline}>
+          <div className={styles.byline}>
             <div className={styles.photoWrap}>
-              <div className={styles.photoHalo} aria-hidden="true" />
-              <div className={styles.photoInner}>
+              <div className={styles.photoRing} aria-hidden="true">
+                <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                  <defs>
+                    <linearGradient
+                      id="aboutWiggleGrad"
+                      x1="5%"
+                      y1="5%"
+                      x2="88%"
+                      y2="88%"
+                    >
+                      <stop
+                        offset="5%"
+                        style={{ stopColor: 'var(--color-sage-soft)' }}
+                      />
+                      <stop
+                        offset="45%"
+                        style={{ stopColor: 'var(--color-plum-soft)' }}
+                      />
+                      <stop
+                        offset="88%"
+                        style={{ stopColor: 'var(--color-terracotta-soft)' }}
+                      />
+                    </linearGradient>
+                  </defs>
+                  <path
+                    ref={wigglePathRef}
+                    d="M100 8 C 145 6, 188 38, 193 85 C 198 132, 168 180, 118 192 C 68 204, 15 175, 7 125 C -1 75, 30 18, 78 9 C 82 8.3, 90 7.5, 100 8 Z"
+                    fill="none"
+                    stroke="url(#aboutWiggleGrad)"
+                    strokeWidth="4"
+                  />
+                </svg>
+              </div>
+              <div ref={photoInnerRef} className={styles.photoInner}>
                 <Image
                   src={cloudImg(HOME_IMAGES['lorin-photo'], 480)}
                   alt="Lorin Anderberg, smiling warmly at the camera"
                   fill
-                  sizes="(max-width: 600px) 160px, (max-width: 900px) 200px, 240px"
+                  sizes="(max-width: 600px) 220px, (max-width: 900px) 220px, 280px"
                   className={styles.photoImage}
                 />
               </div>
             </div>
 
-            <div className={styles.bylineText}>
+            <div ref={bylineTextRef} className={styles.bylineText}>
               <p className={styles.name}>Lorin Anderberg</p>
               <p className={styles.title}>Designer &amp; Researcher</p>
               <p className={styles.location}>Based in NYC</p>
@@ -179,8 +327,8 @@ export default function AboutSection() {
           </div>
 
           {/* ── Lede ── */}
-          <div ref={ledeRef} className={styles.ledeWrap}>
-            <p className={styles.lede}>
+          <div className={styles.ledeWrap}>
+            <p ref={ledeRef} className={styles.lede}>
               Translating lived experience into{' '}
               <span className={styles.ledeAccent}>thoughtful design</span>{' '}
               to improve complex systems.
@@ -241,16 +389,21 @@ export default function AboutSection() {
           </div>
 
           {/* ── Practice: Sense / Weave / Shape ── */}
-          <div ref={practiceRef} className={styles.practiceWrap}>
-            <p className={styles.practiceLabel}>How I work</p>
+          <div className={styles.practiceWrap}>
+            <p ref={practiceLabelRef} className={styles.practiceLabel}>
+              How I work
+            </p>
             <div className={styles.practiceRow} role="group" aria-label="My practice">
-              {PRACTICES.map((p) => {
+              {PRACTICES.map((p, i) => {
                 const isActive = activePractice === p.id
                 const Mark =
                   p.id === 'sense' ? SenseMark : p.id === 'weave' ? WeaveMark : ShapeMark
                 return (
                   <button
                     key={p.id}
+                    ref={(el) => {
+                      practiceMarkRefs.current[i] = el
+                    }}
                     type="button"
                     className={`${styles.practiceMark} ${isActive ? styles.practiceMarkActive : ''}`}
                     aria-pressed={isActive}
@@ -290,7 +443,11 @@ export default function AboutSection() {
           {/* ── Contact pills ── */}
           <div ref={contactRef} className={styles.contactWrap}>
             <ul className={styles.contact}>
-              <li>
+              <li
+                ref={(el) => {
+                  pillRefs.current[0] = el
+                }}
+              >
                 <a
                   className={styles.contactPill}
                   href="/resume.pdf"
@@ -300,7 +457,11 @@ export default function AboutSection() {
                   Resume
                 </a>
               </li>
-              <li>
+              <li
+                ref={(el) => {
+                  pillRefs.current[1] = el
+                }}
+              >
                 <a
                   className={styles.contactPill}
                   href="https://www.linkedin.com/in/lorin-anderberg"
@@ -310,7 +471,11 @@ export default function AboutSection() {
                   LinkedIn
                 </a>
               </li>
-              <li>
+              <li
+                ref={(el) => {
+                  pillRefs.current[2] = el
+                }}
+              >
                 <a className={styles.contactPill} href="mailto:lorin@lorin.work">
                   Email
                 </a>

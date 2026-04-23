@@ -14,10 +14,10 @@
   min-height: 100vh;
   min-height: 100dvh;
   margin: 0;
-  padding: var(--space-lg) var(--container-padding);
+  padding: var(--space-md) var(--container-padding);
   background: var(--color-cream);
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
 }
 
@@ -39,7 +39,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--space-sm);
+  gap: var(--space-lg);
 }
 
 /* ===========================================
@@ -56,41 +56,45 @@
 .photoWrap {
   position: relative;
   flex-shrink: 0;
-  width: clamp(140px, 16vw, 180px);
-  height: clamp(140px, 16vw, 180px);
+  width: clamp(200px, 22vw, 280px);
+  height: clamp(200px, 22vw, 280px);
 }
 
-/* Gradient halo sits behind the photo. Breathes via CSS keyframes. */
-.photoHalo {
+/* Wiggle ring with hero gradient stroke. Sits behind the photo.
+   Spins on hover (desktop only), respects reduced motion. */
+.photoRing {
   position: absolute;
-  top: -10%;
-  right: -10%;
-  bottom: -10%;
-  left: -10%;
-  inset: -10%;
-  border-radius: 50%;
-  background: conic-gradient(
-    from 135deg,
-    var(--color-sage-soft),
-    var(--color-plum-soft),
-    var(--color-terracotta-soft),
-    var(--color-sage-soft)
-  );
-  filter: blur(22px);
-  opacity: 0.55;
+  top: -28px;
+  right: -28px;
+  bottom: -28px;
+  left: -28px;
+  inset: -28px;
   z-index: 0;
-  animation: haloBreathe 6s ease-in-out infinite;
+  pointer-events: none;
 }
 
-@keyframes haloBreathe {
-  0%, 100% {
-    transform: scale(1);
-    opacity: 0.5;
+.photoRing svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* Ring spins on hover only, at a nice speed. Paused by default so it
+   rests at whatever angle it was at — no snap on mouseleave. */
+@media (hover: hover) {
+  .photoRing {
+    animation: wiggleHoverSpin 10s linear infinite;
+    animation-play-state: paused;
   }
-  50% {
-    transform: scale(1.04);
-    opacity: 0.7;
+
+  .photoWrap:hover .photoRing {
+    animation-play-state: running;
   }
+}
+
+@keyframes wiggleHoverSpin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
 
 .photoInner {
@@ -497,7 +501,7 @@
 
 @media (max-width: 900px) {
   .inner {
-    gap: var(--space-sm);
+    gap: var(--space-md);
   }
 
   .practiceRow {
@@ -518,8 +522,16 @@
   }
 
   .photoWrap {
-    width: 140px;
-    height: 140px;
+    width: 220px;
+    height: 220px;
+  }
+
+  .photoRing {
+    top: -20px;
+    right: -20px;
+    bottom: -20px;
+    left: -20px;
+    inset: -20px;
   }
 
   .cardHeader {
@@ -549,10 +561,9 @@
    =========================================== */
 
 @media (prefers-reduced-motion: reduce) {
-  .photoHalo {
-    animation: none;
-    transform: none;
-    opacity: 0.55;
+  .photoRing {
+    animation: none !important;
+    transform: none !important;
   }
 
   .cardTilt0,
