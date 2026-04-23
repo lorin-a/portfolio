@@ -4,7 +4,25 @@
 
 /* ===========================================
    ABOUT SECTION WRAPPER
+   Promotes About from thin footer to full section,
+   matching the vertical rhythm of a project preview.
    =========================================== */
 .aboutWrap {
-  padding: var(--space-xl) 0 var(--space-xl);
+  position: relative;
+  padding: var(--space-xl) 0;
+}
+
+/* Subtle hairline above the section — separates it from the last
+   project preview without adding visual noise. Opacity-based so it
+   works in both light and dark themes. */
+.aboutWrap::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(var(--content-width), calc(100% - var(--container-padding) * 2));
+  height: 1px;
+  background: currentColor;
+  opacity: 0.08;
 }

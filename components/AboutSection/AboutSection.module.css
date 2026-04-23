@@ -1,162 +1,581 @@
 /* ===========================================
-   ABOUT SECTION — Circle photo + text
+   ABOUT SECTION — Homepage closer
+   Dark-mode aware via data-theme tokens.
    =========================================== */
-.aboutSection {
-  padding: 0;
-  display: flex;
-  align-items: center;
-  gap: clamp(32px, 5vw, 64px);
-  max-width: var(--content-width);
-  margin: 0 auto;
-}
 
-/* ===========================================
-   PHOTO
-   =========================================== */
-.aboutPhoto {
-  flex-shrink: 0;
+.wrapper {
   position: relative;
-  width: clamp(120px, 14vw, 172px);
-  height: clamp(120px, 14vw, 172px);
+  width: 100%;
 }
 
-.aboutPhotoInner {
+.about {
+  position: relative;
   width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  background: var(--color-cream-dark);
+  min-height: 100vh;
+  min-height: 100dvh;
+  margin: 0;
+  padding: var(--space-lg) var(--container-padding);
+  background: var(--color-cream);
   display: flex;
   align-items: center;
   justify-content: center;
-  overflow: hidden;
-  position: relative;
-  z-index: 2;
 }
 
-.aboutPhotoImage {
-  object-fit: cover;
-}
-
-.aboutPhotoBorder {
+.visuallyHidden {
   position: absolute;
-  top: 0; right: 0; bottom: 0; left: 0;
-  inset: -16px;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.inner {
+  max-width: var(--content-width);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+/* ===========================================
+   BYLINE — photo + name + meta (horizontal on desktop)
+   =========================================== */
+
+.byline {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.photoWrap {
+  position: relative;
+  flex-shrink: 0;
+  width: clamp(140px, 16vw, 180px);
+  height: clamp(140px, 16vw, 180px);
+}
+
+/* Gradient halo sits behind the photo. Breathes via CSS keyframes. */
+.photoHalo {
+  position: absolute;
+  top: -10%;
+  right: -10%;
+  bottom: -10%;
+  left: -10%;
+  inset: -10%;
+  border-radius: 50%;
+  background: conic-gradient(
+    from 135deg,
+    var(--color-sage-soft),
+    var(--color-plum-soft),
+    var(--color-terracotta-soft),
+    var(--color-sage-soft)
+  );
+  filter: blur(22px);
+  opacity: 0.55;
+  z-index: 0;
+  animation: haloBreathe 6s ease-in-out infinite;
+}
+
+@keyframes haloBreathe {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.5;
+  }
+  50% {
+    transform: scale(1.04);
+    opacity: 0.7;
+  }
+}
+
+.photoInner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  overflow: hidden;
+  background: var(--color-cream-dark);
   z-index: 1;
 }
 
-.aboutPhotoBorder svg {
-  width: 100%;
-  height: 100%;
+.photoImage {
+  object-fit: cover;
 }
 
-@media (hover: hover) {
-  .aboutPhoto:hover .aboutPhotoBorder {
-    animation: spinBorder 4s linear infinite;
-  }
+.bylineText {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-xxs);
+  text-align: left;
 }
 
-@keyframes spinBorder {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-
-/* ===========================================
-   TEXT
-   =========================================== */
-.aboutTextBlock {
-  flex: 1;
-}
-
-.aboutText {
+.name {
   font-family: var(--font-heading);
-  font-size: clamp(18px, 2.2vw, 24px);
-  font-weight: 300;
+  font-size: var(--text-h3);
+  font-weight: var(--weight-title);
   font-variation-settings: 'SOFT' 50, 'WONK' 0;
-  line-height: var(--leading-normal);
-  color: var(--color-ink-light);
-  margin-bottom: 0;
-}
-
-.aboutText em {
   color: var(--color-ink);
+  line-height: var(--leading-tight);
+  margin: 0;
 }
 
-.aboutLink {
-  display: inline-flex;
-  align-items: center;
-  margin-top: 20px;
+.title {
+  font-family: var(--font-heading);
+  font-size: var(--text-body-large);
+  font-style: italic;
+  font-weight: var(--weight-body);
+  font-variation-settings: 'SOFT' 50, 'WONK' 0;
+  color: var(--color-ink-light);
+  line-height: var(--leading-relaxed);
+  margin: 0;
+}
+
+.location {
   font-family: var(--font-body);
   font-size: var(--text-body-small);
   font-weight: var(--weight-label);
-  color: var(--color-plum);
-  text-decoration: none;
-  border-bottom: 1px solid var(--color-plum-light);
-  padding-bottom: 3px;
-  transition: border-color 0.4s var(--ease-in-out);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--color-ink-faint);
+  margin: 0;
+}
+
+/* ===========================================
+   LEDE
+   =========================================== */
+
+.ledeWrap {
+  max-width: 760px;
+  width: 100%;
+}
+
+.lede {
+  font-family: var(--font-heading);
+  font-size: clamp(1.625rem, 2.8vw, 2.25rem); /* 26→36px — between h2 and h1 */
+  font-weight: var(--weight-hero);
+  font-variation-settings: 'SOFT' 50, 'WONK' 0;
+  line-height: var(--leading-tight);
+  color: var(--color-ink);
+  text-align: center;
+  text-wrap: balance;
+  margin: 0;
+}
+
+.ledeAccent {
+  background: linear-gradient(
+    135deg,
+    var(--color-sage-soft) 5%,
+    var(--color-plum-soft) 45%,
+    var(--color-terracotta-soft) 88%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  font-style: italic;
+}
+
+/* ===========================================
+   CARDS — Currently / Seeking / Range
+   =========================================== */
+
+.cards {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  width: 100%;
+  max-width: 720px;
+}
+
+.cardWrap {
+  width: 100%;
+}
+
+.card {
+  position: relative;
+  background: color-mix(in srgb, var(--color-cream-dark) 60%, transparent);
+  border: 1px solid color-mix(in srgb, var(--color-ink-faint) 20%, transparent);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition:
+    transform var(--motion-fast) var(--ease-out),
+    border-color var(--motion-fast) var(--ease-out),
+    box-shadow var(--motion-fast) var(--ease-out);
+}
+
+/* Quiet alternating tilt — gives the cards a "scattered postcard" feel.
+   Small enough not to feel gimmicky. */
+.cardTilt0 { transform: rotate(-0.4deg); }
+.cardTilt1 { transform: rotate(0.5deg); }
+.cardTilt2 { transform: rotate(-0.3deg); }
+
+@media (hover: hover) {
+  .card:hover {
+    transform: translateY(-2px) rotate(0deg);
+    border-color: color-mix(in srgb, var(--color-plum-soft) 45%, transparent);
+    box-shadow: var(--shadow-md);
+  }
+}
+
+.cardOpen {
+  border-color: color-mix(in srgb, var(--color-plum-soft) 55%, transparent);
+}
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
   min-height: var(--min-touch-target);
+  padding: var(--space-sm) var(--space-md);
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  color: var(--color-ink);
+  font: inherit;
+  text-align: left;
 }
 
-.aboutLink:focus-visible {
-  outline: 2px solid var(--color-plum);
-  outline-offset: 2px;
-  border-radius: var(--radius-sm);
+.cardHeader:focus-visible {
+  outline: 2px solid var(--color-plum-soft);
+  outline-offset: 3px;
+  border-radius: var(--radius-lg);
 }
 
-.aboutLinkDisabled {
-  opacity: 0.6;
-  cursor: default;
-  pointer-events: none;
-  border-bottom: none;
-  gap: var(--space-xs);
+.cardLabel {
+  font-family: var(--font-heading);
+  font-size: var(--text-h4);
+  font-weight: var(--weight-title);
+  font-style: italic;
+  font-variation-settings: 'SOFT' 50, 'WONK' 0;
+  color: var(--color-ink);
+  line-height: var(--leading-tight);
 }
 
-.comingSoon {
-  font-size: var(--text-caption);
-  font-weight: var(--weight-body);
+.cardChevron {
+  width: 20px;
+  height: 20px;
   color: var(--color-ink-light);
-  background: var(--pill-bg-light);
-  border: 1px solid var(--pill-border-light);
-  border-radius: var(--radius-pill);
-  padding: 2px 10px;
-  margin-left: var(--space-xs);
+  transition: transform var(--motion-fast) var(--ease-out);
+  flex-shrink: 0;
+}
+
+.cardOpen .cardChevron {
+  transform: rotate(180deg);
+  color: var(--color-plum-soft);
+}
+
+.cardPanel {
+  max-height: 0;
+  opacity: 0;
+  padding: 0 var(--space-md);
+  overflow: hidden;
+  transition:
+    max-height var(--motion-medium) var(--ease-out),
+    opacity var(--motion-medium) var(--ease-out),
+    padding var(--motion-medium) var(--ease-out);
+}
+
+.cardPanelOpen {
+  max-height: 400px;
+  opacity: 1;
+  padding: 0 var(--space-md) var(--space-md);
+}
+
+.cardBody {
+  font-family: var(--font-body);
+  font-size: var(--text-body-large);
+  font-weight: var(--weight-body);
+  line-height: var(--leading-normal);
+  color: var(--color-ink-light);
+  text-wrap: pretty;
+  margin: 0;
+}
+
+/* ===========================================
+   PRACTICE — Sense / Weave / Shape
+   =========================================== */
+
+.practiceWrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-sm);
+  width: 100%;
+  max-width: 720px;
+}
+
+.practiceLabel {
+  font-family: var(--font-body);
+  font-size: var(--text-body-small);
+  font-weight: var(--weight-label);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-ink-faint);
+  margin: 0;
+}
+
+.practiceRow {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: var(--space-md);
+  flex-wrap: wrap;
+}
+
+.practiceMark {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: var(--space-xs) var(--space-sm);
+  min-width: var(--min-touch-target);
+  min-height: var(--min-touch-target);
+  background: transparent;
+  border: 0;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  color: var(--color-ink);
+  transition:
+    transform var(--motion-fast) var(--ease-out),
+    background var(--motion-fast) var(--ease-out);
+}
+
+.practiceMark:focus-visible {
+  outline: 2px solid var(--color-plum-soft);
+  outline-offset: 2px;
 }
 
 @media (hover: hover) {
-  .aboutLink:hover {
-    border-color: var(--color-plum);
+  .practiceMark:hover {
+    transform: translateY(-2px);
+    background: color-mix(in srgb, var(--color-cream-dark) 40%, transparent);
+  }
+}
+
+.practiceMarkActive {
+  background: color-mix(in srgb, var(--color-plum-muted) 100%, transparent);
+}
+
+.practiceMarkInner {
+  display: block;
+  width: 56px;
+  height: 56px;
+  position: relative;
+}
+
+.practiceMarkName {
+  font-family: var(--font-heading);
+  font-size: var(--text-body);
+  font-weight: var(--weight-body);
+  font-style: italic;
+  font-variation-settings: 'SOFT' 50, 'WONK' 0;
+  color: var(--color-ink-light);
+}
+
+.practiceMarkActive .practiceMarkName {
+  color: var(--color-ink);
+}
+
+.practiceReveal {
+  min-height: 1em;
+  width: 100%;
+  text-align: center;
+}
+
+.practiceRevealInner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-xxs);
+  padding: var(--space-sm) var(--space-md);
+  animation: practiceRevealIn var(--motion-medium) var(--ease-out);
+}
+
+@keyframes practiceRevealIn {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
     opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.practiceParadox {
+  font-family: var(--font-heading);
+  font-size: var(--text-body-large);
+  font-style: italic;
+  font-weight: var(--weight-body);
+  font-variation-settings: 'SOFT' 50, 'WONK' 0;
+  color: var(--color-plum-soft);
+  margin: 0;
+}
+
+.practiceMantra {
+  font-family: var(--font-heading);
+  font-size: var(--text-h4);
+  font-weight: var(--weight-title);
+  font-variation-settings: 'SOFT' 50, 'WONK' 0;
+  color: var(--color-ink);
+  margin: 0;
+}
+
+.practiceBody {
+  font-family: var(--font-body);
+  font-size: var(--text-body-large);
+  line-height: var(--leading-normal);
+  color: var(--color-ink-light);
+  max-width: 48ch;
+  text-wrap: pretty;
+  margin: 0;
+}
+
+/* ===========================================
+   CONTACT — Resume / LinkedIn / Email pills
+   =========================================== */
+
+.contactWrap {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.contact {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  justify-content: center;
+}
+
+.contactPill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: var(--min-touch-target);
+  padding: var(--space-xs) var(--space-md);
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  font-weight: var(--weight-label);
+  color: var(--color-ink);
+  background: color-mix(in srgb, var(--color-cream-dark) 60%, transparent);
+  border: 1px solid color-mix(in srgb, var(--color-ink-faint) 30%, transparent);
+  border-radius: var(--radius-pill);
+  text-decoration: none;
+  transition:
+    transform var(--motion-fast) var(--ease-out),
+    border-color var(--motion-fast) var(--ease-out),
+    background var(--motion-fast) var(--ease-out);
+}
+
+.contactPill:focus-visible {
+  outline: 2px solid var(--color-plum-soft);
+  outline-offset: 2px;
+}
+
+@media (hover: hover) {
+  .contactPill:hover {
+    transform: translateY(-2px);
+    border-color: var(--color-plum-soft);
+    background: color-mix(in srgb, var(--color-plum-muted) 100%, transparent);
   }
 }
 
 /* ===========================================
-   RESPONSIVE - TABLET (900px)
+   RESPONSIVE
    =========================================== */
+
 @media (max-width: 900px) {
-  .aboutSection {
+  .inner {
+    gap: var(--space-sm);
+  }
+
+  .practiceRow {
+    gap: var(--space-sm);
+  }
+}
+
+@media (max-width: 600px) {
+  .byline {
     flex-direction: column;
+    align-items: center;
     text-align: center;
   }
 
-  .aboutPhoto {
-    width: 120px;
-    height: 120px;
+  .bylineText {
+    align-items: center;
+    text-align: center;
+  }
+
+  .photoWrap {
+    width: 140px;
+    height: 140px;
+  }
+
+  .cardHeader {
+    padding: var(--space-sm);
+  }
+
+  .cardPanel {
+    padding: 0 var(--space-sm);
+  }
+
+  .cardPanelOpen {
+    padding: 0 var(--space-sm) var(--space-sm);
+  }
+
+  .practiceMarkInner {
+    width: 48px;
+    height: 48px;
+  }
+
+  .contact {
+    gap: var(--space-xs);
   }
 }
 
 /* ===========================================
-   RESPONSIVE - MOBILE (600px)
+   REDUCED MOTION — content fully visible, no transforms
    =========================================== */
-/* 600px responsive padding handled by page grid cell */
 
-/* ===========================================
-   ACCESSIBILITY - REDUCED MOTION
-   =========================================== */
 @media (prefers-reduced-motion: reduce) {
-  .aboutLink {
+  .photoHalo {
+    animation: none;
+    transform: none;
+    opacity: 0.55;
+  }
+
+  .cardTilt0,
+  .cardTilt1,
+  .cardTilt2 {
+    transform: none;
+  }
+
+  .card {
     transition: none;
   }
 
-  .aboutPhotoBorder {
-    animation: none !important;
+  .cardChevron,
+  .contactPill,
+  .practiceMark {
+    transition: none;
+  }
+
+  .cardPanel {
+    transition: none;
+  }
+
+  .practiceRevealInner {
+    animation: none;
   }
 }
