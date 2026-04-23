@@ -89,14 +89,14 @@ export default function Home() {
             { label: 'Research Synthesis' },
           ]}
           pillVariant="sense"
-          mediaSrc={cloudImg(HOME_IMAGES['transition-design-hero'], 1600)}
-          mediaType="image"
-          mediaAlt="Transition design cover"
+          mediaSrc={cloudVideo(HOME_VIDEOS['transition-design-default'], 1600)}
+          mediaType="video"
+          mediaAlt="Transition design default preview"
           mediaSequence={[
-            { src: cloudVideo(HOME_VIDEOS['transition-design-default'], 1200), type: 'video', alt: 'Transition design systems map' },
+            { src: cloudImg(HOME_IMAGES['td-scales'], 1200), type: 'image', alt: 'Scales of transition design intervention' },
             { src: cloudVideo(HOME_VIDEOS['transition-design-hover'], 1200), type: 'video', alt: 'Transition design detail' },
-            { src: cloudImg(HOME_IMAGES['transition-design-hero'], 1200), type: 'image', alt: 'Transition design placeholder' },
-            { src: cloudImg(HOME_IMAGES['transition-design-hero'], 1200), type: 'image', alt: 'Transition design placeholder' },
+            { src: cloudImg(HOME_IMAGES['td-timeline'], 1200), type: 'image', alt: 'Food insecurity timeline' },
+            { src: cloudImg(HOME_IMAGES['td-stakeholders'], 1200), type: 'image', alt: 'Stakeholder relations map' },
           ]}
           comingSoon
           flip
