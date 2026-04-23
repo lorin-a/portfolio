@@ -113,14 +113,16 @@ export default function Home() {
             { label: 'Animation' },
           ]}
           pillVariant="shape"
-          mediaSrc={cloudImg(HOME_IMAGES['bridging-cover'], 1600)}
-          mediaType="image"
-          mediaAlt="Bridging the G.A.P. cover"
+          mediaSrc={cloudVideo(HOME_VIDEOS['bridging-default'], 1600)}
+          mediaType="video"
+          mediaAlt="Bridging the G.A.P. logo animation"
           mediaSequence={[
-            { src: cloudVideo(HOME_VIDEOS['bridging-default'], 1200), type: 'video', alt: 'Bridging the G.A.P. campaign' },
-            { src: cloudVideo(HOME_VIDEOS['bridging-hover'], 1200), type: 'video', alt: 'Bridging the G.A.P. detail' },
-            { src: cloudImg(HOME_IMAGES['bridging-cover'], 1200), type: 'image', alt: 'Bridging placeholder' },
-            { src: cloudImg(HOME_IMAGES['bridging-cover'], 1200), type: 'image', alt: 'Bridging placeholder' },
+            { src: cloudImg(HOME_IMAGES['btg-29'], 1200), type: 'image', alt: 'Bridging the G.A.P. campaign detail' },
+            { src: cloudVideo(HOME_VIDEOS['bridging-app-iphone'], 1200), type: 'video', alt: 'Bridging the G.A.P. iPhone app prototype' },
+            { src: cloudVideo(HOME_VIDEOS['bridging-clip-2'], 1200), type: 'video', alt: 'Bridging the G.A.P. motion clip' },
+            { src: cloudVideo(HOME_VIDEOS['bridging-logos-2'], 1200), type: 'video', alt: 'Bridging the G.A.P. secondary logo animation' },
+            { src: cloudImg(HOME_IMAGES['btg-36'], 1200), type: 'image', alt: 'Bridging the G.A.P. campaign detail' },
+            { src: cloudImg(HOME_IMAGES['btg-33'], 1200), type: 'image', alt: 'Bridging the G.A.P. campaign detail' },
           ]}
           comingSoon
         />
