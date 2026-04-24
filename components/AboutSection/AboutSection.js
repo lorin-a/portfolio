@@ -76,6 +76,7 @@ export default function AboutSection() {
   const ledeAccentRef = useRef(null)
   const ledeAfterRef = useRef(null)
   const cardRefs = useRef([])
+  const practiceWrapRef = useRef(null)
   const practiceLabelRef = useRef(null)
   const practiceMarkRefs = useRef([])
 
@@ -195,7 +196,7 @@ export default function AboutSection() {
         scrollTrigger: {
           trigger: sectionRef.current,
           start: 'top top',
-          end: '+=400%',
+          end: '+=200%',
           pin: true,
           pinType: 'transform',
           scrub: 0.4,
@@ -252,7 +253,7 @@ export default function AboutSection() {
         )
       }
 
-      // Beat 4 — Drop-down menus cascade vertically (4.2 → ~5.2s)
+      // Beat 4 — Drop-down menus cascade vertically (4.2 → ~5.1s)
       pinTl.to(
         cards,
         {
@@ -260,56 +261,70 @@ export default function AboutSection() {
           y: 0,
           duration: 0.6,
           ease: 'power2.out',
-          stagger: 0.18,
+          stagger: 0.15,
         },
         4.2
       )
 
-      // Beat 5 — "How I work" label fades up (5.3 → 5.7s)
-      pinTl.to(
-        practiceLabelRef.current,
-        { autoAlpha: 1, y: 0, duration: 0.4, ease: 'power2.out' },
-        5.3
-      )
+      // ─── Practice timeline: paused until IntersectionObserver fires.
+      // Plays at its own natural pace when the practice block is visibly
+      // in view — not tied to scroll velocity or scrub smoothing.
+      if (practiceWrapRef.current) {
+        const practiceTl = gsap.timeline({ paused: true })
 
-      // Beat 6a — Practice cards appear clustered at center (5.5 → 6.1s)
-      pinTl.to(
-        marks,
-        {
-          autoAlpha: 1,
-          duration: 0.6,
-          ease: 'power2.out',
-          stagger: 0.08,
-        },
-        5.5
-      )
+        practiceTl
+          .to(
+            practiceLabelRef.current,
+            { autoAlpha: 1, y: 0, duration: 0.4, ease: 'power2.out' },
+            0
+          )
+          .to(
+            marks,
+            {
+              autoAlpha: 1,
+              duration: 0.5,
+              ease: 'power2.out',
+              stagger: 0.08,
+            },
+            0.2
+          )
+          .to(
+            marks,
+            {
+              x: 0,
+              rotation: 0,
+              duration: 0.7,
+              ease: 'power2.out',
+              stagger: 0.06,
+            },
+            0.8
+          )
 
-      // Beat 6b — Practice cards spread into 3 columns (6.1 → 6.9s)
-      pinTl.to(
-        marks,
-        {
-          x: 0,
-          rotation: 0,
-          duration: 0.8,
-          ease: 'power2.out',
-          stagger: 0.06,
-        },
-        6.1
-      )
+        if (cardBodies.length) {
+          practiceTl.to(
+            cardBodies,
+            {
+              autoAlpha: 1,
+              scale: 1,
+              duration: 0.6,
+              ease: 'back.out(1.4)',
+              stagger: 0.1,
+            },
+            1.5
+          )
+        }
 
-      // Beat 6c — Body copy blooms inside each practice card (7.0 → 7.7s)
-      if (cardBodies.length) {
-        pinTl.to(
-          cardBodies,
-          {
-            autoAlpha: 1,
-            scale: 1,
-            duration: 0.7,
-            ease: 'back.out(1.4)',
-            stagger: 0.1,
+        const observer = new IntersectionObserver(
+          ([entry]) => {
+            if (entry.isIntersecting) {
+              practiceTl.play()
+            } else {
+              practiceTl.reverse()
+            }
           },
-          7.0
+          { threshold: 0.35 }
         )
+        observer.observe(practiceWrapRef.current)
       }
     },
     { scope: wrapperRef, dependencies: [] }
@@ -446,7 +461,7 @@ export default function AboutSection() {
           </div>
 
           {/* ── Practice: Sense / Weave / Shape fanned cards ── */}
-          <div className={styles.practiceWrap}>
+          <div ref={practiceWrapRef} className={styles.practiceWrap}>
             <p ref={practiceLabelRef} className={styles.practiceLabel}>
               How I work
             </p>
