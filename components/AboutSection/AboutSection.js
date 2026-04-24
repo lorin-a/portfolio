@@ -148,9 +148,9 @@ export default function AboutSection() {
       gsap.set(marks, { autoAlpha: 0, scale: 0.4 })
       gsap.set(pills, { autoAlpha: 0, scale: 0.8, y: 20 })
 
-      // ─── Pre-pin reveals: photo iris + wiggle draw happen as the section
-      // enters the viewport, BEFORE pin engages. By the time pin starts at
-      // 'top top', the photo is already fully revealed and anchors the view.
+      // ─── Pre-pin reveal: photo iris opens as the section enters the viewport.
+      // By the time pin starts at 'top top', the photo is fully revealed and
+      // anchors the view. Wiggle ring waits for pin to draw on.
 
       gsap.to(photoInnerRef.current, {
         clipPath: 'circle(75% at 50% 50%)',
@@ -158,32 +158,20 @@ export default function AboutSection() {
         scrollTrigger: {
           trigger: sectionRef.current,
           start: 'top 85%',
-          end: 'top 25%',
+          end: 'top 10%',
           scrub: true,
         },
       })
 
-      gsap.to(wigglePathRef.current, {
-        drawSVG: '0% 100%',
-        ease: 'power2.inOut',
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: 'top 80%',
-          end: 'top 20%',
-          scrub: true,
-        },
-      })
-
-      // ─── Pinned autoplay timeline: the upper-fold beats (byline, lede, cards)
-      // play at their natural pace while the section is held at viewport top.
-      // Pin distance matches the animation duration at median scroll speed so
-      // even fast scrollers are held long enough to see the core moments.
+      // ─── Pinned scrub timeline: each beat cascades sequentially with a
+      // 0.3s gap between them so the user can absorb each element in turn.
+      // Pin distance (+=400%) matches the case study rhythm — heavy, deliberate.
 
       const pinTl = gsap.timeline({
         scrollTrigger: {
           trigger: sectionRef.current,
           start: 'top top',
-          end: '+=300%',
+          end: '+=400%',
           pin: true,
           pinType: 'transform',
           scrub: 1,
@@ -191,13 +179,21 @@ export default function AboutSection() {
         },
       })
 
-      pinTl
-        .to(
-          bylineTextRef.current,
-          { autoAlpha: 1, x: 0, duration: 0.8, ease: 'power2.out' },
-          0
-        )
+      // Beat 1 — Wiggle ring draws around photo (0 → 1.4s)
+      pinTl.to(
+        wigglePathRef.current,
+        { drawSVG: '0% 100%', duration: 1.4, ease: 'power2.inOut' },
+        0
+      )
 
+      // Beat 2 — Byline text slides in (1.7 → 2.5s)
+      pinTl.to(
+        bylineTextRef.current,
+        { autoAlpha: 1, x: 0, duration: 0.8, ease: 'power2.out' },
+        1.7
+      )
+
+      // Beat 3 — Lede chars type on (2.8 → 3.6s)
       if (ledeSplit) {
         pinTl.to(
           ledeSplit.chars,
@@ -207,20 +203,21 @@ export default function AboutSection() {
             ease: 'power1.inOut',
             stagger: 0.025,
           },
-          0.4
+          2.8
         )
       }
 
+      // Beat 4 — Cards drop with stagger (4.0 → ~5.7s)
       pinTl.to(
         cards,
         {
           autoAlpha: 1,
           y: 0,
-          duration: 0.7,
+          duration: 1.3,
           ease: 'back.out(1.15)',
-          stagger: 0.14,
+          stagger: 0.22,
         },
-        1.0
+        4.0
       )
 
       // ─── Below-fold reveals (practice + pills): per-element triggers that
@@ -229,11 +226,11 @@ export default function AboutSection() {
       gsap.to(practiceLabelRef.current, {
         autoAlpha: 1,
         y: 0,
-        duration: 0.5,
+        duration: 0.7,
         ease: 'power2.out',
         scrollTrigger: {
           trigger: practiceLabelRef.current,
-          start: 'top 85%',
+          start: 'top 70%',
           toggleActions: 'play none none reverse',
         },
       })
@@ -241,12 +238,12 @@ export default function AboutSection() {
       gsap.to(marks, {
         autoAlpha: 1,
         scale: 1,
-        duration: 0.6,
+        duration: 0.8,
         ease: 'back.out(1.4)',
-        stagger: 0.1,
+        stagger: 0.18,
         scrollTrigger: {
           trigger: marks[0],
-          start: 'top 85%',
+          start: 'top 65%',
           toggleActions: 'play none none reverse',
         },
       })
@@ -255,12 +252,12 @@ export default function AboutSection() {
         autoAlpha: 1,
         scale: 1,
         y: 0,
-        duration: 0.5,
+        duration: 0.6,
         ease: 'back.out(1.2)',
-        stagger: 0.08,
+        stagger: 0.12,
         scrollTrigger: {
           trigger: pills[0],
-          start: 'top 90%',
+          start: 'top 75%',
           toggleActions: 'play none none reverse',
         },
       })
