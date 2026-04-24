@@ -73,7 +73,6 @@ export default function AboutSection() {
   const cardRefs = useRef([])
   const practiceLabelRef = useRef(null)
   const practiceMarkRefs = useRef([])
-  const contactRef = useRef(null)
   const pillRefs = useRef([])
 
   const toggleCard = useCallback((id) => {
@@ -106,7 +105,6 @@ export default function AboutSection() {
   useGSAP(
     () => {
       const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-
       const cards = cardRefs.current.filter(Boolean)
       const marks = practiceMarkRefs.current.filter(Boolean)
       const pills = pillRefs.current.filter(Boolean)
@@ -127,7 +125,7 @@ export default function AboutSection() {
         return
       }
 
-      // SplitText on the lede (char-by-char mask reveal).
+      // SplitText on the lede for char-by-char reveal.
       let ledeSplit = null
       if (ledeRef.current) {
         ledeSplit = SplitText.create(ledeRef.current, {
@@ -137,21 +135,18 @@ export default function AboutSection() {
         })
       }
 
-      // Initial hidden states. Each element starts off-position/invisible;
-      // the timeline animates them in as the section enters view.
+      // Initial hidden states. Elements stay in natural flow, they just start
+      // invisible and animate to revealed. Once revealed, they stay on screen.
       gsap.set(photoInnerRef.current, { clipPath: 'circle(0% at 50% 50%)' })
       if (wigglePathRef.current) gsap.set(wigglePathRef.current, { drawSVG: '50% 50%' })
-      gsap.set(bylineTextRef.current, { autoAlpha: 0, x: -24 })
+      gsap.set(bylineTextRef.current, { autoAlpha: 0, y: 20 })
       if (ledeSplit) gsap.set(ledeSplit.chars, { yPercent: 110 })
       gsap.set(cards, { autoAlpha: 0, y: -80 })
       gsap.set(practiceLabelRef.current, { autoAlpha: 0, y: 16 })
       gsap.set(marks, { autoAlpha: 0, scale: 0.4 })
       gsap.set(pills, { autoAlpha: 0, scale: 0.8, y: 20 })
 
-      // ─── Pre-pin reveal: photo iris opens as the section enters the viewport.
-      // By the time pin starts at 'top top', the photo is fully revealed and
-      // anchors the view. Wiggle ring waits for pin to draw on.
-
+      // ─── Pre-pin: photo iris opens as section enters viewport ───
       gsap.to(photoInnerRef.current, {
         clipPath: 'circle(75% at 50% 50%)',
         ease: 'power3.out',
@@ -163,10 +158,7 @@ export default function AboutSection() {
         },
       })
 
-      // ─── Pinned scrub timeline: each beat cascades sequentially with a
-      // 0.3s gap between them so the user can absorb each element in turn.
-      // Pin distance (+=400%) matches the case study rhythm — heavy, deliberate.
-
+      // ─── Pinned scrub timeline: each beat cascades, once revealed stays visible.
       const pinTl = gsap.timeline({
         scrollTrigger: {
           trigger: sectionRef.current,
@@ -179,17 +171,17 @@ export default function AboutSection() {
         },
       })
 
-      // Beat 1 — Wiggle ring draws around photo (0 → 1.4s)
+      // Beat 1 — Wiggle ring draws (0 → 1.4s)
       pinTl.to(
         wigglePathRef.current,
         { drawSVG: '0% 100%', duration: 1.4, ease: 'power2.inOut' },
         0
       )
 
-      // Beat 2 — Byline text slides in (1.7 → 2.5s)
+      // Beat 2 — Byline text slides up (1.7 → 2.5s)
       pinTl.to(
         bylineTextRef.current,
-        { autoAlpha: 1, x: 0, duration: 0.8, ease: 'power2.out' },
+        { autoAlpha: 1, y: 0, duration: 0.8, ease: 'power2.out' },
         1.7
       )
 
@@ -277,8 +269,8 @@ export default function AboutSection() {
         </h2>
 
         <div className={styles.inner}>
-          {/* ── Byline: photo + name + meta ── */}
-          <div className={styles.byline}>
+          {/* ── Byline: photo centered, name stacked beneath ── */}
+          <div className={styles.anchor}>
             <div className={styles.photoWrap}>
               <div className={styles.photoRing} aria-hidden="true">
                 <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
@@ -446,7 +438,7 @@ export default function AboutSection() {
           </div>
 
           {/* ── Contact pills ── */}
-          <div ref={contactRef} className={styles.contactWrap}>
+          <div className={styles.contactWrap}>
             <ul className={styles.contact}>
               <li
                 ref={(el) => {
