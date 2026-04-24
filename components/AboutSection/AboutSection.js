@@ -37,28 +37,28 @@ const PRACTICES = [
   {
     id: 'sense',
     label: 'Sense',
-    paradox: 'meticulous dreamer',
-    mantra: 'Distilling Complexity',
+    mantra: 'Distil Complexity',
     body:
-      'I map complexity to reveal root causes, using participatory research and systems thinking.',
+      'I start with feeling, foraging, and gathering: details, patterns, tensions, emotions.',
   },
   {
     id: 'weave',
     label: 'Weave',
-    paradox: 'playful perfectionist',
-    mantra: 'Amplifying Voices',
+    mantra: 'Amplify Voices',
     body:
-      'I translate lived experience into narratives that make complexity accessible and catalyze change.',
+      'I weave narratives that balance nuance between: stories + systems, empathy + evidence, details + dreams.',
   },
   {
     id: 'shape',
     label: 'Shape',
-    paradox: 'hopeful realist',
-    mantra: 'Holding Space',
+    mantra: 'Create Together',
     body:
-      'I create interventions that transform individual experiences and systemic barriers at the same time.',
+      'I collaborate to build immersive experiences, supportive environments, and brand identities.',
   },
 ]
+
+// Gradient values reused from HeroScatter for the "signature" moments.
+const PRACTICE_GRADIENT = ['#C5CFA6', '#C7AAD1', '#F79C7E']
 
 export default function AboutSection() {
   const [openCards, setOpenCards] = useState(() => new Set(['currently']))
@@ -66,14 +66,18 @@ export default function AboutSection() {
 
   const wrapperRef = useRef(null)
   const sectionRef = useRef(null)
+  const [replayMap, setReplayMap] = useState({})
+
   const photoInnerRef = useRef(null)
   const wigglePathRef = useRef(null)
   const bylineTextRef = useRef(null)
   const ledeRef = useRef(null)
+  const ledeBeforeRef = useRef(null)
+  const ledeAccentRef = useRef(null)
+  const ledeAfterRef = useRef(null)
   const cardRefs = useRef([])
   const practiceLabelRef = useRef(null)
   const practiceMarkRefs = useRef([])
-  const pillRefs = useRef([])
 
   const toggleCard = useCallback((id) => {
     setOpenCards((prev) => {
@@ -86,6 +90,8 @@ export default function AboutSection() {
 
   const togglePractice = useCallback((id) => {
     setActivePractice((prev) => (prev === id ? null : id))
+    // Only the clicked card's mark replays — others stay put.
+    setReplayMap((prev) => ({ ...prev, [id]: (prev[id] || 0) + 1 }))
   }, [])
 
   const handleCardKeyDown = useCallback(
@@ -107,7 +113,6 @@ export default function AboutSection() {
       const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
       const cards = cardRefs.current.filter(Boolean)
       const marks = practiceMarkRefs.current.filter(Boolean)
-      const pills = pillRefs.current.filter(Boolean)
       const allTargets = [
         photoInnerRef.current,
         bylineTextRef.current,
@@ -115,24 +120,39 @@ export default function AboutSection() {
         ...cards,
         practiceLabelRef.current,
         ...marks,
-        ...pills,
       ].filter(Boolean)
 
       if (prefersReduced) {
         gsap.set(allTargets, { autoAlpha: 1, y: 0, x: 0, scale: 1, rotation: 0 })
         gsap.set(photoInnerRef.current, { clipPath: 'circle(75% at 50% 50%)' })
         if (wigglePathRef.current) gsap.set(wigglePathRef.current, { drawSVG: '100%' })
+        if (ledeAccentRef.current) gsap.set(ledeAccentRef.current, { autoAlpha: 1, yPercent: 0 })
+        // Card bodies inside practice cards.
+        const bodies = marks.map((m) => m?.querySelector(`.${styles.practiceCardBody}`)).filter(Boolean)
+        if (bodies.length) gsap.set(bodies, { autoAlpha: 1, scale: 1 })
         return
       }
 
-      // SplitText on the lede for char-by-char reveal.
-      let ledeSplit = null
-      if (ledeRef.current) {
-        ledeSplit = SplitText.create(ledeRef.current, {
+      // Split the lede around the gradient accent: split before + after
+      // separately, leave the accent span intact so its gradient renders as
+      // one coherent unit across the phrase.
+      let beforeChars = []
+      let afterChars = []
+      if (ledeBeforeRef.current) {
+        const splitBefore = SplitText.create(ledeBeforeRef.current, {
           type: 'chars',
           mask: 'chars',
           autoSplit: true,
         })
+        beforeChars = splitBefore.chars || []
+      }
+      if (ledeAfterRef.current) {
+        const splitAfter = SplitText.create(ledeAfterRef.current, {
+          type: 'chars',
+          mask: 'chars',
+          autoSplit: true,
+        })
+        afterChars = splitAfter.chars || []
       }
 
       // Initial hidden states. Elements stay in natural flow, they just start
@@ -140,11 +160,23 @@ export default function AboutSection() {
       gsap.set(photoInnerRef.current, { clipPath: 'circle(0% at 50% 50%)' })
       if (wigglePathRef.current) gsap.set(wigglePathRef.current, { drawSVG: '50% 50%' })
       gsap.set(bylineTextRef.current, { autoAlpha: 0, y: 20 })
-      if (ledeSplit) gsap.set(ledeSplit.chars, { yPercent: 110 })
-      gsap.set(cards, { autoAlpha: 0, y: -80 })
+      gsap.set([...beforeChars, ...afterChars], { yPercent: 110 })
+      if (ledeAccentRef.current) gsap.set(ledeAccentRef.current, { autoAlpha: 0, yPercent: 30 })
+      // Drop-down menu cards (Currently/Seeking/Range) — vertical cascade reveal.
+      gsap.set(cards, { autoAlpha: 0, y: -30 })
+
+      // Practice cards (Sense/Weave/Shape) — start clustered at center with
+      // slight rotation, then spread into 3 upright columns.
+      if (marks[0]) gsap.set(marks[0], { autoAlpha: 0, x: 260, rotation: -8 })
+      if (marks[1]) gsap.set(marks[1], { autoAlpha: 0, x: 0, rotation: 0 })
+      if (marks[2]) gsap.set(marks[2], { autoAlpha: 0, x: -260, rotation: 8 })
+
+      // Practice card body copy starts hidden — blooms inside each card after spread.
+      const cardBodies = marks
+        .map((m) => m?.querySelector(`.${styles.practiceCardBody}`))
+        .filter(Boolean)
+      gsap.set(cardBodies, { autoAlpha: 0, scale: 0.85, transformOrigin: 'center top' })
       gsap.set(practiceLabelRef.current, { autoAlpha: 0, y: 16 })
-      gsap.set(marks, { autoAlpha: 0, scale: 0.4 })
-      gsap.set(pills, { autoAlpha: 0, scale: 0.8, y: 20 })
 
       // ─── Pre-pin: photo iris opens as section enters viewport ───
       gsap.to(photoInnerRef.current, {
@@ -166,7 +198,7 @@ export default function AboutSection() {
           end: '+=400%',
           pin: true,
           pinType: 'transform',
-          scrub: 1,
+          scrub: 0.4,
           anticipatePin: 1,
         },
       })
@@ -185,74 +217,100 @@ export default function AboutSection() {
         1.7
       )
 
-      // Beat 3 — Lede chars type on (2.8 → 3.6s)
-      if (ledeSplit) {
+      // Beat 3a — "Translating lived experience into " types on (2.6 → ~3.4s)
+      if (beforeChars.length) {
         pinTl.to(
-          ledeSplit.chars,
+          beforeChars,
           {
             yPercent: 0,
-            duration: 0.8,
+            duration: 0.5,
             ease: 'power1.inOut',
-            stagger: 0.025,
+            stagger: 0.022,
           },
-          2.8
+          2.6
         )
       }
 
-      // Beat 4 — Cards drop with stagger (4.0 → ~5.7s)
+      // Beat 3b — Gradient accent "thoughtful design" fades up (3.2 → 3.8s)
+      pinTl.to(
+        ledeAccentRef.current,
+        { autoAlpha: 1, yPercent: 0, duration: 0.6, ease: 'power2.out' },
+        3.2
+      )
+
+      // Beat 3c — " to improve complex systems." types on (3.4 → ~4.1s)
+      if (afterChars.length) {
+        pinTl.to(
+          afterChars,
+          {
+            yPercent: 0,
+            duration: 0.5,
+            ease: 'power1.inOut',
+            stagger: 0.022,
+          },
+          3.4
+        )
+      }
+
+      // Beat 4 — Drop-down menus cascade vertically (4.2 → ~5.2s)
       pinTl.to(
         cards,
         {
           autoAlpha: 1,
           y: 0,
-          duration: 1.3,
-          ease: 'back.out(1.15)',
-          stagger: 0.22,
+          duration: 0.6,
+          ease: 'power2.out',
+          stagger: 0.18,
         },
-        4.0
+        4.2
       )
 
-      // ─── Below-fold reveals (practice + pills): per-element triggers that
-      // fire as they enter the viewport after the pin releases.
+      // Beat 5 — "How I work" label fades up (5.3 → 5.7s)
+      pinTl.to(
+        practiceLabelRef.current,
+        { autoAlpha: 1, y: 0, duration: 0.4, ease: 'power2.out' },
+        5.3
+      )
 
-      gsap.to(practiceLabelRef.current, {
-        autoAlpha: 1,
-        y: 0,
-        duration: 0.7,
-        ease: 'power2.out',
-        scrollTrigger: {
-          trigger: practiceLabelRef.current,
-          start: 'top 70%',
-          toggleActions: 'play none none reverse',
+      // Beat 6a — Practice cards appear clustered at center (5.5 → 6.1s)
+      pinTl.to(
+        marks,
+        {
+          autoAlpha: 1,
+          duration: 0.6,
+          ease: 'power2.out',
+          stagger: 0.08,
         },
-      })
+        5.5
+      )
 
-      gsap.to(marks, {
-        autoAlpha: 1,
-        scale: 1,
-        duration: 0.8,
-        ease: 'back.out(1.4)',
-        stagger: 0.18,
-        scrollTrigger: {
-          trigger: marks[0],
-          start: 'top 65%',
-          toggleActions: 'play none none reverse',
+      // Beat 6b — Practice cards spread into 3 columns (6.1 → 6.9s)
+      pinTl.to(
+        marks,
+        {
+          x: 0,
+          rotation: 0,
+          duration: 0.8,
+          ease: 'power2.out',
+          stagger: 0.06,
         },
-      })
+        6.1
+      )
 
-      gsap.to(pills, {
-        autoAlpha: 1,
-        scale: 1,
-        y: 0,
-        duration: 0.6,
-        ease: 'back.out(1.2)',
-        stagger: 0.12,
-        scrollTrigger: {
-          trigger: pills[0],
-          start: 'top 75%',
-          toggleActions: 'play none none reverse',
-        },
-      })
+      // Beat 6c — Body copy blooms inside each practice card (7.0 → 7.7s)
+      if (cardBodies.length) {
+        pinTl.to(
+          cardBodies,
+          {
+            autoAlpha: 1,
+            scale: 1,
+            duration: 0.7,
+            ease: 'back.out(1.4)',
+            stagger: 0.1,
+          },
+          7.0
+        )
+      }
     },
     { scope: wrapperRef, dependencies: [] }
   )
@@ -326,9 +384,11 @@ export default function AboutSection() {
           {/* ── Lede ── */}
           <div className={styles.ledeWrap}>
             <p ref={ledeRef} className={styles.lede}>
-              Translating lived experience into{' '}
-              <span className={styles.ledeAccent}>thoughtful design</span>{' '}
-              to improve complex systems.
+              <span ref={ledeBeforeRef}>{'Translating lived experience into '}</span>
+              <span ref={ledeAccentRef} className={styles.ledeAccent}>
+                thoughtful design
+              </span>
+              <span ref={ledeAfterRef}>{' to improve complex systems.'}</span>
             </p>
           </div>
 
@@ -385,14 +445,15 @@ export default function AboutSection() {
             })}
           </div>
 
-          {/* ── Practice: Sense / Weave / Shape ── */}
+          {/* ── Practice: Sense / Weave / Shape fanned cards ── */}
           <div className={styles.practiceWrap}>
             <p ref={practiceLabelRef} className={styles.practiceLabel}>
               How I work
             </p>
-            <div className={styles.practiceRow} role="group" aria-label="My practice">
+            <div className={styles.practiceFan} role="group" aria-label="My practice">
               {PRACTICES.map((p, i) => {
                 const isActive = activePractice === p.id
+                const dimmed = activePractice && !isActive
                 const Mark =
                   p.id === 'sense' ? SenseMark : p.id === 'weave' ? WeaveMark : ShapeMark
                 return (
@@ -402,82 +463,31 @@ export default function AboutSection() {
                       practiceMarkRefs.current[i] = el
                     }}
                     type="button"
-                    className={`${styles.practiceMark} ${isActive ? styles.practiceMarkActive : ''}`}
+                    data-practice={p.id}
+                    className={`${styles.practiceCard} ${isActive ? styles.practiceCardActive : ''} ${dimmed ? styles.practiceCardDimmed : ''}`}
                     aria-pressed={isActive}
-                    aria-label={`${p.label}: ${p.paradox}. ${p.mantra}. ${p.body}`}
+                    aria-label={`${p.label}: ${p.mantra}. ${p.body}`}
                     onClick={() => togglePractice(p.id)}
                   >
-                    <span className={styles.practiceMarkInner} aria-hidden="true">
-                      <Mark animate showBrush />
+                    <span className={styles.practiceCardMark} aria-hidden="true">
+                      <Mark
+                        animate
+                        showBrush
+                        replay={replayMap[p.id] || 0}
+                        gradientColors={PRACTICE_GRADIENT}
+                      />
                     </span>
-                    <span className={styles.practiceMarkName} aria-hidden="true">
+                    <span className={styles.practiceCardName} aria-hidden="true">
                       {p.label}
                     </span>
+                    <span className={styles.practiceCardMantra} aria-hidden="true">
+                      {p.mantra}
+                    </span>
+                    <span className={styles.practiceCardBody}>{p.body}</span>
                   </button>
                 )
               })}
             </div>
-            <div
-              className={styles.practiceReveal}
-              aria-live="polite"
-              aria-atomic="true"
-            >
-              {activePractice &&
-                (() => {
-                  const p = PRACTICES.find((x) => x.id === activePractice)
-                  if (!p) return null
-                  return (
-                    <div className={styles.practiceRevealInner}>
-                      <p className={styles.practiceParadox}>{p.paradox}</p>
-                      <p className={styles.practiceMantra}>{p.mantra}</p>
-                      <p className={styles.practiceBody}>{p.body}</p>
-                    </div>
-                  )
-                })()}
-            </div>
-          </div>
-
-          {/* ── Contact pills ── */}
-          <div className={styles.contactWrap}>
-            <ul className={styles.contact}>
-              <li
-                ref={(el) => {
-                  pillRefs.current[0] = el
-                }}
-              >
-                <a
-                  className={styles.contactPill}
-                  href="/resume.pdf"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Resume
-                </a>
-              </li>
-              <li
-                ref={(el) => {
-                  pillRefs.current[1] = el
-                }}
-              >
-                <a
-                  className={styles.contactPill}
-                  href="https://www.linkedin.com/in/lorin-anderberg"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  LinkedIn
-                </a>
-              </li>
-              <li
-                ref={(el) => {
-                  pillRefs.current[2] = el
-                }}
-              >
-                <a className={styles.contactPill} href="mailto:lorin@lorin.work">
-                  Email
-                </a>
-              </li>
-            </ul>
           </div>
         </div>
       </section>

@@ -170,8 +170,43 @@
 }
 
 .ledeAccent {
-  color: var(--color-plum-soft);
   font-style: italic;
+  /* For reduced motion / no-split fallback: gradient on the span itself. */
+  background: linear-gradient(
+    135deg,
+    var(--color-sage-soft) 5%,
+    var(--color-plum-soft) 50%,
+    var(--color-terracotta-soft) 92%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+/* Applied per-char by JS after SplitText runs, so the gradient renders
+   correctly even when each char is wrapped in a mask. */
+.ledeAccentChar {
+  background: linear-gradient(
+    135deg,
+    var(--color-sage-soft) 5%,
+    var(--color-plum-soft) 50%,
+    var(--color-terracotta-soft) 92%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+/* Applied to the .ledeAccent parent when SplitText has run — turns off
+   the parent's clip-text so it doesn't interfere with per-char gradient. */
+.ledeAccentSplit {
+  background: none;
+  -webkit-background-clip: unset;
+  background-clip: unset;
+  -webkit-text-fill-color: unset;
+  color: inherit;
 }
 
 /* ===========================================
@@ -192,48 +227,38 @@
 
 .card {
   position: relative;
-  background: var(--card-bg, color-mix(in srgb, var(--color-cream-dark) 60%, transparent));
-  border: 1px solid color-mix(in srgb, var(--card-accent, var(--color-ink-faint)) 30%, transparent);
-  border-left: 3px solid var(--card-accent, var(--color-ink-faint));
+  /* Transparent fill + gradient border using double-background trick. */
+  background:
+    linear-gradient(var(--color-cream), var(--color-cream)) padding-box,
+    linear-gradient(
+      135deg,
+      var(--color-sage-soft) 5%,
+      var(--color-plum-soft) 50%,
+      var(--color-terracotta-soft) 92%
+    ) border-box;
+  border: 2px solid transparent;
   border-radius: var(--radius-lg);
   overflow: hidden;
   transition:
-    transform var(--motion-fast) var(--ease-out),
-    background var(--motion-fast) var(--ease-out),
-    border-color var(--motion-fast) var(--ease-out),
+    translate var(--motion-fast) var(--ease-out),
+    scale var(--motion-fast) var(--ease-out),
     box-shadow var(--motion-fast) var(--ease-out);
 }
 
-/* Per-card accent colors — each card gets its own practice color.
-   Currently (sage / Sense), Seeking (plum / Weave), Range (terracotta / Shape). */
-.cardTilt0 {
-  --card-accent: var(--color-sage-soft);
-  --card-bg: var(--color-sage-muted);
-  --card-bg-hover: color-mix(in srgb, var(--color-sage-soft) 18%, transparent);
-}
-.cardTilt1 {
-  --card-accent: var(--color-plum-soft);
-  --card-bg: var(--color-plum-muted);
-  --card-bg-hover: color-mix(in srgb, var(--color-plum-soft) 18%, transparent);
-}
-.cardTilt2 {
-  --card-accent: var(--color-terracotta-soft);
-  --card-bg: var(--color-terracotta-muted);
-  --card-bg-hover: color-mix(in srgb, var(--color-terracotta-soft) 18%, transparent);
-}
+/* Per-card accent color — only used now for the label + chevron. */
+.cardTilt0 { --card-accent: var(--color-sage-soft); }
+.cardTilt1 { --card-accent: var(--color-plum-soft); }
+.cardTilt2 { --card-accent: var(--color-terracotta-soft); }
 
 @media (hover: hover) {
   .card:hover {
-    transform: translateY(-2px);
-    background: var(--card-bg-hover);
-    border-color: color-mix(in srgb, var(--card-accent) 55%, transparent);
+    translate: 0 -2px;
     box-shadow: var(--shadow-md);
   }
 }
 
 .cardOpen {
-  background: var(--card-bg-hover);
-  border-color: color-mix(in srgb, var(--card-accent) 55%, transparent);
+  box-shadow: var(--shadow-md);
 }
 
 .cardHeader {
@@ -319,130 +344,143 @@
 }
 
 .practiceLabel {
-  font-family: var(--font-body);
-  font-size: var(--text-body-small);
-  font-weight: var(--weight-label);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--color-ink-faint);
-  margin: 0;
-}
-
-.practiceRow {
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
-  gap: var(--space-md);
-  flex-wrap: wrap;
-}
-
-.practiceMark {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--space-xs);
-  padding: var(--space-xs) var(--space-sm);
-  min-width: var(--min-touch-target);
-  min-height: var(--min-touch-target);
-  background: transparent;
-  border: 0;
-  border-radius: var(--radius-md);
-  cursor: pointer;
-  color: var(--color-ink);
-  transition:
-    transform var(--motion-fast) var(--ease-out),
-    background var(--motion-fast) var(--ease-out);
-}
-
-.practiceMark:focus-visible {
-  outline: 2px solid var(--color-plum-soft);
-  outline-offset: 2px;
-}
-
-@media (hover: hover) {
-  .practiceMark:hover {
-    transform: translateY(-2px);
-    background: color-mix(in srgb, var(--color-cream-dark) 40%, transparent);
-  }
-}
-
-.practiceMarkActive {
-  background: color-mix(in srgb, var(--color-plum-muted) 100%, transparent);
-}
-
-.practiceMarkInner {
-  display: block;
-  width: 56px;
-  height: 56px;
-  position: relative;
-}
-
-.practiceMarkName {
   font-family: var(--font-heading);
-  font-size: var(--text-body);
-  font-weight: var(--weight-body);
-  font-style: italic;
-  font-variation-settings: 'SOFT' 50, 'WONK' 0;
-  color: var(--color-ink-light);
-}
-
-.practiceMarkActive .practiceMarkName {
-  color: var(--color-ink);
-}
-
-.practiceReveal {
-  min-height: 1em;
-  width: 100%;
-  text-align: center;
-}
-
-.practiceRevealInner {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--space-xxs);
-  padding: var(--space-sm) var(--space-md);
-  animation: practiceRevealIn var(--motion-medium) var(--ease-out);
-}
-
-@keyframes practiceRevealIn {
-  from {
-    opacity: 0;
-    transform: translateY(-4px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.practiceParadox {
-  font-family: var(--font-heading);
-  font-size: var(--text-body-large);
-  font-style: italic;
-  font-weight: var(--weight-body);
-  font-variation-settings: 'SOFT' 50, 'WONK' 0;
-  color: var(--color-plum-soft);
-  margin: 0;
-}
-
-.practiceMantra {
-  font-family: var(--font-heading);
-  font-size: var(--text-h4);
+  font-size: clamp(1.5rem, 2.4vw, 2rem); /* 24 → 32px */
   font-weight: var(--weight-title);
   font-variation-settings: 'SOFT' 50, 'WONK' 0;
   color: var(--color-ink);
+  line-height: var(--leading-tight);
+  letter-spacing: -0.01em;
   margin: 0;
 }
 
-.practiceBody {
+/* Three practice cards — start clustered at center (stack) then spread
+   into 3 upright columns as the pin timeline progresses. */
+.practiceFan {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  width: 100%;
+  padding: var(--space-lg) 0;
+  min-height: 280px;
+}
+
+.practiceCard {
+  flex: 0 0 auto;
+  width: clamp(240px, 26vw, 280px);
+  min-height: 340px;
+  padding: var(--space-md);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  /* Transparent fill + gradient border using double-background trick. */
+  background:
+    linear-gradient(var(--color-cream), var(--color-cream)) padding-box,
+    linear-gradient(
+      135deg,
+      var(--color-sage-soft) 5%,
+      var(--color-plum-soft) 50%,
+      var(--color-terracotta-soft) 92%
+    ) border-box;
+  border: 2px solid transparent;
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  text-align: center;
+  color: var(--color-ink);
+  transition:
+    transform var(--motion-medium) var(--ease-out),
+    opacity var(--motion-medium) var(--ease-out),
+    box-shadow var(--motion-medium) var(--ease-out);
+}
+
+/* Per-practice accent color for the label. Positions handled by flex + GSAP. */
+.practiceCard[data-practice="sense"] {
+  --practice-accent: var(--color-sage-soft);
+}
+
+.practiceCard[data-practice="weave"] {
+  --practice-accent: var(--color-plum-soft);
+}
+
+.practiceCard[data-practice="shape"] {
+  --practice-accent: var(--color-terracotta-soft);
+}
+
+.practiceCard:focus-visible {
+  outline: 2px solid var(--practice-accent);
+  outline-offset: 4px;
+}
+
+/* Use individual translate/scale so they compose with GSAP's transform
+   (GSAP drives x/y/rotation in the timeline; these stack on top). */
+@media (hover: hover) {
+  .practiceCard:hover {
+    translate: 0 -4px;
+    scale: 1.03;
+    box-shadow: var(--shadow-md);
+    z-index: 3;
+  }
+}
+
+/* Active: card pops forward with real presence. */
+.practiceCardActive {
+  translate: 0 -16px;
+  scale: 1.1;
+  z-index: 10;
+  box-shadow: var(--shadow-lg);
+}
+
+/* Others recede behind — scaled down, translated down, dimmed — so the
+   active card reads as clearly "selected from the lineup." */
+.practiceCardDimmed {
+  translate: 0 6px;
+  scale: 0.94;
+  opacity: 0.5;
+}
+
+.practiceCardMark {
+  display: block;
+  width: 84px;
+  height: 84px;
+  position: relative;
+}
+
+.practiceCardName {
+  font-family: var(--font-heading);
+  font-size: clamp(1.25rem, 1.8vw, 1.5rem);
+  font-weight: var(--weight-title);
+  font-variation-settings: 'SOFT' 50, 'WONK' 0;
+  color: var(--practice-accent);
+  line-height: var(--leading-tight);
+}
+
+.practiceCardMantra {
   font-family: var(--font-body);
-  font-size: var(--text-body-large);
-  line-height: var(--leading-normal);
-  color: var(--color-ink-light);
-  max-width: 48ch;
+  font-size: var(--text-body-small);
+  font-weight: var(--weight-body);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-ink);
+  line-height: var(--leading-relaxed);
+  opacity: 0.9;
+}
+
+/* Body copy lives inside each card. Revealed with bloom in timeline. */
+.practiceCardBody {
+  display: block;
+  font-family: var(--font-body);
+  font-size: 0.9375rem; /* 15px */
+  font-weight: var(--weight-body);
+  line-height: 1.5;
+  color: var(--color-ink);
   text-wrap: pretty;
-  margin: 0;
+  margin-top: var(--space-xs);
+  padding: 0 var(--space-xs);
+  transform-origin: center top;
 }
 
 /* ===========================================
