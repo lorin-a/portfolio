@@ -11,14 +11,11 @@
 .about {
   position: relative;
   width: 100%;
-  min-height: 100vh;
-  min-height: 100dvh;
   margin: 0;
-  padding: var(--space-md) var(--container-padding);
+  /* Top padding clears the fixed Nav (~65px) + the wiggle ring's
+     -28px inset + comfortable breathing room. */
+  padding: calc(var(--space-xl) + var(--space-md)) var(--container-padding) var(--space-xl);
   background: var(--color-cream);
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
 }
 
 .visuallyHidden {
@@ -172,16 +169,7 @@
 }
 
 .ledeAccent {
-  background: linear-gradient(
-    135deg,
-    var(--color-sage-soft) 5%,
-    var(--color-plum-soft) 45%,
-    var(--color-terracotta-soft) 88%
-  );
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: transparent;
+  color: var(--color-plum-soft);
   font-style: italic;
 }
 

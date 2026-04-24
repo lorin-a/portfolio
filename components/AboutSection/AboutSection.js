@@ -148,53 +148,58 @@ export default function AboutSection() {
       gsap.set(marks, { autoAlpha: 0, scale: 0.4 })
       gsap.set(pills, { autoAlpha: 0, scale: 0.8, y: 20 })
 
-      const master = gsap.timeline({
+      // ─── Pre-pin reveals: photo iris + wiggle draw happen as the section
+      // enters the viewport, BEFORE pin engages. By the time pin starts at
+      // 'top top', the photo is already fully revealed and anchors the view.
+
+      gsap.to(photoInnerRef.current, {
+        clipPath: 'circle(75% at 50% 50%)',
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: 'top 85%',
+          end: 'top 25%',
+          scrub: true,
+        },
+      })
+
+      gsap.to(wigglePathRef.current, {
+        drawSVG: '0% 100%',
+        ease: 'power2.inOut',
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: 'top 80%',
+          end: 'top 20%',
+          scrub: true,
+        },
+      })
+
+      // ─── Pinned autoplay timeline: the upper-fold beats (byline, lede, cards)
+      // play at their natural pace while the section is held at viewport top.
+      // Pin distance matches the animation duration at median scroll speed so
+      // even fast scrollers are held long enough to see the core moments.
+
+      const pinTl = gsap.timeline({
         scrollTrigger: {
           trigger: sectionRef.current,
           start: 'top top',
-          end: '+=150%',
+          end: '+=300%',
           pin: true,
           pinType: 'transform',
-          scrub: 1.2,
+          scrub: 1,
           anticipatePin: 1,
         },
       })
 
-      // Beat 1 — Photo iris opens + wiggle ring draws on (0 → 1.5s)
-      master
-        .to(
-          photoInnerRef.current,
-          {
-            clipPath: 'circle(75% at 50% 50%)',
-            duration: 1.2,
-            ease: 'power3.out',
-          },
-          0
-        )
-        .to(
-          wigglePathRef.current,
-          {
-            drawSVG: '0% 100%',
-            duration: 1.4,
-            ease: 'power2.inOut',
-          },
-          0.2
-        )
-        // Beat 2 — Byline text slides in from left
+      pinTl
         .to(
           bylineTextRef.current,
-          {
-            autoAlpha: 1,
-            x: 0,
-            duration: 0.7,
-            ease: 'power2.out',
-          },
-          0.8
+          { autoAlpha: 1, x: 0, duration: 0.8, ease: 'power2.out' },
+          0
         )
 
-      // Beat 3 — Lede chars type on with mask reveal
       if (ledeSplit) {
-        master.to(
+        pinTl.to(
           ledeSplit.chars,
           {
             yPercent: 0,
@@ -202,60 +207,63 @@ export default function AboutSection() {
             ease: 'power1.inOut',
             stagger: 0.025,
           },
-          1.0
+          0.4
         )
       }
 
-      // Beat 4 — Cards fall in from above with slight overshoot
-      master.to(
+      pinTl.to(
         cards,
         {
           autoAlpha: 1,
           y: 0,
           duration: 0.7,
           ease: 'back.out(1.15)',
-          stagger: 0.12,
+          stagger: 0.14,
         },
-        '>-0.4'
+        1.0
       )
 
-      // Beat 5 — Practice label fades up, marks pop in with bounce
-      master
-        .to(
-          practiceLabelRef.current,
-          {
-            autoAlpha: 1,
-            y: 0,
-            duration: 0.5,
-            ease: 'power2.out',
-          },
-          '>-0.1'
-        )
-        .to(
-          marks,
-          {
-            autoAlpha: 1,
-            scale: 1,
-            duration: 0.6,
-            ease: 'back.out(1.4)',
-            stagger: 0.1,
-          },
-          '>-0.2'
-        )
+      // ─── Below-fold reveals (practice + pills): per-element triggers that
+      // fire as they enter the viewport after the pin releases.
 
-      // Beat 6 — Contact pills land
-      master.to(
-        pills,
-        {
-          autoAlpha: 1,
-          scale: 1,
-          y: 0,
-          duration: 0.5,
-          ease: 'back.out(1.2)',
-          stagger: 0.08,
+      gsap.to(practiceLabelRef.current, {
+        autoAlpha: 1,
+        y: 0,
+        duration: 0.5,
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: practiceLabelRef.current,
+          start: 'top 85%',
+          toggleActions: 'play none none reverse',
         },
-        '>-0.1'
-      )
+      })
+
+      gsap.to(marks, {
+        autoAlpha: 1,
+        scale: 1,
+        duration: 0.6,
+        ease: 'back.out(1.4)',
+        stagger: 0.1,
+        scrollTrigger: {
+          trigger: marks[0],
+          start: 'top 85%',
+          toggleActions: 'play none none reverse',
+        },
+      })
+
+      gsap.to(pills, {
+        autoAlpha: 1,
+        scale: 1,
+        y: 0,
+        duration: 0.5,
+        ease: 'back.out(1.2)',
+        stagger: 0.08,
+        scrollTrigger: {
+          trigger: pills[0],
+          start: 'top 90%',
+          toggleActions: 'play none none reverse',
+        },
+      })
     },
     { scope: wrapperRef, dependencies: [] }
   )
