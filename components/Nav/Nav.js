@@ -5,7 +5,6 @@ import Link from 'next/link'
 import { gsap, ScrollTrigger } from '@/lib/gsap'
 import { useGSAP } from '@gsap/react'
 import ShapeMark from '@/components/marks/ShapeMark'
-import ThemeToggle from '@/components/ThemeToggle/ThemeToggle'
 import { useHeroIntro } from '@/components/HeroIntroContext'
 import styles from './Nav.module.css'
 
@@ -133,16 +132,9 @@ export default function Nav() {
         </button>
 
         <div className={styles.navRight}>
-          <Link href="/#work" className={styles.navLink}>
-            Work
-          </Link>
           <span className={`${styles.navLink} ${styles.navLinkDisabled}`}>
             About
           </span>
-          <a href="mailto:lorinanderberg1@gmail.com" className={styles.navLink}>
-            Contact
-          </a>
-          <ThemeToggle />
         </div>
       </nav>
     </header>

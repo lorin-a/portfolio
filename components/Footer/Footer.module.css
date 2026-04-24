@@ -1,29 +1,19 @@
 /* ===========================================
-   FOOTER — Minimal, warm
+   FOOTER — Centered links only
    =========================================== */
 .footer {
   padding: 40px var(--gutter) 48px;
-  /* border-top removed — cell grid frame handles separation */
   display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  flex-wrap: wrap;
-  gap: 20px;
+  justify-content: center;
+  align-items: center;
   max-width: var(--max-width);
   margin: 0 auto;
-}
-
-.warmth {
-  font-family: var(--font-serif);
-  font-size: clamp(15px, 1.6vw, 18px);
-  font-weight: 300;
-  font-style: italic;
-  color: var(--color-ink-light);
 }
 
 .footerLinks {
   display: flex;
   gap: 28px;
+  justify-content: center;
 }
 
 .footerLinks a {
@@ -67,10 +57,7 @@
    =========================================== */
 @media (max-width: 600px) {
   .footer {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    padding: var(--space-lg) var(--container-padding) var(--space-lg);
+    padding: var(--space-lg) var(--container-padding);
   }
 
   .footerLinks {

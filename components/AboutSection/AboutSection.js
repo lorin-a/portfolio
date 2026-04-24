@@ -62,11 +62,10 @@ const PRACTICE_GRADIENT = ['#C5CFA6', '#C7AAD1', '#F79C7E']
 
 export default function AboutSection() {
   const [openCards, setOpenCards] = useState(() => new Set(['currently']))
-  const [activePractice, setActivePractice] = useState(null)
+  const [replayMap, setReplayMap] = useState({})
 
   const wrapperRef = useRef(null)
   const sectionRef = useRef(null)
-  const [replayMap, setReplayMap] = useState({})
 
   const photoInnerRef = useRef(null)
   const wigglePathRef = useRef(null)
@@ -79,6 +78,9 @@ export default function AboutSection() {
   const practiceWrapRef = useRef(null)
   const practiceLabelRef = useRef(null)
   const practiceMarkRefs = useRef([])
+  const closerRef = useRef(null)
+  const closerQuestionRef = useRef(null)
+  const closerCtaRef = useRef(null)
 
   const toggleCard = useCallback((id) => {
     setOpenCards((prev) => {
@@ -89,9 +91,8 @@ export default function AboutSection() {
     })
   }, [])
 
-  const togglePractice = useCallback((id) => {
-    setActivePractice((prev) => (prev === id ? null : id))
-    // Only the clicked card's mark replays — others stay put.
+  // Hover or focus on a practice card replays just that mark's draw.
+  const replayMark = useCallback((id) => {
     setReplayMap((prev) => ({ ...prev, [id]: (prev[id] || 0) + 1 }))
   }, [])
 
@@ -131,6 +132,9 @@ export default function AboutSection() {
         // Card bodies inside practice cards.
         const bodies = marks.map((m) => m?.querySelector(`.${styles.practiceCardBody}`)).filter(Boolean)
         if (bodies.length) gsap.set(bodies, { autoAlpha: 1, scale: 1 })
+        if (closerQuestionRef.current && closerCtaRef.current) {
+          gsap.set([closerQuestionRef.current, closerCtaRef.current], { autoAlpha: 1, y: 0 })
+        }
         return
       }
 
@@ -326,6 +330,51 @@ export default function AboutSection() {
         )
         observer.observe(practiceWrapRef.current)
       }
+
+      // ─── Closer: question stagger-types in, then "Reach out!" pops as
+      // one bouncy unit. The CTA is animated whole (not split) so its
+      // gradient text-fill survives — background-clip: text on a parent
+      // does not propagate through transformed character spans.
+      if (closerQuestionRef.current && closerCtaRef.current) {
+        const splitQ = SplitText.create(closerQuestionRef.current, { type: 'chars' })
+        const qChars = splitQ.chars || []
+
+        gsap.set(qChars, { autoAlpha: 0, y: 14 })
+        gsap.set(closerCtaRef.current, {
+          autoAlpha: 0,
+          yPercent: 60,
+          scale: 0.6,
+          transformOrigin: 'center bottom',
+        })
+
+        const closerTl = gsap.timeline({
+          scrollTrigger: {
+            trigger: closerRef.current,
+            start: 'top 85%',
+            toggleActions: 'play none none reverse',
+          },
+        })
+
+        closerTl
+          .to(qChars, {
+            autoAlpha: 1,
+            y: 0,
+            duration: 0.5,
+            ease: 'power1.inOut',
+            stagger: 0.018,
+          })
+          .to(
+            closerCtaRef.current,
+            {
+              autoAlpha: 1,
+              yPercent: 0,
+              scale: 1,
+              duration: 0.9,
+              ease: 'back.out(2.6)',
+            },
+            '-=0.1'
+          )
+      }
     },
     { scope: wrapperRef, dependencies: [] }
   )
@@ -467,22 +516,20 @@ export default function AboutSection() {
             </p>
             <div className={styles.practiceFan} role="group" aria-label="My practice">
               {PRACTICES.map((p, i) => {
-                const isActive = activePractice === p.id
-                const dimmed = activePractice && !isActive
                 const Mark =
                   p.id === 'sense' ? SenseMark : p.id === 'weave' ? WeaveMark : ShapeMark
                 return (
-                  <button
+                  <div
                     key={p.id}
                     ref={(el) => {
                       practiceMarkRefs.current[i] = el
                     }}
-                    type="button"
                     data-practice={p.id}
-                    className={`${styles.practiceCard} ${isActive ? styles.practiceCardActive : ''} ${dimmed ? styles.practiceCardDimmed : ''}`}
-                    aria-pressed={isActive}
+                    className={styles.practiceCard}
+                    onMouseEnter={() => replayMark(p.id)}
+                    onFocus={() => replayMark(p.id)}
+                    tabIndex={0}
                     aria-label={`${p.label}: ${p.mantra}. ${p.body}`}
-                    onClick={() => togglePractice(p.id)}
                   >
                     <span className={styles.practiceCardMark} aria-hidden="true">
                       <Mark
@@ -499,11 +546,26 @@ export default function AboutSection() {
                       {p.mantra}
                     </span>
                     <span className={styles.practiceCardBody}>{p.body}</span>
-                  </button>
+                  </div>
                 )
               })}
             </div>
           </div>
+
+          {/* ── Closer ── */}
+          <p ref={closerRef} className={styles.closer}>
+            <span ref={closerQuestionRef} className={styles.closerQuestion}>
+              Want to make something meaningful?
+            </span>
+            {' '}
+            <a
+              ref={closerCtaRef}
+              href="mailto:lorinanderberg1@gmail.com"
+              className={styles.closerCta}
+            >
+              Reach out!
+            </a>
+          </p>
         </div>
       </section>
     </div>
