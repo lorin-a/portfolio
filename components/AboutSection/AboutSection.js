@@ -170,11 +170,21 @@ export default function AboutSection() {
       // Drop-down menu cards (Currently/Seeking/Range) — vertical cascade reveal.
       gsap.set(cards, { autoAlpha: 0, y: -30 })
 
-      // Practice cards (Sense/Weave/Shape) — start clustered at center with
-      // slight rotation, then spread into 3 upright columns.
-      if (marks[0]) gsap.set(marks[0], { autoAlpha: 0, x: 260, rotation: -8 })
-      if (marks[1]) gsap.set(marks[1], { autoAlpha: 0, x: 0, rotation: 0 })
-      if (marks[2]) gsap.set(marks[2], { autoAlpha: 0, x: -260, rotation: 8 })
+      // Practice cards (Sense/Weave/Shape). Below 800px the cards stack
+      // vertically (CSS), so the horizontal cluster→spread x-shift would
+      // push them off the viewport. Switch to a simple fade-up stagger
+      // on mobile.
+      const isPracticeMobile = window.matchMedia('(max-width: 800px)').matches
+
+      if (isPracticeMobile) {
+        marks.forEach((m) => {
+          if (m) gsap.set(m, { autoAlpha: 0, y: 24 })
+        })
+      } else {
+        if (marks[0]) gsap.set(marks[0], { autoAlpha: 0, x: 260, rotation: -8 })
+        if (marks[1]) gsap.set(marks[1], { autoAlpha: 0, x: 0, rotation: 0 })
+        if (marks[2]) gsap.set(marks[2], { autoAlpha: 0, x: -260, rotation: 8 })
+      }
 
       // Practice card body copy starts hidden — blooms inside each card after spread.
       const cardBodies = marks
@@ -294,13 +304,20 @@ export default function AboutSection() {
           )
           .to(
             marks,
-            {
-              x: 0,
-              rotation: 0,
-              duration: 0.7,
-              ease: 'power2.out',
-              stagger: 0.06,
-            },
+            isPracticeMobile
+              ? {
+                  y: 0,
+                  duration: 0.5,
+                  ease: 'power2.out',
+                  stagger: 0.08,
+                }
+              : {
+                  x: 0,
+                  rotation: 0,
+                  duration: 0.7,
+                  ease: 'power2.out',
+                  stagger: 0.06,
+                },
             0.8
           )
 

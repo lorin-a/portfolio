@@ -612,6 +612,25 @@
   }
 }
 
+/* Below 800px the three practice cards (260–320px each) overflow a
+   horizontal flex row. Stack vertically and let each card breathe. */
+@media (max-width: 800px) {
+  .practiceFan {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--space-md);
+    min-height: auto;
+    padding: var(--space-md) 0;
+  }
+
+  .practiceCard {
+    width: 100%;
+    max-width: 420px;
+    margin: 0 auto;
+    min-height: auto;
+  }
+}
+
 @media (max-width: 600px) {
   .photoWrap {
     width: 220px;
