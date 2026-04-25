@@ -46,7 +46,7 @@ const PRACTICES = [
     label: 'Weave',
     mantra: 'Amplify Voices',
     body:
-      'I weave narratives that balance nuance between: stories + systems, empathy + evidence, details + dreams.',
+      'I weave narratives that balance nuance between: stories & systems, empathy & evidence, details & dreams.',
   },
   {
     id: 'shape',

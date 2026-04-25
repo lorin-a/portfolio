@@ -173,7 +173,7 @@ export default function ProjectPreview({
       <div ref={textRef} className={styles.text}>
         <span className={styles.num}>{num}</span>
         <h2 className={styles.title}>{title}</h2>
-        <p className={styles.tagline}>{tagline}</p>
+        {tagline && <p className={styles.tagline}>{tagline}</p>}
         {description && <p className={styles.description}>{description}</p>}
         {contributions.length > 0 && (
           <div className={styles.pills}>

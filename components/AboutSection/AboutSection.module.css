@@ -369,7 +369,7 @@
 
 .practiceCard {
   flex: 0 0 auto;
-  width: clamp(240px, 26vw, 280px);
+  width: clamp(260px, 28vw, 320px);
   min-height: 340px;
   padding: var(--space-md);
   display: flex;
@@ -453,7 +453,7 @@
   color: var(--color-ink);
   text-align: center;
   text-wrap: balance;
-  margin: var(--space-xl) auto 0;
+  margin: var(--space-xl) auto calc(var(--space-xl) * 1.5);
   max-width: 640px;
 }
 

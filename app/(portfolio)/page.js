@@ -59,8 +59,7 @@ export default function Home() {
         <ProjectPreview
           num="03"
           title="SomeBuddy"
-          tagline="A therapy companion app."
-          description="Brand identity, UX, and animation for a therapy companion app. Full creative range."
+          description="A Social App Concept helping grad students find connection over shared values."
           contributions={[
             { label: 'Brand Identity' },
             { label: 'UX' },
@@ -82,8 +81,7 @@ export default function Home() {
         <ProjectPreview
           num="04"
           title="Transition Design"
-          tagline="Systems-level design for food insecurity."
-          description="A systems-level design response to food insecurity in Pittsburgh. The lens widens."
+          description="A systems-level design response to food insecurity in Pittsburgh using Transition Design methods."
           contributions={[
             { label: 'Systems Mapping' },
             { label: 'Research Synthesis' },
