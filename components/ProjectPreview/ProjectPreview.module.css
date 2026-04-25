@@ -128,6 +128,7 @@
   color: var(--color-ink);
   line-height: 1.3;
   margin: 0 0 var(--space-sm);
+  text-wrap: balance;
 }
 
 :global(:root[data-theme="dark"]) .tagline {
@@ -142,6 +143,7 @@
   line-height: 1.6;
   color: var(--color-ink-light);
   margin: 0 0 var(--space-sm);
+  text-wrap: balance;
 }
 
 :global(:root[data-theme="dark"]) .description {

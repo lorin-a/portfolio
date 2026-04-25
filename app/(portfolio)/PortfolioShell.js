@@ -13,10 +13,12 @@ import Footer from '@/components/Footer/Footer'
  * Wraps Nav, main content, and Footer with the HeroIntroProvider
  * so Nav and Hero can coordinate the cinematic entrance.
  *
- * Site-wide smooth scroll via Lenis. Lenis intercepts wheel/touch
- * events and smooths them without restructuring the DOM, so existing
- * ScrollTrigger animations work without modification. Reduced-motion
- * skips Lenis entirely.
+ * Smooth scroll via Lenis on case study / non-home routes. Lenis is
+ * intentionally disabled on the homepage because it desyncs the hero's
+ * top-pinned ScrollTrigger (the pin spacer is created but the pin never
+ * actually engages, so the user can scroll past the hero into blank
+ * space). The homepage uses native scroll + ScrollTrigger.normalizeScroll
+ * (set inside HeroScatter) instead. Reduced-motion skips Lenis entirely.
  */
 export default function PortfolioShell({ children }) {
   const pathname = usePathname()
@@ -39,6 +41,8 @@ export default function PortfolioShell({ children }) {
     if (typeof window === 'undefined') return
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     if (prefersReduced) return
+    // Skip Lenis on the homepage — see component comment above.
+    if (isHomepage) return
 
     const lenis = new Lenis({
       duration: 1.2,
@@ -66,7 +70,7 @@ export default function PortfolioShell({ children }) {
       lenisRef.current = null
       delete window.__lenis
     }
-  }, [])
+  }, [isHomepage])
 
   return (
     <HeroIntroProvider isHomepage={isHomepage}>

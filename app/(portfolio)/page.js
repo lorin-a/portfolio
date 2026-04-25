@@ -13,7 +13,7 @@ export default function Home() {
         <ProjectPreview
           num="01"
           title="Groundswell"
-          tagline="Making Space to Restore, Together."
+          tagline="Making Space to Restore, Together"
           description="A multi-scale design ecology built to support the complex emotional reality of oncology care. Co-designed with healthcare workers."
           contributions={[
             { label: 'Participatory Research' },
@@ -37,7 +37,7 @@ export default function Home() {
         <ProjectPreview
           num="02"
           title="BirthStory"
-          tagline="A micro-app for birthing parents."
+          tagline="A Micro-App for Birthing Parents"
           description="Helping parents document and reflect on their birth experience for University of Pittsburgh Women's Health."
           contributions={[
             { label: 'UX Research' },
@@ -60,7 +60,7 @@ export default function Home() {
           num="03"
           title="SomeBuddy"
           tagline="Social(ish): Approachable Socialization for Busy Buddies"
-          description="A Social App Concept helping grad students find connection over shared values."
+          description="A social app concept helping grad students find connection over shared values."
           contributions={[
             { label: 'Brand Identity' },
             { label: 'UX' },
@@ -105,7 +105,7 @@ export default function Home() {
         <ProjectPreview
           num="05"
           title="Bridging the G.A.P."
-          tagline="Trail rebrand and campaign."
+          tagline="Inclusive and Playful Nature Trail Rebrand"
           description="A comprehensive rebranding proposal for the Great Allegheny Passage featuring a campaign for inexperienced riders."
           contributions={[
             { label: 'UX Research' },

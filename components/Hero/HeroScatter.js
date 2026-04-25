@@ -220,7 +220,11 @@ export default function HeroScatter() {
       const bounceTl = gsap.timeline({
         onComplete: () => {
           flowerHoverable.current = true
-          /* Enable the scroll timeline + unlock scrolling */
+          /* Enable the scroll timeline + unlock scrolling. normalizeScroll
+             keeps the pin holding through native scroll on macOS/iOS
+             (prevents elastic bounce from desyncing the scrub). Note:
+             Lenis is intentionally disabled on the homepage in
+             PortfolioShell so it does not fight this trigger. */
           document.body.style.overflow = ''
           if (heroST) heroST.enable()
           ScrollTrigger.normalizeScroll(true)

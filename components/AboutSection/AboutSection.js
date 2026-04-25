@@ -145,7 +145,7 @@ export default function AboutSection() {
       let afterChars = []
       if (ledeBeforeRef.current) {
         const splitBefore = SplitText.create(ledeBeforeRef.current, {
-          type: 'chars',
+          type: 'words,chars',
           mask: 'chars',
           autoSplit: true,
         })
@@ -153,7 +153,7 @@ export default function AboutSection() {
       }
       if (ledeAfterRef.current) {
         const splitAfter = SplitText.create(ledeAfterRef.current, {
-          type: 'chars',
+          type: 'words,chars',
           mask: 'chars',
           autoSplit: true,
         })
@@ -350,13 +350,14 @@ export default function AboutSection() {
           transformOrigin: 'center bottom',
         })
 
-        const closerTl = gsap.timeline({
-          scrollTrigger: {
-            trigger: closerRef.current,
-            start: 'top 85%',
-            toggleActions: 'play none none reverse',
-          },
-        })
+        // Paused timeline driven by IntersectionObserver — same pattern as
+        // the practice section. ScrollTrigger's calculated start position
+        // was firing while the closer was still offscreen because the
+        // about section's pin shifts the closer's effective viewport
+        // position. IntersectionObserver fires on actual viewport
+        // intersection, so the animation plays exactly when the closer
+        // becomes visible.
+        const closerTl = gsap.timeline({ paused: true })
 
         closerTl
           .to(qChars, {
@@ -377,6 +378,18 @@ export default function AboutSection() {
             },
             '-=0.1'
           )
+
+        const closerObserver = new IntersectionObserver(
+          ([entry]) => {
+            if (entry.isIntersecting) {
+              closerTl.play()
+            } else {
+              closerTl.reverse()
+            }
+          },
+          { threshold: 0.3 }
+        )
+        closerObserver.observe(closerRef.current)
       }
     },
     { scope: wrapperRef, dependencies: [] }
