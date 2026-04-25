@@ -120,6 +120,7 @@ export default function HeroScatter() {
   const weaveRef = useRef(null)
   const measureRef = useRef(null)
   const idleTweens = useRef([])
+  const idleTimer = useRef(null)
 
   const [shapeAnimate, setShapeAnimate] = useState(false)
   const [senseReplay, setSenseReplay] = useState(0)
@@ -292,33 +293,46 @@ export default function HeroScatter() {
               }
             }
 
-            /* Float starts after drag-in is fully settled (including scrub lag) */
-            const inScatter = self.progress > 0.24 && self.progress < 0.30
-
-            /* Start floats when settled in scatter range */
-            if (inScatter && idleTweens.current.length === 0) {
-              allScatter.forEach(el => {
-                if (!el) return
-                /* Start from current y (0) with a gentle ramp — no sudden jump */
-                idleTweens.current.push(gsap.to(el, {
-                  y: '+=12', duration: gsap.utils.random(2.5, 4),
-                  ease: 'sine.inOut', repeat: -1, yoyo: true,
-                  delay: gsap.utils.random(0, 1),
-                }))
-              })
-              idleTweens.current.push(gsap.to(flower, {
-                y: '+=8', duration: 3,
-                ease: 'sine.inOut', repeat: -1, yoyo: true,
-                delay: 0.5,
-              }))
-            }
-
-            /* Kill floats when leaving scatter range */
-            if (!inScatter && idleTweens.current.length > 0) {
+            /* Floats are scroll-idle-driven: any scroll movement kills
+               them; an idle pause in the scatter zone (0.20–0.32, the
+               breathing space between drag-in completion at 0.22 and
+               gather start at 0.32) starts them. This is more reliable
+               than a pure progress-range trigger because progress can
+               be anywhere when the user pauses, and kills the floats
+               immediately when scroll resumes so they never fight the
+               gather tweens that move the same elements after 0.32. */
+            const killFloats = () => {
+              if (idleTweens.current.length === 0) return
               idleTweens.current.forEach(t => t.kill())
               idleTweens.current = []
               allScatter.forEach(el => { if (el) gsap.set(el, { y: 0 }) })
               gsap.set(flower, { y: 0 })
+            }
+            const startFloats = () => {
+              if (idleTweens.current.length > 0) return
+              allScatter.forEach(el => {
+                if (!el) return
+                idleTweens.current.push(gsap.to(el, {
+                  y: '+=16', duration: gsap.utils.random(2.4, 3.6),
+                  ease: 'sine.inOut', repeat: -1, yoyo: true,
+                  delay: gsap.utils.random(0, 0.8),
+                }))
+              })
+              idleTweens.current.push(gsap.to(flower, {
+                y: '+=10', duration: 3,
+                ease: 'sine.inOut', repeat: -1, yoyo: true,
+                delay: 0.4,
+              }))
+            }
+
+            killFloats()
+            if (idleTimer.current) clearTimeout(idleTimer.current)
+
+            if (self.progress > 0.20 && self.progress < 0.32) {
+              idleTimer.current = setTimeout(() => {
+                startFloats()
+                idleTimer.current = null
+              }, 250)
             }
           },
         },
@@ -437,6 +451,10 @@ export default function HeroScatter() {
     return () => {
       idleTweens.current.forEach(t => t.kill())
       idleTweens.current = []
+      if (idleTimer.current) {
+        clearTimeout(idleTimer.current)
+        idleTimer.current = null
+      }
       document.body.classList.remove('hero-loading')
       document.body.style.overflow = ''
     }

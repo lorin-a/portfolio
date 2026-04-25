@@ -37,7 +37,7 @@ const PRACTICES = [
   {
     id: 'sense',
     label: 'Sense',
-    mantra: 'Distil Complexity',
+    mantra: 'Distill Complexity',
     body:
       'I start with feeling, foraging, and gathering: details, patterns, tensions, emotions.',
   },
