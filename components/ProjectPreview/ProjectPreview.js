@@ -1,24 +1,26 @@
 'use client'
 
-import { useRef } from 'react'
-import { gsap, ScrollTrigger } from '@/lib/gsap'
+import { useCallback, useEffect, useRef, useState } from 'react'
+import { gsap } from '@/lib/gsap'
 import { useGSAP } from '@gsap/react'
 import styles from './ProjectPreview.module.css'
 
 gsap.registerPlugin(useGSAP)
 
 /**
- * ProjectPreview — scroll-driven project showcase.
+ * ProjectPreview — scroll-driven project showcase (skim-test variant).
  *
- * On scroll: media shrinks and text reveals on the other side.
- * Once composed, continued scrolling rotates through additional media
- * in-place (each new slide crossfades in over the previous).
+ * On scroll: media shrinks and text reveals on the other side, then the
+ * pin releases. Skimmer scrolls past at native speed after the compose
+ * moment. Diver opts into depth via the carousel — click/tap the media
+ * to advance, click a dot to jump to a specific slide.
  *
  * @param {string} mediaSrc — initial media src (image or video)
  * @param {'image'|'video'} mediaType — initial media type
  * @param {string} mediaAlt — alt text for initial media
- * @param {Array<{src,type,alt}>} [mediaSequence] — additional slides that
- *   crossfade in-place after the composed state, in scroll order
+ * @param {Array<{src,type,alt}>} [mediaSequence] — additional slides
+ *   surfaced via the click/dot interactive carousel after the compose
+ *   moment lands
  */
 export default function ProjectPreview({
   num, title, tagline, description, contributions = [],
@@ -29,7 +31,52 @@ export default function ProjectPreview({
   const sectionRef = useRef(null)
   const mediaRef = useRef(null)
   const textRef = useRef(null)
+  const controlsRef = useRef(null)
   const slidesRef = useRef([])
+  const prevActiveRef = useRef(0)
+  /* Tracks which arrow / control caused the most recent slide change so
+     the GSAP transition can move in a matching direction. 'next' = new
+     slide rises from below; 'previous' = new slide descends from above. */
+  const directionRef = useRef('next')
+
+  /* Build the ordered slide list: initial media first, then carousel slides */
+  const allSlides = [
+    { src: mediaSrc, type: mediaType, alt: mediaAlt },
+    ...mediaSequence,
+  ]
+  const hasCarousel = allSlides.length > 1
+
+  const [activeSlide, setActiveSlide] = useState(0)
+  const advance = useCallback(() => {
+    if (!hasCarousel) return
+    directionRef.current = 'next'
+    setActiveSlide(prev => (prev + 1) % allSlides.length)
+  }, [hasCarousel, allSlides.length])
+  const previous = useCallback(() => {
+    if (!hasCarousel) return
+    directionRef.current = 'previous'
+    setActiveSlide(prev => (prev - 1 + allSlides.length) % allSlides.length)
+  }, [hasCarousel, allSlides.length])
+
+  /* Slide-in animation on activeSlide change. Direction-aware: next =
+     rise from below, previous = descend from above. The CSS opacity
+     crossfade still runs underneath, so the incoming slide both fades
+     in AND moves into place — a composed transition rather than a
+     bare replace. Skips the initial render (activeSlide === 0 ===
+     prevActiveRef.current). */
+  useEffect(() => {
+    if (prevActiveRef.current === activeSlide) return
+    const slide = slidesRef.current[activeSlide]
+    if (slide) {
+      const fromY = directionRef.current === 'next' ? 100 : -100
+      gsap.fromTo(
+        slide,
+        { yPercent: fromY },
+        { yPercent: 0, duration: 0.55, ease: 'power2.inOut' }
+      )
+    }
+    prevActiveRef.current = activeSlide
+  }, [activeSlide])
 
   useGSAP(() => {
     const section = sectionRef.current
@@ -37,8 +84,7 @@ export default function ProjectPreview({
     const text = textRef.current
     if (!section || !media || !text) return
 
-    const slides = slidesRef.current.filter(Boolean)
-    const rotationSlides = slides.slice(1) /* slides that lift in after the initial */
+    const controls = controlsRef.current
 
     /* Initial mediaWrap centering. At 95% width with flex-start anchoring
        there's a 5% gap on the opposite side, which reads as off-center.
@@ -54,28 +100,25 @@ export default function ProjectPreview({
     if (prefersReduced) {
       gsap.set(text, { autoAlpha: 1 })
       gsap.set(media, { xPercent: centerShift })
-      /* Rotation slides parked below the frame and hidden under reduced motion */
-      rotationSlides.forEach(s => gsap.set(s, { yPercent: 101, autoAlpha: 0 }))
+      if (controls) gsap.set(controls, { autoAlpha: 1 })
       return
     }
 
-    /* Initial state: text hidden, rotation slides revealed (CSS hid them
-       pre-hydration) and parked just below the frame. yPercent: 101 gives
-       a 1% buffer so sub-pixel rounding and tiny scroll deltas can't flash
-       a sliver of the slide above the bottom edge. */
+    /* Initial state: text hidden, dots hidden until compose lands. */
     gsap.set(text, isMobile
       ? { autoAlpha: 0, y: 24 }
       : { autoAlpha: 0, x: flip ? -40 : 40 })
     gsap.set(media, { xPercent: centerShift })
-    rotationSlides.forEach(s => gsap.set(s, { yPercent: 101, autoAlpha: 1 }))
+    if (controls) gsap.set(controls, { autoAlpha: 0, y: 8 })
 
-    /* Pin length: 100vh compose + 160vh per rotation slide + 100vh final
-       hold after the last slide settles, so the user can dwell on it
-       before the section releases. */
+    /* Pin length: compose + a longer hold so the user has time to register
+       the carousel as a control (the dots catch the eye as the dwell sits)
+       before the pin releases and the page continues scrolling. The
+       carousel itself is interactive — click/tap to advance, dots to jump
+       — not scroll-driven, so dwell time is the only thing the pin owes. */
     const composeUnits = 100
-    const perSlideUnits = 160
-    const finalHoldUnits = rotationSlides.length > 0 ? 100 : 0
-    const pinUnits = composeUnits + rotationSlides.length * perSlideUnits + finalHoldUnits
+    const finalHoldUnits = 350
+    const pinUnits = composeUnits + finalHoldUnits
 
     const tl = gsap.timeline({
       scrollTrigger: {
@@ -124,34 +167,19 @@ export default function ProjectPreview({
       composeEnd * 0.30,
     )
 
-    /* Rotate: each subsequent slide lifts up from below the frame,
-       stacking on top of the previous one. Each slide occupies 90% of
-       its segment so the glide feels continuous with a short settle. */
-    if (rotationSlides.length > 0) {
-      const rotateStart = composeEnd + (20 / pinUnits) /* small pause after compose */
-      const rotateEnd = 1 - (finalHoldUnits / pinUnits) /* leaves a hold after the last slide */
-      const rotateSpan = rotateEnd - rotateStart
-      const perSlide = rotateSpan / rotationSlides.length
-
-      rotationSlides.forEach((slide, i) => {
-        const enterAt = rotateStart + i * perSlide
-        tl.to(slide, {
-          yPercent: 0,
-          duration: perSlide * 0.95, /* near-full segment so slide is almost always in motion while within its scroll range */
-          ease: 'power2.inOut', /* stronger S-curve — slide resists at start and settles at end */
-        }, enterAt)
-      })
+    /* Dots fade up after compose has mostly landed — signaling the
+       interactive carousel is ready to use. */
+    if (controls) {
+      tl.to(controls, {
+        autoAlpha: 1,
+        y: 0,
+        duration: composeEnd * 0.4,
+        ease: 'power2.out',
+      }, composeEnd * 0.7)
     }
-
   }, { scope: sectionRef, dependencies: [mediaSrc, mediaSequence.length] })
 
   const pillClass = styles[`pill${pillVariant.charAt(0).toUpperCase() + pillVariant.slice(1)}`] || styles.pillWeave
-
-  /* Build the ordered slide list: initial media first, then rotation slides */
-  const allSlides = [
-    { src: mediaSrc, type: mediaType, alt: mediaAlt },
-    ...mediaSequence,
-  ]
 
   return (
     <section
@@ -161,13 +189,20 @@ export default function ProjectPreview({
     >
       {/* Media wrapper — the sizing element GSAP shrinks on scroll */}
       <div ref={mediaRef} className={styles.mediaWrap}>
-        <div className={styles.media}>
+        <div
+          className={`${styles.media} ${hasCarousel ? styles.mediaInteractive : ''}`}
+          onClick={hasCarousel ? advance : undefined}
+          role={hasCarousel ? 'button' : undefined}
+          tabIndex={hasCarousel ? 0 : undefined}
+          aria-label={hasCarousel ? `View next image (${activeSlide + 1} of ${allSlides.length})` : undefined}
+          onKeyDown={hasCarousel ? (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); advance() } } : undefined}
+        >
           {allSlides.map((slide, i) => (
             <div
               key={i}
               ref={el => { slidesRef.current[i] = el }}
-              className={styles.slide}
-              aria-hidden={i > 0 ? 'true' : undefined}
+              className={`${styles.slide} ${activeSlide === i ? styles.slideActive : ''}`}
+              aria-hidden={activeSlide === i ? undefined : 'true'}
             >
               {slide.type === 'video' ? (
                 <video
@@ -190,7 +225,42 @@ export default function ProjectPreview({
               )}
             </div>
           ))}
+
         </div>
+
+        {hasCarousel && (
+          <div ref={controlsRef} className={styles.carouselControls}>
+            <button
+              type="button"
+              className={styles.carouselArrow}
+              onClick={(e) => { e.stopPropagation(); previous() }}
+              aria-label="Previous image"
+            >
+              <svg viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                <path d="M10 12L6 8l4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </button>
+            <span
+              className={styles.carouselCounter}
+              aria-live="polite"
+              aria-label={`Image ${activeSlide + 1} of ${allSlides.length}`}
+            >
+              {String(activeSlide + 1).padStart(2, '0')}
+              <span className={styles.carouselCounterDivider} aria-hidden="true"> / </span>
+              {String(allSlides.length).padStart(2, '0')}
+            </span>
+            <button
+              type="button"
+              className={styles.carouselArrow}
+              onClick={(e) => { e.stopPropagation(); advance() }}
+              aria-label="Next image"
+            >
+              <svg viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                <path d="M6 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </button>
+          </div>
+        )}
       </div>
 
       {/* Text — hidden initially, reveals on scroll */}
