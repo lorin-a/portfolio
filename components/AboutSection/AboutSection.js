@@ -163,27 +163,20 @@ export default function AboutSection() {
       // The pin scrub timeline that drives the byline / lede / cards
       // cascade does not translate well to touch + iOS Safari (pin spacer
       // height calc + address-bar show/hide cause closer/footer overlap
-      // and feel glitchy). On mobile, skip the pin entirely and just put
-      // those elements in their final visible state.
+      // and feel glitchy). On mobile, skip the pin and play the same
+      // beats via an IntersectionObserver-driven paused timeline below.
       const isAboutMobile = window.matchMedia('(max-width: 900px)').matches
 
-      // Initial hidden states. Elements stay in natural flow, they just start
-      // invisible and animate to revealed. Once revealed, they stay on screen.
+      // Initial hidden states (both platforms). On mobile the cascade
+      // plays at natural pace once the byline enters viewport; on desktop
+      // it scrubs along the pin timeline.
       gsap.set(photoInnerRef.current, { clipPath: 'circle(0% at 50% 50%)' })
-      if (isAboutMobile) {
-        if (wigglePathRef.current) gsap.set(wigglePathRef.current, { drawSVG: '100%' })
-        gsap.set(bylineTextRef.current, { autoAlpha: 1, y: 0 })
-        gsap.set([...beforeChars, ...afterChars], { yPercent: 0 })
-        if (ledeAccentRef.current) gsap.set(ledeAccentRef.current, { autoAlpha: 1, yPercent: 0 })
-        gsap.set(cards, { autoAlpha: 1, y: 0 })
-      } else {
-        if (wigglePathRef.current) gsap.set(wigglePathRef.current, { drawSVG: '50% 50%' })
-        gsap.set(bylineTextRef.current, { autoAlpha: 0, y: 20 })
-        gsap.set([...beforeChars, ...afterChars], { yPercent: 110 })
-        if (ledeAccentRef.current) gsap.set(ledeAccentRef.current, { autoAlpha: 0, yPercent: 30 })
-        // Drop-down menu cards (Currently/Seeking/Range) — vertical cascade reveal.
-        gsap.set(cards, { autoAlpha: 0, y: -30 })
-      }
+      if (wigglePathRef.current) gsap.set(wigglePathRef.current, { drawSVG: '50% 50%' })
+      gsap.set(bylineTextRef.current, { autoAlpha: 0, y: 20 })
+      gsap.set([...beforeChars, ...afterChars], { yPercent: 110 })
+      if (ledeAccentRef.current) gsap.set(ledeAccentRef.current, { autoAlpha: 0, yPercent: 30 })
+      // Drop-down menu cards (Currently/Seeking/Range) — vertical cascade reveal.
+      gsap.set(cards, { autoAlpha: 0, y: -30 })
 
       // Practice cards (Sense/Weave/Shape). Below 800px the cards stack
       // vertically (CSS), so the horizontal cluster→spread x-shift would
@@ -221,8 +214,8 @@ export default function AboutSection() {
       })
 
       // ─── Pinned scrub timeline: each beat cascades, once revealed stays
-      // visible. Desktop only — on mobile, isAboutMobile already set the
-      // pin-driven elements to their final visible state above.
+      // visible. Desktop only — mobile gets the same beats via a paused
+      // timeline + IntersectionObserver in the else branch below.
       if (!isAboutMobile) {
         const pinTl = gsap.timeline({
           scrollTrigger: {
@@ -297,6 +290,70 @@ export default function AboutSection() {
           },
           4.2
         )
+      } else {
+        // ─── Mobile cascade: same beats as the desktop pin scrub but
+        // played at natural pace, triggered when the byline enters the
+        // viewport. Tighter durations than desktop since there's no
+        // scroll-velocity smoothing — the user dwells on the section.
+        const mobileTl = gsap.timeline({ paused: true })
+
+        if (wigglePathRef.current) {
+          mobileTl.to(
+            wigglePathRef.current,
+            { drawSVG: '0% 100%', duration: 1.0, ease: 'power2.inOut' },
+            0
+          )
+        }
+
+        mobileTl.to(
+          bylineTextRef.current,
+          { autoAlpha: 1, y: 0, duration: 0.6, ease: 'power2.out' },
+          0.4
+        )
+
+        if (beforeChars.length) {
+          mobileTl.to(
+            beforeChars,
+            { yPercent: 0, duration: 0.4, ease: 'power1.inOut', stagger: 0.018 },
+            1.0
+          )
+        }
+
+        if (ledeAccentRef.current) {
+          mobileTl.to(
+            ledeAccentRef.current,
+            { autoAlpha: 1, yPercent: 0, duration: 0.5, ease: 'power2.out' },
+            1.4
+          )
+        }
+
+        if (afterChars.length) {
+          mobileTl.to(
+            afterChars,
+            { yPercent: 0, duration: 0.4, ease: 'power1.inOut', stagger: 0.018 },
+            1.5
+          )
+        }
+
+        mobileTl.to(
+          cards,
+          { autoAlpha: 1, y: 0, duration: 0.5, ease: 'power2.out', stagger: 0.12 },
+          2.0
+        )
+
+        // Trigger the cascade when the byline enters the viewport — by
+        // that point the photo iris has already opened (its own scrub
+        // trigger) so this kicks in just as the user starts to read.
+        const mobileObserver = new IntersectionObserver(
+          ([entry]) => {
+            if (entry.isIntersecting) {
+              mobileTl.play()
+              mobileObserver.disconnect()
+            }
+          },
+          { threshold: 0.3 }
+        )
+        if (bylineTextRef.current) mobileObserver.observe(bylineTextRef.current)
       }
 
       // ─── Practice timeline: paused until IntersectionObserver fires.
