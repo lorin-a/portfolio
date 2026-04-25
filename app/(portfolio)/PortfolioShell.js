@@ -23,6 +23,18 @@ export default function PortfolioShell({ children }) {
   const isHomepage = pathname === '/'
   const lenisRef = useRef(null)
 
+  // Homepage uses dark tokens (scoped via data-theme on <html>). The inline
+  // script in layout.js sets this on first paint to avoid a flash; this
+  // effect keeps it in sync for client-side navigation between routes.
+  useEffect(() => {
+    if (typeof document === 'undefined') return
+    if (isHomepage) {
+      document.documentElement.dataset.theme = 'dark'
+    } else {
+      delete document.documentElement.dataset.theme
+    }
+  }, [isHomepage])
+
   useEffect(() => {
     if (typeof window === 'undefined') return
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
