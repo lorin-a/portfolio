@@ -3,34 +3,26 @@
    =========================================== */
 
 /* ===========================================
-   SELECTED WORK — vertical card stack
-   =========================================== */
-.selectedWork {
-  margin-top: clamp(18px, 2.7vh, 36px);
-  padding-bottom: var(--space-lg);
-}
-
-.projectsWrap {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 var(--gutter);
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-}
-
-/* ===========================================
    ABOUT SECTION WRAPPER
+   Promotes About from thin footer to full section,
+   matching the vertical rhythm of a project preview.
    =========================================== */
 .aboutWrap {
-  padding-bottom: var(--space-xl);
+  position: relative;
+  padding: var(--space-sm) 0 var(--space-xl);
 }
 
-/* ===========================================
-   RESPONSIVE — MOBILE (600px)
-   =========================================== */
-@media (max-width: 600px) {
-  .projectsWrap {
-    gap: 20px;
-  }
+/* Subtle hairline above the section — separates it from the last
+   project preview without adding visual noise. Opacity-based so it
+   works in both light and dark themes. */
+.aboutWrap::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(var(--content-width), calc(100% - var(--container-padding) * 2));
+  height: 1px;
+  background: currentColor;
+  opacity: 0.08;
 }

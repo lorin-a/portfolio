@@ -1,0 +1,281 @@
+/* ===========================================
+   HERO SCATTER-GATHER
+   Single pinned section, scroll-scrubbed timeline
+   All elements position:absolute
+   =========================================== */
+
+.wrapper {
+  /* Provides scroll runway for the pinned section */
+}
+
+.hero {
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  position: relative;
+  overflow: hidden;
+  overscroll-behavior: none;
+  touch-action: pan-y;
+}
+
+/* ===========================================
+   FLOWER
+   =========================================== */
+.flower {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 5;
+  visibility: hidden;
+}
+
+.flower > * {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* ===========================================
+   SCATTER CHARS
+   =========================================== */
+.scatterChar {
+  position: absolute;
+  font-family: var(--font-heading);
+  font-size: clamp(56px, 10vw, 140px);
+  font-weight: 300;
+  font-variation-settings: 'SOFT' 100, 'WONK' 1;
+  line-height: 1;
+  transform: translate(-50%, -50%);
+  color: var(--color-ink);
+  visibility: hidden;
+  z-index: 3;
+  cursor: default;
+}
+
+:global(:root[data-theme="dark"]) .scatterChar {
+  color: #e9e9e9;
+}
+
+.gradient {
+  background: linear-gradient(to bottom right, #6B8245 5%, #8B6899 45%, #B86048 88%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent !important;
+}
+
+:global(:root[data-theme="dark"]) .gradient {
+  background: linear-gradient(169.3deg, #C5CFA6 15.5%, #C7AAD1 52.1%, #F79C7E 89.7%);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+/* ===========================================
+   MARKS
+   =========================================== */
+.mark {
+  position: absolute;
+  width: clamp(50px, 6vw, 80px);
+  height: clamp(50px, 6vw, 80px);
+  transform: translate(-50%, -50%);
+  visibility: hidden;
+  z-index: 3;
+}
+
+.mark > * {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* ===========================================
+   SUBTITLE
+   =========================================== */
+.subtitle {
+  position: absolute;
+  left: 50%;
+  top: 72%;
+  transform: translate(-50%, -50%);
+  font-family: var(--font-heading);
+  font-weight: 250;
+  font-style: italic;
+  letter-spacing: 0.025em;
+  font-variation-settings: 'SOFT' 100, 'WONK' 1;
+  color: var(--color-ink);
+  line-height: 1.4;
+  text-align: center;
+  font-size: clamp(16px, 2vw, 28px);
+  visibility: hidden;
+  z-index: 3;
+  white-space: nowrap;
+}
+
+:global(:root[data-theme="dark"]) .subtitle {
+  color: #e9e9e9;
+}
+
+/* ===========================================
+   SCROLL ARROW
+   =========================================== */
+.welcomeGroup {
+  position: absolute;
+  left: 50%;
+  top: 70%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  visibility: hidden;
+  z-index: 3;
+}
+
+.welcomeText {
+  font-family: var(--font-heading);
+  font-size: clamp(20px, 2vw, 26px);
+  font-weight: 300;
+  font-style: italic;
+  font-variation-settings: 'SOFT' 100, 'WONK' 1;
+  color: #e9e9e9;
+  margin: 0;
+  letter-spacing: 0.05em;
+}
+
+.arrow {
+  width: 24px;
+  height: 28px;
+  color: #e9e9e9;
+  animation: bobDown 2s ease-in-out infinite;
+}
+
+@keyframes bobDown {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(6px); }
+}
+
+/* ===========================================
+   VIEW WORK CTA
+   =========================================== */
+.cta {
+  position: absolute;
+  left: 50%;
+  top: 80%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-heading);
+  font-size: clamp(20px, 2vw, 26px);
+  font-weight: 300;
+  min-height: var(--min-touch-target, 44px);
+  padding: var(--space-xs, 8px) var(--space-sm, 16px);
+  font-style: italic;
+  font-variation-settings: 'SOFT' 100, 'WONK' 1;
+  color: #e9e9e9;
+  text-decoration: none;
+  visibility: hidden;
+  z-index: 3;
+  cursor: pointer;
+}
+
+.cta:hover {
+  opacity: 0.8;
+}
+
+.ctaArrow {
+  width: 20px;
+  height: 24px;
+  color: #e9e9e9;
+  animation: bobDown 2s ease-in-out infinite;
+}
+
+/* ===========================================
+   MEASUREMENT LAYER — invisible, for final position calculation
+   =========================================== */
+.measureLayer {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  visibility: hidden;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.measureMarks {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: clamp(20px, 3vw, 40px);
+  margin-bottom: clamp(16px, 2.5vh, 32px);
+}
+
+.measureMarkIcon {
+  width: clamp(55px, 6.1vw, 87px);
+  height: clamp(55px, 6.1vw, 87px);
+}
+
+.measureMarkIconWeave {
+  composes: measureMarkIcon;
+  width: clamp(69px, 7.7vw, 111px);
+}
+
+.measureTitle {
+  font-family: var(--font-heading);
+  font-size: clamp(56px, 10vw, 140px);
+  font-weight: 300;
+  font-variation-settings: 'SOFT' 100, 'WONK' 1;
+  line-height: 0.82;
+  text-align: center;
+}
+
+.measureChar {
+  display: inline-block;
+}
+
+.measureSubtitle {
+  font-family: var(--font-heading);
+  font-weight: 250;
+  font-style: italic;
+  letter-spacing: 0.025em;
+  font-variation-settings: 'SOFT' 100, 'WONK' 1;
+  line-height: 1.4;
+  text-align: center;
+  margin: 0;
+  margin-top: clamp(16px, 2.5vh, 24px);
+  font-size: clamp(16px, 2vw, 28px);
+}
+
+@media (max-width: 768px) {
+  .measureSubtitle {
+    margin-top: clamp(24px, 4vh, 40px);
+    font-size: clamp(13px, 3.5vw, 18px);
+  }
+}
+
+/* ===========================================
+   REDUCED MOTION
+   =========================================== */
+@media (prefers-reduced-motion: reduce) {
+  .scatterChar, .mark, .subtitle { visibility: visible !important; opacity: 1 !important; }
+  .arrow { display: none; }
+}
+
+/* ===========================================
+   RESPONSIVE
+   =========================================== */
+@media (max-width: 768px) {
+  .scatterChar { font-size: clamp(40px, 12vw, 64px); }
+  .measureTitle { font-size: clamp(40px, 12vw, 64px); }
+  .mark {
+    width: clamp(35px, 8vw, 50px);
+    height: clamp(35px, 8vw, 50px);
+  }
+  .subtitle {
+    font-size: clamp(13px, 3.5vw, 18px);
+    white-space: normal;
+    text-wrap: pretty;
+    max-width: 280px;
+    top: 82%;
+  }
+}

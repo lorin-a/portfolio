@@ -92,7 +92,7 @@ function ShuffleWord({ item, delay = 0, isOpen, onOpen, onClose, showHint = fals
         import('gsap').then(({ gsap }) => {
           gsap.fromTo(subsEl,
             { height: 0 },
-            { height: 'auto', duration: 0.7, ease: 'power1.inOut' }
+            { height: 'auto', duration: 0.7, ease: 'power1.inOut', overwrite: true }
           )
         })
       }
@@ -105,6 +105,7 @@ function ShuffleWord({ item, delay = 0, isOpen, onOpen, onClose, showHint = fals
             height: 0,
             duration: 0.5,
             ease: 'power1.inOut',
+            overwrite: true,
           })
         })
       }

@@ -105,6 +105,28 @@ Two active presets:
 
 **Guideline:** Prefer these tokens for consistency. One-off values are acceptable when a specific layout demands it — but if the same custom value appears in more than one place, promote it to a token.
 
+### Token Architecture Rules
+
+**The One Rule:** Every visual property that appears more than once must be defined as a variable. Fonts, colors, spacing, border radii, shadows, transition timing — all of it lives in `globals.css`. Components reference tokens, never hex codes or pixel values.
+
+**One-offs are fine. Undocumented one-offs are not.** A decorative pull quote with a unique size, a page-specific accent color — these are legitimate one-offs. The rule: if it's custom, comment why. If you find yourself commenting the same "one-off" in three files, promote it to a token.
+
+**Page-level custom properties:** When a page or case study needs its own accent colors, define them scoped to that page — not in the global `:root`.
+
+```css
+.page {
+  --page-accent: #554E65;
+  --page-accent-light: #E4E0EB;
+}
+```
+
+| Tokenize (global `:root`) | Don't tokenize |
+|---|---|
+| Brand colors, text colors, backgrounds | Project-specific case study colors |
+| Font families and standard size scale | One-off decorative sizes (comment why) |
+| Spacing scale used across components | Third-party embed overrides |
+| Shared motion values | Data viz / chart-specific colors |
+
 ---
 
 ## 4. LAYOUT [DECIDED]
@@ -142,12 +164,10 @@ Two active presets:
 
 ---
 
-## 5. COLOR PALETTE [DIRECTIONAL]
-
-**Status:** Lorin is moving toward the V2 palette but needs to validate accessibility (contrast ratios) before fully committing. The V1 palette (olive, lavender, sky, adobe, rose) and legacy aliases are deprecated — do not use them in new work.
+## 5. COLOR PALETTE [DECIDED]
 
 ### V2 Palette — Derived from Scanned Objects
-These colors are sampled from Lorin's actual stones, flowers, and childhood paintings. They are not arbitrary.
+These colors are sampled from Lorin's actual stones, flowers, and childhood paintings. They are not arbitrary. The V1 palette (olive, lavender, sky, adobe, rose) and legacy aliases are deprecated — do not use them in new work.
 
 **Backgrounds:**
 ```
@@ -192,15 +212,6 @@ These colors are sampled from Lorin's actual stones, flowers, and childhood pain
 --color-ink-light: #5A5550    → Body text
 --color-ink-faint: #7A7570    → Secondary/muted text
 ```
-
-### Accessibility Validation Needed Before Locking
-- [ ] `--color-ink` (#2C2C2C) on `--color-cream` (#FBF9F6) — heading text
-- [ ] `--color-ink-light` (#5A5550) on `--color-cream` — body text
-- [ ] `--color-ink-faint` (#7A7570) on `--color-cream` — muted text (highest risk)
-- [ ] Each primary color (sage, plum, terracotta, chalcedony) as text on cream
-- [ ] Light text (#FBF9F6) on each primary color (for dark-background sections)
-- [ ] Pill/tag system contrast in both light and dark contexts
-- [ ] All combinations validated in night mode variant (see Section 9)
 
 ### 60/30/10 Rule [GUIDELINE]
 - **60%** — Cream backgrounds, ink text (the quiet foundation)
@@ -482,28 +493,8 @@ WCAG 2.2 Level AA compliance as the minimum. Level AAA where achievable without 
 - No horizontal scroll at any breakpoint
 - Screen reader testing: at least one pass with VoiceOver (Mac/iOS) before deployment
 
-### Accessibility Feature Toggles [DIRECTIONAL]
-
-These features go beyond baseline WCAG compliance and demonstrate Lorin's commitment to inclusive design. They live in a site settings panel accessible from the nav or footer.
-
-**Night Mode / Dark Theme:**
-Reduces eye strain in low-light environments. Benefits users with light sensitivity, migraine conditions, and some forms of dyslexia. Implementation: swap cream backgrounds with dark neutrals, swap ink text with light text. Respect `prefers-color-scheme: dark` as system default with manual override. All V2 palette colors need contrast validation in both schemes. Store preference in `localStorage`.
-
-**Reduced Motion Toggle:**
-The site respects `prefers-reduced-motion` at the OS level. An on-site toggle gives users who don't know about the OS setting (or use shared computers) the same control. When active: all animations resolve to end state instantly, scroll effects become static, parallax disabled, auto-advancing content stops.
-
-**High Contrast Mode:**
-For users with low vision. Respects `prefers-contrast: more` at OS level. On-site toggle increases all contrast ratios to AAA (7:1 normal, 4.5:1 large), adds visible borders to all interactive elements, removes decorative textures (noise overlay, gradient washes, muted color backgrounds).
-
-**Text Size Controls:**
-Allows users to increase base font size (Default / Large / Extra Large). Supplements browser zoom with targeted text scaling that avoids reflow issues. All layouts must accommodate a 150% text size increase without breaking.
-
-**Implementation notes for all toggles:**
-- Store preference in `localStorage`, persist across sessions
-- Toggles themselves must be keyboard accessible and screen-reader announced
-- ARIA live region confirms toggle state change ("Night mode enabled")
-- Simple icon cluster in footer or accessible settings panel in nav
-- Each toggle should work independently (user can enable night mode + large text simultaneously)
+### Accessibility Feature Toggles
+Future consideration: on-site toggles for reduced motion, high contrast, and text size controls. Dark/light theme toggle is already implemented via ThemeToggle component. Not in current scope — revisit after case study pages ship.
 
 ---
 
@@ -517,7 +508,7 @@ The portfolio case study links OUT to the standalone site for depth. This solves
 
 ---
 
-## 11. VISUAL LANGUAGE [DIRECTIONAL]
+## 11. VISUAL LANGUAGE [DECIDED]
 
 ### Confirmed Direction
 - Typography-forward: type IS the design
@@ -526,54 +517,11 @@ The portfolio case study links OUT to the standalone site for depth. This solves
 - Polished foundation with experimental moments
 - Calm surface with surprises underneath for those who look closely
 
-### The Scanned Objects [TBD — Not Yet Implemented]
-Lorin's flatbed scanner scans of personal objects (stones, dried flowers, altar cloth, childhood paintings, earrings, embroidered textiles) are the raw material for the visual identity. The V2 color palette is derived from these objects.
-
-**Standing idea:** A personal history timeline interaction on the homepage or about page, showcasing Lorin's creative journey — from childhood finger painting to journalism photography to poster design to animation to CMU. The scanned objects would serve as landmarks and visual texture.
-
-**Potential future applications (not yet built):**
-- Background textures from linen, stone, embroidery
-- CSS `mix-blend-mode` interactions with colored backgrounds
-- CSS `mask-image` reveals (text or shapes filled with scanned texture)
-- Cutouts with transparent backgrounds on cream
-- Parallax floating objects at different scroll speeds
-- Dark-field full-bleed section breaks between case studies
-- Color sampling from childhood paintings for generative gradients
+### Scanned Objects
+Lorin's flatbed scanner scans of personal objects (stones, dried flowers, altar cloth, childhood paintings, earrings, embroidered textiles) are the raw material for the visual identity. The V2 color palette is derived from these objects. Future applications (textures, mask-image reveals, parallax objects, dark-field section breaks) will be explored during about page design.
 
 ### Noise Overlay
-`body::after` applies fractal noise at `opacity: 0.022` — subtle paper/grain quality. Keep unless performance testing shows issues. Disabled in high contrast mode.
-
-### Open Visual Decisions
-- [ ] How literally vs. abstractly do scans appear on the site?
-- [ ] Dark-field sections as full-bleed breaks between content?
-- [ ] Role label that shifts contextually in the nav?
-- [ ] Tarot card reveal mechanic for about page?
-- [ ] Poster work as a mini case study ("From Concept to Clarity")?
-- [ ] Personal history timeline: homepage or about page?
-
----
-
-## 12. V1 → V2 MIGRATION [DIRECTIONAL]
-
-### Current State
-- Homepage: actively being rebuilt with V2 styles
-- About page: V1 styles, incomplete, uses deprecated color tokens and `--font-sharp`
-- Case study template: not yet built for V2
-- Standalone Groundswell: complete, keep as-is (not part of migration)
-- Project card theme system: exists in `lib/projectThemes.js`, usage in V2 is TBD
-
-### Migration Strategy
-1. **Do not break the deployed V1.** V2 work happens alongside until a page is ready to replace.
-2. **V2 decisions made on the homepage get documented here immediately.**
-3. **When homepage V2 is approved,** apply patterns to about page and case study template.
-4. **Once all pages are V2,** remove deprecated tokens in a single cleanup pass.
-
-### Deprecated — Do Not Use in New Work
-**Colors:** `--olive-*`, `--lavender-*`, `--sky-*`, `--adobe-*`, `--rose-*`, `--hero-*`, and all legacy aliases (`--color-green-*`, `--color-gold`, `--color-bg`, `--color-bg-alt`, `--color-text`, `--color-text-light`, `--color-border`)
-
-**Typography:** `--font-sharp` — update all existing references to `--font-soft`
-
-**Easing:** `--ease-default`, `--ease-pulse`, `--ease-out-expo`, `--ease-out-quart`, `--transition-gentle`, `--transition-smooth`
+`body::after` applies fractal noise at `opacity: 0.022` — subtle paper/grain quality. Keep unless performance testing shows issues.
 
 ---
 
@@ -607,19 +555,23 @@ Lorin's flatbed scanner scans of personal objects (stones, dried flowers, altar 
 
 | Document | Status |
 |----------|--------|
+| `ENGINEERING_STANDARDS_v2.md` | **Archive.** Unique content folded into this spec (Section 3). |
+| `PORTFOLIO_STRATEGY_SUMMARY_v2.md` | **Archive.** Vision doc from Feb 2026. Useful for historical context; not operational. |
+| `PORTFOLIO_INTELLIGENCE_2026.md` | **Archive.** External industry intelligence. Reference only. |
+| `GROUNDSWELL_PRESENTATION_PROMPT.md` | **Archive.** Interview presentation concept. Not in current scope. |
 | `PORTFOLIO_ENGINEERING_STANDARDS.md` | **Archive.** Wrong font, old colors, different easing. |
 | `CLAUDE_PROJECT_PROMPT.md` | **Archive.** Duplicates this spec; some values outdated. |
 | `CLAUDE_WORKFLOW.md` | **Archive.** Workflow mechanics useful; token values stale. |
 | `README copy.md` | **Archive.** Wrong font, wrong transition values. |
 | `CLAUDE_CODE_AUDIT_PROMPT.md.txt` | **Archive.** Historical audit scope doc. |
 
+All archived docs live in `docs/archive/`. Do not reference them for active work.
+
 ### Keep Active Alongside This Spec
-These three documents together are the complete context for any new session:
 
 1. **`DESIGN_SPEC.md`** (this file) — All design and engineering decisions
-2. **`PORTFOLIO_STRATEGY_SUMMARY_v2.md`** — Creative direction, conceptual framework, content strategy, interaction philosophy
-3. **`WORKING_WITH_LORIN.md`** — Collaboration guide, creative taste, strengths, growth edges
+2. **`WORKING_WITH_LORIN.md`** — Collaboration guide, creative taste, strengths, growth edges
 
 ---
 
-*When a decision moves from DIRECTIONAL to DECIDED, update the tier label. When a TBD is resolved, move it to the appropriate section. When guidance proves too rigid or too loose, adjust it. This document grows with the work.*
+*This document grows with the work. When guidance proves too rigid or too loose, adjust it.*

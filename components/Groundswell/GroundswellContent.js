@@ -647,6 +647,17 @@ export default function GroundswellContent() {
             <span className={styles.projectInfoLabel}>Team</span>
             <span className={styles.projectInfoValue}>Kristin Hughes, Elijah Benzon, Kelly McDowell, Robertus Sucahyo, Greg Baltus</span>
           </div>
+          <div className={styles.projectInfoItem}>
+            <span className={styles.projectInfoLabel}>Live Site</span>
+            <a
+              href="/groundswell"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.projectInfoLink}
+            >
+              Visit Groundswell &rarr;
+            </a>
+          </div>
         </div>
       </section>
 

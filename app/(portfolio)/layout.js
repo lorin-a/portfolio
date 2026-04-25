@@ -1,7 +1,6 @@
 import '../globals.css'
 import { Fraunces, Open_Sans } from 'next/font/google'
-import Nav from '@/components/Nav/Nav'
-import Footer from '@/components/Footer/Footer'
+import PortfolioShell from './PortfolioShell'
 
 const fraunces = Fraunces({
   subsets: ['latin'],
@@ -50,16 +49,22 @@ export default function RootLayout({ children }) {
     <html lang="en" className={`${fraunces.variable} ${openSans.variable}`}>
       <head>
         <link rel="icon" href="/favicon.ico" sizes="any" />
+        <script dangerouslySetInnerHTML={{ __html: `
+          try {
+            var t = localStorage.getItem('theme-preference');
+            if (t) document.documentElement.dataset.theme = t;
+          } catch(e) {}
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          window.scrollTo(0, 0);
+        `}} />
       </head>
       <body>
         <a href="#main-content" className="skip-link">
           Skip to content
         </a>
-        <Nav />
-        <main id="main-content">
+        <PortfolioShell>
           {children}
-        </main>
-        <Footer />
+        </PortfolioShell>
       </body>
     </html>
   )

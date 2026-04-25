@@ -11,7 +11,7 @@
   z-index: 100;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   transform: translateY(-100%);
-  transition: transform var(--motion-fast) var(--ease-default);
+  transition: transform var(--motion-fast) var(--ease-in-out);
 }
 
 .headerVisible {
@@ -43,7 +43,7 @@
   padding: var(--space-xs) var(--space-sm);
   border-radius: var(--radius-sm);
   opacity: 0.9;
-  transition: opacity var(--motion-fast) var(--ease-default);
+  transition: opacity var(--motion-fast) var(--ease-in-out);
   min-height: 44px;
 }
 

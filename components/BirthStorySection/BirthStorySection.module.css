@@ -1,0 +1,209 @@
+/* ===========================================
+   BIRTHSTORY SECTION
+   Row 1: full-width video
+   Row 2: sticky gallery + text (Groundswell layout)
+   =========================================== */
+
+.section {
+  padding: var(--space-lg) 0;
+}
+
+.inner {
+  composes: grid from global;
+}
+
+/* ===========================================
+   ROW 1 — Full-width video
+   =========================================== */
+.videoRow {
+  grid-column: 1 / -1;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  aspect-ratio: 16 / 9;
+}
+
+.media {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* ===========================================
+   ROW 2 — Sticky gallery + text
+   =========================================== */
+.galleryWrap {
+  max-width: var(--max-width);
+  margin: var(--grid-gutter) auto 0;
+  padding: 0 var(--grid-margin);
+}
+
+.galleryRunway {
+  position: relative;
+}
+
+.gallerySticky {
+  position: sticky;
+  top: var(--space-sm);
+}
+
+.gallery {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--radius-md);
+  overflow: clip;
+}
+
+.galleryLayer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ===========================================
+   TEXT ROW — Groundswell two-column layout
+   Sits inside sticky container, visible during gallery scroll
+   =========================================== */
+.textRow {
+  display: grid;
+  grid-template-columns: repeat(var(--grid-columns), 1fr);
+  column-gap: var(--grid-gutter);
+  margin-top: var(--grid-gutter);
+}
+
+.textLeft {
+  grid-column: 1 / 7;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  align-self: center;
+}
+
+.textRight {
+  grid-column: 7 / 12;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  align-self: end;
+}
+
+/* ===========================================
+   TYPOGRAPHY
+   =========================================== */
+.projectNum {
+  font-family: var(--font-heading);
+  font-size: clamp(16px, 1.5vw, 24px);
+  font-weight: 400;
+  font-variation-settings: var(--font-soft);
+  color: var(--color-ink);
+}
+
+.title {
+  font-family: var(--font-heading);
+  font-size: clamp(32px, 4.5vw, 68px);
+  font-weight: 300;
+  font-variation-settings: 'SOFT' 100, 'WONK' 1;
+  color: var(--color-ink);
+  margin: 0;
+  line-height: 1.05;
+}
+
+.tagline {
+  font-family: var(--font-heading);
+  font-size: clamp(16px, 2.3vw, 35px);
+  font-weight: 150;
+  font-variation-settings: 'SOFT' 100, 'WONK' 1;
+  font-style: italic;
+  color: var(--color-ink-light);
+  line-height: 1.15;
+  margin: 0;
+}
+
+.description {
+  font-family: var(--font-body);
+  font-size: 18px;
+  font-weight: 400;
+  color: var(--color-ink-light);
+  opacity: 0.85;
+  line-height: 1.5;
+  margin: 0;
+  text-wrap: pretty;
+}
+
+/* ===========================================
+   PILLS
+   =========================================== */
+.pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+  margin-top: var(--space-xs);
+}
+
+.pill {
+  font-family: var(--font-body);
+  font-size: 14px;
+  letter-spacing: 0.02em;
+  padding: 0.4em 1em;
+  border-radius: var(--pill-radius);
+  white-space: nowrap;
+  line-height: 1;
+  display: inline-block;
+}
+
+.pillSense {
+  color: var(--pill-sense-text, var(--pill-text-dark));
+  border: 2px solid var(--pill-sense-border, var(--pill-border-dark));
+  background: var(--pill-sense-bg, var(--pill-bg-dark));
+}
+
+.pillWeave {
+  color: var(--pill-weave-text, var(--pill-text-dark));
+  border: 2px solid var(--pill-weave-border, var(--pill-border-dark));
+  background: var(--pill-weave-bg, var(--pill-bg-dark));
+}
+
+.pillShape {
+  color: var(--pill-shape-text, var(--pill-text-dark));
+  border: 2px solid var(--pill-shape-border, var(--pill-border-dark));
+  background: var(--pill-shape-bg, var(--pill-bg-dark));
+}
+
+.comingSoon {
+  font-size: var(--text-body-small);
+  color: var(--color-ink-faint);
+  font-style: italic;
+}
+
+/* ===========================================
+   RESPONSIVE — TABLET (<=900px)
+   =========================================== */
+@media (max-width: 900px) {
+  .textRow {
+    grid-template-columns: 1fr;
+  }
+
+  .textLeft,
+  .textRight {
+    grid-column: 1 / -1;
+  }
+}
+
+/* ===========================================
+   ACCESSIBILITY — REDUCED MOTION
+   =========================================== */
+@media (prefers-reduced-motion: reduce) {
+  .gallerySticky {
+    position: relative;
+  }
+
+  .galleryLayer,
+  .videoRow {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}

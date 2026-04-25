@@ -1,162 +1,678 @@
 /* ===========================================
-   ABOUT SECTION — Circle photo + text
+   ABOUT SECTION — Homepage closer
+   Dark-mode aware via data-theme tokens.
    =========================================== */
-.aboutSection {
+
+.wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.about {
+  position: relative;
+  width: 100%;
+  margin: 0;
+  /* Top padding clears the fixed Nav (~65px) + the wiggle ring's
+     -28px inset + comfortable breathing room. */
+  padding: calc(var(--space-xl) + var(--space-md)) var(--container-padding) var(--space-xl);
+  background: var(--color-cream);
+}
+
+.visuallyHidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
   padding: 0;
-  display: flex;
-  align-items: center;
-  gap: clamp(32px, 5vw, 64px);
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.inner {
   max-width: var(--content-width);
   margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-lg);
 }
 
 /* ===========================================
-   PHOTO
+   ANCHOR — photo + byline text, always visible during pin
    =========================================== */
-.aboutPhoto {
-  flex-shrink: 0;
-  position: relative;
-  width: clamp(120px, 14vw, 172px);
-  height: clamp(120px, 14vw, 172px);
-}
 
-.aboutPhotoInner {
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  background: var(--color-cream-dark);
+.anchor {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  overflow: hidden;
+  gap: var(--space-md);
+}
+
+
+.photoWrap {
   position: relative;
-  z-index: 2;
+  flex-shrink: 0;
+  width: clamp(200px, 22vw, 280px);
+  height: clamp(200px, 22vw, 280px);
 }
 
-.aboutPhotoImage {
-  object-fit: cover;
-}
-
-.aboutPhotoBorder {
+/* Wiggle ring with hero gradient stroke. Sits behind the photo.
+   Spins on hover (desktop only), respects reduced motion. */
+.photoRing {
   position: absolute;
-  top: 0; right: 0; bottom: 0; left: 0;
-  inset: -16px;
-  z-index: 1;
+  top: -28px;
+  right: -28px;
+  bottom: -28px;
+  left: -28px;
+  inset: -28px;
+  z-index: 0;
+  pointer-events: none;
 }
 
-.aboutPhotoBorder svg {
+.photoRing svg {
   width: 100%;
   height: 100%;
+  display: block;
 }
 
+/* Ring spins on hover only, at a nice speed. Paused by default so it
+   rests at whatever angle it was at — no snap on mouseleave. */
 @media (hover: hover) {
-  .aboutPhoto:hover .aboutPhotoBorder {
-    animation: spinBorder 4s linear infinite;
+  .photoRing {
+    animation: wiggleHoverSpin 10s linear infinite;
+    animation-play-state: paused;
+  }
+
+  .photoWrap:hover .photoRing {
+    animation-play-state: running;
   }
 }
 
-@keyframes spinBorder {
+@keyframes wiggleHoverSpin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
 
-/* ===========================================
-   TEXT
-   =========================================== */
-.aboutTextBlock {
-  flex: 1;
+.photoInner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  overflow: hidden;
+  background: var(--color-cream-dark);
+  z-index: 1;
 }
 
-.aboutText {
-  font-family: var(--font-heading);
-  font-size: clamp(18px, 2.2vw, 24px);
-  font-weight: 300;
-  font-variation-settings: 'SOFT' 50, 'WONK' 0;
-  line-height: var(--leading-normal);
-  color: var(--color-ink-light);
-  margin-bottom: 0;
+.photoImage {
+  object-fit: cover;
 }
 
-.aboutText em {
-  color: var(--color-ink);
-}
-
-.aboutLink {
-  display: inline-flex;
+.bylineText {
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  margin-top: 20px;
+  gap: var(--space-xxs);
+  text-align: center;
+}
+
+.name {
+  font-family: var(--font-heading);
+  font-size: clamp(1.75rem, 3vw, 2.5rem); /* 28 → 40px */
+  font-weight: var(--weight-title);
+  font-variation-settings: 'SOFT' 50, 'WONK' 0;
+  color: var(--color-ink);
+  line-height: var(--leading-tight);
+  margin: 0;
+}
+
+.title {
+  font-family: var(--font-heading);
+  font-size: clamp(1.125rem, 1.5vw, 1.375rem); /* 18 → 22px */
+  font-style: italic;
+  font-weight: var(--weight-body);
+  font-variation-settings: 'SOFT' 50, 'WONK' 0;
+  color: var(--color-ink-light);
+  line-height: var(--leading-relaxed);
+  margin: 0;
+}
+
+.location {
   font-family: var(--font-body);
   font-size: var(--text-body-small);
   font-weight: var(--weight-label);
-  color: var(--color-plum);
-  text-decoration: none;
-  border-bottom: 1px solid var(--color-plum-light);
-  padding-bottom: 3px;
-  transition: border-color 0.4s var(--ease-in-out);
-  min-height: var(--min-touch-target);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--color-ink-faint);
+  margin: 0;
 }
 
-.aboutLink:focus-visible {
-  outline: 2px solid var(--color-plum);
-  outline-offset: 2px;
+/* ===========================================
+   LEDE
+   =========================================== */
+
+.ledeWrap {
+  max-width: 760px;
+  width: 100%;
+}
+
+.lede {
+  font-family: var(--font-heading);
+  font-size: clamp(1.625rem, 2.8vw, 2.25rem); /* 26→36px — between h2 and h1 */
+  font-weight: var(--weight-hero);
+  font-variation-settings: 'SOFT' 50, 'WONK' 0;
+  line-height: var(--leading-tight);
+  color: var(--color-ink);
+  text-align: center;
+  text-wrap: balance;
+  margin: 0;
+}
+
+.ledeAccent {
+  font-style: italic;
+  /* For reduced motion / no-split fallback: gradient on the span itself. */
+  background: linear-gradient(
+    135deg,
+    var(--color-sage-soft) 5%,
+    var(--color-plum-soft) 50%,
+    var(--color-terracotta-soft) 92%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+/* Applied per-char by JS after SplitText runs, so the gradient renders
+   correctly even when each char is wrapped in a mask. */
+.ledeAccentChar {
+  background: linear-gradient(
+    135deg,
+    var(--color-sage-soft) 5%,
+    var(--color-plum-soft) 50%,
+    var(--color-terracotta-soft) 92%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+/* Applied to the .ledeAccent parent when SplitText has run — turns off
+   the parent's clip-text so it doesn't interfere with per-char gradient. */
+.ledeAccentSplit {
+  background: none;
+  -webkit-background-clip: unset;
+  background-clip: unset;
+  -webkit-text-fill-color: unset;
+  color: inherit;
+}
+
+/* ===========================================
+   CARDS — Currently / Seeking / Range
+   =========================================== */
+
+.cards {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  width: 100%;
+  max-width: 720px;
+}
+
+.cardWrap {
+  width: 100%;
+}
+
+.card {
+  position: relative;
+  /* Transparent fill + gradient border using double-background trick. */
+  background:
+    linear-gradient(var(--color-cream), var(--color-cream)) padding-box,
+    linear-gradient(
+      135deg,
+      var(--color-sage-soft) 5%,
+      var(--color-plum-soft) 50%,
+      var(--color-terracotta-soft) 92%
+    ) border-box;
+  border: 2px solid transparent;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition:
+    translate var(--motion-fast) var(--ease-out),
+    scale var(--motion-fast) var(--ease-out),
+    box-shadow var(--motion-fast) var(--ease-out);
+}
+
+/* Per-card accent color — only used now for the label + chevron. */
+.cardTilt0 { --card-accent: var(--color-sage-soft); }
+.cardTilt1 { --card-accent: var(--color-plum-soft); }
+.cardTilt2 { --card-accent: var(--color-terracotta-soft); }
+
+@media (hover: hover) {
+  .card:hover {
+    translate: 0 -2px;
+    box-shadow: var(--shadow-md);
+  }
+}
+
+.cardOpen {
+  box-shadow: var(--shadow-md);
+}
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  min-height: var(--min-touch-target);
+  padding: var(--space-sm) var(--space-md);
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  color: var(--color-ink);
+  font: inherit;
+  text-align: left;
+}
+
+.cardHeader:focus-visible {
+  outline: 2px solid var(--color-plum-soft);
+  outline-offset: 3px;
+  border-radius: var(--radius-lg);
+}
+
+.cardLabel {
+  font-family: var(--font-heading);
+  font-size: clamp(1.25rem, 1.8vw, 1.5rem); /* 20 → 24px */
+  font-weight: var(--weight-title);
+  font-variation-settings: 'SOFT' 50, 'WONK' 0;
+  color: var(--card-accent, var(--color-ink));
+  line-height: var(--leading-tight);
+}
+
+.cardChevron {
+  width: 20px;
+  height: 20px;
+  color: var(--card-accent, var(--color-ink-light));
+  transition: transform var(--motion-fast) var(--ease-out);
+  flex-shrink: 0;
+}
+
+.cardOpen .cardChevron {
+  transform: rotate(180deg);
+}
+
+.cardPanel {
+  max-height: 0;
+  opacity: 0;
+  padding: 0 var(--space-md);
+  overflow: hidden;
+  transition:
+    max-height var(--motion-medium) var(--ease-out),
+    opacity var(--motion-medium) var(--ease-out),
+    padding var(--motion-medium) var(--ease-out);
+}
+
+.cardPanelOpen {
+  max-height: 400px;
+  opacity: 1;
+  padding: 0 var(--space-md) var(--space-md);
+}
+
+.cardBody {
+  font-family: var(--font-body);
+  font-size: var(--text-body-large);
+  font-weight: var(--weight-body);
+  line-height: var(--leading-normal);
+  color: var(--color-ink);
+  text-wrap: pretty;
+  margin: 0;
+}
+
+/* ===========================================
+   PRACTICE — Sense / Weave / Shape
+   =========================================== */
+
+.practiceWrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-sm);
+  width: 100%;
+  max-width: 720px;
+}
+
+.practiceLabel {
+  font-family: var(--font-heading);
+  font-size: clamp(1.5rem, 2.4vw, 2rem); /* 24 → 32px */
+  font-weight: var(--weight-title);
+  font-variation-settings: 'SOFT' 50, 'WONK' 0;
+  color: var(--color-ink);
+  line-height: var(--leading-tight);
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+
+/* Three practice cards — start clustered at center (stack) then spread
+   into 3 upright columns as the pin timeline progresses. */
+.practiceFan {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  width: 100%;
+  padding: var(--space-lg) 0;
+  min-height: 280px;
+}
+
+.practiceCard {
+  flex: 0 0 auto;
+  width: clamp(240px, 26vw, 280px);
+  min-height: 340px;
+  padding: var(--space-md);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  /* Transparent fill + gradient border using double-background trick. */
+  background:
+    linear-gradient(var(--color-cream), var(--color-cream)) padding-box,
+    linear-gradient(
+      135deg,
+      var(--color-sage-soft) 5%,
+      var(--color-plum-soft) 50%,
+      var(--color-terracotta-soft) 92%
+    ) border-box;
+  border: 2px solid transparent;
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  text-align: center;
+  color: var(--color-ink);
+  transition:
+    transform var(--motion-medium) var(--ease-out),
+    translate var(--motion-medium) var(--ease-out),
+    scale var(--motion-medium) var(--ease-out),
+    opacity var(--motion-medium) var(--ease-out),
+    box-shadow var(--motion-medium) var(--ease-out);
+}
+
+/* Per-practice accent color for the label. Positions handled by flex + GSAP. */
+.practiceCard[data-practice="sense"] {
+  --practice-accent: var(--color-sage-soft);
+}
+
+.practiceCard[data-practice="weave"] {
+  --practice-accent: var(--color-plum-soft);
+}
+
+.practiceCard[data-practice="shape"] {
+  --practice-accent: var(--color-terracotta-soft);
+}
+
+.practiceCard:focus-visible {
+  outline: 2px solid var(--practice-accent);
+  outline-offset: 4px;
+}
+
+/* Hover spotlight: hovered card lifts and scales up, non-hovered cards
+   recede and dim so the hovered one clearly takes the stage for a second.
+   Icon redraw is handled by JS incrementing the mark's replay prop. */
+@media (hover: hover) {
+  .practiceCard:hover {
+    translate: 0 -10px;
+    scale: 1.05;
+    box-shadow: var(--shadow-lg);
+    z-index: 10;
+  }
+
+  .practiceFan:has(.practiceCard:hover) .practiceCard:not(:hover) {
+    opacity: 0.45;
+    scale: 0.96;
+  }
+}
+
+.practiceCardMark {
+  display: block;
+  width: 84px;
+  height: 84px;
+  position: relative;
+}
+
+/* ===========================================
+   CLOSER — final big statement before footer
+   =========================================== */
+.closer {
+  font-family: var(--font-heading);
+  font-size: clamp(1.75rem, 3vw, 2.5rem);
+  font-weight: var(--weight-hero);
+  font-variation-settings: 'SOFT' 50, 'WONK' 0;
+  line-height: var(--leading-tight);
+  color: var(--color-ink);
+  text-align: center;
+  text-wrap: balance;
+  margin: var(--space-xl) auto 0;
+  max-width: 640px;
+}
+
+.closerQuestion {
+  display: inline;
+}
+
+.closerCta {
+  display: inline-block;
+  position: relative;
+  text-decoration: none;
+  font-style: italic;
+  font-variation-settings: 'SOFT' 100, 'WONK' 1;
+  background-image: linear-gradient(110deg, #C5CFA6 0%, #C7AAD1 50%, #F79C7E 100%);
+  background-size: 220% 100%;
+  background-position: 0% 50%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  cursor: pointer;
+  transition:
+    background-position var(--motion-medium) var(--ease-out),
+    scale var(--motion-fast) var(--ease-out);
+}
+
+.closerCta::after {
+  content: '';
+  position: absolute;
+  left: 0.05em;
+  right: 0.05em;
+  bottom: -0.08em;
+  height: 3px;
+  border-radius: 2px;
+  background: linear-gradient(110deg, #C5CFA6 0%, #C7AAD1 50%, #F79C7E 100%);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform var(--motion-medium) var(--ease-out);
+}
+
+.closerCta:focus-visible {
+  outline: 2px solid var(--color-plum-soft);
+  outline-offset: 6px;
   border-radius: var(--radius-sm);
 }
 
-.aboutLinkDisabled {
-  opacity: 0.6;
-  cursor: default;
-  pointer-events: none;
-  border-bottom: none;
-  gap: var(--space-xs);
+@media (hover: hover) {
+  .closerCta:hover {
+    background-position: 100% 50%;
+    scale: 1.04;
+  }
+
+  .closerCta:hover::after {
+    transform: scaleX(1);
+  }
 }
 
-.comingSoon {
-  font-size: var(--text-caption);
+.practiceCardName {
+  font-family: var(--font-heading);
+  font-size: clamp(1.25rem, 1.8vw, 1.5rem);
+  font-weight: var(--weight-title);
+  font-variation-settings: 'SOFT' 50, 'WONK' 0;
+  color: var(--practice-accent);
+  line-height: var(--leading-tight);
+}
+
+.practiceCardMantra {
+  font-family: var(--font-body);
+  font-size: var(--text-body-small);
   font-weight: var(--weight-body);
-  color: var(--color-ink-light);
-  background: var(--pill-bg-light);
-  border: 1px solid var(--pill-border-light);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-ink);
+  line-height: var(--leading-relaxed);
+  opacity: 0.9;
+}
+
+/* Body copy lives inside each card. Revealed with bloom in timeline. */
+.practiceCardBody {
+  display: block;
+  font-family: var(--font-body);
+  font-size: 0.9375rem; /* 15px */
+  font-weight: var(--weight-body);
+  line-height: 1.5;
+  color: var(--color-ink);
+  text-wrap: pretty;
+  margin-top: var(--space-xs);
+  padding: 0 var(--space-xs);
+  transform-origin: center top;
+}
+
+/* ===========================================
+   CONTACT — Resume / LinkedIn / Email pills
+   =========================================== */
+
+.contactWrap {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.contact {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  justify-content: center;
+}
+
+.contactPill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: var(--min-touch-target);
+  padding: var(--space-xs) var(--space-md);
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  font-weight: var(--weight-label);
+  color: var(--color-ink);
+  background: color-mix(in srgb, var(--color-cream-dark) 60%, transparent);
+  border: 1px solid color-mix(in srgb, var(--color-ink-faint) 30%, transparent);
   border-radius: var(--radius-pill);
-  padding: 2px 10px;
-  margin-left: var(--space-xs);
+  text-decoration: none;
+  transition:
+    transform var(--motion-fast) var(--ease-out),
+    border-color var(--motion-fast) var(--ease-out),
+    background var(--motion-fast) var(--ease-out);
+}
+
+.contactPill:focus-visible {
+  outline: 2px solid var(--color-plum-soft);
+  outline-offset: 2px;
 }
 
 @media (hover: hover) {
-  .aboutLink:hover {
-    border-color: var(--color-plum);
-    opacity: 1;
+  .contactPill:hover {
+    transform: translateY(-2px);
+    border-color: var(--color-plum-soft);
+    background: color-mix(in srgb, var(--color-plum-muted) 100%, transparent);
   }
 }
 
 /* ===========================================
-   RESPONSIVE - TABLET (900px)
+   RESPONSIVE
    =========================================== */
+
 @media (max-width: 900px) {
-  .aboutSection {
-    flex-direction: column;
-    text-align: center;
+  .inner {
+    gap: var(--space-md);
   }
 
-  .aboutPhoto {
-    width: 120px;
-    height: 120px;
+  .practiceRow {
+    gap: var(--space-sm);
+  }
+}
+
+@media (max-width: 600px) {
+  .photoWrap {
+    width: 220px;
+    height: 220px;
+  }
+
+  .photoRing {
+    top: -20px;
+    right: -20px;
+    bottom: -20px;
+    left: -20px;
+    inset: -20px;
+  }
+
+  .cardHeader {
+    padding: var(--space-sm);
+  }
+
+  .cardPanel {
+    padding: 0 var(--space-sm);
+  }
+
+  .cardPanelOpen {
+    padding: 0 var(--space-sm) var(--space-sm);
+  }
+
+  .practiceMarkInner {
+    width: 48px;
+    height: 48px;
+  }
+
+  .contact {
+    gap: var(--space-xs);
   }
 }
 
 /* ===========================================
-   RESPONSIVE - MOBILE (600px)
+   REDUCED MOTION — content fully visible, no transforms
    =========================================== */
-/* 600px responsive padding handled by page grid cell */
 
-/* ===========================================
-   ACCESSIBILITY - REDUCED MOTION
-   =========================================== */
 @media (prefers-reduced-motion: reduce) {
-  .aboutLink {
+  .photoRing {
+    animation: none !important;
+    transform: none !important;
+  }
+
+  .card {
     transition: none;
   }
 
-  .aboutPhotoBorder {
-    animation: none !important;
+  .cardChevron,
+  .contactPill,
+  .practiceMark {
+    transition: none;
+  }
+
+  .cardPanel {
+    transition: none;
+  }
+
+  .practiceRevealInner {
+    animation: none;
   }
 }

@@ -63,7 +63,7 @@
   background: rgba(0, 0, 0, 0.35);
   border: none;
   cursor: pointer;
-  transition: opacity var(--motion-fast) var(--ease-default), background var(--motion-fast) var(--ease-out);
+  transition: opacity var(--motion-fast) var(--ease-in-out), background var(--motion-fast) var(--ease-out);
 }
 
 .videoPlayOverlay:focus-visible {

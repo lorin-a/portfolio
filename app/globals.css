@@ -10,16 +10,16 @@
   --motion-medium: 600ms;
   --motion-slow: 900ms;
 
-  /* Easing — ease-in-out is the default for everything */
-  --ease-default: cubic-bezier(0.42, 0, 0.58, 1);
-
-  /* Soft bounce — slight overshoot then settle, for elements landing into place */
+  /* ─── Easing: 3 curves only ─── */
+  /* The workhorse. Most transitions, scroll reveals, hover states. */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  /* Sustained movement. Page transitions, scroll-driven animation. */
+  --ease-in-out: cubic-bezier(0.42, 0, 0.58, 1);
+  /* Soft arrival with slight overshoot. Elements landing into place. Use sparingly. */
   --ease-bounce: cubic-bezier(0.34, 1.4, 0.64, 1);
 
-  /* Gentle pulse — for looping attention indicators like the rings */
-  --ease-pulse: ease-in-out;
 
-  /* Hero Animation Colors */
+  /* ═══ V1 ONLY — remove after about page and case study template migrate ═══ */
   --cream: #F7F7F7;
   --hero-olive: #8B8525;
   --hero-olive-dark: #3C3A1F;
@@ -28,41 +28,27 @@
   --plum: #8B5E83;
   --terracotta: #B5654A;
   --sage: #A8B5A0;
-
-  /* Olive (Primary Brand) */
   --olive-light: #D8DBA0;
   --olive: #898B27;
   --olive-dark: #6F6D1F;
-
-  /* Lavender (Soft accent) */
   --lavender-light: #E8E4F0;
   --lavender: #C4BCE0;
   --lavender-dark: #8B7EB8;
-
-  /* Sky (Soft accent) */
   --sky-light: #E4EBF0;
   --sky: #B8CCD9;
   --sky-dark: #7A9DB8;
-
-  /* Adobe (Secondary Accent - use sparingly) */
   --adobe-light: #F5D4C8;
   --adobe: #E69A7B;
   --adobe-dark: #D67A5A;
-
-  /* Dusty Rose (Alternative accent) */
   --rose-light: #F0E4E8;
   --rose: #D4A5B0;
   --rose-dark: #B87A8B;
-
-  /* Neutrals */
   --text-heading: #2C2C28;
   --text-body: #4A4A46;
   --text-light: #666;
   --surface: #FBFBFB;
   --background: #FBFBFB;
   --border: #DDD8CE;
-
-  /* Legacy color aliases (for existing components) */
   --color-green-warm: var(--olive-light);
   --color-green-sage: var(--olive);
   --color-green-dark: var(--olive-dark);
@@ -72,6 +58,7 @@
   --color-text: var(--text-heading);
   --color-text-light: var(--text-body);
   --color-border: var(--border);
+  /* ═══ END V1 BLOCK ═══ */
 
   /* Project Accent Colors (overridden per-project) */
   --project-accent: var(--olive-dark);
@@ -147,9 +134,14 @@
   /* ===========================================
      LAYOUT
      =========================================== */
-  --max-width: 1200px;
+  --max-width: 1400px;
   --content-width: 900px;
-  --container-padding: var(--space-md);
+
+  /* Canonical horizontal page margin. Every section, nav, footer, and
+     container aligns to this value at every breakpoint so vertical
+     edges match. Legacy names below alias to it. */
+  --page-gutter: clamp(24px, 5vw, 80px);
+  --container-padding: var(--page-gutter);
   
   /* ===========================================
      SHADOWS
@@ -162,13 +154,10 @@
      COLORS — DEVICE CHROME
      =========================================== */
   --color-device-dark: #1a1a1a;
+  --color-device-bezel: #1a1a1a;
+  --color-device-ring: #3a3a3a;
+  --color-device-inner: #1a1a1a;
 
-  /* ===========================================
-     EASING
-     =========================================== */
-  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
-  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
-  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
 
   /* ===========================================
      V2 COLOR PALETTE
@@ -178,22 +167,22 @@
   --color-cream-dark: #F0ECE4;
 
   /* Sage — sense */
-  --color-sage: #5E6D52;
-  --color-sage-light: #7A8B6F;
-  --color-sage-soft: #A0A88A;
-  --color-sage-muted: rgba(160, 168, 138, 0.10);
+  --color-sage: #5E6B54;
+  --color-sage-light: #78876E;
+  --color-sage-soft: #96A088;
+  --color-sage-muted: rgba(150, 160, 136, 0.10);
 
   /* Plum — weave */
-  --color-plum: #7A6680;
-  --color-plum-light: #8A7690;
-  --color-plum-soft: #9B8A9E;
-  --color-plum-muted: rgba(155, 138, 158, 0.08);
+  --color-plum: #746270;
+  --color-plum-light: #877686;
+  --color-plum-soft: #9A8E98;
+  --color-plum-muted: rgba(154, 142, 152, 0.08);
 
-  /* Terracotta — shape */
-  --color-terracotta: #956058;
-  --color-terracotta-light: #A87068;
-  --color-terracotta-soft: #C4908A;
-  --color-terracotta-muted: rgba(196, 144, 138, 0.08);
+  /* Terracotta — shape (warm, same family as ampersand) */
+  --color-terracotta: #A0644E;
+  --color-terracotta-light: #C47A62;
+  --color-terracotta-soft: #D9A08C;
+  --color-terracotta-muted: rgba(196, 122, 98, 0.08);
 
   /* Chalcedony — accent */
   --color-chalcedony: #6E8FAE;
@@ -205,12 +194,18 @@
   --color-ink-light: #5A5550;
   --color-ink-faint: #7A7570;
 
+  /* Ampersand — warm terracotta on cream, brighter coral on dark */
+  --color-ampersand: #C47A62;
+
+  /* Legacy alias — use --page-gutter in new code */
+  --gutter: var(--page-gutter);
+
   /* ===========================================
-     V2 TRANSITIONS
+     12-COLUMN GRID SYSTEM
      =========================================== */
-  --transition-gentle: 0.5s ease;
-  --transition-smooth: 0.3s ease;
-  --gutter: clamp(24px, 5vw, 80px);
+  --grid-columns: 12;
+  --grid-gutter: clamp(16px, 2vw, 24px);
+  --grid-margin: var(--page-gutter);
 
   /* ===========================================
      PROJECT CARD TINTS
@@ -253,6 +248,77 @@
   --pill-text-dark: rgba(255, 255, 255, 1.0);
   --pill-bg-dark: rgba(255, 255, 255, 0.12);
 
+  /* Mark-colored pills — light mode (colored border + light tint fill + dark text)
+     Dark text on light tint: all exceed 10:1 contrast — well above AA */
+  --pill-sense-text: #2C2C28;
+  --pill-sense-border: #8A9263;
+  --pill-sense-bg: rgba(138, 146, 99, 0.12);
+  --pill-weave-text: #2C2C28;
+  --pill-weave-border: #9F84A9;
+  --pill-weave-bg: rgba(159, 132, 169, 0.12);
+  --pill-shape-text: #2C2C28;
+  --pill-shape-border: #C97D64;
+  --pill-shape-bg: rgba(201, 125, 100, 0.12);
+
+}
+
+/* ===========================================
+   DARK THEME — Homepage only (scoped via data attribute)
+   Promotion path: when full site goes dark, move
+   these overrides into :root and delete this block.
+   =========================================== */
+:root[data-theme="dark"] {
+  /* Backgrounds */
+  --color-cream: #252525;
+  --color-cream-dark: #333;
+  --nav-scrolled-bg: rgba(37, 37, 37, 0.92);
+
+  /* Text */
+  --color-ink: #E9E9E9;
+  --color-ink-light: #B0B0B0;
+  --color-ink-faint: #888;
+
+  /* Ampersand */
+  --color-ampersand: #F79C7E;
+
+  /* Sense */
+  --color-sage: #8A9B6E;
+  --color-sage-light: #A8B88C;
+  --color-sage-soft: #C5CFA6;
+  --color-sage-muted: rgba(197, 207, 166, 0.10);
+
+  /* Weave */
+  --color-plum: #9B7DAA;
+  --color-plum-light: #B194BD;
+  --color-plum-soft: #C7AAD1;
+  --color-plum-muted: rgba(199, 170, 209, 0.10);
+
+  /* Shape — warm terracotta */
+  --color-terracotta: #C97E65;
+  --color-terracotta-light: #E08D72;
+  --color-terracotta-soft: #F79C7E;
+  --color-terracotta-muted: rgba(247, 156, 126, 0.10);
+
+  /* Device chrome — titanium silver */
+  --color-device-bezel: #d1d1d6;
+  --color-device-ring: #b8b8bd;
+  --color-device-inner: #1a1a1a;
+
+  /* Shadows (lighter on dark) */
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.20);
+  --shadow-md: 0 2px 8px rgba(0,0,0,0.25);
+  --shadow-lg: 0 4px 16px rgba(0,0,0,0.30);
+
+  /* Mark-colored pills */
+  --pill-sense-text: #f3ffce;
+  --pill-sense-border: rgba(197, 207, 166, 0.5);
+  --pill-sense-bg: rgba(197, 207, 166, 0.35);
+  --pill-weave-text: #fcf1ff;
+  --pill-weave-border: rgba(199, 170, 209, 0.5);
+  --pill-weave-bg: rgba(199, 170, 209, 0.35);
+  --pill-shape-text: #fff0e8;
+  --pill-shape-border: rgba(247, 156, 126, 0.5);
+  --pill-shape-bg: rgba(247, 156, 126, 0.35);
 }
 
 /* ===========================================
@@ -266,6 +332,8 @@
     --text-pull-quote: 1.375rem; /* 22px */
     --space-lg: 3rem;
     --space-xl: 5rem;
+    --grid-columns: 8;
+    --grid-gutter: 16px;
   }
 }
 
@@ -282,7 +350,8 @@
     --text-pull-quote: 1.25rem; /* 20px */
     --space-lg: 2.5rem;
     --space-xl: 4rem;
-    --container-padding: var(--space-sm);
+    --grid-columns: 4;
+    --grid-gutter: 12px;
   }
 }
 
@@ -293,6 +362,7 @@
   :root {
     --space-lg: 2rem;
     --space-xl: 3rem;
+    --grid-gutter: 10px;
   }
 }
 
@@ -337,7 +407,7 @@ body::after {
   position: fixed;
   top: 0; right: 0; bottom: 0; left: 0;
   inset: 0;
-  opacity: 0.022;
+  opacity: 0.012;
   pointer-events: none;
   z-index: 50;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
@@ -490,6 +560,17 @@ a:focus-visible {
   padding: 0 var(--container-padding);
 }
 
+.grid {
+  display: grid;
+  grid-template-columns: repeat(var(--grid-columns), 1fr);
+  column-gap: var(--grid-gutter);
+  max-width: var(--max-width);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--grid-margin);
+  padding-right: var(--grid-margin);
+}
+
 section {
   padding: var(--space-lg) 0;
 }
@@ -536,4 +617,15 @@ img {
   border: 1px solid var(--pill-border-dark);
   color: var(--pill-text-dark);
   background: var(--pill-bg-dark);
+}
+
+/* Hero loading state — hides content below hero during opener */
+body.hero-loading > * > main > *:not(:first-child) {
+  visibility: hidden !important;
+}
+
+/* Prevent horizontal scroll site-wide */
+html, body {
+  overflow-x: hidden;
+  overscroll-behavior-x: none;
 }

@@ -1,4 +1,4 @@
-# CLAUDE.md
+# CLAUDE.md — lorin.work Portfolio
 
 ## What This Project Is
 
@@ -9,42 +9,10 @@ A design research portfolio for lorin.work. The audience is hiring managers who 
 Read these three files. They are the complete project context:
 
 1. **`DESIGN_SPEC.md`** — All design tokens, engineering decisions, accessibility standards, motion system, case study structure. This is the source of truth. If something contradicts this file, this file wins.
-2. **`PORTFOLIO_STRATEGY_SUMMARY_v2.md`** — Creative direction, conceptual framework (four elemental energies), content strategy, interaction philosophy, visual language goals.
-3. **`WORKING_WITH_LORIN.md`** — How Lorin thinks, her creative taste, her strengths, her growth edges, and how to collaborate with her effectively.
+2. **`docs/WORKING_WITH_LORIN.md`** — How Lorin thinks, her creative taste, her strengths, her growth edges, and how to collaborate with her effectively.
+3. **`GSAP_PATTERNS.md`** — GSAP animation patterns, plugin usage, React integration, and conventions for this project. All animation code must follow these patterns.
 
-Do not reference any files in `docs/archive/`. They contain outdated values.
-
-## Your Role
-
-You are a senior design director who codes. You bring rigor in: clean architecture, typography, color theory, motion design, WCAG accessibility, responsive engineering, and component-driven development. You also bring creative ambition — you push Lorin's work further, not just execute it.
-
-You ask before implementing. You challenge ideas when they could be stronger. You are direct about what to cut, improve, or highlight. You never paraphrase Lorin's writing — use her actual words or flag for her to rewrite.
-
-## Collaboration Rules
-
-### Before Any Change, Ask Yourself
-"What files am I changing, what is the expected result, and what could break?"
-
-### Approval Tiers
-- **Tier 1 — Just do it:** Bug fixes, typo corrections, CSS-only responsive fixes, ARIA attributes, fixing deprecated token usage
-- **Tier 2 — Propose plan first:** Changes touching 3+ files, new components, animation timing, layout restructuring
-- **Tier 3 — Discuss before anything:** Architecture changes, content hierarchy, new page structures, design system changes, anything experiential
-
-### Working Style
-- Tackle one thing at a time, not comprehensive overhauls
-- Be specific — "72px Fraunces with 1.1 line height on cream" not "clean and modern"
-- Don't present binary choices — frame options as a spectrum or "both, but here's how"
-- Remind Lorin of the audience when deep in creative weeds
-- Protect her strongest work from being diluted by volume
-
-### Before Proposing Any Fix or Change
-Before presenting a solution and asking Lorin to build/preview it, pause and scrutinize your own approach as a senior developer:
-- **Is this the best approach?** Not just a fix — the *right* fix.
-- **Is it organized?** Does it follow existing patterns, or does it introduce a one-off that'll need cleanup later?
-- **Does it unify across the codebase?** If this pattern exists elsewhere, are you solving it consistently — or creating divergence?
-- **How could it be better and more efficient?** Challenge your first instinct. A quick patch that causes two more issues is worse than taking a moment to get it right.
-
-If the answer to any of these is "no" or "I'm not sure," revise before proposing. Don't waste build cycles on half-solutions.
+Do not reference any files in `docs/archive/`. They contain outdated values from earlier project phases.
 
 ## Tech Stack
 
@@ -122,17 +90,6 @@ The site is mid-build. V1 is deployed and must not break. V2 is being built on t
 - **Standalone Groundswell:** Complete. Do not touch.
 
 When V2 decisions are made during homepage work, update `DESIGN_SPEC.md` immediately.
-
-## Accessibility — Non-Negotiable
-
-- WCAG 2.2 AA minimum
-- 44×44px touch targets
-- `:focus-visible` on all interactive elements
-- `prefers-reduced-motion` respected globally AND per-component (content must be visible when motion is disabled)
-- `@media (hover: hover)` for all hover effects
-- Semantic HTML, logical heading hierarchy, descriptive link text
-- No auto-playing media
-- See `DESIGN_SPEC.md` Section 9 for comprehensive requirements
 
 ## Common Gotchas
 

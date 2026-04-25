@@ -1,0 +1,256 @@
+/* ===========================================
+   PROJECT PREVIEW — scroll-driven shrink, reveal,
+   and media rotation. Media starts wide, shrinks
+   to one side as text reveals on the other. Continued
+   scrolling crossfades through additional media in-place.
+   =========================================== */
+
+.section {
+  position: relative;
+  min-height: 90vh;
+  display: flex;
+  align-items: center;
+  padding: var(--space-lg) var(--gutter);
+  gap: clamp(24px, 4vw, 64px);
+}
+
+.section:not(.flip) {
+  flex-direction: row;
+}
+
+.flip {
+  flex-direction: row-reverse;
+}
+
+/* ===========================================
+   MEDIA WRAP + FRAME — the sizing element GSAP
+   shrinks. Slides stack absolutely inside the frame.
+   =========================================== */
+.mediaWrap {
+  position: relative;
+  width: 95%;
+  flex-shrink: 0;
+}
+
+.media {
+  border-radius: 16px;
+  overflow: hidden;
+  position: relative;
+  aspect-ratio: 16 / 9;
+  transition: box-shadow var(--motion-medium) var(--ease-out);
+}
+
+/* Each media slide fills the frame. Stacked absolutely so later slides
+   sit on top of earlier ones — GSAP lifts them in from below on scroll.
+   Clips its own content so per-slide transforms (zoom crops) stay within
+   the slide's bounds and don't peek past the frame while parked. */
+.slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* Rotation slides hidden during SSR and before GSAP hydrates so the
+   DOM-last slide doesn't flash on top of the first. GSAP reveals them
+   via autoAlpha as part of its initial set. */
+.slide:not(:first-child) {
+  visibility: hidden;
+}
+
+.slideInner {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* ===========================================
+   TEXT — positioned absolutely so it stays in its final layout
+   from first paint. Media shrinking doesn't reflow the text column;
+   the text just fades in at its final size and position.
+   =========================================== */
+.text {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: var(--gutter);
+  width: 32%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  visibility: hidden;
+}
+
+.flip .text {
+  right: auto;
+  left: var(--gutter);
+}
+
+.num {
+  font-family: var(--font-heading);
+  font-size: clamp(14px, 1.5vw, 20px);
+  font-weight: 340;
+  font-variation-settings: 'SOFT' 100, 'WONK' 1;
+  color: var(--color-ink-faint);
+  display: block;
+  margin-bottom: var(--space-xs);
+}
+
+:global(:root[data-theme="dark"]) .num {
+  color: var(--color-ink-faint);
+}
+
+.title {
+  font-family: var(--font-heading);
+  font-size: clamp(28px, 4vw, 56px);
+  font-weight: 200;
+  font-variation-settings: 'SOFT' 100, 'WONK' 1;
+  line-height: 1.05;
+  color: var(--color-ink);
+  margin: 0 0 var(--space-xs);
+}
+
+:global(:root[data-theme="dark"]) .title {
+  color: #e9e9e9;
+}
+
+.tagline {
+  font-family: var(--font-heading);
+  font-size: clamp(16px, 2vw, 24px);
+  font-weight: 300;
+  font-style: italic;
+  font-variation-settings: 'SOFT' 100, 'WONK' 1;
+  color: var(--color-ink);
+  line-height: 1.3;
+  margin: 0 0 var(--space-sm);
+}
+
+:global(:root[data-theme="dark"]) .tagline {
+  color: #ffffff;
+  opacity: 0.92;
+}
+
+.description {
+  font-family: var(--font-body);
+  font-size: clamp(15px, 1.2vw, 18px);
+  font-weight: 400;
+  line-height: 1.6;
+  color: var(--color-ink-light);
+  margin: 0 0 var(--space-sm);
+}
+
+:global(:root[data-theme="dark"]) .description {
+  color: #ffffff;
+  opacity: 0.75;
+}
+
+/* ===========================================
+   PILLS
+   =========================================== */
+.pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: var(--space-sm);
+}
+
+.pill {
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 400;
+  padding: 4px 12px;
+  border-radius: var(--radius-pill);
+  border: 1.5px solid;
+  white-space: nowrap;
+}
+
+.pillSense {
+  composes: pill;
+  color: var(--pill-sense-text);
+  border-color: var(--pill-sense-border);
+  background: var(--pill-sense-bg);
+}
+
+.pillWeave {
+  composes: pill;
+  color: var(--pill-weave-text);
+  border-color: var(--pill-weave-border);
+  background: var(--pill-weave-bg);
+}
+
+.pillShape {
+  composes: pill;
+  color: var(--pill-shape-text);
+  border-color: var(--pill-shape-border);
+  background: var(--pill-shape-bg);
+}
+
+/* ===========================================
+   CTA
+   =========================================== */
+.cta {
+  font-family: var(--font-heading);
+  font-size: clamp(16px, 1.5vw, 20px);
+  font-weight: 300;
+  font-style: italic;
+  font-variation-settings: 'SOFT' 100, 'WONK' 1;
+  color: var(--color-ink);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  display: inline-block;
+  min-height: var(--min-touch-target, 44px);
+  padding: var(--space-xs) 0;
+}
+
+:global(:root[data-theme="dark"]) .cta {
+  color: #e9e9e9;
+}
+
+@media (hover: hover) {
+  .cta:hover { opacity: 0.7; }
+}
+
+.comingSoon {
+  font-family: var(--font-body);
+  font-size: var(--text-body-small);
+  color: var(--color-ink-faint);
+  font-style: italic;
+}
+
+/* ===========================================
+   RESPONSIVE
+   =========================================== */
+@media (max-width: 900px) {
+  .section {
+    flex-direction: column !important;
+    min-height: auto;
+    padding: var(--space-md) var(--gutter);
+  }
+
+  .mediaWrap {
+    width: 100%;
+  }
+
+  .text {
+    position: static;
+    width: 100%;
+    min-width: 0;
+    right: auto;
+    left: auto;
+  }
+}
+
+/* ===========================================
+   REDUCED MOTION
+   =========================================== */
+@media (prefers-reduced-motion: reduce) {
+  .text {
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+}
