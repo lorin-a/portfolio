@@ -1,5 +1,5 @@
 # Project Status
-### Last updated: 2026-04-22
+### Last updated: 2026-04-24
 
 This is the living status doc for the lorin.work portfolio redesign. Updated at the end of every working session.
 
@@ -7,44 +7,35 @@ This is the living status doc for the lorin.work portfolio redesign. Updated at 
 
 ## Current Phase
 
-**Codebase overhaul** — consolidating months of exploration into a production-quality foundation before building case study pages.
+**Dark homepage shipped to production.** Next focus: case study template and a real about page.
 
 ### Roadmap
-1. Codebase overhaul (in progress)
-2. Finish dark homepage with project previews
-3. Case study pages (Sense/Weave/Shape template)
-4. About page (new concept)
+1. ~~Codebase overhaul~~ done
+2. ~~Finish dark homepage with project previews~~ shipped 2026-04-24
+3. Case study pages (Sense/Weave/Shape template) — next
+4. About page (new concept) — currently a disabled span in the nav
 
 ---
 
 ## What's Live (main branch, deployed to lorin.work)
 
-- Homepage V1 with video preview cards, "coming soon" states
-- Standalone Groundswell stakeholder site (complete, do not touch)
-- Last commit: `7c015c2` — consistent "we" voice in Groundswell copy
+- **Dark homepage** with scatter-gather hero, scroll-driven ProjectPreview carousels for all five projects, AboutSection (drop-down cards + Sense/Weave/Shape practice fan + bouncy mailto closer), Lenis smooth scroll
+- Nav slimmed to "About" only (Work and Contact removed; ThemeToggle stashed but not imported)
+- Footer: centered LinkedIn / Resume (disabled) / Email
+- `/projects/groundswell` case study with a "Live Site" cell linking to `/groundswell`
+- Standalone Groundswell stakeholder site (`/groundswell`, complete, do not touch)
+- Theme: forced `data-theme="dark"` on `/` only via inline head script + PortfolioShell effect; case study and other portfolio routes stay light
+- Last production commit: `c799323` — SomeBuddy + TD subheads, closer word-break and spacing
+- **Tag `v1-final`** points at `7c015c2` (the pre-redesign main HEAD), so the V1 site is one `git checkout` away
 
 ---
 
-## Active Branch: `homepage-dark-redesign`
+## What's Unfinished
 
-45 commits ahead of main. Pushed to remote 2026-04-06.
-
-**What's built:**
-- Light/dark theme toggle (ThemeToggle component, `data-theme` attribute)
-- Dark mode hero with gradient marks, per-character wave animation
-- "Designing" wipe-on animation with descender-safe clip-path
-- GroundswellSection: 2-row media-first layout, scroll-triggered fan-out, 3D card flips, iPhone mockup
-- BirthStorySection: full-width video, sticky scroll gallery (5 images)
-- 3 generic ProjectSections (SomeBuddy, Transition Design, Bridging the G.A.P.) with video cards
-- Gradient pills, squiggle gradients, systematized typography
-- Corner-to-corner gradients on hero marks
-- AboutSection placeholder at bottom
-
-**What's unfinished:**
-- BirthStory: missing case study link
-- SomeBuddy, Transition Design, Bridging: all marked `comingSoon: true`
-- About section: placeholder with "coming soon" extended bio
-- Bridging preview video may be placeholder (`Logos_1`)
+- About page (`/about`) — the nav still shows it as a disabled span
+- Resume link in footer — disabled span
+- BirthStory / SomeBuddy / Transition Design / Bridging the G.A.P. case study pages — all `comingSoon: true` on the homepage; the routes don't exist yet
+- ThemeToggle still in `components/ThemeToggle/` but no longer imported anywhere (intentional stash)
 
 ---
 
