@@ -336,7 +336,10 @@ export default function AboutSection() {
       // gradient text-fill survives — background-clip: text on a parent
       // does not propagate through transformed character spans.
       if (closerQuestionRef.current && closerCtaRef.current) {
-        const splitQ = SplitText.create(closerQuestionRef.current, { type: 'chars' })
+        // Split into words AND chars so chars animate individually but
+        // word wrappers prevent mid-word line breaks (e.g., "somethin"
+        // / "g meaningful").
+        const splitQ = SplitText.create(closerQuestionRef.current, { type: 'words,chars' })
         const qChars = splitQ.chars || []
 
         gsap.set(qChars, { autoAlpha: 0, y: 14 })

@@ -59,6 +59,7 @@ export default function Home() {
         <ProjectPreview
           num="03"
           title="SomeBuddy"
+          tagline="Social(ish): Approachable Socialization for Busy Buddies"
           description="A Social App Concept helping grad students find connection over shared values."
           contributions={[
             { label: 'Brand Identity' },
@@ -81,6 +82,7 @@ export default function Home() {
         <ProjectPreview
           num="04"
           title="Transition Design"
+          tagline="Roots to Resilience: A Food Justice Future"
           description="A systems-level design response to food insecurity in Pittsburgh using Transition Design methods."
           contributions={[
             { label: 'Systems Mapping' },

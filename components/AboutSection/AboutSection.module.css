@@ -453,7 +453,7 @@
   color: var(--color-ink);
   text-align: center;
   text-wrap: balance;
-  margin: var(--space-xl) auto calc(var(--space-xl) * 1.5);
+  margin: 0 auto;
   max-width: 640px;
 }
 
