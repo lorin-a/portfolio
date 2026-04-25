@@ -80,7 +80,14 @@ export default function ProjectPreview({
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: section,
-        start: 'top top',
+        /* On mobile the column layout puts media at the top of the
+           section. Pinning at 'top top' would tuck the image's top
+           edge directly behind the fixed nav (~50–56px tall). Offset
+           the pin so the section pins with its top at 64px from the
+           viewport top, clearing the nav entirely. Desktop centers
+           content in min-height: 90vh, so the nav never overlaps
+           visible content there. */
+        start: isMobile ? 'top 64px' : 'top top',
         end: `+=${pinUnits}%`,
         pin: true,
         pinType: 'transform',

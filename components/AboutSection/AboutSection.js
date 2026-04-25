@@ -354,12 +354,15 @@ export default function AboutSection() {
           )
         }
 
+        // Play once and stay revealed. Reverse-on-exit was animating the
+        // cards back to invisible whenever the section left the viewport
+        // (in either direction), so they appeared "gone" the moment the
+        // user scrolled past to the closer/footer.
         const observer = new IntersectionObserver(
           ([entry]) => {
             if (entry.isIntersecting) {
               practiceTl.play()
-            } else {
-              practiceTl.reverse()
+              observer.disconnect()
             }
           },
           { threshold: 0.35 }
@@ -415,12 +418,14 @@ export default function AboutSection() {
             '-=0.1'
           )
 
+        // Play once and stay revealed (same reasoning as the practice
+        // observer above — reverse-on-exit was animating the closer
+        // back to invisible whenever it briefly left the viewport).
         const closerObserver = new IntersectionObserver(
           ([entry]) => {
             if (entry.isIntersecting) {
               closerTl.play()
-            } else {
-              closerTl.reverse()
+              closerObserver.disconnect()
             }
           },
           { threshold: 0.3 }
