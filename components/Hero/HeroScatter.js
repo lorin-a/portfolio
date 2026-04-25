@@ -275,7 +275,12 @@ export default function HeroScatter() {
           start: 'top top',
           end: '+=500%',
           pin: sectionRef.current,
-          pinType: 'transform',
+          /* On mobile (touch + iOS Safari address-bar show/hide),
+             transform-based pins drift and the section scrolls past
+             into glitchy/layered states. position:fixed escapes that
+             entirely. Desktop keeps transform — it's smoother there
+             and avoids creating a containing block. */
+          pinType: window.matchMedia('(max-width: 768px)').matches ? 'fixed' : 'transform',
           scrub: 0.8,
           onUpdate: (self) => {
             /* Show welcome only when at the very start (flower state) */

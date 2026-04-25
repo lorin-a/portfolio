@@ -160,15 +160,30 @@ export default function AboutSection() {
         afterChars = splitAfter.chars || []
       }
 
+      // The pin scrub timeline that drives the byline / lede / cards
+      // cascade does not translate well to touch + iOS Safari (pin spacer
+      // height calc + address-bar show/hide cause closer/footer overlap
+      // and feel glitchy). On mobile, skip the pin entirely and just put
+      // those elements in their final visible state.
+      const isAboutMobile = window.matchMedia('(max-width: 900px)').matches
+
       // Initial hidden states. Elements stay in natural flow, they just start
       // invisible and animate to revealed. Once revealed, they stay on screen.
       gsap.set(photoInnerRef.current, { clipPath: 'circle(0% at 50% 50%)' })
-      if (wigglePathRef.current) gsap.set(wigglePathRef.current, { drawSVG: '50% 50%' })
-      gsap.set(bylineTextRef.current, { autoAlpha: 0, y: 20 })
-      gsap.set([...beforeChars, ...afterChars], { yPercent: 110 })
-      if (ledeAccentRef.current) gsap.set(ledeAccentRef.current, { autoAlpha: 0, yPercent: 30 })
-      // Drop-down menu cards (Currently/Seeking/Range) — vertical cascade reveal.
-      gsap.set(cards, { autoAlpha: 0, y: -30 })
+      if (isAboutMobile) {
+        if (wigglePathRef.current) gsap.set(wigglePathRef.current, { drawSVG: '100%' })
+        gsap.set(bylineTextRef.current, { autoAlpha: 1, y: 0 })
+        gsap.set([...beforeChars, ...afterChars], { yPercent: 0 })
+        if (ledeAccentRef.current) gsap.set(ledeAccentRef.current, { autoAlpha: 1, yPercent: 0 })
+        gsap.set(cards, { autoAlpha: 1, y: 0 })
+      } else {
+        if (wigglePathRef.current) gsap.set(wigglePathRef.current, { drawSVG: '50% 50%' })
+        gsap.set(bylineTextRef.current, { autoAlpha: 0, y: 20 })
+        gsap.set([...beforeChars, ...afterChars], { yPercent: 110 })
+        if (ledeAccentRef.current) gsap.set(ledeAccentRef.current, { autoAlpha: 0, yPercent: 30 })
+        // Drop-down menu cards (Currently/Seeking/Range) — vertical cascade reveal.
+        gsap.set(cards, { autoAlpha: 0, y: -30 })
+      }
 
       // Practice cards (Sense/Weave/Shape). Below 800px the cards stack
       // vertically (CSS), so the horizontal cluster→spread x-shift would
@@ -205,80 +220,84 @@ export default function AboutSection() {
         },
       })
 
-      // ─── Pinned scrub timeline: each beat cascades, once revealed stays visible.
-      const pinTl = gsap.timeline({
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: 'top top',
-          end: '+=200%',
-          pin: true,
-          pinType: 'transform',
-          scrub: 0.4,
-          anticipatePin: 1,
-        },
-      })
-
-      // Beat 1 — Wiggle ring draws (0 → 1.4s)
-      pinTl.to(
-        wigglePathRef.current,
-        { drawSVG: '0% 100%', duration: 1.4, ease: 'power2.inOut' },
-        0
-      )
-
-      // Beat 2 — Byline text slides up (1.7 → 2.5s)
-      pinTl.to(
-        bylineTextRef.current,
-        { autoAlpha: 1, y: 0, duration: 0.8, ease: 'power2.out' },
-        1.7
-      )
-
-      // Beat 3a — "Translating lived experience into " types on (2.6 → ~3.4s)
-      if (beforeChars.length) {
-        pinTl.to(
-          beforeChars,
-          {
-            yPercent: 0,
-            duration: 0.5,
-            ease: 'power1.inOut',
-            stagger: 0.022,
+      // ─── Pinned scrub timeline: each beat cascades, once revealed stays
+      // visible. Desktop only — on mobile, isAboutMobile already set the
+      // pin-driven elements to their final visible state above.
+      if (!isAboutMobile) {
+        const pinTl = gsap.timeline({
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: 'top top',
+            end: '+=200%',
+            pin: true,
+            pinType: 'transform',
+            scrub: 0.4,
+            anticipatePin: 1,
           },
-          2.6
+        })
+
+        // Beat 1 — Wiggle ring draws (0 → 1.4s)
+        pinTl.to(
+          wigglePathRef.current,
+          { drawSVG: '0% 100%', duration: 1.4, ease: 'power2.inOut' },
+          0
+        )
+
+        // Beat 2 — Byline text slides up (1.7 → 2.5s)
+        pinTl.to(
+          bylineTextRef.current,
+          { autoAlpha: 1, y: 0, duration: 0.8, ease: 'power2.out' },
+          1.7
+        )
+
+        // Beat 3a — "Translating lived experience into " types on (2.6 → ~3.4s)
+        if (beforeChars.length) {
+          pinTl.to(
+            beforeChars,
+            {
+              yPercent: 0,
+              duration: 0.5,
+              ease: 'power1.inOut',
+              stagger: 0.022,
+            },
+            2.6
+          )
+        }
+
+        // Beat 3b — Gradient accent "thoughtful design" fades up (3.2 → 3.8s)
+        pinTl.to(
+          ledeAccentRef.current,
+          { autoAlpha: 1, yPercent: 0, duration: 0.6, ease: 'power2.out' },
+          3.2
+        )
+
+        // Beat 3c — " to improve complex systems." types on (3.4 → ~4.1s)
+        if (afterChars.length) {
+          pinTl.to(
+            afterChars,
+            {
+              yPercent: 0,
+              duration: 0.5,
+              ease: 'power1.inOut',
+              stagger: 0.022,
+            },
+            3.4
+          )
+        }
+
+        // Beat 4 — Drop-down menus cascade vertically (4.2 → ~5.1s)
+        pinTl.to(
+          cards,
+          {
+            autoAlpha: 1,
+            y: 0,
+            duration: 0.6,
+            ease: 'power2.out',
+            stagger: 0.15,
+          },
+          4.2
         )
       }
-
-      // Beat 3b — Gradient accent "thoughtful design" fades up (3.2 → 3.8s)
-      pinTl.to(
-        ledeAccentRef.current,
-        { autoAlpha: 1, yPercent: 0, duration: 0.6, ease: 'power2.out' },
-        3.2
-      )
-
-      // Beat 3c — " to improve complex systems." types on (3.4 → ~4.1s)
-      if (afterChars.length) {
-        pinTl.to(
-          afterChars,
-          {
-            yPercent: 0,
-            duration: 0.5,
-            ease: 'power1.inOut',
-            stagger: 0.022,
-          },
-          3.4
-        )
-      }
-
-      // Beat 4 — Drop-down menus cascade vertically (4.2 → ~5.1s)
-      pinTl.to(
-        cards,
-        {
-          autoAlpha: 1,
-          y: 0,
-          duration: 0.6,
-          ease: 'power2.out',
-          stagger: 0.15,
-        },
-        4.2
-      )
 
       // ─── Practice timeline: paused until IntersectionObserver fires.
       // Plays at its own natural pace when the practice block is visibly

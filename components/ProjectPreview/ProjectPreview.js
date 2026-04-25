@@ -45,8 +45,10 @@ export default function ProjectPreview({
        Shifting the wrap by 2.5% of section width (≈ 2.632% of its own
        95%-of-section width) puts it visually centered. During compose,
        xPercent tweens back to 0 so the final 55% width lands flush at
-       its natural flex anchor. */
-    const centerShift = flip ? -2.632 : 2.632
+       its natural flex anchor. On mobile (column layout) this trick
+       isn't needed — the media is full-width and stacks above the text. */
+    const isMobile = window.matchMedia('(max-width: 900px)').matches
+    const centerShift = isMobile ? 0 : (flip ? -2.632 : 2.632)
 
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     if (prefersReduced) {
@@ -61,7 +63,9 @@ export default function ProjectPreview({
        pre-hydration) and parked just below the frame. yPercent: 101 gives
        a 1% buffer so sub-pixel rounding and tiny scroll deltas can't flash
        a sliver of the slide above the bottom edge. */
-    gsap.set(text, { autoAlpha: 0, x: flip ? -40 : 40 })
+    gsap.set(text, isMobile
+      ? { autoAlpha: 0, y: 24 }
+      : { autoAlpha: 0, x: flip ? -40 : 40 })
     gsap.set(media, { xPercent: centerShift })
     rotationSlides.forEach(s => gsap.set(s, { yPercent: 101, autoAlpha: 1 }))
 
@@ -84,21 +88,34 @@ export default function ProjectPreview({
       },
     })
 
-    /* Compose: media shrinks and text reveals */
+    /* Compose: media shrinks (desktop only — on mobile the column
+       layout keeps media full-width, since shrinking to 55% leaves the
+       imagery tiny and pushed up off-screen) and text reveals. */
     const composeEnd = composeUnits / pinUnits
-    tl.to(media, {
-      width: '55%',
-      xPercent: 0,
-      duration: composeEnd,
-      ease: 'power1.inOut',
-    }, 0)
+    if (!isMobile) {
+      tl.to(media, {
+        width: '55%',
+        xPercent: 0,
+        duration: composeEnd,
+        ease: 'power1.inOut',
+      }, 0)
+    }
 
-    tl.to(text, {
-      autoAlpha: 1,
-      x: 0,
-      duration: composeEnd * 0.75,
-      ease: 'power1.inOut',
-    }, composeEnd * 0.30)
+    tl.to(text, isMobile
+      ? {
+          autoAlpha: 1,
+          y: 0,
+          duration: composeEnd * 0.75,
+          ease: 'power1.inOut',
+        }
+      : {
+          autoAlpha: 1,
+          x: 0,
+          duration: composeEnd * 0.75,
+          ease: 'power1.inOut',
+        },
+      composeEnd * 0.30,
+    )
 
     /* Rotate: each subsequent slide lifts up from below the frame,
        stacking on top of the previous one. Each slide occupies 90% of

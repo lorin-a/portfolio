@@ -435,7 +435,9 @@
 }
 
 .practiceCardMark {
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 84px;
   height: 84px;
   position: relative;

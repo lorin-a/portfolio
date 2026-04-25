@@ -31,7 +31,7 @@ export default function Home() {
             { src: cloudVideo(GS_VIDEOS['gs-walkthrough-video'], 1200), type: 'video', alt: 'Groundswell walkthrough' },
             { src: cloudImg(GS_IMAGES['gs-ctb-email'], 1200), type: 'image', alt: 'Groundswell care-through-books email in use' },
           ]}
-          href="/projects/groundswell"
+          href="/groundswell"
         />
 
         <ProjectPreview
