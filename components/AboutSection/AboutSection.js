@@ -150,6 +150,7 @@ export default function AboutSection() {
           autoSplit: true,
         })
         beforeChars = splitBefore.chars || []
+        ledeBeforeRef.current.removeAttribute('aria-label')
       }
       if (ledeAfterRef.current) {
         const splitAfter = SplitText.create(ledeAfterRef.current, {
@@ -158,6 +159,7 @@ export default function AboutSection() {
           autoSplit: true,
         })
         afterChars = splitAfter.chars || []
+        ledeAfterRef.current.removeAttribute('aria-label')
       }
 
       // The pin scrub timeline that drives the byline / lede / cards
@@ -437,6 +439,7 @@ export default function AboutSection() {
         // / "g meaningful").
         const splitQ = SplitText.create(closerQuestionRef.current, { type: 'words,chars' })
         const qChars = splitQ.chars || []
+        closerQuestionRef.current.removeAttribute('aria-label')
 
         gsap.set(qChars, { autoAlpha: 0, y: 14 })
         gsap.set(closerCtaRef.current, {
@@ -562,11 +565,16 @@ export default function AboutSection() {
           {/* ── Lede ── */}
           <div className={styles.ledeWrap}>
             <p ref={ledeRef} className={styles.lede}>
-              <span ref={ledeBeforeRef}>{'Translating lived experience into '}</span>
-              <span ref={ledeAccentRef} className={styles.ledeAccent}>
-                thoughtful design
+              <span aria-hidden="true">
+                <span ref={ledeBeforeRef}>{'Translating lived experience into '}</span>
+                <span ref={ledeAccentRef} className={styles.ledeAccent}>
+                  thoughtful design
+                </span>
+                <span ref={ledeAfterRef}>{' to improve complex systems.'}</span>
               </span>
-              <span ref={ledeAfterRef}>{' to improve complex systems.'}</span>
+              <span className={styles.visuallyHidden}>
+                Translating lived experience into thoughtful design to improve complex systems.
+              </span>
             </p>
           </div>
 
@@ -668,9 +676,10 @@ export default function AboutSection() {
 
           {/* ── Closer ── */}
           <p ref={closerRef} className={styles.closer}>
-            <span ref={closerQuestionRef} className={styles.closerQuestion}>
+            <span ref={closerQuestionRef} className={styles.closerQuestion} aria-hidden="true">
               Want to make something meaningful?
             </span>
+            <span className={styles.visuallyHidden}>Want to make something meaningful?</span>
             {' '}
             <a
               ref={closerCtaRef}

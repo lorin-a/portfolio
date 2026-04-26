@@ -318,10 +318,6 @@ function WorkshopCarousel() {
                 cursor: i === current ? 'default' : 'pointer',
               }}
               onClick={() => i !== current && setCurrent(i)}
-              onKeyDown={(e) => { if ((e.key === 'Enter' || e.key === ' ') && i !== current) { e.preventDefault(); setCurrent(i) }}}
-              role={i !== current ? 'button' : undefined}
-              tabIndex={i !== current ? 0 : -1}
-              aria-label={i !== current ? `Go to ${ws.title} workshop` : undefined}
             >
               <div className={styles.workshopCarouselCard}>
                 <span className={styles.workshopLabel}>{ws.label}</span>
