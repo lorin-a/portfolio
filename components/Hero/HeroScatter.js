@@ -119,8 +119,6 @@ export default function HeroScatter() {
   const senseRef = useRef(null)
   const weaveRef = useRef(null)
   const measureRef = useRef(null)
-  const idleTweens = useRef([])
-  const idleTimer = useRef(null)
 
   const [shapeAnimate, setShapeAnimate] = useState(false)
   const [senseReplay, setSenseReplay] = useState(0)
@@ -171,9 +169,6 @@ export default function HeroScatter() {
 
     const dChars = dRefs.current.filter(Boolean)
     const cChars = cRefs.current.filter(Boolean)
-    const allChars = [...dChars, ...cChars]
-    const marks = [senseRef.current, weaveRef.current].filter(Boolean)
-    const allScatter = [...allChars, ...marks]
 
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     if (prefersReduced) {
@@ -292,48 +287,6 @@ export default function HeroScatter() {
                 gsap.set(arrowRef.current, { autoAlpha: 0 })
               }
             }
-
-            /* Floats are scroll-idle-driven: any scroll movement kills
-               them; an idle pause in the scatter zone (0.20–0.32, the
-               breathing space between drag-in completion at 0.22 and
-               gather start at 0.32) starts them. This is more reliable
-               than a pure progress-range trigger because progress can
-               be anywhere when the user pauses, and kills the floats
-               immediately when scroll resumes so they never fight the
-               gather tweens that move the same elements after 0.32. */
-            const killFloats = () => {
-              if (idleTweens.current.length === 0) return
-              idleTweens.current.forEach(t => t.kill())
-              idleTweens.current = []
-              allScatter.forEach(el => { if (el) gsap.set(el, { y: 0 }) })
-              gsap.set(flower, { y: 0 })
-            }
-            const startFloats = () => {
-              if (idleTweens.current.length > 0) return
-              allScatter.forEach(el => {
-                if (!el) return
-                idleTweens.current.push(gsap.to(el, {
-                  y: '+=16', duration: gsap.utils.random(2.4, 3.6),
-                  ease: 'sine.inOut', repeat: -1, yoyo: true,
-                  delay: gsap.utils.random(0, 0.8),
-                }))
-              })
-              idleTweens.current.push(gsap.to(flower, {
-                y: '+=10', duration: 3,
-                ease: 'sine.inOut', repeat: -1, yoyo: true,
-                delay: 0.4,
-              }))
-            }
-
-            killFloats()
-            if (idleTimer.current) clearTimeout(idleTimer.current)
-
-            if (self.progress > 0.20 && self.progress < 0.32) {
-              idleTimer.current = setTimeout(() => {
-                startFloats()
-                idleTimer.current = null
-              }, 250)
-            }
           },
         },
       })
@@ -380,17 +333,15 @@ export default function HeroScatter() {
         }, 0.03)
       }
 
-      /* Idle float is managed by onUpdate — starts/stops based on scroll progress */
-
-      /* ── 22–32%: Brief scatter hold ── */
-
-      /* ── 32–78%: GATHER — every element to its kerned final position ── */
+      /* ── 22–68%: GATHER — every element to its kerned final position.
+           No scatter hold: drag-in flows directly into gather so the user
+           never feels stopped at the mid-point. ── */
       dChars.forEach((el, i) => {
         if (!dFinals[i]) return
         tl.to(el, {
           left: dFinals[i].left + '%', top: dFinals[i].top + '%',
           duration: 0.38, ease: 'power2.inOut',
-        }, 0.32 + i * 0.01)
+        }, 0.22 + i * 0.01)
       })
 
       cChars.forEach((el, i) => {
@@ -398,7 +349,7 @@ export default function HeroScatter() {
         tl.to(el, {
           left: cFinals[i].left + '%', top: cFinals[i].top + '%',
           duration: 0.38, ease: 'power2.inOut',
-        }, 0.34 + i * 0.01)
+        }, 0.24 + i * 0.01)
       })
 
       if (senseRef.current && mFinals[0]) {
@@ -406,14 +357,14 @@ export default function HeroScatter() {
           left: mFinals[0].left + '%', top: mFinals[0].top + '%',
           width: mFinals[0].w, height: mFinals[0].h,
           duration: 0.34, ease: 'power2.inOut',
-        }, 0.36)
+        }, 0.26)
       }
       if (weaveRef.current && mFinals[1]) {
         tl.to(weaveRef.current, {
           left: mFinals[1].left + '%', top: mFinals[1].top + '%',
           width: mFinals[1].w, height: mFinals[1].h,
           duration: 0.34, ease: 'power2.inOut',
-        }, 0.36)
+        }, 0.26)
       }
       if (mFinals[2]) {
         /* Flower uses xPercent/yPercent for centering, which is already applied.
@@ -422,39 +373,33 @@ export default function HeroScatter() {
           left: mFinals[2].left + '%', top: mFinals[2].top + '%',
           width: mFinals[2].w, height: mFinals[2].h,
           duration: 0.34, ease: 'power2.inOut',
-        }, 0.36)
+        }, 0.26)
       }
 
-      /* ── 70–80%: Subtitle fades in ── */
+      /* ── 60–70%: Subtitle fades in (just after gather completes ~0.68) ── */
       tl.to(subtitleRef.current, {
         autoAlpha: 1, duration: 0.10, ease: 'power1.inOut',
-      }, 0.70)
+      }, 0.60)
 
-      /* ── 78–88%: "View Work" CTA + nav appear ── */
+      /* ── 68–78%: "View Work" CTA + nav appear ── */
       tl.to(ctaRef.current, {
         autoAlpha: 1, duration: 0.10, ease: 'power1.inOut',
-      }, 0.78)
+      }, 0.68)
 
       const header = document.querySelector('header')
       if (header) {
         tl.to(header, {
           autoAlpha: 1, pointerEvents: 'auto',
           duration: 0.10, ease: 'power1.inOut',
-        }, 0.78)
+        }, 0.68)
       }
 
-      /* ── 88–100%: Hold — let the composed state breathe ── */
+      /* ── 78–100%: Hold — let the composed state breathe ── */
 
       return tl.scrollTrigger
     }
 
     return () => {
-      idleTweens.current.forEach(t => t.kill())
-      idleTweens.current = []
-      if (idleTimer.current) {
-        clearTimeout(idleTimer.current)
-        idleTimer.current = null
-      }
       document.body.classList.remove('hero-loading')
       document.body.style.overflow = ''
     }
