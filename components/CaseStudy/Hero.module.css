@@ -1,0 +1,211 @@
+/* ===========================================
+   CASE STUDY · HERO  (cinematic, image-led)
+   Full-bleed media fills the viewport. Foreground type layers in
+   over the image in a choreographed reveal sequence. Pure white type
+   on top of a subtle bottom-darken scrim for contrast safety.
+   =========================================== */
+.hero {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+  background: #1a1a1a; /* fallback before image loads */
+  color: #FFFFFF;
+}
+
+.media {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  will-change: transform;
+}
+
+/* Whatever child is passed (Image fill / video) covers the wrapper. */
+.media > * {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+}
+
+/* Subtle scrim — darker at bottom-left where the title block sits, so
+   pure-white type stays legible regardless of the underlying photo. */
+.scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.18) 0%,
+      rgba(0, 0, 0, 0) 24%,
+      rgba(0, 0, 0, 0) 55%,
+      rgba(0, 0, 0, 0.55) 100%
+    );
+  pointer-events: none;
+}
+
+.foreground {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: var(--space-xl) var(--page-gutter) var(--space-lg);
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  color: #FFFFFF;
+}
+
+.eyebrow {
+  font-family: var(--font-body);
+  font-size: var(--text-label);
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: rgba(255, 255, 255, 0.72);
+  visibility: hidden;
+  align-self: start;
+}
+
+/* Title block bottom-anchored. 1px column rule on the left, content beside it.
+   No max-width on the block itself — inner elements manage their own widths
+   so the tagline doesn't get clipped by an arbitrary parent constraint. */
+.titleBlock {
+  align-self: end;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: var(--space-md);
+  align-items: stretch;
+}
+
+.frameLine {
+  width: 1px;
+  align-self: stretch;
+  background: rgba(255, 255, 255, 0.55);
+  transform-origin: bottom;
+  transform: scaleY(0);
+}
+
+.titleContent {
+  display: grid;
+  gap: var(--space-md);
+  align-content: end;
+}
+
+.title {
+  font-family: var(--font-heading);
+  font-size: clamp(56px, 10vw, 160px);
+  font-weight: 200;
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+  font-variation-settings: 'SOFT' 100, 'WONK' 1;
+  color: #FFFFFF;
+  margin: 0;
+  max-width: 12ch;
+  text-wrap: balance;
+  visibility: hidden;
+}
+
+/* Per-character gradient pulled from the homepage hero's
+   "Connection" treatment — sage → plum → terracotta. Applied via
+   SplitText's charsClass so each split char carries it independently
+   (parent-level background-clip:text breaks per-char animation). */
+.gradient {
+  background: linear-gradient(169.3deg, #C5CFA6 15.5%, #C7AAD1 52.1%, #F79C7E 89.7%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent !important;
+}
+
+.tagline {
+  font-family: var(--font-heading);
+  font-size: clamp(20px, 2vw, 30px);
+  font-weight: 200;
+  font-style: italic;
+  line-height: 1.2;
+  font-variation-settings: 'SOFT' 100, 'WONK' 1;
+  color: rgba(255, 255, 255, 0.88);
+  margin: 0;
+  visibility: hidden;
+  max-width: 30ch;
+  text-wrap: pretty;
+}
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-md);
+  margin: var(--space-sm) 0 0;
+  visibility: hidden;
+}
+
+.meta div {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xxs);
+}
+
+.meta dt {
+  font-family: var(--font-body);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.10em;
+  color: rgba(255, 255, 255, 0.52);
+}
+
+.meta dd {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--text-body-small);
+  color: rgba(255, 255, 255, 0.88);
+}
+
+.scrollCue {
+  align-self: end;
+  justify-self: center;
+  display: grid;
+  gap: var(--space-xs);
+  justify-items: center;
+  color: rgba(255, 255, 255, 0.72);
+  visibility: hidden;
+}
+
+.scrollCueText {
+  font-family: var(--font-body);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+}
+
+.scrollCueArrow {
+  width: 20px;
+  height: 24px;
+  animation: bobDown 2s ease-in-out infinite;
+}
+
+@keyframes bobDown {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(6px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .eyebrow, .title, .tagline, .meta, .scrollCue {
+    visibility: visible !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .frameLine { transform: scaleY(1) !important; }
+  .scrollCueArrow { animation: none !important; }
+}
+
+@media (max-width: 768px) {
+  .foreground { padding: var(--space-lg) var(--page-gutter); }
+  .titleBlock { gap: var(--space-sm); max-width: none; }
+  .title { font-size: clamp(48px, 14vw, 84px); line-height: 0.98; }
+  .tagline { font-size: clamp(18px, 4.5vw, 24px); }
+  .meta { gap: var(--space-sm); }
+}

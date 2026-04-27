@@ -1,0 +1,108 @@
+/* ===========================================
+   CASE STUDY · CREDITS
+   Footer of the case study. Same outer rhythm.
+   =========================================== */
+.credits {
+  width: 100%;
+  padding: var(--space-xl) 0 var(--space-lg);
+  color: var(--color-ink);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.inner {
+  width: 100%;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 var(--page-gutter);
+  display: grid;
+  gap: var(--space-xl);
+}
+
+.heading {
+  font-family: var(--font-body);
+  font-size: var(--text-label);
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--color-ink-faint);
+  margin: 0 0 var(--space-sm);
+}
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--space-xs);
+  font-family: var(--font-body);
+  font-size: var(--text-body-small);
+}
+
+.list li {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+  align-items: baseline;
+}
+
+.name { color: var(--color-ink); }
+.role { color: var(--color-ink-faint); }
+
+.next {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: var(--space-md);
+  text-decoration: none;
+  color: var(--color-ink);
+  font-family: var(--font-heading);
+  font-style: italic;
+  font-weight: 250;
+  font-size: clamp(28px, 4vw, 56px);
+  line-height: 1.1;
+  font-variation-settings: 'SOFT' 100, 'WONK' 1;
+  padding: var(--space-lg);
+  border-top: 1px solid rgba(255, 255, 255, 0.10);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.10);
+  min-height: var(--min-touch-target, 44px);
+  transition: padding var(--motion-fast) var(--ease-out);
+}
+
+@media (hover: hover) {
+  .next:hover { padding-left: calc(var(--space-lg) + var(--space-sm)); }
+  .next:hover .nextArrow { transform: translateX(8px); }
+}
+
+.nextArrow {
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  transition: transform var(--motion-fast) var(--ease-out);
+}
+
+.next:focus-visible {
+  outline: 2px solid var(--color-ink);
+  outline-offset: 4px;
+  border-radius: var(--radius-xs);
+}
+
+.nextLabel {
+  display: block;
+  font-family: var(--font-body);
+  font-style: normal;
+  font-weight: 400;
+  font-size: var(--text-label);
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--color-ink-faint);
+  margin-bottom: var(--space-xs);
+}
+
+.nextTitle { display: block; }
+
+@media (max-width: 768px) {
+  .inner {
+    grid-template-columns: 1fr;
+    gap: var(--space-md);
+    align-items: start;
+  }
+}

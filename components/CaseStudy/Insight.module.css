@@ -1,0 +1,49 @@
+/* ===========================================
+   CASE STUDY · INSIGHT  (labeled thesis-level reframe)
+   Lives inside <Phase> content column. Picks up --phase-tint.
+   Distinct from Quote: this is the design team's structural insight,
+   not a pulled quote from a person.
+   =========================================== */
+.insight {
+  display: grid;
+  gap: var(--space-sm);
+  padding: var(--space-md) var(--space-lg);
+  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.03);
+  border-left: 3px solid var(--phase-tint, var(--color-ink));
+  visibility: hidden;
+}
+
+.label {
+  font-family: var(--font-body);
+  font-size: var(--text-label);
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--phase-tint, var(--color-ink-faint));
+}
+
+.body {
+  font-family: var(--font-heading);
+  font-size: clamp(20px, 2.4vw, 28px);
+  font-weight: 250;
+  line-height: 1.4;
+  font-variation-settings: 'SOFT' 100, 'WONK' 1;
+  color: var(--color-ink);
+  text-wrap: pretty;
+}
+
+.body p {
+  margin: 0;
+}
+
+.body p + p {
+  margin-top: var(--space-sm);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .insight {
+    visibility: visible !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}

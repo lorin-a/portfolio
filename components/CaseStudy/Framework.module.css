@@ -1,0 +1,73 @@
+/* ===========================================
+   CASE STUDY · FRAMEWORK  (labeled list of named items)
+   Lives inside <Phase> content column. Picks up --phase-tint.
+   =========================================== */
+.framework {
+  display: grid;
+  gap: var(--space-sm);
+  padding-top: var(--space-md);
+  border-top: 1px solid rgba(255, 255, 255, 0.10);
+  visibility: hidden;
+}
+
+.label {
+  font-family: var(--font-body);
+  font-size: var(--text-label);
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--color-ink-faint);
+}
+
+.list {
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--space-sm);
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: var(--space-md);
+  align-items: baseline;
+  padding-top: var(--space-xs);
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.row:first-child {
+  border-top: none;
+  padding-top: 0;
+}
+
+.name {
+  font-family: var(--font-heading);
+  font-size: clamp(18px, 2vw, 22px);
+  font-weight: 300;
+  font-variation-settings: 'SOFT' 100, 'WONK' 1;
+  color: var(--color-ink);
+  margin: 0;
+}
+
+.description {
+  font-family: var(--font-body);
+  font-size: var(--text-body-small);
+  line-height: 1.5;
+  color: var(--color-ink-light);
+  margin: 0;
+  text-wrap: pretty;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .framework {
+    visibility: visible !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .row {
+    grid-template-columns: 1fr;
+    gap: var(--space-xxs);
+  }
+}

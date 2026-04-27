@@ -1,0 +1,97 @@
+/* ===========================================
+   CASE STUDY · PHASE NAV  (floating right-edge dot navigation)
+   Hidden on mobile (<900px) — single-column scrolling is primary nav there.
+   =========================================== */
+.nav {
+  position: fixed;
+  right: var(--space-md);
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 40;
+  pointer-events: auto;
+}
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--space-sm);
+}
+
+.item { margin: 0; padding: 0; }
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  background: transparent;
+  border: none;
+  padding: var(--space-xs);
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-size: var(--text-label);
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--color-ink-faint);
+  min-height: var(--min-touch-target, 44px);
+  transition: color var(--motion-fast) var(--ease-out);
+}
+
+.dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--color-ink-faint);
+  transition:
+    background var(--motion-fast) var(--ease-out),
+    transform var(--motion-fast) var(--ease-out);
+}
+
+.label {
+  opacity: 0;
+  transform: translateX(8px);
+  transition:
+    opacity var(--motion-fast) var(--ease-out),
+    transform var(--motion-fast) var(--ease-out);
+}
+
+/* Hover reveals labels for the whole nav. */
+@media (hover: hover) {
+  .nav:hover .label,
+  .button:focus-visible .label {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  .button:hover .dot { background: var(--color-ink); }
+}
+
+/* Active state — phase tint per kind, set inline on data-phase-kind */
+.button.active { color: var(--color-ink); }
+.button.active .dot { transform: scale(1.4); }
+.button[data-phase-kind="sense"].active .dot,
+.button[data-phase-kind="research"].active .dot   { background: var(--color-sage-soft); }
+.button[data-phase-kind="weave"].active .dot,
+.button[data-phase-kind="study"].active .dot      { background: var(--color-plum-soft); }
+.button[data-phase-kind="shape"].active .dot,
+.button[data-phase-kind="production"].active .dot { background: var(--color-terracotta-soft); }
+
+.button.active .label {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.button:focus-visible {
+  outline: 2px solid var(--color-ink);
+  outline-offset: 4px;
+  border-radius: var(--radius-sm);
+}
+
+@media (max-width: 900px) {
+  .nav { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dot, .label, .button { transition: none !important; }
+}

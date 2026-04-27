@@ -1,5 +1,5 @@
 # Project Status
-### Last updated: 2026-04-24
+### Last updated: 2026-04-26
 
 This is the living status doc for the lorin.work portfolio redesign. Updated at the end of every working session.
 
@@ -7,13 +7,99 @@ This is the living status doc for the lorin.work portfolio redesign. Updated at 
 
 ## Current Phase
 
-**Dark homepage shipped to production.** Next focus: case study template and a real about page.
+**Phase 2 — Case studies + about + playground.** Homepage shipped, awaiting feedback (99% done). Building case study template starting with a Lorin-focused Groundswell case study.
 
 ### Roadmap
 1. ~~Codebase overhaul~~ done
 2. ~~Finish dark homepage with project previews~~ shipped 2026-04-24
-3. Case study pages (Sense/Weave/Shape template) — next
-4. About page (new concept) — currently a disabled span in the nav
+3. **Case study template + Groundswell case study** — in progress
+4. Remaining case studies (BirthStory, SomeBuddy, Transition Design, GAP)
+5. About page (V2 migration)
+6. Playground (`/playground`) — ~15 entries from squarespace + new in-progress projects (Whelm, Vibe Code)
+
+---
+
+## Phase 2 — Case Studies (Active)
+
+### Decisions locked
+- **Groundswell case study** = Lorin-focused (her skills, design lens, case study questions answered). Standalone `/groundswell` stakeholder site stays untouched and gets linked *out* to from the case study's Shape phase as the deepest evidence artifact.
+- **Architecture:** shared phase components in `components/CaseStudy/` + per-project files at `app/(portfolio)/projects/[slug]/page.js` that compose them. Per-project bending allowed.
+- **Anatomy:** Hero (light pin) → Context → Sense → Weave → Shape → Reflection → Credits. Same internal rhythm in each phase: setup question → evidence → takeaway in first-person voice.
+- **Mark baton:** active phase mark fades out as next phase's mark draws on, coordinated by ScrollTrigger ranges. Simplify to no-baton if it feels too busy.
+- **Hero pin:** ~0.4 viewport. Cinematic nod to homepage without trapping the reader.
+- **Playground concept:** evolve `components/_archive/BuildingNow/BuildingNow.js` (cards with autoplay video previews + click-to-overlay) into a "floating" asymmetric layout with subtle idle drift. ~15 entries needs lightweight filtering — by phase or type.
+
+### Components built
+- [x] `components/CaseStudy/Hero.js` + CSS — title via SplitText mask, tagline/meta soft-appear, asset scale-up, light pin via ScrollTrigger
+- [x] `components/CaseStudy/Phase.js` + CSS — mark draw-on, SplitText question, evidence batch reveal, takeaway with phase-tinted left border, baton fade-out
+- [x] `components/CaseStudy/Context.js` + CSS — first-person setup paragraph
+- [x] `components/CaseStudy/Reflection.js` + CSS — first-person close
+- [x] `components/CaseStudy/Credits.js` + CSS — collaborators + next-project link (no animation)
+- [x] `components/CaseStudy/Artifact.js` + CSS — image or video evidence with caption. Images now open `Lightbox` on click for closer inspection (UX/UI audit fix). Videos play inline.
+- [x] `components/CaseStudy/Quote.js` + CSS — pull-quote with source + context attribution, picks up `--phase-tint`
+- [x] `components/CaseStudy/DataNote.js` + CSS — stat + unit + note, large display number in phase tint
+- [x] `components/CaseStudy/Insight.js` + CSS — labeled thesis-level reframe (e.g., The Void, the CTB email revelation), distinct from Quote which is sourced from a person
+- [x] `components/CaseStudy/Framework.js` + CSS — labeled list of named items + context (e.g., the four dimensions of well-being)
+- [x] `components/CaseStudy/LiveLink.js` + CSS — destination card for external evidence (live site, paper, video, Figma)
+- [x] `components/CaseStudy/PhaseBeat.js` + CSS — sub-section divider inside a Phase (e.g., "Synthesis" beat inside Research). Solves synthesis-overshadow without restructuring the framework.
+- [x] `components/CaseStudy/PhaseNav.js` + CSS — floating right-edge dot navigation. Tracks active phase via IntersectionObserver, click-jumps between phases, hidden on mobile.
+- [x] Phase number treatment — `<Phase number="01" label="Research" />` renders a large faded numeral + label in the sticky mark column. Strengthens phase boundaries.
+- [x] Strongest contribution elevated — bumped to `--text-body-large` italic in a tinted, bordered block. Breadth+depth signal louder.
+- [x] Reflection number plate — `04 / Reflection` mirrors the phase numbering pattern in the spacer column.
+- [x] Credits next-project elevated — full-width band with clamp(28px, 4vw, 56px) italic title, padding-grow hover.
+- [x] `components/CaseStudy/index.js` — barrel export (Hero, Context, Phase, PhaseBeat, PhaseNav, Reflection, Credits, Artifact, Quote, DataNote, Insight, Framework, LiveLink)
+
+### Components built (continued)
+- [x] `components/Groundswell/GroundswellCaseStudy.js` — composes the CaseStudy primitives with Groundswell content. Voice and quotes seeded from `groundswell-case-study` branch's `docs/groundswell.md` (verbatim where Lorin wrote it; flagged as TODO drafts where first-person paragraphs need rewriting)
+- [x] `app/(portfolio)/projects/groundswell/preview/page.js` — preview route at `/projects/groundswell/preview` (no-index, not in nav). V1 stays at `/projects/groundswell` until content-complete and routes swap
+
+### Content still needed (Lorin to write)
+- [ ] **Context paragraph** — 1–2 sentences, first-person. Why this work mattered to you (not what the project is)
+- [ ] **Weave paragraph** — short, the grief→restoration pivot and how the three insights led to "create space for what was already there"
+- [ ] **Shape paragraph** — short, your role through the 10-week production sprint (project coordination, copywriting, donor outreach, language work). First-person seed exists verbatim in groundswell.md
+- [ ] **Reflection answers (all three)** — drafts in `GroundswellCaseStudy.js` are seeded from themes but not Lorin's actual words. Rewrite in voice
+
+### Front-end engineering pass
+- [x] Reflection prompts converted from `<dl><dt><dd>` to `<section><h3><p>` — heading-nav now surfaces each prompt
+- [x] `'use client'` removed from `GroundswellCaseStudy.js` — composition is server-rendered, only Hero/Phase/Context/Reflection/PhaseNav/Artifact hydrate as client islands. Bundle improvement.
+- [x] `<Insight>` switched from `<aside>` to `<div role="note" aria-label={label}>` — landmark gets a meaningful name
+- [x] External `<LiveLink>` adds `<span className="visually-hidden">(opens in new tab)</span>` for screen readers (WCAG 2.4.4)
+- [x] `.visually-hidden` utility added to `globals.css` (standard sr-only pattern)
+- [x] `<Framework items={[{name, description}]}>` — renamed `context` → `description` to disambiguate from `<Quote context>`. Updated Groundswell call site.
+- [x] `<Artifact type="video">` pauses when off-screen via IntersectionObserver — battery + CPU savings
+- [x] Hero asset `sizes` refined to `(max-width: 900px) 100vw, (max-width: 1400px) 90vw, 1240px`
+- [x] `<Phase>` dev-only warning when `kind` isn't in MARKS map — catches typos in future case studies
+
+### Motion infrastructure
+- [x] `lib/gsap.js` — added `CustomEase` plugin, registered `'bounce'` ease (matches `--ease-bounce` CSS token), exported `EASE` constant for centralized motion vocabulary
+- [x] Hero pin uses `pinType:'fixed'` on mobile (≤768px) to avoid iOS Safari URL-bar drift
+- [x] Phase: SplitText reverts in cleanup (was leaking spans), uses `EASE` constants throughout
+- [x] Mark baton trigger overlap — phase entry fires at `top 80%` (was `top 70%`) so next mark begins drawing while previous is still mid-fade; no empty-rail moment between phases
+- [x] PhaseBeat joins evidence batch reveal (added `data-evidence` + `visibility: hidden`)
+- [x] PhaseNav fades in 1.2s after page load (after hero opener settles)
+- [x] PhaseNav uses Lenis (`window.__lenis.scrollTo`) when available, falls back to native smooth scroll
+
+### Components still needed
+- [ ] Replace `app/(portfolio)/projects/groundswell/page.js` (V1, 1387 lines) with the new composition once content is locked
+- [ ] Decide what happens to the V1 — archive `components/Groundswell/GroundswellContent.js` to `_archive/` after swap
+
+### Decisions locked (continued)
+- **Hero asset:** lead with polished product, not process. For Groundswell, reuse `gs-hero` corridor photo. Stack: polish (Hero) → process (phases) → polish (Reflection ties back to outcome). Process-led only works when polish is also visible.
+- **Context paragraph:** below the Hero pin (after unpin). Hero delivers the visual hit; Context is the breath after — the human stakes that hook them into the first phase. Homepage already primed them, so don't re-establish what the project is, establish why it mattered.
+- **Phase structure (chronological for Groundswell):** Research → Production → Study. Three phases match the doc's own framework (Phase 1 / Phase 2 / Phase 3) and the project's 15-month arc. Synthesis lives inside Research as a visually distinct sub-beat (Framework + Insight components carry the weight). Other case studies can use either chronological or methodology naming (Sense/Weave/Shape) — Phase component supports both. Marks reassigned: Research → SenseMark, Production → ShapeMark, Study → WeaveMark.
+- **Strongest contribution per phase:** new `contribution` prop on `<Phase>` renders a small italic line under the takeaway with phase-tinted "Strongest contribution" label. Surfaces Lorin's distinctive individual moves without breaking the collective "we" voice of the body. Reusable across all case studies.
+- **Eyebrow:** *Co-Design · Healthcare · Mental Health.* Three short chips that locate the work in market terms. Year stays in meta.
+- **Reflection format:** three labeled prompts, each 1–2 sentences in Lorin's voice (not bullets, not essay):
+  1. *What I'd do differently*
+  2. *What surprised me*
+  3. *What I'm taking forward*
+  Locks the rhythm across all 5 case studies; voice does the differentiation inside the structure.
+
+### Strategy notes
+- Old `groundswell-case-study` branch (22 commits, 1400-line component) is reference only. Lorin: "I do not think it fits with our progress."
+- Playground design pass deferred until case study template ships. Keep the floating/scattered idea in mind so design language stays consistent.
+
+---
 
 ---
 

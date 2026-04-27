@@ -1,0 +1,16 @@
+export { default as Hero } from './Hero'
+export { default as Context } from './Context'
+export { default as Phase } from './Phase'
+export { default as PhaseBeat } from './PhaseBeat'
+export { default as PhaseNav } from './PhaseNav'
+export { default as QuoteScene } from './QuoteScene'
+export { default as Reflection } from './Reflection'
+export { default as Credits } from './Credits'
+
+/* Evidence sub-components — composed inside <Phase> */
+export { default as Artifact } from './Artifact'
+export { default as Quote } from './Quote'
+export { default as DataNote } from './DataNote'
+export { default as Insight } from './Insight'
+export { default as Framework } from './Framework'
+export { default as LiveLink } from './LiveLink'

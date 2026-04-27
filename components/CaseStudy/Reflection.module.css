@@ -1,0 +1,116 @@
+/* ===========================================
+   CASE STUDY · REFLECTION
+   Three labeled prompts. Spec: same content column as Phase
+   so the rhythm carries through to the close.
+   =========================================== */
+.reflection {
+  width: 100%;
+  padding: var(--space-xl) 0;
+  color: var(--color-ink);
+}
+
+.inner {
+  width: 100%;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 var(--page-gutter);
+  display: grid;
+  grid-template-columns: 140px minmax(0, var(--content-width));
+  gap: var(--space-lg);
+  align-items: start;
+}
+
+.numberPlate {
+  position: sticky;
+  top: var(--space-lg);
+  display: grid;
+  gap: var(--space-xxs);
+  border-top: 1px solid rgba(255, 255, 255, 0.10);
+  padding-top: var(--space-sm);
+  max-width: 140px;
+  color: var(--color-ink-light);
+}
+
+.number {
+  font-family: var(--font-heading);
+  font-size: clamp(56px, 5vw, 72px);
+  font-weight: 200;
+  line-height: 0.9;
+  font-variation-settings: 'SOFT' 100, 'WONK' 1;
+  color: var(--color-ink);
+  letter-spacing: -0.02em;
+}
+
+.numberLabel {
+  font-family: var(--font-body);
+  font-size: var(--text-label);
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--color-ink-light);
+}
+
+.content {
+  display: grid;
+  gap: var(--space-lg);
+  min-width: 0;
+}
+
+.heading {
+  font-family: var(--font-heading);
+  font-size: clamp(28px, 3.5vw, 44px);
+  font-weight: 200;
+  font-style: italic;
+  line-height: 1.1;
+  font-variation-settings: 'SOFT' 100, 'WONK' 1;
+  margin: 0;
+  color: var(--color-ink);
+  visibility: hidden;
+}
+
+.prompts {
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--space-md);
+}
+
+.prompt {
+  display: grid;
+  gap: var(--space-xs);
+  visibility: hidden;
+  border-top: 1px solid rgba(255, 255, 255, 0.10);
+  padding-top: var(--space-md);
+}
+
+.label {
+  font-family: var(--font-body);
+  font-size: var(--text-label);
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--color-ink-faint);
+  margin: 0;
+}
+
+.answer {
+  font-family: var(--font-heading);
+  font-size: clamp(20px, 2.2vw, 28px);
+  font-weight: 250;
+  line-height: 1.4;
+  font-variation-settings: 'SOFT' 100, 'WONK' 1;
+  margin: 0;
+  color: var(--color-ink);
+  text-wrap: pretty;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .heading, .prompt {
+    visibility: visible !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+@media (max-width: 900px) {
+  .reflection { padding: var(--space-lg) 0; }
+  .inner { grid-template-columns: 1fr; gap: var(--space-md); }
+}

@@ -1,0 +1,52 @@
+/* ===========================================
+   CASE STUDY · DATA NOTE  (stat + note evidence)
+   Lives inside <Phase> content column. Picks up --phase-tint.
+   =========================================== */
+.dataNote {
+  display: grid;
+  gap: var(--space-xs);
+  padding-top: var(--space-md);
+  border-top: 1px solid rgba(255, 255, 255, 0.10);
+  visibility: hidden;
+}
+
+.statBlock {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-xs);
+}
+
+.stat {
+  font-family: var(--font-heading);
+  font-size: clamp(40px, 6vw, 80px);
+  font-weight: 200;
+  line-height: 1;
+  font-variation-settings: 'SOFT' 100, 'WONK' 1;
+  color: var(--phase-tint, var(--color-ink));
+}
+
+.unit {
+  font-family: var(--font-body);
+  font-size: var(--text-body-small);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-ink-faint);
+}
+
+.note {
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  line-height: 1.55;
+  color: var(--color-ink-light);
+  margin: 0;
+  text-wrap: pretty;
+  max-width: 60ch;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dataNote {
+    visibility: visible !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}

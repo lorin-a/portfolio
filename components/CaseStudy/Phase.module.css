@@ -1,0 +1,179 @@
+/* ===========================================
+   CASE STUDY · PHASE  (Sense | Weave | Shape)
+   Spec: outer surface fills --color-cream, content grid is
+   [mark-rail | content-column] inside --max-width with --page-gutter.
+   Content column capped at --content-width for legibility.
+   =========================================== */
+.phase {
+  position: relative;
+  width: 100%;
+  padding: var(--space-xl) 0;
+  color: var(--color-ink);
+}
+
+/* Phase tints reuse the established palette tokens from globals.css.
+   In dark theme these resolve to the lighter sage / plum / terracotta. */
+.phase[data-phase="sense"],
+.phase[data-phase="research"]   { --phase-tint: var(--color-sage-soft); }
+.phase[data-phase="weave"],
+.phase[data-phase="study"]      { --phase-tint: var(--color-plum-soft); }
+.phase[data-phase="shape"],
+.phase[data-phase="production"] { --phase-tint: var(--color-terracotta-soft); }
+
+.inner {
+  width: 100%;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 var(--page-gutter);
+  display: grid;
+  grid-template-columns: 140px minmax(0, var(--content-width));
+  gap: var(--space-lg);
+  align-items: start;
+}
+
+.markAnchor {
+  position: sticky;
+  top: var(--space-lg);
+  width: 100%;
+  max-width: 140px;
+  display: grid;
+  gap: var(--space-md);
+  color: var(--phase-tint);
+}
+
+.numberPlate {
+  display: grid;
+  gap: var(--space-xxs);
+  border-top: 1px solid rgba(255, 255, 255, 0.10);
+  padding-top: var(--space-sm);
+}
+
+.number {
+  font-family: var(--font-heading);
+  font-size: clamp(56px, 5vw, 72px);
+  font-weight: 200;
+  line-height: 0.9;
+  font-variation-settings: 'SOFT' 100, 'WONK' 1;
+  color: var(--phase-tint);
+  letter-spacing: -0.02em;
+}
+
+.numberLabel {
+  font-family: var(--font-body);
+  font-size: var(--text-label);
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--color-ink-light);
+}
+
+.markIcon {
+  width: 100%;
+  max-width: 100px;
+  aspect-ratio: 1;
+}
+
+.content {
+  display: grid;
+  gap: var(--space-lg);
+  min-width: 0;
+}
+
+.header {
+  display: grid;
+  gap: var(--space-sm);
+}
+
+.phaseTag {
+  font-family: var(--font-body);
+  font-size: var(--text-label);
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--phase-tint);
+}
+
+.question {
+  font-family: var(--font-heading);
+  font-size: clamp(28px, 4vw, 56px);
+  font-weight: 200;
+  line-height: 1.1;
+  font-variation-settings: 'SOFT' 100, 'WONK' 1;
+  margin: 0;
+  text-wrap: balance;
+  visibility: hidden;
+  color: var(--color-ink);
+}
+
+.evidence {
+  display: grid;
+  gap: var(--space-lg);
+}
+
+.takeaway {
+  font-family: var(--font-heading);
+  font-size: clamp(20px, 2.5vw, 32px);
+  font-weight: 250;
+  font-style: italic;
+  line-height: 1.4;
+  font-variation-settings: 'SOFT' 100, 'WONK' 1;
+  margin: var(--space-md) 0 0;
+  color: var(--color-ink);
+  text-wrap: pretty;
+  border-left: 3px solid var(--phase-tint);
+  padding-left: var(--space-md);
+}
+
+/* Strongest contribution — surfaces Lorin's distinctive individual move
+   per phase. Elevated visual weight so the breadth+depth signal lands.
+   Sits in a tinted, bordered block adjacent to the takeaway, not below it. */
+.contribution {
+  margin: var(--space-md) 0 0;
+  padding: var(--space-md) var(--space-lg);
+  display: grid;
+  gap: var(--space-xs);
+  background: rgba(255, 255, 255, 0.025);
+  border-radius: var(--radius-md);
+  border-left: 3px solid var(--phase-tint);
+  font-family: var(--font-body);
+  text-wrap: pretty;
+}
+
+.contributionLabel {
+  font-size: var(--text-label);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--phase-tint);
+}
+
+.contributionBody {
+  font-family: var(--font-heading);
+  font-size: clamp(18px, 1.6vw, 22px);
+  font-weight: 250;
+  font-style: italic;
+  line-height: 1.5;
+  font-variation-settings: 'SOFT' 100, 'WONK' 1;
+  color: var(--color-ink);
+  max-width: 60ch;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .question, .takeaway, .evidence > * {
+    visibility: visible !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+@media (max-width: 900px) {
+  .phase { padding: var(--space-lg) 0; }
+  .inner {
+    grid-template-columns: 1fr;
+    gap: var(--space-md);
+  }
+  .markAnchor {
+    position: relative;
+    top: 0;
+    max-width: 80px;
+  }
+  .takeaway { padding-left: var(--space-sm); }
+}

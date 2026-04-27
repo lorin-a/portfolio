@@ -51,7 +51,8 @@ export default function RootLayout({ children }) {
         <link rel="icon" href="/favicon.ico" sizes="any" />
         <script dangerouslySetInnerHTML={{ __html: `
           try {
-            if (window.location.pathname === '/') {
+            var p = window.location.pathname;
+            if (p === '/' || /^\/projects\/[^/]+\/preview$/.test(p)) {
               document.documentElement.dataset.theme = 'dark';
             }
           } catch(e) {}

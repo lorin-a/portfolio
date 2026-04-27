@@ -1,0 +1,61 @@
+/* ===========================================
+   CASE STUDY · ARTIFACT  (image or video evidence)
+   Lives inside <Phase> content column. Caption stays under the media
+   at the same width.
+   =========================================== */
+.artifact {
+  margin: 0;
+  display: grid;
+  gap: var(--space-sm);
+  visibility: hidden;
+}
+
+.media {
+  width: 100%;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.04);
+  position: relative;
+}
+
+.clickable {
+  cursor: zoom-in;
+  transition: transform var(--motion-fast) var(--ease-out);
+}
+
+.clickable:focus-visible {
+  outline: 2px solid var(--color-ink);
+  outline-offset: 4px;
+}
+
+@media (hover: hover) {
+  .clickable:hover { transform: translateY(-2px); }
+  .clickable:hover .image { transform: scale(1.02); }
+}
+
+.image { transition: transform 600ms var(--ease-out); }
+
+.image,
+.video {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.video { object-fit: cover; }
+
+.caption {
+  font-family: var(--font-body);
+  font-size: var(--text-body-small);
+  line-height: 1.55;
+  color: var(--color-ink-light);
+  text-wrap: pretty;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .artifact {
+    visibility: visible !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}

@@ -1,0 +1,73 @@
+/* ===========================================
+   CASE STUDY · LIVE LINK
+   Destination card for external evidence (live site, paper, video).
+   Lives inside <Phase> content column. Picks up --phase-tint.
+   =========================================== */
+.liveLink {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: var(--space-md);
+  padding: var(--space-md) var(--space-lg);
+  margin-top: var(--space-sm);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  border-left: 3px solid var(--phase-tint, var(--color-ink));
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  color: var(--color-ink);
+  background: rgba(255, 255, 255, 0.02);
+  transition:
+    background var(--motion-fast) var(--ease-out),
+    border-color var(--motion-fast) var(--ease-out);
+  visibility: hidden;
+}
+
+.liveLink[data-evidence] { /* picked up by Phase batch reveal */ }
+
+@media (hover: hover) {
+  .liveLink:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: var(--phase-tint, rgba(255, 255, 255, 0.25));
+  }
+  .liveLink:hover .arrow { transform: translateX(6px); }
+}
+
+.liveLink:focus-visible {
+  outline: 2px solid var(--phase-tint, var(--color-ink));
+  outline-offset: 4px;
+}
+
+.label {
+  display: block;
+  font-family: var(--font-body);
+  font-size: var(--text-label);
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--color-ink-faint);
+  margin-bottom: var(--space-xxs);
+}
+
+.title {
+  display: block;
+  font-family: var(--font-heading);
+  font-size: clamp(20px, 2.4vw, 28px);
+  font-weight: 250;
+  font-style: italic;
+  line-height: 1.2;
+  font-variation-settings: 'SOFT' 100, 'WONK' 1;
+  color: var(--color-ink);
+}
+
+.arrow {
+  color: var(--phase-tint, var(--color-ink));
+  transition: transform var(--motion-fast) var(--ease-out);
+  flex-shrink: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .liveLink {
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+  .arrow { transition: none !important; }
+}
