@@ -35,6 +35,7 @@ const MARKS = {
 export default function Phase({ kind, number, label, question, takeaway, contribution, children }) {
   const phaseRef = useRef(null)
   const markRef = useRef(null)
+  const markIconRef = useRef(null)
   const questionRef = useRef(null)
   const evidenceRef = useRef(null)
   const takeawayRef = useRef(null)
@@ -105,6 +106,27 @@ export default function Phase({ kind, number, label, question, takeaway, contrib
       },
     })
 
+    /* Mark scale scrub: glyph enters at column-width (presence), then
+       gracefully scrubs down to icon size as the reader moves into evidence.
+       transformOrigin top-left so the mark settles toward the column's
+       reading-edge anchor — like a chapter glyph reducing to a marginal note.
+       Disabled on mobile (column stacks; mark stays at fixed inline size). */
+    let scaleScrub
+    const isNarrow = window.matchMedia('(max-width: 900px)').matches
+    if (!isNarrow && markIconRef.current) {
+      scaleScrub = ScrollTrigger.create({
+        trigger: phaseRef.current,
+        start: 'top 50%',
+        end: 'top 10%',
+        scrub: true,
+        animation: gsap.fromTo(
+          markIconRef.current,
+          { scale: 1, transformOrigin: 'top left' },
+          { scale: 0.25, ease: 'none' }
+        ),
+      })
+    }
+
     /* Baton: fade mark out as user leaves the phase, overlapping with
        the next phase's mark draw-on (which fires at top 80%). */
     const exit = ScrollTrigger.create({
@@ -119,6 +141,7 @@ export default function Phase({ kind, number, label, question, takeaway, contrib
       enter.kill()
       if (evidenceBatch) evidenceBatch.forEach(t => t.kill())
       takeawayTween.kill()
+      if (scaleScrub) scaleScrub.kill()
       exit.kill()
       if (split && typeof split.revert === 'function') split.revert()
     }
@@ -128,15 +151,15 @@ export default function Phase({ kind, number, label, question, takeaway, contrib
     <section ref={phaseRef} data-phase={kind} className={styles.phase}>
       <div className={styles.inner}>
         <div ref={markRef} className={styles.markAnchor} aria-hidden="true">
+          <div ref={markIconRef} className={styles.markIcon}>
+            <Mark animate={markAnimate} />
+          </div>
           {number && (
             <div className={styles.numberPlate}>
               <span className={styles.number}>{number}</span>
               <span className={styles.numberLabel}>{label || kind}</span>
             </div>
           )}
-          <div className={styles.markIcon}>
-            <Mark animate={markAnimate} />
-          </div>
         </div>
         <div className={styles.content}>
           <header className={styles.header}>
