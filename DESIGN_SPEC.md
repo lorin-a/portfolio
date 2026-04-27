@@ -525,6 +525,61 @@ Lorin's flatbed scanner scans of personal objects (stones, dried flowers, altar 
 
 ---
 
+## 12. READING & INTERACTION HEURISTICS [DECIDED]
+
+Four UX laws codified as rules for this site. They govern how the portfolio *feels* over a 90-second skim and a 10-minute deep read.
+
+### Doherty Threshold — 400ms feedback budget
+Every interaction must give visible feedback within 400ms or risk feeling broken against the polish of the surrounding craft.
+
+- Hover states, focus rings, active states: respond instantly (≤ 100ms transition).
+- Page transitions, route changes: first paint within 400ms; if longer, show a deliberate transition cover (skeleton, fade-through, held element via Flip).
+- Image loads on case study pages: blur-up placeholder or fade-in over solid color — never empty space waiting.
+- Scroll-triggered reveals: by default, trigger before the element reaches center so motion completes as the reader arrives. Late reveals read as lag — *unless the lateness is the intended effect* (suspense, cinematic pacing). Make the choice deliberate.
+- If a real interaction can't beat 400ms, engineer a perceived-performance cover. Don't ship the bare wait.
+
+### Peak-End Rule — engineer the peak and the close
+Hiring managers remember the strongest moment plus the last thing they saw. Both must be deliberate.
+
+- **Per case study:** identify the one peak moment (the cinematic Groundswell preview is the model) and protect it from dilution. Cut anything that competes with it.
+- **Per case study:** the closing beat is not "next project." It is a final statement — a quote, a takeaway, a single image — that lands the work before the reader leaves. Design it as carefully as the hero.
+- **Site-wide:** the homepage close (footer/colophon) is the last thing a skimmer sees. Treat it as a peak surface, not chrome.
+
+### Serial Position — primacy and recency in any list
+First and last items are remembered; the middle blurs. Order accordingly.
+
+- **Featured Work:** strongest project first, second-strongest last, weaker work buried in the middle. Never alphabetical, never chronological by default.
+- **Case study sections (Sense → Weave → Shape):** Shape must close strong. If the strongest insight lives in Weave, restructure or echo it in Shape.
+- **Nav, lists, skill tags, tool grids:** apply the same rule. Cap at ~5 items (see Working Memory below).
+
+### Goal-Gradient + Zeigarnik — show progress through long reads
+Readers complete more of a task when they can see how close they are to finishing, and unfinished tasks pull at attention.
+
+- For case studies that exceed roughly three scroll-screens, consider a progress signal: scroll-rail, section dots, or a thin top bar. Skip it if it would compete with a cinematic moment — the rule is "make page length legible," not "always show chrome."
+- When an indicator is used, surface section labels (Sense / Weave / Shape) so the reader knows where they are in the arc.
+- Don't hide the page length. A reader who knows they're 30% in will keep going; a reader staring into infinite scroll bails. This can be solved with a progress indicator, a visible TOC, clear section anchors, or a strong scent-of-information in the hero — pick what fits the page.
+
+### Supporting principles (apply without ceremony)
+
+- **Working Memory / Miller's Law:** ~5 is a soft target for nav, section counts, and lists where each item competes for attention. Longer lists are fine when the items are scannable as a group (a tools grid, a tag cloud) rather than read one-by-one. In long case studies, repeat key context at section breaks — don't make readers hold methodology to understand findings (Tesler's Law: absorb the complexity in the design, not the reader).
+- **Von Restorff:** one emphasis per viewport. If everything is highlighted, nothing is. Already a rule for data viz (Section 9 / global) — applies site-wide.
+- **Jakob's Law:** anchor in convention before departing from it. Familiar IA and navigation patterns are the floor that lets novelty in motion, typography, and texture register as intentional rather than disorienting. Experimentation is encouraged — but a reader should never have to learn the site to read the work.
+- **Aesthetic-Usability caveat:** polish raises the cost of every visible flaw. A broken interaction on lorin.work reads worse than the same bug on an average site. Treat any regression as urgent.
+- **Selective Attention:** don't style "key insight" boxes like ads. No right-rail cards, no dismiss-X icons on persistent UI, no ALL CAPS yellow callouts. Pull-quotes and insight boxes should read as part of the page, not chrome layered on top.
+
+### Perception & memory levers
+
+Four cognitive biases that change concrete decisions about how the work is presented and remembered.
+
+- **Halo Effect** — the first strong signal pulls perception of everything else upward. The first three seconds (hero typography, opening line, first motion beat) disproportionately determine how case studies are judged. Over-invest there. A weak opening makes strong work read as average; a strong opening makes average work read as considered.
+- **Curse of Knowledge** — Lorin can't un-know her projects; hiring managers have zero context. Every case study opens with a one-sentence "what this is" in plain language *before* any process or methodology language. Assume the reader has never heard of Groundswell, the partner org, or the methods used.
+- **Picture Superiority Effect** — images are remembered roughly 6× more than text after three days. Each case study needs one iconic image a hiring manager will recall a week later. Treat case study heroes and homepage thumbnails as load-bearing, not decorative — image selection is a content decision, not a layout decision.
+- **Processing Fluency** — text that is easier to read is judged smarter, truer, and more credible. The typographic discipline already in this spec (40-60ch, 1.5 leading, restrained palette, generous whitespace) is a *credibility* lever, not just an aesthetic one. Frame it that way when defending tradeoffs.
+
+**Also relevant — apply without dedicated rules:** Anchoring (lead case studies with the strongest scope or outcome anchor before narrative), Framing Effect (gain frames over loss frames in outcome statements), Identifiable Victim (open research-heavy case studies with one named user or scene before aggregates), Authority Bias (surface CMU, named collaborators, and cited work earlier than feels comfortable), Hindsight Bias (make the problem state vivid and uncertain before the resolution lands, or the work looks trivial), Bizarreness Effect (one deliberately strange element per case study gives a memory hook — extends Von Restorff from "isolation" to "memorable weirdness"), Fading Affect Bias (negative impressions outlast positive ones — a single broken interaction costs more than polish earns), Cheerleader Effect (a tight 3-4 card grid reads stronger than a single hero card alone), IKEA Effect (small interactive moments increase attachment to the page), Spotlight Effect (readers feel craft details subliminally — never write copy explaining them).
+
+---
+
 ## 13. QUALITY CHECKLISTS
 
 ### Before Every Commit [GUIDELINE]
@@ -537,6 +592,8 @@ Lorin's flatbed scanner scans of personal objects (stones, dried flowers, altar 
 - [ ] Images have appropriate alt text
 - [ ] No `console.log`, no unused imports
 - [ ] Motion feels calm, not jarring
+- [ ] Interaction feedback under 400ms, or covered by a deliberate transition (Doherty)
+- [ ] One emphasis per viewport — nothing competes with the intended focus (Von Restorff)
 
 ### Before Deploying a Page
 - [ ] `npm run build` completes with zero errors
@@ -548,6 +605,13 @@ Lorin's flatbed scanner scans of personal objects (stones, dried flowers, altar 
 - [ ] Animations enhance understanding, don't distract
 - [ ] All interactive elements keyboard accessible
 - [ ] Color contrast validated for all text/background combinations
+- [ ] *Case studies + homepage:* engineered peak moment AND deliberate closing beat (Peak-End)
+- [ ] *Featured Work + case study sections:* order leads with strongest, ends with second-strongest (Serial Position)
+- [ ] *Pages exceeding ~3 scroll-screens:* page length is legible to the reader — progress indicator, TOC, anchors, or strong information scent (Goal-Gradient/Zeigarnik)
+- [ ] Lists where items compete for attention stay near ~5; longer scannable lists (tools, tags) are fine (Miller's Law)
+- [ ] *Case studies:* open with a plain-language "what this is" sentence (Curse of Knowledge)
+- [ ] *Case studies:* one iconic, memorable image (Picture Superiority)
+- [ ] *Case studies:* problem framed vividly before resolution lands (Hindsight Bias)
 
 ---
 
