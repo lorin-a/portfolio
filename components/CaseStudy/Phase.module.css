@@ -8,17 +8,54 @@
   position: relative;
   width: 100%;
   padding: var(--space-xl) 0;
-  color: var(--color-ink);
+  background: var(--phase-bg);
+  color: var(--phase-fg);
+
+  /* Defaults; per-theme blocks below override */
+  --phase-bg: var(--color-cream);
+  --phase-fg: var(--color-ink);
+  --phase-fg-muted: var(--color-ink-light);
+  --phase-rule: rgba(44, 44, 44, 0.10);
+  --phase-tint: var(--color-sage-soft);
 }
 
-/* Phase tints reuse the established palette tokens from globals.css.
-   In dark theme these resolve to the lighter sage / plum / terracotta. */
+/* Section-level theming. The dark→plum→cream progression by phase IS
+   the page's methodological spine. Sense=dark (listening register),
+   Weave=plum (synthesis register), Shape=cream (made-thing register).
+   Mark accents stay vivid against each surround. */
+.phase[data-theme="dark"] {
+  --phase-bg: #0F0F0E;
+  --phase-fg: #F1EFEC;
+  --phase-fg-muted: rgba(241, 239, 236, 0.72);
+  --phase-rule: rgba(241, 239, 236, 0.16);
+  --phase-tint: var(--color-sage-soft);
+}
+
+.phase[data-theme="plum"] {
+  --phase-bg: var(--color-plum);
+  --phase-fg: var(--color-cream);
+  --phase-fg-muted: rgba(251, 249, 246, 0.78);
+  --phase-rule: rgba(251, 249, 246, 0.18);
+  --phase-tint: #E0D2DD;
+}
+
+.phase[data-theme="cream"] {
+  --phase-bg: var(--color-cream);
+  --phase-fg: var(--color-ink);
+  --phase-fg-muted: var(--color-ink-light);
+  --phase-rule: rgba(44, 44, 44, 0.10);
+  --phase-tint: var(--color-terracotta);
+}
+
+/* Per-kind tint override (mark glyph color etc.) — still respected
+   when the theme doesn't override it. Kind drives glyph; theme drives
+   surround. Keep both for accent consistency. */
 .phase[data-phase="sense"],
 .phase[data-phase="research"]   { --phase-tint: var(--color-sage-soft); }
 .phase[data-phase="weave"],
-.phase[data-phase="study"]      { --phase-tint: var(--color-plum-soft); }
+.phase[data-phase="study"]      { --phase-tint: #E0D2DD; }
 .phase[data-phase="shape"],
-.phase[data-phase="production"] { --phase-tint: var(--color-terracotta-soft); }
+.phase[data-phase="production"] { --phase-tint: var(--color-terracotta); }
 
 .inner {
   width: 100%;
@@ -43,7 +80,7 @@
 .numberPlate {
   display: grid;
   gap: var(--space-xxs);
-  border-top: 1px solid rgba(255, 255, 255, 0.10);
+  border-top: 1px solid var(--phase-rule);
   padding-top: var(--space-sm);
 }
 
@@ -62,7 +99,7 @@
   font-size: var(--text-label);
   text-transform: uppercase;
   letter-spacing: 0.16em;
-  color: var(--color-ink-light);
+  color: var(--phase-fg-muted);
 }
 
 /* Mark icon — at scale 1 fills the column for chapter-glyph presence;
@@ -113,7 +150,7 @@
   margin: 0;
   text-wrap: balance;
   visibility: hidden;
-  color: var(--color-ink);
+  color: var(--phase-fg);
 }
 
 .evidence {
@@ -129,7 +166,7 @@
   line-height: 1.4;
   font-variation-settings: 'SOFT' 100, 'WONK' 1;
   margin: var(--space-md) 0 0;
-  color: var(--color-ink);
+  color: var(--phase-fg);
   text-wrap: pretty;
   border-left: 3px solid var(--phase-tint);
   padding-left: var(--space-md);
@@ -143,7 +180,7 @@
   padding: var(--space-md) var(--space-lg);
   display: grid;
   gap: var(--space-xs);
-  background: rgba(255, 255, 255, 0.025);
+  background: color-mix(in oklab, transparent, var(--phase-fg) 4%);
   border-radius: var(--radius-md);
   border-left: 3px solid var(--phase-tint);
   font-family: var(--font-body);
@@ -165,7 +202,7 @@
   font-style: italic;
   line-height: 1.5;
   font-variation-settings: 'SOFT' 100, 'WONK' 1;
-  color: var(--color-ink);
+  color: var(--phase-fg);
   max-width: 60ch;
 }
 

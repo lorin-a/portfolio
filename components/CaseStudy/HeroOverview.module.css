@@ -1,0 +1,182 @@
+/* ===========================================
+   CASE STUDY · HERO OVERVIEW
+   Quote-led, words-first case-study opener. Renders below an opening
+   QuoteScene as the second stage of the cold open: orientation
+   (thesis → identity → meta → outcomes) on a dark surround.
+
+   Themed via data-theme so the same primitive works on dark/plum/cream.
+   =========================================== */
+.hero {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: grid;
+  align-content: center;
+  padding: var(--space-xl) var(--page-gutter);
+  background: var(--hero-bg);
+  color: var(--hero-fg);
+
+  /* Default theme = dark. Overridden via [data-theme]. */
+  --hero-bg: #0F0F0E;
+  --hero-fg: #F7F7F7;
+  --hero-fg-muted: rgba(247, 247, 247, 0.72);
+  --hero-rule: rgba(247, 247, 247, 0.14);
+  --hero-accent: var(--color-sage-soft);
+}
+
+.hero[data-theme="cream"] {
+  --hero-bg: var(--color-cream);
+  --hero-fg: var(--color-ink);
+  --hero-fg-muted: var(--color-ink-light);
+  --hero-rule: rgba(44, 44, 44, 0.14);
+  --hero-accent: var(--color-sage);
+}
+
+.hero[data-theme="plum"] {
+  --hero-bg: var(--color-plum);
+  --hero-fg: var(--color-cream);
+  --hero-fg-muted: rgba(251, 249, 246, 0.78);
+  --hero-rule: rgba(251, 249, 246, 0.18);
+  --hero-accent: var(--color-plum-soft);
+}
+
+.inner {
+  width: 100%;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  display: grid;
+  gap: var(--space-lg);
+}
+
+.eyebrow {
+  font-family: var(--font-body);
+  font-size: var(--text-label);
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--hero-accent);
+  margin: 0;
+}
+
+/* Thesis — the one sentence that carries the case study's argument.
+   Editorial scale; large enough to read as a thesis, not body copy. */
+.thesis {
+  font-family: var(--font-heading);
+  font-size: clamp(28px, 3.6vw, 48px);
+  font-weight: 250;
+  line-height: 1.25;
+  letter-spacing: -0.005em;
+  font-variation-settings: 'SOFT' 100, 'WONK' 1;
+  color: var(--hero-fg);
+  margin: 0;
+  max-width: 24ch;
+  text-wrap: balance;
+}
+
+.identity {
+  display: grid;
+  gap: var(--space-xs);
+  margin-top: var(--space-md);
+}
+
+.title {
+  font-family: var(--font-heading);
+  font-size: clamp(48px, 7.5vw, 110px);
+  font-weight: 200;
+  line-height: 0.98;
+  letter-spacing: -0.02em;
+  font-variation-settings: 'SOFT' 100, 'WONK' 1;
+  color: var(--hero-fg);
+  margin: 0;
+  text-wrap: balance;
+}
+
+.tagline {
+  font-family: var(--font-heading);
+  font-size: clamp(18px, 2vw, 26px);
+  font-weight: 250;
+  font-style: italic;
+  line-height: 1.3;
+  font-variation-settings: 'SOFT' 100, 'WONK' 1;
+  color: var(--hero-fg-muted);
+  margin: 0;
+  max-width: 36ch;
+}
+
+/* Meta strip — flat horizontal grid of project facts. Uses an explicit
+   12-column grid so labels align across breakpoints. */
+.meta {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: var(--space-sm) var(--space-md);
+  margin: 0;
+  padding: var(--space-md) 0 0;
+  border-top: 1px solid var(--hero-rule);
+}
+
+.meta div {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xxs);
+}
+
+.meta dt {
+  font-family: var(--font-body);
+  font-size: var(--text-caption);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--hero-fg-muted);
+  margin: 0;
+}
+
+.meta dd {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--text-body-small);
+  font-weight: 400;
+  line-height: 1.4;
+  color: var(--hero-fg);
+}
+
+/* Outcomes ribbon — 3-4 stat cards, equal weight, no decoration. The
+   "at a glance" beat that lets a hiring manager decide in 5 seconds
+   whether to keep reading. */
+.outcomes {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: var(--space-md);
+  margin: 0;
+  padding: var(--space-md) 0 0;
+  border-top: 1px solid var(--hero-rule);
+  list-style: none;
+}
+
+.outcome {
+  display: grid;
+  gap: var(--space-xxs);
+}
+
+.outcomeValue {
+  font-family: var(--font-heading);
+  font-size: clamp(24px, 2.4vw, 32px);
+  font-weight: 250;
+  line-height: 1.0;
+  font-variation-settings: 'SOFT' 100, 'WONK' 1;
+  color: var(--hero-accent);
+  letter-spacing: -0.01em;
+}
+
+.outcomeLabel {
+  font-family: var(--font-body);
+  font-size: var(--text-body-small);
+  line-height: 1.35;
+  color: var(--hero-fg-muted);
+  text-wrap: pretty;
+}
+
+@media (max-width: 768px) {
+  .hero { padding: var(--space-lg) var(--page-gutter); }
+  .inner { gap: var(--space-md); }
+  .meta, .outcomes { grid-template-columns: 1fr 1fr; }
+  .identity { margin-top: var(--space-sm); }
+}

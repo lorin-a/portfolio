@@ -16,24 +16,20 @@ import ProgressNav from '@/components/ProgressNav/ProgressNav'
 export default function CaseStudyProgress() {
   const [progress, setProgress] = useState(0)
   const [isDark, setIsDark] = useState(true)
+  const [hideOverActive, setHideOverActive] = useState(true)
 
   useEffect(() => {
-    const computeProgress = () => {
-      const doc = document.documentElement
-      const max = doc.scrollHeight - window.innerHeight
-      const next = max > 0 ? (window.scrollY / max) * 100 : 0
-      setProgress(next)
-    }
-
-    computeProgress()
-    window.addEventListener('scroll', computeProgress, { passive: true })
-    window.addEventListener('resize', computeProgress)
-
-    /* Watch themed sections — first one whose top is in the upper half
-       of the viewport sets the active theme. Falls back to dark when
-       the cinematic hero is on screen. */
+    const doc = document.documentElement
     const themed = Array.from(document.querySelectorAll('[data-theme]'))
-    const updateTheme = () => {
+
+    const update = () => {
+      const max = doc.scrollHeight - window.innerHeight
+      const nextProgress = max > 0 ? (window.scrollY / max) * 100 : 0
+      setProgress(nextProgress)
+
+      /* Active themed section: first one whose top is in the upper
+         portion of the viewport. Drives both color flip and the
+         data-progress="hidden" suppression (used over the hero). */
       const probe = window.innerHeight * 0.4
       let active = themed[0]
       for (const el of themed) {
@@ -45,14 +41,15 @@ export default function CaseStudyProgress() {
       }
       const theme = active?.getAttribute('data-theme') || 'light'
       setIsDark(theme === 'dark')
+      setHideOverActive(active?.getAttribute('data-progress') === 'hidden')
     }
-    updateTheme()
-    window.addEventListener('scroll', updateTheme, { passive: true })
 
+    update()
+    window.addEventListener('scroll', update, { passive: true })
+    window.addEventListener('resize', update)
     return () => {
-      window.removeEventListener('scroll', computeProgress)
-      window.removeEventListener('resize', computeProgress)
-      window.removeEventListener('scroll', updateTheme)
+      window.removeEventListener('scroll', update)
+      window.removeEventListener('resize', update)
     }
   }, [])
 
@@ -60,7 +57,7 @@ export default function CaseStudyProgress() {
     <ProgressNav
       scrollProgress={progress}
       isDark={isDark}
-      isVisible={progress > 3}
+      isVisible={progress > 3 && !hideOverActive}
     />
   )
 }

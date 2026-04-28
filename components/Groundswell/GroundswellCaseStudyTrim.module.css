@@ -1,0 +1,67 @@
+/* ===========================================
+   GROUNDSWELL CASE STUDY (Trim) — page-level styles
+   The component's content lives in shared CaseStudy primitives. This
+   module owns only the few page-specific bits: the article surround
+   token defaults and the deep-dive callout that bridges into the
+   stakeholder project page.
+   =========================================== */
+.article {
+  width: 100%;
+  background: var(--color-cream);
+  color: var(--color-ink);
+}
+
+/* Deep-dive callout sits between the closing Reflection and the
+   Credits. Cream surround so it carries the Shape-phase register
+   visually, but the link itself uses the project's accent for warmth. */
+.deepDiveSection {
+  width: 100%;
+  background: var(--color-cream);
+  padding: var(--space-xl) var(--page-gutter);
+  border-top: 1px solid rgba(44, 44, 44, 0.10);
+  border-bottom: 1px solid rgba(44, 44, 44, 0.10);
+}
+
+.deepDiveInner {
+  width: 100%;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  display: grid;
+  gap: var(--space-sm);
+  justify-items: start;
+}
+
+.deepDiveLabel {
+  font-family: var(--font-body);
+  font-size: var(--text-label);
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--color-ink-light);
+  margin: 0;
+}
+
+.deepDiveLink {
+  font-family: var(--font-heading);
+  font-size: clamp(24px, 2.6vw, 36px);
+  font-weight: 250;
+  line-height: 1.2;
+  font-variation-settings: 'SOFT' 100, 'WONK' 1;
+  color: var(--color-ink);
+  text-decoration: none;
+  display: inline-block;
+  padding: var(--space-xs) 0;
+  border-bottom: 1px solid currentColor;
+  transition: color var(--motion-fast) var(--ease-out);
+  text-wrap: balance;
+}
+
+@media (hover: hover) {
+  .deepDiveLink:hover {
+    color: var(--color-terracotta);
+  }
+}
+
+.deepDiveLink:focus-visible {
+  outline: 2px solid var(--color-terracotta);
+  outline-offset: 4px;
+}

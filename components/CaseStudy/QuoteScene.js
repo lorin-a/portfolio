@@ -24,7 +24,7 @@ gsap.registerPlugin(useGSAP)
  *     ]}
  *   />
  */
-export default function QuoteScene({ source, lines = [] }) {
+export default function QuoteScene({ source, lines = [], theme = 'cream' }) {
   const sectionRef = useRef(null)
   const linesRef = useRef([])
   const sourceRef = useRef(null)
@@ -79,7 +79,13 @@ export default function QuoteScene({ source, lines = [] }) {
   if (!lines.length) return null
 
   return (
-    <section ref={sectionRef} className={styles.scene} aria-label="Opening quote">
+    <section
+      ref={sectionRef}
+      className={styles.scene}
+      aria-label="Opening quote"
+      data-theme={theme}
+      data-progress="hidden"
+    >
       <figure className={styles.figure}>
         <blockquote className={styles.quote}>
           {lines.map((line, i) => (

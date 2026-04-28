@@ -39,7 +39,24 @@
   width: 100%;
 }
 
-.imageWrap > * {
+/* Each frame is a layer. JS crossfades between them in stage A and
+   ken-burns scales each one. Multiple children = carousel; single
+   child = static frame with ken-burns. */
+.frame {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  will-change: transform, opacity;
+  transform-origin: center center;
+}
+
+/* Frames after the first start hidden; GSAP fades them in. The first
+   frame paints immediately so there's never a black flash on load. */
+.frame[data-frame-index]:not([data-frame-index="0"]) {
+  opacity: 0;
+}
+
+.frame > * {
   position: absolute !important;
   inset: 0 !important;
   width: 100% !important;
@@ -62,11 +79,15 @@
   width: 100%;
   max-width: var(--max-width);
   display: grid;
-  gap: var(--space-md);
+  /* Larger row gap separates eyebrow → title stack → meta cleanly so
+     the converging title doesn't crowd the meta strip on settle. */
+  gap: var(--space-lg);
   justify-items: center;
   text-align: center;
 }
 
+/* Eyebrow stays muted while photography moves; GSAP lifts it in early.
+   visibility:hidden prevents FOUC; GSAP autoAlpha replaces it cleanly. */
 .eyebrow {
   font-family: var(--font-body);
   font-size: var(--text-label);
@@ -74,17 +95,18 @@
   letter-spacing: 0.16em;
   color: var(--surround-fg-muted);
   margin: 0;
+  visibility: hidden;
 }
 
-/* Title stack — wordmark + tagline. JS scrubs each child's transform
-   x to converge from L/R viewport edges to center. The grid keeps them
-   stacked vertically; tagline starts visually beside the wordmark via
-   y: -2.4em (compensating for the gap), then JS scrubs y back to 0
-   in stage 2 so it tucks beneath the wordmark. */
+.hero[data-state="resolved"] .eyebrow { visibility: visible; }
+
+/* Title stack — wordmark + tagline stacked vertically with explicit
+   space between them. JS scrubs each child's x to converge from L/R
+   viewport edges; vertical separation is owned by CSS. */
 .titleStack {
   display: grid;
   grid-template-rows: auto auto;
-  gap: var(--space-xs);
+  gap: var(--space-sm);
   justify-items: center;
   width: 100%;
   position: relative;
@@ -114,14 +136,9 @@
   margin: 0;
   max-width: 36ch;
   text-wrap: pretty;
-  /* Stage 2 (y: 2.4em → 0 via JS) tucks the tagline UNDER the wordmark.
-     Until JS runs, render at its natural position so reduced-motion is
-     correct without an inline transform. */
   will-change: transform;
 }
 
-/* Reduced-motion: render the resolved tagline placement directly. The
-   transform: none from the @media query below collapses the y-tween. */
 .hero[data-state="resolved"] .tagline,
 .hero[data-state="resolved"] .wordmark {
   transform: none !important;
@@ -131,12 +148,12 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: var(--space-md) var(--space-lg);
-  margin: var(--space-sm) 0 0;
-  padding: var(--space-sm) 0 0;
+  gap: var(--space-md) var(--space-xl);
+  margin: 0;
+  padding: var(--space-md) 0 0;
   border-top: 1px solid color-mix(in oklab, transparent, var(--surround-fg) 18%);
   width: min(100%, 920px);
-  /* GSAP reveals this in stage 2; render hidden until then. */
+  /* GSAP reveals this in stage C; render hidden until then. */
   opacity: 0;
 }
 

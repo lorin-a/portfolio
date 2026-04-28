@@ -32,7 +32,18 @@ const MARKS = {
  * Per-project bending: drop any artifact components as children. The Phase
  * doesn't prescribe what evidence looks like — only the rhythm around it.
  */
-export default function Phase({ kind, number, label, question, takeaway, contribution, children }) {
+/* Default theme by kind. Sense=dark (the listening register), Weave=plum
+   (the synthesis register), Shape=cream (the made-thing register). The
+   page-level dark→light progression IS the methodology arc. Override
+   via the explicit `theme` prop if a project needs a different mapping. */
+const KIND_THEME = {
+  sense: 'dark', research: 'dark',
+  weave: 'plum', study: 'plum',
+  shape: 'cream', production: 'cream',
+}
+
+export default function Phase({ kind, number, label, question, takeaway, contribution, theme, children }) {
+  const resolvedTheme = theme || KIND_THEME[kind] || 'cream'
   const phaseRef = useRef(null)
   const markRef = useRef(null)
   const markIconRef = useRef(null)
@@ -148,7 +159,12 @@ export default function Phase({ kind, number, label, question, takeaway, contrib
   }, { scope: phaseRef })
 
   return (
-    <section ref={phaseRef} data-phase={kind} className={styles.phase}>
+    <section
+      ref={phaseRef}
+      data-phase={kind}
+      data-theme={resolvedTheme}
+      className={styles.phase}
+    >
       <div className={styles.inner}>
         <div ref={markRef} className={styles.markAnchor} aria-hidden="true">
           <div ref={markIconRef} className={styles.markIcon}>

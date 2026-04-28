@@ -74,12 +74,26 @@ export default function GroundswellCaseStudy() {
           duration: '15 months',
         }}
       >
+        {/* Three-frame carousel: place → unit → intimate detail. Pulls
+            the reader into the world before the title resolves. */}
         <Image
           src={cloudImg(GS_IMAGES['gs-hero'], 1920)}
           alt="Groundswell installation in the Gynecologic Oncology corridor at UPMC Magee-Womens Hospital"
           fill
           sizes="100vw"
           priority
+        />
+        <Image
+          src={cloudImg(GS_IMAGES['gs-install-upmc'], 1920)}
+          alt="Groundswell installed in the unit — pod, garden, and reflection cards in place"
+          fill
+          sizes="100vw"
+        />
+        <Image
+          src={cloudImg(GS_IMAGES['gs-artwall'], 1920)}
+          alt="The Garden — community art wall close-up"
+          fill
+          sizes="100vw"
         />
       </HeroCinematic>
 

@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef } from 'react'
+import { Children, isValidElement, useMemo, useRef } from 'react'
 import { gsap, ScrollTrigger, EASE } from '@/lib/gsap'
 import { useGSAP } from '@gsap/react'
 import styles from './HeroCinematic.module.css'
@@ -9,29 +9,41 @@ gsap.registerPlugin(useGSAP)
 
 /**
  * HeroCinematic — pinned, scroll-scrubbed hero for case studies that
- * want a cinematic open. The reader watches a single section transform:
+ * want a cinematic open. Three stages on one timeline:
  *
- *   Image fills the viewport in a dark surround. Wordmark sits on the
- *   left edge, tagline on the right. As you scroll, the image compresses
- *   toward the top, the surround fades dark → light, and wordmark +
- *   tagline migrate from the edges to a centered stack with a tight
- *   meta strip beneath. By the end, the page is a clean light reading
- *   surface with a small image at top — ready for the case study body.
+ *   Stage A (0 → 0.45)   Image carousel + ken-burns. Pass multiple
+ *                        children; each is a stage of the immersive
+ *                        opening — corridor, room, detail. Surround
+ *                        holds dark; wordmark + tagline wait offstage.
+ *                        Eyebrow visible early as a quiet anchor.
+ *   Stage B (0.45 → 0.85) Surround scrubs dark → light via color-mix
+ *                        on --scrub. Wordmark + tagline converge from
+ *                        opposite viewport edges to a centered stack.
+ *   Stage C (0.85 → 1.0)  Meta strip reveals; scroll cue fades.
  *
- * The metaphor is intentional: from inside the world (immersive, dark,
- * sensory) to stepping back to read about it (clear, bright, focused).
+ * Pass a single child for a still hero with ken-burns; pass multiple
+ * children for the carousel.
+ *
+ * data-progress="hidden" on the section signals to CaseStudyProgress
+ * that the reading-progress bar should be hidden over this section —
+ * the cinematic open shouldn't compete with a scroll indicator.
  *
  * Reduced motion: the resolved state renders on first paint. No scrub,
- * no pin. Image small at top, centered title + tagline, meta visible,
- * cream surround. Content fully readable.
+ * no pin. The first frame shows full, centered title + tagline + meta.
  */
 export default function HeroCinematic({ eyebrow, title, tagline, meta = {}, children }) {
   const heroRef = useRef(null)
-  const imageRef = useRef(null)
   const wordmarkRef = useRef(null)
   const taglineRef = useRef(null)
+  const eyebrowRef = useRef(null)
   const metaRef = useRef(null)
   const scrollCueRef = useRef(null)
+  const framesRef = useRef([])
+
+  const frames = useMemo(
+    () => Children.toArray(children).filter(isValidElement),
+    [children]
+  )
 
   useGSAP(() => {
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
@@ -41,17 +53,14 @@ export default function HeroCinematic({ eyebrow, title, tagline, meta = {}, chil
     }
 
     const isMobile = window.matchMedia('(max-width: 768px)').matches
+    const liveFrames = framesRef.current.filter(Boolean)
+    const N = Math.max(1, liveFrames.length)
 
-    /* Pinned scrub timeline.
-       Stage 1 (0 → 0.7): image compresses, surround scrubs dark → light,
-       wordmark + tagline converge from L/R viewport edges toward center.
-       Stage 2 (0.7 → 1.0): tagline drops under wordmark, meta strip reveals,
-       scroll cue fades. */
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: heroRef.current,
         start: 'top top',
-        end: '+=120%',
+        end: '+=240%',
         pin: true,
         pinType: isMobile ? 'fixed' : 'transform',
         scrub: 0.6,
@@ -59,40 +68,108 @@ export default function HeroCinematic({ eyebrow, title, tagline, meta = {}, chil
       },
     })
 
-    /* Stage 1 — converge + fade (drives a single CSS variable on the
-       host so the surround color, image height, and text color all
-       interpolate together in one tween). */
-    tl.to(heroRef.current, { '--scrub': 1, ease: 'none' }, 0)
-      .fromTo(wordmarkRef.current,
-        { x: isMobile ? '-12vw' : '-28vw', scale: isMobile ? 1 : 1.08 },
-        { x: 0, scale: 1, ease: 'none' }, 0)
-      .fromTo(taglineRef.current,
-        { x: isMobile ? '12vw' : '28vw' },
-        { x: 0, ease: 'none' }, 0)
-      .to(scrollCueRef.current, { autoAlpha: 0, ease: 'none' }, 0)
+    /* Stage A — image carousel + ken-burns. Each frame holds for
+       (0.45 / N) of the timeline. Frame i fades in at its boundary
+       (i > 0) and ken-burns scale 1.06 → 1.0 across its full window. */
+    const stageADuration = 0.45
+    liveFrames.forEach((el, i) => {
+      const start = (i / N) * stageADuration
+      const dur = stageADuration / N
+      tl.fromTo(
+        el,
+        { scale: 1.06 },
+        { scale: 1.0, ease: 'none', duration: dur },
+        start
+      )
+      if (i > 0) {
+        const fadeOverlap = Math.min(0.04, dur * 0.25)
+        tl.fromTo(
+          el,
+          { autoAlpha: 0 },
+          { autoAlpha: 1, ease: EASE.inOut, duration: Math.min(0.12, dur * 0.45) },
+          Math.max(0, start - fadeOverlap)
+        )
+      }
+    })
 
-    /* Stage 2 — settle: tagline drops under wordmark, meta lifts in. */
-    tl.to(taglineRef.current, { y: '2.4em', ease: 'none' }, 0.7)
-      .fromTo(metaRef.current,
-        { autoAlpha: 0, y: 12 },
-        { autoAlpha: 1, y: 0, ease: 'none' }, 0.75)
+    /* Eyebrow lifts in early (over the second beat of the carousel)
+       so the reader has a quiet anchor while the photography moves. */
+    if (eyebrowRef.current) {
+      tl.fromTo(
+        eyebrowRef.current,
+        { autoAlpha: 0, y: 8 },
+        { autoAlpha: 1, y: 0, ease: EASE.inOut, duration: 0.08 },
+        0.10
+      )
+    }
+
+    /* Stage B — surround color scrub + wordmark/tagline convergence.
+       The convergence is the single longest tween in the timeline so
+       the dark→light transition has time to read as a deliberate beat,
+       not a flash. */
+    tl.to(
+      heroRef.current,
+      { '--scrub': 1, ease: 'none', duration: 0.40 },
+      0.45
+    )
+    tl.fromTo(
+      wordmarkRef.current,
+      { x: isMobile ? '-14vw' : '-30vw' },
+      { x: 0, ease: 'none', duration: 0.40 },
+      0.45
+    )
+    tl.fromTo(
+      taglineRef.current,
+      { x: isMobile ? '14vw' : '30vw' },
+      { x: 0, ease: 'none', duration: 0.40 },
+      0.45
+    )
+    tl.to(
+      scrollCueRef.current,
+      { autoAlpha: 0, ease: 'none', duration: 0.20 },
+      0.45
+    )
+
+    /* Stage C — meta strip lifts in. */
+    tl.fromTo(
+      metaRef.current,
+      { autoAlpha: 0, y: 12 },
+      { autoAlpha: 1, y: 0, ease: EASE.inOut, duration: 0.12 },
+      0.86
+    )
 
     return () => {
       tl.scrollTrigger?.kill()
       tl.kill()
     }
-  }, { scope: heroRef })
+  }, { scope: heroRef, dependencies: [frames.length] })
 
   const hasMeta = Object.values(meta).some(Boolean)
 
   return (
-    <section ref={heroRef} className={styles.hero} data-theme="dark">
-      <div ref={imageRef} className={styles.imageWrap}>
-        {children}
+    <section
+      ref={heroRef}
+      className={styles.hero}
+      data-theme="dark"
+      data-progress="hidden"
+    >
+      <div className={styles.imageWrap}>
+        {frames.map((child, i) => (
+          <div
+            key={i}
+            ref={el => { framesRef.current[i] = el }}
+            className={styles.frame}
+            data-frame-index={i}
+          >
+            {child}
+          </div>
+        ))}
       </div>
       <div className={styles.surround}>
         <div className={styles.surroundInner}>
-          {eyebrow && <p className={styles.eyebrow}>{eyebrow}</p>}
+          {eyebrow && (
+            <p ref={eyebrowRef} className={styles.eyebrow}>{eyebrow}</p>
+          )}
           <div className={styles.titleStack}>
             <h1 ref={wordmarkRef} className={styles.wordmark}>{title}</h1>
             {tagline && (

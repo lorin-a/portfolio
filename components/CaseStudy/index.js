@@ -1,5 +1,6 @@
 export { default as Hero } from './Hero'
 export { default as HeroCinematic } from './HeroCinematic'
+export { default as HeroOverview } from './HeroOverview'
 export { default as StickyScene } from './StickyScene'
 export { default as CaseStudyProgress } from './CaseStudyProgress'
 export { default as Context } from './Context'
