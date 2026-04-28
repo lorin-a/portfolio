@@ -13,12 +13,35 @@ const PROMPTS = [
 
 /**
  * Reflection — first-person close.
- * Three labeled prompts, each 1–2 sentences in Lorin's voice.
- * Locks rhythm across case studies; voice differentiates inside the structure.
+ *
+ * Two modes:
+ *   1. PROMPT mode (legacy) — pass `differently / surprised / forward` strings.
+ *      Renders three labeled prompts with the canonical questions above.
+ *   2. PRINCIPLES mode — pass `principles: [{ title, body }]`.
+ *      Each principle's *title is the lesson*. Use this for the closing
+ *      peak per the storytelling philosophy: headers carry the claim,
+ *      body explains in 2–3 sentences. Up to four principles.
+ *
+ * Prefer principles mode for new case studies. Prompt mode stays as a
+ * fallback for projects that haven't migrated.
  */
-export default function Reflection({ number = '04', differently, surprised, forward }) {
+export default function Reflection({
+  number = '04',
+  heading = 'Reflection',
+  principles,
+  differently,
+  surprised,
+  forward,
+}) {
   const ref = useRef(null)
-  const answers = { differently, surprised, forward }
+
+  /* Resolve which mode is active. Principles take precedence when an
+     array of one or more {title, body} entries is provided. */
+  const usingPrinciples =
+    Array.isArray(principles) &&
+    principles.some(p => p && (p.title || p.body))
+
+  const promptAnswers = { differently, surprised, forward }
 
   useGSAP(() => {
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
@@ -37,16 +60,25 @@ export default function Reflection({ number = '04', differently, surprised, forw
           <span className={styles.numberLabel}>Reflection</span>
         </div>
         <div className={styles.content}>
-          <h2 data-reveal className={styles.heading}>Reflection</h2>
+          <h2 data-reveal className={styles.heading}>{heading}</h2>
           <div className={styles.prompts}>
-            {PROMPTS.map(({ key, label }) => (
-              answers[key] && (
-                <section key={key} data-reveal className={styles.prompt}>
-                  <h3 className={styles.label}>{label}</h3>
-                  <p className={styles.answer}>{answers[key]}</p>
-                </section>
-              )
-            ))}
+            {usingPrinciples
+              ? principles
+                  .filter(p => p && (p.title || p.body))
+                  .map(({ title, body }, i) => (
+                    <section key={i} data-reveal className={styles.prompt}>
+                      <h3 className={styles.principleTitle}>{title}</h3>
+                      {body && <p className={styles.answer}>{body}</p>}
+                    </section>
+                  ))
+              : PROMPTS.map(({ key, label }) => (
+                  promptAnswers[key] && (
+                    <section key={key} data-reveal className={styles.prompt}>
+                      <h3 className={styles.label}>{label}</h3>
+                      <p className={styles.answer}>{promptAnswers[key]}</p>
+                    </section>
+                  )
+                ))}
           </div>
         </div>
       </div>

@@ -91,6 +91,32 @@
   margin: 0;
 }
 
+/* Principle title — the lesson IS the heading. Larger, confident,
+   serif italic so each principle reads as a thesis. The body
+   paragraph below carries the explanation. */
+.principleTitle {
+  font-family: var(--font-heading);
+  font-size: clamp(22px, 2.4vw, 30px);
+  font-weight: 300;
+  font-style: italic;
+  line-height: 1.25;
+  font-variation-settings: 'SOFT' 100, 'WONK' 1;
+  color: var(--color-ink);
+  margin: 0;
+  text-wrap: balance;
+}
+
+/* In principles mode, dial the answer paragraph back to body scale so
+   the title carries the visual weight, not the explanation. */
+.prompt:has(.principleTitle) .answer {
+  font-family: var(--font-body);
+  font-size: var(--text-body-large);
+  font-weight: 400;
+  font-style: normal;
+  line-height: 1.55;
+  color: var(--color-ink-light);
+}
+
 .answer {
   font-family: var(--font-heading);
   font-size: clamp(20px, 2.2vw, 28px);

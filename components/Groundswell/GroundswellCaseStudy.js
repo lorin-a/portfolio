@@ -1,6 +1,8 @@
 import Image from 'next/image'
 import {
-  Hero,
+  HeroCinematic,
+  StickyScene,
+  CaseStudyProgress,
   Context,
   Phase,
   PhaseBeat,
@@ -15,24 +17,39 @@ import {
   Framework,
   LiveLink,
 } from '@/components/CaseStudy'
+import { cloudImg, cloudVideo, GS_IMAGES, GS_VIDEOS } from '@/lib/cloudinary'
 
 const PHASES = [
-  { kind: 'research',   label: 'Research' },
-  { kind: 'production', label: 'Production' },
-  { kind: 'study',      label: 'Study' },
+  { kind: 'sense', label: 'Sense' },
+  { kind: 'weave', label: 'Weave' },
+  { kind: 'shape', label: 'Shape' },
 ]
-import { cloudImg, cloudVideo, GS_IMAGES, GS_VIDEOS } from '@/lib/cloudinary'
 
 /**
  * Groundswell — Lorin-focused case study.
  *
- * Three-phase chronological structure (Research / Production / Study) matches
- * the project's 15-month arc and the source timeline doc's own framework.
- * Synthesis lives inside Research as a visually distinct sub-beat.
+ * Three-phase methodological structure (Sense → Weave → Shape) maps onto
+ * the project's 15-month chronological arc:
+ *   Sense  — Spring 2025, 15 weeks embedded with the Gynecologic Oncology
+ *            team. Listening, shadowing, workshops.
+ *   Weave  — late Spring 2025, synthesis. Affinity mapping, the
+ *            tetrahedron, The Void, the language pivot.
+ *   Shape  — Summer 2025 → ongoing. Production of the ecosystem,
+ *            installation, and a 12-month QI study.
  *
- * Content seeded from docs/groundswell.md + the project timeline doc.
- * Quotes, takeaways, and frameworks use Lorin's verbatim words. First-person
- * paragraphs are flagged TODO for Lorin to write in voice.
+ * Storytelling philosophy gates the writing here:
+ *   1. Phase H2s are claim sentences (Lorin's voice), not category labels.
+ *      Framework word lives in the small-caps eyebrow above each H2.
+ *   2. First-person `I` throughout. `we` only when explicitly attributing
+ *      a collaborator's contribution.
+ *   3. PhaseBeat is used as a chronological sub-anchor inside each phase
+ *      so the 15-month arc surfaces inside the methodology.
+ *   4. One mid-phase pull-quote per phase, placed at the decision moment.
+ *   5. The closing Reflection renders three named principles — the
+ *      titles ARE the lessons; bodies are 2–3 sentences in Lorin's voice.
+ *   6. The Sense → Weave handoff is staged as a StickyScene split-screen
+ *      featuring the language pivot — the moment listening became
+ *      synthesis.
  *
  * Credit precision: brand identity = Kristin Hughes; language pivot from
  * grief → restoration came from staff feedback in the language workshop;
@@ -41,15 +58,21 @@ import { cloudImg, cloudVideo, GS_IMAGES, GS_VIDEOS } from '@/lib/cloudinary'
 export default function GroundswellCaseStudy() {
   return (
     <article>
+      <CaseStudyProgress />
       <PhaseNav phases={PHASES} />
 
-      <Hero
+      <HeroCinematic
         eyebrow="Co-Design · Healthcare · Mental Health"
         title="Groundswell"
         tagline="Making Space to Restore, Together"
-        role="Participatory Research · Co-Design · Copywriting · Project Coordination"
-        year="2024–2025"
-        collaborators="UPMC Magee-Womens Hospital · CMU School of Design"
+        meta={{
+          role: 'Participatory Research · Co-Design · Copywriting · Project Coordination',
+          client: 'UPMC Magee-Womens Hospital',
+          year: '2024–2025',
+          category: 'Healthcare · Mental Health',
+          team: 'CMU School of Design',
+          duration: '15 months',
+        }}
       >
         <Image
           src={cloudImg(GS_IMAGES['gs-hero'], 1920)}
@@ -58,11 +81,12 @@ export default function GroundswellCaseStudy() {
           sizes="100vw"
           priority
         />
-      </Hero>
+      </HeroCinematic>
 
-      {/* TODO Lorin: Context paragraph in your voice. 1–2 sentences. The
-          human stakes — why this work mattered to you, not what the project is.
-          The Phase 0 prelude line below is verbatim factual framing for now. */}
+      {/* TODO Lorin: rewrite Context in your voice. 1–2 sentences naming
+          the human stake — why this work mattered to YOU, not what the
+          project is. The factual line below is scaffolding only and
+          should not ship as the opener. */}
       <Context>
         Groundswell is a grant-funded ecosystem of emotional support for healthcare workers,
         developed in collaboration with the Gynecologic Oncology staff at UPMC Magee-Womens
@@ -83,15 +107,19 @@ export default function GroundswellCaseStudy() {
         ]}
       />
 
-      {/* ─── RESEARCH (15 weeks · Spring 2025) ─── */}
+      {/* ─── 01 · SENSE (Spring 2025 · 15 weeks embedded) ───
+          Listening. Shadowing. Workshops. The phase H2 is a Lorin-voiced
+          claim/question — not a category label. */}
       <Phase
-        kind="research"
+        kind="sense"
         number="01"
-        label="Research"
+        label="Sense"
         question="What were oncology staff already carrying that no one was naming?"
-        takeaway="We didn't arrive as outsiders with solutions. We showed up, listened, and stayed."
+        takeaway="I didn't arrive as an outsider with solutions. I showed up, listened, and stayed."
         contribution="Co-led and lead-designed the Grief Workshop — built the trauma-responsive container, scenarios, and facilitation that made staff comfortable enough to speak."
       >
+        <PhaseBeat label="Week 1–4 · Embedding" />
+
         <DataNote
           stat="15"
           unit="weeks embedded"
@@ -101,13 +129,15 @@ export default function GroundswellCaseStudy() {
         <DataNote
           stat="8"
           unit="staff interviewed"
-          note="Across roles. A separate one-hour interview with a former Magee employee — through Lorin&rsquo;s personal connection — surfaced institutional dynamics current staff couldn&rsquo;t safely share."
+          note="Across roles. A separate one-hour interview with a former Magee employee — through my personal connection — surfaced institutional dynamics current staff couldn&rsquo;t safely share."
         />
+
+        <PhaseBeat label="Week 5–9 · Workshops" />
 
         <Artifact
           src={cloudImg(GS_IMAGES['gs-workshop-grief-01'], 1200)}
           alt="Grief workshop with oncology staff — a soft stuffed animal placed at the center of the table"
-          caption="Grief workshop. We opened with a trauma-responsive grounding exercise and provided a soft stuffed animal to hold. One participant said, &lsquo;We need more time with you guys.&rsquo;"
+          caption="Grief workshop. I opened with a trauma-responsive grounding exercise and provided a soft stuffed animal to hold. One participant said, &lsquo;We need more time with you guys.&rsquo;"
         />
 
         <Artifact
@@ -116,20 +146,49 @@ export default function GroundswellCaseStudy() {
           caption="Nourishing the Flower. Staff used nature-based metaphors to identify what makes a workplace sustainable. Three themes surfaced: recognition, environment, and culture."
         />
 
-        {/* ── Synthesis sub-beat: where listening turned into design intent ── */}
-        <PhaseBeat label="Synthesis" />
+        {/* TODO Lorin: 1 short paragraph in voice — the listening arc.
+            Why staying long enough to be told 'grief' was the wrong word
+            was the design brief, not a footnote. */}
+      </Phase>
 
+      {/* ─── FEATURED BEAT · The language pivot ───
+          Split-screen sticky scene. The moment Sense became Weave: when
+          staff named 'grief' as the wrong word, the synthesis began.
+          Decision-moment pull-quote in the sticky column carries the
+          peak; scrolling media on the right walks the reader through
+          the workshop, the synthesis, and the language I landed on. */}
+      <StickyScene
+        theme="cream"
+        label="Week 10 · The pivot"
+        title="Staff said grief wasn’t the right word. The brief changed."
+        lead="I had pitched the project as ‘Making Space for Grief, Together.’ A physician pulled me aside afterward, and the language reframed the whole design intent."
+        pullQuote="Oncology work involves more than grief. It encompasses hope, joy, exhaustion, and resilience."
+        pullQuoteCite="— A physician, after the proposal"
+      >
         <Artifact
           src={cloudImg(GS_IMAGES['gs-sense-affinity-01'], 1200)}
           alt="Affinity mapping session"
-          caption="Affinity mapping. Hundreds of observations and quotes from interviews, shadowing, and workshops, organized through a tetrahedron analysis."
+          caption="Affinity mapping after the workshops. Hundreds of observations and quotes from interviews, shadowing, and workshops, organized through tetrahedron analysis."
         />
-
         <Artifact
           src={cloudImg(GS_IMAGES['Synthesis-diagram'], 1200)}
           alt="Synthesis tetrahedron with The Void at the center"
-          caption="The synthesis diagram. Four dimensions of staff well-being mapped against each other, with The Void at the center: the structural tension all four converge on."
+          caption="The synthesis diagram. Four dimensions of staff well-being mapped against each other, with The Void at the center."
         />
+      </StickyScene>
+
+      {/* ─── 02 · WEAVE (late Spring 2025 · synthesis) ───
+          Synthesis. The tetrahedron. The Void. The framework that
+          changed how the project's design intent was scoped. */}
+      <Phase
+        kind="weave"
+        number="02"
+        label="Weave"
+        question="What was the structural tension everything else circled around?"
+        takeaway="Naming The Void let me design with the staff, not for them."
+        contribution="Authored the synthesis: the four-dimension framework and the tetrahedron analysis that named The Void as the structural tension underneath all four dimensions of well-being."
+      >
+        <PhaseBeat label="Synthesis" />
 
         <Framework
           label="Four dimensions of well-being"
@@ -148,7 +207,7 @@ export default function GroundswellCaseStudy() {
           leading to burnout, poor recognition, and a toxic workplace culture.
         </Insight>
 
-        <Quote context="A physician, after we proposed &lsquo;Making Space for Grief, Together&rsquo;">
+        <Quote context="A physician, after I proposed &lsquo;Making Space for Grief, Together&rsquo;">
           Oncology work involves more than grief. It encompasses hope, joy, exhaustion, and resilience.
         </Quote>
 
@@ -159,28 +218,33 @@ export default function GroundswellCaseStudy() {
           external
         />
 
-        {/* TODO Lorin: 1–2 short paragraphs in voice — the listening + synthesis arc.
-            Why staying long enough to identify The Void mattered, and how it changed
-            the design intent toward "creating space for what was already there." */}
+        {/* TODO Lorin: 1–2 short paragraphs in voice — why naming The
+            Void changed the design intent toward 'creating space for
+            what was already there.' */}
       </Phase>
 
-      {/* ─── PRODUCTION (10 weeks · Summer 2025) ─── */}
+      {/* ─── 03 · SHAPE (Summer 2025 → ongoing) ───
+          Production + Study. Making the ecosystem, installing it,
+          measuring it, and stepping back. */}
       <Phase
-        kind="production"
-        number="02"
-        label="Production"
-        question="How do we honor what was already there?"
-        takeaway="You have already built a culture of care. We are here to amplify it."
-        contribution="Led $30K donor outreach campaign — secured the NookPod ($26K), Density sensor, Schlage locks, walnut wood, finger labyrinths, and printing through cold email and LinkedIn between June and August. Did first draft of all copy and collaborated with meditation teachers Catherine Liggett and Mark Staley on custom guided meditations."
+        kind="shape"
+        number="03"
+        label="Shape"
+        question="How do I honor what was already there?"
+        takeaway="When design resonates, people across roles choose to nurture it. At launch, a member of the maintenance team volunteered to clean the pod, and I began stepping back. This phase belongs to the community."
+        contribution="Led $30K donor outreach campaign — secured the NookPod ($26K), Density sensor, Schlage locks, walnut wood, finger labyrinths, and printing through cold email and LinkedIn. Authored first draft of all copy and collaborated with meditation teachers Catherine Liggett and Mark Staley on custom guided meditations. Built the Groundswell data visualization platform: taught myself to vibe-code with Claude AI and developed a custom database-backed web app (Vercel, NEON, Density and YouTube APIs) to communicate study findings."
       >
-        {/* TODO Lorin: 1 short paragraph in voice — the 10-week sprint as your
-            first experience with design production and launch in the real world. */}
+        <PhaseBeat label="Summer 2025 · Production" />
+
+        {/* TODO Lorin: 1 short paragraph in voice — the 10-week sprint
+            as my first experience with design production and launch in
+            the real world. */}
 
         <Insight label="The CTB email">
           During production, a nurse manager tearfully disclosed that the existing
           Ceased to Breathe email was not a cold institutional protocol. It was her own
           quiet act of compassion, built years earlier to ensure colleagues learned of
-          patient deaths with dignity. This revelation reshaped how we worked from then on.
+          patient deaths with dignity. This revelation reshaped how I worked from then on.
         </Insight>
 
         <Artifact
@@ -219,17 +283,9 @@ export default function GroundswellCaseStudy() {
           unit="playtest participants"
           note="Retired nurses, UPMC administrators, design professors, mental health professionals, and designers. Testing surfaced three issues that drove rapid iteration: table depth, wayfinding, and the role of music as the opening cue."
         />
-      </Phase>
 
-      {/* ─── STUDY (Oct 2025 · ongoing) ─── */}
-      <Phase
-        kind="study"
-        number="03"
-        label="Study"
-        question="What happens when we step back?"
-        takeaway="When design resonates, people across roles choose to nurture it. At launch, a member of the maintenance team volunteered to clean the pod, and we began stepping back. This phase belongs to the community."
-        contribution="Built the Groundswell data visualization platform. Taught myself to vibe-code with Claude AI and developed a custom database-backed web app (Vercel, NEON, Density and YouTube APIs) to communicate study findings, coordinating data integration with Density and feedback with UPMC. Team contributed art direction throughout."
-      >
+        <PhaseBeat label="October 2025 → ongoing · Study" />
+
         <Artifact
           src={cloudImg(GS_IMAGES['gs-install-upmc'], 1600)}
           alt="Groundswell installed and active in the Gynecologic Oncology unit at UPMC Magee"
@@ -239,7 +295,7 @@ export default function GroundswellCaseStudy() {
         <DataNote
           stat="12"
           unit="month QI study"
-          note="Now installed at UPMC Magee. We&rsquo;re measuring compassion fatigue, burnout, culture of well-being, and intent to leave — before, during, and after."
+          note="Now installed at UPMC Magee. The team is measuring compassion fatigue, burnout, culture of well-being, and intent to leave — before, during, and after."
         />
 
         <DataNote
@@ -248,8 +304,9 @@ export default function GroundswellCaseStudy() {
           note="Minimum baselines. Methods designed to undercount rather than overcount."
         />
 
-        {/* TODO Lorin: capture a screenshot or short screen recording of the
-            data viz platform and add it as an Artifact above this LiveLink. */}
+        {/* TODO Lorin: capture a screenshot or short screen recording of
+            the data viz platform and add it as an Artifact above this
+            LiveLink. */}
         <LiveLink
           href="https://groundswell-admin-test.vercel.app/"
           label="Explore the data"
@@ -265,7 +322,7 @@ export default function GroundswellCaseStudy() {
         <DataNote
           stat="15"
           unit="minute sensor intervals"
-          note="The Density sensor measures at 15-minute intervals — a real constraint on data granularity. We adjusted the data framework to match the system&rsquo;s actual capabilities rather than our original tracking ambitions."
+          note="The Density sensor measures at 15-minute intervals — a real constraint on data granularity. I adjusted the data framework to match the system&rsquo;s actual capabilities rather than my original tracking ambitions."
         />
 
         <LiveLink
@@ -276,12 +333,25 @@ export default function GroundswellCaseStudy() {
       </Phase>
 
       {/* ─── REFLECTION ───
-          TODO Lorin: rewrite all three in your voice. Drafts below are
-          starting points seeded from themes in the doc. */}
+          Three named principles. Each title IS the lesson. Body is
+          2–3 sentences in Lorin's voice. Drafts below are starting
+          points seeded from themes in the doc — TODO Lorin to revise
+          in voice before shipping. */}
       <Reflection
-        differently="(Draft) When staff first told us &lsquo;grief&rsquo; was the wrong word, I treated it as a small note. It was a much bigger signal. Next time I&rsquo;d push for the language shift in week one, not week ten. I&rsquo;d also fight harder to keep the Steward Guide in scope; its absence created the communication gaps that surfaced months later."
-        surprised="(Draft) The Ceased to Breathe email. I expected to redesign a cold clinical protocol. What I found was a nurse manager&rsquo;s quiet act of compassion that had already changed the culture from inside. That single discovery reshaped how we worked from then on."
-        forward="(Draft) A practice I now call resonance: Presence (sustained relational engagement over time), Attunement (responsive listening across diverse perspectives), Harmonization (amplifying existing community innovations rather than replacing them). It has reshaped how I approach design."
+        principles={[
+          {
+            title: 'Listen for the language before you write any.',
+            body: '(Draft) When staff first told me ‘grief’ was the wrong word, I treated it as a small note. It was a much bigger signal. The language a community already uses is the design brief; mine is to surface it, not invent a new one.',
+          },
+          {
+            title: 'What looks like protocol is often someone’s quiet care.',
+            body: '(Draft) I expected to redesign a cold institutional Ceased to Breathe email. What I found was a nurse manager’s compassion built into the system years before I arrived. From that point on I designed with the assumption that care was already there.',
+          },
+          {
+            title: 'Resonance is a practice — Presence, Attunement, Harmonization.',
+            body: '(Draft) Sustained relational engagement over time. Responsive listening across diverse perspectives. Amplifying existing community innovations rather than replacing them. This trio has reshaped how I approach every project.',
+          },
+        ]}
       />
 
       <Credits

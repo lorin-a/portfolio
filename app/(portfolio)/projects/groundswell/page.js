@@ -1,4 +1,4 @@
-import GroundswellContent from '@/components/Groundswell/GroundswellContent'
+import GroundswellCaseStudy from '@/components/Groundswell/GroundswellCaseStudy'
 
 export const metadata = {
   title: 'Groundswell | Lorin Anderberg',
@@ -11,5 +11,5 @@ export const metadata = {
 }
 
 export default function GroundswellPage() {
-  return <GroundswellContent />
+  return <GroundswellCaseStudy />
 }

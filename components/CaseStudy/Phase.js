@@ -163,7 +163,9 @@ export default function Phase({ kind, number, label, question, takeaway, contrib
         </div>
         <div className={styles.content}>
           <header className={styles.header}>
-            <span className={styles.phaseTag}>{label || kind}</span>
+            <span className={styles.phaseTag}>
+              {label || kind}{number ? ` · ${number}` : ''}
+            </span>
             <h2 ref={questionRef} className={styles.question}>{question}</h2>
           </header>
           <div ref={evidenceRef} className={styles.evidence}>
