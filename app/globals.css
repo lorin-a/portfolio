@@ -624,8 +624,10 @@ body.hero-loading > * > main > *:not(:first-child) {
   visibility: hidden !important;
 }
 
-/* Prevent horizontal scroll site-wide */
+/* Prevent horizontal scroll site-wide.
+   `clip` (not `hidden`) — `hidden` creates a scroll container and breaks
+   `position: sticky` for descendants (e.g. Groundswell parallax sections). */
 html, body {
-  overflow-x: hidden;
+  overflow-x: clip;
   overscroll-behavior-x: none;
 }
