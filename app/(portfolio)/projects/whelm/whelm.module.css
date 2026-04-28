@@ -1,0 +1,163 @@
+/* Whelm scrollytelling — foundation slice (title + Acts I + II).
+   Bg #FFFAF0 throughout this slice; later acts shift to deep blue.
+   Hardcoded slide cream rather than --cream token so the case study
+   matches its source palette exactly. */
+
+.story {
+  position: relative;
+  width: 100%;
+  background: #FFFAF0;
+  color: var(--text-heading, #2C2C28);
+}
+
+.stage {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+}
+
+.canvas {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.dot {
+  /* GSAP claims transform on mount via snapToLayout. */
+}
+
+/* ─── Copy layer ──────────────────────────────────────────────── */
+
+.copyLayer {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  pointer-events: none;
+}
+
+.copyBlock {
+  position: absolute;
+  visibility: visible;
+  pointer-events: auto;
+  max-width: min(38ch, 36vw);
+}
+
+/* ─── Kind variants (typography per copy role) ────────────────── */
+
+.kind_h1 {
+  max-width: min(60ch, 58vw);
+}
+
+.titleH1 {
+  margin: 0;
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: clamp(34px, 5vw, 78px);
+  font-weight: 200;
+  line-height: 1.05;
+  letter-spacing: -0.015em;
+  font-variation-settings: 'SOFT' 100, 'WONK' 1;
+  color: #1A1A1A;
+}
+
+.titleLine {
+  display: block;
+  /* clipPath set by GSAP for line-by-line wipe entrance. */
+}
+
+.kind_sub {
+  font-family: var(--font-body, 'Open Sans'), sans-serif;
+  font-size: clamp(15px, 1.5vw, 22px);
+  line-height: 1.4;
+  font-weight: 400;
+  max-width: min(42ch, 36vw);
+  color: #1A1A1A;
+}
+
+.kind_lead {
+  font-family: var(--font-body, 'Open Sans'), sans-serif;
+  font-size: clamp(20px, 2.4vw, 32px);
+  line-height: 1.25;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+
+.kind_body {
+  font-family: var(--font-body, 'Open Sans'), sans-serif;
+  font-size: clamp(16px, 1.6vw, 22px);
+  line-height: 1.4;
+  max-width: min(28ch, 24vw);
+}
+
+.kind_note {
+  font-family: var(--font-body, 'Open Sans'), sans-serif;
+  font-size: clamp(14px, 1.4vw, 18px);
+  font-weight: 300;
+  text-align: center;
+  max-width: 24ch;
+}
+
+.kind_quote {
+  font-family: var(--font-body, 'Open Sans'), sans-serif;
+  font-size: clamp(15px, 1.6vw, 20px);
+  line-height: 1.4;
+  max-width: min(32ch, 30vw);
+}
+
+.kind_quote q::before { content: '\201C'; }
+.kind_quote q::after  { content: '\201D'; }
+
+.kind_tag {
+  font-family: var(--font-body, 'Open Sans'), sans-serif;
+  font-size: clamp(14px, 1.5vw, 20px);
+  white-space: nowrap;
+}
+
+/* ─── Position presets ────────────────────────────────────────── */
+
+.pos_tl { top: 7vh;  left: 5vw;  }
+.pos_tr { top: 7vh;  right: 5vw; }
+.pos_bl { bottom: 12vh; left: 5vw; }
+.pos_br { bottom: 14vh; right: 5vw; max-width: min(36ch, 32vw); }
+
+/* Subtitle in the lower-right (matches title slide). */
+.pos_br_sub {
+  bottom: 8vh;
+  right: 5vw;
+  text-align: left;
+  max-width: min(46ch, 38vw);
+}
+
+.pos_ml { top: 38vh; left: 5vw; }
+.pos_mr { top: 38vh; right: 5vw; }
+
+.pos_c_bot {
+  left: 50%;
+  top: 58vh;
+  transform: translateX(-50%);
+}
+
+.pos_you_tag {
+  right: 8vw;
+  bottom: 22vh;
+}
+
+/* ─── Reduced motion ─────────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  .copyBlock {
+    opacity: 1;
+    transform: none;
+  }
+  .titleLine {
+    clip-path: none !important;
+  }
+}
