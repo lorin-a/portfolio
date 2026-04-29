@@ -1,7 +1,9 @@
 'use client'
 
 import { Children, isValidElement, useMemo, useRef } from 'react'
-import { gsap, ScrollTrigger, EASE } from '@/lib/gsap'
+import { gsap, ScrollTrigger } from '@/lib/gsap'
+
+const EASE_INOUT = 'power1.inOut'
 import { useGSAP } from '@gsap/react'
 import styles from './StickyScene.module.css'
 
@@ -111,12 +113,12 @@ function Steps({ children }) {
         start: 'top center',
         end: 'bottom center',
         onEnter: () => {
-          gsap.to(prev, { autoAlpha: 0, duration: 0.4, ease: EASE.inOut })
-          gsap.to(next, { autoAlpha: 1, duration: 0.5, ease: EASE.inOut })
+          gsap.to(prev, { autoAlpha: 0, duration: 0.4, ease: EASE_INOUT })
+          gsap.to(next, { autoAlpha: 1, duration: 0.5, ease: EASE_INOUT })
         },
         onLeaveBack: () => {
-          gsap.to(next, { autoAlpha: 0, duration: 0.4, ease: EASE.inOut })
-          gsap.to(prev, { autoAlpha: 1, duration: 0.5, ease: EASE.inOut })
+          gsap.to(next, { autoAlpha: 0, duration: 0.4, ease: EASE_INOUT })
+          gsap.to(prev, { autoAlpha: 1, duration: 0.5, ease: EASE_INOUT })
         },
       })
       triggers.push(t)

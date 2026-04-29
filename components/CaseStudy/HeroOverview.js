@@ -1,7 +1,9 @@
 'use client'
 
 import { useRef } from 'react'
-import { gsap, ScrollTrigger, EASE } from '@/lib/gsap'
+import { gsap, ScrollTrigger } from '@/lib/gsap'
+
+const EASE_INOUT = 'power1.inOut'
 import { useGSAP } from '@gsap/react'
 import styles from './HeroOverview.module.css'
 
@@ -56,7 +58,7 @@ export default function HeroOverview({
       y: 20,
       duration: 0.8,
       stagger: 0.12,
-      ease: EASE.inOut,
+      ease: EASE_INOUT,
     })
 
     return () => { tl.scrollTrigger?.kill(); tl.kill() }

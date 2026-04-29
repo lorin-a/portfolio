@@ -1,7 +1,9 @@
 'use client'
 
 import { useRef } from 'react'
-import { gsap, ScrollTrigger, EASE } from '@/lib/gsap'
+import { gsap, ScrollTrigger } from '@/lib/gsap'
+
+const EASE_INOUT = 'power1.inOut'
 import { useGSAP } from '@gsap/react'
 import styles from './QuoteScene.module.css'
 
@@ -58,14 +60,14 @@ export default function QuoteScene({ source, lines = [], theme = 'cream' }) {
        Calm power1.inOut to match the project's text-reveal voice. */
     linesRef.current.filter(Boolean).forEach((line, i) => {
       tl.from(line, {
-        autoAlpha: 0, y: 24, duration: 1, ease: EASE.inOut,
+        autoAlpha: 0, y: 24, duration: 1, ease: EASE_INOUT,
       }, i * 0.6)
     })
 
     /* Attribution lands after the last line. Smaller, slower, off-axis. */
     if (sourceRef.current) {
       tl.from(sourceRef.current, {
-        autoAlpha: 0, y: 12, duration: 0.6, ease: EASE.inOut,
+        autoAlpha: 0, y: 12, duration: 0.6, ease: EASE_INOUT,
       }, '>-0.1')
     }
 

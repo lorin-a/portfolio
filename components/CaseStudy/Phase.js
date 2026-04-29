@@ -1,7 +1,9 @@
 'use client'
 
 import { useRef, useState } from 'react'
-import { gsap, ScrollTrigger, EASE } from '@/lib/gsap'
+import { gsap, ScrollTrigger } from '@/lib/gsap'
+
+const EASE_INOUT = 'power1.inOut'
 import { useGSAP } from '@gsap/react'
 import { SplitText } from 'gsap/SplitText'
 import SenseMark from '@/components/marks/SenseMark'
@@ -83,7 +85,7 @@ export default function Phase({ kind, number, label, question, takeaway, contrib
             const perChar = 0.06
             const duration = Math.max(1.2, self.chars.length * perChar)
             return gsap.from(self.chars, {
-              yPercent: 100, duration, stagger: 0.025, ease: EASE.inOut,
+              yPercent: 100, duration, stagger: 0.025, ease: EASE_INOUT,
             })
           },
         })
@@ -99,7 +101,7 @@ export default function Phase({ kind, number, label, question, takeaway, contrib
         {
           start: 'top 85%',
           onEnter: (els) => gsap.from(els, {
-            autoAlpha: 0, y: 20, duration: 0.7, stagger: 0.12, ease: EASE.inOut,
+            autoAlpha: 0, y: 20, duration: 0.7, stagger: 0.12, ease: EASE_INOUT,
           }),
         }
       )
@@ -112,7 +114,7 @@ export default function Phase({ kind, number, label, question, takeaway, contrib
       once: true,
       onEnter: () => {
         gsap.from(takeawayRef.current, {
-          autoAlpha: 0, y: 16, duration: 1.0, ease: EASE.inOut,
+          autoAlpha: 0, y: 16, duration: 1.0, ease: EASE_INOUT,
         })
       },
     })
@@ -145,7 +147,7 @@ export default function Phase({ kind, number, label, question, takeaway, contrib
       start: 'bottom 60%',
       end: 'bottom 30%',
       scrub: true,
-      animation: gsap.to(markRef.current, { autoAlpha: 0, ease: EASE.inOut }),
+      animation: gsap.to(markRef.current, { autoAlpha: 0, ease: EASE_INOUT }),
     })
 
     return () => {

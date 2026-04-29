@@ -1,7 +1,9 @@
 'use client'
 
 import { Children, isValidElement, useMemo, useRef } from 'react'
-import { gsap, ScrollTrigger, EASE } from '@/lib/gsap'
+import { gsap, ScrollTrigger } from '@/lib/gsap'
+
+const EASE_INOUT = 'power1.inOut'
 import { useGSAP } from '@gsap/react'
 import styles from './HeroCinematic.module.css'
 
@@ -86,7 +88,7 @@ export default function HeroCinematic({ eyebrow, title, tagline, meta = {}, chil
         tl.fromTo(
           el,
           { autoAlpha: 0 },
-          { autoAlpha: 1, ease: EASE.inOut, duration: Math.min(0.12, dur * 0.45) },
+          { autoAlpha: 1, ease: EASE_INOUT, duration: Math.min(0.12, dur * 0.45) },
           Math.max(0, start - fadeOverlap)
         )
       }
@@ -98,7 +100,7 @@ export default function HeroCinematic({ eyebrow, title, tagline, meta = {}, chil
       tl.fromTo(
         eyebrowRef.current,
         { autoAlpha: 0, y: 8 },
-        { autoAlpha: 1, y: 0, ease: EASE.inOut, duration: 0.08 },
+        { autoAlpha: 1, y: 0, ease: EASE_INOUT, duration: 0.08 },
         0.10
       )
     }
@@ -134,7 +136,7 @@ export default function HeroCinematic({ eyebrow, title, tagline, meta = {}, chil
     tl.fromTo(
       metaRef.current,
       { autoAlpha: 0, y: 12 },
-      { autoAlpha: 1, y: 0, ease: EASE.inOut, duration: 0.12 },
+      { autoAlpha: 1, y: 0, ease: EASE_INOUT, duration: 0.12 },
       0.86
     )
 

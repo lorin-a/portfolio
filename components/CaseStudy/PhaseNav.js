@@ -1,7 +1,9 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import { gsap, EASE } from '@/lib/gsap'
+import { gsap } from '@/lib/gsap'
+
+const EASE_INOUT = 'power1.inOut'
 import styles from './PhaseNav.module.css'
 
 /**
@@ -33,7 +35,7 @@ export default function PhaseNav({ phases = [] }) {
     }
     gsap.set(navRef.current, { autoAlpha: 0 })
     const tween = gsap.to(navRef.current, {
-      autoAlpha: 1, duration: 0.5, ease: EASE.inOut, delay: 1.2,
+      autoAlpha: 1, duration: 0.5, ease: EASE_INOUT, delay: 1.2,
     })
     return () => tween.kill()
   }, [])

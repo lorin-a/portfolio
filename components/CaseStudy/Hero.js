@@ -1,7 +1,10 @@
 'use client'
 
 import { useRef } from 'react'
-import { gsap, ScrollTrigger, EASE } from '@/lib/gsap'
+import { gsap, ScrollTrigger } from '@/lib/gsap'
+
+const EASE_OUT = 'power1.out'
+const EASE_INOUT = 'power1.inOut'
 import { useGSAP } from '@gsap/react'
 import { SplitText } from 'gsap/SplitText'
 import styles from './Hero.module.css'
@@ -54,13 +57,13 @@ export default function Hero({ title, tagline, role, year, collaborators, eyebro
     tl.fromTo(
       mediaRef.current,
       { scale: 1.04 },
-      { scale: 1, duration: 1.2, ease: EASE.out },
+      { scale: 1, duration: 1.2, ease: EASE_OUT },
       0
     )
-      .from(eyebrowRef.current, { autoAlpha: 0, y: 8, duration: 0.7, ease: EASE.inOut }, 0.5)
+      .from(eyebrowRef.current, { autoAlpha: 0, y: 8, duration: 0.7, ease: EASE_INOUT }, 0.5)
       .from(
         frameLineRef.current,
-        { scaleY: 0, duration: 0.7, ease: EASE.inOut, transformOrigin: 'bottom' },
+        { scaleY: 0, duration: 0.7, ease: EASE_INOUT, transformOrigin: 'bottom' },
         0.7
       )
 
@@ -76,21 +79,21 @@ export default function Hero({ title, tagline, role, year, collaborators, eyebro
     const titleDuration = Math.max(1.0, (split.chars?.length || 1) * 0.08)
     tl.from(
       split.chars,
-      { yPercent: 100, duration: titleDuration, stagger: 0.04, ease: EASE.inOut },
+      { yPercent: 100, duration: titleDuration, stagger: 0.04, ease: EASE_INOUT },
       0.9
     )
 
-    tl.from(taglineRef.current, { autoAlpha: 0, y: 12, duration: 0.7, ease: EASE.inOut }, '>-0.5')
+    tl.from(taglineRef.current, { autoAlpha: 0, y: 12, duration: 0.7, ease: EASE_INOUT }, '>-0.5')
 
     if (metaRef.current) {
       tl.from(
         metaRef.current.querySelectorAll('div'),
-        { autoAlpha: 0, y: 12, duration: 0.6, stagger: 0.06, ease: EASE.inOut },
+        { autoAlpha: 0, y: 12, duration: 0.6, stagger: 0.06, ease: EASE_INOUT },
         '<+0.2'
       )
     }
 
-    tl.from(scrollCueRef.current, { autoAlpha: 0, y: 8, duration: 0.6, ease: EASE.inOut }, '+=0.4')
+    tl.from(scrollCueRef.current, { autoAlpha: 0, y: 8, duration: 0.6, ease: EASE_INOUT }, '+=0.4')
 
     /* Pin + scrub: ~30% viewport pin holds the hero in place while the
        image parallaxes up and the foreground type clears out. Mobile gets
@@ -108,10 +111,10 @@ export default function Hero({ title, tagline, role, year, collaborators, eyebro
         .to(mediaRef.current, { yPercent: -10, ease: 'none' }, 0)
         .to(
           [eyebrowRef.current, titleRef.current, taglineRef.current, metaRef.current],
-          { autoAlpha: 0, y: -20, ease: EASE.inOut },
+          { autoAlpha: 0, y: -20, ease: EASE_INOUT },
           0
         )
-        .to(scrollCueRef.current, { autoAlpha: 0, ease: EASE.inOut }, 0),
+        .to(scrollCueRef.current, { autoAlpha: 0, ease: EASE_INOUT }, 0),
     })
 
     return () => {
