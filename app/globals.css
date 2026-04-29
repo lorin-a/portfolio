@@ -626,7 +626,9 @@ body.hero-loading > * > main > *:not(:first-child) {
 
 /* Prevent horizontal scroll site-wide.
    `clip` (not `hidden`) — `hidden` creates a scroll container and breaks
-   `position: sticky` for descendants (e.g. Groundswell parallax sections). */
+   `position: sticky` for descendants (e.g. Groundswell parallax sections)
+   AND interferes with ScrollTrigger pin-spacer measurement on the homepage
+   hero (causes flower position drift on cached loads). */
 html, body {
   overflow-x: clip;
   overscroll-behavior-x: none;
