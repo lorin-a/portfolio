@@ -111,42 +111,21 @@ export default function ProjectPreview({
     gsap.set(media, { xPercent: centerShift })
     if (controls) gsap.set(controls, { autoAlpha: 0, y: 8 })
 
-    /* Pin length: compose + a brief hold. The original 350% hold made
-       each card feel like a 4.5vh scroll-grind once compose finished —
-       users got "stuck" in dead dwell time. Trimming the hold collapses
-       the pin to ~1.3vh per card while still leaving a beat for the
-       carousel dots to register as interactive. */
-    const composeUnits = 100
-    const finalHoldUnits = 30
-    const pinUnits = composeUnits + finalHoldUnits
-
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: section,
-        /* On mobile the column layout puts media at the top of the
-           section. Pinning at 'top top' would tuck the image's top
-           edge directly behind the fixed nav (~50–56px tall). Offset
-           the pin so the section pins with its top at 64px from the
-           viewport top, clearing the nav entirely. Desktop centers
-           content in min-height: 90vh, so the nav never overlaps
-           visible content there. */
-        start: isMobile ? 'top 64px' : 'top top',
-        end: `+=${pinUnits}%`,
-        pin: true,
-        pinType: 'transform',
-        scrub: 1, /* heavier — scroll and motion feel weighted together */
-      },
-    })
+    /* Compose timeline: paused, played by IntersectionObserver when the
+       section enters view. No scrub, no pin — same model as the bio and
+       practice cards. Section's min-height: 90vh provides natural
+       dwell; the cascade lands in ~0.9s, well within the user's normal
+       scroll-through window. */
+    const tl = gsap.timeline({ paused: true })
 
     /* Compose: media shrinks (desktop only — on mobile the column
        layout keeps media full-width, since shrinking to 55% leaves the
        imagery tiny and pushed up off-screen) and text reveals. */
-    const composeEnd = composeUnits / pinUnits
     if (!isMobile) {
       tl.to(media, {
         width: '55%',
         xPercent: 0,
-        duration: composeEnd,
+        duration: 1.6,
         ease: 'power1.inOut',
       }, 0)
     }
@@ -155,16 +134,16 @@ export default function ProjectPreview({
       ? {
           autoAlpha: 1,
           y: 0,
-          duration: composeEnd * 0.75,
+          duration: 0.8,
           ease: 'power1.inOut',
         }
       : {
           autoAlpha: 1,
           x: 0,
-          duration: composeEnd * 0.75,
+          duration: 0.8,
           ease: 'power1.inOut',
         },
-      composeEnd * 0.30,
+      0.6,
     )
 
     /* Dots fade up after compose has mostly landed — signaling the
@@ -173,10 +152,24 @@ export default function ProjectPreview({
       tl.to(controls, {
         autoAlpha: 1,
         y: 0,
-        duration: composeEnd * 0.4,
+        duration: 0.4,
         ease: 'power2.out',
-      }, composeEnd * 0.7)
+      }, 1.4)
     }
+
+    /* Threshold 0.35: fires once roughly a third of the section is in
+       view, so the compose only begins once the user has clearly
+       transitioned to looking at this card and not the previous one. */
+    const composeObserver = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          tl.play()
+          composeObserver.disconnect()
+        }
+      },
+      { threshold: 0.35 }
+    )
+    composeObserver.observe(section)
   }, { scope: sectionRef, dependencies: [mediaSrc, mediaSequence.length] })
 
   const pillClass = styles[`pill${pillVariant.charAt(0).toUpperCase() + pillVariant.slice(1)}`] || styles.pillWeave
