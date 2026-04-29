@@ -3,10 +3,9 @@
  *
  * Coordinate space: SVG viewBox 0 0 1000 600. Each dot is a <g> at (0,0)
  * containing a circle of r=24; GSAP translates the group via x/y and
- * scales it. Dots persist throughout the entire story — when not
- * starring, they recede to ambient peripheral positions (small scale,
- * lower opacity) rather than disappearing. The whole point is that
- * the cast remains continuous as scroll repositions them.
+ * scales it. Layouts only list dots that should be VISIBLE at that
+ * beat. Match-cut continuity: a dot present in two adjacent layouts
+ * travels between positions; a dot present in only one fades in/out.
  *
  * Colors are eyedropped approximations from the Figma slides. Refine
  * against the source palette before public ship.
@@ -37,6 +36,32 @@ export const CAST = [
 
 export const YOU = { id: 'you', color: '#DCE7F0' }
 export const ALL_DOTS = [...CAST, YOU]
+
+/* ─── Computed ring positions for Act III ─────────────────────
+   20 evenly-spaced angles around (500, 300), radius 200, starting
+   at the top and walking clockwise. */
+const RING_CENTER = { x: 500, y: 300 }
+const RING_RADIUS = 200
+const ringPos = (i) => {
+  const angle = (i / 20) * Math.PI * 2 - Math.PI / 2
+  return {
+    x: +(RING_CENTER.x + Math.cos(angle) * RING_RADIUS).toFixed(1),
+    y: +(RING_CENTER.y + Math.sin(angle) * RING_RADIUS).toFixed(1),
+    scale: 1,
+  }
+}
+
+const ringLayout = Object.fromEntries(
+  CAST.map((dot, i) => [dot.id, ringPos(i)])
+)
+
+/* Indices into the ring used for chaotic interior lines (Act III).
+   Pairs of dot indices whose ring positions get connected. Decorative;
+   visualization-only; activated when DrawSVG lines are added. */
+export const RING_LINES = [
+  [0, 8], [0, 13], [3, 11], [4, 17], [6, 14],
+  [7, 16], [9, 18], [10, 19], [12, 1], [15, 5], [2, 14],
+]
 
 export const LAYOUTS = {
   /* Hero — 5 dots in a diagonal across the right side, sized
@@ -73,9 +98,7 @@ export const LAYOUTS = {
     d04: { x: 565, y: 310, scale: 1 },
   },
 
-  /* Cluster: all 20 dots converge into a tight blob. The 5 title
-     dots return from ambient; the other 15 enter from offstage.
-     Lavender "you" appears at lower-right edge. */
+  /* Cluster — all 20 dots converge into a tight blob. */
   cluster: {
     d01: { x: 510, y: 305, scale: 1 },
     d02: { x: 460, y: 280, scale: 1 },
@@ -100,7 +123,7 @@ export const LAYOUTS = {
     you: { x: 880, y: 480, scale: 0.7 },
   },
 
-  /* Same cluster; lavender "you" rises slightly toward center. */
+  /* Cluster + lavender rises slightly toward center. */
   truth: {
     d01: { x: 510, y: 305, scale: 1 },
     d02: { x: 460, y: 280, scale: 1 },
@@ -124,21 +147,67 @@ export const LAYOUTS = {
     d20: { x: 555, y: 350, scale: 1 },
     you: { x: 870, y: 440, scale: 1.0 },
   },
+
+  /* Act III — perfect ring formation. All 20 dots Flip from cluster
+     to evenly-spaced ring positions. Lavender stays at lower-right. */
+  ring: {
+    ...ringLayout,
+    you: { x: 880, y: 480, scale: 0.7 },
+  },
+
+  /* Same ring; lavender rises into focus for "But your own." */
+  ring_you: {
+    ...ringLayout,
+    you: { x: 880, y: 460, scale: 1.0 },
+  },
+
+  /* Act IV — just blue, alone, large, at center. The ring fades. */
+  blue_solo: {
+    d03: { x: 500, y: 300, scale: 2.0 },
+  },
+
+  /* Blue + yellow as the "therapy and mom" pair. Yellow joins
+     overlapping the right side of blue. */
+  therapy_pair: {
+    d01: { x: 470, y: 320, scale: 1.4 },
+    d03: { x: 540, y: 280, scale: 1.6 },
+  },
 }
 
-/* Initial layout — set on mount, runs intro animation, NOT a scroll beat. */
+/* Initial layout — set on mount, intro animation runs, NOT a scroll beat. */
 export const INITIAL_LAYOUT = 'title'
 export const INITIAL_COPY = 'title'
 
-/* Scroll-driven beats only. The first beat transitions FROM the title
-   initial state. span = vh of scroll spent transitioning INTO this beat. */
+/* Scroll-driven beats. Atomized: most movements split into a
+   transition beat (dots move, lead text wipes in) followed by one
+   or more held beats (image static, secondary copy reveals). The
+   reader gets explicit dwell on each phrase rather than meeting them
+   stacked inside one beat. */
 export const BEATS = [
-  { id: 'thought',       layout: 'thought', copyId: 'thought',      span: 250 },
-  { id: 'empathy',       layout: 'trio',    copyId: 'empathy',      span: 200 },
-  { id: 'perspectives',  layout: 'quad',    copyId: 'perspectives', span: 200 },
-  { id: 'distance',      layout: 'cluster', copyId: 'distance',     span: 250 },
-  { id: 'avoidance',     layout: 'cluster', copyId: 'avoidance',    span: 200 },
-  { id: 'truth',         layout: 'truth',   copyId: 'truth',        span: 200 },
+  /* Act I — thought spiral */
+  { id: 'thought-lead',     layout: 'thought',  copyId: 'thought_lead',     span: 200 },
+  { id: 'thought-quote',    layout: 'thought',  copyId: 'thought_quote',    span: 150 },
+  { id: 'empathy-lead',     layout: 'trio',     copyId: 'empathy_lead',     span: 200 },
+  { id: 'empathy-quote',    layout: 'trio',     copyId: 'empathy_quote',    span: 150 },
+  { id: 'perspectives-lead',layout: 'quad',     copyId: 'persp_lead',       span: 200 },
+  { id: 'perspectives-quote',layout: 'quad',    copyId: 'persp_quote',      span: 150 },
+
+  /* Act II — distance, avoidance, truth */
+  { id: 'distance',         layout: 'cluster',  copyId: 'distance',         span: 250 },
+  { id: 'avoidance',        layout: 'cluster',  copyId: 'avoidance',        span: 200 },
+  { id: 'disassociation',   layout: 'cluster',  copyId: 'disassociation',   span: 200 },
+  { id: 'truth',            layout: 'truth',    copyId: 'truth',            span: 200 },
+
+  /* Act III — every angle */
+  { id: 'every-angle',      layout: 'ring',     copyId: 'every_angle',      span: 300 },
+  { id: 'everyones',        layout: 'ring',     copyId: 'everyones',        span: 200 },
+  { id: 'but-your-own',     layout: 'ring_you', copyId: 'but_your_own',     span: 200 },
+
+  /* Act IV — therapy + mom */
+  { id: 'aka',              layout: 'blue_solo',    copyId: 'aka',          span: 200 },
+  { id: 'therapy',          layout: 'blue_solo',    copyId: 'therapy',      span: 200 },
+  { id: 'mom',              layout: 'therapy_pair', copyId: 'mom',          span: 200 },
+  { id: 'mom-wisdom',       layout: 'therapy_pair', copyId: 'mom_wisdom',   span: 250 },
 ]
 
 export const TOTAL_VH = BEATS.reduce((sum, b) => sum + b.span, 0)

@@ -1,7 +1,8 @@
-/* Whelm scrollytelling — foundation slice (title + Acts I + II).
-   Bg #FFFAF0 throughout this slice; later acts shift to deep blue.
-   Hardcoded slide cream rather than --cream token so the case study
-   matches its source palette exactly. */
+/* Whelm scrollytelling — Acts I–IV.
+   Bg #FFFAF0 (Figma slide cream) hardcoded throughout this slice.
+   The dot canvas wraps in a subtle ambient-breath wrapper that runs
+   independently of GSAP — adds quiet life to held beats without
+   conflicting with scroll-driven transforms on inner dots. */
 
 .story {
   position: relative;
@@ -16,6 +17,26 @@
   height: 100vh;
   height: 100dvh;
   overflow: hidden;
+}
+
+/* Ambient breath wrapper — slow scale oscillation around the canvas.
+   Pure CSS, parallel to GSAP's transforms on individual dots. The
+   breath gives held beats subtle life: the cluster appears to inhale
+   while the reader meets the copy. */
+.canvasWrap {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  animation: ambientBreath 14s ease-in-out infinite;
+  transform-origin: 50% 50%;
+  will-change: transform;
+}
+
+@keyframes ambientBreath {
+  0%, 100% { transform: scale(1); }
+  50%      { transform: scale(1.012); }
 }
 
 .canvas {
@@ -51,7 +72,7 @@
   max-width: min(38ch, 36vw);
 }
 
-/* ─── Kind variants (typography per copy role) ────────────────── */
+/* ─── Kind variants ─────────────────────────────────────────── */
 
 .kind_h1 {
   max-width: min(60ch, 58vw);
@@ -70,7 +91,6 @@
 
 .titleLine {
   display: block;
-  /* clipPath set by GSAP for line-by-line wipe entrance. */
 }
 
 .kind_sub {
@@ -89,6 +109,25 @@
   font-weight: 400;
   letter-spacing: -0.012em;
   max-width: min(22ch, 32vw);
+}
+
+/* Editorial inline display heading — matches the "Things I learned
+   in therapy" / "and from my mom" register. Larger than lead, more
+   confident weight, used inside the therapy/mom sequence. */
+.kind_h2_inline {
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: clamp(36px, 4.4vw, 68px);
+  line-height: 1.15;
+  font-weight: 250;
+  letter-spacing: -0.012em;
+  font-variation-settings: 'SOFT' 100, 'WONK' 0;
+  color: #1A1A1A;
+  max-width: min(28ch, 50vw);
+}
+
+.kind_h2_inline strong {
+  font-weight: 500;
+  font-variation-settings: 'SOFT' 100, 'WONK' 1;
 }
 
 .kind_body {
@@ -115,30 +154,31 @@
   font-size: clamp(18px, 1.9vw, 28px);
   line-height: 1.35;
   font-weight: 400;
-  max-width: min(24ch, 26vw);
+  max-width: min(28ch, 30vw);
 }
 
 .kind_quote q::before { content: '\201C'; }
 .kind_quote q::after  { content: '\201D'; }
 
 .kind_tag {
-  font-family: var(--font-body, 'Open Sans'), sans-serif;
-  font-size: clamp(14px, 1.5vw, 20px);
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: clamp(20px, 2.2vw, 36px);
+  font-weight: 350;
+  font-variation-settings: 'SOFT' 100, 'WONK' 1;
   white-space: nowrap;
+  color: #1A1A1A;
 }
 
 /* ─── Position presets ─────────────────────────────────────────
-   Generous edge insets and tight max-widths intentionally leave
-   each phrase alone with cream around it. The dot canvas occupies
-   the visual center; copy stays anchored to the corners and edges
-   so they don't collide. */
+   Generous edge insets and tight max-widths leave each phrase alone
+   with cream around it. Dot canvas occupies visual center; copy stays
+   anchored to corners and edges. */
 
 .pos_tl { top: 6vh;  left: 6vw;  }
 .pos_tr { top: 6vh;  right: 6vw; }
 .pos_bl { bottom: 8vh; left: 6vw; }
-.pos_br { bottom: 8vh; right: 6vw; max-width: min(28ch, 30vw); }
+.pos_br { bottom: 8vh; right: 6vw; max-width: min(32ch, 32vw); }
 
-/* Subtitle in the lower-right (matches title slide). */
 .pos_br_sub {
   bottom: 7vh;
   right: 6vw;
@@ -146,32 +186,67 @@
   max-width: min(38ch, 34vw);
 }
 
-/* Mid-row left/right — anchored to vertical mid; pulled to outer
-   edges so display-scale text doesn't crowd the dot cluster. */
 .pos_ml { top: 32vh; left: 6vw; }
 .pos_mr { top: 32vh; right: 6vw; }
 
-/* Below the dot stage. Sits with vertical breathing room above
-   and below to feel like an aside, not a caption. */
 .pos_c_bot {
   left: 50%;
   top: 64vh;
   transform: translateX(-50%);
 }
 
+/* Mid-canvas centered — used for the "empathized with everyone's"
+   phrase that nests inside the chaotic ring. */
+.pos_c_mid {
+  left: 50%;
+  top: 48vh;
+  transform: translateX(-50%);
+  text-align: center;
+  max-width: min(28ch, 32vw);
+}
+
+/* "you" tag — anchored near the lavender dot's truth/your-own position. */
 .pos_you_tag {
   right: 8vw;
   bottom: 22vh;
 }
 
+/* Therapy/mom centered stack — three phrases that build vertically
+   centered on the canvas, each below the last with breathing room. */
+.pos_c_lead {
+  left: 50%;
+  top: 22vh;
+  transform: translateX(-50%);
+  text-align: left;
+  max-width: min(28ch, 50vw);
+}
+.pos_c_lead2 {
+  left: 50%;
+  top: 36vh;
+  transform: translateX(-50%);
+  text-align: left;
+  max-width: min(28ch, 50vw);
+}
+.pos_c_lead3 {
+  left: 50%;
+  top: 52vh;
+  transform: translateX(-50%);
+  text-align: left;
+  max-width: min(28ch, 50vw);
+}
+
 /* ─── Reduced motion ─────────────────────────────────────────── */
 
 @media (prefers-reduced-motion: reduce) {
+  .canvasWrap { animation: none; }
   .copyBlock {
     opacity: 1;
     transform: none;
   }
   .titleLine {
+    clip-path: none !important;
+  }
+  .kind_lead, .kind_h2_inline {
     clip-path: none !important;
   }
 }
