@@ -111,13 +111,13 @@ export default function ProjectPreview({
     gsap.set(media, { xPercent: centerShift })
     if (controls) gsap.set(controls, { autoAlpha: 0, y: 8 })
 
-    /* Pin length: compose + a longer hold so the user has time to register
-       the carousel as a control (the dots catch the eye as the dwell sits)
-       before the pin releases and the page continues scrolling. The
-       carousel itself is interactive — click/tap to advance, dots to jump
-       — not scroll-driven, so dwell time is the only thing the pin owes. */
+    /* Pin length: compose + a brief hold. The original 350% hold made
+       each card feel like a 4.5vh scroll-grind once compose finished —
+       users got "stuck" in dead dwell time. Trimming the hold collapses
+       the pin to ~1.3vh per card while still leaving a beat for the
+       carousel dots to register as interactive. */
     const composeUnits = 100
-    const finalHoldUnits = 350
+    const finalHoldUnits = 30
     const pinUnits = composeUnits + finalHoldUnits
 
     const tl = gsap.timeline({
