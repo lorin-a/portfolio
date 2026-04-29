@@ -84,32 +84,38 @@
 
 .kind_lead {
   font-family: var(--font-body, 'Open Sans'), sans-serif;
-  font-size: clamp(20px, 2.4vw, 32px);
-  line-height: 1.25;
+  font-size: clamp(28px, 3.6vw, 56px);
+  line-height: 1.2;
   font-weight: 400;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.012em;
+  max-width: min(22ch, 32vw);
 }
 
 .kind_body {
   font-family: var(--font-body, 'Open Sans'), sans-serif;
-  font-size: clamp(16px, 1.6vw, 22px);
-  line-height: 1.4;
-  max-width: min(28ch, 24vw);
+  font-size: clamp(18px, 2vw, 30px);
+  line-height: 1.3;
+  font-weight: 400;
+  letter-spacing: -0.005em;
+  max-width: min(20ch, 22vw);
 }
 
 .kind_note {
   font-family: var(--font-body, 'Open Sans'), sans-serif;
-  font-size: clamp(14px, 1.4vw, 18px);
+  font-size: clamp(16px, 1.6vw, 22px);
   font-weight: 300;
+  font-style: italic;
   text-align: center;
-  max-width: 24ch;
+  max-width: 22ch;
+  letter-spacing: 0.005em;
 }
 
 .kind_quote {
   font-family: var(--font-body, 'Open Sans'), sans-serif;
-  font-size: clamp(15px, 1.6vw, 20px);
-  line-height: 1.4;
-  max-width: min(32ch, 30vw);
+  font-size: clamp(18px, 1.9vw, 28px);
+  line-height: 1.35;
+  font-weight: 400;
+  max-width: min(24ch, 26vw);
 }
 
 .kind_quote q::before { content: '\201C'; }
@@ -121,27 +127,35 @@
   white-space: nowrap;
 }
 
-/* ─── Position presets ────────────────────────────────────────── */
+/* ─── Position presets ─────────────────────────────────────────
+   Generous edge insets and tight max-widths intentionally leave
+   each phrase alone with cream around it. The dot canvas occupies
+   the visual center; copy stays anchored to the corners and edges
+   so they don't collide. */
 
-.pos_tl { top: 7vh;  left: 5vw;  }
-.pos_tr { top: 7vh;  right: 5vw; }
-.pos_bl { bottom: 12vh; left: 5vw; }
-.pos_br { bottom: 14vh; right: 5vw; max-width: min(36ch, 32vw); }
+.pos_tl { top: 6vh;  left: 6vw;  }
+.pos_tr { top: 6vh;  right: 6vw; }
+.pos_bl { bottom: 8vh; left: 6vw; }
+.pos_br { bottom: 8vh; right: 6vw; max-width: min(28ch, 30vw); }
 
 /* Subtitle in the lower-right (matches title slide). */
 .pos_br_sub {
-  bottom: 8vh;
-  right: 5vw;
+  bottom: 7vh;
+  right: 6vw;
   text-align: left;
-  max-width: min(46ch, 38vw);
+  max-width: min(38ch, 34vw);
 }
 
-.pos_ml { top: 38vh; left: 5vw; }
-.pos_mr { top: 38vh; right: 5vw; }
+/* Mid-row left/right — anchored to vertical mid; pulled to outer
+   edges so display-scale text doesn't crowd the dot cluster. */
+.pos_ml { top: 32vh; left: 6vw; }
+.pos_mr { top: 32vh; right: 6vw; }
 
+/* Below the dot stage. Sits with vertical breathing room above
+   and below to feel like an aside, not a caption. */
 .pos_c_bot {
   left: 50%;
-  top: 58vh;
+  top: 64vh;
   transform: translateX(-50%);
 }
 

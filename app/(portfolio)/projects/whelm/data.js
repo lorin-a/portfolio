@@ -38,23 +38,9 @@ export const CAST = [
 export const YOU = { id: 'you', color: '#DCE7F0' }
 export const ALL_DOTS = [...CAST, YOU]
 
-/* Ambient peripheral positions for the 5 title dots when not starring.
-   Distributed to corners/edges, small scale, dimmed opacity. They stay
-   visible as continuous characters in the periphery. */
-const AMBIENT = {
-  d01: { x: 90,  y: 80,  scale: 0.28, opacity: 0.45 },
-  d02: { x: 920, y: 90,  scale: 0.28, opacity: 0.45 },
-  d03: { x: 80,  y: 520, scale: 0.28, opacity: 0.45 },
-  d04: { x: 940, y: 510, scale: 0.28, opacity: 0.45 },
-  d05: { x: 920, y: 220, scale: 0.32, opacity: 0.4  },
-}
-
-const merge = (...layers) => Object.assign({}, ...layers)
-
 export const LAYOUTS = {
   /* Hero — 5 dots in a diagonal across the right side, sized
-     progressively. Mirrors the Figma title slide. Lavender "you"
-     not yet present (scale 0). */
+     progressively. Mirrors the Figma title slide. */
   title: {
     d01: { x: 540, y: 440, scale: 0.5 },
     d02: { x: 625, y: 370, scale: 0.7 },
@@ -63,25 +49,29 @@ export const LAYOUTS = {
     d05: { x: 915, y: 90,  scale: 1.4 },
   },
 
-  /* Single yellow thought, others recede to ambient periphery. */
-  thought: merge(AMBIENT, {
-    d01: { x: 500, y: 280, scale: 1, opacity: 1 },
-  }),
+  /* Single yellow thought. d03 (blue) carries forward from the title
+     diagonal, traveling to its trio-right waiting position.
+     d02, d04, d05 fade out (absent from this layout). */
+  thought: {
+    d01: { x: 500, y: 280, scale: 1 },
+    d03: { x: 555, y: 270, scale: 1 },
+  },
 
-  /* Empathy: yellow + red + blue come center; green + wine ambient. */
-  trio: merge(AMBIENT, {
-    d01: { x: 510, y: 310, scale: 1, opacity: 1 },
-    d02: { x: 465, y: 270, scale: 1, opacity: 1 },
-    d03: { x: 555, y: 270, scale: 1, opacity: 1 },
-  }),
+  /* Empathy: d02 (rust) fades in at trio-left. d01 and d03 already
+     in place from thought; they nudge slightly into trio formation. */
+  trio: {
+    d01: { x: 510, y: 310, scale: 1 },
+    d02: { x: 465, y: 270, scale: 1 },
+    d03: { x: 555, y: 270, scale: 1 },
+  },
 
-  /* Perspectives: add green to the trio. Wine still ambient. */
-  quad: merge(AMBIENT, {
-    d01: { x: 495, y: 290, scale: 1, opacity: 1 },
-    d02: { x: 460, y: 250, scale: 1, opacity: 1 },
-    d03: { x: 555, y: 250, scale: 1, opacity: 1 },
-    d04: { x: 565, y: 310, scale: 1, opacity: 1 },
-  }),
+  /* Perspectives: d04 (green) fades in below the trio. */
+  quad: {
+    d01: { x: 495, y: 290, scale: 1 },
+    d02: { x: 460, y: 250, scale: 1 },
+    d03: { x: 555, y: 250, scale: 1 },
+    d04: { x: 565, y: 310, scale: 1 },
+  },
 
   /* Cluster: all 20 dots converge into a tight blob. The 5 title
      dots return from ambient; the other 15 enter from offstage.
