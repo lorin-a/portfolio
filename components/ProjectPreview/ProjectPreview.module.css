@@ -110,13 +110,11 @@
   padding: 0;
   cursor: pointer;
   color: var(--color-ink);
-  opacity: 0.45;
   border-radius: 50%;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  transition: opacity var(--motion-fast) var(--ease-out),
-              transform var(--motion-fast) var(--ease-out);
+  transition: transform var(--motion-fast) var(--ease-out);
 }
 
 .carouselArrow svg {
@@ -127,12 +125,11 @@
 .carouselArrow:focus-visible {
   outline: 2px solid var(--color-ink);
   outline-offset: 4px;
-  opacity: 0.8;
 }
 
 @media (hover: hover) {
   .carouselArrow:hover {
-    opacity: 1;
+    transform: scale(1.1);
   }
 }
 
@@ -142,7 +139,6 @@
   font-weight: 400;
   letter-spacing: 0.06em;
   color: var(--color-ink);
-  opacity: 0.5;
   font-feature-settings: 'tnum' 1;
   min-width: 5em;
   text-align: center;
@@ -150,7 +146,6 @@
 
 .carouselCounterDivider {
   margin: 0 0.1em;
-  opacity: 0.7;
 }
 
 /* ===========================================
