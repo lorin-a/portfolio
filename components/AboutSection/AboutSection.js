@@ -203,95 +203,98 @@ export default function AboutSection() {
       gsap.set(cardBodies, { autoAlpha: 0 })
       gsap.set(practiceLabelRef.current, { autoAlpha: 0, y: 16 })
 
-      // ─── Pre-pin: photo iris opens as section enters viewport ───
+      // ─── Photo iris opens once when the section enters view. Plays at
+      // its own pace, no scrub, no reverse on backscroll.
       gsap.to(photoInnerRef.current, {
         clipPath: 'circle(75% at 50% 50%)',
+        duration: 1.2,
         ease: 'power3.out',
         scrollTrigger: {
           trigger: sectionRef.current,
           start: 'top 85%',
-          end: 'top 10%',
-          scrub: true,
+          toggleActions: 'play none none none',
         },
       })
 
-      // ─── Pinned scrub timeline: each beat cascades, once revealed stays
-      // visible. Desktop only — mobile gets the same beats via a paused
-      // timeline + IntersectionObserver in the else branch below.
+      // ─── Bio cascade: paused timeline played by IntersectionObserver
+      // when the section enters view. No scrub, no pin — same model as
+      // the practice cards. Compressed to ~1.5s so every beat lands
+      // while the section is still in view at typical scroll speeds.
       if (!isAboutMobile) {
-        const pinTl = gsap.timeline({
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: 'top top',
-            end: '+=200%',
-            pin: true,
-            pinType: 'transform',
-            scrub: 0.4,
-            anticipatePin: 1,
-          },
-        })
+        const pinTl = gsap.timeline({ paused: true })
 
-        // Beat 1 — Wiggle ring draws (0 → 1.4s)
+        // Beat 1 — Wiggle ring draws (0 → 0.6s)
         pinTl.to(
           wigglePathRef.current,
-          { drawSVG: '0% 100%', duration: 1.4, ease: 'power2.inOut' },
+          { drawSVG: '0% 100%', duration: 0.6, ease: 'power2.inOut' },
           0
         )
 
-        // Beat 2 — Byline text slides up (1.7 → 2.5s)
+        // Beat 2 — Byline text slides up (0.4 → 0.8s)
         pinTl.to(
           bylineTextRef.current,
-          { autoAlpha: 1, y: 0, duration: 0.8, ease: 'power2.out' },
-          1.7
+          { autoAlpha: 1, y: 0, duration: 0.4, ease: 'power2.out' },
+          0.4
         )
 
-        // Beat 3a — "Translating lived experience into " types on (2.6 → ~3.4s)
+        // Beat 3a — "Translating lived experience into " types on (0.6 → 0.85s)
         if (beforeChars.length) {
           pinTl.to(
             beforeChars,
             {
               yPercent: 0,
-              duration: 0.5,
+              duration: 0.25,
               ease: 'power1.inOut',
-              stagger: 0.022,
+              stagger: 0.012,
             },
-            2.6
+            0.6
           )
         }
 
-        // Beat 3b — Gradient accent "thoughtful design" fades up (3.2 → 3.8s)
+        // Beat 3b — Gradient accent "thoughtful design" fades up (0.8 → 1.1s)
         pinTl.to(
           ledeAccentRef.current,
-          { autoAlpha: 1, yPercent: 0, duration: 0.6, ease: 'power2.out' },
-          3.2
+          { autoAlpha: 1, yPercent: 0, duration: 0.3, ease: 'power2.out' },
+          0.8
         )
 
-        // Beat 3c — " to improve complex systems." types on (3.4 → ~4.1s)
+        // Beat 3c — " to improve complex systems." types on (0.85 → 1.1s)
         if (afterChars.length) {
           pinTl.to(
             afterChars,
             {
               yPercent: 0,
-              duration: 0.5,
+              duration: 0.25,
               ease: 'power1.inOut',
-              stagger: 0.022,
+              stagger: 0.012,
             },
-            3.4
+            0.85
           )
         }
 
-        // Beat 4 — Drop-down menus cascade vertically (4.2 → ~5.1s)
+        // Beat 4 — Drop-down menus cascade vertically (1.1 → ~1.5s)
         pinTl.to(
           cards,
           {
             autoAlpha: 1,
             y: 0,
-            duration: 0.6,
+            duration: 0.3,
             ease: 'power2.out',
-            stagger: 0.15,
+            stagger: 0.08,
           },
-          4.2
+          1.1
         )
+
+        const bioObserver = new IntersectionObserver(
+          ([entry]) => {
+            if (entry.isIntersecting) {
+              pinTl.play()
+              bioObserver.disconnect()
+            }
+          },
+          { threshold: 0, rootMargin: '0px' }
+        )
+        bioObserver.observe(sectionRef.current)
       } else {
         // ─── Mobile cascade: same beats as the desktop pin scrub but
         // played at natural pace, triggered when the byline enters the
