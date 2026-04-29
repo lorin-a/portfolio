@@ -112,6 +112,7 @@ export default function HeroScatter() {
   const sectionRef = useRef(null)
   const flowerRef = useRef(null)
   const arrowRef = useRef(null)
+  const idleHintRef = useRef(null)
   const subtitleRef = useRef(null)
   const ctaRef = useRef(null)
   const dRefs = useRef([])
@@ -126,6 +127,57 @@ export default function HeroScatter() {
   const flowerHoverable = useRef(false)
   const shapeDrawDone = useRef(null)
   const onShapeDrawComplete = useCallback(() => shapeDrawDone.current?.(), [])
+
+  /* Idle scroll hint — fades in if user hasn't scrolled within threshold,
+     fades out + disables on first scroll input. Sibling of the pinned
+     section so it stays viewport-anchored regardless of pin transforms. */
+  useEffect(() => {
+    const el = idleHintRef.current
+    if (!el) return
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    const isMobile = window.matchMedia('(max-width: 480px)').matches
+    const threshold = isMobile ? 1800 : 2500
+
+    let revealed = false
+    let dismissed = false
+    let timer = null
+
+    const reveal = () => {
+      if (dismissed || revealed) return
+      revealed = true
+      el.style.opacity = '0.85'
+    }
+
+    const dismiss = () => {
+      if (dismissed) return
+      dismissed = true
+      if (timer) clearTimeout(timer)
+      el.style.opacity = '0'
+      window.removeEventListener('scroll', onScroll, { passive: true })
+      window.removeEventListener('wheel', dismiss, { passive: true })
+      window.removeEventListener('touchmove', dismiss, { passive: true })
+      window.removeEventListener('keydown', onKey)
+    }
+
+    const onScroll = () => { if (window.scrollY > 2) dismiss() }
+    const onKey = (e) => {
+      if (['ArrowDown', 'PageDown', 'Space', ' ', 'End'].includes(e.key)) dismiss()
+    }
+
+    if (!prefersReduced) timer = setTimeout(reveal, threshold)
+    window.addEventListener('scroll', onScroll, { passive: true })
+    window.addEventListener('wheel', dismiss, { passive: true })
+    window.addEventListener('touchmove', dismiss, { passive: true })
+    window.addEventListener('keydown', onKey)
+
+    return () => {
+      if (timer) clearTimeout(timer)
+      window.removeEventListener('scroll', onScroll)
+      window.removeEventListener('wheel', dismiss)
+      window.removeEventListener('touchmove', dismiss)
+      window.removeEventListener('keydown', onKey)
+    }
+  }, [])
 
   const [isDark, setIsDark] = useState(true)
   useEffect(() => {
@@ -460,6 +512,7 @@ export default function HeroScatter() {
 
           <div ref={arrowRef} className={styles.welcomeGroup}>
             <p className={styles.welcomeText}>Welcome</p>
+            <p className={styles.scrollHint}>Scroll to Explore</p>
             <svg className={styles.arrow} viewBox="0 0 20 24" fill="none" aria-hidden="true">
               <path d="M10 2v18M5 14l5 6 5-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
@@ -487,6 +540,13 @@ export default function HeroScatter() {
           </div>
 
         </section>
+      </div>
+
+      <div ref={idleHintRef} className={styles.idleHint} aria-hidden="true">
+        <span className={styles.idleHintLabel}>Keep scrolling</span>
+        <svg className={styles.idleHintArrow} viewBox="0 0 20 24" fill="none" aria-hidden="true">
+          <path d="M10 2v18M5 14l5 6 5-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
       </div>
     </div>
   )
