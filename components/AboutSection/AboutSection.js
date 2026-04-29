@@ -196,11 +196,11 @@ export default function AboutSection() {
         if (marks[2]) gsap.set(marks[2], { autoAlpha: 0, x: -260, rotation: 8 })
       }
 
-      // Practice card body copy starts hidden — blooms inside each card after spread.
+      // Practice card body copy starts hidden — fades in quickly after cards land.
       const cardBodies = marks
         .map((m) => m?.querySelector(`.${styles.practiceCardBody}`))
         .filter(Boolean)
-      gsap.set(cardBodies, { autoAlpha: 0, scale: 0.85, transformOrigin: 'center top' })
+      gsap.set(cardBodies, { autoAlpha: 0 })
       gsap.set(practiceLabelRef.current, { autoAlpha: 0, y: 16 })
 
       // ─── Pre-pin: photo iris opens as section enters viewport ───
@@ -367,36 +367,36 @@ export default function AboutSection() {
         practiceTl
           .to(
             practiceLabelRef.current,
-            { autoAlpha: 1, y: 0, duration: 0.4, ease: 'power2.out' },
+            { autoAlpha: 1, y: 0, duration: 0.2, ease: 'power2.out' },
             0
           )
           .to(
             marks,
             {
               autoAlpha: 1,
-              duration: 0.5,
+              duration: 0.2,
               ease: 'power2.out',
-              stagger: 0.08,
+              stagger: 0.04,
             },
-            0.2
+            0.05
           )
           .to(
             marks,
             isPracticeMobile
               ? {
                   y: 0,
-                  duration: 0.5,
+                  duration: 0.3,
                   ease: 'power2.out',
-                  stagger: 0.08,
+                  stagger: 0.04,
                 }
               : {
                   x: 0,
                   rotation: 0,
-                  duration: 0.7,
+                  duration: 0.3,
                   ease: 'power2.out',
-                  stagger: 0.06,
+                  stagger: 0.03,
                 },
-            0.8
+            0.2
           )
 
         if (cardBodies.length) {
@@ -404,12 +404,11 @@ export default function AboutSection() {
             cardBodies,
             {
               autoAlpha: 1,
-              scale: 1,
-              duration: 0.6,
-              ease: 'back.out(1.4)',
-              stagger: 0.1,
+              duration: 0.2,
+              ease: 'power2.out',
+              stagger: 0.04,
             },
-            1.5
+            0.4
           )
         }
 
@@ -424,7 +423,7 @@ export default function AboutSection() {
               observer.disconnect()
             }
           },
-          { threshold: 0.35 }
+          { threshold: 0, rootMargin: '0px 0px -120px 0px' }
         )
         observer.observe(practiceWrapRef.current)
       }

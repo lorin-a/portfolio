@@ -341,6 +341,10 @@
   gap: var(--space-sm);
   width: 100%;
   max-width: 720px;
+  /* Extra vertical runway so the practice block occupies more of the
+     scroll path. Lengthens the user's viewing window without forcing a
+     pin or sticky behavior. */
+  padding-block: var(--space-xl);
 }
 
 .practiceLabel {
