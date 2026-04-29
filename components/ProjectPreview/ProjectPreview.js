@@ -1,7 +1,7 @@
 'use client'
 
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { gsap } from '@/lib/gsap'
+import { gsap, ScrollTrigger } from '@/lib/gsap'
 import { useGSAP } from '@gsap/react'
 import styles from './ProjectPreview.module.css'
 
@@ -111,72 +111,48 @@ export default function ProjectPreview({
     gsap.set(media, { xPercent: centerShift })
     if (controls) gsap.set(controls, { autoAlpha: 0, y: 8 })
 
-    /* Pin length: compose + a longer hold so the user has time to register
-       the carousel as a control (the dots catch the eye as the dwell sits)
-       before the pin releases and the page continues scrolling. The
-       carousel itself is interactive — click/tap to advance, dots to jump
-       — not scroll-driven, so dwell time is the only thing the pin owes. */
-    const composeUnits = 100
-    const finalHoldUnits = 350
-    const pinUnits = composeUnits + finalHoldUnits
+    /* Compose plays on its own ~1s timer when the section enters view.
+       A short pin (150%) holds the composed card just long enough for the
+       carousel dots to register as an interactive control before the page
+       continues scrolling. Decoupling compose from scroll velocity stops
+       the section from feeling like a 4.5vh scroll-grind per card. */
+    const composeTl = gsap.timeline({ paused: true })
 
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: section,
-        /* On mobile the column layout puts media at the top of the
-           section. Pinning at 'top top' would tuck the image's top
-           edge directly behind the fixed nav (~50–56px tall). Offset
-           the pin so the section pins with its top at 64px from the
-           viewport top, clearing the nav entirely. Desktop centers
-           content in min-height: 90vh, so the nav never overlaps
-           visible content there. */
-        start: isMobile ? 'top 64px' : 'top top',
-        end: `+=${pinUnits}%`,
-        pin: true,
-        pinType: 'transform',
-        scrub: 1, /* heavier — scroll and motion feel weighted together */
-      },
-    })
-
-    /* Compose: media shrinks (desktop only — on mobile the column
-       layout keeps media full-width, since shrinking to 55% leaves the
-       imagery tiny and pushed up off-screen) and text reveals. */
-    const composeEnd = composeUnits / pinUnits
     if (!isMobile) {
-      tl.to(media, {
+      composeTl.to(media, {
         width: '55%',
         xPercent: 0,
-        duration: composeEnd,
+        duration: 0.7,
         ease: 'power1.inOut',
       }, 0)
     }
 
-    tl.to(text, isMobile
-      ? {
-          autoAlpha: 1,
-          y: 0,
-          duration: composeEnd * 0.75,
-          ease: 'power1.inOut',
-        }
-      : {
-          autoAlpha: 1,
-          x: 0,
-          duration: composeEnd * 0.75,
-          ease: 'power1.inOut',
-        },
-      composeEnd * 0.30,
+    composeTl.to(text, isMobile
+      ? { autoAlpha: 1, y: 0, duration: 0.55, ease: 'power1.inOut' }
+      : { autoAlpha: 1, x: 0, duration: 0.55, ease: 'power1.inOut' },
+      0.25,
     )
 
-    /* Dots fade up after compose has mostly landed — signaling the
-       interactive carousel is ready to use. */
     if (controls) {
-      tl.to(controls, {
-        autoAlpha: 1,
-        y: 0,
-        duration: composeEnd * 0.4,
-        ease: 'power2.out',
-      }, composeEnd * 0.7)
+      composeTl.to(controls, {
+        autoAlpha: 1, y: 0,
+        duration: 0.35, ease: 'power2.out',
+      }, 0.6)
     }
+
+    /* Pin briefly so the user dwells with the composed card. No scrub —
+       compose runs on its own timer, pin only owes "looking time." */
+    ScrollTrigger.create({
+      trigger: section,
+      /* Mobile: offset 64px to clear the fixed nav (column layout puts
+         media at top). Desktop: centers via min-height: 90vh. */
+      start: isMobile ? 'top 64px' : 'top top',
+      end: '+=150%',
+      pin: true,
+      pinType: 'transform',
+      onEnter: () => composeTl.play(),
+      onEnterBack: () => composeTl.play(),
+    })
   }, { scope: sectionRef, dependencies: [mediaSrc, mediaSequence.length] })
 
   const pillClass = styles[`pill${pillVariant.charAt(0).toUpperCase() + pillVariant.slice(1)}`] || styles.pillWeave
