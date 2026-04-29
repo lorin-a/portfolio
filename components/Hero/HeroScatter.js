@@ -223,7 +223,7 @@ export default function HeroScatter() {
       if (D_PEEK.has(i)) {
         const peek = toPeek(D_SCATTER[i])
         const off = peekSlideOffset(D_SCATTER[i])
-        gsap.set(el, { left: peek[0] + '%', top: peek[1] + '%', x: off.x, y: off.y, autoAlpha: 0 })
+        gsap.set(el, { left: peek[0] + '%', top: peek[1] + '%', xPercent: -50, yPercent: -50, x: off.x, y: off.y, autoAlpha: 0 })
         peekEls.push(el)
       } else {
         gsap.set(el, { left: D_OFFSCREEN[i][0] + '%', top: D_OFFSCREEN[i][1] + '%', autoAlpha: 1 })
@@ -233,7 +233,7 @@ export default function HeroScatter() {
       if (C_PEEK.has(i)) {
         const peek = toPeek(C_SCATTER[i])
         const off = peekSlideOffset(C_SCATTER[i])
-        gsap.set(el, { left: peek[0] + '%', top: peek[1] + '%', x: off.x, y: off.y, autoAlpha: 0 })
+        gsap.set(el, { left: peek[0] + '%', top: peek[1] + '%', xPercent: -50, yPercent: -50, x: off.x, y: off.y, autoAlpha: 0 })
         peekEls.push(el)
       } else {
         gsap.set(el, { left: C_OFFSCREEN[i][0] + '%', top: C_OFFSCREEN[i][1] + '%', autoAlpha: 1 })
