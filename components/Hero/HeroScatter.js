@@ -106,6 +106,32 @@ const MARK_OFFSCREEN = {
   weave: toOffscreen(MARK_SCATTER.weave),
 }
 
+/* PEEK: a few letters start cropped at their nearest edge instead of fully
+   offscreen. Acts as a wordless "more below" affordance during Welcome,
+   then continues onto the existing scatter trajectory when scroll begins. */
+function toPeek(pos) {
+  const [x, y] = pos
+  const distLeft = x, distRight = 100 - x, distTop = y, distBottom = 100 - y
+  const min = Math.min(distLeft, distRight, distTop, distBottom)
+  if (min === distLeft) return [8, y]
+  if (min === distRight) return [92, y]
+  if (min === distTop) return [x, 8]
+  return [x, 92]
+}
+/* Slide-in direction in pixels — letter starts pushed further toward
+   its nearest edge, then slides back to its peek resting position. */
+function peekSlideOffset(pos) {
+  const [x, y] = pos
+  const distLeft = x, distRight = 100 - x, distTop = y, distBottom = 100 - y
+  const min = Math.min(distLeft, distRight, distTop, distBottom)
+  if (min === distLeft) return { x: -80, y: 0 }
+  if (min === distRight) return { x: 80, y: 0 }
+  if (min === distTop) return { x: 0, y: -80 }
+  return { x: 0, y: 80 }
+}
+const D_PEEK = new Set([0, 1, 2])  /* D, e, s */
+const C_PEEK = new Set([0])        /* C */
+
 export default function HeroScatter() {
   const heroRef = useRef(null)
   const wrapperRef = useRef(null)
@@ -187,12 +213,31 @@ export default function HeroScatter() {
       width: flowerSize, height: flowerSize, autoAlpha: 1,
     })
 
-    /* Place all elements at their OFFSCREEN positions (visible but off-viewport) */
+    /* Place elements at their starting positions.
+       Non-PEEK letters: full OFFSCREEN, autoAlpha:1 (invisible past edge).
+       PEEK letters: at PEEK position (so the timeline captures peek as their
+       "from"), but pushed further out via x/y offset and hidden via autoAlpha:0
+       — they slide in + fade in when Welcome appears. */
+    const peekEls = []
     dChars.forEach((el, i) => {
-      gsap.set(el, { left: D_OFFSCREEN[i][0] + '%', top: D_OFFSCREEN[i][1] + '%', autoAlpha: 1 })
+      if (D_PEEK.has(i)) {
+        const peek = toPeek(D_SCATTER[i])
+        const off = peekSlideOffset(D_SCATTER[i])
+        gsap.set(el, { left: peek[0] + '%', top: peek[1] + '%', x: off.x, y: off.y, autoAlpha: 0 })
+        peekEls.push(el)
+      } else {
+        gsap.set(el, { left: D_OFFSCREEN[i][0] + '%', top: D_OFFSCREEN[i][1] + '%', autoAlpha: 1 })
+      }
     })
     cChars.forEach((el, i) => {
-      gsap.set(el, { left: C_OFFSCREEN[i][0] + '%', top: C_OFFSCREEN[i][1] + '%', autoAlpha: 1 })
+      if (C_PEEK.has(i)) {
+        const peek = toPeek(C_SCATTER[i])
+        const off = peekSlideOffset(C_SCATTER[i])
+        gsap.set(el, { left: peek[0] + '%', top: peek[1] + '%', x: off.x, y: off.y, autoAlpha: 0 })
+        peekEls.push(el)
+      } else {
+        gsap.set(el, { left: C_OFFSCREEN[i][0] + '%', top: C_OFFSCREEN[i][1] + '%', autoAlpha: 1 })
+      }
     })
     if (senseRef.current) gsap.set(senseRef.current, { left: MARK_OFFSCREEN.sense[0] + '%', top: MARK_OFFSCREEN.sense[1] + '%', autoAlpha: 1 })
     if (weaveRef.current) gsap.set(weaveRef.current, { left: MARK_OFFSCREEN.weave[0] + '%', top: MARK_OFFSCREEN.weave[1] + '%', autoAlpha: 1 })
@@ -226,6 +271,13 @@ export default function HeroScatter() {
           ScrollTrigger.normalizeScroll(true)
           ScrollTrigger.refresh()
           gsap.to(arrowRef.current, { autoAlpha: 1, duration: 0.5, ease: 'power1.inOut' })
+          /* Peek letters slide in from further offscreen, fading in alongside
+             Welcome — a wordless hint that more exists beyond the frame. */
+          gsap.to(peekEls, {
+            x: 0, y: 0, autoAlpha: 1,
+            duration: 0.9, ease: 'power1.inOut',
+            stagger: 0.08,
+          })
           document.body.classList.remove('hero-loading')
         },
       })
@@ -460,6 +512,7 @@ export default function HeroScatter() {
 
           <div ref={arrowRef} className={styles.welcomeGroup}>
             <p className={styles.welcomeText}>Welcome</p>
+            <p className={styles.scrollHint}>Keep Scrolling</p>
             <svg className={styles.arrow} viewBox="0 0 20 24" fill="none" aria-hidden="true">
               <path d="M10 2v18M5 14l5 6 5-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
