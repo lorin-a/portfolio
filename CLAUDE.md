@@ -80,6 +80,35 @@ Use V2 tokens from `DESIGN_SPEC.md` Section 5 (color) and Section 6 (motion) for
 --font-wonky: 'SOFT' 50, 'WONK' 1   /* Hero only */
 ```
 
+## Motion Architecture — Scroll Reveals
+
+All scroll-triggered reveals on this project use **paused timeline + IntersectionObserver play-once**. No GSAP `scrub`. Forward plays once at the timeline's own pace. Backward leaves the section composed — never reverses.
+
+```js
+const tl = gsap.timeline({ paused: true })
+tl.to(/* beats */)
+
+const observer = new IntersectionObserver(
+  ([entry]) => {
+    if (entry.isIntersecting) {
+      tl.play()
+      observer.disconnect()
+    }
+  },
+  { threshold: 0.35 }
+)
+observer.observe(sectionRef.current)
+```
+
+**Trigger tuning:**
+- `threshold: 0.3-0.5` — fires once user has clearly transitioned to looking at the section. Default for case studies and bio.
+- `rootMargin: '0px 0px Npx 0px'` (positive) — fires before section enters view. Use only when animation needs head-start time.
+- `rootMargin: '0px 0px -Npx 0px'` (negative) — fires after section is N pixels in. Alternative to threshold for short sections.
+
+Compress timelines to ~1-2s so all beats land within the section's natural viewing window. Don't pin to enforce dwell — let the section's CSS height (`min-height: 90vh` etc.) provide it.
+
+**Deprecated:** `scrub: true`, `scrub: 0.4`, scrub-pinned timelines. These were on every homepage section before 2026-04-29. They created reverse-on-backscroll, pin spacer friction, and "stuck" feel. Don't reintroduce. Hero (HeroScatter) is the only remaining scrub-tied animation on the homepage and is intentional.
+
 ## V1 → V2 Migration
 
 The site is mid-build. V1 is deployed and must not break. V2 is being built on the homepage first, then applied to other pages.

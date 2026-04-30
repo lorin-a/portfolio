@@ -1,7 +1,7 @@
 'use client'
 
 import { useRef, useState, useEffect, useCallback } from 'react'
-import { gsap, ScrollTrigger } from '@/lib/gsap'
+import { gsap, ScrollTrigger, SplitText } from '@/lib/gsap'
 import { useGSAP } from '@gsap/react'
 import ShapeMark from '@/components/marks/ShapeMark'
 import SenseMark from '@/components/marks/SenseMark'
@@ -138,6 +138,8 @@ export default function HeroScatter() {
   const sectionRef = useRef(null)
   const flowerRef = useRef(null)
   const arrowRef = useRef(null)
+  const welcomeTextRef = useRef(null)
+  const scrollHintRef = useRef(null)
   const subtitleRef = useRef(null)
   const ctaRef = useRef(null)
   const dRefs = useRef([])
@@ -244,7 +246,23 @@ export default function HeroScatter() {
 
     gsap.set(subtitleRef.current, { autoAlpha: 0 })
     gsap.set(ctaRef.current, { autoAlpha: 0 })
-    gsap.set(arrowRef.current, { autoAlpha: 0 })
+    gsap.set(arrowRef.current, { autoAlpha: 0, xPercent: -50 })
+    /* Both texts visible at element-level; per-char masking handles the swap.
+       SplitText needs the elements rendered with their final font metrics
+       before splitting, so we split here (after fonts loaded via opener)
+       and stash the splits on the refs for the timeline to drive. */
+    gsap.set(welcomeTextRef.current, { autoAlpha: 1 })
+    gsap.set(scrollHintRef.current, { autoAlpha: 0.75 })
+    const welcomeSplit = SplitText.create(welcomeTextRef.current, {
+      type: 'chars', mask: 'chars', charsClass: 'wChar',
+    })
+    const hintSplit = SplitText.create(scrollHintRef.current, {
+      type: 'chars', mask: 'chars', charsClass: 'hChar',
+    })
+    /* Welcome chars start in place (visible). Hint chars start lifted out
+       of their mask (below the mask box), so they wipe up into view. */
+    gsap.set(welcomeSplit.chars, { yPercent: 0 })
+    gsap.set(hintSplit.chars, { yPercent: 110 })
     gsap.set(measureRef.current, { autoAlpha: 0 })
 
     /* Lock scrolling during flower opener */
@@ -267,10 +285,17 @@ export default function HeroScatter() {
              Lenis is intentionally disabled on the homepage in
              PortfolioShell so it does not fight this trigger. */
           document.body.style.overflow = ''
-          if (heroST) heroST.enable()
-          ScrollTrigger.normalizeScroll(true)
-          ScrollTrigger.refresh()
-          gsap.to(arrowRef.current, { autoAlpha: 1, duration: 0.5, ease: 'power1.inOut' })
+          /* Fade welcome in BEFORE enabling the scrub timeline. The
+             timeline's tl.set at position 0 would otherwise snap autoAlpha
+             to 1 the moment scrub activates, overriding this soft fade. */
+          gsap.to(arrowRef.current, {
+            autoAlpha: 1, duration: 0.5, ease: 'power1.inOut',
+            onComplete: () => {
+              if (heroST) heroST.enable()
+              ScrollTrigger.normalizeScroll(true)
+              ScrollTrigger.refresh()
+            },
+          })
           /* Peek letters slide in from further offscreen, fading in alongside
              Welcome — a wordless hint that more exists beyond the frame. */
           gsap.to(peekEls, {
@@ -330,20 +355,73 @@ export default function HeroScatter() {
              and avoids creating a containing block. */
           pinType: window.matchMedia('(max-width: 768px)').matches ? 'fixed' : 'transform',
           scrub: 0.8,
+          /* Welcome → Keep Scrolling crossfade is built into the timeline below
+             (search "WELCOME → KEEP SCROLLING SWAP"), so progress drives the swap
+             and the hint persists through scatter, fading as gather begins.
+
+             onUpdate: when scrub is below the welcome exit tween's start
+             position (0.06), force the welcome group back to its initial
+             pose. Plain `tl.to` only renders within its own time range, so
+             scrubbing back below the tween otherwise leaves the element
+             stuck at the TO state (autoAlpha:0). Putting an anchor tween
+             at position 0 of the timeline would fire at build time and
+             show welcome during the flower opener — this callback avoids
+             both pitfalls. */
           onUpdate: (self) => {
-            /* Show welcome only when at the very start (flower state) */
-            if (arrowRef.current) {
-              if (self.progress < 0.005) {
-                gsap.set(arrowRef.current, { autoAlpha: 1 })
-              } else {
-                gsap.set(arrowRef.current, { autoAlpha: 0 })
-              }
+            if (self.progress < 0.05 && arrowRef.current) {
+              gsap.set(arrowRef.current, { y: 0, autoAlpha: 1 })
             }
           },
         },
       })
 
-      /* Welcome arrow hidden via onUpdate callback (handles all scroll states) */
+      /* ── WELCOME → KEEP SCROLLING SWAP ──
+           Per-character clip-mask swap (SplitText with mask: 'chars'):
+           Welcome chars wipe up out of their masks while KEEP SCROLLING
+           chars wipe up into theirs from below, slightly staggered.
+           Reads as a coordinated split-flap — a single magic gesture,
+           not two competing animations.
+
+           Dismiss is a typewriter back-step: KEEP SCROLLING chars retract
+           right-to-left (last char first), each lifting and clipping out
+           of its mask. Arrow holds, then fades only after the last char
+           is gone, so the message visibly finishes retracting. */
+
+      /* Welcome chars wipe up out (left-to-right stagger) */
+      tl.to(welcomeSplit.chars, {
+        yPercent: -110,
+        duration: 0.02,
+        ease: 'power1.inOut',
+        stagger: { each: 0.002, from: 'start' },
+      }, 0)
+
+      /* KEEP SCROLLING chars wipe up into place (left-to-right stagger,
+         starting just after Welcome begins exiting so they overlap) */
+      tl.to(hintSplit.chars, {
+        yPercent: 0,
+        duration: 0.025,
+        ease: 'power1.inOut',
+        stagger: { each: 0.002, from: 'start' },
+      }, 0.008)
+
+      /* Hold KEEP SCROLLING briefly, then a long, scrub-tied dissolve:
+         the whole group drifts down ~12px and fades over a wide swath of
+         the timeline (0.06 → 0.30, ~24% of total scroll). Stretching the
+         tween ensures each scroll tick maps to a small alpha delta, which
+         is what makes scrub feel like scrub instead of a trigger.
+
+         fromTo with immediateRender:false is required so that scrubbing
+         BACK below the tween start (e.g. user scrolls back to top after
+         the hero exit) restores autoAlpha:1 + y:0. With a plain `to`,
+         autoAlpha gets stuck at 0 / visibility:hidden when scrubbed
+         below the start — `to` only renders within its time range. */
+      /* Long, scrub-tied dissolve via the timeline. */
+      tl.to(arrowRef.current, {
+        y: 12,
+        autoAlpha: 0,
+        duration: 0.24,
+        ease: 'sine.inOut',
+      }, 0.06)
 
       /* ── 0–25%: DRAG IN — letters travel from offscreen to scatter positions.
            Flower shrinks simultaneously. Same scroll range = same gesture. ── */
@@ -511,8 +589,10 @@ export default function HeroScatter() {
           </a>
 
           <div ref={arrowRef} className={styles.welcomeGroup}>
-            <p className={styles.welcomeText}>Welcome</p>
-            <p className={styles.scrollHint}>Keep Scrolling</p>
+            <div className={styles.welcomeSwap}>
+              <p ref={welcomeTextRef} className={styles.welcomeText}>Welcome</p>
+              <p ref={scrollHintRef} className={styles.scrollHint}>Keep Scrolling</p>
+            </div>
             <svg className={styles.arrow} viewBox="0 0 20 24" fill="none" aria-hidden="true">
               <path d="M10 2v18M5 14l5 6 5-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
             </svg>

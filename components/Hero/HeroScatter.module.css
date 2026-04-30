@@ -118,13 +118,23 @@
   position: absolute;
   left: 50%;
   top: 70%;
-  transform: translateX(-50%);
+  /* X-centering handled via xPercent in GSAP — CSS transform would
+     conflict with y/autoAlpha tweens on the exit drop. */
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 8px;
   visibility: hidden;
   z-index: 3;
+}
+
+.welcomeSwap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 1.6em;
+  min-width: 11ch;
 }
 
 .welcomeText {
@@ -136,9 +146,19 @@
   color: #e9e9e9;
   margin: 0;
   letter-spacing: 0.05em;
+  white-space: nowrap;
 }
 
 .scrollHint {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-family: var(--font-body);
   font-size: 14px;
   font-weight: 400;
@@ -147,6 +167,7 @@
   color: #e9e9e9;
   opacity: 0.75;
   margin: 0;
+  white-space: nowrap;
 }
 
 .arrow {
