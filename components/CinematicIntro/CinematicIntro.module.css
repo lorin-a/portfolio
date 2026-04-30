@@ -1,0 +1,513 @@
+/* ============================================================================
+   CinematicIntro — Sticky watercolor + purple wash, text beats scroll over.
+   Sits between the hero strip and #vision on /groundswell only.
+   Type follows site-wide tokens: --text-* sizes, --weight-*, --leading-*,
+   --font-heading / --font-body / --font-soft.
+============================================================================ */
+
+.cinematic {
+  position: relative;
+  /* Deep plum carrier behind the watercolor + wash. Mostly hidden by the
+     reveal but sets the anchor color before the painting loads and at any
+     compositing edges. Scoped to this component -- the cinematic is the
+     only deep-plum surface on the site; rest of /groundswell is cream. */
+  --cinematic-carrier: #1a1320;
+  /* Groundswell project cream -- warmer than the site default --cream.
+     Used for all type that sits on the watercolor. */
+  --gs-cream: #f8ebe5;
+  background: var(--cinematic-carrier);
+  color: var(--gs-cream);
+  isolation: isolate;
+  /* Override the global `section` rule that adds 64px top/bottom padding */
+  padding: 0;
+}
+
+/* Sticky background: pinned to viewport for the full length of the intro.
+   Watercolor + purple wash live inside; text beats scroll over the top. */
+.stickyBg {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.purpleWash {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  inset: 0;
+  /* Lighter at center where text lands so the painting reads brighter
+     under the type; darker at edges to anchor the composition. */
+  background: radial-gradient(
+    ellipse at center,
+    rgba(40, 24, 50, 0.35) 0%,
+    rgba(35, 20, 45, 0.65) 55%,
+    rgba(28, 16, 38, 0.85) 100%
+  );
+  z-index: 2;
+  /* GSAP animates autoAlpha to 1 at WASH_START_MS */
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* Scroll column: pulled up one viewport so beat 1 sits on the sticky bg
+   at initial scroll position. As user scrolls, beats slide up while the
+   watercolor stays pinned. */
+.scrollColumn {
+  position: relative;
+  z-index: 1;
+  margin-top: -100vh;
+  margin-top: -100dvh;
+}
+
+.beat {
+  position: relative;
+  min-height: 50vh;
+  min-height: 50dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(40px, 6vh, 72px) clamp(20px, 5vw, 48px);
+}
+
+/* The first beat anchors the pull quote on the watercolor at scroll 0;
+   it needs to fill the viewport so the quote lands centered. */
+.scrollColumn > .beat:first-child {
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+.beatPoem {
+  min-height: auto;
+  padding-top: clamp(32px, 5vh, 56px);
+  padding-bottom: clamp(72px, 12vh, 140px);
+}
+
+.beatInner {
+  max-width: 600px;
+  width: 100%;
+  margin: 0 auto;
+  text-align: center;
+}
+
+/* SplitText line-mask wrapper. Each line gets clipped via overflow:hidden;
+   slight vertical padding keeps descenders/ascenders intact during the wipe. */
+.splitLine {
+  padding: 0.06em 0;
+}
+
+/* ----------------------------------------------------------------------------
+   Beat 1 — Pull quote (visible at scroll 0, layers in via GSAP)
+---------------------------------------------------------------------------- */
+
+.pullQuote {
+  margin: 0 auto;
+  max-width: min(900px, 94vw);
+  text-align: center;
+}
+
+/* Pull quote and thesis share one display register: same family, size,
+   weight, and leading. The pull quote sets itself apart only with italic.
+   Each clause is wrapped in its own span (display:block) so the three
+   visual lines are guaranteed regardless of container width. */
+.quoteText {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: var(--text-h2);
+  font-weight: var(--weight-hero);
+  font-style: italic;
+  line-height: var(--leading-tight);
+  font-variation-settings: var(--font-soft);
+  color: var(--gs-cream);
+  /* GSAP-animated initial state -- parent fades in, SplitText wipes lines */
+  opacity: 0;
+  visibility: hidden;
+}
+
+.quoteText > span {
+  display: block;
+}
+
+.attribution {
+  display: block;
+  margin-top: 1.75em;
+  font-family: var(--font-body);
+  font-size: var(--text-label);
+  font-weight: var(--weight-label);
+  font-style: normal;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(248, 235, 229, 0.6);
+  /* GSAP-animated initial state */
+  opacity: 0;
+  visibility: hidden;
+}
+
+/* Scroll cue: positioned in the lower third of the hero so it sits closer
+   to the thesis than to the viewport edge. Uses site UI register --
+   Open Sans, non-italic, body-small with letter-spacing. */
+.scrollCue {
+  position: absolute;
+  bottom: clamp(120px, 18vh, 180px);
+  left: 50%;
+  transform: translateX(-50%) translateY(8px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  color: rgba(248, 235, 229, 0.7);
+  /* GSAP-animated initial state */
+  opacity: 0;
+  visibility: hidden;
+  animation: scrollCueBob 2.2s ease-in-out infinite;
+}
+
+.scrollLabel {
+  font-family: var(--font-body);
+  font-size: var(--text-body-small);
+  font-weight: var(--weight-body);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+@keyframes scrollCueBob {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50%      { transform: translateX(-50%) translateY(5px); }
+}
+
+/* ----------------------------------------------------------------------------
+   Beat 2 — Thesis + framing
+---------------------------------------------------------------------------- */
+
+/* Same display register as the pull quote -- only difference is roman vs italic. */
+.thesis {
+  margin: 0 auto;
+  max-width: min(22ch, 92vw);
+  font-family: var(--font-heading);
+  font-size: var(--text-h2);
+  font-weight: var(--weight-hero);
+  line-height: var(--leading-tight);
+  font-variation-settings: var(--font-soft);
+  color: var(--gs-cream);
+  text-align: center;
+  text-wrap: pretty;
+  /* GSAP-animated initial state -- SplitText wipes the lines */
+  opacity: 0;
+  visibility: hidden;
+}
+
+/* Framing line sits below the pull quote in beat 2. Site body register --
+   Open Sans, body-large, full opacity so it reads as a project statement. */
+.framing {
+  margin: clamp(40px, 5vh, 64px) auto 0;
+  max-width: 48ch;
+  font-family: var(--font-body);
+  font-size: var(--text-body-large);
+  font-weight: var(--weight-body);
+  line-height: var(--leading-normal);
+  color: var(--gs-cream);
+  text-align: center;
+  text-wrap: pretty;
+  /* GSAP-animated initial state */
+  opacity: 0;
+  visibility: hidden;
+}
+
+/* ----------------------------------------------------------------------------
+   Beat 3 — Side-by-side: big media player on the left, transcript on the right
+---------------------------------------------------------------------------- */
+
+.poemGrid {
+  display: grid;
+  grid-template-columns: minmax(260px, 320px) minmax(0, 540px);
+  align-items: start;
+  gap: clamp(40px, 6vw, 80px);
+  width: 100%;
+  max-width: 940px;
+  margin: 0 auto;
+}
+
+.poemControls {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1.25em;
+  position: sticky;
+  top: clamp(80px, 14vh, 140px);
+  /* GSAP-animated initial state */
+  opacity: 0;
+  visibility: hidden;
+}
+
+/* Big circular play disc -- the spotlight of the player composition. */
+.playDisc {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: clamp(72px, 9vw, 96px);
+  height: clamp(72px, 9vw, 96px);
+  border: 1px solid rgba(248, 235, 229, 0.4);
+  border-radius: 50%;
+  background: rgba(248, 235, 229, 0.08);
+  color: var(--gs-cream);
+  cursor: pointer;
+  padding: 0;
+  transition:
+    background-color var(--motion-fast) var(--ease-out),
+    border-color var(--motion-fast) var(--ease-out),
+    transform var(--motion-fast) var(--ease-out);
+}
+
+@media (hover: hover) {
+  .playDisc:hover {
+    background: rgba(248, 235, 229, 0.16);
+    border-color: rgba(248, 235, 229, 0.75);
+    transform: scale(1.02);
+  }
+}
+
+.playDisc:focus-visible {
+  outline: 2px solid var(--gs-cream);
+  outline-offset: 4px;
+}
+
+.playDiscIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  /* Slight optical offset on the play triangle so it sits visually centered */
+  margin-left: 2px;
+}
+
+.playDisc[aria-pressed='true'] .playDiscIcon {
+  margin-left: 0;
+}
+
+.playerCaption {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 26ch;
+}
+
+.playerTitle {
+  font-family: var(--font-heading);
+  font-size: var(--text-body-small);
+  font-weight: var(--weight-quote);
+  font-style: italic;
+  font-variation-settings: var(--font-soft);
+  line-height: var(--leading-normal);
+  color: rgba(248, 235, 229, 0.78);
+}
+
+.playerStatus {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-body);
+  font-size: var(--text-label);
+  font-weight: var(--weight-label);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--gs-cream);
+}
+
+.playerStatus::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--gs-cream);
+  animation: pulse 1.6s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.4; }
+  50%      { opacity: 1; }
+}
+
+.skipLink {
+  font-family: var(--font-heading);
+  font-size: var(--text-body-small);
+  font-weight: var(--weight-quote);
+  font-style: italic;
+  font-variation-settings: var(--font-soft);
+  letter-spacing: 0.01em;
+  color: rgba(248, 235, 229, 0.65);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-thickness: 1px;
+  padding: 8px 4px;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  transition: color var(--motion-fast) var(--ease-out);
+}
+
+@media (hover: hover) {
+  .skipLink:hover {
+    color: var(--gs-cream);
+  }
+}
+
+.skipLink:focus-visible {
+  outline: 2px solid var(--gs-cream);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+.poemText {
+  width: 100%;
+}
+
+/* Contained transcript frame: fixed height, scrolls as audio plays through.
+   Mask gradient softens the top + bottom edges so lines breathe in and out.
+   The frame itself takes the entry-fade autoAlpha; .poemBody inside is
+   just content. */
+.poemFrame {
+  position: relative;
+  width: 100%;
+  height: clamp(360px, 56vh, 520px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent 0,
+    #000 12%,
+    #000 88%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 0,
+    #000 12%,
+    #000 88%,
+    transparent 100%
+  );
+  /* GSAP-animated initial state */
+  opacity: 0;
+  visibility: hidden;
+  /* Subtle scrollbar so users discover scrollability without visual weight */
+  scrollbar-width: thin;
+  scrollbar-color: rgba(248, 235, 229, 0.18) transparent;
+}
+
+.poemFrame::-webkit-scrollbar {
+  width: 4px;
+}
+
+.poemFrame::-webkit-scrollbar-thumb {
+  background: rgba(248, 235, 229, 0.18);
+  border-radius: var(--radius-pill);
+}
+
+.poemFrame::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.poemBody {
+  margin: 0;
+  padding: 1em 1.5em 1em 0;
+  font-family: var(--font-heading);
+  font-size: var(--text-body-large);
+  font-weight: var(--weight-quote);
+  line-height: var(--leading-normal);
+  font-variation-settings: var(--font-soft);
+  color: rgba(248, 235, 229, 0.88);
+  text-align: left;
+}
+
+.poemOpener {
+  margin: 0 0 1.4em;
+  font-family: var(--font-heading);
+  font-size: var(--text-h3);
+  font-weight: var(--weight-label);
+  color: var(--gs-cream);
+  font-variation-settings: var(--font-soft);
+}
+
+.stanza {
+  margin: 0 0 1.4em;
+  display: flex;
+  flex-direction: column;
+}
+
+.stanza:last-child {
+  margin-bottom: 0;
+}
+
+.poemLine {
+  display: block;
+}
+
+/* Active-line highlight. While audio plays, the line whose timestamp is
+   current stays at full opacity (and brightens to cream); siblings dim
+   so the eye is led to where the voice is. The transition matches the
+   breath of the reading -- 600ms power1.inOut to feel calm, not snappy. */
+.poemBody [data-line-index] {
+  transition: opacity 600ms cubic-bezier(0.42, 0, 0.58, 1),
+              color 600ms cubic-bezier(0.42, 0, 0.58, 1);
+}
+
+.lineDim {
+  opacity: 0.32;
+}
+
+.lineActive {
+  opacity: 1;
+  color: var(--gs-cream);
+}
+
+/* ----------------------------------------------------------------------------
+   Reduced motion — content visible, no animation
+---------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .purpleWash,
+  .quoteText,
+  .attribution,
+  .thesis,
+  .framing,
+  .poemControls,
+  .poemFrame {
+    opacity: 1;
+    visibility: visible;
+  }
+  .poemBody [data-line-index] {
+    transition: none;
+  }
+  .scrollCue {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%);
+    animation: none;
+  }
+}
+
+/* ----------------------------------------------------------------------------
+   Mobile
+---------------------------------------------------------------------------- */
+
+@media (max-width: 600px) {
+  .beat {
+    padding: clamp(40px, 6vh, 72px) var(--space-md);
+  }
+  /* Side-by-side becomes stacked: player on top, transcript below.
+     Player un-sticks so it doesn't pin to the top of the column. */
+  .poemGrid {
+    grid-template-columns: 1fr;
+    gap: 2.25em;
+  }
+  .poemControls {
+    position: static;
+    align-items: flex-start;
+    gap: 1em;
+  }
+}
