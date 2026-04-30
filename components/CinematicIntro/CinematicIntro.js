@@ -1,7 +1,7 @@
 'use client'
 
 import { useRef, useState, useEffect } from 'react'
-import { gsap, SplitText } from '@/lib/gsap'
+import { gsap, SplitText, ScrollTrigger } from '@/lib/gsap'
 import { useGSAP } from '@gsap/react'
 import WatercolorReveal from '@/components/WatercolorReveal/WatercolorReveal'
 import { cloudAudio, GS_AUDIO } from '@/lib/cloudinary'
@@ -11,20 +11,21 @@ gsap.registerPlugin(useGSAP)
 
 const REVEAL_DURATION = 24000
 const WASH_START_MS = 1000
+const WASH_DURATION_S = 1.5
 const QUOTE_DELAY_MS = 2000
 
 const PULL_ATTR = 'Previous UPMC Magee employee'
-const THESIS = 'The healthcare system is held together by the invisible labor of its staff.'
+const THESIS = 'The medical system is held together by the invisible labor of healthcare professionals and caregivers.'
 const FRAMING = 'This project was co-created with and for those who give everything they have to others.'
 
 // Poem text. Sourced from Lorin's Figma (Whelm 271-6873). Stanzas are
 // rendered with internal line breaks; the first stanza is a single bold
 // invocation that doubles as the poem's opening.
 //
-// POEM_TIMESTAMPS pairs by flat line index with POEM_LINES_FLAT below --
-// when Lorin authors per-line start times, the active line highlights as
-// audio plays through. Until then, the array stays null and lines render
-// at full opacity (no dim, no highlight choreography).
+// POEM_TIMESTAMPS pairs by flat line index with the lines rendered below
+// (opener + each stanza line, in document order). When Lorin authors
+// per-line start times, the active line highlights as audio plays through.
+// Until then, the array stays null and lines render at full opacity.
 const POEM_TIMESTAMPS = null // [0.0, 2.4, 4.8, ...] -- flat by line index
 const POEM_OPENER = 'Remember your heart.'
 const POEM_STANZAS = [
@@ -103,6 +104,7 @@ export default function CinematicIntro() {
   const scrollCueRef = useRef(null)
   const quoteBeatRef = useRef(null)
   const thesisRef = useRef(null)
+  const framingBeatRef = useRef(null)
   const framingRef = useRef(null)
   const poemBeatRef = useRef(null)
   const poemTitleRef = useRef(null)
@@ -114,8 +116,9 @@ export default function CinematicIntro() {
   const [audioPlaying, setAudioPlaying] = useState(false)
 
   // Hero beat: thesis is the opening declaration on the watercolor.
-  // Wash fades in first, thesis wipes in line by line via SplitText line-mask,
-  // scroll cue lands as the invitation to continue.
+  // Wash fades in first, thesis lines drift in with a soft blur (autoAlpha
+  // + y + filter:blur), scroll cue trails. No line-mask -- atmospheric,
+  // not choreographed.
   useGSAP(() => {
     if (typeof window === 'undefined') return
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
@@ -123,112 +126,140 @@ export default function CinematicIntro() {
     if (reduced) {
       gsap.set([washRef.current, thesisRef.current, scrollCueRef.current], {
         autoAlpha: 1,
+        y: 0,
+        filter: 'none',
       })
       return
     }
 
     const tl = gsap.timeline()
 
+    // Wash starts dimming the painting early so by the time thesis arrives
+    // the text has its readable backdrop already in place.
     tl.to(washRef.current, {
       autoAlpha: 1,
-      duration: 6,
+      duration: WASH_DURATION_S,
       ease: 'power1.inOut',
     }, WASH_START_MS / 1000)
 
     tl.set(thesisRef.current, { autoAlpha: 1 }, QUOTE_DELAY_MS / 1000)
-    const thesisHeroSplit = SplitText.create(thesisRef.current, {
-      type: 'lines',
-      mask: 'lines',
-      linesClass: styles.splitLine,
-    })
-    tl.from(thesisHeroSplit.lines, {
-      yPercent: 110,
-      duration: 1.5,
-      stagger: 0.5,
-      ease: 'power1.inOut',
-    }, QUOTE_DELAY_MS / 1000)
+    const thesisHeroSplit = SplitText.create(thesisRef.current, { type: 'lines' })
+    tl.fromTo(
+      thesisHeroSplit.lines,
+      { autoAlpha: 0, y: 22, filter: 'blur(5px)' },
+      {
+        autoAlpha: 1,
+        y: 0,
+        filter: 'blur(0px)',
+        duration: 1.4,
+        stagger: 0.22,
+        ease: 'power2.out',
+      },
+      QUOTE_DELAY_MS / 1000
+    )
 
-    tl.to(scrollCueRef.current, {
-      autoAlpha: 1,
-      duration: 0.9,
-      ease: 'power1.inOut',
-    }, '>+0.8')
+    // Scroll cue: no blur (small UI element, blur adds GPU cost without
+    // visible benefit at this size). Just a quiet fade + drift.
+    tl.fromTo(
+      scrollCueRef.current,
+      { autoAlpha: 0, y: 6 },
+      { autoAlpha: 1, y: 0, duration: 0.7, ease: 'power2.out' },
+      '>+0.2'
+    )
   }, { scope: rootRef })
 
-  // Thesis beat: line-mask wipe on the thesis, soft fade on the framing line.
-  // Poem beat: controls fade, transcript fades as a unit (the SplitText wipe
-  // would fight the audio-driven translateY scroll).
+  // Per-beat reveals fire when the beat top crosses viewport center
+  // (`start: 'top center'`) -- text lands fluidly as the user scrolls into
+  // the moment, never abruptly. ScrollTrigger plays each timeline forward
+  // once; backward scroll leaves beats composed.
+  // Reveal grammar: autoAlpha + y + filter:blur, power1.out -- atmospheric.
   useGSAP(() => {
     if (typeof window === 'undefined') return
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
-    // Beat 2: pull quote line-mask wipe, then attribution fades in.
+    // Two reveal grammars to keep GPU cost low and cadence brisk:
+    //   `softFluid` -- blur + y + autoAlpha for display-scale text
+    //   (thesis lines, quote lines, framing, transcript). Atmospheric.
+    //   `quickDrift` -- y + autoAlpha for supporting copy and UI
+    //   (attribution, controls). No blur compositing layer.
+    const softFluidFrom = (over = {}) => ({
+      autoAlpha: 0,
+      y: 22,
+      filter: 'blur(5px)',
+      ...over,
+    })
+    const softFluidTo = (over = {}) => ({
+      autoAlpha: 1,
+      y: 0,
+      filter: 'blur(0px)',
+      duration: 1.4,
+      ease: 'power2.out',
+      ...over,
+    })
+    const quickDriftFrom = (over = {}) => ({ autoAlpha: 0, y: 12, ...over })
+    const quickDriftTo = (over = {}) => ({
+      autoAlpha: 1,
+      y: 0,
+      duration: 1.0,
+      ease: 'power2.out',
+      ...over,
+    })
+
     const buildQuote = (tl) => {
       tl.set(quoteRef.current, { autoAlpha: 1 })
-      const qSplit = SplitText.create(quoteRef.current, {
-        type: 'lines',
-        mask: 'lines',
-        linesClass: styles.splitLine,
-      })
-      tl.from(qSplit.lines, {
-        yPercent: 110,
-        duration: 1.5,
-        stagger: 0.4,
-        ease: 'power1.inOut',
-      })
-      tl.to(attrRef.current, {
-        autoAlpha: 1,
-        duration: 1.1,
-        ease: 'power1.inOut',
-      }, '>-0.2')
+      const qSplit = SplitText.create(quoteRef.current, { type: 'lines' })
+      tl.fromTo(qSplit.lines, softFluidFrom(), softFluidTo({ stagger: 0.18 }))
+      tl.fromTo(attrRef.current, quickDriftFrom(), quickDriftTo(), '>-0.25')
     }
 
-    // Beat 3: framing line primes the poem; controls and transcript fade in.
+    const buildFraming = (tl) => {
+      tl.fromTo(framingRef.current, softFluidFrom(), softFluidTo({ duration: 1.3 }))
+    }
+
     const buildPoem = (tl) => {
-      tl.to(framingRef.current, {
-        autoAlpha: 1,
-        duration: 1.1,
-        ease: 'power1.inOut',
-      })
-      tl.to(poemControlsRef.current, {
-        autoAlpha: 1,
-        duration: 0.9,
-        ease: 'power1.inOut',
-      }, '>-0.3')
-      tl.to(poemTranscriptRef.current, {
-        autoAlpha: 1,
-        duration: 1.2,
-        ease: 'power1.inOut',
-      }, '>-0.4')
+      tl.fromTo(poemControlsRef.current, quickDriftFrom(), quickDriftTo({ duration: 0.9 }))
+      tl.fromTo(
+        poemTranscriptRef.current,
+        softFluidFrom(),
+        softFluidTo({ duration: 1.2 }),
+        '>-0.35'
+      )
     }
 
     const beats = [
       { beat: quoteBeatRef.current, build: buildQuote, fallback: [quoteRef.current, attrRef.current] },
-      { beat: poemBeatRef.current, build: buildPoem, fallback: [framingRef.current, poemControlsRef.current, poemTranscriptRef.current] },
+      { beat: framingBeatRef.current, build: buildFraming, fallback: [framingRef.current] },
+      { beat: poemBeatRef.current, build: buildPoem, fallback: [poemControlsRef.current, poemTranscriptRef.current] },
     ]
 
+    // Each beat plays its reveal once when it enters viewport at 'top 80%'
+    // -- fires as the beat is climbing into view, finishes mid-arrival.
+    // toggleActions: 'play none none none' = forward-only, never reverses
+    // on backscroll. Animation plays at its own paced cadence (1.4s+ for
+    // the soft fluid reveals), so fast scrollers still see the motion.
+    const triggers = []
     beats.forEach(({ beat, build, fallback }) => {
       if (!beat) return
 
       if (reduced) {
-        gsap.set(fallback.filter(Boolean), { autoAlpha: 1 })
+        gsap.set(fallback.filter(Boolean), { autoAlpha: 1, y: 0, filter: 'none' })
         return
       }
 
       const tl = gsap.timeline({ paused: true })
       build(tl)
 
-      const observer = new IntersectionObserver(
-        ([entry]) => {
-          if (entry.isIntersecting) {
-            tl.play()
-            observer.disconnect()
-          }
-        },
-        { threshold: 0.35 }
+      triggers.push(
+        ScrollTrigger.create({
+          trigger: beat,
+          start: 'top 80%',
+          toggleActions: 'play none none none',
+          onEnter: () => tl.play(),
+        })
       )
-      observer.observe(beat)
     })
+
+    return () => triggers.forEach((t) => t.kill())
   }, { scope: rootRef })
 
   // Audio-driven sync. Two layers:
@@ -356,22 +387,24 @@ export default function CinematicIntro() {
           </div>
         </div>
 
-        {/* Beat 2: pull quote + attribution + framing line. Framing primes
-            the poem in the next beat. */}
+        {/* Beat 2: pull quote + attribution. */}
         <div ref={quoteBeatRef} className={styles.beat}>
-          <div className={styles.beatInner}>
-            <blockquote className={styles.pullQuote}>
-              <p ref={quoteRef} className={styles.quoteText}>
-                <span>&ldquo;A special person can do this work forever,</span>
-                <span>a good person can do it for a little while,</span>
-                <span>most people couldn&rsquo;t do it for a day.&rdquo;</span>
-              </p>
-              <cite ref={attrRef} className={styles.attribution}>
-                {PULL_ATTR}
-              </cite>
-            </blockquote>
-            <p ref={framingRef} className={styles.framing}>{FRAMING}</p>
-          </div>
+          <blockquote className={styles.pullQuote}>
+            <p ref={quoteRef} className={styles.quoteText}>
+              <span>&ldquo;A special person can do this work forever,</span>
+              <span>a good person can do it for a little while,</span>
+              <span>most people couldn&rsquo;t do it for a day.&rdquo;</span>
+            </p>
+            <cite ref={attrRef} className={styles.attribution}>
+              {PULL_ATTR}
+            </cite>
+          </blockquote>
+        </div>
+
+        {/* Beat 3: framing line gets its own viewport -- a quiet dedication
+            between the quote and the poem. */}
+        <div ref={framingBeatRef} className={styles.beat}>
+          <p ref={framingRef} className={styles.framing}>{FRAMING}</p>
         </div>
 
         {/* Beat 3: side-by-side player + transcript. Stacks on mobile. */}
