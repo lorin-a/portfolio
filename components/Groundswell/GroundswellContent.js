@@ -12,7 +12,6 @@ import ScrollVideo from '@/components/ScrollVideo/ScrollVideo'
 import AnimatedElement from '@/components/AnimatedElement/AnimatedElement'
 import ProgressNav from '@/components/ProgressNav/ProgressNav'
 import Lightbox from '@/components/Lightbox/Lightbox'
-import Squiggle from '@/components/Squiggle/Squiggle'
 
 
 // ============================================
@@ -1357,11 +1356,6 @@ export default function GroundswellContent() {
               </p>
             </div>
           </AnimatedElement>
-
-          {/* Squiggle Divider */}
-          <div className={styles.squiggleDivider}>
-            <Squiggle color="var(--project-accent-light)" />
-          </div>
 
           {/* Closing */}
           <AnimatedElement>
