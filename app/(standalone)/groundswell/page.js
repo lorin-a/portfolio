@@ -1,4 +1,4 @@
-import GroundswellContent from '@/components/Groundswell/GroundswellContent'
+import GroundswellPublicContent from '@/components/Groundswell/GroundswellPublicContent'
 
 export const metadata = {
   title: 'Groundswell',
@@ -11,5 +11,5 @@ export const metadata = {
 }
 
 export default function StandaloneGroundswellPage() {
-  return <GroundswellContent />
+  return <GroundswellPublicContent />
 }
