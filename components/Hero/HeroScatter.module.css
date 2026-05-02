@@ -298,7 +298,7 @@
    =========================================== */
 @media (max-width: 768px) {
   .scatterChar { font-size: clamp(40px, 12vw, 64px); }
-  .measureTitle { font-size: clamp(40px, 12vw, 64px); }
+  .measureTitle { font-size: clamp(40px, 12vw, 64px); line-height: 1.0; }
   .mark {
     width: clamp(35px, 8vw, 50px);
     height: clamp(35px, 8vw, 50px);
