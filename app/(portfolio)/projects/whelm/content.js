@@ -12,32 +12,35 @@
  */
 
 export const COPY = {
-  /* 01 — Hero */
+  /* 01 — Hero (slide 255:355) */
   hero: [
     { position: 'tl', kind: 'h1', html: 'whelm.' },
     { position: 'br_sub', kind: 'sub', html: '<em>Find Your Way to Feeling</em>' },
   ],
 
-  /* 02 — Chapter divider: The Gap */
+  /* 02 — Chapter divider: The Gap (slide 255:356) */
   'divider-gap': [
     { position: 'tl', kind: 'tag', html: 'Agenda' },
     { position: 'mr', kind: 'agenda', html: 'agenda', dataActive: 'gap' },
   ],
 
-  /* 03 — Overlooked */
+  /* 03 — Overlooked (slide 255:357)
+     Visual is a layered Overwhelm × 3 stack rendered by the
+     `overcome-stack` element. Copy is the punchline beneath. */
   overlooked: [
-    { position: 'c_lead', kind: 'h2_inline', html: 'Overwhelm <em>is overlooked.</em>' },
+    { position: 'c_lead', kind: 'h2_inline', html: '<em>is overlooked.</em>' },
   ],
 
-  /* 04 — Not a problem to solve */
+  /* 04 — Not a problem (slide 255:358) */
   'not-a-problem': [
-    { position: 'tl', kind: 'lead', html: 'What if overwhelm is <em>not a problem</em> to be solved?' },
-    { position: 'br', kind: 'body', html: 'Overwhelm is treated as a productivity issue that can be solved through self-management. This neglects the <strong>emotional experience</strong> beneath the surface.' },
+    { position: 'tl', kind: 'h2_inline', html: 'What if overwhelm is <em>not a problem to be solved?</em>' },
+    { position: 'br', kind: 'body', html: 'Overwhelm is treated as a productivity issue that can be solved through self-management. This neglects the emotional experience beneath the surface.' },
   ],
 
-  /* 05 — The Messenger */
+  /* 05 — Messenger (slide 255:359) */
   messenger: [
     { position: 'tl', kind: 'h2_inline', html: 'What if overwhelm offers us <em>valuable information?</em>' },
-    { position: 'br', kind: 'body', html: 'Overwhelm represents the tension between unmet needs and expectations, unfelt feelings and internalized beliefs. It is not a problem. It is a <strong>messenger</strong>.' },
+    { position: 'br', kind: 'body', html: 'Overwhelm represents the tension between unmet needs and expectations, unfelt feelings and internalized beliefs. It is not a problem.' },
+    { position: 'br_sub', kind: 'lead', html: 'It is a <em>messenger.</em>' },
   ],
 }
