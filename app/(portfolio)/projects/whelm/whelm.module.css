@@ -1,0 +1,276 @@
+/* Whelm scrollytelling — engine + theme.
+   Bg #1f0536 (Figma slide deep purple) hardcoded. Cream-panel beats
+   override to #f0e2ff. Slide-source exact, do not normalize to project
+   tokens. The element canvas wraps in an ambient-breath wrapper that
+   runs independently of GSAP — adds quiet life to held beats without
+   conflicting with scroll-driven transforms on inner elements. */
+
+/* ─── Pinned story container + Whelm theme tokens ───
+   Tokens live on .story so they scope to all descendants without
+   leaking to the rest of the portfolio. Display fonts (Mackinac Pro,
+   Crimson Pro) come from Adobe Fonts; until the Typekit kit is wired,
+   both fall back to Fraunces (already loaded site-wide). */
+.story {
+  --whelm-display: 'P22 Mackinac Pro', 'Mackinac Pro', var(--font-fraunces, 'Fraunces'), Georgia, serif;
+  --whelm-editorial: 'Crimson Pro', var(--font-fraunces, 'Fraunces'), Georgia, serif;
+  --whelm-bg:        #1f0536;  /* slide-exact deep purple */
+  --whelm-bg-cream:  #f0e2ff;  /* slide-exact cream panel */
+  --whelm-cream:     #f3eff7;  /* near-white body type on dark */
+  --whelm-mauve:     #bdb7e9;  /* secondary accent */
+  --whelm-plum:      #49325d;  /* mid accent */
+  --whelm-orchid:    #895fae;  /* highlight */
+
+  position: relative;
+  width: 100%;
+  background: #1f0536; /* slide-exact deep purple, hardcoded by request */
+  color: var(--whelm-cream);
+}
+
+.stage {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+}
+
+/* Ambient breath wrapper — slow scale oscillation around the canvas.
+   Pure CSS, parallel to GSAP transforms on individual elements. */
+.canvasWrap {
+  position: absolute;
+  inset: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  animation: ambientBreath 14s ease-in-out infinite;
+  transform-origin: 50% 50%;
+  will-change: transform;
+}
+
+@keyframes ambientBreath {
+  0%, 100% { transform: scale(1); }
+  50%      { transform: scale(1.012); }
+}
+
+.canvas {
+  position: absolute;
+  inset: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+/* ─── Element wrapper ───
+   Position driven by CSS custom properties set on each wrapper by
+   the orchestrator. Defaults render the element offscreen-invisible
+   so first-paint never flashes a stack of overlapping placeholders. */
+.element {
+  position: absolute;
+  left: calc(var(--ex, 50) * 1%);
+  top: calc(var(--ey, 50) * 1%);
+  transform: translate(-50%, -50%) scale(var(--es, 1));
+  opacity: var(--eo, 0);
+  transform-origin: 50% 50%;
+  will-change: transform, opacity;
+  pointer-events: none;
+}
+
+/* ─── Phase 0 placeholder visual ─── */
+.placeholder {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem 1.5rem;
+  background: rgba(189, 183, 233, 0.12);
+  border: 1px dashed var(--whelm-mauve, #bdb7e9);
+  border-radius: 8px;
+  font-family: var(--whelm-editorial), serif;
+  font-size: 18px;
+  color: var(--whelm-cream, #f3eff7);
+  white-space: nowrap;
+  letter-spacing: 0.02em;
+}
+
+.placeholder[data-kind='wordmark'] {
+  font-family: var(--whelm-display), serif;
+  font-size: clamp(72px, 9vw, 180px);
+  font-weight: 300;
+  letter-spacing: -0.02em;
+  border: none;
+  background: transparent;
+}
+
+.placeholder[data-kind='diagram'],
+.placeholder[data-kind='venn'],
+.placeholder[data-kind='journey'] {
+  width: clamp(280px, 36vw, 540px);
+  height: clamp(280px, 36vw, 540px);
+  border-radius: 50%;
+}
+
+/* ─── Copy layer ─── */
+.copyLayer {
+  position: absolute;
+  inset: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  pointer-events: none;
+}
+
+.copyBlock {
+  position: absolute;
+  visibility: visible;
+  pointer-events: auto;
+  max-width: min(38ch, 36vw);
+}
+
+/* ─── Type kinds ─── */
+.kind_h1 {
+  font-family: var(--whelm-display), serif;
+  font-size: clamp(56px, 8.5vw, 180px);
+  line-height: 1.0;
+  font-weight: 300;
+  letter-spacing: -0.02em;
+  color: var(--whelm-cream, #f3eff7);
+  margin: 0;
+}
+
+.kind_sub {
+  font-family: var(--whelm-editorial), serif;
+  font-size: clamp(20px, 2.4vw, 38px);
+  font-weight: 300;
+  font-style: italic;
+  line-height: 1.3;
+  color: var(--whelm-mauve, #bdb7e9);
+  max-width: min(38ch, 36vw);
+}
+
+.kind_lead {
+  font-family: var(--whelm-editorial), serif;
+  font-size: clamp(28px, 3.6vw, 56px);
+  line-height: 1.2;
+  font-weight: 300;
+  letter-spacing: -0.005em;
+  color: var(--whelm-cream, #f3eff7);
+  max-width: min(22ch, 32vw);
+}
+
+.kind_h2_inline {
+  font-family: var(--whelm-display), serif;
+  font-size: clamp(36px, 5.2vw, 84px);
+  line-height: 1.1;
+  font-weight: 300;
+  letter-spacing: -0.012em;
+  color: var(--whelm-cream, #f3eff7);
+  max-width: min(28ch, 50vw);
+}
+
+.kind_h2_inline em {
+  font-family: var(--whelm-editorial), serif;
+  font-style: italic;
+  font-weight: 300;
+}
+
+.kind_body {
+  font-family: var(--font-body, 'Open Sans'), sans-serif;
+  font-size: clamp(16px, 1.6vw, 22px);
+  line-height: 1.5;
+  font-weight: 400;
+  color: var(--whelm-cream, #f3eff7);
+  opacity: 0.9;
+  max-width: min(36ch, 32vw);
+}
+
+.kind_quote {
+  font-family: var(--whelm-editorial), serif;
+  font-size: clamp(18px, 2vw, 28px);
+  line-height: 1.35;
+  font-weight: 300;
+  font-style: italic;
+  color: var(--whelm-cream, #f3eff7);
+  max-width: min(28ch, 30vw);
+}
+
+.kind_quote q::before { content: '\201C'; }
+.kind_quote q::after  { content: '\201D'; }
+
+.kind_note {
+  font-family: var(--font-body, 'Open Sans'), sans-serif;
+  font-size: clamp(15px, 1.5vw, 20px);
+  font-weight: 300;
+  font-style: italic;
+  text-align: center;
+  color: var(--whelm-mauve, #bdb7e9);
+  max-width: 22ch;
+}
+
+.kind_tag {
+  font-family: var(--whelm-editorial), serif;
+  font-size: clamp(20px, 2.4vw, 36px);
+  font-weight: 300;
+  font-style: italic;
+  color: var(--whelm-mauve, #bdb7e9);
+  white-space: nowrap;
+}
+
+.kind_agenda {
+  font-family: var(--whelm-display), serif;
+  font-size: clamp(28px, 3.4vw, 48px);
+  line-height: 1.6;
+  font-weight: 300;
+  color: var(--whelm-mauve, #bdb7e9);
+}
+
+/* ─── Position presets — generous edge insets, asymmetrical placement ─── */
+.pos_tl   { top: 6vh;  left: 6vw; }
+.pos_tr   { top: 6vh;  right: 6vw; }
+.pos_bl   { bottom: 8vh; left: 6vw; }
+.pos_br   { bottom: 8vh; right: 6vw; max-width: min(36ch, 34vw); }
+
+.pos_br_sub {
+  bottom: 8vh;
+  right: 6vw;
+  text-align: left;
+  max-width: min(38ch, 34vw);
+}
+
+.pos_ml { top: 32vh; left: 6vw; }
+.pos_mr { top: 32vh; right: 6vw; }
+
+.pos_c_lead {
+  left: 50%;
+  top: 22vh;
+  transform: translateX(-50%);
+  text-align: left;
+  max-width: min(28ch, 50vw);
+}
+
+.pos_c_mid {
+  left: 50%;
+  top: 48vh;
+  transform: translateX(-50%);
+  text-align: center;
+  max-width: min(28ch, 32vw);
+}
+
+.pos_c_bot {
+  left: 50%;
+  top: 64vh;
+  transform: translateX(-50%);
+}
+
+/* ─── Reduced motion ─── */
+@media (prefers-reduced-motion: reduce) {
+  .canvasWrap { animation: none; }
+  .copyBlock {
+    opacity: 1;
+    transform: none;
+  }
+  .kind_lead, .kind_h2_inline, .titleLine {
+    clip-path: none !important;
+  }
+}
