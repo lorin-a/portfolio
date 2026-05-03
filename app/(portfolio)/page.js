@@ -1,7 +1,7 @@
 import Hero from '@/components/Hero/HeroScatter'
 import ProjectPreview from '@/components/ProjectPreview/ProjectPreview'
 import AboutSection from '@/components/AboutSection/AboutSection'
-import { cloudImg, cloudVideo, HOME_IMAGES, HOME_VIDEOS, GS_IMAGES, GS_VIDEOS } from '@/lib/cloudinary'
+import { cloudImg, cloudVideo, HOME_IMAGES, HOME_VIDEOS, GS_IMAGES, GS_VIDEOS, WHELM_IMAGES, WHELM_VIDEOS } from '@/lib/cloudinary'
 import styles from './page.module.css'
 
 export default function Home() {
@@ -31,7 +31,7 @@ export default function Home() {
             { src: cloudVideo(GS_VIDEOS['gs-walkthrough-video'], 1200), type: 'video', alt: 'Groundswell walkthrough' },
             { src: cloudImg(GS_IMAGES['gs-ctb-email'], 1200), type: 'image', alt: 'Groundswell care-through-books email in use' },
           ]}
-          href="/groundswell"
+          href="/projects/groundswell"
         />
 
         <ProjectPreview
@@ -58,6 +58,31 @@ export default function Home() {
 
         <ProjectPreview
           num="03"
+          title="Whelm"
+          tagline="A Companion for Navigating Overwhelm"
+          description="A ritual for building a relationship with yourself. Whelm offers permission and process for moving through thought spirals — guiding you inward to find the need beneath the narrative."
+          contributions={[
+            { label: 'Original Concept' },
+            { label: 'Framework Development' },
+            { label: 'Brand & Product Design' },
+          ]}
+          pillVariant="weave"
+          mediaSrc={cloudImg(WHELM_IMAGES['whelm-2'], 1600)}
+          mediaType="image"
+          mediaAlt="Whelm interface — meter introduction"
+          mediaSequence={[
+            { src: cloudVideo(WHELM_VIDEOS['whelm-meter'], 1200), type: 'video', alt: 'Whelm meter in motion' },
+            { src: cloudImg(WHELM_IMAGES['whelm-3'], 1200), type: 'image', alt: 'Whelm interface — body scan introduction' },
+            { src: cloudVideo(WHELM_VIDEOS['whelm-body'], 1200), type: 'video', alt: 'Whelm body scan in motion' },
+            { src: cloudImg(WHELM_IMAGES['whelm-4'], 1200), type: 'image', alt: 'Whelm interface — breathe introduction' },
+            { src: cloudVideo(WHELM_VIDEOS['whelm-breathe'], 1200), type: 'video', alt: 'Whelm breathe practice' },
+            { src: cloudVideo(WHELM_VIDEOS['whelm-opener'], 1200), type: 'video', alt: 'Whelm opener' },
+          ]}
+          comingSoon
+        />
+
+        <ProjectPreview
+          num="04"
           title="SomeBuddy"
           tagline="Social(ish): Approachable Socialization for Busy Buddies"
           description="A social app concept helping grad students find connection over shared values."
@@ -77,10 +102,11 @@ export default function Home() {
             { src: cloudVideo(HOME_VIDEOS['somebuddy-reel-2'], 1200), type: 'video', alt: 'SomeBuddy reel continued' },
           ]}
           comingSoon
+          flip
         />
 
         <ProjectPreview
-          num="04"
+          num="05"
           title="Transition Design"
           tagline="Roots to Resilience: A Food Justice Future"
           description="A systems-level design response to food insecurity in Pittsburgh using Transition Design methods."
@@ -99,11 +125,10 @@ export default function Home() {
             { src: cloudImg(HOME_IMAGES['td-stakeholders'], 1200), type: 'image', alt: 'Stakeholder relations map' },
           ]}
           comingSoon
-          flip
         />
 
         <ProjectPreview
-          num="05"
+          num="06"
           title="Bridging the G.A.P."
           tagline="Inclusive and Playful Nature Trail Rebrand"
           description="A comprehensive rebranding proposal for the Great Allegheny Passage featuring a campaign for inexperienced riders."
@@ -125,6 +150,7 @@ export default function Home() {
             { src: cloudImg(HOME_IMAGES['btg-33'], 1200), type: 'image', alt: 'Bridging the G.A.P. campaign detail' },
           ]}
           comingSoon
+          flip
         />
       </div>
 
