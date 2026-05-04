@@ -70,6 +70,18 @@ export const LAYOUTS = {
 export const INITIAL_LAYOUT = 'hero'
 export const INITIAL_COPY = 'hero'
 
+/* Agenda — drives the sticky top nav that appears once the user scrolls
+   past the hero. Order is the case-study reading order; ids match the
+   `section` field on BEATS for active-state detection. */
+export const SECTIONS = [
+  { id: 'gap',       label: 'The Gap' },
+  { id: 'need',      label: 'The Need' },
+  { id: 'audience',  label: 'The Audience' },
+  { id: 'framework', label: 'The Framework' },
+  { id: 'research',  label: 'The Research' },
+  { id: 'design',    label: 'The Design' },
+]
+
 export const BEATS = [
   /* Each beat: { id, layout, copyId, span, section, fullBleed?, attrs? }
      - section: drives the sidebar's active highlight via data-active-section
