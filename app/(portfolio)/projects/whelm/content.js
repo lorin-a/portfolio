@@ -21,7 +21,7 @@ export const COPY = {
      `overcome-stack` element on the right. The "is overlooked"
      punchline lands bottom-left; "is" upright, "overlooked" italic. */
   overlooked: [
-    { position: 'bl', kind: 'lead', html: 'is <em>overlooked.</em>' },
+    { position: 'br', kind: 'lead', html: 'is <em>overlooked.</em>' },
   ],
 
   /* Section 2 — NEED. Three What-If beats, one phrase per dwell. */
@@ -32,8 +32,8 @@ export const COPY = {
 
   messenger: [
     { position: 'tl', kind: 'h2_inline', html: 'What if overwhelm offers us <em>valuable information?</em>' },
-    { position: 'br', kind: 'body', html: 'Overwhelm represents the tension between unmet needs and expectations, unfelt feelings and internalized beliefs. It is not a problem.' },
-    { position: 'br_sub', kind: 'lead', html: 'It is a <em>messenger.</em>' },
+    { position: 'bl', kind: 'body', html: 'Overwhelm represents the tension between unmet needs and expectations, unfelt feelings and internalized beliefs. It is not a problem.' },
+    { position: 'br', kind: 'lead', html: 'It is a <em>messenger.</em>' },
   ],
 
   invitation: [

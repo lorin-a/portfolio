@@ -75,6 +75,13 @@ export default function WhelmStory() {
       clipPath: 'inset(-0.2em 100% -0.2em 0)',
     })
 
+    /* Hero is full-bleed: sidebar starts hidden. The first beat's
+       tl.call (offset slightly into the beat) will fade it in once
+       scroll moves past hero. */
+    if (sidebarRef.current) {
+      sidebarRef.current.dataset.state = 'hidden'
+    }
+
     if (prefersReduced) {
       const finalName = BEATS.at(-1).layout
       snapToLayout(finalName)
@@ -155,13 +162,14 @@ export default function WhelmStory() {
       const beatLabel = `beat-${beat.id}`
       tl.addLabel(beatLabel, '>')
 
-      /* ── Sidebar update — fires at beat start. ── */
+      /* ── Sidebar update — fires slightly into the beat so progress 0
+         leaves the hero in its initial full-bleed state. ── */
       tl.call(() => {
         const s = sidebarRef.current
         if (!s) return
         s.dataset.state = beat.fullBleed ? 'hidden' : 'visible'
         if (beat.section) s.dataset.activeSection = beat.section
-      }, [], beatLabel)
+      }, [], `${beatLabel}+=${localDur * 0.08}`)
 
       /* ── Phase A — outgoing copy fades out ── */
       const phaseA_dur = localDur * (held ? 0.30 : 0.22)
@@ -202,10 +210,10 @@ export default function WhelmStory() {
 
       const phaseC_start = elementAfterCopy
         ? `${beatLabel}+=${localDur * 0.20}`
-        : `${beatLabel}+=${localDur * (held ? 0.35 : 0.6)}`
+        : `${beatLabel}+=${localDur * (held ? 0.30 : 0.45)}`
       const phaseC_dur = elementAfterCopy
-        ? localDur * 0.30
-        : localDur * (held ? 0.55 : 0.35)
+        ? localDur * 0.35
+        : localDur * (held ? 0.50 : 0.40)
 
       /* ── Phase B — element transitions (skipped on held beats) ── */
       if (!held && diff) {
@@ -272,7 +280,7 @@ export default function WhelmStory() {
           const isWipe = block.kind === 'lead' || block.kind === 'h2_inline'
 
           if (isWipe) {
-            tl.to(sel, { autoAlpha: 1, y: 0, duration: blockDur * 0.2, ease: 'power2.out' }, at)
+            tl.to(sel, { autoAlpha: 1, y: 0, duration: blockDur * 0.3, ease: 'power2.out' }, at)
             tl.to(sel, {
               clipPath: 'inset(-0.2em 0% -0.2em 0)',
               duration: blockDur,
@@ -287,6 +295,9 @@ export default function WhelmStory() {
           }
         })
       }
+
+      /* ── Settle — reveal lands, hold visible before next beat exits ── */
+      tl.to({}, { duration: localDur * 0.20 }, '>')
     })
 
     return () => {

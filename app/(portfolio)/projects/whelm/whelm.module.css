@@ -146,6 +146,13 @@
   z-index: 2;
 }
 
+/* Specific element overrides — different default placement than centered. */
+.element[data-element-id='scroll-cue'] {
+  align-items: flex-end;
+  padding-bottom: var(--s-7);
+  z-index: 6;
+}
+
 /* =====================================================================
    COPY LAYER — grid-positioned blocks
    ===================================================================== */
@@ -163,72 +170,82 @@
   flex-direction: column;
 }
 
-/* Position presets: grid-column + alignment. Padding via spacing tokens. */
+/* Position presets — grid-column + alignment.
+   All presets use `justify-self: stretch` so the block fills its
+   column allocation; text-align controls horizontal alignment of the
+   content inside. This prevents intrinsic-size shrinkage that was
+   collapsing italic punchlines into 2-3 char columns. */
 .pos_tl {
-  grid-column: content-start / span 6;
+  grid-column: content-start / span 7;
   align-self: start;
-  justify-self: start;
+  justify-self: stretch;
   padding: var(--s-9) 0 0 0;
+  text-align: left;
 }
 
 .pos_tr {
-  grid-column: span 6 / content-end;
+  grid-column: span 7 / content-end;
   align-self: start;
-  justify-self: end;
+  justify-self: stretch;
   padding: var(--s-9) 0 0 0;
   text-align: right;
 }
 
 .pos_bl {
-  grid-column: content-start / span 6;
+  grid-column: content-start / span 7;
   align-self: end;
-  justify-self: start;
+  justify-self: stretch;
   padding: 0 0 var(--s-9) 0;
+  text-align: left;
 }
 
 .pos_br {
-  grid-column: span 6 / content-end;
+  grid-column: span 7 / content-end;
   align-self: end;
-  justify-self: end;
+  justify-self: stretch;
   padding: 0 0 var(--s-9) 0;
   text-align: right;
 }
 
 .pos_ml {
-  grid-column: content-start / span 6;
+  grid-column: content-start / span 7;
   align-self: center;
-  justify-self: start;
+  justify-self: stretch;
+  text-align: left;
 }
 
 .pos_mr {
-  grid-column: span 6 / content-end;
+  grid-column: span 7 / content-end;
   align-self: center;
-  justify-self: end;
+  justify-self: stretch;
   text-align: right;
 }
 
 .pos_center {
   grid-column: 4 / span 6;
   align-self: center;
-  justify-self: center;
+  justify-self: stretch;
   text-align: center;
 }
 
 .pos_below_center {
   grid-column: 4 / span 6;
   align-self: center;
-  justify-self: center;
+  justify-self: stretch;
   text-align: center;
-  padding-top: 18vh;
+  padding-top: 16vh;
 }
 
-.pos_br_sub {
-  grid-column: span 6 / content-end;
-  align-self: end;
-  justify-self: end;
-  padding: 0 0 var(--s-9) 0;
-  text-align: right;
-}
+/* Stretch the copy text inside max-width so right-aligned text reads
+   from the right edge inward. */
+.pos_tl > *,
+.pos_bl > *,
+.pos_ml > * { margin-right: auto; }
+.pos_tr > *,
+.pos_br > *,
+.pos_mr > * { margin-left: auto; }
+.pos_center > *,
+.pos_below_center > * { margin-left: auto; margin-right: auto; }
 
 /* =====================================================================
    TYPE KINDS — coordinated ramp
@@ -277,12 +294,12 @@
 
 .kind_h2_inline {
   font-family: var(--whelm-display-font);
-  font-size: var(--t-h1);
+  font-size: var(--t-h2);
   font-weight: 400;
-  line-height: var(--lh-tight);
+  line-height: var(--lh-snug);
   letter-spacing: -0.012em;
   color: var(--whelm-cream);
-  max-width: 16ch;
+  max-width: 14ch;
   margin: 0;
 }
 
@@ -334,7 +351,15 @@
   flex-direction: column;
   justify-content: center;
   padding: var(--s-9) var(--s-7) var(--s-9) var(--s-8);
-  border-right: 1px solid rgba(189, 183, 233, 0.10);
+  background: linear-gradient(
+    180deg,
+    rgba(58, 37, 83, 0.0)   0%,
+    rgba(58, 37, 83, 0.55) 18%,
+    rgba(58, 37, 83, 0.65) 50%,
+    rgba(58, 37, 83, 0.55) 82%,
+    rgba(58, 37, 83, 0.0) 100%
+  );
+  border-right: 1px solid rgba(189, 183, 233, 0.18);
   z-index: 8;
   opacity: 0;
   transition: opacity var(--m-slow) var(--m-out);
