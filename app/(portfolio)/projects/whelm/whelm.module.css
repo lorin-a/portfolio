@@ -149,7 +149,7 @@
 /* Specific element overrides — different default placement than centered. */
 .element[data-element-id='scroll-cue'] {
   align-items: flex-end;
-  padding-bottom: var(--s-7);
+  padding-bottom: var(--s-9);
   z-index: 6;
 }
 
@@ -530,15 +530,35 @@
   mix-blend-mode: screen;
 }
 
-/* Hero flourish (now using cursivewhelm.svg as background asset). */
-.heroFlourish {
-  width: 100%;
-  height: 100%;
-  display: block;
+/* Hero cursive flourish — oversized, clipped wrapper, wipes L→R.
+   The wrapper is sized to 130% of its container so the cursive marks
+   extend past the visible edges of the stage. clip-path inset(0 100% 0 0)
+   hides it initially; the orchestrator animates to inset(0 0% 0 0)
+   during intro for a handwriting-style draw-on. */
+.heroFlourishClip {
+  position: absolute;
+  top: -15%;
+  left: -15%;
+  width: 130%;
+  height: 130%;
+  clip-path: inset(0 100% 0 0);
+  pointer-events: none;
+  will-change: clip-path;
 }
 
-.heroFlourishPath {
-  /* GSAP animates strokeDashoffset 100 → 0 during the intro. */
+.heroFlourishImg {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  opacity: 0.85;
+}
+
+/* Hero flourish wrapper needs visible overflow so the oversized image
+   bleeds past the .element grid cell into sidebar / bottom edges. */
+.element[data-element-id='hero-flourish'] {
+  overflow: visible;
+  z-index: 2;
 }
 
 /* Overcome stack — slide 255:357. */
@@ -564,24 +584,27 @@
 .overcomeLine[data-tier='2'] { color: var(--whelm-mauve); }
 .overcomeLine[data-tier='3'] { color: rgba(189, 183, 233, 0.45); }
 
-/* Scroll cue — Hero "Learn More" + chevron. */
+/* Scroll cue — Hero "Learn More" + chevron. Cream for legibility,
+   tracked open for editorial feel. The element override below sits it
+   higher than the bottom edge. */
 .scrollCue {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--s-2);
+  gap: var(--s-3);
   font-family: var(--whelm-editorial-font);
-  font-size: var(--t-body);
+  font-size: var(--t-lead);
   font-style: italic;
   font-weight: 300;
-  letter-spacing: 0.04em;
-  color: var(--whelm-mauve);
+  letter-spacing: 0.06em;
+  color: var(--whelm-cream);
   animation: scrollCueBob 2.4s ease-in-out infinite;
-  z-index: 4;
+  z-index: 6;
 }
 
 .scrollCueArrow {
-  color: var(--whelm-mauve);
+  color: var(--whelm-cream);
+  opacity: 0.85;
 }
 
 @keyframes scrollCueBob {
@@ -661,8 +684,8 @@
   .wordmarkCursor {
     display: none;
   }
-  .heroFlourishPath {
-    stroke-dashoffset: 0 !important;
+  .heroFlourishClip {
+    clip-path: none !important;
   }
   .scrollCue {
     animation: none;

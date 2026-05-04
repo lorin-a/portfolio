@@ -112,12 +112,13 @@ export default function WhelmStory() {
       0.4,
     )
 
-    /* Flourish draw-on, parallel with typing. Uses pathLength=100 so
-       offset 100→0 normalizes to "fully drawn" regardless of geometry. */
+    /* Cursive flourish draw-on — clip-path inset 100% → 0% (left to
+       right) mirrors the direction of cursive handwriting. Slightly
+       longer than the typewriter so both finish in the same window. */
     intro.to(
-      `.${styles.heroFlourishPath}`,
-      { strokeDashoffset: 0, duration: 1.6, ease: 'power2.inOut' },
-      0.5,
+      '[data-hero-clip]',
+      { clipPath: 'inset(0 0% 0 0)', duration: 1.8, ease: 'power2.inOut' },
+      0.4,
     )
 
     /* Tagline + scroll cue fade up after typing lands. */

@@ -24,7 +24,6 @@
 export const ELEMENT_IDS = [
   'wordmark',
   'hero-flourish',
-  'hero-accents',
   'scroll-cue',
   'overcome-stack',
   'signal-diagram',
@@ -39,12 +38,11 @@ export const ELEMENT_IDS = [
 ]
 
 export const LAYOUTS = {
-  /* 01 — Hero. Wordmark center, cursive flourish + accents bleed full,
-     scroll cue at the bottom. Position is grid-driven (see CSS); the
-     opacity field is the only one the engine still consumes here. */
+  /* 01 — Hero. Wordmark center; cursive flourish layers above the bg
+     (oversized to extend past stage edges), wipes on left-to-right
+     during intro. Scroll cue at the bottom. */
   hero: {
-    'hero-accents':  { opacity: 0.55 },
-    'hero-flourish': { opacity: 0.4 },
+    'hero-flourish': { opacity: 1 },
     wordmark:        { opacity: 1 },
     'scroll-cue':    { opacity: 1 },
   },

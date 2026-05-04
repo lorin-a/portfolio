@@ -31,7 +31,6 @@ import SignalDiagram from './SignalDiagram'
 import TangleDiagram from './TangleDiagram'
 import PortalDiagram from './PortalDiagram'
 import HeroFlourish from './HeroFlourish'
-import HeroAccents from './HeroAccents'
 import ScrollCue from './ScrollCue'
 
 /* Entrance contract: (node, { duration }) → paused GSAP timeline.
@@ -77,7 +76,6 @@ const placeholder = (label, opts = {}) => ({
 export const ELEMENT_REGISTRY = {
   wordmark:         { render: Wordmark },
   'hero-flourish':  { render: HeroFlourish },
-  'hero-accents':   { render: HeroAccents },
   'scroll-cue':     { render: ScrollCue },
   'overcome-stack': { render: OvercomeStack, entrance: overcomeStackEntrance },
   'signal-diagram': { render: SignalDiagram },
