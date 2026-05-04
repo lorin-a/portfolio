@@ -108,47 +108,50 @@ export default function WhelmStory() {
     }
 
     /* ─── Intro animation (page load, one-shot) ───────────────
-       Order: typewriter wordmark → flourish draws on alongside →
-       tagline + scroll cue fade up → cursor fades after typing finishes. */
+       Calm, playful pacing — the wordmark types deliberately, the
+       cursor lingers, the cursive draws on slowly alongside, then the
+       tagline + scroll cue settle in once the type has landed. */
     const intro = gsap.timeline()
 
-    /* Wordmark: each character snaps in with `steps(1)` ease, no fade,
-       feeling like real keystrokes. The cursor is already blinking via
-       CSS at the end of the inner span and naturally tracks the right
-       edge of visible text because flex items sit beside each other. */
+    /* Wordmark: each character snaps in with `steps(1)` ease. Stagger
+       0.22s/char gives "whelm." (6 chars) ~1.3s of typing time —
+       feels like real, unhurried keystrokes. */
     intro.to(
       '[data-char]',
-      { autoAlpha: 1, duration: 0.01, ease: 'steps(1)', stagger: 0.13 },
-      0.4,
+      { autoAlpha: 1, duration: 0.01, ease: 'steps(1)', stagger: 0.22 },
+      0.6,
     )
 
-    /* Cursive flourish draw-on — stroke-dashoffset on the centerline
-       path traces along the actual writing direction Lorin drew. Pen
-       flowing through each letter, point-to-point handwriting feel.
-       Sine.inOut for a swooping, deliberate motion. */
+    /* Cursive flourish — slowed to 4.6s for a meditative pen pull
+       across the canvas. Starts alongside the typing so both arrive
+       in the same window. */
     intro.to(
       '[data-cursive-path]',
-      { strokeDashoffset: 0, duration: 3.2, ease: 'sine.inOut' },
-      0.4,
+      { strokeDashoffset: 0, duration: 4.6, ease: 'sine.inOut' },
+      0.5,
     )
 
-    /* Tagline + scroll cue fade up after typing lands. */
+    /* Tagline + scroll cue fade up after the wordmark fully types in
+       (typing lands ~1.92s). Hold off ~0.4s so the wordmark has a
+       beat alone before the rest joins. */
     intro.to(
       `[data-beat="${INITIAL_COPY}"] .${styles.copyBlock}`,
-      { autoAlpha: 1, y: 0, duration: 0.7, ease: 'power2.out', stagger: 0.12 },
-      1.4,
+      { autoAlpha: 1, y: 0, duration: 1.1, ease: 'power2.out', stagger: 0.18 },
+      2.3,
     )
     intro.to(
       `[data-beat="${INITIAL_COPY}"] .${styles.kind_lead}, [data-beat="${INITIAL_COPY}"] .${styles.kind_h2_inline}`,
-      { clipPath: 'inset(-0.2em 0% -0.2em 0)', duration: 0.9, ease: 'power2.inOut' },
-      1.5,
+      { clipPath: 'inset(-0.2em 0% -0.2em 0)', duration: 1.4, ease: 'power2.inOut' },
+      2.4,
     )
 
-    /* Cursor fades out a beat after typing finishes. */
+    /* Cursor lingers ~1.2s after the period lands, then fades slowly
+       over 1.1s — gives the page a moment to breathe before the
+       cursor ducks out. */
     intro.to(
       '[data-cursor]',
-      { autoAlpha: 0, duration: 0.6, ease: 'power2.out' },
-      1.7,
+      { autoAlpha: 0, duration: 1.1, ease: 'power2.out' },
+      3.1,
     )
 
     /* ─── Pinned scrub timeline ─────────────────────────────── */
