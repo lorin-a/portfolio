@@ -15,7 +15,7 @@ const gsImg = (key, w) => cloudImg(GS_IMAGES[key], w)
 const gsVid = (key) => cloudVideo(GS_VIDEOS[key])
 const gsAud = (key) => cloudAudio(GS_AUDIO[key])
 
-// Public-site nav: Intro · Vision · Ecosystem · Outcomes · Context
+// Public-site nav: Intro · Vision · Ecosystem · Outcomes · Press · Context · What's Next
 const sectionLabels = {
   'hero': 'Intro',
   'vision': 'Vision',
@@ -25,12 +25,21 @@ const sectionLabels = {
   'ctb': 'The Ecosystem',
   'cards': 'The Ecosystem',
   'outcomes': 'Outcomes',
+  'press': 'Press',
   'context': 'Context',
   'acknowledgements': 'Credits',
+  'whats-next': "What's Next",
 }
 
-const darkSections = ['hero', 'vision', 'ctb', 'artwall', 'outcomes', 'acknowledgements']
+const darkSections = ['hero', 'vision', 'ctb', 'artwall', 'outcomes', 'acknowledgements', 'whats-next']
 
+// CLIPS TBD: 5/6 of these are blurred to protect unpublished study findings.
+// For the public site we want clearer recordings where possible. Lorin to
+// confirm which views can be cleared with UPMC, or swap to alternative
+// Groundswell videos that show the data-site interaction without revealing
+// findings. Available alternates in lib/cloudinary.js GS_VIDEOS:
+//   gs-walkthrough-video, gs-qr-library, gs-card-flip, gs-display-view,
+//   gs-pod-data, gs-opener, gs-intro-artwall, gs-overlay, gs-new-meditations
 const dashboardClips = [
   { src: gsVid('entrypage'), label: 'Entry Screen' },
   { src: gsVid('moduleview'), label: 'Data Module', blur: true },
@@ -152,6 +161,10 @@ export default function GroundswellPublicContent() {
         <div className={styles.parallaxSticky}>
           <div className={styles.stickyContentLight}>
             <h2 className={styles.stickyTitleLight}>The Vision</h2>
+            {/* PUBLIC-TONE TBD: "developed with the Gynecologic Oncology staff"
+                reads procedural / institutional. For public/donor audience,
+                consider warmer framing — "made with the oncology staff at
+                UPMC Magee" or naming the relationship instead of the unit. */}
             <p className={styles.stickyBodyLightBold}>
               Groundswell is a grant-funded ecosystem of emotional support for healthcare workers, developed with the Gynecologic Oncology staff at UPMC Magee-Womens Hospital.
             </p>
@@ -179,6 +192,11 @@ export default function GroundswellPublicContent() {
             <p className={styles.breakBody}>
               <em>Named for water that rises naturally from deep within the earth, Groundswell emerges directly from the efforts and voices of healthcare workers themselves.</em>
             </p>
+            {/* PUBLIC-TONE TBD: "comprises four interconnected components" +
+                "designed to meet staff wherever they are in their day" reads
+                as design-deck language. For public, consider naming what each
+                does in human terms (a wall, a pod, an email, cards) instead
+                of describing them as components. */}
             <p className={styles.breakBody}>
               The ecosystem comprises four interconnected components&mdash;each addressing a different dimension of workplace well-being, designed to meet staff wherever they are in their day. Together, they create the conditions for culture change to emerge from within the care community.
             </p>
@@ -195,6 +213,10 @@ export default function GroundswellPublicContent() {
           <div className={styles.stickyContentLight}>
             <p className={styles.componentLabelLight}>Component 01</p>
             <h3 className={styles.stickyTitleLight}>Community Art Wall</h3>
+            {/* PUBLIC-TONE TBD: "anonymous shared emotional expression across
+                the full spectrum of oncology experiences" is design-spec.
+                Consider plainer: what staff and families do at the wall,
+                what they leave there, what it feels like to walk past one. */}
             <p className={styles.stickyBodyLightBold}>
               A community art wall that invites participation through anonymous shared emotional expression across the full spectrum of oncology experiences.
             </p>
@@ -261,6 +283,10 @@ export default function GroundswellPublicContent() {
           <div className={styles.stickyContent}>
             <p className={styles.componentLabel}>Component 02</p>
             <h3 className={styles.stickyTitle}>Restorative Pod</h3>
+            {/* PUBLIC-TONE TBD: "emotional decompression through mindfulness
+                activities" reads clinical. Consider: what the pod actually
+                is (a small private room with a soft chair, audio, a
+                labyrinth) and what it gives staff (10 minutes alone). */}
             <p className={styles.stickyBodyBold}>
               A dedicated space for emotional decompression through mindfulness activities like guided meditation.
             </p>
@@ -283,6 +309,10 @@ export default function GroundswellPublicContent() {
           <div className={styles.stickyContentLight}>
             <p className={styles.componentLabelLight}>Component 03</p>
             <h3 className={styles.stickyTitleLight}>Ceased to Breathe Email</h3>
+            {/* PUBLIC-TONE TBD: "Updated patient death notification email
+                template with compassionate visuals and language" is dense
+                + clinical. Public lead could be: what the email is, what
+                it says now that it didn't before, why that matters. */}
             <p className={styles.stickyBodyLightBold}>
               Updated patient death notification email template with compassionate visuals and language that acknowledges the impact of patient loss.
             </p>
@@ -310,6 +340,11 @@ export default function GroundswellPublicContent() {
           <AnimatedElement>
             <p className={styles.componentLabelCenter}>Component 04</p>
             <h3 className={styles.breakTitle}>Reflection Cards</h3>
+            {/* PUBLIC-TONE TBD: "build a self-care practice through emotional
+                validation and introductory exercises for emotional regulation"
+                is therapy-spec. Consider what the cards do in a staff member's
+                hand — what they ask, what they offer, when someone might
+                pick one up. */}
             <p className={styles.breakBodyBold}>
               Guided reflection cards that help staff build a self-care practice through emotional validation and introductory exercises for emotional regulation.
             </p>
@@ -339,6 +374,12 @@ export default function GroundswellPublicContent() {
             <p className={styles.stickyBodyLightBold}>
               Groundswell is now officially installed at UPMC Magee-Womens Hospital, launching a 12-month quality improvement study for Cancer Services staff.
             </p>
+            {/* PUBLIC-TONE TBD: "data visualization website to track and
+                communicate our findings, integrating survey data with video
+                documentation" is dense. For public, consider naming what the
+                study measures (compassion fatigue, burnout, intent to leave)
+                and what the data site is for (so leaders can see what changes
+                when staff are cared for). */}
             <p className={styles.stickyBodyLight}>
               The study combines quantitative data with qualitative interviews, measuring compassion fatigue, burnout, culture of employee well-being, and intent to leave—before, during, and after the installation. We built a data visualization website to track and communicate our findings, integrating survey data with video documentation. Data is blurred to protect unpublished study findings.
             </p>
@@ -350,11 +391,63 @@ export default function GroundswellPublicContent() {
         </div>
       </section>
 
+      {/* ==================== IN THE PRESS ==================== */}
+      <section id="press" className={styles.breakSection}>
+        <div className={styles.breakContent}>
+          <AnimatedElement>
+            <p className={styles.componentLabelCenter}>Coverage</p>
+            <h2 className={styles.breakTitle}>In the Press</h2>
+          </AnimatedElement>
+
+          <div className={styles.reflectionPressGrid}>
+            <AnimatedElement>
+              <div className={styles.reflectionPressCardWrapper}>
+                <a
+                  href="https://www.design.cmu.edu/news/groundswell-creates-space-soul-co-designing-oncology-staff-upmc-magee-womens-hospital"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={styles.reflectionPressCard}
+                >
+                  <span className={styles.reflectionPressSource}>Carnegie Mellon School of Design</span>
+                  <h4 className={styles.reflectionPressTitle}>
+                    Groundswell Creates Space for the Soul: Co-designing with Oncology Staff
+                  </h4>
+                  <span className={styles.reflectionPressLink}>Read Article &rarr;</span>
+                </a>
+                <span className={styles.reflectionPressFold} aria-hidden="true" />
+              </div>
+            </AnimatedElement>
+
+            <AnimatedElement>
+              <div className={styles.reflectionPressCardWrapper}>
+                <a
+                  href="https://www.design.cmu.edu/news/concept-care-designing-groundswell-oncology-caregivers"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={styles.reflectionPressCard}
+                >
+                  <span className={styles.reflectionPressSource}>Carnegie Mellon School of Design</span>
+                  <h4 className={styles.reflectionPressTitle}>
+                    Concept to Care: Designing Groundswell for Oncology Caregivers
+                  </h4>
+                  <span className={styles.reflectionPressLink}>Read Article &rarr;</span>
+                </a>
+                <span className={styles.reflectionPressFold} aria-hidden="true" />
+              </div>
+            </AnimatedElement>
+          </div>
+        </div>
+      </section>
+
       {/* ==================== CONTEXT ==================== */}
       <section id="context" className={styles.parallaxSection}>
         <div className={styles.parallaxSticky}>
           <div className={styles.stickyContent}>
             <h2 className={styles.stickyTitle}>The Context</h2>
+            {/* PUBLIC-TONE TBD: "How might we…" is design-research framing.
+                For public, consider stating the question plainly — "What
+                would it look like to actually care for the people who
+                care for everyone else?" or similar. */}
             <p className={styles.stickyBodyBold}>
               How might we create supportive environments where staff can feel nurtured, recognized, and celebrated?
             </p>
@@ -379,6 +472,44 @@ export default function GroundswellPublicContent() {
             <blockquote className={styles.stickyStatement}>
               This is not an individual failure.<br />It is a systemic one.
             </blockquote>
+
+            {/* Behind-the-scenes beats. Four prompts in Lorin's voice — the
+                human story behind what Groundswell became. Lorin can rename,
+                reorder, drop, or merge any of these. Each [TBD] gets a short
+                paragraph (2-4 sentences) in her voice. */}
+            <div className={styles.behindTheScenes}>
+              <h3 className={styles.behindTheScenesHeading}>The question that started it</h3>
+              {/* BEHIND-THE-SCENES TBD: what brought the team into Magee, what
+                  was originally asked, what shifted once you got there. */}
+              <p className={styles.stickyBody}>
+                [TBD: a short paragraph about how the project began — what the team was asked to look at, and what changed once they were on the ground.]
+              </p>
+
+              <h3 className={styles.behindTheScenesHeading}>Who we listened to</h3>
+              {/* BEHIND-THE-SCENES TBD: who the conversations were with, what
+                  kinds of moments surfaced, what surprised the team. */}
+              <p className={styles.stickyBody}>
+                [TBD: who the staff were, what kinds of conversations happened, the moments that shifted the team's understanding.]
+              </p>
+
+              <h3 className={styles.behindTheScenesHeading}>What we learned</h3>
+              {/* BEHIND-THE-SCENES TBD: the human insight that shaped every
+                  component — e.g., the realization that the CTB email was
+                  already a staff act of compassion, or the discovery that
+                  emotional labor needed real space. */}
+              <p className={styles.stickyBody}>
+                [TBD: the core insight that came out of listening — what the team learned that changed how they designed.]
+              </p>
+
+              <h3 className={styles.behindTheScenesHeading}>How we built</h3>
+              {/* BEHIND-THE-SCENES TBD: the team, the donors, the constraints
+                  that shaped the work (lockable doors, $30k of donated materials,
+                  the 10-week sprint). What it took to get this from idea to
+                  installation. */}
+              <p className={styles.stickyBody}>
+                [TBD: the people, partnerships, and constraints that made this real — what it took to bring the work from concept to installation.]
+              </p>
+            </div>
           </div>
         </div>
         <div className={styles.parallaxScroll}>
@@ -484,6 +615,68 @@ export default function GroundswellPublicContent() {
             <p className={styles.bodyTextLightCenteredItalic}>
               To everyone who played a role in bringing this project to life—thank you.
             </p>
+          </AnimatedElement>
+        </div>
+      </section>
+
+      {/* ==================== WHAT'S NEXT / GET INVOLVED ====================
+          Closing invitation. Lorin owns voice + which CTAs go here. The
+          structural skeleton uses the same dark register as Acknowledgements
+          for visual continuity, and the same press-card pattern as the
+          Press section above for the action items so the visual language
+          stays consistent. */}
+      <section id="whats-next" className={styles.sectionDark}>
+        <div className={styles.sectionContent}>
+          <AnimatedElement>
+            {/* CLOSING HEADING TBD: pick one — "What's Next", "Stay Connected",
+                "Help Us Continue", "Keep the Work Going" */}
+            <h2 className={styles.sectionHeadingLightCentered}>What&rsquo;s Next</h2>
+            {/* CLOSING BODY TBD: 2-3 sentences inviting visitors to follow,
+                support, or get involved. In Lorin's voice. The current
+                placeholder reads as the structural intent only. */}
+            <p className={styles.bodyTextLightCenteredBold}>
+              [CLOSING BODY TBD] A brief, warm invitation to follow the work, support its continuation, or get involved as the study expands.
+            </p>
+          </AnimatedElement>
+
+          <AnimatedElement>
+            {/* Action cards. Use 1-3 of these. Likely candidates:
+                - Email signup for project updates
+                - Donation / support link
+                - Link to /projects/groundswell case study for those who want
+                  the design story
+                - Press / academic publication preorder
+                - Social follow
+                Lorin: pick which ones, fill href + copy. */}
+            <div className={styles.reflectionPressGrid}>
+              <div className={styles.reflectionPressCardWrapper}>
+                <a
+                  href="#"
+                  className={styles.reflectionPressCard}
+                >
+                  <span className={styles.reflectionPressSource}>[CTA 1 LABEL TBD]</span>
+                  <h4 className={styles.reflectionPressTitle}>
+                    [CTA 1 TITLE TBD]
+                  </h4>
+                  <span className={styles.reflectionPressLink}>[CTA 1 ACTION] &rarr;</span>
+                </a>
+                <span className={styles.reflectionPressFold} aria-hidden="true" />
+              </div>
+
+              <div className={styles.reflectionPressCardWrapper}>
+                <a
+                  href="#"
+                  className={styles.reflectionPressCard}
+                >
+                  <span className={styles.reflectionPressSource}>[CTA 2 LABEL TBD]</span>
+                  <h4 className={styles.reflectionPressTitle}>
+                    [CTA 2 TITLE TBD]
+                  </h4>
+                  <span className={styles.reflectionPressLink}>[CTA 2 ACTION] &rarr;</span>
+                </a>
+                <span className={styles.reflectionPressFold} aria-hidden="true" />
+              </div>
+            </div>
           </AnimatedElement>
         </div>
       </section>

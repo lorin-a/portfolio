@@ -1886,6 +1886,29 @@
 }
 
 /* Subheading with Divider Lines */
+/* ===========================================
+   BEHIND THE SCENES (Public site #context expansion)
+   Sub-block of context with 4 narrative beats. Lives inside the
+   .stickyContent column so it shares the section's typographic register.
+   =========================================== */
+.behindTheScenes {
+  margin-top: var(--space-xl);
+}
+
+.behindTheScenesHeading {
+  font-family: var(--font-serif);
+  font-size: clamp(1.25rem, 2.4vw, 1.5rem);
+  font-weight: var(--weight-quote);
+  font-style: italic;
+  color: inherit;
+  margin: var(--space-lg) 0 var(--space-xs);
+  line-height: 1.2;
+}
+
+.behindTheScenes .behindTheScenesHeading:first-child {
+  margin-top: 0;
+}
+
 .reflectionSubheadingWithDivider {
   display: flex;
   align-items: center;
