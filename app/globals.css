@@ -1,8 +1,11 @@
 /* Whelm case study runs full-bleed cinematic — global nav hidden
    while WhelmStory mounts (body[data-page="whelm"] toggled in
-   WhelmStory.client.jsx useEffect). */
-body[data-page='whelm'] header {
-  display: none;
+   WhelmStory.client.jsx useEffect). The Nav component renders a
+   <header> with a CSS-module class; both selectors match the same
+   element, !important defeats any GSAP-set inline display values. */
+body[data-page='whelm'] header,
+body[data-page='whelm'] [class*='_header_'] {
+  display: none !important;
 }
 
 /* ===========================================

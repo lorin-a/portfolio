@@ -124,7 +124,7 @@ export default function CursiveWhelm() {
     <svg
       viewBox="0 0 2224 1395"
       className={styles.cursiveSvg}
-      preserveAspectRatio="xMidYMid meet"
+      preserveAspectRatio="xMidYMid slice"
       aria-hidden="true"
     >
       <defs>
