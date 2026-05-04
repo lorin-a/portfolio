@@ -24,6 +24,7 @@
 export const ELEMENT_IDS = [
   'wordmark',
   'hero-flourish',
+  'hero-accents',
   'scroll-cue',
   'overcome-stack',
   'signal-diagram',
@@ -38,32 +39,33 @@ export const ELEMENT_IDS = [
 ]
 
 export const LAYOUTS = {
-  /* 01 — Hero. Wordmark center-stage, flourish drawn alongside,
-     scroll cue at the bottom-center to invite the user onward. */
+  /* 01 — Hero. Wordmark center, cursive flourish + accents bleed full,
+     scroll cue at the bottom. Position is grid-driven (see CSS); the
+     opacity field is the only one the engine still consumes here. */
   hero: {
-    wordmark:        { x: 50, y: 48, scale: 1, opacity: 1 },
-    'hero-flourish': { x: 50, y: 64, scale: 1, opacity: 1 },
-    'scroll-cue':    { x: 50, y: 92, scale: 1, opacity: 1 },
+    'hero-accents':  { opacity: 0.55 },
+    'hero-flourish': { opacity: 0.4 },
+    wordmark:        { opacity: 1 },
+    'scroll-cue':    { opacity: 1 },
   },
 
-  /* 03 — Overlooked: layered "Overwhelm" stack on the right; copy
-     fills the left half with the "is overlooked" punchline below. */
+  /* Section 1 — Overlooked. OvercomeStack centered. */
   'overcome-stack': {
-    'overcome-stack': { x: 65, y: 50, scale: 1, opacity: 1 },
+    'overcome-stack': { opacity: 1 },
   },
 
-  /* What-If beats (Section 2): no element on stage, copy-only. */
+  /* Section 2 — What-If beats: copy-only, no element on stage. */
   empty: {},
 
-  /* Section 3 — diagrams on the right, copy on the left half. */
+  /* Section 3 — diagrams full-bleed; copy lives on top. */
   'signal-diagram': {
-    'signal-diagram': { x: 70, y: 50, scale: 1, opacity: 1 },
+    'signal-diagram': { opacity: 1 },
   },
   'tangle-diagram': {
-    'tangle-diagram': { x: 70, y: 50, scale: 1, opacity: 1 },
+    'tangle-diagram': { opacity: 1 },
   },
   'portal-diagram': {
-    'portal-diagram': { x: 70, y: 50, scale: 1, opacity: 1 },
+    'portal-diagram': { opacity: 1 },
   },
 }
 
