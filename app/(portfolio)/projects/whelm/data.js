@@ -10,9 +10,12 @@
  * present in two adjacent layouts travels; an element present in only
  * one fades in/out.
  *
- * Phase 0 placeholder set: hero, divider, overlooked, not-a-problem,
- * messenger. Enough to verify the engine renders, transitions, and
- * holds across beats. Phase 2 fills the full 16-beat sequence.
+ * Section structure (per Lorin's storyboard 2026-05-04):
+ *   - Hero (full-bleed, sidebar hidden)
+ *   - Section 1 GAP — Overlooked
+ *   - Section 2 NEED — three What-Ifs (sequential, copy-only beats)
+ *   - Section 3 NEED — three Overwhelm-Is statements (Signal/Tangle/Portal)
+ *   - Section 4 (future) — Whelm reveal + product, full-bleed
  */
 
 /* Element catalog: every id that could appear in any layout. The
@@ -20,51 +23,45 @@
    orchestrator only animates positioning + opacity afterward. */
 export const ELEMENT_IDS = [
   'wordmark',
-  'agenda',
+  'hero-flourish',
+  'scroll-cue',
   'overcome-stack',
   'signal-diagram',
   'tangle-diagram',
   'portal-diagram',
   'wordplay',
   'manifesto-panel',
-  'persona-venn',
+  'persona-rings',
   'typology-trio',
   'roots-grid',
   'phase-journey',
 ]
 
 export const LAYOUTS = {
-  /* 01 — Hero. Wordmark center-stage. */
+  /* 01 — Hero. Wordmark center-stage, flourish drawn alongside,
+     scroll cue at the bottom-center to invite the user onward. */
   hero: {
-    wordmark: { x: 50, y: 50, scale: 1, opacity: 1 },
+    wordmark:        { x: 50, y: 48, scale: 1, opacity: 1 },
+    'hero-flourish': { x: 50, y: 64, scale: 1, opacity: 1 },
+    'scroll-cue':    { x: 50, y: 92, scale: 1, opacity: 1 },
   },
 
-  /* 02 — Chapter divider. Agenda list visible in upper-right. */
-  agenda: {
-    agenda: { x: 75, y: 45, scale: 1, opacity: 1 },
-  },
-
-  /* 03 — Overlooked: layered "Overwhelm" type stack.  */
+  /* 03 — Overlooked: layered "Overwhelm" stack on the right; copy
+     fills the left half with the "is overlooked" punchline below. */
   'overcome-stack': {
-    'overcome-stack': { x: 50, y: 50, scale: 1, opacity: 1 },
+    'overcome-stack': { x: 65, y: 50, scale: 1, opacity: 1 },
   },
 
-  /* 05 — Messenger: type alone, no element. */
+  /* What-If beats (Section 2): no element on stage, copy-only. */
   empty: {},
 
-  /* 08 — Signal diagram on the right; copy fills the left half. */
+  /* Section 3 — diagrams on the right, copy on the left half. */
   'signal-diagram': {
     'signal-diagram': { x: 70, y: 50, scale: 1, opacity: 1 },
   },
-
-  /* 09 — Tangle diagram. Same composition as Signal — diagram right,
-     copy left. The match-cut moment is purely the diagram swap. */
   'tangle-diagram': {
     'tangle-diagram': { x: 70, y: 50, scale: 1, opacity: 1 },
   },
-
-  /* 10 — Portal diagram. Same right-side anchor; the spiral and "Self"
-     core carry the metaphor inward. */
   'portal-diagram': {
     'portal-diagram': { x: 70, y: 50, scale: 1, opacity: 1 },
   },
@@ -74,34 +71,24 @@ export const INITIAL_LAYOUT = 'hero'
 export const INITIAL_COPY = 'hero'
 
 export const BEATS = [
-  /* Each beat: { id, layout, copyId, span, attrs? }
-     - layout: name from LAYOUTS
-     - copyId: key in COPY
-     - span: vh of pinned scroll dwell
-     - attrs: optional element-id → attribute dict, applied during Phase A
-       (used for held beats that morph internal state without layout change) */
+  /* Each beat: { id, layout, copyId, span, section, fullBleed?, attrs? }
+     - section: drives the sidebar's active highlight via data-active-section
+     - fullBleed: when true, sidebar fades out for that beat (hero, future Whelm reveal)
+     - attrs: optional element-id → attribute dict, applied at beat start */
 
-  /* 02 — divider The Gap (held against an empty prior canvas; agenda fades in) */
-  { id: 'divider-gap',  layout: 'agenda',         copyId: 'divider-gap',   span: 100,
-    attrs: { agenda: { 'data-active': 'gap' } } },
+  /* Section 1 — GAP. */
+  { id: 'overlooked',    layout: 'overcome-stack', copyId: 'overlooked',    span: 250, section: 'gap'  },
 
-  /* 03 — Overlooked (transition: agenda fades out, overcome-stack fades in) */
-  { id: 'overlooked',   layout: 'overcome-stack', copyId: 'overlooked',    span: 200 },
+  /* Section 2 — NEED. Three What-Ifs, each a standalone copy beat. */
+  { id: 'not-a-problem', layout: 'empty',          copyId: 'not-a-problem', span: 200, section: 'need' },
+  { id: 'messenger',     layout: 'empty',          copyId: 'messenger',     span: 200, section: 'need' },
+  { id: 'invitation',    layout: 'empty',          copyId: 'invitation',    span: 200, section: 'need' },
 
-  /* 04 — Not a problem (held: same layout, copy swap) */
-  { id: 'not-a-problem',layout: 'overcome-stack', copyId: 'not-a-problem', span: 200 },
-
-  /* 05 — Messenger (transition: stack fades, type-only beat) */
-  { id: 'messenger',    layout: 'empty',          copyId: 'messenger',     span: 200 },
-
-  /* 08 — Signal (transition: diagram fades in on right) */
-  { id: 'signal',       layout: 'signal-diagram', copyId: 'signal',        span: 250 },
-
-  /* 09 — Tangle (transition: signal funnel fades, tangle knots in) */
-  { id: 'tangle',       layout: 'tangle-diagram', copyId: 'tangle',        span: 250 },
-
-  /* 10 — Portal (transition: tangle fades, spiral draws inward) */
-  { id: 'portal',       layout: 'portal-diagram', copyId: 'portal',        span: 250 },
+  /* Section 3 — NEED continues. Overwhelm-Is statements with diagrams.
+     Per storyboard: copy reveals first, element animates in last. */
+  { id: 'signal',        layout: 'signal-diagram', copyId: 'signal',        span: 280, section: 'need', elementOrder: 'after-copy' },
+  { id: 'tangle',        layout: 'tangle-diagram', copyId: 'tangle',        span: 280, section: 'need', elementOrder: 'after-copy' },
+  { id: 'portal',        layout: 'portal-diagram', copyId: 'portal',        span: 280, section: 'need', elementOrder: 'after-copy' },
 ]
 
 export const TOTAL_VH = BEATS.reduce((sum, b) => sum + b.span, 0)

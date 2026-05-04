@@ -79,10 +79,11 @@
 
 /* ─── Element renderers ─── */
 
-/* Wordmark — slide 255:355 hero. Display type at editorial scale,
-   wrapped in an inner span so clip-path wipes apply only to the visible
-   glyphs (not the wrapper, which would clip the wrapper's positioning
-   too). The negative em insets prevent descender clipping on the period. */
+/* Wordmark — slide 255:355 hero. Display type at editorial scale.
+   Each character is its own span so the orchestrator can reveal them
+   sequentially for the typewriter intro. The cursor is a CSS bar at
+   the end that blinks until typing finishes; the orchestrator hides
+   it after the last character lands. */
 .wordmark {
   margin: 0;
   font-family: var(--whelm-display);
@@ -96,9 +97,156 @@
   user-select: none;
 }
 
-.wordmarkText {
+.wordmarkInner {
+  display: inline-flex;
+  align-items: baseline;
+}
+
+.wordmarkChar {
   display: inline-block;
-  clip-path: inset(-0.2em 100% -0.2em 0);
+  opacity: 0;
+}
+
+.wordmarkCursor {
+  display: inline-block;
+  width: 0.06em;
+  height: 0.78em;
+  margin-left: 0.04em;
+  background: currentColor;
+  vertical-align: -0.04em;
+  animation: cursorBlink 1s steps(1, end) infinite;
+}
+
+@keyframes cursorBlink {
+  0%, 50% { opacity: 1; }
+  50.01%, 100% { opacity: 0; }
+}
+
+/* Hero flourish — cursive draw-on alongside the wordmark. */
+.heroFlourish {
+  width: clamp(220px, 26vw, 400px);
+  height: auto;
+  display: block;
+  color: var(--whelm-mauve);
+  opacity: 0.85;
+}
+
+.heroFlourishPath {
+  /* GSAP animates strokeDashoffset 100 → 0 during the intro. */
+}
+
+/* Scroll cue — "Learn More" + chevron, bobbing gently. */
+.scrollCue {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--whelm-editorial);
+  font-size: 16px;
+  font-style: italic;
+  font-weight: 300;
+  letter-spacing: 0.04em;
+  color: var(--whelm-mauve);
+  animation: scrollCueBob 2.4s ease-in-out infinite;
+}
+
+.scrollCueLabel {
+  text-transform: none;
+}
+
+.scrollCueArrow {
+  color: var(--whelm-mauve);
+}
+
+@keyframes scrollCueBob {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(6px); }
+}
+
+/* ─── Sidebar agenda — persistent left navigation ───
+   Lives inside the pinned stage but visually anchored mid-left. The
+   orchestrator toggles data-state="visible|hidden" per beat to fade in
+   after Hero and out for full-bleed sections. data-active-section
+   drives the highlighted item via attribute selectors below. */
+.sidebar {
+  position: absolute;
+  top: 50%;
+  left: 4vw;
+  transform: translateY(-50%);
+  z-index: 10;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.8s var(--ease-out, cubic-bezier(0.22, 1, 0.36, 1));
+  font-family: var(--whelm-editorial);
+}
+
+.sidebar[data-state='visible'] {
+  opacity: 1;
+}
+
+.sidebarTitle {
+  margin: 0 0 1.5rem 0;
+  font-family: var(--whelm-display);
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(243, 239, 247, 0.5);
+}
+
+.sidebarList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+
+.sidebarItem {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 16px;
+  font-weight: 300;
+  font-style: italic;
+  color: rgba(243, 239, 247, 0.35);
+  transition: color 0.5s var(--ease-out, cubic-bezier(0.22, 1, 0.36, 1));
+}
+
+.sidebarDot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  border: 1px solid currentColor;
+  background: transparent;
+  transition: background 0.5s var(--ease-out, cubic-bezier(0.22, 1, 0.36, 1)),
+              transform 0.5s var(--ease-out, cubic-bezier(0.22, 1, 0.36, 1));
+  flex: 0 0 auto;
+}
+
+.sidebarLabel {
+  white-space: nowrap;
+}
+
+/* Active section: brighten label + fill the dot. */
+.sidebar[data-active-section='gap']       .sidebarItem[data-section='gap'],
+.sidebar[data-active-section='need']      .sidebarItem[data-section='need'],
+.sidebar[data-active-section='audience']  .sidebarItem[data-section='audience'],
+.sidebar[data-active-section='framework'] .sidebarItem[data-section='framework'],
+.sidebar[data-active-section='research']  .sidebarItem[data-section='research'],
+.sidebar[data-active-section='design']    .sidebarItem[data-section='design'] {
+  color: var(--whelm-cream);
+}
+
+.sidebar[data-active-section='gap']       .sidebarItem[data-section='gap']       .sidebarDot,
+.sidebar[data-active-section='need']      .sidebarItem[data-section='need']      .sidebarDot,
+.sidebar[data-active-section='audience']  .sidebarItem[data-section='audience']  .sidebarDot,
+.sidebar[data-active-section='framework'] .sidebarItem[data-section='framework'] .sidebarDot,
+.sidebar[data-active-section='research']  .sidebarItem[data-section='research']  .sidebarDot,
+.sidebar[data-active-section='design']    .sidebarItem[data-section='design']    .sidebarDot {
+  background: var(--whelm-cream);
+  transform: scale(1.15);
 }
 
 /* Overcome stack — slide 255:357. Three "Overwhelm" lines stacked
@@ -298,13 +446,6 @@
   white-space: nowrap;
 }
 
-.kind_agenda {
-  font-family: var(--whelm-display), serif;
-  font-size: clamp(28px, 3.4vw, 48px);
-  line-height: 1.6;
-  font-weight: 300;
-  color: var(--whelm-mauve, #bdb7e9);
-}
 
 /* ─── Position presets — generous edge insets, asymmetrical placement ─── */
 .pos_tl   { top: 6vh;  left: 6vw; }
@@ -365,7 +506,16 @@
   .kind_lead, .kind_h2_inline, .titleLine {
     clip-path: none !important;
   }
-  .wordmarkText {
-    clip-path: none !important;
+  .wordmarkChar {
+    opacity: 1 !important;
+  }
+  .wordmarkCursor {
+    display: none;
+  }
+  .heroFlourishPath {
+    stroke-dashoffset: 0 !important;
+  }
+  .scrollCue {
+    animation: none;
   }
 }

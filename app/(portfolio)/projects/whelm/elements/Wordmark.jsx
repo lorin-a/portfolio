@@ -1,15 +1,34 @@
 import styles from '../whelm.module.css'
 
 /* Hero brand mark — slide 255:355.
-   Rendered as semantic <h1> so screen readers and SEO get the page
-   heading, but visually carries Whelm's display type at full editorial
-   scale. The orchestrator runs a clip-path wipe on `.wordmarkText`
-   during the intro timeline (and on incoming transitions if the
-   wordmark ever returns to layout — e.g., the closing beat). */
+   Semantic <h1> with per-character spans for the typewriter intro:
+   each char starts hidden, the orchestrator reveals them sequentially
+   via gsap.to('[data-char]', { autoAlpha: 1, stagger, ease: 'steps(1)' })
+   to feel like live typing. The cursor span sits at the end and blinks
+   via CSS until the orchestrator fades it once typing finishes. */
+
+const CHARS = ['w', 'h', 'e', 'l', 'm', '.']
+
 export default function Wordmark() {
   return (
-    <h1 className={styles.wordmark}>
-      <span className={styles.wordmarkText} data-wipe="true">whelm.</span>
+    <h1 className={styles.wordmark} aria-label="whelm.">
+      <span className={styles.wordmarkInner}>
+        {CHARS.map((char, i) => (
+          <span
+            key={i}
+            data-char={i}
+            className={styles.wordmarkChar}
+            aria-hidden="true"
+          >
+            {char}
+          </span>
+        ))}
+        <span
+          data-cursor="true"
+          className={styles.wordmarkCursor}
+          aria-hidden="true"
+        />
+      </span>
     </h1>
   )
 }
