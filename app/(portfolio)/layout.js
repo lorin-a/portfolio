@@ -1,5 +1,5 @@
 import '../globals.css'
-import { Fraunces, Open_Sans } from 'next/font/google'
+import { Fraunces, Open_Sans, Crimson_Pro } from 'next/font/google'
 import PortfolioShell from './PortfolioShell'
 
 const fraunces = Fraunces({
@@ -15,6 +15,16 @@ const openSans = Open_Sans({
   weight: ['400', '500', '600'],
   style: ['normal', 'italic'],
   variable: '--font-open-sans',
+  display: 'swap',
+})
+
+/* Used by the Whelm case study editorial register. Italics carry the
+   manifesto/sub voice; weights kept light for editorial register. */
+const crimsonPro = Crimson_Pro({
+  subsets: ['latin'],
+  weight: ['200', '300', '400'],
+  style: ['normal', 'italic'],
+  variable: '--font-crimson-pro',
   display: 'swap',
 })
 
@@ -46,7 +56,7 @@ export const viewport = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={`${fraunces.variable} ${openSans.variable}`}>
+    <html lang="en" className={`${fraunces.variable} ${openSans.variable} ${crimsonPro.variable}`}>
       <head>
         <link rel="icon" href="/favicon.ico" sizes="any" />
         <script dangerouslySetInnerHTML={{ __html: `

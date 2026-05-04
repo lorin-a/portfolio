@@ -12,7 +12,7 @@
    both fall back to Fraunces (already loaded site-wide). */
 .story {
   --whelm-display: 'P22 Mackinac Pro', 'Mackinac Pro', var(--font-fraunces, 'Fraunces'), Georgia, serif;
-  --whelm-editorial: 'Crimson Pro', var(--font-fraunces, 'Fraunces'), Georgia, serif;
+  --whelm-editorial: var(--font-crimson-pro, 'Crimson Pro'), var(--font-fraunces, 'Fraunces'), Georgia, serif;
   --whelm-bg:        #1f0536;  /* slide-exact deep purple */
   --whelm-bg-cream:  #f0e2ff;  /* slide-exact cream panel */
   --whelm-cream:     #f3eff7;  /* near-white body type on dark */
