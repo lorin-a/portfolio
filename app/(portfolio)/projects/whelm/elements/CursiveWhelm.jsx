@@ -49,6 +49,34 @@ function parsePolyline(d) {
   return points
 }
 
+/* Chaikin corner-cutting — each pass replaces every line segment
+   with two new points at 1/4 and 3/4 along it. Effectively rounds
+   sharp angles between click-points before bezier conversion.
+   Two passes is the sweet spot: enough smoothing to lose the
+   polyline angularity, not so much that the cursive shape softens
+   into mush. */
+function chaikinSmooth(points, iterations = 2) {
+  let pts = points
+  for (let iter = 0; iter < iterations; iter++) {
+    const next = [pts[0]]
+    for (let i = 0; i < pts.length - 1; i++) {
+      const p1 = pts[i]
+      const p2 = pts[i + 1]
+      next.push({
+        x: 0.75 * p1.x + 0.25 * p2.x,
+        y: 0.75 * p1.y + 0.25 * p2.y,
+      })
+      next.push({
+        x: 0.25 * p1.x + 0.75 * p2.x,
+        y: 0.25 * p1.y + 0.75 * p2.y,
+      })
+    }
+    next.push(pts[pts.length - 1])
+    pts = next
+  }
+  return pts
+}
+
 /* Centripetal Catmull-Rom smoothing — converts a polyline into a
    sequence of cubic beziers that flow smoothly through every original
    point. Centripetal (alpha=0.5) avoids the loops/overshoots that
@@ -87,7 +115,9 @@ function smoothPolyline(points, alpha = 0.5) {
   return d
 }
 
-const SMOOTHED_PATH_D = smoothPolyline(parsePolyline(RAW_POLYLINE))
+const SMOOTHED_PATH_D = smoothPolyline(
+  chaikinSmooth(parsePolyline(RAW_POLYLINE), 2),
+)
 
 export default function CursiveWhelm() {
   return (
@@ -110,19 +140,16 @@ export default function CursiveWhelm() {
           <stop offset="0.4" stopColor="#8552B2" />
           <stop offset="0.85" stopColor="#BDB7E9" />
         </linearGradient>
-        <filter id="cursive-soft" x="-2%" y="-2%" width="104%" height="104%">
-          <feGaussianBlur stdDev="0.6" />
-        </filter>
       </defs>
       <path
         data-cursive-path="true"
         d={SMOOTHED_PATH_D}
         fill="none"
         stroke="url(#cursive-stroke)"
-        strokeWidth="22"
+        strokeWidth="11"
+        strokeOpacity="0.55"
         strokeLinecap="round"
         strokeLinejoin="round"
-        filter="url(#cursive-soft)"
         pathLength="1000"
         strokeDasharray="1000"
         strokeDashoffset="1000"

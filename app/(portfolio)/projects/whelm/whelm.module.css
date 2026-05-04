@@ -533,15 +533,17 @@
 }
 
 /* Hero cursive flourish — inline SVG centerline path, stroked with
-   the gradient. Oversized to bleed past stage edges. Orchestrator
-   animates stroke-dashoffset along the path's drawing direction
-   for true point-to-point handwriting reveal. */
+   the gradient. Sized 180% with negative offsets so the cursive
+   bleeds diagonally from upper-left past the corner of the stage to
+   bottom-right past its corner. The orchestrator animates
+   stroke-dashoffset along the path's drawing direction for true
+   point-to-point handwriting reveal. */
 .cursiveSvg {
   position: absolute;
-  top: -15%;
-  left: -15%;
-  width: 130%;
-  height: 130%;
+  top: -28%;
+  left: -28%;
+  width: 180%;
+  height: 180%;
   display: block;
   pointer-events: none;
   overflow: visible;
