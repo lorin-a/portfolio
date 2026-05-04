@@ -1,30 +1,94 @@
-/* Whelm scrollytelling — engine + theme.
-   Bg #1f0536 (Figma slide deep purple) hardcoded. Cream-panel beats
-   override to #f0e2ff. Slide-source exact, do not normalize to project
-   tokens. The element canvas wraps in an ambient-breath wrapper that
-   runs independently of GSAP — adds quiet life to held beats without
-   conflicting with scroll-driven transforms on inner elements. */
+/* =====================================================================
+   Whelm design system — tokens, grid, type ramp, spacing, motion.
 
-/* ─── Pinned story container + Whelm theme tokens ───
-   Tokens live on .story so they scope to all descendants without
-   leaking to the rest of the portfolio. Display fonts (Mackinac Pro,
-   Crimson Pro) come from Adobe Fonts; until the Typekit kit is wired,
-   both fall back to Fraunces (already loaded site-wide). */
+   Scope: every token lives on .story so portfolio defaults are not
+   disturbed. Bg #1f0536 (slide-source deep purple) hardcoded; cream
+   panels override locally with #f0e2ff (also slide-exact).
+
+   Layout: a 14-column CSS Grid on .stage —
+     [sidebar | margin | 12 content cols | margin]
+   Position presets place copy and elements by grid-area instead of
+   ad-hoc xy values. Element wrappers default to full content area.
+
+   Type: 1.25 modular scale, base 18px. Eyebrow → Body → Lead → H3 →
+   H2 → H1 → Display → Hero. Each kind binds a font, weight, size, and
+   line-height in one rule so they read as a coordinated ramp.
+
+   Spacing: 4px base. Use --s-N tokens, never raw px.
+   Motion: --m-fast / --m-medium / --m-slow / --m-emphasis.
+   ===================================================================== */
+
 .story {
-  --whelm-display: 'p22-mackinac-pro', var(--font-fraunces, 'Fraunces'), Georgia, serif;
-  --whelm-editorial: var(--font-crimson-pro, 'Crimson Pro'), var(--font-fraunces, 'Fraunces'), Georgia, serif;
-  --whelm-bg:        #1f0536;  /* slide-exact deep purple */
-  --whelm-bg-cream:  #f0e2ff;  /* slide-exact cream panel */
-  --whelm-cream:     #f3eff7;  /* near-white body type on dark */
-  --whelm-mauve:     #bdb7e9;  /* secondary accent */
-  --whelm-plum:      #49325d;  /* mid accent */
-  --whelm-orchid:    #895fae;  /* highlight */
+  /* ─── COLOR ─── slide-source exact, hardcoded (not normalized). */
+  --whelm-bg:        #1f0536;
+  --whelm-bg-cream:  #f0e2ff;
+  --whelm-cream:     #f3eff7;
+  --whelm-mauve:     #bdb7e9;
+  --whelm-plum:      #49325d;
+  --whelm-orchid:    #895fae;
+  --whelm-deep:      #3a2553;
 
+  /* ─── TYPE FAMILIES ─── */
+  --whelm-display-font:   'p22-mackinac-pro', var(--font-fraunces, 'Fraunces'), Georgia, serif;
+  --whelm-editorial-font: var(--font-crimson-pro, 'Crimson Pro'), Georgia, serif;
+  --whelm-body-font:      var(--font-open-sans, 'Open Sans'), -apple-system, sans-serif;
+
+  /* ─── TYPE SIZES ─── 1.25 ratio modular scale. */
+  --t-eyebrow: clamp(11px, 0.78vw, 13px);
+  --t-body:    clamp(15px, 1.05vw, 18px);
+  --t-lead:    clamp(19px, 1.35vw, 22px);
+  --t-h3:      clamp(23px, 1.7vw,  28px);
+  --t-h2:      clamp(30px, 2.4vw,  44px);
+  --t-h1:      clamp(46px, 4.2vw,  72px);
+  --t-display: clamp(72px, 7.5vw,  140px);
+  --t-hero:    clamp(108px, 11vw,  220px);
+
+  /* Line heights paired with sizes. */
+  --lh-tight:   1.0;
+  --lh-display: 1.05;
+  --lh-snug:    1.15;
+  --lh-normal:  1.35;
+  --lh-relaxed: 1.5;
+
+  /* ─── SPACING ─── 4px base. Use semantically. */
+  --s-1:  4px;
+  --s-2:  8px;
+  --s-3:  12px;
+  --s-4:  16px;
+  --s-5:  24px;
+  --s-6:  32px;
+  --s-7:  48px;
+  --s-8:  64px;
+  --s-9:  96px;
+  --s-10: 128px;
+
+  /* ─── MOTION ─── */
+  --m-fast:     240ms;
+  --m-medium:   480ms;
+  --m-slow:     800ms;
+  --m-emphasis: 1200ms;
+  --m-out:      cubic-bezier(0.22, 1, 0.36, 1);
+  --m-inout:    cubic-bezier(0.42, 0, 0.58, 1);
+  --m-bounce:   cubic-bezier(0.34, 1.4, 0.64, 1);
+
+  /* ─── LAYOUT ─── */
+  --sidebar-w: clamp(220px, 18vw, 320px);
+  --page-margin: var(--s-7);
+  --gutter: var(--s-5);
+
+  /* ─── Story container ─── */
   position: relative;
   width: 100%;
-  background: #1f0536; /* slide-exact deep purple, hardcoded by request */
+  background: var(--whelm-bg);
   color: var(--whelm-cream);
+  font-family: var(--whelm-body-font);
+  font-size: var(--t-body);
+  line-height: var(--lh-relaxed);
 }
+
+/* =====================================================================
+   STAGE GRID
+   ===================================================================== */
 
 .stage {
   position: relative;
@@ -32,69 +96,339 @@
   height: 100vh;
   height: 100dvh;
   overflow: hidden;
+  display: grid;
+  grid-template-columns:
+    [sidebar-start] var(--sidebar-w)
+    [sidebar-end content-start]
+    repeat(12, 1fr)
+    [content-end];
+  grid-template-rows: [stage-start] 1fr [stage-end];
+  column-gap: var(--gutter);
+  padding-right: var(--page-margin);
+  isolation: isolate;
 }
 
-/* Ambient breath wrapper — slow scale oscillation around the canvas.
-   Pure CSS, parallel to GSAP transforms on individual elements. */
+/* Stage wrapper — `display: contents` makes its children direct grid
+   participants in .stage so element wrappers, sidebar, and copy layers
+   all share the same grid context. */
 .canvasWrap {
-  position: absolute;
-  inset: 0;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  animation: ambientBreath 14s ease-in-out infinite;
-  transform-origin: 50% 50%;
-  will-change: transform;
+  display: contents;
 }
 
-@keyframes ambientBreath {
-  0%, 100% { transform: scale(1); }
-  50%      { transform: scale(1.012); }
-}
+/* =====================================================================
+   ELEMENT WRAPPERS
+   Default: full content area, full height. Beat-driven opacity via --eo.
+   ===================================================================== */
 
-.canvas {
-  position: absolute;
-  inset: 0;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-}
-
-/* ─── Element wrapper ───
-   Position driven by CSS custom properties set on each wrapper by
-   the orchestrator. Defaults render the element offscreen-invisible
-   so first-paint never flashes a stack of overlapping placeholders. */
 .element {
-  position: absolute;
-  left: calc(var(--ex, 50) * 1%);
-  top: calc(var(--ey, 50) * 1%);
-  transform: translate(-50%, -50%) scale(var(--es, 1));
-  opacity: var(--eo, 0);
-  transform-origin: 50% 50%;
-  will-change: transform, opacity;
+  grid-column: content-start / content-end;
+  grid-row: stage-start / stage-end;
+  position: relative;
+  align-self: stretch;
+  justify-self: stretch;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   pointer-events: none;
+  opacity: var(--eo, 0);
+  z-index: 1;
 }
 
-/* ─── Element renderers ─── */
+/* Hero-tier elements that should bleed past content edges into sidebar
+   territory (cursive flourish, decorative accents). */
+.element[data-layer='bleed'] {
+  grid-column: sidebar-start / content-end;
+  z-index: 0;
+}
 
-/* Wordmark — slide 255:355 hero. Display type at editorial scale.
-   Each character is its own span so the orchestrator can reveal them
-   sequentially for the typewriter intro. The cursor is a CSS bar at
-   the end that blinks until typing finishes; the orchestrator hides
-   it after the last character lands. */
+/* Foreground elements (scroll cue, type marks) sit above bg layers. */
+.element[data-layer='fore'] {
+  z-index: 2;
+}
+
+/* =====================================================================
+   COPY LAYER — grid-positioned blocks
+   ===================================================================== */
+
+.copyLayer {
+  display: contents;
+}
+
+.copyBlock {
+  grid-row: stage-start / stage-end;
+  z-index: 5;
+  visibility: visible;
+  pointer-events: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Position presets: grid-column + alignment. Padding via spacing tokens. */
+.pos_tl {
+  grid-column: content-start / span 6;
+  align-self: start;
+  justify-self: start;
+  padding: var(--s-9) 0 0 0;
+}
+
+.pos_tr {
+  grid-column: span 6 / content-end;
+  align-self: start;
+  justify-self: end;
+  padding: var(--s-9) 0 0 0;
+  text-align: right;
+}
+
+.pos_bl {
+  grid-column: content-start / span 6;
+  align-self: end;
+  justify-self: start;
+  padding: 0 0 var(--s-9) 0;
+}
+
+.pos_br {
+  grid-column: span 6 / content-end;
+  align-self: end;
+  justify-self: end;
+  padding: 0 0 var(--s-9) 0;
+  text-align: right;
+}
+
+.pos_ml {
+  grid-column: content-start / span 6;
+  align-self: center;
+  justify-self: start;
+}
+
+.pos_mr {
+  grid-column: span 6 / content-end;
+  align-self: center;
+  justify-self: end;
+  text-align: right;
+}
+
+.pos_center {
+  grid-column: 4 / span 6;
+  align-self: center;
+  justify-self: center;
+  text-align: center;
+}
+
+.pos_below_center {
+  grid-column: 4 / span 6;
+  align-self: center;
+  justify-self: center;
+  text-align: center;
+  padding-top: 18vh;
+}
+
+.pos_br_sub {
+  grid-column: span 6 / content-end;
+  align-self: end;
+  justify-self: end;
+  padding: 0 0 var(--s-9) 0;
+  text-align: right;
+}
+
+/* =====================================================================
+   TYPE KINDS — coordinated ramp
+   ===================================================================== */
+
+.kind_eyebrow {
+  font-family: var(--whelm-body-font);
+  font-size: var(--t-eyebrow);
+  font-weight: 400;
+  line-height: var(--lh-tight);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--whelm-mauve);
+}
+
+.kind_body {
+  font-family: var(--whelm-body-font);
+  font-size: var(--t-body);
+  font-weight: 400;
+  line-height: var(--lh-relaxed);
+  color: var(--whelm-cream);
+  max-width: 36ch;
+  opacity: 0.92;
+}
+
+.kind_lead {
+  font-family: var(--whelm-editorial-font);
+  font-size: var(--t-h2);
+  font-weight: 300;
+  font-style: italic;
+  line-height: var(--lh-snug);
+  color: var(--whelm-cream);
+  max-width: 22ch;
+  margin: 0;
+}
+
+.kind_sub {
+  font-family: var(--whelm-editorial-font);
+  font-size: var(--t-h3);
+  font-weight: 300;
+  font-style: italic;
+  line-height: var(--lh-normal);
+  color: var(--whelm-mauve);
+  max-width: 36ch;
+}
+
+.kind_h2_inline {
+  font-family: var(--whelm-display-font);
+  font-size: var(--t-h1);
+  font-weight: 400;
+  line-height: var(--lh-tight);
+  letter-spacing: -0.012em;
+  color: var(--whelm-cream);
+  max-width: 16ch;
+  margin: 0;
+}
+
+.kind_h2_inline em {
+  font-family: var(--whelm-editorial-font);
+  font-style: italic;
+  font-weight: 300;
+}
+
+.kind_h1 {
+  font-family: var(--whelm-display-font);
+  font-size: var(--t-display);
+  font-weight: 400;
+  line-height: var(--lh-display);
+  letter-spacing: -0.025em;
+  color: var(--whelm-cream);
+  margin: 0;
+}
+
+.kind_quote {
+  font-family: var(--whelm-editorial-font);
+  font-size: var(--t-lead);
+  font-weight: 300;
+  font-style: italic;
+  line-height: var(--lh-snug);
+  color: var(--whelm-cream);
+  max-width: 28ch;
+}
+
+.kind_quote q::before { content: '\201C'; }
+.kind_quote q::after  { content: '\201D'; }
+
+.kind_tag {
+  font-family: var(--whelm-editorial-font);
+  font-size: var(--t-h3);
+  font-weight: 300;
+  font-style: italic;
+  color: var(--whelm-mauve);
+}
+
+/* =====================================================================
+   SIDEBAR — full-viewport vertical strip
+   ===================================================================== */
+
+.sidebar {
+  grid-column: sidebar-start / sidebar-end;
+  grid-row: stage-start / stage-end;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: var(--s-9) var(--s-7) var(--s-9) var(--s-8);
+  border-right: 1px solid rgba(189, 183, 233, 0.10);
+  z-index: 8;
+  opacity: 0;
+  transition: opacity var(--m-slow) var(--m-out);
+}
+
+.sidebar[data-state='visible'] { opacity: 1; }
+
+.sidebarTitle {
+  margin: 0 0 var(--s-7) 0;
+  font-family: var(--whelm-body-font);
+  font-size: var(--t-eyebrow);
+  font-weight: 500;
+  line-height: var(--lh-tight);
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--whelm-mauve);
+  opacity: 0.7;
+}
+
+.sidebarList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-5);
+}
+
+.sidebarItem {
+  display: flex;
+  align-items: center;
+  gap: var(--s-4);
+  font-family: var(--whelm-editorial-font);
+  font-size: var(--t-h3);
+  font-weight: 300;
+  font-style: italic;
+  line-height: var(--lh-tight);
+  color: rgba(243, 239, 247, 0.30);
+  transition: color var(--m-medium) var(--m-out);
+}
+
+.sidebarDot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 1.5px solid currentColor;
+  flex: 0 0 auto;
+  background: transparent;
+  transition: background var(--m-medium) var(--m-out),
+              transform   var(--m-medium) var(--m-out);
+}
+
+.sidebarLabel {
+  white-space: nowrap;
+}
+
+/* Active highlight — grouped attribute selector for all 6 sections. */
+.sidebar[data-active-section='gap']       .sidebarItem[data-section='gap'],
+.sidebar[data-active-section='need']      .sidebarItem[data-section='need'],
+.sidebar[data-active-section='audience']  .sidebarItem[data-section='audience'],
+.sidebar[data-active-section='framework'] .sidebarItem[data-section='framework'],
+.sidebar[data-active-section='research']  .sidebarItem[data-section='research'],
+.sidebar[data-active-section='design']    .sidebarItem[data-section='design'] {
+  color: var(--whelm-cream);
+}
+
+.sidebar[data-active-section='gap']       .sidebarItem[data-section='gap']       .sidebarDot,
+.sidebar[data-active-section='need']      .sidebarItem[data-section='need']      .sidebarDot,
+.sidebar[data-active-section='audience']  .sidebarItem[data-section='audience']  .sidebarDot,
+.sidebar[data-active-section='framework'] .sidebarItem[data-section='framework'] .sidebarDot,
+.sidebar[data-active-section='research']  .sidebarItem[data-section='research']  .sidebarDot,
+.sidebar[data-active-section='design']    .sidebarItem[data-section='design']    .sidebarDot {
+  background: var(--whelm-cream);
+  transform: scale(1.4);
+}
+
+/* =====================================================================
+   ELEMENT RENDERERS
+   ===================================================================== */
+
+/* Wordmark — slide 255:355. */
 .wordmark {
   margin: 0;
-  font-family: var(--whelm-display);
-  font-size: clamp(80px, 13vw, 220px);
+  font-family: var(--whelm-display-font);
+  font-size: var(--t-hero);
   font-weight: 300;
-  line-height: 0.95;
+  line-height: var(--lh-tight);
   letter-spacing: -0.025em;
   color: var(--whelm-cream);
   text-align: center;
   white-space: nowrap;
   user-select: none;
+  z-index: 4;
+  position: relative;
 }
 
 .wordmarkInner {
@@ -122,36 +456,70 @@
   50.01%, 100% { opacity: 0; }
 }
 
-/* Hero flourish — cursive draw-on alongside the wordmark. */
-.heroFlourish {
-  width: clamp(220px, 26vw, 400px);
-  height: auto;
+/* Background-asset SVG layer — full-bleed image fill. */
+.bleedAsset {
+  width: 100%;
+  height: 100%;
   display: block;
-  color: var(--whelm-mauve);
-  opacity: 0.85;
+  object-fit: cover;
+  object-position: center;
+  pointer-events: none;
+}
+
+.bleedAssetMauve {
+  /* Tinted/muted variant */
+  opacity: 0.6;
+  mix-blend-mode: screen;
+}
+
+/* Hero flourish (now using cursivewhelm.svg as background asset). */
+.heroFlourish {
+  width: 100%;
+  height: 100%;
+  display: block;
 }
 
 .heroFlourishPath {
   /* GSAP animates strokeDashoffset 100 → 0 during the intro. */
 }
 
-/* Scroll cue — "Learn More" + chevron, bobbing gently. */
+/* Overcome stack — slide 255:357. */
+.overcomeStack {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--s-1);
+  font-family: var(--whelm-display-font);
+  font-size: var(--t-display);
+  font-weight: 400;
+  line-height: var(--lh-tight);
+  letter-spacing: -0.012em;
+  user-select: none;
+  z-index: 4;
+}
+
+.overcomeLine {
+  display: block;
+}
+
+.overcomeLine[data-tier='1'] { color: var(--whelm-cream); }
+.overcomeLine[data-tier='2'] { color: var(--whelm-mauve); }
+.overcomeLine[data-tier='3'] { color: rgba(189, 183, 233, 0.45); }
+
+/* Scroll cue — Hero "Learn More" + chevron. */
 .scrollCue {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.5rem;
-  font-family: var(--whelm-editorial);
-  font-size: 16px;
+  gap: var(--s-2);
+  font-family: var(--whelm-editorial-font);
+  font-size: var(--t-body);
   font-style: italic;
   font-weight: 300;
   letter-spacing: 0.04em;
   color: var(--whelm-mauve);
   animation: scrollCueBob 2.4s ease-in-out infinite;
-}
-
-.scrollCueLabel {
-  text-transform: none;
+  z-index: 4;
 }
 
 .scrollCueArrow {
@@ -163,121 +531,8 @@
   50%      { transform: translateY(6px); }
 }
 
-/* ─── Sidebar agenda — persistent left navigation ───
-   Lives inside the pinned stage but visually anchored mid-left. The
-   orchestrator toggles data-state="visible|hidden" per beat to fade in
-   after Hero and out for full-bleed sections. data-active-section
-   drives the highlighted item via attribute selectors below. */
-.sidebar {
-  position: absolute;
-  top: 50%;
-  left: 4vw;
-  transform: translateY(-50%);
-  z-index: 10;
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 0.8s var(--ease-out, cubic-bezier(0.22, 1, 0.36, 1));
-  font-family: var(--whelm-editorial);
-}
-
-.sidebar[data-state='visible'] {
-  opacity: 1;
-}
-
-.sidebarTitle {
-  margin: 0 0 1.5rem 0;
-  font-family: var(--whelm-display);
-  font-size: 14px;
-  font-weight: 400;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: rgba(243, 239, 247, 0.5);
-}
-
-.sidebarList {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 1.1rem;
-}
-
-.sidebarItem {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  font-size: 16px;
-  font-weight: 300;
-  font-style: italic;
-  color: rgba(243, 239, 247, 0.35);
-  transition: color 0.5s var(--ease-out, cubic-bezier(0.22, 1, 0.36, 1));
-}
-
-.sidebarDot {
-  width: 9px;
-  height: 9px;
-  border-radius: 50%;
-  border: 1px solid currentColor;
-  background: transparent;
-  transition: background 0.5s var(--ease-out, cubic-bezier(0.22, 1, 0.36, 1)),
-              transform 0.5s var(--ease-out, cubic-bezier(0.22, 1, 0.36, 1));
-  flex: 0 0 auto;
-}
-
-.sidebarLabel {
-  white-space: nowrap;
-}
-
-/* Active section: brighten label + fill the dot. */
-.sidebar[data-active-section='gap']       .sidebarItem[data-section='gap'],
-.sidebar[data-active-section='need']      .sidebarItem[data-section='need'],
-.sidebar[data-active-section='audience']  .sidebarItem[data-section='audience'],
-.sidebar[data-active-section='framework'] .sidebarItem[data-section='framework'],
-.sidebar[data-active-section='research']  .sidebarItem[data-section='research'],
-.sidebar[data-active-section='design']    .sidebarItem[data-section='design'] {
-  color: var(--whelm-cream);
-}
-
-.sidebar[data-active-section='gap']       .sidebarItem[data-section='gap']       .sidebarDot,
-.sidebar[data-active-section='need']      .sidebarItem[data-section='need']      .sidebarDot,
-.sidebar[data-active-section='audience']  .sidebarItem[data-section='audience']  .sidebarDot,
-.sidebar[data-active-section='framework'] .sidebarItem[data-section='framework'] .sidebarDot,
-.sidebar[data-active-section='research']  .sidebarItem[data-section='research']  .sidebarDot,
-.sidebar[data-active-section='design']    .sidebarItem[data-section='design']    .sidebarDot {
-  background: var(--whelm-cream);
-  transform: scale(1.15);
-}
-
-/* Overcome stack — slide 255:357. Three "Overwhelm" lines stacked
-   vertically with a tonal gradient: brightest cream at top, mid mauve,
-   deepest dim at bottom. Each line is its own span so it can be
-   individually animated (entrance staggers, exit on Phase A) and so
-   per-tier color is straightforward. */
-.overcomeStack {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 0.05em;
-  font-family: var(--whelm-display);
-  font-size: clamp(64px, 10.5vw, 168px);
-  font-weight: 300;
-  line-height: 1.0;
-  letter-spacing: -0.012em;
-  user-select: none;
-}
-
-.overcomeLine {
-  display: block;
-}
-
-.overcomeLine[data-tier='1'] { color: var(--whelm-cream); }
-.overcomeLine[data-tier='2'] { color: var(--whelm-mauve); }
-.overcomeLine[data-tier='3'] { color: rgba(189, 183, 233, 0.45); }
-
-/* Diagram base — square SVG sized to fit the wrapper. The wrapper
-   itself handles position via the engine's CSS variables; the SVG
-   inside scales responsively while preserving aspect ratio. */
+/* Diagram base for inline-SVG renderers (Section 3 fallback if assets
+   are not used as bleeds). */
 .diagram {
   width: clamp(320px, 38vw, 560px);
   height: clamp(320px, 38vw, 560px);
@@ -286,49 +541,40 @@
 }
 
 .signalLabel {
-  font-family: var(--font-body, 'Open Sans'), sans-serif;
+  font-family: var(--whelm-body-font);
   font-size: 18px;
   font-weight: 400;
   letter-spacing: 0.005em;
 }
 
 .tangleLabel {
-  font-family: var(--font-body, 'Open Sans'), sans-serif;
+  font-family: var(--whelm-body-font);
   font-size: 14px;
   font-weight: 400;
   letter-spacing: 0.01em;
 }
 
 .portalCoreLabel {
-  font-family: var(--font-body, 'Open Sans'), sans-serif;
+  font-family: var(--whelm-body-font);
   font-size: 13px;
   font-weight: 500;
   letter-spacing: 0.02em;
 }
 
-/* ─── Phase 0 placeholder visual ─── */
+/* Phase 0 placeholder visual (kept for elements not yet rebuilt). */
 .placeholder {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 1rem 1.5rem;
-  background: rgba(189, 183, 233, 0.12);
-  border: 1px dashed var(--whelm-mauve, #bdb7e9);
+  padding: var(--s-4) var(--s-5);
+  background: rgba(189, 183, 233, 0.10);
+  border: 1px dashed var(--whelm-mauve);
   border-radius: 8px;
-  font-family: var(--whelm-editorial), serif;
-  font-size: 18px;
-  color: var(--whelm-cream, #f3eff7);
-  white-space: nowrap;
+  font-family: var(--whelm-editorial-font);
+  font-size: var(--t-body);
+  color: var(--whelm-cream);
   letter-spacing: 0.02em;
-}
-
-.placeholder[data-kind='wordmark'] {
-  font-family: var(--whelm-display), serif;
-  font-size: clamp(72px, 9vw, 180px);
-  font-weight: 300;
-  letter-spacing: -0.02em;
-  border: none;
-  background: transparent;
+  white-space: nowrap;
 }
 
 .placeholder[data-kind='diagram'],
@@ -339,171 +585,16 @@
   border-radius: 50%;
 }
 
-/* ─── Copy layer ─── */
-.copyLayer {
-  position: absolute;
-  inset: 0;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  pointer-events: none;
-}
+/* =====================================================================
+   REDUCED MOTION
+   ===================================================================== */
 
-.copyBlock {
-  position: absolute;
-  visibility: visible;
-  pointer-events: auto;
-  max-width: min(38ch, 36vw);
-}
-
-/* ─── Type kinds ─── */
-.kind_h1 {
-  font-family: var(--whelm-display), serif;
-  font-size: clamp(56px, 8.5vw, 180px);
-  line-height: 1.0;
-  font-weight: 300;
-  letter-spacing: -0.02em;
-  color: var(--whelm-cream, #f3eff7);
-  margin: 0;
-}
-
-.kind_sub {
-  font-family: var(--whelm-editorial), serif;
-  font-size: clamp(20px, 2.4vw, 38px);
-  font-weight: 300;
-  font-style: italic;
-  line-height: 1.3;
-  color: var(--whelm-mauve, #bdb7e9);
-  max-width: min(38ch, 36vw);
-}
-
-.kind_lead {
-  font-family: var(--whelm-editorial), serif;
-  font-size: clamp(28px, 3.6vw, 56px);
-  line-height: 1.2;
-  font-weight: 300;
-  letter-spacing: -0.005em;
-  color: var(--whelm-cream, #f3eff7);
-  max-width: min(22ch, 32vw);
-}
-
-.kind_h2_inline {
-  font-family: var(--whelm-display), serif;
-  font-size: clamp(36px, 5.2vw, 84px);
-  line-height: 1.1;
-  font-weight: 300;
-  letter-spacing: -0.012em;
-  color: var(--whelm-cream, #f3eff7);
-  max-width: min(28ch, 50vw);
-}
-
-.kind_h2_inline em {
-  font-family: var(--whelm-editorial), serif;
-  font-style: italic;
-  font-weight: 300;
-}
-
-.kind_body {
-  font-family: var(--font-body, 'Open Sans'), sans-serif;
-  font-size: clamp(16px, 1.6vw, 22px);
-  line-height: 1.5;
-  font-weight: 400;
-  color: var(--whelm-cream, #f3eff7);
-  opacity: 0.9;
-  max-width: min(36ch, 32vw);
-}
-
-.kind_quote {
-  font-family: var(--whelm-editorial), serif;
-  font-size: clamp(18px, 2vw, 28px);
-  line-height: 1.35;
-  font-weight: 300;
-  font-style: italic;
-  color: var(--whelm-cream, #f3eff7);
-  max-width: min(28ch, 30vw);
-}
-
-.kind_quote q::before { content: '\201C'; }
-.kind_quote q::after  { content: '\201D'; }
-
-.kind_note {
-  font-family: var(--font-body, 'Open Sans'), sans-serif;
-  font-size: clamp(15px, 1.5vw, 20px);
-  font-weight: 300;
-  font-style: italic;
-  text-align: center;
-  color: var(--whelm-mauve, #bdb7e9);
-  max-width: 22ch;
-}
-
-.kind_tag {
-  font-family: var(--whelm-editorial), serif;
-  font-size: clamp(20px, 2.4vw, 36px);
-  font-weight: 300;
-  font-style: italic;
-  color: var(--whelm-mauve, #bdb7e9);
-  white-space: nowrap;
-}
-
-
-/* ─── Position presets — generous edge insets, asymmetrical placement ─── */
-.pos_tl   { top: 6vh;  left: 6vw; }
-.pos_tr   { top: 6vh;  right: 6vw; }
-.pos_bl   { bottom: 8vh; left: 6vw; }
-.pos_br   { bottom: 8vh; right: 6vw; max-width: min(36ch, 34vw); }
-
-.pos_br_sub {
-  bottom: 8vh;
-  right: 6vw;
-  text-align: left;
-  max-width: min(38ch, 34vw);
-}
-
-.pos_ml { top: 32vh; left: 6vw; }
-.pos_mr { top: 32vh; right: 6vw; }
-
-.pos_c_lead {
-  left: 50%;
-  top: 22vh;
-  transform: translateX(-50%);
-  text-align: left;
-  max-width: min(28ch, 50vw);
-}
-
-.pos_c_mid {
-  left: 50%;
-  top: 48vh;
-  transform: translateX(-50%);
-  text-align: center;
-  max-width: min(28ch, 32vw);
-}
-
-.pos_c_bot {
-  left: 50%;
-  top: 64vh;
-  transform: translateX(-50%);
-}
-
-/* Below-center — for editorial subs sitting directly under a centered
-   element (hero tagline below wordmark). Subtle vertical separation
-   without the full-screen-bottom feel of pos_c_bot. */
-.pos_below_center {
-  left: 50%;
-  top: 62vh;
-  transform: translateX(-50%);
-  text-align: center;
-  max-width: min(36ch, 60vw);
-}
-
-/* ─── Reduced motion ─── */
 @media (prefers-reduced-motion: reduce) {
-  .canvasWrap { animation: none; }
   .copyBlock {
     opacity: 1;
     transform: none;
   }
-  .kind_lead, .kind_h2_inline, .titleLine {
+  .kind_lead, .kind_h2_inline {
     clip-path: none !important;
   }
   .wordmarkChar {
