@@ -33,20 +33,14 @@ const sectionLabels = {
 
 const darkSections = ['hero', 'vision', 'ctb', 'artwall', 'outcomes', 'acknowledgements', 'whats-next']
 
-// CLIPS TBD: 5/6 of these are blurred to protect unpublished study findings.
-// For the public site we want clearer recordings where possible. Lorin to
-// confirm which views can be cleared with UPMC, or swap to alternative
-// Groundswell videos that show the data-site interaction without revealing
-// findings. Available alternates in lib/cloudinary.js GS_VIDEOS:
-//   gs-walkthrough-video, gs-qr-library, gs-card-flip, gs-display-view,
-//   gs-pod-data, gs-opener, gs-intro-artwall, gs-overlay, gs-new-meditations
+// LABELS TBD — Lorin owns. Clips swapped to public-safe alternates 2026-05-04.
 const dashboardClips = [
-  { src: gsVid('entrypage'), label: 'Entry Screen' },
-  { src: gsVid('moduleview'), label: 'Data Module', blur: true },
-  { src: gsVid('popup'), label: 'Click-through Overlay', blur: true },
-  { src: gsVid('chartview'), label: 'Chart View', blur: true },
-  { src: gsVid('displayview'), label: 'Display View', blur: true },
-  { src: gsVid('admin'), label: 'Admin Page', blur: true },
+  { src: gsVid('gs-opener'), label: '[LABEL TBD]' },
+  { src: gsVid('gs-intro-artwall'), label: '[LABEL TBD]' },
+  { src: gsVid('gs-pod-data'), label: '[LABEL TBD]' },
+  { src: gsVid('gs-display-view'), label: '[LABEL TBD]' },
+  { src: gsVid('gs-overlay'), label: '[LABEL TBD]' },
+  { src: gsVid('gs-new-meditations'), label: '[LABEL TBD]' },
 ]
 
 const audioTracks = [
@@ -528,6 +522,68 @@ export default function GroundswellPublicContent() {
         </div>
       </section>
 
+      {/* ==================== WHAT'S NEXT / GET INVOLVED ====================
+          Closing invitation. Lorin owns voice + which CTAs go here. The
+          structural skeleton uses the same dark register as Acknowledgements
+          for visual continuity, and the same press-card pattern as the
+          Press section above for the action items so the visual language
+          stays consistent. */}
+      <section id="whats-next" className={styles.sectionDark}>
+        <div className={styles.sectionContent}>
+          <AnimatedElement>
+            {/* CLOSING HEADING TBD: pick one — "What's Next", "Stay Connected",
+                "Help Us Continue", "Keep the Work Going" */}
+            <h2 className={styles.sectionHeadingLightCentered}>What&rsquo;s Next</h2>
+            {/* CLOSING BODY TBD: 2-3 sentences inviting visitors to follow,
+                support, or get involved. In Lorin's voice. The current
+                placeholder reads as the structural intent only. */}
+            <p className={styles.bodyTextLightCenteredBold}>
+              [CLOSING BODY TBD] A brief, warm invitation to follow the work, support its continuation, or get involved as the study expands.
+            </p>
+          </AnimatedElement>
+
+          <AnimatedElement>
+            {/* Action cards. Use 1-3 of these. Likely candidates:
+                - Email signup for project updates
+                - Donation / support link
+                - Link to /projects/groundswell case study for those who want
+                  the design story
+                - Press / academic publication preorder
+                - Social follow
+                Lorin: pick which ones, fill href + copy. */}
+            <div className={styles.reflectionPressGrid}>
+              <div className={styles.reflectionPressCardWrapper}>
+                <a
+                  href="#"
+                  className={styles.reflectionPressCard}
+                >
+                  <span className={styles.reflectionPressSource}>[CTA 1 LABEL TBD]</span>
+                  <h4 className={styles.reflectionPressTitle}>
+                    [CTA 1 TITLE TBD]
+                  </h4>
+                  <span className={styles.reflectionPressLink}>[CTA 1 ACTION] &rarr;</span>
+                </a>
+                <span className={styles.reflectionPressFold} aria-hidden="true" />
+              </div>
+
+              <div className={styles.reflectionPressCardWrapper}>
+                <a
+                  href="#"
+                  className={styles.reflectionPressCard}
+                >
+                  <span className={styles.reflectionPressSource}>[CTA 2 LABEL TBD]</span>
+                  <h4 className={styles.reflectionPressTitle}>
+                    [CTA 2 TITLE TBD]
+                  </h4>
+                  <span className={styles.reflectionPressLink}>[CTA 2 ACTION] &rarr;</span>
+                </a>
+                <span className={styles.reflectionPressFold} aria-hidden="true" />
+              </div>
+            </div>
+          </AnimatedElement>
+        </div>
+      </section>
+
       {/* ==================== ACKNOWLEDGEMENTS ==================== */}
       <section id="acknowledgements" className={styles.sectionDark}>
         <div className={styles.sectionContent}>
@@ -615,68 +671,6 @@ export default function GroundswellPublicContent() {
             <p className={styles.bodyTextLightCenteredItalic}>
               To everyone who played a role in bringing this project to life—thank you.
             </p>
-          </AnimatedElement>
-        </div>
-      </section>
-
-      {/* ==================== WHAT'S NEXT / GET INVOLVED ====================
-          Closing invitation. Lorin owns voice + which CTAs go here. The
-          structural skeleton uses the same dark register as Acknowledgements
-          for visual continuity, and the same press-card pattern as the
-          Press section above for the action items so the visual language
-          stays consistent. */}
-      <section id="whats-next" className={styles.sectionDark}>
-        <div className={styles.sectionContent}>
-          <AnimatedElement>
-            {/* CLOSING HEADING TBD: pick one — "What's Next", "Stay Connected",
-                "Help Us Continue", "Keep the Work Going" */}
-            <h2 className={styles.sectionHeadingLightCentered}>What&rsquo;s Next</h2>
-            {/* CLOSING BODY TBD: 2-3 sentences inviting visitors to follow,
-                support, or get involved. In Lorin's voice. The current
-                placeholder reads as the structural intent only. */}
-            <p className={styles.bodyTextLightCenteredBold}>
-              [CLOSING BODY TBD] A brief, warm invitation to follow the work, support its continuation, or get involved as the study expands.
-            </p>
-          </AnimatedElement>
-
-          <AnimatedElement>
-            {/* Action cards. Use 1-3 of these. Likely candidates:
-                - Email signup for project updates
-                - Donation / support link
-                - Link to /projects/groundswell case study for those who want
-                  the design story
-                - Press / academic publication preorder
-                - Social follow
-                Lorin: pick which ones, fill href + copy. */}
-            <div className={styles.reflectionPressGrid}>
-              <div className={styles.reflectionPressCardWrapper}>
-                <a
-                  href="#"
-                  className={styles.reflectionPressCard}
-                >
-                  <span className={styles.reflectionPressSource}>[CTA 1 LABEL TBD]</span>
-                  <h4 className={styles.reflectionPressTitle}>
-                    [CTA 1 TITLE TBD]
-                  </h4>
-                  <span className={styles.reflectionPressLink}>[CTA 1 ACTION] &rarr;</span>
-                </a>
-                <span className={styles.reflectionPressFold} aria-hidden="true" />
-              </div>
-
-              <div className={styles.reflectionPressCardWrapper}>
-                <a
-                  href="#"
-                  className={styles.reflectionPressCard}
-                >
-                  <span className={styles.reflectionPressSource}>[CTA 2 LABEL TBD]</span>
-                  <h4 className={styles.reflectionPressTitle}>
-                    [CTA 2 TITLE TBD]
-                  </h4>
-                  <span className={styles.reflectionPressLink}>[CTA 2 ACTION] &rarr;</span>
-                </a>
-                <span className={styles.reflectionPressFold} aria-hidden="true" />
-              </div>
-            </div>
           </AnimatedElement>
         </div>
       </section>
