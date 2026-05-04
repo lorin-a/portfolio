@@ -147,7 +147,7 @@ export default function CursiveWhelm() {
         fill="none"
         stroke="url(#cursive-stroke)"
         strokeWidth="11"
-        strokeOpacity="0.55"
+        strokeOpacity="0.7"
         strokeLinecap="round"
         strokeLinejoin="round"
         pathLength="1000"

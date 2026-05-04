@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef } from 'react'
+import { useRef, useEffect } from 'react'
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
@@ -64,6 +64,16 @@ function isHeldBeat(beat, prevLayoutName) {
 export default function WhelmStory() {
   const sectionRef = useRef(null)
   const sidebarRef = useRef(null)
+
+  /* Whelm is a cinematic case study; the global portfolio nav competes
+     with the hero composition. Mark the body for the route lifetime so
+     globals.css can hide the nav while we're on /projects/whelm. */
+  useEffect(() => {
+    document.body.dataset.page = 'whelm'
+    return () => {
+      delete document.body.dataset.page
+    }
+  }, [])
 
   useGSAP(() => {
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches

@@ -1,3 +1,10 @@
+/* Whelm case study runs full-bleed cinematic — global nav hidden
+   while WhelmStory mounts (body[data-page="whelm"] toggled in
+   WhelmStory.client.jsx useEffect). */
+body[data-page='whelm'] header {
+  display: none;
+}
+
 /* ===========================================
    DESIGN SYSTEM VARIABLES
    =========================================== */

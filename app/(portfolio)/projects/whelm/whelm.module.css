@@ -549,9 +549,11 @@
   overflow: visible;
 }
 
+/* Hero flourish bleeds past edges. Sits BEHIND wordmark + copy so
+   all text reads on top of the cursive. */
 .element[data-element-id='hero-flourish'] {
   overflow: visible;
-  z-index: 2;
+  z-index: 0;
 }
 
 /* Overcome stack — slide 255:357. */
