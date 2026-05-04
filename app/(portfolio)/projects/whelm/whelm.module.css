@@ -546,13 +546,16 @@
   display: block;
   pointer-events: none;
   overflow: visible;
-  transform: scale(1.18) rotate(-2.5deg);
+  transform: translate(-4%, -4%) scale(1.18) rotate(-2.5deg);
   transform-origin: 50% 50%;
 }
 
-/* Hero flourish bleeds past edges. Sits BEHIND wordmark + copy so
-   all text reads on top of the cursive. */
+/* Hero flourish spans the full hero width (sidebar is hidden during
+   the hero beat, so we extend past content-start into that column).
+   Bleeds past edges. Sits BEHIND wordmark + copy so all text reads
+   on top of the cursive. */
 .element[data-element-id='hero-flourish'] {
+  grid-column: sidebar-start / content-end;
   overflow: visible;
   z-index: 0;
 }
