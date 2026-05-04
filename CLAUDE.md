@@ -133,6 +133,7 @@ When V2 decisions are made during homepage work, update `DESIGN_SPEC.md` immedia
 | Orphaned words on mobile | Missing `text-wrap: pretty` or test at 400px |
 | Inconsistent easing | Using old 6+ curve system — only 3 active curves now |
 | Hardcoded spacing values | Should use tokens from `globals.css` unless one-off is justified |
+| Straight `'` `"` `...` in prose | Reads as AI. Use curly `’ ‘ ” “ …` in JSX text, markdown, alt text, headings. Straight stays in code (props, classNames, JS strings, `alt=""` attribute values). See global CLAUDE.md → Copy Style → Formatting tells. |
 
 ## The Feeling Test
 

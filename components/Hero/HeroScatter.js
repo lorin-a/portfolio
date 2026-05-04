@@ -6,6 +6,7 @@ import { useGSAP } from '@gsap/react'
 import ShapeMark from '@/components/marks/ShapeMark'
 import SenseMark from '@/components/marks/SenseMark'
 import WeaveMark from '@/components/marks/WeaveMark'
+import { useHeroIntro } from '@/components/HeroIntroContext'
 import styles from './HeroScatter.module.css'
 
 gsap.registerPlugin(useGSAP)
@@ -154,6 +155,17 @@ export default function HeroScatter() {
   const flowerHoverable = useRef(false)
   const shapeDrawDone = useRef(null)
   const onShapeDrawComplete = useCallback(() => shapeDrawDone.current?.(), [])
+
+  /* Mark intro as played so future visits in the same session skip
+     straight to the static homepage. The provider already gates the
+     intro by reading sessionStorage on mount, so firing this any time
+     after the hero is on screen is safe — the flag is only consulted
+     on the *next* mount. */
+  const { markDone } = useHeroIntro()
+  useEffect(() => {
+    const t = setTimeout(markDone, 1500)
+    return () => clearTimeout(t)
+  }, [markDone])
 
   const [isDark, setIsDark] = useState(true)
   useEffect(() => {

@@ -4,7 +4,9 @@ import { useRef, useState, useEffect } from 'react'
 import { gsap, SplitText, ScrollTrigger } from '@/lib/gsap'
 import { useGSAP } from '@gsap/react'
 import WatercolorReveal from '@/components/WatercolorReveal/WatercolorReveal'
-import { cloudAudio, GS_AUDIO } from '@/lib/cloudinary'
+import { cloudAudio, cloudImg, GS_AUDIO, GS_IMAGES } from '@/lib/cloudinary'
+import { useSharedAudio } from '@/lib/useSharedAudio'
+import projectStyles from '@/styles/project.module.css'
 import styles from './CinematicIntro.module.css'
 
 gsap.registerPlugin(useGSAP)
@@ -18,15 +20,23 @@ const PULL_ATTR = 'Previous UPMC Magee employee'
 const THESIS = 'The medical system is held together by the invisible labor of healthcare professionals and caregivers.'
 const FRAMING = 'This project was co-created with and for those who give everything they have to others.'
 
+// Hero descriptor + logo. The logo image carries the wordmark and
+// the subhead together; the descriptor below it grounds the visitor
+// in what Groundswell is.
+const GS_LOGO_URL = 'https://res.cloudinary.com/dc17mvdyv/image/upload/v1777927846/gs-logo-white.png'
+const HERO_DESCRIPTOR = 'An ecosystem of restoration, connection, and collective meaning-making co-designed with oncology staff at UPMC Magee-Womens Cancer Services.'
+
 // Poem text. Sourced from Lorin's Figma (Whelm 271-6873). Stanzas are
 // rendered with internal line breaks; the first stanza is a single bold
 // invocation that doubles as the poem's opening.
 //
-// POEM_TIMESTAMPS pairs by flat line index with the lines rendered below
-// (opener + each stanza line, in document order). When Lorin authors
-// per-line start times, the active line highlights as audio plays through.
-// Until then, the array stays null and lines render at full opacity.
-const POEM_TIMESTAMPS = null // [0.0, 2.4, 4.8, ...] -- flat by line index
+// POEM_TIMESTAMPS pairs by stanza index. Index 0 = opener ("Remember your
+// heart."), indices 1..N = POEM_STANZAS in order. When Lorin authors
+// per-stanza start times, the active stanza highlights and scrolls into
+// the center band as audio plays through. Until then, the array stays
+// null, the transcript scrolls linearly with the audio, and no highlight
+// applies.
+const POEM_TIMESTAMPS = null // [0.0, 8.4, 18.2, ...] -- one per stanza, length = POEM_STANZAS.length + 1
 const POEM_OPENER = 'Remember your heart.'
 const POEM_STANZAS = [
   [
@@ -95,9 +105,37 @@ const POEM_STANZAS = [
   ['For what you carry, we all carry.'],
 ]
 
-export default function CinematicIntro() {
+// Small bobbing arrow placed below each beat's content so the visitor
+// sees a "keep scrolling" cue that floats just below whatever they're
+// reading -- adapts to the content height of each beat naturally.
+function BeatCue() {
+  return (
+    <div className={styles.beatCue} aria-hidden="true">
+      <svg width="22" height="28" viewBox="0 0 20 24" fill="none">
+        <path
+          d="M10 2v18M5 14l5 6 5-6"
+          stroke="currentColor"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
+    </div>
+  )
+}
+
+export default function CinematicIntro({ onActiveChange }) {
   const rootRef = useRef(null)
+  const heroLayerRef = useRef(null)
+  const heroLogoRef = useRef(null)
+  const heroDescriptorRef = useRef(null)
+  const blueGardenRef = useRef(null)
+  const heroPhotoRef = useRef(null)
   const heroContentRef = useRef(null)
+  const sentinel1Ref = useRef(null)
+  const sentinel2Ref = useRef(null)
+  const sentinel3Ref = useRef(null)
+  const sentinel4Ref = useRef(null)
   const washRef = useRef(null)
   const quoteRef = useRef(null)
   const attrRef = useRef(null)
@@ -107,24 +145,46 @@ export default function CinematicIntro() {
   const framingBeatRef = useRef(null)
   const framingRef = useRef(null)
   const poemBeatRef = useRef(null)
-  const poemTitleRef = useRef(null)
+  const poemHeaderRef = useRef(null)
   const poemBodyRef = useRef(null)
-  const poemControlsRef = useRef(null)
   const poemTranscriptRef = useRef(null)
+  const poemChromeRef = useRef(null)
   const audioRef = useRef(null)
 
   const [audioPlaying, setAudioPlaying] = useState(false)
+  const [currentTime, setCurrentTime] = useState(0)
+  const [duration, setDuration] = useState(0)
 
-  // Hero beat: thesis is the opening declaration on the watercolor.
-  // Wash fades in first, thesis lines drift in with a soft blur (autoAlpha
-  // + y + filter:blur), scroll cue trails. No line-mask -- atmospheric,
-  // not choreographed.
+  // Project-standard motion: paused timeline + IntersectionObserver play-once
+  // per beat. Each beat plays its own breath as it enters the viewport;
+  // backward scroll leaves beats composed (no reverse). Sticky watercolor
+  // backdrop anchors the visual frame; the scrolling beats provide the
+  // scroll-as-advance language used throughout the site.
   useGSAP(() => {
     if (typeof window === 'undefined') return
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
+    const beat1 = heroContentRef.current
+    const beat2 = quoteBeatRef.current
+    const beat3 = framingBeatRef.current
+    const beat4 = poemBeatRef.current
+    if (!beat1 || !beat2 || !beat3 || !beat4) return
+
+    // Always set to a known initial state so React re-renders don't leave
+    // stale inline styles fighting GSAP.
+    const breathables = [
+      thesisRef.current,
+      quoteRef.current,
+      attrRef.current,
+      framingRef.current,
+      poemHeaderRef.current,
+      poemTranscriptRef.current,
+      poemChromeRef.current,
+      scrollCueRef.current,
+    ].filter(Boolean)
+
     if (reduced) {
-      gsap.set([washRef.current, thesisRef.current, scrollCueRef.current], {
+      gsap.set([beat1, beat2, beat3, beat4, washRef.current, ...breathables], {
         autoAlpha: 1,
         y: 0,
         filter: 'none',
@@ -132,135 +192,234 @@ export default function CinematicIntro() {
       return
     }
 
-    const tl = gsap.timeline()
+    // Initial state. Beats are absolute-positioned at viewport center,
+    // all hidden by default. Sentinels below the sticky stage drive
+    // which beat is visible -- crossfade only, no travel. Wash + scroll
+    // cue start hidden and follow the hero scrub.
+    const beats = [beat1, beat2, beat3, beat4]
+    gsap.set(beats, { autoAlpha: 0 })
+    gsap.set(washRef.current, { autoAlpha: 0 })
+    gsap.set(scrollCueRef.current, { autoAlpha: 1, y: 0 })
 
-    // Wash starts dimming the painting early so by the time thesis arrives
-    // the text has its readable backdrop already in place.
-    tl.to(washRef.current, {
-      autoAlpha: 1,
-      duration: WASH_DURATION_S,
-      ease: 'power1.inOut',
-    }, WASH_START_MS / 1000)
+    // Show beat at index `idx`, fade out all others. Uses paused inner
+    // timelines (the breath-in for that beat) the first time it's shown;
+    // subsequent shows just bring autoAlpha back to 1.
+    const playedBreath = new Set()
+    let activeIdx = -1
 
-    tl.set(thesisRef.current, { autoAlpha: 1 }, QUOTE_DELAY_MS / 1000)
-    const thesisHeroSplit = SplitText.create(thesisRef.current, { type: 'lines' })
-    tl.fromTo(
-      thesisHeroSplit.lines,
-      { autoAlpha: 0, y: 22, filter: 'blur(5px)' },
-      {
-        autoAlpha: 1,
-        y: 0,
-        filter: 'blur(0px)',
-        duration: 1.4,
-        stagger: 0.22,
-        ease: 'power2.out',
-      },
-      QUOTE_DELAY_MS / 1000
-    )
-
-    // Scroll cue: no blur (small UI element, blur adds GPU cost without
-    // visible benefit at this size). Just a quiet fade + drift.
-    tl.fromTo(
-      scrollCueRef.current,
-      { autoAlpha: 0, y: 6 },
-      { autoAlpha: 1, y: 0, duration: 0.7, ease: 'power2.out' },
-      '>+0.2'
-    )
-  }, { scope: rootRef })
-
-  // Per-beat reveals fire when the beat top crosses viewport center
-  // (`start: 'top center'`) -- text lands fluidly as the user scrolls into
-  // the moment, never abruptly. ScrollTrigger plays each timeline forward
-  // once; backward scroll leaves beats composed.
-  // Reveal grammar: autoAlpha + y + filter:blur, power1.out -- atmospheric.
-  useGSAP(() => {
-    if (typeof window === 'undefined') return
-    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-
-    // Two reveal grammars to keep GPU cost low and cadence brisk:
-    //   `softFluid` -- blur + y + autoAlpha for display-scale text
-    //   (thesis lines, quote lines, framing, transcript). Atmospheric.
-    //   `quickDrift` -- y + autoAlpha for supporting copy and UI
-    //   (attribution, controls). No blur compositing layer.
-    const softFluidFrom = (over = {}) => ({
-      autoAlpha: 0,
-      y: 22,
-      filter: 'blur(5px)',
-      ...over,
-    })
-    const softFluidTo = (over = {}) => ({
+    const breathFrom = { autoAlpha: 0, y: 14, filter: 'blur(4px)' }
+    const breathTo = (overrides = {}) => ({
       autoAlpha: 1,
       y: 0,
       filter: 'blur(0px)',
-      duration: 1.4,
-      ease: 'power2.out',
-      ...over,
-    })
-    const quickDriftFrom = (over = {}) => ({ autoAlpha: 0, y: 12, ...over })
-    const quickDriftTo = (over = {}) => ({
-      autoAlpha: 1,
-      y: 0,
-      duration: 1.0,
-      ease: 'power2.out',
-      ...over,
+      duration: 1.2,
+      ease: 'power1.inOut',
+      ...overrides,
     })
 
-    const buildQuote = (tl) => {
-      tl.set(quoteRef.current, { autoAlpha: 1 })
+    const playThesisBreath = () => {
+      const split = SplitText.create(thesisRef.current, { type: 'lines' })
+      gsap.set(thesisRef.current, { autoAlpha: 1 })
+      gsap.fromTo(split.lines, breathFrom, breathTo({ stagger: 0.22 }))
+    }
+    const playPullQuoteBreath = () => {
       const qSplit = SplitText.create(quoteRef.current, { type: 'lines' })
-      tl.fromTo(qSplit.lines, softFluidFrom(), softFluidTo({ stagger: 0.18 }))
-      tl.fromTo(attrRef.current, quickDriftFrom(), quickDriftTo(), '>-0.25')
-    }
-
-    const buildFraming = (tl) => {
-      tl.fromTo(framingRef.current, softFluidFrom(), softFluidTo({ duration: 1.3 }))
-    }
-
-    const buildPoem = (tl) => {
-      tl.fromTo(poemControlsRef.current, quickDriftFrom(), quickDriftTo({ duration: 0.9 }))
-      tl.fromTo(
-        poemTranscriptRef.current,
-        softFluidFrom(),
-        softFluidTo({ duration: 1.2 }),
-        '>-0.35'
+      gsap.set(quoteRef.current, { autoAlpha: 1 })
+      gsap.fromTo(qSplit.lines, breathFrom, breathTo({ stagger: 0.18 }))
+      gsap.fromTo(
+        attrRef.current,
+        { autoAlpha: 0, y: 8 },
+        { autoAlpha: 1, y: 0, duration: 0.9, ease: 'power2.out', delay: 0.3 }
       )
     }
+    const playFramingBreath = () => {
+      gsap.fromTo(framingRef.current, breathFrom, breathTo({ duration: 1.3 }))
+    }
+    const playPoemBreath = () => {
+      gsap.fromTo(poemHeaderRef.current, breathFrom, breathTo({ duration: 1.0 }))
+      gsap.fromTo(poemChromeRef.current, breathFrom, breathTo({ duration: 1.0, delay: 0.4 }))
+      gsap.fromTo(poemTranscriptRef.current, breathFrom, breathTo({ duration: 1.2, delay: 0.5 }))
+    }
+    const breathPlayers = [playThesisBreath, playPullQuoteBreath, playFramingBreath, playPoemBreath]
 
-    const beats = [
-      { beat: quoteBeatRef.current, build: buildQuote, fallback: [quoteRef.current, attrRef.current] },
-      { beat: framingBeatRef.current, build: buildFraming, fallback: [framingRef.current] },
-      { beat: poemBeatRef.current, build: buildPoem, fallback: [poemControlsRef.current, poemTranscriptRef.current] },
-    ]
+    const showBeat = (idx) => {
+      if (idx === activeIdx) return
+      activeIdx = idx
 
-    // Each beat plays its reveal once when it enters viewport at 'top 80%'
-    // -- fires as the beat is climbing into view, finishes mid-arrival.
-    // toggleActions: 'play none none none' = forward-only, never reverses
-    // on backscroll. Animation plays at its own paced cadence (1.4s+ for
-    // the soft fluid reveals), so fast scrollers still see the motion.
-    const triggers = []
-    beats.forEach(({ beat, build, fallback }) => {
-      if (!beat) return
-
-      if (reduced) {
-        gsap.set(fallback.filter(Boolean), { autoAlpha: 1, y: 0, filter: 'none' })
-        return
-      }
-
-      const tl = gsap.timeline({ paused: true })
-      build(tl)
-
-      triggers.push(
-        ScrollTrigger.create({
-          trigger: beat,
-          start: 'top 80%',
-          toggleActions: 'play none none none',
-          onEnter: () => tl.play(),
+      // Set autoAlpha across all beats in one pass with overwrite:'auto'
+      // so any in-flight tween on the same target gets killed cleanly.
+      beats.forEach((b, i) => {
+        gsap.to(b, {
+          autoAlpha: i === idx ? 1 : 0,
+          duration: i === idx ? 0.6 : 0.5,
+          ease: 'power1.inOut',
+          overwrite: 'auto',
         })
+      })
+
+      // First time showing this beat: also play the breath choreography
+      // for its inner content (split lines, attribution, etc.).
+      if (!playedBreath.has(idx)) {
+        playedBreath.add(idx)
+        breathPlayers[idx]()
+      }
+    }
+
+    // Sentinels: each one corresponds to a beat. When a sentinel enters
+    // the middle band of the viewport (rootMargin shrinks the active
+    // band to the middle 30%), its beat becomes visible.
+    const sentinels = [
+      sentinel1Ref.current,
+      sentinel2Ref.current,
+      sentinel3Ref.current,
+      sentinel4Ref.current,
+    ]
+    const observers = []
+    sentinels.forEach((sentinel, idx) => {
+      if (!sentinel) return
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) showBeat(idx)
+        },
+        { rootMargin: '-35% 0px -35% 0px', threshold: 0 }
+      )
+      observer.observe(sentinel)
+      observers.push(observer)
+    })
+
+    // Hero zone trigger: when the user scrolls back up into the hero
+    // crossfade zone, hide all beats so the hero photo + title overlay
+    // can re-emerge cleanly without the thesis (or whichever beat was
+    // last active) lingering on screen.
+    const heroZoneTrigger = ScrollTrigger.create({
+      trigger: rootRef.current,
+      start: 'top top',
+      end: '+=80%',
+      onEnterBack: () => showBeat(-1),
+    })
+
+    // Entry timeline (no scroll required). On page load:
+    //   1. Watercolor reveal plays in its own component (WebGL bloom).
+    //   2. Purple wash fades in over the painting -- the brand register
+    //      arrives.
+    //   3. Hero overlay (logo + descriptor + scroll cue) fades in over
+    //      the wash.
+    // Initial states: wash hidden, hero overlay hidden, gs-hero photo
+    // hidden, Blue Garden visible (its own WebGL handles its reveal).
+    gsap.set(washRef.current, { autoAlpha: 0 })
+    gsap.set(heroLayerRef.current, { autoAlpha: 0 })
+    gsap.set(heroPhotoRef.current, { autoAlpha: 0 })
+
+    // Wash bloom + cinematic reveal of the title block. The wash starts
+    // early and rises slowly behind the watercolor; the logo settles in
+    // with a subtle scale + blur dissolve; the descriptor's lines reveal
+    // in stagger; the scroll cue arrives last as a quiet invitation.
+    // The heroLayer parent stays at autoAlpha 1 throughout so the scroll
+    // scrub can fade the whole block out as one unit when the visitor
+    // begins moving.
+    gsap.set(heroLayerRef.current, { autoAlpha: 1 })
+
+    const washIn = gsap.fromTo(
+      washRef.current,
+      { autoAlpha: 0 },
+      { autoAlpha: 1, duration: 4.0, delay: 0.8, ease: 'power1.inOut', overwrite: false }
+    )
+
+    const logoIn = gsap.fromTo(
+      heroLogoRef.current,
+      { autoAlpha: 0, scale: 0.92, filter: 'blur(8px)' },
+      {
+        autoAlpha: 1,
+        scale: 1,
+        filter: 'blur(0px)',
+        duration: 2.2,
+        delay: 3.0,
+        ease: 'power2.out',
+        overwrite: false,
+      }
+    )
+
+    // Descriptor lines reveal in soft stagger — built on next tick so
+    // SplitText measures actual line breaks once the layout has settled.
+    let descriptorSplit = null
+    let descriptorIn = null
+    requestAnimationFrame(() => {
+      if (!heroDescriptorRef.current) return
+      descriptorSplit = SplitText.create(heroDescriptorRef.current, { type: 'lines' })
+      gsap.set(heroDescriptorRef.current, { autoAlpha: 1 })
+      descriptorIn = gsap.fromTo(
+        descriptorSplit.lines,
+        { autoAlpha: 0, y: 14, filter: 'blur(4px)' },
+        {
+          autoAlpha: 1,
+          y: 0,
+          filter: 'blur(0px)',
+          duration: 1.4,
+          delay: 4.4,
+          stagger: 0.16,
+          ease: 'power2.out',
+          overwrite: false,
+        }
       )
     })
 
-    return () => triggers.forEach((t) => t.kill())
-  }, { scope: rootRef })
+    const cueIn = gsap.fromTo(
+      scrollCueRef.current,
+      { autoAlpha: 0, y: 6 },
+      { autoAlpha: 1, y: 0, duration: 0.9, delay: 5.6, ease: 'power2.out', overwrite: false }
+    )
+
+    // Scroll scrub (0–80vh of section): hero overlay fades out, Blue
+    // Garden fades out, gs-hero photograph fades in. Wash stays at
+    // full opacity throughout. `immediateRender: false` keeps these
+    // tweens from firing on creation -- so they don't override the
+    // entry timeline's hidden initial state. They activate only when
+    // the user actually scrolls.
+    const scrubST = {
+      trigger: rootRef.current,
+      start: 'top top',
+      // Twice the scroll distance + heavier scrub lag = a slower,
+      // more cinematic transition. Hard scrolls don't rip through it.
+      end: '+=160%',
+      scrub: 1.2,
+    }
+    const heroFadeOut = gsap.to(heroLayerRef.current, {
+      autoAlpha: 0, ease: 'none', immediateRender: false, scrollTrigger: scrubST,
+    })
+    const blueFadeOut = gsap.to(blueGardenRef.current, {
+      autoAlpha: 0, ease: 'none', immediateRender: false, scrollTrigger: scrubST,
+    })
+    const photoFadeIn = gsap.to(heroPhotoRef.current, {
+      autoAlpha: 1, ease: 'none', immediateRender: false, scrollTrigger: scrubST,
+    })
+
+    // Active state for the parent (drives ProgressNav hide). Fires the
+    // moment the cinematic touches the viewport, releases when it's gone.
+    const activeObserver = new IntersectionObserver(
+      ([entry]) => {
+        onActiveChange?.(entry.isIntersecting)
+      },
+      { threshold: 0.05 }
+    )
+    activeObserver.observe(rootRef.current)
+
+    return () => {
+      observers.forEach((o) => o.disconnect())
+      activeObserver.disconnect()
+      heroFadeOut.scrollTrigger?.kill()
+      blueFadeOut.scrollTrigger?.kill()
+      photoFadeIn.scrollTrigger?.kill()
+      heroFadeOut.kill()
+      blueFadeOut.kill()
+      photoFadeIn.kill()
+      washIn.kill()
+      logoIn.kill()
+      cueIn.kill()
+      descriptorIn?.kill()
+      descriptorSplit?.revert()
+      heroZoneTrigger.kill()
+    }
+  }, { scope: rootRef, dependencies: [onActiveChange] })
 
   // Audio-driven sync. Two layers:
   //   (1) Frame scrollTop tracks audio.currentTime so the visible window
@@ -270,124 +429,175 @@ export default function CinematicIntro() {
   //       brightens and siblings dim.
   // User can scroll manually inside the frame -- the next timeupdate event
   // re-asserts the audio position. To stay manual, pause the audio.
+  // Audio sync: drives the scrubber/time display state, the active-stanza
+  // highlight, and the auto-scroll-to-center behavior. Stanza-level
+  // granularity -- timestamps array is one entry per stanza (opener + each
+  // POEM_STANZAS entry).
+  // Audio sync: drives the scrubber/time display state and the
+  // active-stanza highlight (when POEM_TIMESTAMPS is authored).
+  // Transcript scroll is fully manual -- the user controls it; audio
+  // never moves the scroll position.
   useEffect(() => {
     const audio = audioRef.current
     const frame = poemTranscriptRef.current
     const inner = poemBodyRef.current
     if (!audio || !frame || !inner) return
 
-    const lines = inner.querySelectorAll('[data-line-index]')
+    const stanzas = inner.querySelectorAll('[data-stanza-index]')
 
-    const setScrollSmoothly = (target) => {
-      frame.scrollTo({ top: target, behavior: 'smooth' })
-    }
-
-    const update = () => {
-      const dur = audio.duration
-      if (!dur || !isFinite(dur)) return
-      const overflow = Math.max(frame.scrollHeight - frame.clientHeight, 0)
-      if (!overflow) return
-
-      if (POEM_TIMESTAMPS && lines.length) {
-        const t = audio.currentTime
-        let activeIdx = -1
-        for (let i = 0; i < POEM_TIMESTAMPS.length; i += 1) {
-          if (POEM_TIMESTAMPS[i] <= t) activeIdx = i
-          else break
-        }
-        lines.forEach((el, i) => {
-          el.classList.toggle(styles.lineActive, i === activeIdx)
-          el.classList.toggle(styles.lineDim, activeIdx >= 0 && i !== activeIdx)
-        })
-        if (activeIdx >= 0) {
-          const el = lines[activeIdx]
-          // Center the active line vertically inside the frame.
-          const target = el.offsetTop - frame.clientHeight / 2 + el.offsetHeight / 2
-          setScrollSmoothly(Math.max(0, Math.min(target, overflow)))
-        }
-      } else {
-        // Linear pace fallback.
-        const target = (audio.currentTime / dur) * overflow
-        setScrollSmoothly(target)
+    const updateHighlight = () => {
+      setCurrentTime(audio.currentTime)
+      if (!POEM_TIMESTAMPS || !stanzas.length) return
+      const t = audio.currentTime
+      let activeIdx = -1
+      for (let i = 0; i < POEM_TIMESTAMPS.length; i += 1) {
+        if (POEM_TIMESTAMPS[i] <= t) activeIdx = i
+        else break
       }
-    }
-    const resetClasses = () => {
-      lines.forEach((el) => {
-        el.classList.remove(styles.lineActive, styles.lineDim)
+      stanzas.forEach((el, i) => {
+        el.classList.toggle(styles.stanzaActive, i === activeIdx)
+        el.classList.toggle(styles.stanzaDim, activeIdx >= 0 && i !== activeIdx)
       })
     }
-    const onEnded = () => {
-      resetClasses()
-      setScrollSmoothly(0)
+
+    const onLoaded = () => {
+      if (isFinite(audio.duration)) setDuration(audio.duration)
+      updateHighlight()
+    }
+    const resetClasses = () => {
+      stanzas.forEach((el) => {
+        el.classList.remove(styles.stanzaActive, styles.stanzaDim)
+      })
     }
 
-    audio.addEventListener('timeupdate', update)
-    audio.addEventListener('play', update)
-    audio.addEventListener('loadedmetadata', update)
+    audio.addEventListener('timeupdate', updateHighlight)
+    audio.addEventListener('loadedmetadata', onLoaded)
+    audio.addEventListener('durationchange', onLoaded)
     audio.addEventListener('pause', resetClasses)
-    audio.addEventListener('ended', onEnded)
+    audio.addEventListener('ended', resetClasses)
     return () => {
-      audio.removeEventListener('timeupdate', update)
-      audio.removeEventListener('play', update)
-      audio.removeEventListener('loadedmetadata', update)
+      audio.removeEventListener('timeupdate', updateHighlight)
+      audio.removeEventListener('loadedmetadata', onLoaded)
+      audio.removeEventListener('durationchange', onLoaded)
       audio.removeEventListener('pause', resetClasses)
-      audio.removeEventListener('ended', onEnded)
+      audio.removeEventListener('ended', resetClasses)
     }
   }, [])
 
+  const seekTo = (value) => {
+    const audio = audioRef.current
+    if (!audio || !isFinite(audio.duration)) return
+    audio.currentTime = Math.max(0, Math.min(audio.duration, value))
+    setCurrentTime(audio.currentTime)
+  }
+
+  const formatTime = (seconds) => {
+    if (!isFinite(seconds)) return '0:00'
+    const total = Math.max(0, Math.floor(seconds))
+    const m = Math.floor(total / 60)
+    const s = total % 60
+    return `${m}:${s.toString().padStart(2, '0')}`
+  }
+
+  // Wire this audio into the page-wide single-play system (shared with
+  // the pod's poem + meditation players + the StandaloneNav button).
+  // The hook handles claim, pause-others, state events, and remote
+  // toggle. We just keep the local playing state in sync for our own
+  // play-button UI.
+  useSharedAudio(audioRef, 'Poem')
   useEffect(() => {
     const audio = audioRef.current
     if (!audio) return
-    const onEnd = () => setAudioPlaying(false)
-    audio.addEventListener('ended', onEnd)
-    return () => audio.removeEventListener('ended', onEnd)
+    const onPlay = () => setAudioPlaying(true)
+    const onPause = () => setAudioPlaying(false)
+    audio.addEventListener('play', onPlay)
+    audio.addEventListener('pause', onPause)
+    audio.addEventListener('ended', onPause)
+    return () => {
+      audio.removeEventListener('play', onPlay)
+      audio.removeEventListener('pause', onPause)
+      audio.removeEventListener('ended', onPause)
+    }
   }, [])
 
   const togglePoem = () => {
     const audio = audioRef.current
     if (!audio) return
-    if (audio.paused) {
-      audio.play()
-      setAudioPlaying(true)
-    } else {
-      audio.pause()
-      setAudioPlaying(false)
-    }
+    if (audio.paused) audio.play()
+    else audio.pause()
   }
 
   return (
-    <section ref={rootRef} className={styles.cinematic} aria-label="Cinematic introduction">
-      {/* Sticky background: watercolor + purple wash, pinned for the whole
-          length of the intro while text beats scroll over it. */}
-      <div className={styles.stickyBg}>
-        <WatercolorReveal duration={REVEAL_DURATION} />
-        <div ref={washRef} className={styles.purpleWash} aria-hidden="true" />
-      </div>
+    <section ref={rootRef} id="hero" className={styles.cinematic} aria-label="Groundswell — introduction">
+      {/* Sticky backdrop holds EVERYTHING that should appear anchored at
+          viewport center: hero photo, overlays, hero title overlay, AND
+          all four beats (absolute-positioned, stacked at the same anchor
+          point). User scrolls through sentinels below; sentinels trigger
+          which beat is visible. No travel -- only opacity changes. */}
+      <div className={styles.stickyBackdrop}>
+        {/* Brand white base -- the cinematic opens on a clean canvas
+            before the watercolor blooms over it. */}
+        <div className={styles.whiteBase} aria-hidden="true" />
 
-      {/* Scroll column: text beats stack and scroll up over the sticky bg.
-          Pulled up by one viewport so beat 1 sits on the bg at scroll 0. */}
-      <div className={styles.scrollColumn}>
-        {/* Beat 1: thesis is the opening declaration on the watercolor */}
+        {/* Blue Garden watercolor: WebGL bloom on page load. Stays at
+            full opacity until the user starts scrolling, then crossfades
+            out as the gs-hero photograph fades in beneath the wash. */}
+        <div ref={blueGardenRef} className={styles.blueGardenLayer}>
+          <WatercolorReveal duration={18000} />
+        </div>
+
+        {/* gs-hero photograph: hidden initially, fades in via scrub as
+            Blue Garden fades out. The wash sits above it for legibility. */}
+        <img
+          ref={heroPhotoRef}
+          src={cloudImg(GS_IMAGES['gs-hero'], 1600)}
+          alt="Groundswell installation at UPMC Magee-Womens Hospital"
+          className={styles.heroBackdropImage}
+        />
+
+        {/* Brand purple wash: fades in after watercolor reveal completes
+            and stays at full opacity through the entire cinematic. The
+            project's color register, carried throughout. */}
+        <div ref={washRef} className={styles.purpleWash} aria-hidden="true" />
+
+        {/* Hero overlay: logo (which carries the wordmark + subhead) +
+            descriptor + scroll cue. Fades in after wash settles, then
+            fades out via scrub as the user scrolls into the cinematic. */}
+        <div ref={heroLayerRef} className={styles.heroLayer}>
+          <div className={projectStyles.heroContent}>
+            <img
+              ref={heroLogoRef}
+              src={GS_LOGO_URL}
+              alt="Groundswell"
+              className={styles.heroLogo}
+            />
+            <p ref={heroDescriptorRef} className={styles.heroDescriptor}>{HERO_DESCRIPTOR}</p>
+            <div ref={scrollCueRef} className={styles.scrollCue} aria-hidden="true">
+              <span className={styles.scrollLabel}>scroll</span>
+              <svg width="14" height="18" viewBox="0 0 20 24" fill="none">
+                <path
+                  d="M10 2v18M5 14l5 6 5-6"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        {/* Beats: each absolute-positioned at center, opacity 0 by default.
+            Sentinels below trigger fade in/out. One beat visible at a time.
+            Each beat owns a small `.beatCue` arrow placed below its content
+            so the cue's vertical position adapts to whatever's above it. */}
         <div ref={heroContentRef} className={styles.beat}>
           <div className={styles.beatInner}>
             <p ref={thesisRef} className={styles.thesis}>{THESIS}</p>
           </div>
-
-          <div ref={scrollCueRef} className={styles.scrollCue} aria-hidden="true">
-            <span className={styles.scrollLabel}>continue</span>
-            <svg width="14" height="18" viewBox="0 0 20 24" fill="none">
-              <path
-                d="M10 2v18M5 14l5 6 5-6"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          </div>
+          <BeatCue />
         </div>
 
-        {/* Beat 2: pull quote + attribution. */}
         <div ref={quoteBeatRef} className={styles.beat}>
           <blockquote className={styles.pullQuote}>
             <p ref={quoteRef} className={styles.quoteText}>
@@ -399,53 +609,67 @@ export default function CinematicIntro() {
               {PULL_ATTR}
             </cite>
           </blockquote>
+          <BeatCue />
         </div>
 
-        {/* Beat 3: framing line gets its own viewport -- a quiet dedication
-            between the quote and the poem. */}
         <div ref={framingBeatRef} className={styles.beat}>
           <p ref={framingRef} className={styles.framing}>{FRAMING}</p>
+          <BeatCue />
         </div>
 
-        {/* Beat 3: side-by-side player + transcript. Stacks on mobile. */}
+        {/* Beat 4: Apple Podcasts-style single column. Header strip up top
+            anchors title + reader; scrolling transcript in the middle with
+            faded edges and stanza-level highlight when timestamps land;
+            persistent player chrome at the bottom. */}
         <div ref={poemBeatRef} className={`${styles.beat} ${styles.beatPoem}`}>
-          <div className={styles.poemGrid}>
-            <div ref={poemControlsRef} className={styles.poemControls}>
-              <button
-                type="button"
-                onClick={togglePoem}
-                className={styles.playDisc}
-                aria-pressed={audioPlaying}
-                aria-label={audioPlaying ? 'Pause poem audio' : 'Play poem audio'}
-              >
-                <span className={styles.playDiscIcon} aria-hidden="true">
+          <div className={styles.poemColumn}>
+            <div ref={poemHeaderRef} className={styles.poemHeader}>
+              <p className={styles.poemHeaderEyebrow}>Co-written for the project</p>
+              <p className={styles.poemHeaderTitle}>Remember Your Heart</p>
+              <p className={styles.poemHeaderSubtitle}>Read by Catherine Liggett</p>
+            </div>
+
+            <div ref={poemChromeRef} className={styles.poemChrome}>
+              <div className={styles.transport}>
+                <button
+                  type="button"
+                  onClick={togglePoem}
+                  className={styles.playButton}
+                  aria-pressed={audioPlaying}
+                  aria-label={audioPlaying ? 'Pause poem' : 'Play poem'}
+                >
                   {audioPlaying ? (
-                    <svg width="22" height="26" viewBox="0 0 14 16" fill="currentColor">
+                    <svg width="26" height="30" viewBox="0 0 14 16" fill="currentColor" aria-hidden="true">
                       <rect x="1" y="1" width="4" height="14" rx="1" />
                       <rect x="9" y="1" width="4" height="14" rx="1" />
                     </svg>
                   ) : (
-                    <svg width="22" height="26" viewBox="0 0 14 16" fill="currentColor">
+                    <svg width="26" height="30" viewBox="0 0 14 16" fill="currentColor" aria-hidden="true">
                       <path d="M2 1.5v13a.5.5 0 0 0 .76.43l11-6.5a.5.5 0 0 0 0-.86l-11-6.5A.5.5 0 0 0 2 1.5z" />
                     </svg>
                   )}
-                </span>
-              </button>
+                </button>
+              </div>
 
-              <p className={styles.playerCaption}>
-                <span className={styles.playerTitle}>
-                  Co-written for the project, read aloud by Catherine Liggett
-                </span>
-                {audioPlaying && (
-                  <span className={styles.playerStatus} aria-live="polite">
-                    Now playing
-                  </span>
-                )}
-              </p>
-
-              <a href="#vision" className={styles.skipLink}>
-                Continue to the project
-              </a>
+              <div className={styles.scrubberRow}>
+                <input
+                  type="range"
+                  min={0}
+                  max={duration || 0}
+                  step={0.1}
+                  value={Math.min(currentTime, duration || 0)}
+                  onChange={(e) => seekTo(Number(e.target.value))}
+                  className={styles.scrubber}
+                  aria-label="Seek through poem"
+                  style={{
+                    '--progress': duration ? `${(currentTime / duration) * 100}%` : '0%',
+                  }}
+                />
+                <div className={styles.scrubberTimes}>
+                  <span>{formatTime(currentTime)}</span>
+                  <span>-{formatTime(Math.max(0, (duration || 0) - currentTime))}</span>
+                </div>
+              </div>
 
               <audio
                 ref={audioRef}
@@ -454,53 +678,48 @@ export default function CinematicIntro() {
               />
             </div>
 
-            {/* Contained transcript: faded edges, fixed height, scrolls
-                inside its frame as audio plays through. User can scroll
-                manually too. data-line-index pairs each line with
+            {/* Contained transcript: faded edges, fixed height, scrolls as
+                audio plays. data-stanza-index pairs each stanza with
                 POEM_TIMESTAMPS once authored. */}
             <div ref={poemTranscriptRef} className={styles.poemFrame}>
               <div ref={poemBodyRef} className={styles.poemBody}>
-                {(() => {
-                  let lineIdx = 0
-                  const opener = (
-                    <p
-                      key="opener"
-                      ref={poemTitleRef}
-                      data-line-index={lineIdx}
-                      className={styles.poemOpener}
-                    >
-                      {POEM_OPENER}
-                    </p>
-                  )
-                  lineIdx += 1
-                  const stanzas = POEM_STANZAS.map((stanza, si) => (
-                    <p key={si} className={styles.stanza}>
-                      {stanza.map((line) => {
-                        const idx = lineIdx
-                        lineIdx += 1
-                        return (
-                          <span
-                            key={idx}
-                            data-line-index={idx}
-                            className={styles.poemLine}
-                          >
-                            {line}
-                          </span>
-                        )
-                      })}
-                    </p>
-                  ))
-                  return (
-                    <>
-                      {opener}
-                      {stanzas}
-                    </>
-                  )
-                })()}
+                <p
+                  data-stanza-index={0}
+                  className={styles.poemOpener}
+                >
+                  {POEM_OPENER}
+                </p>
+                {POEM_STANZAS.map((stanza, si) => (
+                  <p
+                    key={si}
+                    data-stanza-index={si + 1}
+                    className={styles.stanza}
+                  >
+                    {stanza.map((line, li) => (
+                      <span key={li} className={styles.poemLine}>
+                        {line}
+                      </span>
+                    ))}
+                  </p>
+                ))}
               </div>
             </div>
+
+            <BeatCue />
           </div>
         </div>
+      </div>
+
+      {/* Sentinel track: scroll-progress markers below the sticky backdrop.
+          Each sentinel triggers which beat is visible in the anchored
+          stage above. Hero zone (top of track) gets extra padding so the
+          first beat doesn't fade in until the user has scrolled past the
+          hero crossfade. */}
+      <div className={styles.sentinelTrack}>
+        <div ref={sentinel1Ref} className={styles.sentinel} aria-hidden="true" />
+        <div ref={sentinel2Ref} className={styles.sentinel} aria-hidden="true" />
+        <div ref={sentinel3Ref} className={styles.sentinel} aria-hidden="true" />
+        <div ref={sentinel4Ref} className={`${styles.sentinel} ${styles.sentinelLast}`} aria-hidden="true" />
       </div>
     </section>
   )

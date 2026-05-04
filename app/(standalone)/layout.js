@@ -48,7 +48,7 @@ export default function StandaloneLayout({ children }) {
         <a href="#main-content" className="skip-link">
           Skip to content
         </a>
-        <StandaloneNav />
+        <StandaloneNav revealAfter="#vision" />
         <main id="main-content">
           {children}
         </main>

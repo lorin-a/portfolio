@@ -11,7 +11,11 @@ import CardCarousel from '@/components/CardCarousel/CardCarousel'
 import ScrollVideo from '@/components/ScrollVideo/ScrollVideo'
 import AnimatedElement from '@/components/AnimatedElement/AnimatedElement'
 import ProgressNav from '@/components/ProgressNav/ProgressNav'
-import Lightbox from '@/components/Lightbox/Lightbox'
+import AudioPlayer from './parts/AudioPlayer'
+import DiagramTabs from './parts/DiagramTabs'
+import WorkshopCarousel from './parts/WorkshopCarousel'
+import PlaytestCarousel from './parts/PlaytestCarousel'
+import VoiceCard from './parts/VoiceCard'
 
 
 // ============================================
@@ -64,21 +68,21 @@ const researchQuotes = [
   },
   {
     quote: "I was not prepared for this.",
-    context: "No one officially trained me on the emotional trauma that this job causes. I'm doing the work of a therapist and social worker, losing people daily."
+    context: "No one officially trained me on the emotional trauma that this job causes. I’m doing the work of a therapist and social worker, losing people daily."
   },
   {
-    quote: "I can't turn it off.",
+    quote: "I can’t turn it off.",
     context: "Even on my days off, I keep checking Teams to stay updated. I worry about my patients when I am at home. I am so exhausted."
   },
 ]
 
 /** Play testing quotes — displayed in Play Testing section */
 const playtestingQuotes = [
-  "It's remarkable what 10 minutes can do...",
-  "As soon as I stepped inside, I almost teared up. You're not always aware of how frazzled you are until you stop.",
+  "It’s remarkable what 10 minutes can do…",
+  "As soon as I stepped inside, I almost teared up. You’re not always aware of how frazzled you are until you stop.",
   "Being able to stop in the middle of the day and have the physical and mental space to get quiet and meditate is really helpful—much better than a bathroom stall.",
-  "You don't have to wait until the end of the day to refresh, but you can have micro-resets in-between.",
-  "I've worked in the trauma field, and I work with physicians—everyone needs one of these.",
+  "You don’t have to wait until the end of the day to refresh, but you can have micro-resets in-between.",
+  "I’ve worked in the trauma field, and I work with physicians—everyone needs one of these.",
 ]
 
 
@@ -109,435 +113,6 @@ const audioTracks = [
 ]
 
 
-// ============================================
-// COMPONENTS
-// ============================================
-
-/**
- * AudioPlayer — Compact player for pod audio resources.
- */
-function AudioPlayer({ track }) {
-  return (
-    <div className={styles.audioPlayerCompact}>
-      <div className={styles.audioHeaderCompact}>
-        <span className={styles.audioType}>{track.type}</span>
-        <span className={styles.audioTitle}>{track.title}</span>
-      </div>
-      <audio controls className={styles.audioElementCompact}>
-        <source src={track.src} type="audio/mpeg" />
-      </audio>
-    </div>
-  )
-}
-
-
-// ============================================
-// MAIN COMPONENT
-// ============================================
-
-/* ── DiagramTabs ── */
-function DiagramTabs() {
-  const [activeTab, setActiveTab] = useState('ecosystem')
-
-  const diagrams = {
-    ecosystem: {
-      src: '/images/groundswell/gs-ecosystem-diagram-purple.svg',
-      alt: 'Ecosystem flow diagram showing how CTB Email, Pod, Garden Art Wall, and Reflection Cards connect to moments like arriving at work, taking a break, patient loss, hard moments, and one-on-one meetings',
-    },
-    values: {
-      src: '/images/groundswell/gs-values-diagram.svg',
-      alt: 'Groundswell core values: Humanity, Together, Normalcy, and Compassion forming a continuous cycle',
-    },
-  }
-
-  const tabs = [
-    { id: 'ecosystem', label: 'System Map' },
-    { id: 'values', label: 'Core Values' },
-  ]
-
-  return (
-    <div className={styles.diagramTabs}>
-      <div className={styles.segmentedControl} role="tablist">
-        {tabs.map((tab) => (
-          <button
-            key={tab.id}
-            role="tab"
-            className={`${styles.segmentedButton} ${activeTab === tab.id ? styles.segmentedButtonActive : ''}`}
-            onClick={() => setActiveTab(tab.id)}
-            aria-selected={activeTab === tab.id}
-          >
-            {tab.label}
-          </button>
-        ))}
-      </div>
-      <div className={styles.diagramTabContent}>
-        <div
-          className={styles.diagramTabPanel}
-          role="tabpanel"
-          style={{ opacity: activeTab === 'ecosystem' ? 1 : 0, position: activeTab === 'ecosystem' ? 'relative' : 'absolute' }}
-        >
-          <img
-            src={diagrams.ecosystem.src}
-            alt={diagrams.ecosystem.alt}
-            className={styles.diagramImageLarge}
-            loading="lazy"
-          />
-        </div>
-        <div
-          className={styles.diagramTabPanel}
-          role="tabpanel"
-          style={{ opacity: activeTab === 'values' ? 1 : 0, position: activeTab === 'values' ? 'relative' : 'absolute' }}
-        >
-          <img
-            src={diagrams.values.src}
-            alt={diagrams.values.alt}
-            className={styles.diagramImageLarge}
-            loading="lazy"
-          />
-        </div>
-      </div>
-    </div>
-  )
-}
-
-function WorkshopCarousel() {
-  const isMobileInit = typeof window !== 'undefined' && window.innerWidth <= 600
-  const [current, setCurrent] = useState(isMobileInit ? 0 : 1)
-  const [lightboxImg, setLightboxImg] = useState(null)
-
-  const workshops = [
-    {
-      label: 'Coloring Culture',
-      title: 'Nourishing the Flower',
-      body: (
-        <>
-          Using the anatomy of a flower as a metaphor for workplace health, participants mapped their experiences onto two worksheets&mdash;one flourishing, one wilting. The exercise surfaced what sustains people alongside what quietly erodes them. The session ended with the group voting on what resonated most.
-        </>
-      ),
-      quotes: [
-        "Positive atmosphere, positive energy. Team player. Support one another.",
-      ],
-      images: [
-        { src: gsImg('gs-workshop-flower-01', 1200), alt: 'Nourishing the Flower activity worksheets' },
-        { src: gsImg('gs-workshop-flower-02', 1200), alt: 'Staff completing flower activity' },
-      ],
-    },
-    {
-      label: 'Participatory Poster',
-      title: 'Women in White Coats',
-      body: (
-        <>
-          We partnered with{' '}
-          <a href="https://cancerbridges.org/" target="_blank" rel="noopener noreferrer" className={styles.inlineLink}>
-            CancerBridges
-          </a>
-          {' '}to honor women in cancer care. Each participant received a hand-made orchid pin with a removable &ldquo;leaf&rdquo; they could add to a shared poster answering: <em>How has your approach to patient care evolved to help you balance compassion with self-care?</em>
-        </>
-      ),
-      quotes: [
-        "Self-care to me is gifting time. 'Me' time, 'she' time, and 'we' time.",
-      ],
-      images: [
-        { src: gsImg('gs-workshop-coats-01', 1200), alt: 'Women in White Coats event honoring women in cancer care' },
-        { src: gsImg('gs-workshop-coats-03', 1600), alt: 'Research poster with participant responses' },
-      ],
-    },
-    {
-      label: 'Grief Scenarios',
-      title: 'Grief Workshop',
-      body: (
-        <>
-          We created a container for vulnerability&mdash;using a soft stuffed animal as a &ldquo;puppet&rdquo; to abstract the topic of grief. Staff were given scenarios and asked what they could do or say to support their colleague. The session ended with the group voting on what resonated most.
-        </>
-      ),
-      quotes: [
-        "A manager or team member asking, what can I do to help? I\u2019ve got you covered.",
-      ],
-      images: [
-        { src: gsImg('gs-workshop-grief-01', 1200), alt: 'Grief workshop with trauma-informed facilitation' },
-        { src: gsImg('gs-workshop-grief-02', 1200), alt: 'Staff engaging with scenario-based discussion' },
-      ],
-    },
-  ]
-
-  const goNext = () => setCurrent((p) => Math.min(p + 1, workshops.length - 1))
-  const goPrev = () => setCurrent((p) => Math.max(p - 1, 0))
-
-  const handleKeyDown = (e) => {
-    if (e.key === 'ArrowRight') goNext()
-    if (e.key === 'ArrowLeft') goPrev()
-  }
-
-  const w = typeof window !== 'undefined' ? window.innerWidth : 1200
-  const isMobile = w <= 600
-  const isTablet = w > 600 && w <= 900
-
-  const getPosition = (index) => {
-    const diff = index - current
-    if (isMobile) {
-      if (diff === 0)  return { transform: 'translateX(0) scale(1)',       opacity: 1, z: 3 }
-      if (diff === -1) return { transform: 'translateX(-110%) scale(0.9)', opacity: 0, z: 1 }
-      if (diff === 1)  return { transform: 'translateX(110%) scale(0.9)',  opacity: 0, z: 1 }
-      return { transform: 'translateX(0) scale(0.8)', opacity: 0, z: 0 }
-    }
-    if (isTablet) {
-      if (diff === 0)  return { transform: 'translateX(0) scale(1)',       opacity: 1,    z: 3 }
-      if (diff === -1) return { transform: 'translateX(-70%) scale(0.88)', opacity: 0.65, z: 2 }
-      if (diff === 1)  return { transform: 'translateX(70%) scale(0.88)',  opacity: 0.65, z: 2 }
-      return { transform: 'translateX(0) scale(0.7)', opacity: 0, z: 0 }
-    }
-    // Desktop: deck fan via translateX (grid handles height)
-    if (diff === 0)  return { transform: 'translateX(0) scale(1)',        opacity: 1,    z: 3 }
-    if (diff === -1) return { transform: 'translateX(-85%) scale(0.88)',  opacity: 0.65, z: 2 }
-    if (diff === 1)  return { transform: 'translateX(85%) scale(0.88)',   opacity: 0.65, z: 2 }
-    if (diff === -2) return { transform: 'translateX(-115%) scale(0.76)', opacity: 0.3,  z: 1 }
-    if (diff === 2)  return { transform: 'translateX(115%) scale(0.76)',  opacity: 0.3,  z: 1 }
-    return { transform: 'translateX(0) scale(0.7)', opacity: 0, z: 0 }
-  }
-
-  return (
-    <div
-      className={styles.workshopCarouselContainer}
-      onKeyDown={handleKeyDown}
-      tabIndex={0}
-      role="region"
-      aria-label="Workshop activities carousel"
-    >
-      <div className={styles.workshopCarouselTrack}>
-        {workshops.map((ws, i) => {
-          const pos = getPosition(i)
-          return (
-            <div
-              key={i}
-              className={styles.workshopCarouselSlot}
-              style={{
-                transform: pos.transform,
-                opacity: pos.opacity,
-                zIndex: pos.z,
-                cursor: i === current ? 'default' : 'pointer',
-              }}
-              onClick={() => i !== current && setCurrent(i)}
-            >
-              <div className={styles.workshopCarouselCard}>
-                <span className={styles.workshopLabel}>{ws.label}</span>
-                <h3 className={styles.workshopTitle}>{ws.title}</h3>
-                <p className={styles.workshopBody}>{ws.body}</p>
-                <div className={styles.workshopQuotes}>
-                  {ws.quotes.map((q, qi) => (
-                    <blockquote key={qi} className={styles.workshopQuote}>
-                      &ldquo;{q}&rdquo;
-                    </blockquote>
-                  ))}
-                </div>
-                <div className={styles.workshopImageGrid}>
-                  {ws.images.map((img, ii) => (
-                    <button
-                      key={ii}
-                      type="button"
-                      className={styles.workshopImageButton}
-                      onClick={(e) => { e.stopPropagation(); setLightboxImg(img) }}
-                      aria-label={`View ${img.alt} in lightbox`}
-                    >
-                      <img src={img.src} alt={img.alt} loading="lazy" />
-                    </button>
-                  ))}
-                </div>
-              </div>
-            </div>
-          )
-        })}
-      </div>
-
-      <div className={styles.workshopCarouselControls}>
-        <button
-          onClick={goPrev}
-          className={styles.workshopCarouselArrow}
-          disabled={current === 0}
-          aria-label="Previous workshop"
-        >
-          &#8592;
-        </button>
-        <div className={styles.workshopCarouselInfo}>
-          <span className={styles.workshopCarouselInstruction}>
-            Click side cards to navigate
-          </span>
-          <span className={styles.workshopCarouselCounter}>
-            {current + 1} of {workshops.length}
-          </span>
-        </div>
-        <button
-          onClick={goNext}
-          className={styles.workshopCarouselArrow}
-          disabled={current === workshops.length - 1}
-          aria-label="Next workshop"
-        >
-          &#8594;
-        </button>
-      </div>
-
-      <div className={styles.workshopCarouselDots}>
-        {workshops.map((_, i) => (
-          <button
-            key={i}
-            className={`${styles.workshopCarouselDot} ${i === current ? styles.workshopCarouselDotActive : ''}`}
-            onClick={() => setCurrent(i)}
-            aria-label={`Go to workshop ${i + 1}`}
-          />
-        ))}
-      </div>
-
-      {lightboxImg && (
-        <Lightbox
-          src={lightboxImg.src}
-          alt={lightboxImg.alt}
-          onClose={() => setLightboxImg(null)}
-        />
-      )}
-  </div>
-  )
-}
-
-function PlaytestCarousel() {
-  const isMobileInit = typeof window !== 'undefined' && window.innerWidth <= 600
-  const [current, setCurrent] = useState(isMobileInit ? 0 : 1)
-
-  const iterations = [
-    {
-      label: 'Accessibility',
-      problem: 'Participants with larger bodies reported discomfort with table positioning, limiting their ability to rest comfortably.',
-      quote: "Uncomfortable for larger people. I wished to rest my head on the table but couldn't get comfortable. The biggest thing was getting comfortable.",
-      solution: 'We sawed 2 inches from the table depth to accommodate a wider range of body sizes and postures.',
-    },
-    {
-      label: 'Wayfinding',
-      problem: 'Multiple participants expressed confusion about where to start, creating anxiety that undermined the calming intent.',
-      quote: "Not sure what to do first. I was worried about doing something wrong—eventually I let go of that, but it took time.",
-      solution: 'We added clear step-by-step instructions, making the digital library the explicit first step to set intention.',
-    },
-    {
-      label: 'Entry Ritual',
-      problem: 'Participants who started with music reported significantly deeper engagement with other pod activities.',
-      quote: "The music was wonderful—it really set the tone and helped me settle in. I was able to engage with everything else more deeply after that.",
-      solution: 'We repositioned the table centerpiece to center and ensured music exploration was the first instruction step.',
-    },
-  ]
-
-  const goNext = () => setCurrent((p) => Math.min(p + 1, iterations.length - 1))
-  const goPrev = () => setCurrent((p) => Math.max(p - 1, 0))
-
-  const handleKeyDown = (e) => {
-    if (e.key === 'ArrowRight') goNext()
-    if (e.key === 'ArrowLeft') goPrev()
-  }
-
-  const w = typeof window !== 'undefined' ? window.innerWidth : 1200
-  const isMobile = w <= 600
-  const isTablet = w > 600 && w <= 900
-
-  const getPosition = (index) => {
-    const diff = index - current
-    if (isMobile) {
-      if (diff === 0)  return { transform: 'translateX(0) scale(1)',       opacity: 1, z: 3 }
-      if (diff === -1) return { transform: 'translateX(-110%) scale(0.9)', opacity: 0, z: 1 }
-      if (diff === 1)  return { transform: 'translateX(110%) scale(0.9)',  opacity: 0, z: 1 }
-      return { transform: 'translateX(0) scale(0.8)', opacity: 0, z: 0 }
-    }
-    if (isTablet) {
-      if (diff === 0)  return { transform: 'translateX(0) scale(1)',       opacity: 1,    z: 3 }
-      if (diff === -1) return { transform: 'translateX(-70%) scale(0.88)', opacity: 0.65, z: 2 }
-      if (diff === 1)  return { transform: 'translateX(70%) scale(0.88)',  opacity: 0.65, z: 2 }
-      return { transform: 'translateX(0) scale(0.7)', opacity: 0, z: 0 }
-    }
-    // Desktop: deck fan via translateX (grid handles height)
-    if (diff === 0)  return { transform: 'translateX(0) scale(1)',        opacity: 1,    z: 3 }
-    if (diff === -1) return { transform: 'translateX(-85%) scale(0.88)',  opacity: 0.65, z: 2 }
-    if (diff === 1)  return { transform: 'translateX(85%) scale(0.88)',   opacity: 0.65, z: 2 }
-    if (diff === -2) return { transform: 'translateX(-115%) scale(0.76)', opacity: 0.3,  z: 1 }
-    if (diff === 2)  return { transform: 'translateX(115%) scale(0.76)',  opacity: 0.3,  z: 1 }
-    return { transform: 'translateX(0) scale(0.7)', opacity: 0, z: 0 }
-  }
-
-  return (
-    <div
-      className={styles.playtestCarouselContainer}
-      onKeyDown={handleKeyDown}
-      tabIndex={0}
-      role="region"
-      aria-label="Play testing iterations carousel"
-    >
-      <div className={styles.playtestCarouselTrack}>
-        {iterations.map((item, i) => {
-          const pos = getPosition(i)
-          return (
-            <div
-              key={i}
-              className={styles.playtestCarouselSlot}
-              style={{
-                transform: pos.transform,
-                opacity: pos.opacity,
-                zIndex: pos.z,
-                cursor: i === current ? 'default' : 'pointer',
-              }}
-              onClick={() => i !== current && setCurrent(i)}
-              onKeyDown={(e) => { if ((e.key === 'Enter' || e.key === ' ') && i !== current) { e.preventDefault(); setCurrent(i) }}}
-              role={i !== current ? 'button' : undefined}
-              tabIndex={i !== current ? 0 : -1}
-              aria-label={i !== current ? `Go to ${item.label} iteration` : undefined}
-            >
-              <div className={styles.playtestCarouselCard}>
-                <span className={styles.playtestCategoryLabel}>FEEDBACK</span>
-                <span className={styles.playtestLabel}>{item.label}</span>
-                <p className={styles.playtestProblem}>{item.problem}</p>
-                <blockquote className={styles.playtestQuote}>
-                  &ldquo;{item.quote}&rdquo;
-                </blockquote>
-                <div className={styles.playtestSolution}>
-                  <span className={styles.playtestArrow}>&rarr;</span>
-                  <p>{item.solution}</p>
-                </div>
-              </div>
-            </div>
-          )
-        })}
-      </div>
-
-      <div className={styles.playtestCarouselControls}>
-        <button
-          onClick={goPrev}
-          className={styles.playtestCarouselArrow}
-          disabled={current === 0}
-          aria-label="Previous iteration"
-        >
-          &#8592;
-        </button>
-        <div className={styles.playtestCarouselInfo}>
-          <span className={styles.playtestCarouselCounter}>
-            {current + 1} of {iterations.length}
-          </span>
-        </div>
-        <button
-          onClick={goNext}
-          className={styles.playtestCarouselArrow}
-          disabled={current === iterations.length - 1}
-          aria-label="Next iteration"
-        >
-          &#8594;
-        </button>
-      </div>
-
-      <div className={styles.playtestCarouselDots}>
-        {iterations.map((_, i) => (
-          <button
-            key={i}
-            className={`${styles.playtestCarouselDot} ${i === current ? styles.playtestCarouselDotActive : ''}`}
-            onClick={() => setCurrent(i)}
-            aria-label={`Go to iteration ${i + 1}`}
-          />
-        ))}
-      </div>
-    </div>
-  )
-}
 
 export default function GroundswellContent() {
   const [currentSectionId, setCurrentSectionId] = useState('hero')
@@ -668,9 +243,9 @@ export default function GroundswellContent() {
               Through communication, creativity, and connection, Groundswell fosters a culture where the emotional complexities of oncology care are acknowledged, isolation transforms into belonging, and self-care is honored as essential to delivering excellent patient care.
             </p>
             <blockquote className={styles.outcomesQuote}>
-              &ldquo;Groundswell reminds us that caring for patients begins with caring for the people who serve them. By creating intentional spaces and practices that acknowledge the emotional realities of oncology care, we're laying the foundation for a culture where staff well-being is recognized as essential.&rdquo;
+              &ldquo;Groundswell reminds us that caring for patients begins with caring for the people who serve them. By creating intentional spaces and practices that acknowledge the emotional realities of oncology care, we’re laying the foundation for a culture where staff well-being is recognized as essential.&rdquo;
             </blockquote>
-            <cite className={styles.outcomesQuoteCite}>&mdash; Samantha Williams, Director of Women's Cancer Services, UPMC</cite>
+            <cite className={styles.outcomesQuoteCite}>&mdash; Samantha Williams, Director of Women’s Cancer Services, UPMC</cite>
           </div>
         </div>
         <div className={styles.parallaxScroll}>
@@ -711,7 +286,7 @@ export default function GroundswellContent() {
               We intentionally included family caregivers and patients because we saw how important it was for staff to hear from them—especially gratitude, as almost every desk was decorated with cards from patients and families. Staff reported discomfort expressing feelings due to fear of retaliation. We built this as an anonymous place to safely share and understand what others are feeling—giving public, collective voice to the cancer care community.
             </p>
             <blockquote className={styles.outcomesQuote}>
-              &ldquo;Groundswell is not just a campaign—it's a commitment. By centering staff-identified well-being priorities, we're ensuring that every voice is heard and concerns are addressed.&rdquo;
+              &ldquo;Groundswell is not just a campaign—it’s a commitment. By centering staff-identified well-being priorities, we’re ensuring that every voice is heard and concerns are addressed.&rdquo;
             </blockquote>
             <cite className={styles.outcomesQuoteCite}>&mdash; Kendyl Grant, Director of Operations for the Gynecologic Oncology Division, UPMC</cite>
           </div>
@@ -916,10 +491,7 @@ export default function GroundswellContent() {
           {/* Interview voice cards */}
           {researchQuotes.map((voice, i) => (
             <AnimatedElement key={`voice-${i}`}>
-              <div className={styles.voiceCard}>
-                <blockquote className={styles.voiceQuote}>&ldquo;{voice.quote}&rdquo;</blockquote>
-                <p className={styles.voiceContext}>{voice.context}</p>
-              </div>
+              <VoiceCard quote={voice.quote} context={voice.context} />
             </AnimatedElement>
           ))}
         </div>
@@ -1136,9 +708,7 @@ export default function GroundswellContent() {
         <div className={styles.parallaxScroll}>
           {playtestingQuotes.map((quote, i) => (
             <AnimatedElement key={`playtest-quote-${i}`}>
-              <div className={styles.voiceCard}>
-                <blockquote className={styles.voiceQuote}>&ldquo;{quote}&rdquo;</blockquote>
-              </div>
+              <VoiceCard quote={quote} />
             </AnimatedElement>
           ))}
         </div>

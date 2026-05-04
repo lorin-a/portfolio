@@ -462,7 +462,7 @@ export default function Hero() {
           <div className={`${styles.markItem} markItem`}
             onMouseEnter={() => entranceDoneRef.current && setShapeReplay(r => r + 1)}>
             <div className={styles.markIcon}>
-              <ShapeMark animate={shapeAnimate && !isIntro} replay={shapeReplay} showBrush gradientColors={isDark ? DARK_GRADIENT : LIGHT_GRADIENT} />
+              <ShapeMark animate={shapeAnimate && !isIntro} replay={shapeReplay} showBrush fillReveal withSpin={false} gradientColors={isDark ? DARK_GRADIENT : LIGHT_GRADIENT} />
             </div>
           </div>
         </div>

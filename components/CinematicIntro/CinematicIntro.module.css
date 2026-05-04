@@ -22,18 +22,69 @@
   padding: 0;
 }
 
-/* Sticky background: pinned to viewport for the full length of the intro.
-   Watercolor + purple wash live inside; text beats scroll over the top. */
-.stickyBg {
+/* Sticky backdrop: watercolor + wash anchor the visual frame for the
+   entire cinematic. Sticks at viewport top while the beats below scroll
+   past it. The cinematic section's total height is determined by its
+   children (.scrollColumn + this), so sticky has room to stick. */
+.stickyBackdrop {
   position: sticky;
   top: 0;
   width: 100%;
   height: 100vh;
   height: 100dvh;
-  z-index: 0;
   overflow: hidden;
+  z-index: 0;
 }
 
+/* Brand white base -- the cinematic opens on a clean canvas before
+   the watercolor blooms over it. Also serves as the background-of-
+   record at any compositing edges. */
+.whiteBase {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  inset: 0;
+  background: var(--cream, #f8ebe5);
+  z-index: 0;
+}
+
+/* Blue Garden watercolor layer: full-bleed wrapper for the WebGL
+   reveal. Stays at full opacity until scroll crossfades it out. */
+.blueGardenLayer {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  inset: 0;
+  z-index: 1;
+}
+
+/* Hero photograph: hidden at first; fades in via scroll scrub as the
+   Blue Garden watercolor fades out. Sits beneath the wash so the wash
+   provides constant brand-purple legibility regardless of which image
+   is visible. */
+.heroBackdropImage {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 2;
+  /* GSAP-controlled visibility */
+  opacity: 0;
+  visibility: hidden;
+}
+
+/* Brand purple wash (#554E65). Fades in after watercolor reveal and
+   stays at full opacity for the entire cinematic -- the brand color
+   carrier across both the Blue Garden and the gs-hero photograph. */
 .purpleWash {
   position: absolute;
   top: 0;
@@ -41,58 +92,147 @@
   bottom: 0;
   left: 0;
   inset: 0;
-  /* Lighter at center where text lands so the painting reads brighter
-     under the type; darker at edges to anchor the composition. */
   background: radial-gradient(
     ellipse at center,
-    rgba(40, 24, 50, 0.35) 0%,
-    rgba(35, 20, 45, 0.65) 55%,
-    rgba(28, 16, 38, 0.85) 100%
+    rgba(85, 78, 101, 0.65) 0%,
+    rgba(70, 64, 84, 0.86) 55%,
+    rgba(55, 50, 67, 0.95) 100%
   );
-  z-index: 2;
-  /* GSAP animates autoAlpha to 1 at WASH_START_MS */
+  z-index: 3;
+  /* GSAP-animated initial state */
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
 }
 
-/* Scroll column: pulled up one viewport so beat 1 sits on the sticky bg
-   at initial scroll position. As user scrolls, beats slide up while the
-   watercolor stays pinned. */
-.scrollColumn {
-  position: relative;
-  z-index: 1;
-  margin-top: -100vh;
-  margin-top: -100dvh;
+/* Hero overlay: logo + descriptor + scroll cue. Sits above wash. Fades
+   in once wash is in place; fades out via scrub as user scrolls into
+   the cinematic interior. */
+.heroLayer {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  inset: 0;
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  /* GSAP-animated initial state */
+  opacity: 0;
+  visibility: hidden;
 }
 
-/* Beats are taller than one viewport so the scroll feels weighted --
-   user has to actively pass through each moment, not glide past. ScrollTrigger
-   snap aligns them to the top of each beat for clean transitions. */
-.beat {
+.heroLogo {
+  display: block;
+  width: clamp(360px, 60vw, 920px);
+  height: auto;
+  margin: 0 auto;
+  /* GSAP-animated initial state: scale + blur settle in */
+  opacity: 0;
+  visibility: hidden;
+  will-change: transform, opacity, filter;
+}
+
+.heroDescriptor {
+  /* GSAP-animated initial state: SplitText line stagger */
+  opacity: 0;
+  visibility: hidden;
+  will-change: transform, opacity, filter;
+}
+
+.heroDescriptor {
+  margin: var(--space-md) auto 0;
+  max-width: min(56ch, 88vw);
+  font-family: var(--font-body);
+  font-size: var(--text-body-large);
+  font-weight: var(--weight-body);
+  line-height: var(--leading-normal);
+  color: var(--gs-cream);
+  text-align: center;
+  text-wrap: pretty;
+}
+
+/* Sentinel track: invisible scroll-progress markers below the sticky
+   backdrop. Each sentinel corresponds to one beat in the anchored
+   stage above. The first sentinel includes a hero-zone offset so beat 1
+   doesn't fade in until the user has scrolled past the hero crossfade. */
+.sentinelTrack {
   position: relative;
-  min-height: 130vh;
-  min-height: 130dvh;
+  z-index: 1;
+}
+
+.sentinel {
+  /* Each sentinel = the scroll dwell time for one beat. Longer = beat
+     stays anchored at center for longer before the next replaces it.
+     ~110vh gives the user time to read each moment before scroll
+     advances them to the next. */
+  height: 110vh;
+  height: 110dvh;
+}
+
+/* The first sentinel needs to push beat 1's activation past the hero
+   crossfade zone. Splitting the offset between a track padding-top and
+   sentinel 1 itself keeps each sentinel close to the same height -- so
+   adjacent sentinels don't both fall inside the IO middle band. */
+.sentinelTrack {
+  padding-top: 80vh;
+  padding-top: 80dvh;
+  /* Just enough trailing space to keep the sticky pinned while sentinel
+     4 finishes its active range. Audio controls are now globally
+     available via the StandaloneNav, so we don't need to trap the user
+     on the poem -- they can scroll out and the audio keeps playing. */
+  padding-bottom: 20vh;
+  padding-bottom: 20dvh;
+  /* Sentinels are scroll-trigger geometry only -- never receive clicks
+     or scroll-target focus. Without this, the sentinels (which sit
+     above the sticky stage in stacking order) would intercept the
+     poem player's clicks and the transcript's scroll wheel. */
+  pointer-events: none;
+}
+
+/* Last sentinel matches the others now that audio controls live in
+   the nav. The user can leave the poem section without losing audio,
+   so we don't need to pin them here longer than the other beats. */
+.sentinelLast {
+  height: 60vh !important;
+  height: 60dvh !important;
+}
+
+/* Each beat is 60vh tall with flex-centered content. As the user scrolls,
+   the beat passes through viewport and the content briefly lands near
+   center. Breath plays in via IO play-once. Beats are short enough that
+   travel is contained but tall enough that only one beat's content is
+   visible at any scroll position. */
+/* All beats sit absolutely-positioned inside the sticky stage, anchored
+   at viewport center. Sentinels below drive which one is visible via
+   crossfade -- no travel, no translation, only opacity. */
+.beat {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  inset: 0;
+  z-index: 5;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: clamp(40px, 6vh, 72px) clamp(20px, 5vw, 48px);
+  padding: clamp(32px, 5vh, 56px) clamp(20px, 5vw, 48px);
+  pointer-events: none;
+  /* GSAP-controlled visibility */
+  opacity: 0;
+  visibility: hidden;
 }
 
-/* Hero is one viewport tall (sits on the watercolor at scroll 0). The
-   thesis lands centered, scroll cue at the bottom. */
-.scrollColumn > .beat:first-child {
-  min-height: 100vh;
-  min-height: 100dvh;
-}
-
+/* Poem beat is interactive -- needs pointer events so the play button,
+   scrubber, and transcript scroll all work. Stays at the same z-index
+   as the other beats so the heroLayer doesn't trap clicks above it. */
 .beatPoem {
-  /* Poem sizes to content -- no 100vh minimum here. After the poem ends,
-     user scrolls into the next section naturally; no empty-space tail. */
-  min-height: auto;
-  padding-top: clamp(40px, 7vh, 88px);
-  padding-bottom: clamp(72px, 12vh, 140px);
+  pointer-events: auto;
 }
 
 .beatInner {
@@ -156,22 +296,16 @@
   visibility: hidden;
 }
 
-/* Scroll cue: positioned in the lower third of the hero so it sits closer
-   to the thesis than to the viewport edge. Uses site UI register --
-   Open Sans, non-italic, body-small with letter-spacing. */
+/* Scroll cue: sits inside the hero content block, well below the tags
+   with breathing room so it reads as a quiet invitation rather than a
+   crowded UI element. */
 .scrollCue {
-  position: absolute;
-  bottom: clamp(120px, 18vh, 180px);
-  left: 50%;
-  transform: translateX(-50%) translateY(8px);
-  display: flex;
+  margin-top: clamp(72px, 9vh, 120px);
+  display: inline-flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
-  color: rgba(248, 235, 229, 0.7);
-  /* GSAP-animated initial state */
-  opacity: 0;
-  visibility: hidden;
+  gap: 8px;
+  color: rgba(247, 247, 247, 0.7);
   animation: scrollCueBob 2.2s ease-in-out infinite;
 }
 
@@ -184,8 +318,29 @@
 }
 
 @keyframes scrollCueBob {
-  0%, 100% { transform: translateX(-50%) translateY(0); }
-  50%      { transform: translateX(-50%) translateY(5px); }
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(5px); }
+}
+
+/* Per-beat scroll cue: lives inside each beat's content stack, below
+   the main text/element, so its vertical position adapts to whatever
+   content sits above it. Inherits the beat's opacity (fades in/out
+   with the beat). Bobs gently to suggest "keep scrolling." */
+.beatCue {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin: clamp(40px, 6vh, 80px) auto 0;
+  width: 22px;
+  height: 28px;
+  color: rgba(247, 247, 247, 0.85);
+  pointer-events: none;
+  animation: scrollCueBob 2.2s ease-in-out infinite;
+}
+
+.beatCue svg {
+  width: 22px;
+  height: 28px;
 }
 
 /* ----------------------------------------------------------------------------
@@ -210,16 +365,17 @@
   will-change: transform, opacity, filter;
 }
 
-/* Framing line gets its own beat -- a quiet dedication between the pull
-   quote and the poem. Site body register: Open Sans, body-large, full
-   opacity. Centered with no margin -- the beat's flex centering handles it. */
+/* Framing line: same display register as the thesis (and pull quote)
+   -- the cinematic uses one type system for its three text moments
+   instead of dropping into body register for the last one. */
 .framing {
   margin: 0 auto;
-  max-width: 48ch;
-  font-family: var(--font-body);
-  font-size: var(--text-body-large);
-  font-weight: var(--weight-body);
-  line-height: var(--leading-normal);
+  max-width: min(28ch, 92vw);
+  font-family: var(--font-heading);
+  font-size: var(--text-h2);
+  font-weight: var(--weight-hero);
+  line-height: var(--leading-tight);
+  font-variation-settings: var(--font-soft);
   color: var(--gs-cream);
   text-align: center;
   text-wrap: pretty;
@@ -230,38 +386,173 @@
 }
 
 /* ----------------------------------------------------------------------------
-   Beat 3 — Side-by-side: big media player on the left, transcript on the right
+   Beat 4 — Single column: header strip / scrolling transcript / player chrome.
+   Apple Podcasts-style. The whole column sits on the cinematic carrier.
 ---------------------------------------------------------------------------- */
 
-.poemGrid {
-  display: grid;
-  grid-template-columns: minmax(260px, 320px) minmax(0, 540px);
-  align-items: start;
-  gap: clamp(40px, 6vw, 80px);
+.poemColumn {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(20px, 3vh, 32px);
   width: 100%;
-  max-width: 940px;
+  max-width: 640px;
   margin: 0 auto;
 }
 
-.poemControls {
+/* Header strip: the calm anchor at the top of the column. Mirrors the
+   small "now playing" card in Apple Podcasts but flatter -- no album
+   art, just title + reader credit on the carrier. */
+.poemHeader {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  gap: 1.25em;
-  position: sticky;
-  top: clamp(80px, 14vh, 140px);
+  gap: 4px;
+  text-align: center;
+  padding-bottom: 4px;
   /* GSAP-animated initial state */
   opacity: 0;
   visibility: hidden;
 }
 
-/* Big circular play disc -- the spotlight of the player composition. */
-.playDisc {
+.poemHeaderEyebrow {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--text-body-small);
+  font-weight: var(--weight-label);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(248, 235, 229, 0.55);
+}
+
+.poemHeaderTitle {
+  margin: 6px 0 0;
+  font-family: var(--font-heading);
+  font-size: var(--text-h3);
+  font-weight: var(--weight-label);
+  font-variation-settings: var(--font-soft);
+  color: var(--gs-cream);
+  line-height: var(--leading-tight);
+}
+
+.poemHeaderSubtitle {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: var(--text-body-small);
+  font-weight: var(--weight-quote);
+  font-style: italic;
+  font-variation-settings: var(--font-soft);
+  color: rgba(248, 235, 229, 0.7);
+}
+
+/* ----------------------------------------------------------------------------
+   Player chrome — scrubber + transport, persistent at the bottom of the column.
+---------------------------------------------------------------------------- */
+
+.poemChrome {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  align-items: center;
+  /* GSAP-animated initial state */
+  opacity: 0;
+  visibility: hidden;
+}
+
+.scrubberRow {
+  width: 100%;
+  max-width: 360px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.scrubber {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 22px;
+  background: transparent;
+  cursor: pointer;
+  margin: 0;
+}
+
+/* WebKit track */
+.scrubber::-webkit-slider-runnable-track {
+  height: 3px;
+  border-radius: var(--radius-pill);
+  background: linear-gradient(
+    to right,
+    rgba(248, 235, 229, 0.85) 0%,
+    rgba(248, 235, 229, 0.85) var(--progress, 0%),
+    rgba(248, 235, 229, 0.18) var(--progress, 0%),
+    rgba(248, 235, 229, 0.18) 100%
+  );
+}
+
+.scrubber::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--gs-cream);
+  margin-top: -4.5px;
+  border: none;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
+}
+
+/* Firefox */
+.scrubber::-moz-range-track {
+  height: 3px;
+  border-radius: var(--radius-pill);
+  background: rgba(248, 235, 229, 0.18);
+}
+
+.scrubber::-moz-range-progress {
+  height: 3px;
+  border-radius: var(--radius-pill);
+  background: rgba(248, 235, 229, 0.85);
+}
+
+.scrubber::-moz-range-thumb {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--gs-cream);
+  border: none;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
+}
+
+.scrubber:focus-visible {
+  outline: 2px solid var(--gs-cream);
+  outline-offset: 4px;
+  border-radius: var(--radius-pill);
+}
+
+.scrubberTimes {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: var(--weight-body);
+  letter-spacing: 0.04em;
+  font-variant-numeric: tabular-nums;
+  color: rgba(248, 235, 229, 0.65);
+}
+
+.transport {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  margin-top: 4px;
+}
+
+.playButton {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: clamp(72px, 9vw, 96px);
-  height: clamp(72px, 9vw, 96px);
+  width: clamp(64px, 8vw, 80px);
+  height: clamp(64px, 8vw, 80px);
   border: 1px solid rgba(248, 235, 229, 0.4);
   border-radius: 50%;
   background: rgba(248, 235, 229, 0.08);
@@ -274,108 +565,24 @@
     transform var(--motion-fast) var(--ease-out);
 }
 
+.playButton[aria-pressed='false'] svg {
+  /* Optical offset for play triangle */
+  margin-left: 3px;
+}
+
 @media (hover: hover) {
-  .playDisc:hover {
+  .playButton:hover {
     background: rgba(248, 235, 229, 0.16);
     border-color: rgba(248, 235, 229, 0.75);
     transform: scale(1.02);
   }
 }
 
-.playDisc:focus-visible {
+.playButton:focus-visible {
   outline: 2px solid var(--gs-cream);
   outline-offset: 4px;
 }
 
-.playDiscIcon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  /* Slight optical offset on the play triangle so it sits visually centered */
-  margin-left: 2px;
-}
-
-.playDisc[aria-pressed='true'] .playDiscIcon {
-  margin-left: 0;
-}
-
-.playerCaption {
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  max-width: 26ch;
-}
-
-.playerTitle {
-  font-family: var(--font-heading);
-  font-size: var(--text-body-small);
-  font-weight: var(--weight-quote);
-  font-style: italic;
-  font-variation-settings: var(--font-soft);
-  line-height: var(--leading-normal);
-  color: rgba(248, 235, 229, 0.78);
-}
-
-.playerStatus {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-family: var(--font-body);
-  font-size: var(--text-body-small);
-  font-weight: var(--weight-label);
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--gs-cream);
-}
-
-.playerStatus::before {
-  content: '';
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--gs-cream);
-  animation: pulse 1.6s ease-in-out infinite;
-}
-
-@keyframes pulse {
-  0%, 100% { opacity: 0.4; }
-  50%      { opacity: 1; }
-}
-
-.skipLink {
-  font-family: var(--font-heading);
-  font-size: var(--text-body-small);
-  font-weight: var(--weight-quote);
-  font-style: italic;
-  font-variation-settings: var(--font-soft);
-  letter-spacing: 0.01em;
-  color: rgba(248, 235, 229, 0.65);
-  text-decoration: underline;
-  text-underline-offset: 4px;
-  text-decoration-thickness: 1px;
-  padding: 8px 4px;
-  min-height: 44px;
-  display: inline-flex;
-  align-items: center;
-  transition: color var(--motion-fast) var(--ease-out);
-}
-
-@media (hover: hover) {
-  .skipLink:hover {
-    color: var(--gs-cream);
-  }
-}
-
-.skipLink:focus-visible {
-  outline: 2px solid var(--gs-cream);
-  outline-offset: 3px;
-  border-radius: 2px;
-}
-
-.poemText {
-  width: 100%;
-}
 
 /* Contained transcript frame: fixed height, scrolls as audio plays through.
    Mask gradient softens the top + bottom edges so lines breathe in and out.
@@ -384,55 +591,64 @@
 .poemFrame {
   position: relative;
   width: 100%;
-  height: clamp(360px, 56vh, 520px);
+  height: clamp(380px, 60vh, 560px);
   overflow-y: auto;
   overscroll-behavior: contain;
   -webkit-mask-image: linear-gradient(
     to bottom,
     transparent 0,
-    #000 12%,
-    #000 88%,
+    #000 14%,
+    #000 86%,
     transparent 100%
   );
   mask-image: linear-gradient(
     to bottom,
     transparent 0,
-    #000 12%,
-    #000 88%,
+    #000 14%,
+    #000 86%,
     transparent 100%
   );
   /* GSAP-animated initial state */
   opacity: 0;
   visibility: hidden;
   will-change: transform, opacity, filter;
-  /* Subtle scrollbar so users discover scrollability without visual weight */
+  /* Visible-enough scrollbar that users know the transcript is
+     scrollable. Keeps the cinematic mood by staying in the cream
+     register but with stronger contrast than a hairline. */
   scrollbar-width: thin;
-  scrollbar-color: rgba(248, 235, 229, 0.18) transparent;
+  scrollbar-color: rgba(248, 235, 229, 0.4) rgba(248, 235, 229, 0.08);
 }
 
 .poemFrame::-webkit-scrollbar {
-  width: 4px;
+  width: 8px;
 }
 
 .poemFrame::-webkit-scrollbar-thumb {
-  background: rgba(248, 235, 229, 0.18);
+  background: rgba(248, 235, 229, 0.42);
   border-radius: var(--radius-pill);
 }
 
+.poemFrame::-webkit-scrollbar-thumb:hover {
+  background: rgba(248, 235, 229, 0.62);
+}
+
 .poemFrame::-webkit-scrollbar-track {
-  background: transparent;
+  background: rgba(248, 235, 229, 0.08);
+  border-radius: var(--radius-pill);
 }
 
 .poemBody {
   margin: 0;
-  padding: 1em 1.5em 1em 0;
+  /* Generous top + bottom padding so the mask gradient at the frame
+     edges fades empty space rather than the first/last poem lines. */
+  padding: 4em 1em 4em 1em;
   font-family: var(--font-heading);
   font-size: var(--text-body-large);
   font-weight: var(--weight-quote);
   line-height: var(--leading-normal);
   font-variation-settings: var(--font-soft);
   color: rgba(248, 235, 229, 0.88);
-  text-align: left;
+  text-align: center;
 }
 
 .poemOpener {
@@ -442,12 +658,14 @@
   font-weight: var(--weight-label);
   color: var(--gs-cream);
   font-variation-settings: var(--font-soft);
+  line-height: var(--leading-tight);
 }
 
 .stanza {
   margin: 0 0 1.4em;
   display: flex;
   flex-direction: column;
+  align-items: center;
 }
 
 .stanza:last-child {
@@ -458,22 +676,20 @@
   display: block;
 }
 
-/* Active-line highlight. While audio plays, the line whose timestamp is
-   current stays at full opacity (and brightens to cream); siblings dim
-   so the eye is led to where the voice is. The transition matches the
-   breath of the reading -- 600ms power1.inOut to feel calm, not snappy. */
-.poemBody [data-line-index] {
-  transition: opacity 600ms cubic-bezier(0.42, 0, 0.58, 1),
-              color 600ms cubic-bezier(0.42, 0, 0.58, 1);
+/* Stanza-level highlight. While audio plays, the stanza whose timestamp
+   is current stays at full opacity; siblings dim so the eye is led to
+   where the voice is. 600ms power1.inOut to feel calm, not snappy. */
+.poemBody [data-stanza-index] {
+  transition: color 600ms cubic-bezier(0.42, 0, 0.58, 1);
 }
 
 /* Dim/active states use color, not opacity, so text renders cleanly
    regardless of state -- opacity on text reduces glyph rendering quality. */
-.lineDim {
-  color: rgba(248, 235, 229, 0.35);
+.stanzaDim {
+  color: rgba(248, 235, 229, 0.32);
 }
 
-.lineActive {
+.stanzaActive {
   color: var(--gs-cream);
 }
 
@@ -482,17 +698,35 @@
 ---------------------------------------------------------------------------- */
 
 @media (prefers-reduced-motion: reduce) {
+  /* Backdrop releases sticky, scroll column drops the negative margin --
+     beats stack normally and all content is statically visible. */
+  .stickyBackdrop {
+    position: relative;
+    height: 100vh;
+    height: 100dvh;
+  }
+  .scrollColumn {
+    margin-top: 0;
+    padding-top: 0;
+  }
+  /* Cross-fade is gone in reduced motion. The hero photo stays visible
+     above the watercolor for its 100vh; beats follow below. */
+  .heroLayer {
+    opacity: 1;
+    visibility: visible;
+  }
   .purpleWash,
   .quoteText,
   .attribution,
   .thesis,
   .framing,
-  .poemControls,
-  .poemFrame {
+  .poemHeader,
+  .poemFrame,
+  .poemChrome {
     opacity: 1;
     visibility: visible;
   }
-  .poemBody [data-line-index] {
+  .poemBody [data-stanza-index] {
     transition: none;
   }
   .scrollCue {
@@ -511,15 +745,12 @@
   .beat {
     padding: clamp(40px, 6vh, 72px) var(--space-md);
   }
-  /* Side-by-side becomes stacked: player on top, transcript below.
-     Player un-sticks so it doesn't pin to the top of the column. */
-  .poemGrid {
-    grid-template-columns: 1fr;
-    gap: 2.25em;
+  /* Single column already stacks naturally; just tighten the chrome on
+     small screens. */
+  .transport {
+    gap: 18px;
   }
-  .poemControls {
-    position: static;
-    align-items: flex-start;
-    gap: 1em;
+  .poemFrame {
+    height: clamp(340px, 56vh, 460px);
   }
 }

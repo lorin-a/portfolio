@@ -6,7 +6,7 @@ export default function NotFound() {
     <div className={styles.container}>
       <h1 className={styles.title}>Page not found</h1>
       <p className={styles.message}>
-        The page you're looking for doesn't exist or has been moved.
+        The page you’re looking for doesn’t exist or has been moved.
       </p>
       <Link href="/" className={styles.link}>
         ← Back to home

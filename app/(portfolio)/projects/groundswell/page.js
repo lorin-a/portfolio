@@ -1,4 +1,5 @@
 import GroundswellContent from '@/components/Groundswell/GroundswellContent'
+import StandaloneNav from '@/components/StandaloneNav/StandaloneNav'
 
 export const metadata = {
   title: 'Groundswell | Lorin Anderberg',
@@ -11,5 +12,10 @@ export const metadata = {
 }
 
 export default function GroundswellPage() {
-  return <GroundswellContent />
+  return (
+    <>
+      <StandaloneNav backHref="/" backLabel="All work" revealAfter="#vision" />
+      <GroundswellContent />
+    </>
+  )
 }

@@ -1128,7 +1128,7 @@
   font-weight: var(--weight-quote);
   font-style: italic;
   color: var(--color-bg);
-  margin-bottom: var(--space-lg);
+  margin-bottom: var(--space-md);
 }
 
 .heroTags {

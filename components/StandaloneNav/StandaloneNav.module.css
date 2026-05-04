@@ -28,6 +28,85 @@
   height: 60px;
 }
 
+.navSplit {
+  justify-content: space-between;
+}
+
+/* Right cluster: pause-poem button (when audio is playing) sits to the
+   left of the back-to-top button. Lets the user stop / resume audio
+   from anywhere on the page. */
+.navRight {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.audioToggle {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  background: none;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: var(--cream);
+  font-family: var(--font-sans);
+  font-size: var(--text-body-small);
+  font-weight: var(--weight-label);
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  padding: var(--space-xs) var(--space-sm);
+  border-radius: var(--radius-pill);
+  opacity: 0.92;
+  transition: opacity var(--motion-fast) var(--ease-in-out),
+              border-color var(--motion-fast) var(--ease-in-out);
+  min-height: 36px;
+}
+
+.audioToggle:focus-visible {
+  outline: 2px solid var(--cream);
+  outline-offset: 2px;
+}
+
+@media (hover: hover) {
+  .audioToggle:hover {
+    opacity: 1;
+    border-color: rgba(255, 255, 255, 0.5);
+  }
+}
+
+.backLink {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  color: var(--cream);
+  font-family: var(--font-sans);
+  font-size: var(--text-body-small);
+  font-weight: var(--weight-label);
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  padding: var(--space-xs) var(--space-sm);
+  border-radius: var(--radius-sm);
+  opacity: 0.9;
+  transition: opacity var(--motion-fast) var(--ease-in-out);
+  min-height: 44px;
+}
+
+.backArrow {
+  width: 14px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+.backLink:focus-visible {
+  outline: 2px solid var(--cream);
+  outline-offset: 2px;
+}
+
+@media (hover: hover) {
+  .backLink:hover {
+    opacity: 1;
+  }
+}
+
 .backToTop {
   display: flex;
   align-items: center;

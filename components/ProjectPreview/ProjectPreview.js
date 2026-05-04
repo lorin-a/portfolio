@@ -4,6 +4,8 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import { gsap } from '@/lib/gsap'
 import { useGSAP } from '@gsap/react'
 import styles from './ProjectPreview.module.css'
+import AtmosphericStack from '@/components/CardStack/AtmosphericStack'
+import FileStack from '@/components/CardStack/FileStack'
 
 gsap.registerPlugin(useGSAP)
 
@@ -27,6 +29,8 @@ export default function ProjectPreview({
   pillVariant = 'weave', mediaSrc, mediaType = 'image', mediaAlt = '',
   mediaSequence = [],
   href, comingSoon = false, flip = false,
+  /** 'carousel' (default) | 'atmospheric' | 'file' */
+  cardVariant = 'carousel',
 }) {
   const sectionRef = useRef(null)
   const mediaRef = useRef(null)
@@ -182,77 +186,84 @@ export default function ProjectPreview({
     >
       {/* Media wrapper — the sizing element GSAP shrinks on scroll */}
       <div ref={mediaRef} className={styles.mediaWrap}>
-        <div
-          className={`${styles.media} ${hasCarousel ? styles.mediaInteractive : ''}`}
-          onClick={hasCarousel ? advance : undefined}
-          role={hasCarousel ? 'button' : undefined}
-          tabIndex={hasCarousel ? 0 : undefined}
-          aria-label={hasCarousel ? `View next image (${activeSlide + 1} of ${allSlides.length})` : undefined}
-          onKeyDown={hasCarousel ? (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); advance() } } : undefined}
-        >
-          {allSlides.map((slide, i) => (
+        {cardVariant === 'atmospheric' ? (
+          <AtmosphericStack slides={allSlides} />
+        ) : cardVariant === 'file' ? (
+          <FileStack slides={allSlides} contributions={contributions} pillVariant={pillVariant} />
+        ) : (
+          <>
             <div
-              key={i}
-              ref={el => { slidesRef.current[i] = el }}
-              className={`${styles.slide} ${activeSlide === i ? styles.slideActive : ''}`}
-              aria-hidden={activeSlide === i ? undefined : 'true'}
+              className={`${styles.media} ${hasCarousel ? styles.mediaInteractive : ''}`}
+              onClick={hasCarousel ? advance : undefined}
+              role={hasCarousel ? 'button' : undefined}
+              tabIndex={hasCarousel ? 0 : undefined}
+              aria-label={hasCarousel ? `View next image (${activeSlide + 1} of ${allSlides.length})` : undefined}
+              onKeyDown={hasCarousel ? (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); advance() } } : undefined}
             >
-              {slide.type === 'video' ? (
-                <video
-                  src={slide.src}
-                  autoPlay muted loop playsInline
-                  ref={el => { if (el) el.muted = true }}
-                  preload={i === 0 ? 'auto' : 'metadata'}
-                  className={styles.slideInner}
-                  style={slide.zoom ? { transform: `scale(${slide.zoom})` } : undefined}
-                  aria-label={slide.alt}
-                />
-              ) : (
-                <img
-                  src={slide.src}
-                  alt={i === 0 ? slide.alt : ''}
-                  className={styles.slideInner}
-                  style={slide.zoom ? { transform: `scale(${slide.zoom})` } : undefined}
-                  loading={i === 0 ? 'eager' : 'lazy'}
-                />
-              )}
+              {allSlides.map((slide, i) => (
+                <div
+                  key={i}
+                  ref={el => { slidesRef.current[i] = el }}
+                  className={`${styles.slide} ${activeSlide === i ? styles.slideActive : ''}`}
+                  aria-hidden={activeSlide === i ? undefined : 'true'}
+                >
+                  {slide.type === 'video' ? (
+                    <video
+                      src={slide.src}
+                      autoPlay muted loop playsInline
+                      ref={el => { if (el) el.muted = true }}
+                      preload={i === 0 ? 'auto' : 'metadata'}
+                      className={styles.slideInner}
+                      style={slide.zoom ? { transform: `scale(${slide.zoom})` } : undefined}
+                      aria-label={slide.alt}
+                    />
+                  ) : (
+                    <img
+                      src={slide.src}
+                      alt={i === 0 ? slide.alt : ''}
+                      className={styles.slideInner}
+                      style={slide.zoom ? { transform: `scale(${slide.zoom})` } : undefined}
+                      loading={i === 0 ? 'eager' : 'lazy'}
+                    />
+                  )}
+                </div>
+              ))}
             </div>
-          ))}
 
-        </div>
-
-        {hasCarousel && (
-          <div ref={controlsRef} className={styles.carouselControls}>
-            <button
-              type="button"
-              className={styles.carouselArrow}
-              onClick={(e) => { e.stopPropagation(); previous() }}
-              aria-label="Previous image"
-            >
-              <svg viewBox="0 0 16 16" fill="none" aria-hidden="true">
-                <path d="M10 12L6 8l4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            </button>
-            <span
-              className={styles.carouselCounter}
-              aria-live="polite"
-              aria-label={`Image ${activeSlide + 1} of ${allSlides.length}`}
-            >
-              {String(activeSlide + 1).padStart(2, '0')}
-              <span className={styles.carouselCounterDivider} aria-hidden="true"> / </span>
-              {String(allSlides.length).padStart(2, '0')}
-            </span>
-            <button
-              type="button"
-              className={styles.carouselArrow}
-              onClick={(e) => { e.stopPropagation(); advance() }}
-              aria-label="Next image"
-            >
-              <svg viewBox="0 0 16 16" fill="none" aria-hidden="true">
-                <path d="M6 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            </button>
-          </div>
+            {hasCarousel && (
+              <div ref={controlsRef} className={styles.carouselControls}>
+                <button
+                  type="button"
+                  className={styles.carouselArrow}
+                  onClick={(e) => { e.stopPropagation(); previous() }}
+                  aria-label="Previous image"
+                >
+                  <svg viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                    <path d="M10 12L6 8l4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </button>
+                <span
+                  className={styles.carouselCounter}
+                  aria-live="polite"
+                  aria-label={`Image ${activeSlide + 1} of ${allSlides.length}`}
+                >
+                  {String(activeSlide + 1).padStart(2, '0')}
+                  <span className={styles.carouselCounterDivider} aria-hidden="true"> / </span>
+                  {String(allSlides.length).padStart(2, '0')}
+                </span>
+                <button
+                  type="button"
+                  className={styles.carouselArrow}
+                  onClick={(e) => { e.stopPropagation(); advance() }}
+                  aria-label="Next image"
+                >
+                  <svg viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                    <path d="M6 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </button>
+              </div>
+            )}
+          </>
         )}
       </div>
 

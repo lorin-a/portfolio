@@ -1,7 +1,7 @@
 import Hero from '@/components/Hero/HeroScatter'
 import ProjectPreview from '@/components/ProjectPreview/ProjectPreview'
 import AboutSection from '@/components/AboutSection/AboutSection'
-import { cloudImg, cloudVideo, HOME_IMAGES, HOME_VIDEOS, GS_IMAGES, GS_VIDEOS } from '@/lib/cloudinary'
+import { cloudImg, cloudVideo, HOME_IMAGES, HOME_VIDEOS, GS_IMAGES, GS_VIDEOS, WHELM_IMAGES, WHELM_VIDEOS } from '@/lib/cloudinary'
 import styles from './page.module.css'
 
 export default function Home() {
@@ -31,14 +31,14 @@ export default function Home() {
             { src: cloudVideo(GS_VIDEOS['gs-walkthrough-video'], 1200), type: 'video', alt: 'Groundswell walkthrough' },
             { src: cloudImg(GS_IMAGES['gs-ctb-email'], 1200), type: 'image', alt: 'Groundswell care-through-books email in use' },
           ]}
-          href="/groundswell"
+          href="/projects/groundswell"
         />
 
         <ProjectPreview
           num="02"
           title="BirthStory"
           tagline="A Micro-App for Birthing Parents"
-          description="Helping parents document and reflect on their birth experience for University of Pittsburgh Women's Health."
+          description="Helping parents document and reflect on their birth experience for University of Pittsburgh Women’s Health."
           contributions={[
             { label: 'UX Research' },
             { label: 'UX Design' },
@@ -58,9 +58,35 @@ export default function Home() {
 
         <ProjectPreview
           num="03"
+          title="Whelm"
+          tagline="A Companion for Navigating Overwhelm"
+          description="A self-inquiry ritual with a sequenced framework that slows the thought spiral, navigates the internal conflict, and surfaces the need beneath the narrative. Permission to pause. A process for moving through. A path back to knowing."
+          contributions={[
+            { label: 'Original Concept' },
+            { label: 'Framework Development' },
+            { label: 'Brand & Product Design' },
+          ]}
+          pillVariant="weave"
+          mediaSrc={cloudImg(WHELM_IMAGES['whelm-2'], 1600)}
+          mediaType="image"
+          mediaAlt="Whelm interface — meter introduction"
+          mediaSequence={[
+            { src: cloudVideo(WHELM_VIDEOS['whelm-meter'], 1200), type: 'video', alt: 'Whelm meter in motion' },
+            { src: cloudImg(WHELM_IMAGES['whelm-3'], 1200), type: 'image', alt: 'Whelm interface — body scan introduction' },
+            { src: cloudVideo(WHELM_VIDEOS['whelm-body'], 1200), type: 'video', alt: 'Whelm body scan in motion' },
+            { src: cloudImg(WHELM_IMAGES['whelm-4'], 1200), type: 'image', alt: 'Whelm interface — breathe introduction' },
+            { src: cloudVideo(WHELM_VIDEOS['whelm-breathe'], 1200), type: 'video', alt: 'Whelm breathe practice' },
+            { src: cloudVideo(WHELM_VIDEOS['whelm-opener'], 1200), type: 'video', alt: 'Whelm opener' },
+          ]}
+          cardVariant="atmospheric"
+          comingSoon
+        />
+
+        <ProjectPreview
+          num="04"
           title="SomeBuddy"
-          tagline="Social(ish): Approachable Socialization for Busy Buddies"
-          description="A social app concept helping grad students find connection over shared values."
+          tagline="Approachable Socialization for Busy Buddies"
+          description="A product and brand system for university campuses, helping busy students connect over shared values through low-effort socializing."
           contributions={[
             { label: 'Brand Identity' },
             { label: 'UX' },
@@ -76,11 +102,13 @@ export default function Home() {
             { src: cloudImg(HOME_IMAGES['somebuddy-28'], 1200), type: 'image', alt: 'SomeBuddy interface detail' },
             { src: cloudVideo(HOME_VIDEOS['somebuddy-reel-2'], 1200), type: 'video', alt: 'SomeBuddy reel continued' },
           ]}
+          cardVariant="file"
           comingSoon
+          flip
         />
 
         <ProjectPreview
-          num="04"
+          num="05"
           title="Transition Design"
           tagline="Roots to Resilience: A Food Justice Future"
           description="A systems-level design response to food insecurity in Pittsburgh using Transition Design methods."
@@ -99,11 +127,10 @@ export default function Home() {
             { src: cloudImg(HOME_IMAGES['td-stakeholders'], 1200), type: 'image', alt: 'Stakeholder relations map' },
           ]}
           comingSoon
-          flip
         />
 
         <ProjectPreview
-          num="05"
+          num="06"
           title="Bridging the G.A.P."
           tagline="Inclusive and Playful Nature Trail Rebrand"
           description="A comprehensive rebranding proposal for the Great Allegheny Passage featuring a campaign for inexperienced riders."
@@ -125,6 +152,7 @@ export default function Home() {
             { src: cloudImg(HOME_IMAGES['btg-33'], 1200), type: 'image', alt: 'Bridging the G.A.P. campaign detail' },
           ]}
           comingSoon
+          flip
         />
       </div>
 
