@@ -84,8 +84,8 @@ export default function Home() {
         <ProjectPreview
           num="04"
           title="SomeBuddy"
-          tagline="Social(ish): Approachable Socialization for Busy Buddies"
-          description="A social app concept helping grad students find connection over shared values."
+          tagline="Approachable Socialization for Busy Buddies"
+          description="A product and brand system for university campuses, helping busy students connect over shared values through low-effort socializing."
           contributions={[
             { label: 'Brand Identity' },
             { label: 'UX' },

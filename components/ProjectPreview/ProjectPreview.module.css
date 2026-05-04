@@ -169,12 +169,21 @@
    from first paint. Media shrinking doesn't reflow the text column;
    the text just fades in at its final size and position.
    =========================================== */
+/* Text column anchors to the INNER edge — adjacent to the composed
+   media (55% wide after GSAP shrink) plus a small breathing gap. This
+   keeps the text-to-media distance consistent across viewports. The
+   outer side (page edge) tracks the page gutter; max-width caps the
+   measure on very wide screens. */
 .text {
+  --preview-text-gap: clamp(56px, 5.5vw, 104px);
   position: absolute;
   top: 0;
   bottom: 0;
+  left: calc(55% + var(--preview-text-gap));
   right: var(--gutter);
-  width: 32%;
+  /* Scales with viewport to give long copy room to breathe; capped so
+     the measure stays readable on >1500px screens. */
+  max-width: clamp(320px, 38vw, 560px);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -182,8 +191,8 @@
 }
 
 .flip .text {
-  right: auto;
-  left: var(--gutter);
+  left: auto;
+  right: calc(55% + var(--preview-text-gap));
 }
 
 .num {
@@ -336,6 +345,7 @@
   .text {
     position: static;
     width: 100%;
+    max-width: none;
     min-width: 0;
     right: auto;
     left: auto;
