@@ -19,7 +19,7 @@ order: 4
 
 Grad students seek connection but struggle to make plans due to hectic schedules which can lead to feelings of isolation.
 
-How can we create easy, low-pressure ways for grad students to connect through simple activities, especially when it's something they don't want to do alone?
+How can we create easy, low-pressure ways for grad students to connect through simple activities, especially when it’s something they don’t want to do alone?
 
 ## Listen
 

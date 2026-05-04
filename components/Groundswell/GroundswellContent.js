@@ -64,21 +64,21 @@ const researchQuotes = [
   },
   {
     quote: "I was not prepared for this.",
-    context: "No one officially trained me on the emotional trauma that this job causes. I'm doing the work of a therapist and social worker, losing people daily."
+    context: "No one officially trained me on the emotional trauma that this job causes. I’m doing the work of a therapist and social worker, losing people daily."
   },
   {
-    quote: "I can't turn it off.",
+    quote: "I can’t turn it off.",
     context: "Even on my days off, I keep checking Teams to stay updated. I worry about my patients when I am at home. I am so exhausted."
   },
 ]
 
 /** Play testing quotes — displayed in Play Testing section */
 const playtestingQuotes = [
-  "It's remarkable what 10 minutes can do...",
-  "As soon as I stepped inside, I almost teared up. You're not always aware of how frazzled you are until you stop.",
+  "It’s remarkable what 10 minutes can do…",
+  "As soon as I stepped inside, I almost teared up. You’re not always aware of how frazzled you are until you stop.",
   "Being able to stop in the middle of the day and have the physical and mental space to get quiet and meditate is really helpful—much better than a bathroom stall.",
-  "You don't have to wait until the end of the day to refresh, but you can have micro-resets in-between.",
-  "I've worked in the trauma field, and I work with physicians—everyone needs one of these.",
+  "You don’t have to wait until the end of the day to refresh, but you can have micro-resets in-between.",
+  "I’ve worked in the trauma field, and I work with physicians—everyone needs one of these.",
 ]
 
 
@@ -235,7 +235,7 @@ function WorkshopCarousel() {
         </>
       ),
       quotes: [
-        "Self-care to me is gifting time. 'Me' time, 'she' time, and 'we' time.",
+        "Self-care to me is gifting time. ‘Me’ time, ‘she’ time, and ‘we’ time.",
       ],
       images: [
         { src: gsImg('gs-workshop-coats-01', 1200), alt: 'Women in White Coats event honoring women in cancer care' },
@@ -405,7 +405,7 @@ function PlaytestCarousel() {
     {
       label: 'Accessibility',
       problem: 'Participants with larger bodies reported discomfort with table positioning, limiting their ability to rest comfortably.',
-      quote: "Uncomfortable for larger people. I wished to rest my head on the table but couldn't get comfortable. The biggest thing was getting comfortable.",
+      quote: "Uncomfortable for larger people. I wished to rest my head on the table but couldn’t get comfortable. The biggest thing was getting comfortable.",
       solution: 'We sawed 2 inches from the table depth to accommodate a wider range of body sizes and postures.',
     },
     {
@@ -668,9 +668,9 @@ export default function GroundswellContent() {
               Through communication, creativity, and connection, Groundswell fosters a culture where the emotional complexities of oncology care are acknowledged, isolation transforms into belonging, and self-care is honored as essential to delivering excellent patient care.
             </p>
             <blockquote className={styles.outcomesQuote}>
-              &ldquo;Groundswell reminds us that caring for patients begins with caring for the people who serve them. By creating intentional spaces and practices that acknowledge the emotional realities of oncology care, we're laying the foundation for a culture where staff well-being is recognized as essential.&rdquo;
+              &ldquo;Groundswell reminds us that caring for patients begins with caring for the people who serve them. By creating intentional spaces and practices that acknowledge the emotional realities of oncology care, we’re laying the foundation for a culture where staff well-being is recognized as essential.&rdquo;
             </blockquote>
-            <cite className={styles.outcomesQuoteCite}>&mdash; Samantha Williams, Director of Women's Cancer Services, UPMC</cite>
+            <cite className={styles.outcomesQuoteCite}>&mdash; Samantha Williams, Director of Women’s Cancer Services, UPMC</cite>
           </div>
         </div>
         <div className={styles.parallaxScroll}>
@@ -711,7 +711,7 @@ export default function GroundswellContent() {
               We intentionally included family caregivers and patients because we saw how important it was for staff to hear from them—especially gratitude, as almost every desk was decorated with cards from patients and families. Staff reported discomfort expressing feelings due to fear of retaliation. We built this as an anonymous place to safely share and understand what others are feeling—giving public, collective voice to the cancer care community.
             </p>
             <blockquote className={styles.outcomesQuote}>
-              &ldquo;Groundswell is not just a campaign—it's a commitment. By centering staff-identified well-being priorities, we're ensuring that every voice is heard and concerns are addressed.&rdquo;
+              &ldquo;Groundswell is not just a campaign—it’s a commitment. By centering staff-identified well-being priorities, we’re ensuring that every voice is heard and concerns are addressed.&rdquo;
             </blockquote>
             <cite className={styles.outcomesQuoteCite}>&mdash; Kendyl Grant, Director of Operations for the Gynecologic Oncology Division, UPMC</cite>
           </div>

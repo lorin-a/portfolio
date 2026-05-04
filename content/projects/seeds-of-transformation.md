@@ -12,7 +12,7 @@ order: 10
 
 ## Context
 
-This interactive zine emerged from a graduate seminar challenge on developing a "design mind." The assignment pushed students to distill their unique perspectives on design practice into an accessible storytelling format.
+This interactive zine emerged from a graduate seminar challenge on developing a “design mind.” The assignment pushed students to distill their unique perspectives on design practice into an accessible storytelling format.
 
 ## Tension
 

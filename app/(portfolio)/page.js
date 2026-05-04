@@ -38,7 +38,7 @@ export default function Home() {
           num="02"
           title="BirthStory"
           tagline="A Micro-App for Birthing Parents"
-          description="Helping parents document and reflect on their birth experience for University of Pittsburgh Women's Health."
+          description="Helping parents document and reflect on their birth experience for University of Pittsburgh Women’s Health."
           contributions={[
             { label: 'UX Research' },
             { label: 'UX Design' },
