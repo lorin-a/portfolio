@@ -39,38 +39,29 @@ import ScrollCue from './ScrollCue'
    the function body so the element is in its hidden start state
    before the orchestrator plays the returned timeline. */
 
-/* OvercomeStack — line 1 fades in, then lines 2 & 3 distribute down
-   from behind line 1 with a slight stagger. Storyboard: "top one fades
-   in and then middle and bottom overhwelms distribute down from the
-   top as if they emerged from behind it and slotted into place." */
-function overcomeStackEntrance(node, { duration = 1.2 } = {}) {
+/* OvercomeStack — cascading waterfall. Each line falls from above its
+   final position with a tight stagger so the three Overwhelms pour
+   down in sequence. Top → middle → bottom, smooth ease-in-out so the
+   fall reads as continuous flow rather than discrete drops. */
+function overcomeStackEntrance(node, { duration = 1.4 } = {}) {
   const lines = node.querySelectorAll('[data-tier]')
   if (lines.length < 3) return null
 
-  /* Snap initial state: line 1 hidden, lines 2 & 3 stacked behind line 1. */
-  gsap.set(lines, { autoAlpha: 0 })
-  gsap.set(lines[1], { y: '-100%' })
-  gsap.set(lines[2], { y: '-200%' })
+  /* Initial: all three lines invisible and offset above their final
+     positions. Falling distance is bigger for later lines so each
+     covers more ground — visually the cascade feels deeper. */
+  gsap.set(lines[0], { y: -90,  autoAlpha: 0 })
+  gsap.set(lines[1], { y: -130, autoAlpha: 0 })
+  gsap.set(lines[2], { y: -170, autoAlpha: 0 })
 
-  const slideDur = duration * 0.45
   const tl = gsap.timeline({ paused: true })
-  tl.to(lines[0], {
+  tl.to(lines, {
+    y: 0,
     autoAlpha: 1,
-    duration: duration * 0.30,
-    ease: 'power2.out',
+    duration: duration * 0.7,
+    stagger: duration * 0.12,
+    ease: 'power2.inOut',
   })
-  tl.to(lines[1], {
-    y: 0,
-    autoAlpha: 1,
-    duration: slideDur,
-    ease: 'power3.out',
-  }, '+=0.15')
-  tl.to(lines[2], {
-    y: 0,
-    autoAlpha: 1,
-    duration: slideDur,
-    ease: 'power3.out',
-  }, '<0.18')
 
   return tl
 }

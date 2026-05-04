@@ -236,6 +236,39 @@
   padding-top: 16vh;
 }
 
+/* Centered-stack presets — vertical positions within the content area,
+   horizontally centered. Used now that the sidebar takes the left and
+   the remaining content area is the natural composition canvas. */
+.pos_top_center {
+  grid-column: 3 / span 8;
+  align-self: start;
+  justify-self: stretch;
+  text-align: center;
+  padding-top: var(--s-9);
+}
+
+.pos_mid_center {
+  grid-column: 3 / span 8;
+  align-self: center;
+  justify-self: stretch;
+  text-align: center;
+}
+
+.pos_bot_center {
+  grid-column: 3 / span 8;
+  align-self: end;
+  justify-self: stretch;
+  text-align: center;
+  padding-bottom: var(--s-9);
+}
+
+.pos_top_center > *,
+.pos_mid_center > *,
+.pos_bot_center > * {
+  margin-left: auto;
+  margin-right: auto;
+}
+
 /* Stretch the copy text inside max-width so right-aligned text reads
    from the right edge inward. */
 .pos_tl > *,

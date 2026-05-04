@@ -208,12 +208,16 @@ export default function WhelmStory() {
         : `${beatLabel}+=${localDur * 0.25}`
       const phaseB_dur = localDur * (elementAfterCopy ? 0.40 : 0.40)
 
+      /* Phase C waits for Phase B to complete on transitional beats so
+         element entrances (e.g., the OvercomeStack waterfall cascade)
+         land before copy reveals. Held beats keep the earlier start
+         since there's no element transition competing for attention. */
       const phaseC_start = elementAfterCopy
         ? `${beatLabel}+=${localDur * 0.20}`
-        : `${beatLabel}+=${localDur * (held ? 0.30 : 0.45)}`
+        : `${beatLabel}+=${localDur * (held ? 0.30 : 0.68)}`
       const phaseC_dur = elementAfterCopy
         ? localDur * 0.35
-        : localDur * (held ? 0.50 : 0.40)
+        : localDur * (held ? 0.50 : 0.30)
 
       /* ── Phase B — element transitions (skipped on held beats) ── */
       if (!held && diff) {

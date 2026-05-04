@@ -17,44 +17,44 @@ export const COPY = {
   ],
 
   /* Section 1 — GAP. Overlooked (slide 255:357).
-     Visual is the layered Overwhelm × 3 stack rendered by the
-     `overcome-stack` element on the right. The "is overlooked"
-     punchline lands bottom-left; "is" upright, "overlooked" italic. */
+     OvercomeStack element fills the center; "is overlooked" punchline
+     wipes in below the stack with attention-grabbing timing. */
   overlooked: [
-    { position: 'br', kind: 'lead', html: 'is <em>overlooked.</em>' },
+    { position: 'bot_center', kind: 'lead', html: 'is <em>overlooked.</em>' },
   ],
 
-  /* Section 2 — NEED. Three What-If beats, one phrase per dwell. */
+  /* Section 2 — NEED. Three What-If beats, centered vertical stacks. */
   'not-a-problem': [
-    { position: 'tl', kind: 'h2_inline', html: 'What if overwhelm is <em>not a problem to be solved?</em>' },
-    { position: 'br', kind: 'body', html: 'Overwhelm is treated as a productivity issue that can be solved through self-management. This neglects the emotional experience beneath the surface.' },
+    { position: 'top_center', kind: 'h2_inline', html: 'What if overwhelm is <em>not a problem to be solved?</em>' },
+    { position: 'bot_center', kind: 'body', html: 'Overwhelm is treated as a productivity issue that can be solved through self-management. This neglects the emotional experience beneath the surface.' },
   ],
 
   messenger: [
-    { position: 'tl', kind: 'h2_inline', html: 'What if overwhelm offers us <em>valuable information?</em>' },
-    { position: 'bl', kind: 'body', html: 'Overwhelm represents the tension between unmet needs and expectations, unfelt feelings and internalized beliefs. It is not a problem.' },
-    { position: 'br', kind: 'lead', html: 'It is a <em>messenger.</em>' },
+    { position: 'top_center', kind: 'h2_inline', html: 'What if overwhelm offers us <em>valuable information?</em>' },
+    { position: 'mid_center', kind: 'body', html: 'Overwhelm represents the tension between unmet needs and expectations, unfelt feelings and internalized beliefs. It is not a problem.' },
+    { position: 'bot_center', kind: 'lead', html: 'It is a <em>messenger.</em>' },
   ],
 
   invitation: [
-    { position: 'tl', kind: 'h2_inline', html: 'What if overwhelm is <em>an invitation?</em>' },
-    { position: 'br', kind: 'body', html: 'Overwhelm is an entry point for building a relationship with yourself, a companion for returning to what is real when your mind is on overdrive.' },
+    { position: 'top_center', kind: 'h2_inline', html: 'What if overwhelm is <em>an invitation?</em>' },
+    { position: 'bot_center', kind: 'body', html: 'Overwhelm is an entry point for building a relationship with yourself, a companion for returning to what is real when your mind is on overdrive.' },
   ],
 
-  /* Section 3 — NEED. Overwhelm-Is statements. Headline + body
-     anchor the left half; diagram fills the right via the element layer. */
+  /* Section 3 — NEED. Overwhelm-Is statements. Centered vertical stack:
+     headline → body → diagram. Diagrams will move from full-bleed to
+     centered presence in the next round. */
   signal: [
-    { position: 'ml', kind: 'h2_inline', html: 'Overwhelm is <em>a Signal.</em>' },
-    { position: 'bl', kind: 'body', html: 'Learning to interpret it is a skill. The experience varies per person but the signals are your system’s way of reaching out for support.' },
+    { position: 'top_center', kind: 'h2_inline', html: 'Overwhelm is <em>a Signal.</em>' },
+    { position: 'bot_center', kind: 'body', html: 'Learning to interpret it is a skill. The experience varies per person but the signals are your system’s way of reaching out for support.' },
   ],
 
   tangle: [
-    { position: 'ml', kind: 'h2_inline', html: 'Overwhelm is <em>a Tangle.</em>' },
-    { position: 'bl', kind: 'body', html: 'A mix of emotions, needs, narratives, and sensations influenced by society, environments, and upbringing that can feel daunting to face alone.' },
+    { position: 'top_center', kind: 'h2_inline', html: 'Overwhelm is <em>a Tangle.</em>' },
+    { position: 'bot_center', kind: 'body', html: 'A mix of emotions, needs, narratives, and sensations influenced by society, environments, and upbringing that can feel daunting to face alone.' },
   ],
 
   portal: [
-    { position: 'ml', kind: 'h2_inline', html: 'Overwhelm is <em>a Portal.</em>' },
-    { position: 'bl', kind: 'body', html: 'Heightened sensations can indicate that important information has surfaced and is available for care, observation, reflection, and release.' },
+    { position: 'top_center', kind: 'h2_inline', html: 'Overwhelm is <em>a Portal.</em>' },
+    { position: 'bot_center', kind: 'body', html: 'Heightened sensations can indicate that important information has surfaced and is available for care, observation, reflection, and release.' },
   ],
 }
