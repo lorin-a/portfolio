@@ -112,19 +112,15 @@ export default function WhelmStory() {
       0.4,
     )
 
-    /* Cursive flourish draw-on — stroke-dashoffset on the inline SVG
-       path traces along the path's own drawing direction, point by
-       point, mimicking an actual pen. Sine.inOut for a swooping feel.
-       Once the stroke lands, the gradient fill ramps in. */
+    /* Cursive flourish draw-on — clip-path L→R wipe on the wrapping
+       div reveals the gradient fill progressively without showing a
+       stroke outline. Sine.inOut for a swooping, deliberate sweep.
+       True point-to-point handwriting needs a stroked centerline path
+       (filled-outline source can't trace its own writing direction). */
     intro.to(
-      '[data-cursive-path]',
-      { strokeDashoffset: 0, duration: 3.2, ease: 'sine.inOut' },
+      '[data-cursive-clip]',
+      { clipPath: 'inset(0 0% 0 0)', duration: 3.2, ease: 'sine.inOut' },
       0.4,
-    )
-    intro.to(
-      '[data-cursive-path]',
-      { fillOpacity: 0.5, duration: 1.0, ease: 'power2.out' },
-      '<+=2.4',
     )
 
     /* Tagline + scroll cue fade up after typing lands. */

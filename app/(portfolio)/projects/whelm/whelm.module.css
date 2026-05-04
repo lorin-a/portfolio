@@ -228,47 +228,38 @@
   text-align: center;
 }
 
+/* Centered presets — span the full content area (matching the wordmark)
+   and use `justify-self: center` so max-width-constrained kind blocks
+   center within the column instead of pinning at the left edge.
+   Fixes the tagline and any other narrow-by-max-width content getting
+   left-anchored under stretch. */
 .pos_below_center {
   grid-column: content-start / content-end;
   align-self: center;
-  justify-self: stretch;
+  justify-self: center;
   text-align: center;
   padding-top: 16vh;
 }
 
-/* Tagline-style copy in centered slots needs to fill the block so
-   text-align: center works against the full container width instead
-   of a 36ch box that auto-margins center. */
-.pos_below_center > .kind_sub,
-.pos_top_center > .kind_sub,
-.pos_mid_center > .kind_sub,
-.pos_bot_center > .kind_sub {
-  max-width: none;
-  width: 100%;
-}
-
-/* Centered-stack presets — vertical positions within the content area,
-   horizontally centered. Used now that the sidebar takes the left and
-   the remaining content area is the natural composition canvas. */
 .pos_top_center {
-  grid-column: 3 / span 8;
+  grid-column: content-start / content-end;
   align-self: start;
-  justify-self: stretch;
+  justify-self: center;
   text-align: center;
   padding-top: var(--s-9);
 }
 
 .pos_mid_center {
-  grid-column: 3 / span 8;
+  grid-column: content-start / content-end;
   align-self: center;
-  justify-self: stretch;
+  justify-self: center;
   text-align: center;
 }
 
 .pos_bot_center {
-  grid-column: 3 / span 8;
+  grid-column: content-start / content-end;
   align-self: end;
-  justify-self: stretch;
+  justify-self: center;
   text-align: center;
   padding-bottom: var(--s-9);
 }
@@ -541,17 +532,27 @@
   mix-blend-mode: screen;
 }
 
-/* Hero cursive flourish — inline SVG, oversized, draws point-to-point
-   via stroke-dashoffset. The stroke traces the path's own drawing
-   direction; once the trace lands, the gradient fill ramps in. */
-.cursiveSvg {
-  width: 130%;
-  height: 130%;
+/* Hero cursive flourish — inline SVG fill (no stroke, no outline),
+   oversized to bleed past stage edges. The wrapping div carries a
+   clip-path the orchestrator animates L→R, revealing the gradient
+   fill progressively without a visible outline trace. True
+   point-to-point handwriting requires a stroked centerline path
+   export from Figma — current asset is a closed-shape outline fill. */
+.cursiveClip {
   position: absolute;
   top: -15%;
   left: -15%;
-  display: block;
+  width: 130%;
+  height: 130%;
+  clip-path: inset(0 100% 0 0);
   pointer-events: none;
+  will-change: clip-path;
+}
+
+.cursiveSvg {
+  width: 100%;
+  height: 100%;
+  display: block;
   overflow: visible;
 }
 
@@ -684,9 +685,8 @@
   .wordmarkCursor {
     display: none;
   }
-  .cursiveSvg [data-cursive-path] {
-    stroke-dashoffset: 0 !important;
-    fill-opacity: 0.5 !important;
+  .cursiveClip {
+    clip-path: none !important;
   }
   .scrollCue {
     animation: none;
