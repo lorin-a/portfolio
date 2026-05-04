@@ -113,11 +113,12 @@ export default function WhelmStory() {
     )
 
     /* Cursive flourish draw-on — clip-path inset 100% → 0% (left to
-       right) mirrors the direction of cursive handwriting. Slightly
-       longer than the typewriter so both finish in the same window. */
+       right). Sine.inOut gives a more swooping, hand-drawn feel; the
+       longer duration reads as a meditative pen pulling across the
+       canvas rather than a snap reveal. */
     intro.to(
       '[data-hero-clip]',
-      { clipPath: 'inset(0 0% 0 0)', duration: 1.8, ease: 'power2.inOut' },
+      { clipPath: 'inset(0 0% 0 0)', duration: 3.2, ease: 'sine.inOut' },
       0.4,
     )
 

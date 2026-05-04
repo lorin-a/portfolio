@@ -149,7 +149,7 @@
 /* Specific element overrides — different default placement than centered. */
 .element[data-element-id='scroll-cue'] {
   align-items: flex-end;
-  padding-bottom: var(--s-9);
+  padding-bottom: 14vh;
   z-index: 6;
 }
 
@@ -229,7 +229,7 @@
 }
 
 .pos_below_center {
-  grid-column: 4 / span 6;
+  grid-column: content-start / content-end;
   align-self: center;
   justify-self: stretch;
   text-align: center;
@@ -584,19 +584,20 @@
 .overcomeLine[data-tier='2'] { color: var(--whelm-mauve); }
 .overcomeLine[data-tier='3'] { color: rgba(189, 183, 233, 0.45); }
 
-/* Scroll cue — Hero "Learn More" + chevron. Cream for legibility,
-   tracked open for editorial feel. The element override below sits it
-   higher than the bottom edge. */
+/* Scroll cue — Hero "Learn More" + chevron. Crimson Pro all-caps
+   tracked, light weight (not bold, not italic). Reads like a small
+   editorial label rather than a typeset label. */
 .scrollCue {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: var(--s-3);
   font-family: var(--whelm-editorial-font);
-  font-size: var(--t-lead);
-  font-style: italic;
+  font-size: var(--t-body);
+  font-style: normal;
   font-weight: 300;
-  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
   color: var(--whelm-cream);
   animation: scrollCueBob 2.4s ease-in-out infinite;
   z-index: 6;
