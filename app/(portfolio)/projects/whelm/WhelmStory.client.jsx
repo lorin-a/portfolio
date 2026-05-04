@@ -84,6 +84,9 @@ export default function WhelmStory() {
     gsap.set(`.${styles.kind_lead}, .${styles.kind_h2_inline}`, {
       clipPath: 'inset(-0.2em 100% -0.2em 0)',
     })
+    /* Scroll cue is the LAST beat of the intro — hide until everything
+       else has landed. snapToLayout sets it to --eo: 1 by default. */
+    gsap.set('[data-element-id="scroll-cue"]', { '--eo': 0 })
 
     /* Hero is full-bleed: sidebar starts hidden. The first beat's
        tl.call (offset slightly into the beat) will fade it in once
@@ -101,7 +104,7 @@ export default function WhelmStory() {
       gsap.set(`.${styles.kind_lead}, .${styles.kind_h2_inline}`, {
         clipPath: 'inset(-0.2em 0% -0.2em 0)',
       })
-      gsap.set('[data-char]', { autoAlpha: 1 })
+      gsap.set('[data-char]', { maxWidth: 'none', opacity: 1 })
       gsap.set('[data-cursor]', { autoAlpha: 0 })
       if (sidebarRef.current) sidebarRef.current.dataset.state = 'visible'
       return
@@ -113,14 +116,25 @@ export default function WhelmStory() {
        tagline + scroll cue settle in once the type has landed. */
     const intro = gsap.timeline()
 
-    /* Wordmark: each character snaps in with `steps(1)` ease. Stagger
-       0.22s/char gives "whelm." (6 chars) ~1.3s of typing time —
-       feels like real, unhurried keystrokes. */
-    intro.to(
-      '[data-char]',
-      { autoAlpha: 1, duration: 0.01, ease: 'steps(1)', stagger: 0.22 },
-      0.6,
-    )
+    /* Wordmark: chars start at max-width:0 (no layout space) and
+       smoothly grow to their natural width with a soft ease, so the
+       centered wordmark recenters as each char joins. Per-char widths
+       measured at mount via scrollWidth (works under max-width: 0).
+       Stagger 0.22s/char gives "whelm." (6 chars) ~1.3s of typing. */
+    const charEls = gsap.utils.toArray('[data-char]')
+    charEls.forEach((el, i) => {
+      const naturalW = el.scrollWidth
+      intro.to(
+        el,
+        {
+          maxWidth: naturalW,
+          opacity: 1,
+          duration: 0.22,
+          ease: 'power2.out',
+        },
+        0.6 + i * 0.22,
+      )
+    })
 
     /* Cursive flourish — slowed to 4.6s for a meditative pen pull
        across the canvas. Starts alongside the typing so both arrive
@@ -152,6 +166,15 @@ export default function WhelmStory() {
       '[data-cursor]',
       { autoAlpha: 0, duration: 1.1, ease: 'power2.out' },
       3.1,
+    )
+
+    /* Scroll cue lands LAST — after the tagline reveal completes and
+       the cursor has ducked out. Soft fade so it doesn't compete with
+       the wordmark's settle. */
+    intro.to(
+      '[data-element-id="scroll-cue"]',
+      { '--eo': 1, duration: 0.9, ease: 'power2.out' },
+      4.4,
     )
 
     /* ─── Pinned scrub timeline ─────────────────────────────── */

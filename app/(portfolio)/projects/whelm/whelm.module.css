@@ -95,7 +95,7 @@
   width: 100%;
   height: 100vh;
   height: 100dvh;
-  overflow: hidden;
+  overflow: visible;
   display: grid;
   grid-template-columns:
     [sidebar-start] var(--sidebar-w)
@@ -104,7 +104,6 @@
     [content-end];
   grid-template-rows: [stage-start] 1fr [stage-end];
   column-gap: var(--gutter);
-  padding-right: var(--page-margin);
   isolation: isolate;
 }
 
@@ -147,9 +146,15 @@
 }
 
 /* Specific element overrides — different default placement than centered. */
+.element[data-element-id='wordmark'] {
+  grid-column: sidebar-start / content-end;
+  padding-bottom: 12vh;
+}
+
 .element[data-element-id='scroll-cue'] {
-  align-items: flex-end;
-  padding-bottom: 14vh;
+  grid-column: sidebar-start / content-end;
+  align-items: flex-start;
+  padding-top: 78vh;
   z-index: 6;
 }
 
@@ -234,11 +239,11 @@
    Fixes the tagline and any other narrow-by-max-width content getting
    left-anchored under stretch. */
 .pos_below_center {
-  grid-column: content-start / content-end;
+  grid-column: sidebar-start / content-end;
   align-self: center;
   justify-self: center;
   text-align: center;
-  padding-top: 9vh;
+  padding-top: 8vh;
 }
 
 .pos_top_center {
@@ -319,12 +324,12 @@
 
 .kind_sub {
   font-family: var(--whelm-editorial-font);
-  font-size: var(--t-h3);
+  font-size: clamp(38px, 3.4vw, 58px);
   font-weight: 300;
   font-style: italic;
-  line-height: var(--lh-normal);
+  line-height: var(--lh-snug);
   color: var(--whelm-mauve);
-  max-width: 36ch;
+  max-width: 22ch;
 }
 
 .kind_h2_inline {
@@ -498,16 +503,18 @@
 
 .wordmarkChar {
   display: inline-block;
+  max-width: 0;
+  overflow: hidden;
   opacity: 0;
 }
 
 .wordmarkCursor {
   display: inline-block;
-  width: 0.06em;
-  height: 0.78em;
+  width: 0.025em;
+  height: 0.7em;
   margin-left: 0.04em;
   background: currentColor;
-  vertical-align: -0.04em;
+  vertical-align: -0.02em;
   animation: cursorBlink 1s steps(1, end) infinite;
 }
 
@@ -679,6 +686,7 @@
     clip-path: none !important;
   }
   .wordmarkChar {
+    max-width: none !important;
     opacity: 1 !important;
   }
   .wordmarkCursor {
