@@ -83,7 +83,7 @@ export default function ShapeMark({ animate = false, delay = 0, replay = 0, clas
       setBrushVisible(false)
       setFilled(false)
 
-      let tween
+      let tl
 
       import('gsap').then(({ gsap }) => {
         const brushEl = brushRef.current
@@ -91,7 +91,7 @@ export default function ShapeMark({ animate = false, delay = 0, replay = 0, clas
         if (!brushEl || refs.filter(Boolean).length !== PETAL_PATHS.length) return
 
         // Reorder petals clockwise so the stagger reads as a clock-hand
-        // sweep (12 → 1 → 3 → 5 → 6 → 8 → 9 → 11). The mask still renders
+        // sweep (12 → 1 → 3 → 5 → 6 → 8 → 9 → 11). The DOM still renders
         // them in array order; only the animation order changes.
         const petalEls = PETAL_CLOCKWISE_ORDER.map((i) => refs[i])
 
@@ -107,34 +107,41 @@ export default function ShapeMark({ animate = false, delay = 0, replay = 0, clas
         const effectiveDelay = replay > 0 ? 0 : delay
         const containerEl = brushEl.parentElement
 
-        tween = gsap.to(petalEls, {
-          scale: 1,
-          rotation: 0,
-          duration: 0.5,
+        // Single timeline so spin overlaps the tail of the petal reveal
+        // (no pause between phases). State updates collapse into the
+        // timeline's onComplete so React re-render + DOM mutation
+        // happen after the spin lands, not during it.
+        tl = gsap.timeline({
           delay: effectiveDelay,
-          stagger: 0.18,
-          ease: 'back.out(1.8)',
           onComplete: () => {
             setBrushVisible(true)
             setFilled(true)
-            if (withSpin) {
-              gsap.to(containerEl, {
-                rotation: 360,
-                duration: 0.9,
-                ease: 'power1.inOut',
-                onComplete: () => {
-                  gsap.set(containerEl, { rotation: 0 })
-                  onDrawComplete?.()
-                },
-              })
-            } else {
-              onDrawComplete?.()
-            }
+            if (containerEl) gsap.set(containerEl, { rotation: 0 })
+            onDrawComplete?.()
           },
         })
+
+        tl.to(petalEls, {
+          scale: 1,
+          rotation: 0,
+          duration: 1.0,
+          stagger: 0.26,
+          ease: 'back.out(1.8)',
+        })
+
+        if (withSpin) {
+          // Start spin 0.5s before the last petal settles so the
+          // rotation feels like it's *carrying* the reveal forward
+          // rather than starting cold after a beat of stillness.
+          tl.to(containerEl, {
+            rotation: 360,
+            duration: 1.7,
+            ease: 'power1.inOut',
+          }, '-=0.5')
+        }
       })
 
-      return () => { tween?.kill() }
+      return () => { tl?.kill() }
     }
 
     /* ── Standard draw-on mode ── */
