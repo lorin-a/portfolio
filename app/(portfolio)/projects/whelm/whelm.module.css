@@ -532,27 +532,18 @@
   mix-blend-mode: screen;
 }
 
-/* Hero cursive flourish — inline SVG fill (no stroke, no outline),
-   oversized to bleed past stage edges. The wrapping div carries a
-   clip-path the orchestrator animates L→R, revealing the gradient
-   fill progressively without a visible outline trace. True
-   point-to-point handwriting requires a stroked centerline path
-   export from Figma — current asset is a closed-shape outline fill. */
-.cursiveClip {
+/* Hero cursive flourish — inline SVG centerline path, stroked with
+   the gradient. Oversized to bleed past stage edges. Orchestrator
+   animates stroke-dashoffset along the path's drawing direction
+   for true point-to-point handwriting reveal. */
+.cursiveSvg {
   position: absolute;
   top: -15%;
   left: -15%;
   width: 130%;
   height: 130%;
-  clip-path: inset(0 100% 0 0);
-  pointer-events: none;
-  will-change: clip-path;
-}
-
-.cursiveSvg {
-  width: 100%;
-  height: 100%;
   display: block;
+  pointer-events: none;
   overflow: visible;
 }
 
@@ -685,8 +676,8 @@
   .wordmarkCursor {
     display: none;
   }
-  .cursiveClip {
-    clip-path: none !important;
+  .cursiveSvg [data-cursive-path] {
+    stroke-dashoffset: 0 !important;
   }
   .scrollCue {
     animation: none;
