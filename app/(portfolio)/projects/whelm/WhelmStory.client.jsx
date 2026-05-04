@@ -112,14 +112,19 @@ export default function WhelmStory() {
       0.4,
     )
 
-    /* Cursive flourish draw-on — clip-path inset 100% → 0% (left to
-       right). Sine.inOut gives a more swooping, hand-drawn feel; the
-       longer duration reads as a meditative pen pulling across the
-       canvas rather than a snap reveal. */
+    /* Cursive flourish draw-on — stroke-dashoffset on the inline SVG
+       path traces along the path's own drawing direction, point by
+       point, mimicking an actual pen. Sine.inOut for a swooping feel.
+       Once the stroke lands, the gradient fill ramps in. */
     intro.to(
-      '[data-hero-clip]',
-      { clipPath: 'inset(0 0% 0 0)', duration: 3.2, ease: 'sine.inOut' },
+      '[data-cursive-path]',
+      { strokeDashoffset: 0, duration: 3.2, ease: 'sine.inOut' },
       0.4,
+    )
+    intro.to(
+      '[data-cursive-path]',
+      { fillOpacity: 0.5, duration: 1.0, ease: 'power2.out' },
+      '<+=2.4',
     )
 
     /* Tagline + scroll cue fade up after typing lands. */

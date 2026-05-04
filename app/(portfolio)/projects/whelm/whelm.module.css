@@ -236,6 +236,17 @@
   padding-top: 16vh;
 }
 
+/* Tagline-style copy in centered slots needs to fill the block so
+   text-align: center works against the full container width instead
+   of a 36ch box that auto-margins center. */
+.pos_below_center > .kind_sub,
+.pos_top_center > .kind_sub,
+.pos_mid_center > .kind_sub,
+.pos_bot_center > .kind_sub {
+  max-width: none;
+  width: 100%;
+}
+
 /* Centered-stack presets — vertical positions within the content area,
    horizontally centered. Used now that the sidebar takes the left and
    the remaining content area is the natural composition canvas. */
@@ -530,32 +541,20 @@
   mix-blend-mode: screen;
 }
 
-/* Hero cursive flourish — oversized, clipped wrapper, wipes L→R.
-   The wrapper is sized to 130% of its container so the cursive marks
-   extend past the visible edges of the stage. clip-path inset(0 100% 0 0)
-   hides it initially; the orchestrator animates to inset(0 0% 0 0)
-   during intro for a handwriting-style draw-on. */
-.heroFlourishClip {
+/* Hero cursive flourish — inline SVG, oversized, draws point-to-point
+   via stroke-dashoffset. The stroke traces the path's own drawing
+   direction; once the trace lands, the gradient fill ramps in. */
+.cursiveSvg {
+  width: 130%;
+  height: 130%;
   position: absolute;
   top: -15%;
   left: -15%;
-  width: 130%;
-  height: 130%;
-  clip-path: inset(0 100% 0 0);
-  pointer-events: none;
-  will-change: clip-path;
-}
-
-.heroFlourishImg {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
   display: block;
-  opacity: 0.85;
+  pointer-events: none;
+  overflow: visible;
 }
 
-/* Hero flourish wrapper needs visible overflow so the oversized image
-   bleeds past the .element grid cell into sidebar / bottom edges. */
 .element[data-element-id='hero-flourish'] {
   overflow: visible;
   z-index: 2;
@@ -685,8 +684,9 @@
   .wordmarkCursor {
     display: none;
   }
-  .heroFlourishClip {
-    clip-path: none !important;
+  .cursiveSvg [data-cursive-path] {
+    stroke-dashoffset: 0 !important;
+    fill-opacity: 0.5 !important;
   }
   .scrollCue {
     animation: none;

@@ -1,22 +1,10 @@
-import styles from '../whelm.module.css'
+import CursiveWhelm from './CursiveWhelm'
 
 /* Hero cursive flourish — slide 255:355.
-   Lorin's exported gradient-filled cursive whelm mark. Sits above the
-   deep-purple background, oversized so it extends past the stage on
-   all sides — the strokes feel hand-drawn into and beyond the canvas.
-   Wrapped in a clipping div so the orchestrator can animate
-   clip-path inset 100% → 0% during the intro for a left-to-right
-   draw-on (matches handwriting flow). */
+   Renders the inline CursiveWhelm SVG so the orchestrator can animate
+   stroke-dashoffset along the path itself. The path traces along its
+   own drawing direction (point-to-point) rather than getting wiped
+   across by a clip-path rectangle. */
 export default function HeroFlourish() {
-  return (
-    <div className={styles.heroFlourishClip} data-hero-clip="true">
-      <img
-        src="/marks/whelm/cursivewhelm.svg"
-        alt=""
-        className={styles.heroFlourishImg}
-        aria-hidden="true"
-        draggable={false}
-      />
-    </div>
-  )
+  return <CursiveWhelm />
 }
