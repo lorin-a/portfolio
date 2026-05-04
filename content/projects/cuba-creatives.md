@@ -12,7 +12,7 @@ order: 9
 
 ## Context
 
-As co-lead designer on University of Oregon SOJC's inaugural immersive journalism study abroad trip, I helped launch a student-led creative agency that produced this interactive iPad publication.
+As co-lead designer on University of Oregon SOJC’s inaugural immersive journalism study abroad trip, I helped launch a student-led creative agency that produced this interactive iPad publication.
 
 ## Tension
 

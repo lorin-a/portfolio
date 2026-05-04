@@ -57,4 +57,4 @@ We created lo-fi wireframes that attempted to offer as many tools as possible bu
 
 The concepts presented in this class will function as real, preliminary research and ideation for the eventual creation of a Birth Story app by the professors and the client.
 
-If I could do this project again, I'd begin by simplifying. Identifying the core need early would have helped me stay focused, rather than trying to do too much at once.
+If I could do this project again, I’d begin by simplifying. Identifying the core need early would have helped me stay focused, rather than trying to do too much at once.

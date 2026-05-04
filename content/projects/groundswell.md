@@ -27,13 +27,13 @@ How might we create supportive environments tailored for the well-being of healt
 
 ## Listen
 
-We learned about the phenomenon of "chronic compounded grief" among oncology nurses, and how repeated exposure to loss accumulates over time when not properly processed.
+We learned about the phenomenon of “chronic compounded grief” among oncology nurses, and how repeated exposure to loss accumulates over time when not properly processed.
 
 The biggest frustrations centered on lack of recognition despite hard work, inadequate resources including insufficient space for both work and decompression, and toxic workplace dynamics that create burnout and affect patient care.
 
 ![gs-listen-workshop-01.jpg]
 
-> "A special person can do this work forever, a good person can do it for a little while, most people couldn't do it for a day."
+> “A special person can do this work forever, a good person can do it for a little while, most people couldn’t do it for a day.”
 
 Through trust-building, observational and generative research, rapid ideation, and feedback sessions our team developed the first iteration of the Groundswell concept.
 
@@ -70,17 +70,17 @@ Upon receiving grant funding and material donations, we faced new limitations an
 
 We navigated hospital approval processes, coordinated fabrication with Greg Baltus, conducted donor outreach securing over $30k in donations, and adapted to last-minute requests including doors with locks for the pod space.
 
-Staff feedback led us to shift away from "grief" and focus on "restoration" because the word grief narrows the focus whereas restoration encompasses the broader movement of healthcare worker well-being.
+Staff feedback led us to shift away from “grief” and focus on “restoration” because the word grief narrows the focus whereas restoration encompasses the broader movement of healthcare worker well-being.
 
 ![gs-try-playtesting-01.jpg]
 
 We invited 30 participants to test our pod experience at CMU before installing at the hospital.
 
-> "It's remarkable what 10 minutes can do..."
+> “It’s remarkable what 10 minutes can do…”
 
-> "As soon as I stepped inside, I almost teared up. You're not always aware of how frazzled you are until you stop."
+> “As soon as I stepped inside, I almost teared up. You’re not always aware of how frazzled you are until you stop.”
 
-> "I've worked in the trauma field, and I work with physicians… everyone needs one of these."
+> “I’ve worked in the trauma field, and I work with physicians… everyone needs one of these.”
 
 ## Offer
 
@@ -116,7 +116,7 @@ Groundswell is now officially installed at Magee-Womens and launched for Cancer 
 
 ![gs-learn-install-01.jpg]
 
-The project continues to evolve. We are developing a data visualization dashboard, have submitted a research paper on designing for "resonance," and are seeking grant funding to continue and democratize this work.
+The project continues to evolve. We are developing a data visualization dashboard, have submitted a research paper on designing for “resonance,” and are seeking grant funding to continue and democratize this work.
 
 Three practices enabled partial movement toward relational design despite institutional constraints:
 
@@ -154,8 +154,8 @@ Groundswell is a grant-funded ecosystem of emotional support for healthcare work
 
 Through communication, creativity, and connection, Groundswell fosters a culture where the emotional complexities of oncology care are acknowledged, isolation transforms into belonging, and self-care is honored as essential to delivering excellent patient care.
 
-“Groundswell reminds us that caring for patients begins with caring for the people who serve them. By creating intentional spaces and practices that acknowledge the emotional realities of oncology care, we're laying the foundation for a culture where staff well-being is recognized as essential.”
-— Samantha Williams, Director of Women's Cancer Services, UPMC
+“Groundswell reminds us that caring for patients begins with caring for the people who serve them. By creating intentional spaces and practices that acknowledge the emotional realities of oncology care, we’re laying the foundation for a culture where staff well-being is recognized as essential.”
+— Samantha Williams, Director of Women’s Cancer Services, UPMC
 ▶
 Installation Walkthrough
 The Ecosystem
@@ -174,7 +174,7 @@ A community art wall that invites participation through anonymous shared emotion
 
 We intentionally included family caregivers and patients because we saw how important it was for staff to hear from them—especially gratitude, as almost every desk was decorated with cards from patients and families. Staff reported discomfort expressing feelings due to fear of retaliation. We built this as an anonymous place to safely share and understand what others are feeling—giving public, collective voice to the cancer care community.
 
-“Groundswell is not just a campaign—it's a commitment. By centering staff-identified well-being priorities, we're ensuring that every voice is heard and concerns are addressed.”
+“Groundswell is not just a campaign—it’s a commitment. By centering staff-identified well-being priorities, we’re ensuring that every voice is heard and concerns are addressed.”
 — Kendyl Grant, Director of Operations for the Gynecologic Oncology Division, UPMC
 Groundswell Community Art Wall
 Art wall contributions from staff
@@ -267,9 +267,9 @@ There are zero benefits for staff mental health. Hardly anyone uses the EAP. I w
 Once someone passes there is no time to grieve the loss before another person comes in. We are trying to find ways to share but nothing is really working.
 
 “I was not prepared for this.”
-No one officially trained me on the emotional trauma that this job causes. I'm doing the work of a therapist and social worker, losing people daily.
+No one officially trained me on the emotional trauma that this job causes. I’m doing the work of a therapist and social worker, losing people daily.
 
-“I can't turn it off.”
+“I can’t turn it off.”
 Even on my days off, I keep checking Teams to stay updated. I worry about my patients when I am at home. I am so exhausted.
 
 What We Heard
@@ -295,7 +295,7 @@ Participatory Poster
 Women in White Coats
 We partnered with CancerBridges to honor women in cancer care. Each participant received a hand-made orchid pin with a removable “leaf” they could add to a shared poster answering: How has your approach to patient care evolved to help you balance compassion with self-care?
 
-“Self-care to me is gifting time. 'Me' time, 'she' time, and 'we' time.”
+“Self-care to me is gifting time. ‘Me’ time, ‘she’ time, and ‘we’ time.”
 Women in White Coats event honoring women in cancer care
 Research poster with participant responses
 Grief Scenarios
@@ -367,7 +367,7 @@ FEEDBACK
 Accessibility
 Participants with larger bodies reported discomfort with table positioning, limiting their ability to rest comfortably.
 
-“Uncomfortable for larger people. I wished to rest my head on the table but couldn't get comfortable. The biggest thing was getting comfortable.”
+“Uncomfortable for larger people. I wished to rest my head on the table but couldn’t get comfortable. The biggest thing was getting comfortable.”
 →
 We sawed 2 inches from the table depth to accommodate a wider range of body sizes and postures.
 
@@ -391,11 +391,11 @@ We repositioned the table centerpiece to center and ensured music exploration wa
 2 of 3
 →
 
-“It's remarkable what 10 minutes can do...”
-“As soon as I stepped inside, I almost teared up. You're not always aware of how frazzled you are until you stop.”
+“It’s remarkable what 10 minutes can do…”
+“As soon as I stepped inside, I almost teared up. You’re not always aware of how frazzled you are until you stop.”
 “Being able to stop in the middle of the day and have the physical and mental space to get quiet and meditate is really helpful—much better than a bathroom stall.”
-“You don't have to wait until the end of the day to refresh, but you can have micro-resets in-between.”
-“I've worked in the trauma field, and I work with physicians—everyone needs one of these.”
+“You don’t have to wait until the end of the day to refresh, but you can have micro-resets in-between.”
+“I’ve worked in the trauma field, and I work with physicians—everyone needs one of these.”
 What We Heard
 After implementing these changes, participants reported overwhelmingly positive experiences. The space offered emotional transformation, support, and privacy. Play testers ranged from retired nurses, UPMC administrators, design professors, mental health professionals, and designers.
 
@@ -596,7 +596,7 @@ We learned about the phenomenon of “chronic compounded grief” among oncology
 
 The research findings support the hypothesis that patient-centered healthcare systems neglect worker well-being, revealing systemic issues including disconnects between staff and leadership due to poor feedback systems, power dynamics between roles, generational tensions, and inadequate physical environments that contribute to burnout. 
 
-Healthcare workers face daily challenges from insufficient funding, lack of benefits, overwhelming tasks, poor recognition, limited breaks, and particularly unaddressed grief culture in oncology work where emotional toll remains a "silent burden" without proper processing spaces.
+Healthcare workers face daily challenges from insufficient funding, lack of benefits, overwhelming tasks, poor recognition, limited breaks, and particularly unaddressed grief culture in oncology work where emotional toll remains a “silent burden” without proper processing spaces.
 
 Current solutions like informal recognition efforts (Snap Jar), minimal grief support (obituary walls), and basic wellness amenities (free coffee) are underfunded and treat staff well-being as an afterthought rather than institutional priority, highlighting the urgent need for systematic changes including structured communication channels, funded recognition programs, designated grief processing spaces, improved physical environments, and cultural shifts that genuinely prioritize healthcare worker sustainability alongside patient care.
 
@@ -621,7 +621,7 @@ We witnessed and heard about the impact of the cramped and windowless environmen
 
 
 Conclusions
-The research revealed that healthcare workers at Magee are eager for dedicated spaces to process grief, with participants requesting more time for such discussions and showing that grief management varies widely. Some compartmentalize during commutes while others prefer talking through emotions with trusted colleagues. Through the "Nourishing the Flower" workshop, staff across departments emphasized the critical importance of recognition (feeling appreciated through verbal affirmations and acknowledgment), supportive environments (flexible workplaces with adequate resources and comfortable spaces), and strong team culture (collaboration, shared purpose, and kindness) for thriving at work.
+The research revealed that healthcare workers at Magee are eager for dedicated spaces to process grief, with participants requesting more time for such discussions and showing that grief management varies widely. Some compartmentalize during commutes while others prefer talking through emotions with trusted colleagues. Through the “Nourishing the Flower” workshop, staff across departments emphasized the critical importance of recognition (feeling appreciated through verbal affirmations and acknowledgment), supportive environments (flexible workplaces with adequate resources and comfortable spaces), and strong team culture (collaboration, shared purpose, and kindness) for thriving at work.
 
 1. The Dual Burden of Care Healthcare workers face emotional exhaustion from both the inherently compassionate nature of their work (constant exposure to grief, loss, and trauma) and excessive administrative tasks that disconnect them from their original purpose of patient care.
 
@@ -636,7 +636,7 @@ We designed multiple participatory workshops to better understand the needs of h
 
 Women in White Coats Event: Leaders in Oncology added their thoughts to the leaves on the stem of our orchid poster, a symbolic flower in cancer care.
 
-Workshop at Magee: Staff completed color-in worksheets with nature-based metaphors for understanding "nutrients” and “root” causes of a nourished workplace.  Small groups discussed the impact of chronic compounded grief. 
+Workshop at Magee: Staff completed color-in worksheets with nature-based metaphors for understanding “nutrients” and “root” causes of a nourished workplace.  Small groups discussed the impact of chronic compounded grief. 
 
 
 
@@ -666,7 +666,7 @@ Outcomes
 Groundswell was awarded a UPMC grant to pursue the installation of our proposed project for a 12-month quality improvement research study that will measure employee well-being, team cohesion, and intent to leave before, during, and after the installation. The project components have evolved and the brand has shifted through iterative co-design and feedback from stakeholders. We have received over $30k worth of donations for material and production skills to make this project a reality and are hopeful that this study will prepare us for the next iteration in more hospital settings.
 
 Acknowledgments
-This project was possible because of the trust building that took place in the year prior during the elective course’s first launch. Without Kristin Hughes' passion and relationships passion and relationships at UPMC, the dedication and enthusiasm of Dr. Sarah Taylor, Dr. Grace Campbell, and Dr. Heidi Donovan, and of course the generous time and vulnerable information shared by the staff members. Many thanks to the CMU faculty and friends who participated in practice rounds of our generative research activities and to the industry professionals who Zoomed in to offer feedback mid-semester. Thank you to the UPMC administrators and GynOc department who coordinated with us. 
+This project was possible because of the trust building that took place in the year prior during the elective course’s first launch. Without Kristin Hughes’ passion and relationships passion and relationships at UPMC, the dedication and enthusiasm of Dr. Sarah Taylor, Dr. Grace Campbell, and Dr. Heidi Donovan, and of course the generous time and vulnerable information shared by the staff members. Many thanks to the CMU faculty and friends who participated in practice rounds of our generative research activities and to the industry professionals who Zoomed in to offer feedback mid-semester. Thank you to the UPMC administrators and GynOc department who coordinated with us. 
 
 Previous
 Groundswell: Making Space to Restore, Together.

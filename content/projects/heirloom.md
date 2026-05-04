@@ -12,13 +12,13 @@ order: 8
 
 ## Context
 
-A mini-capstone for LUMA Institute's Human-Centered Design Practitioner course on the fundamentals of design thinking and creative problem solving.
+A mini-capstone for LUMA Institute’s Human-Centered Design Practitioner course on the fundamentals of design thinking and creative problem solving.
 
 ## Tension
 
-End-of-life planning is rarely discussed. It's often messy, disorganized, and a source of tension within families.
+End-of-life planning is rarely discussed. It’s often messy, disorganized, and a source of tension within families.
 
-How might we make end-of-life logistics more human-centered, and the least of someone's worries while they are grieving?
+How might we make end-of-life logistics more human-centered, and the least of someone’s worries while they are grieving?
 
 ## Listen
 
