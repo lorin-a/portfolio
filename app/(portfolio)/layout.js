@@ -59,6 +59,10 @@ export default function RootLayout({ children }) {
     <html lang="en" className={`${fraunces.variable} ${openSans.variable} ${crimsonPro.variable}`}>
       <head>
         <link rel="icon" href="/favicon.ico" sizes="any" />
+        {/* P22 Mackinac Pro via Adobe Fonts. Used by the Whelm case
+            study display register; loaded site-wide so route transitions
+            don't re-fetch. ~30KB; gzip-compressed by Typekit. */}
+        <link rel="stylesheet" href="https://use.typekit.net/ryb0aoq.css" />
         <script dangerouslySetInnerHTML={{ __html: `
           try {
             if (window.location.pathname === '/') {
