@@ -60,7 +60,7 @@ export default function Home() {
           num="03"
           title="Whelm"
           tagline="A Companion for Navigating Overwhelm"
-          description="A ritual for building a relationship with yourself. Whelm offers permission and process for moving through thought spirals — guiding you inward to find the need beneath the narrative."
+          description="A self-inquiry ritual with a sequenced framework that slows the thought spiral, navigates the internal conflict, and surfaces the need beneath the narrative. Permission to pause. A process for moving through. A path back to knowing."
           contributions={[
             { label: 'Original Concept' },
             { label: 'Framework Development' },
