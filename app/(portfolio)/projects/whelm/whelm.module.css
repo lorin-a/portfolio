@@ -77,6 +77,56 @@
   pointer-events: none;
 }
 
+/* ─── Element renderers ─── */
+
+/* Wordmark — slide 255:355 hero. Display type at editorial scale,
+   wrapped in an inner span so clip-path wipes apply only to the visible
+   glyphs (not the wrapper, which would clip the wrapper's positioning
+   too). The negative em insets prevent descender clipping on the period. */
+.wordmark {
+  margin: 0;
+  font-family: var(--whelm-display);
+  font-size: clamp(80px, 13vw, 220px);
+  font-weight: 300;
+  line-height: 0.95;
+  letter-spacing: -0.025em;
+  color: var(--whelm-cream);
+  text-align: center;
+  white-space: nowrap;
+  user-select: none;
+}
+
+.wordmarkText {
+  display: inline-block;
+  clip-path: inset(-0.2em 100% -0.2em 0);
+}
+
+/* Overcome stack — slide 255:357. Three "Overwhelm" lines stacked
+   vertically with a tonal gradient: brightest cream at top, mid mauve,
+   deepest dim at bottom. Each line is its own span so it can be
+   individually animated (entrance staggers, exit on Phase A) and so
+   per-tier color is straightforward. */
+.overcomeStack {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.05em;
+  font-family: var(--whelm-display);
+  font-size: clamp(64px, 10.5vw, 168px);
+  font-weight: 300;
+  line-height: 1.0;
+  letter-spacing: -0.012em;
+  user-select: none;
+}
+
+.overcomeLine {
+  display: block;
+}
+
+.overcomeLine[data-tier='1'] { color: var(--whelm-cream); }
+.overcomeLine[data-tier='2'] { color: var(--whelm-mauve); }
+.overcomeLine[data-tier='3'] { color: rgba(189, 183, 233, 0.45); }
+
 /* ─── Phase 0 placeholder visual ─── */
 .placeholder {
   display: inline-flex;
@@ -263,6 +313,17 @@
   transform: translateX(-50%);
 }
 
+/* Below-center — for editorial subs sitting directly under a centered
+   element (hero tagline below wordmark). Subtle vertical separation
+   without the full-screen-bottom feel of pos_c_bot. */
+.pos_below_center {
+  left: 50%;
+  top: 62vh;
+  transform: translateX(-50%);
+  text-align: center;
+  max-width: min(36ch, 60vw);
+}
+
 /* ─── Reduced motion ─── */
 @media (prefers-reduced-motion: reduce) {
   .canvasWrap { animation: none; }
@@ -271,6 +332,9 @@
     transform: none;
   }
   .kind_lead, .kind_h2_inline, .titleLine {
+    clip-path: none !important;
+  }
+  .wordmarkText {
     clip-path: none !important;
   }
 }

@@ -84,17 +84,28 @@ export default function WhelmStory() {
       return
     }
 
-    /* ─── Intro animation (page load, one-shot) ─────────────── */
+    /* ─── Intro animation (page load, one-shot) ───────────────
+       Three layers in sequence:
+         - Wordmark glyphs wipe in first (anchors the page)
+         - Tagline + body copy fade up
+         - Editorial display copy clip-wipes
+       The wordmark uses [data-wipe] so any element renderer can opt
+       into the same entrance treatment without coupling to a class. */
     const intro = gsap.timeline()
+    intro.to(
+      '[data-wipe]',
+      { clipPath: 'inset(-0.2em 0% -0.2em 0)', duration: 1.4, ease: 'power2.inOut' },
+      0.3,
+    )
     intro.to(
       `[data-beat="${INITIAL_COPY}"] .${styles.copyBlock}`,
       { autoAlpha: 1, y: 0, duration: 0.8, ease: 'power2.out', stagger: 0.12 },
-      0.4,
+      0.9,
     )
     intro.to(
       `[data-beat="${INITIAL_COPY}"] .${styles.kind_lead}, [data-beat="${INITIAL_COPY}"] .${styles.kind_h2_inline}`,
       { clipPath: 'inset(-0.2em 0% -0.2em 0)', duration: 1.0, ease: 'power2.inOut' },
-      0.5,
+      1.0,
     )
 
     /* ─── Pinned scrub timeline ─────────────────────────────── */

@@ -23,18 +23,22 @@
  */
 
 import PlaceholderBox from './PlaceholderBox'
+import Wordmark from './Wordmark'
+import OvercomeStack from './OvercomeStack'
 
-/* All Phase 0 renderers are PlaceholderBox with a label. The label
-   distinguishes them visually so we can confirm the orchestrator is
-   targeting the right ids. */
+/* Phase 1+: real renderers replace placeholders one element at a time.
+   Each entry: { render } at minimum; optional `entrance(node, ctx)`
+   returns a GSAP timeline fired when the element transitions into a
+   beat (state: 'incoming') for composite element animations like
+   DrawSVG diagrams. */
 const placeholder = (label, opts = {}) => ({
   render: () => <PlaceholderBox label={label} {...opts} />,
 })
 
 export const ELEMENT_REGISTRY = {
-  wordmark:         placeholder('whelm.', { kind: 'wordmark' }),
+  wordmark:         { render: Wordmark },
   agenda:           placeholder('Agenda', { kind: 'agenda' }),
-  'overcome-stack': placeholder('Overwhelm × 3', { kind: 'stack' }),
+  'overcome-stack': { render: OvercomeStack },
   'signal-diagram': placeholder('Signal', { kind: 'diagram' }),
   'tangle-diagram': placeholder('Tangle', { kind: 'diagram' }),
   'portal-diagram': placeholder('Portal', { kind: 'diagram' }),

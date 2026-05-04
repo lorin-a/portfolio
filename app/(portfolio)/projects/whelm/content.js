@@ -12,10 +12,11 @@
  */
 
 export const COPY = {
-  /* 01 — Hero (slide 255:355) */
+  /* 01 — Hero (slide 255:355)
+     The "whelm." display type is rendered by the `wordmark` element
+     (semantic <h1>); copy here is just the editorial tagline below it. */
   hero: [
-    { position: 'tl', kind: 'h1', html: 'whelm.' },
-    { position: 'br_sub', kind: 'sub', html: '<em>Find Your Way to Feeling</em>' },
+    { position: 'below_center', kind: 'sub', html: '<em>Find Your Way to Feeling</em>' },
   ],
 
   /* 02 — Chapter divider: The Gap (slide 255:356) */
@@ -26,9 +27,10 @@ export const COPY = {
 
   /* 03 — Overlooked (slide 255:357)
      Visual is a layered Overwhelm × 3 stack rendered by the
-     `overcome-stack` element. Copy is the punchline beneath. */
+     `overcome-stack` element on the left. The "is overlooked" punchline
+     sits bottom-right; "is" upright, "overlooked" italic per the slide. */
   overlooked: [
-    { position: 'c_lead', kind: 'h2_inline', html: '<em>is overlooked.</em>' },
+    { position: 'br', kind: 'lead', html: 'is <em>overlooked.</em>' },
   ],
 
   /* 04 — Not a problem (slide 255:358) */
