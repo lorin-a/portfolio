@@ -19,6 +19,14 @@ function GradientDef({ id, colors, viewBox }) {
   )
 }
 
+// Clockwise order around the flower starting at 12 o'clock. Used by
+// fillReveal to stagger petals as a clock-hand sweep instead of in
+// arbitrary array order — gives the fill a "building / loading"
+// progression the eye can track.
+//   0 = top (12),  2 = upper-right (1-2),  3 = right (3),  4 = lower-right (4-5),
+//   7 = bottom (6), 6 = lower-left (7-8),  5 = left (9),   1 = upper-left (10-11)
+const PETAL_CLOCKWISE_ORDER = [0, 2, 3, 4, 7, 6, 5, 1]
+
 // 8 sub-paths from shape-stroke.svg, separated at Z boundaries
 const PETAL_PATHS = [
   "M96.3989 94.6163C96.4099 94.5705 96.8272 93.6226 100.172 86.9703C106.855 73.6798 113.526 60.6475 122.35 48.6502C129.8 38.5206 130.608 22.2628 125.573 11.1599C121.651 3.49311 114.219 1.92487 109.283 3.61097C103.934 5.43812 100.088 10.1883 96.8182 19.1315C95.6681 23.9258 95.4708 28.8488 95.0349 33.7426C93.2967 53.0507 92.518 75.4081 96.3989 94.6163Z",
@@ -40,16 +48,22 @@ const SHAPE_BRUSH_PATH = "M107.841 8.56629C104.406 10.6962 104.975 14.9687 102.7
  */
 let instanceCount = 0
 
-export default function ShapeMark({ animate = false, delay = 0, replay = 0, className, onDrawComplete, showBrush = false, color, gradientColors, fillReveal = false }) {
+export default function ShapeMark({ animate = false, delay = 0, replay = 0, className, onDrawComplete, showBrush = false, color, gradientColors, fillReveal = false, withSpin = true }) {
   const [instanceId] = useState(() => ++instanceCount)
   const strokeClipId = `shapeStrokeClip-${instanceId}`
   const brushClipId = `shapeBrushClip-${instanceId}`
+  const waterMaskId = `shapeWaterMask-${instanceId}`
   const gradId = `${GRADIENT_ID}-${instanceId}`
   const fillColor = gradientColors ? `url(#${gradId})` : (color || DEFAULT_COLOR)
   const svgRef = useRef(null)
   const brushRef = useRef(null)
+  const petalMaskRefs = useRef([])
   const [brushVisible, setBrushVisible] = useState(false)
   const [strokeReady, setStrokeReady] = useState(fillReveal)
+  // Once the fill animation lands, drop the mask so the brush renders as
+  // plain SVG. Avoids depending on GSAP transforms surviving every later
+  // re-render, scroll-timeline tween, or hover rotation.
+  const [filled, setFilled] = useState(false)
 
   useEffect(() => {
     if (!animate) return
@@ -62,38 +76,60 @@ export default function ShapeMark({ animate = false, delay = 0, replay = 0, clas
     }
 
     if (fillReveal) {
-      /* ── Fill reveal: stroke visible, color fill sweeps bottom to top ── */
+      /* ── Fill reveal: each of the 8 petals fills via a mask path that
+         scales from the flower's center outward, staggered ~80ms apart.
+         End state is the existing brush silhouette, untouched. ── */
       setStrokeReady(true)
       setBrushVisible(false)
+      setFilled(false)
 
       let tween
 
       import('gsap').then(({ gsap }) => {
         const brushEl = brushRef.current
-        if (!brushEl) return
+        const refs = petalMaskRefs.current
+        if (!brushEl || refs.filter(Boolean).length !== PETAL_PATHS.length) return
 
-        gsap.set(brushEl, { opacity: 1, clipPath: 'inset(100% 0 0 0)' })
+        // Reorder petals clockwise so the stagger reads as a clock-hand
+        // sweep (12 → 1 → 3 → 5 → 6 → 8 → 9 → 11). The mask still renders
+        // them in array order; only the animation order changes.
+        const petalEls = PETAL_CLOCKWISE_ORDER.map((i) => refs[i])
+
+        gsap.set(brushEl, { opacity: 1 })
+        // svgOrigin sets the SVG transform origin in user units (flower
+        // center is ~95,95 in the brush viewBox). Each petal scales AND
+        // rotates around that point — the rotation makes the petal feel
+        // *drawn into* its slot instead of popped in place. -15° start
+        // means each petal swings in counter-clockwise of its final angle,
+        // reinforcing the clockwise sweep direction.
+        gsap.set(petalEls, { svgOrigin: '95 95', scale: 0, rotation: -15 })
 
         const effectiveDelay = replay > 0 ? 0 : delay
         const containerEl = brushEl.parentElement
 
-        tween = gsap.to(brushEl, {
-          clipPath: 'inset(0% 0 0 0)',
-          duration: 2.2,
+        tween = gsap.to(petalEls, {
+          scale: 1,
+          rotation: 0,
+          duration: 0.5,
           delay: effectiveDelay,
-          ease: 'power1.inOut',
+          stagger: 0.18,
+          ease: 'back.out(1.8)',
           onComplete: () => {
             setBrushVisible(true)
-            gsap.set(brushEl, { clearProps: 'clipPath' })
-            gsap.to(containerEl, {
-              rotation: 360,
-              duration: 0.9,
-              ease: 'power1.inOut',
-              onComplete: () => {
-                gsap.set(containerEl, { rotation: 0 })
-                onDrawComplete?.()
-              },
-            })
+            setFilled(true)
+            if (withSpin) {
+              gsap.to(containerEl, {
+                rotation: 360,
+                duration: 0.9,
+                ease: 'power1.inOut',
+                onComplete: () => {
+                  gsap.set(containerEl, { rotation: 0 })
+                  onDrawComplete?.()
+                },
+              })
+            } else {
+              onDrawComplete?.()
+            }
           },
         })
       })
@@ -139,7 +175,7 @@ export default function ShapeMark({ animate = false, delay = 0, replay = 0, clas
     })
 
     return () => { tl?.kill() }
-  }, [animate, delay, replay, fillReveal])
+  }, [animate, delay, replay, fillReveal, withSpin])
 
   return (
     <div className={`${styles.shapeContainer}${className ? ` ${className}` : ''}`} aria-hidden="true">
@@ -178,8 +214,20 @@ export default function ShapeMark({ animate = false, delay = 0, replay = 0, clas
               <rect x="-2" y="-2" width="195" height="196" />
             </clipPath>
             <GradientDef id={gradId} colors={gradientColors} viewBox={[-4, -4, 199, 200]} />
+            {fillReveal && !filled && (
+              <mask id={waterMaskId} maskUnits="userSpaceOnUse" x="-20" y="-20" width="240" height="240">
+                {PETAL_PATHS.map((d, i) => (
+                  <g
+                    key={i}
+                    ref={(el) => { petalMaskRefs.current[i] = el }}
+                  >
+                    <path d={d} fill="white" />
+                  </g>
+                ))}
+              </mask>
+            )}
           </defs>
-          <g clipPath={`url(#${brushClipId})`}>
+          <g clipPath={`url(#${brushClipId})`} {...(fillReveal && !filled ? { mask: `url(#${waterMaskId})` } : {})}>
             <path d={SHAPE_BRUSH_PATH} fill={fillColor} />
           </g>
         </svg>
