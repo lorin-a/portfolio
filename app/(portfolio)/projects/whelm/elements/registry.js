@@ -25,6 +25,9 @@
 import PlaceholderBox from './PlaceholderBox'
 import Wordmark from './Wordmark'
 import OvercomeStack from './OvercomeStack'
+import SignalDiagram from './SignalDiagram'
+import TangleDiagram from './TangleDiagram'
+import PortalDiagram from './PortalDiagram'
 
 /* Phase 1+: real renderers replace placeholders one element at a time.
    Each entry: { render } at minimum; optional `entrance(node, ctx)`
@@ -39,9 +42,9 @@ export const ELEMENT_REGISTRY = {
   wordmark:         { render: Wordmark },
   agenda:           placeholder('Agenda', { kind: 'agenda' }),
   'overcome-stack': { render: OvercomeStack },
-  'signal-diagram': placeholder('Signal', { kind: 'diagram' }),
-  'tangle-diagram': placeholder('Tangle', { kind: 'diagram' }),
-  'portal-diagram': placeholder('Portal', { kind: 'diagram' }),
+  'signal-diagram': { render: SignalDiagram },
+  'tangle-diagram': { render: TangleDiagram },
+  'portal-diagram': { render: PortalDiagram },
   wordplay:         placeholder('Overcome → whelm', { kind: 'wordplay' }),
   'manifesto-panel':placeholder('Manifesto panel', { kind: 'panel' }),
   'persona-venn':   placeholder('Persona Venn', { kind: 'venn' }),

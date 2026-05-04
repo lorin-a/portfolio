@@ -127,6 +127,37 @@
 .overcomeLine[data-tier='2'] { color: var(--whelm-mauve); }
 .overcomeLine[data-tier='3'] { color: rgba(189, 183, 233, 0.45); }
 
+/* Diagram base — square SVG sized to fit the wrapper. The wrapper
+   itself handles position via the engine's CSS variables; the SVG
+   inside scales responsively while preserving aspect ratio. */
+.diagram {
+  width: clamp(320px, 38vw, 560px);
+  height: clamp(320px, 38vw, 560px);
+  display: block;
+  overflow: visible;
+}
+
+.signalLabel {
+  font-family: var(--font-body, 'Open Sans'), sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+  letter-spacing: 0.005em;
+}
+
+.tangleLabel {
+  font-family: var(--font-body, 'Open Sans'), sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+}
+
+.portalCoreLabel {
+  font-family: var(--font-body, 'Open Sans'), sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
 /* ─── Phase 0 placeholder visual ─── */
 .placeholder {
   display: inline-flex;

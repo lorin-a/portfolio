@@ -52,9 +52,21 @@ export const LAYOUTS = {
   /* 05 — Messenger: type alone, no element. */
   empty: {},
 
-  /* 08 — Signal diagram. */
+  /* 08 — Signal diagram on the right; copy fills the left half. */
   'signal-diagram': {
-    'signal-diagram': { x: 65, y: 50, scale: 1, opacity: 1 },
+    'signal-diagram': { x: 70, y: 50, scale: 1, opacity: 1 },
+  },
+
+  /* 09 — Tangle diagram. Same composition as Signal — diagram right,
+     copy left. The match-cut moment is purely the diagram swap. */
+  'tangle-diagram': {
+    'tangle-diagram': { x: 70, y: 50, scale: 1, opacity: 1 },
+  },
+
+  /* 10 — Portal diagram. Same right-side anchor; the spiral and "Self"
+     core carry the metaphor inward. */
+  'portal-diagram': {
+    'portal-diagram': { x: 70, y: 50, scale: 1, opacity: 1 },
   },
 }
 
@@ -81,6 +93,15 @@ export const BEATS = [
 
   /* 05 — Messenger (transition: stack fades, type-only beat) */
   { id: 'messenger',    layout: 'empty',          copyId: 'messenger',     span: 200 },
+
+  /* 08 — Signal (transition: diagram fades in on right) */
+  { id: 'signal',       layout: 'signal-diagram', copyId: 'signal',        span: 250 },
+
+  /* 09 — Tangle (transition: signal funnel fades, tangle knots in) */
+  { id: 'tangle',       layout: 'tangle-diagram', copyId: 'tangle',        span: 250 },
+
+  /* 10 — Portal (transition: tangle fades, spiral draws inward) */
+  { id: 'portal',       layout: 'portal-diagram', copyId: 'portal',        span: 250 },
 ]
 
 export const TOTAL_VH = BEATS.reduce((sum, b) => sum + b.span, 0)
