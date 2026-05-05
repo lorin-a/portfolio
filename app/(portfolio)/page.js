@@ -108,11 +108,34 @@ export default function Home() {
           num="03"
           title="Whelm"
           tagline="A Companion for Navigating Overwhelm"
-          description="A self-inquiry ritual with a sequenced framework that slows the thought spiral, navigates the internal conflict, and surfaces the need beneath the narrative. Permission to pause. A process for moving through. A path back to knowing."
+          description="A self-inquiry ritual with a sequenced framework that slows thought spirals, gently navigates internal conflict, and surfaces core needs that are buried beneath ruminating narratives."
           contributions={[
-            { label: 'Original Concept' },
-            { label: 'Framework Development' },
-            { label: 'Brand & Product Design' },
+            {
+              label: 'Original Concept',
+              gallery: [
+                { src: cloudVideo(WHELM_VIDEOS['whelm-preview'], 1200), type: 'video', alt: 'Whelm preview' },
+                { src: cloudImg(WHELM_IMAGES['whelm-slide-9'], 1200), type: 'image', alt: 'Whelm concept slide' },
+                { src: cloudImg(WHELM_IMAGES['whelm-slide-11'], 1200), type: 'image', alt: 'Whelm concept slide' },
+                { src: cloudImg(WHELM_IMAGES['whelm-slide-13'], 1200), type: 'image', alt: 'Whelm concept slide' },
+              ],
+            },
+            {
+              label: 'Framework Development',
+              gallery: [
+                { src: cloudImg(WHELM_IMAGES['whelm-slide-27'], 1200), type: 'image', alt: 'Whelm framework slide' },
+                { src: cloudImg(WHELM_IMAGES['whelm-slide-17'], 1200), type: 'image', alt: 'Whelm framework slide' },
+                { src: cloudImg(WHELM_IMAGES['whelm-slide-8'], 1200), type: 'image', alt: 'Whelm framework slide' },
+                { src: cloudImg(WHELM_IMAGES['whelm-slide-22'], 1200), type: 'image', alt: 'Whelm framework slide' },
+              ],
+            },
+            {
+              label: 'Interaction Design',
+              gallery: [
+                { src: cloudVideo(WHELM_VIDEOS['whelm-meter'], 1200), type: 'video', alt: 'Whelm meter interaction' },
+                { src: cloudVideo(WHELM_VIDEOS['whelm-body'], 1200), type: 'video', alt: 'Whelm body scan interaction' },
+                { src: cloudVideo(WHELM_VIDEOS['whelm-breathe'], 1200), type: 'video', alt: 'Whelm breathe interaction' },
+              ],
+            },
           ]}
           pillVariant="weave"
           mediaSrc={cloudImg(WHELM_IMAGES['whelm-2'], 1600)}
