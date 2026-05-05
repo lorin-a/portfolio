@@ -246,9 +246,33 @@ export default function Home() {
           tagline="Inclusive and Playful Nature Trail Rebrand"
           description="A comprehensive rebranding proposal for the Great Allegheny Passage featuring a campaign for inexperienced riders."
           contributions={[
-            { label: 'UX Research' },
-            { label: 'Brand Identity' },
-            { label: 'Animation' },
+            {
+              label: 'Brand Identity',
+              gallery: [
+                { src: cloudVideo(HOME_VIDEOS['bridging-default'], 1200), type: 'video', alt: 'Bridging the G.A.P. logo animation' },
+                { src: cloudImg(HOME_IMAGES['btg-29'], 1200), type: 'image', alt: 'Bridging the G.A.P. brand detail' },
+                { src: cloudImg(HOME_IMAGES['btg-30'], 1200), type: 'image', alt: 'Bridging the G.A.P. brand detail' },
+                { src: cloudImg(HOME_IMAGES['btg-33'], 1200), type: 'image', alt: 'Bridging the G.A.P. brand detail' },
+              ],
+            },
+            {
+              label: 'UX Design',
+              gallery: [
+                { src: cloudVideo(HOME_VIDEOS['bridging-clip-1'], 1200), type: 'video', alt: 'Bridging the G.A.P. motion clip' },
+                { src: cloudVideo(HOME_VIDEOS['bridging-clip-2'], 1200), type: 'video', alt: 'Bridging the G.A.P. motion clip' },
+                { src: cloudImg(HOME_IMAGES['btg-14'], 1200), type: 'image', alt: 'Bridging the G.A.P. research artifact' },
+                { src: cloudImg(HOME_IMAGES['btg-45'], 1200), type: 'image', alt: 'Bridging the G.A.P. research artifact' },
+                { src: cloudImg(HOME_IMAGES['btg-15'], 1200), type: 'image', alt: 'Bridging the G.A.P. research artifact' },
+              ],
+            },
+            {
+              label: 'Animation',
+              gallery: [
+                { src: cloudVideo(HOME_VIDEOS['bridging-gap-logo'], 1200), type: 'video', alt: 'Bridging the G.A.P. logo animation' },
+                { src: cloudVideo(HOME_VIDEOS['bridging-logos-3'], 1200), type: 'video', alt: 'Bridging the G.A.P. secondary logo animation' },
+                { src: cloudVideo(HOME_VIDEOS['bridging-logos-2'], 1200), type: 'video', alt: 'Bridging the G.A.P. secondary logo animation' },
+              ],
+            },
           ]}
           pillVariant="shape"
           mediaSrc={cloudVideo(HOME_VIDEOS['bridging-default'], 1600)}
