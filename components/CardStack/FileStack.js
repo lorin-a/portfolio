@@ -169,6 +169,7 @@ export default function FileStack({
   const containerRef = useRef(null)
   const cardRefs = useRef([])
   const matteRefs = useRef([])
+  const videoRefs = useRef([])
   const hasRevealed = useRef(false)
   const prevActiveRef = useRef(0)
 
@@ -194,6 +195,19 @@ export default function FileStack({
     (i, active) => (i - active + cardCount) % cardCount,
     [cardCount]
   )
+
+  /* On mount, pause every video except the initially active one so
+     non-active tabs aren't silently looping in the background. */
+  useEffect(() => {
+    videoRefs.current.forEach((v, i) => {
+      if (!v || i === activeIndex) return
+      try {
+        v.pause()
+        v.currentTime = 0
+      } catch {}
+    })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   /* Initial entrance — cascade in from below, back-most first. */
   useGSAP(() => {
@@ -289,6 +303,22 @@ export default function FileStack({
         ease: 'cubic-bezier(0.22, 1, 0.36, 1)',
       })
     }
+
+    /* Restart videos on tab change — active plays from 0, others
+       pause and rewind so re-entry feels fresh, not "where I left off". */
+    videoRefs.current.forEach((v, i) => {
+      if (!v) return
+      try {
+        if (i === activeIndex) {
+          v.currentTime = 0
+          const p = v.play()
+          if (p && typeof p.catch === 'function') p.catch(() => {})
+        } else {
+          v.pause()
+          v.currentTime = 0
+        }
+      } catch {}
+    })
 
     /* Media crossfade — matte fades out on old, in on new */
     mattes.forEach((m, i) => {
@@ -386,6 +416,7 @@ export default function FileStack({
                 return current.type === 'video' ? (
                   <video
                     key={`v-${i}-${galleryIdx}`}
+                    ref={el => { videoRefs.current[i] = el }}
                     src={current.src}
                     autoPlay
                     muted

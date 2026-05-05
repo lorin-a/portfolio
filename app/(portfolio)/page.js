@@ -16,9 +16,30 @@ export default function Home() {
           tagline="Making Space to Restore, Together"
           description="A multi-scale design ecology built to support the complex emotional reality of oncology care. Co-designed with healthcare workers."
           contributions={[
-            { label: 'Participatory Research' },
-            { label: 'Copywriting' },
-            { label: 'Experience Design' },
+            {
+              label: 'Data Visualization',
+              gallery: [
+                { src: cloudVideo(GS_VIDEOS['gs-opener'], 1200), type: 'video', alt: 'Groundswell opener' },
+                { src: cloudVideo(GS_VIDEOS['gs-pod-data'], 1200), type: 'video', alt: 'Groundswell pod data view' },
+              ],
+            },
+            {
+              label: 'Experience Design',
+              gallery: [
+                { src: cloudImg(GS_IMAGES['gs-hero'], 1200), type: 'image', alt: 'Groundswell installation in hospital corridor' },
+                { src: cloudImg(GS_IMAGES['gs-artwall'], 1200), type: 'image', alt: 'Groundswell art wall' },
+                { src: cloudImg(GS_IMAGES['gs-pod-detail-02'], 1200), type: 'image', alt: 'Groundswell pod detail' },
+                { src: cloudImg(GS_IMAGES['gs-pod-detail-03'], 1200), type: 'image', alt: 'Groundswell pod detail' },
+              ],
+            },
+            {
+              label: 'Copywriting',
+              gallery: [
+                { src: cloudImg(GS_IMAGES['gs-mockups-50'], 1200), type: 'image', alt: 'Groundswell copywriting mockup' },
+                { src: cloudImg(GS_IMAGES['gs-mockups-43'], 1200), type: 'image', alt: 'Groundswell copywriting mockup' },
+                { src: cloudImg(GS_IMAGES['gs-ctb-detail-03'], 1200), type: 'image', alt: 'Groundswell care-through-books detail' },
+              ],
+            },
           ]}
           pillVariant="sense"
           mediaSrc={cloudVideo(GS_VIDEOS['gs-opener'], 1600)}
@@ -31,6 +52,7 @@ export default function Home() {
             { src: cloudVideo(GS_VIDEOS['gs-walkthrough-video'], 1200), type: 'video', alt: 'Groundswell walkthrough' },
             { src: cloudImg(GS_IMAGES['gs-ctb-email'], 1200), type: 'image', alt: 'Groundswell care-through-books email in use' },
           ]}
+          cardVariant="file"
           href="/projects/groundswell"
         />
 
@@ -52,6 +74,7 @@ export default function Home() {
             { src: cloudVideo(HOME_VIDEOS['birthstory-hover'], 1200), type: 'video', alt: 'BirthStory hover preview' },
             { src: cloudImg(HOME_IMAGES['bs'], 1200), type: 'image', alt: 'BirthStory cover' },
           ]}
+          cardVariant="file"
           comingSoon
           flip
         />
@@ -78,7 +101,7 @@ export default function Home() {
             { src: cloudVideo(WHELM_VIDEOS['whelm-breathe'], 1200), type: 'video', alt: 'Whelm breathe practice' },
             { src: cloudVideo(WHELM_VIDEOS['whelm-opener'], 1200), type: 'video', alt: 'Whelm opener' },
           ]}
-          cardVariant="atmospheric"
+          cardVariant="file"
           comingSoon
         />
 
@@ -150,6 +173,7 @@ export default function Home() {
             { src: cloudImg(HOME_IMAGES['td-timeline'], 1200), type: 'image', alt: 'Food insecurity timeline' },
             { src: cloudImg(HOME_IMAGES['td-stakeholders'], 1200), type: 'image', alt: 'Stakeholder relations map' },
           ]}
+          cardVariant="file"
           comingSoon
         />
 
@@ -175,6 +199,7 @@ export default function Home() {
             { src: cloudImg(HOME_IMAGES['btg-36'], 1200), type: 'image', alt: 'Bridging the G.A.P. campaign detail' },
             { src: cloudImg(HOME_IMAGES['btg-33'], 1200), type: 'image', alt: 'Bridging the G.A.P. campaign detail' },
           ]}
+          cardVariant="file"
           comingSoon
           flip
         />
