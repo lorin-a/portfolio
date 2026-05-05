@@ -62,9 +62,34 @@ export default function Home() {
           tagline="A Micro-App for Birthing Parents"
           description="Helping parents document and reflect on their birth experience for University of Pittsburgh Women’s Health."
           contributions={[
-            { label: 'UX Research' },
-            { label: 'UX Design' },
-            { label: 'Client Iteration' },
+            {
+              label: 'UX Design',
+              gallery: [
+                { src: cloudVideo(HOME_VIDEOS['birthstory-default'], 1200), type: 'video', alt: 'BirthStory default preview' },
+                { src: cloudVideo(HOME_VIDEOS['birthstory-hover'], 1200), type: 'video', alt: 'BirthStory hover preview' },
+                { src: cloudImg(HOME_IMAGES['bs-5'], 1200), type: 'image', alt: 'BirthStory interface detail' },
+                { src: cloudImg(HOME_IMAGES['bs-4'], 1200), type: 'image', alt: 'BirthStory interface detail' },
+              ],
+            },
+            {
+              label: 'UX Research',
+              gallery: [
+                { src: cloudImg(HOME_IMAGES['bs'], 1200), type: 'image', alt: 'BirthStory cover' },
+                { src: cloudImg(HOME_IMAGES['bs-55'], 1200), type: 'image', alt: 'BirthStory site architecture map' },
+                { src: cloudImg(HOME_IMAGES['bs-49'], 1200), type: 'image', alt: 'BirthStory navigation map' },
+                { src: cloudImg(HOME_IMAGES['bs-73'], 1200), type: 'image', alt: 'BirthStory research artifact' },
+              ],
+            },
+            {
+              label: 'Client Iteration',
+              gallery: [
+                { src: cloudImg(HOME_IMAGES['bs-23'], 1200), type: 'image', alt: 'BirthStory client iteration — class working with client' },
+                { src: cloudImg(HOME_IMAGES['bs-64'], 1200), type: 'image', alt: 'BirthStory wireframe iteration' },
+                { src: cloudImg(HOME_IMAGES['bs-67'], 1200), type: 'image', alt: 'BirthStory wireframe iteration' },
+                { src: cloudImg(HOME_IMAGES['bs-74'], 1200), type: 'image', alt: 'BirthStory wireframe iteration' },
+                { src: cloudImg(HOME_IMAGES['bs-83'], 1200), type: 'image', alt: 'BirthStory wireframe iteration' },
+              ],
+            },
           ]}
           pillVariant="weave"
           mediaSrc={cloudVideo(HOME_VIDEOS['birthstory-default'], 1600)}
