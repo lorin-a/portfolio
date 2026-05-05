@@ -715,10 +715,26 @@
   display: block;
 }
 
-/* Mackinac's r→w pair sits tight at display sizes — surgical kern just
-   on that boundary so other pairs (over, hel, lm) keep their natural
-   spacing. Adjust by changing the margin-left value. */
+/* Universal rule for the word "Overwhelm" wherever it renders in
+   P22 Mackinac Pro on this site: wrap the "w" in this span —
+   `Over<span class="overwhelmKern">w</span>helm` — so the r→w pair
+   gets a small kern. Mackinac collapses that pair too tight at
+   editorial sizes; the em-relative margin scales with the type so it
+   stays consistent across sizes.
+
+   The selector is exposed as both a CSS-Modules class (for JSX use
+   with `styles.overwhelmKern`) and a `:global` class (for use in
+   `dangerouslySetInnerHTML` strings such as the entries in
+   `content.js`, where the literal class name in HTML must match). */
 .overwhelmKern {
+  margin-left: 0.04em;
+}
+
+/* Global alias scoped under .story so the literal class name in
+   `dangerouslySetInnerHTML` strings (content.js) resolves. Scoping
+   keeps the global selector "pure" for Next.js CSS Modules and
+   confines its effect to the Whelm story container. */
+.story :global(.overwhelmKern) {
   margin-left: 0.04em;
 }
 
@@ -810,6 +826,137 @@
 }
 
 /* =====================================================================
+   SECTION 2 — NEED. Three "What if" beats stacked vertically.
+   Each beat is a sticky 100dvh stage with a centered composition:
+   heading anchored upper-mid-left, body paragraph below it. Reveal
+   is per-beat via paused timeline + IntersectionObserver play-once.
+   ===================================================================== */
+
+/* Outer track is 4 viewport heights tall: 100vh sticky + 300vh of
+   pin range = three 100vh slots, one per beat. ScrollTrigger
+   crossfades the active beat layer as the user scrolls past each
+   slot; the viewport itself stays still. */
+.needSection {
+  position: relative;
+  width: 100%;
+  height: 400vh;
+  /* Override globals.css `section { padding: var(--space-lg) 0 }` —
+     Whelm sections manage their own vertical rhythm via sticky stages
+     and the global padding throws off the pin range + sticky offset. */
+  padding: 0;
+  background: var(--whelm-bg);
+  scroll-margin-top: 72px;
+}
+
+.needSticky {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+}
+
+/* Beat layers stack atop one another inside the sticky stage. Only one
+   is fully visible at a time; the others sit at autoAlpha 0. */
+.needLayer {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  padding: var(--s-9) var(--page-margin);
+}
+
+.needComposition {
+  width: 100%;
+  max-width: 1200px;
+  margin-inline: auto;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(48px, 6vw, 96px);
+}
+
+.needHeading {
+  font-family: var(--whelm-display-font);
+  font-size: clamp(40px, 5.6vw, 84px);
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--whelm-cream);
+  margin: 0;
+  max-width: 22ch;
+}
+
+/* Each line is a relatively-positioned shrink-to-fit container. The
+   text inside is clipped via clip-path inset(... var(--reveal) ... 0):
+   --reveal goes from 100% (fully clipped) to 0% (fully visible) and
+   the cursor's left position is bound to the same value, so the
+   cursor rides the wipe edge in lockstep. Negative top/bottom inset
+   keeps italic ascenders/descenders from being clipped. */
+.needLine {
+  --reveal: 100%;
+  position: relative;
+  display: block;
+  width: max-content;
+  max-width: 100%;
+}
+
+/* Right padding gives the clip-path room past the glyph advance so
+   italic ascenders/overhang on terminal characters (esp. the slanted
+   "?" tail in Mackinac italic) aren't sliced off when --reveal: 0%. */
+.needLineText {
+  display: inline-block;
+  padding-right: 0.2em;
+  clip-path: inset(-0.2em var(--reveal) -0.25em 0);
+  will-change: clip-path;
+}
+
+.needLineAccent {
+  font-style: italic;
+  color: var(--whelm-mauve);
+}
+
+.needCursor {
+  position: absolute;
+  top: 0.08em;
+  left: calc(100% - var(--reveal));
+  width: 0.04em;
+  height: 0.85em;
+  background: currentColor;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.needBody {
+  font-family: var(--font-noto-sans), var(--whelm-body-font);
+  font-size: clamp(18px, 1.85vw, 30px);
+  font-weight: 300;
+  line-height: 1.4;
+  letter-spacing: 0.005em;
+  color: var(--whelm-cream);
+  /* 25% tighter than the prior clamp(420, 44vw, 760) — the question
+     above carries the line; the body is meant to land short and read
+     fast, not stretch across the column. */
+  max-width: clamp(315px, 33vw, 570px);
+  /* Initial state mirrors the GSAP set. */
+  opacity: 0;
+}
+
+/* Per-paragraph balance gives a calmer rag on multi-line bodies; the
+   browser distributes line breaks so no line dangles short. */
+.needBodyP {
+  margin: 0 0 0.5em 0;
+  text-wrap: pretty;
+}
+
+.needBodyP:last-child {
+  margin-bottom: 0;
+}
+
+/* =====================================================================
    EDITORIAL SECTIONS — post-hero scroll content
    Centered, generous breathing room. Each section fills in over its
    own iteration; placeholders here are the scaffolding only.
@@ -888,5 +1035,15 @@
   .gapArrow {
     animation: none;
     opacity: 1 !important;
+  }
+  .needLine {
+    --reveal: 0% !important;
+  }
+  .needCursor {
+    display: none;
+  }
+  .needBody {
+    opacity: 1 !important;
+    transform: none !important;
   }
 }

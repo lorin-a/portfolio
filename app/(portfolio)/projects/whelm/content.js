@@ -24,19 +24,23 @@ export const COPY = {
   ],
 
   /* Section 2 — NEED. Three What-If beats, centered vertical stacks. */
+  /* Mackinac r→w kerning: every Mackinac render of "Overwhelm" wraps
+     the "w" with `class="overwhelmKern"`. The class is exposed as a
+     :global selector in whelm.module.css so the literal class name
+     in these dangerouslySetInnerHTML strings actually matches. */
   'not-a-problem': [
-    { position: 'top_center', kind: 'h2_inline', html: 'What if overwhelm is <em>not a problem to be solved?</em>' },
+    { position: 'top_center', kind: 'h2_inline', html: 'What if over<span class="overwhelmKern">w</span>helm is <em>not a problem to be solved?</em>' },
     { position: 'bot_center', kind: 'body', html: 'Overwhelm is treated as a productivity issue that can be solved through self-management. This neglects the emotional experience beneath the surface.' },
   ],
 
   messenger: [
-    { position: 'top_center', kind: 'h2_inline', html: 'What if overwhelm offers us <em>valuable information?</em>' },
+    { position: 'top_center', kind: 'h2_inline', html: 'What if over<span class="overwhelmKern">w</span>helm offers us <em>valuable information?</em>' },
     { position: 'mid_center', kind: 'body', html: 'Overwhelm represents the tension between unmet needs and expectations, unfelt feelings and internalized beliefs. It is not a problem.' },
     { position: 'bot_center', kind: 'lead', html: 'It is a <em>messenger.</em>' },
   ],
 
   invitation: [
-    { position: 'top_center', kind: 'h2_inline', html: 'What if overwhelm is <em>an invitation?</em>' },
+    { position: 'top_center', kind: 'h2_inline', html: 'What if over<span class="overwhelmKern">w</span>helm is <em>an invitation?</em>' },
     { position: 'bot_center', kind: 'body', html: 'Overwhelm is an entry point for building a relationship with yourself, a companion for returning to what is real when your mind is on overdrive.' },
   ],
 
@@ -44,17 +48,17 @@ export const COPY = {
      headline → body → diagram. Diagrams will move from full-bleed to
      centered presence in the next round. */
   signal: [
-    { position: 'top_center', kind: 'h2_inline', html: 'Overwhelm is <em>a Signal.</em>' },
+    { position: 'top_center', kind: 'h2_inline', html: 'Over<span class="overwhelmKern">w</span>helm is <em>a Signal.</em>' },
     { position: 'bot_center', kind: 'body', html: 'Learning to interpret it is a skill. The experience varies per person but the signals are your system’s way of reaching out for support.' },
   ],
 
   tangle: [
-    { position: 'top_center', kind: 'h2_inline', html: 'Overwhelm is <em>a Tangle.</em>' },
+    { position: 'top_center', kind: 'h2_inline', html: 'Over<span class="overwhelmKern">w</span>helm is <em>a Tangle.</em>' },
     { position: 'bot_center', kind: 'body', html: 'A mix of emotions, needs, narratives, and sensations influenced by society, environments, and upbringing that can feel daunting to face alone.' },
   ],
 
   portal: [
-    { position: 'top_center', kind: 'h2_inline', html: 'Overwhelm is <em>a Portal.</em>' },
+    { position: 'top_center', kind: 'h2_inline', html: 'Over<span class="overwhelmKern">w</span>helm is <em>a Portal.</em>' },
     { position: 'bot_center', kind: 'body', html: 'Heightened sensations can indicate that important information has surfaced and is available for care, observation, reflection, and release.' },
   ],
 }

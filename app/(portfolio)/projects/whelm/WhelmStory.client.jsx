@@ -8,6 +8,8 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { ELEMENT_REGISTRY } from './elements/registry'
 import WhelmAgendaNav from './WhelmAgendaNav'
 import WhelmGap from './sections/WhelmGap'
+import WhelmNeed from './sections/WhelmNeed'
+import { lockForwardScroll } from './lib/scrollLock'
 import { COPY } from './content'
 import { SECTIONS } from './data'
 import styles from './whelm.module.css'
@@ -60,8 +62,12 @@ export default function WhelmStory() {
     /* ─── Hero intro (one-shot on mount) ─────────────────────────
        Wordmark types in (per-char max-width grow), cursive draws on
        in parallel, tagline reveals after the type lands, scroll cue
-       lands last. */
-    const intro = gsap.timeline()
+       lands last. Forward scroll is held until the scroll cue lands
+       so the user can't outrun the intro. */
+    const releaseIntroScroll = lockForwardScroll()
+    const intro = gsap.timeline({
+      onComplete: () => releaseIntroScroll(),
+    })
 
     const charEls = gsap.utils.toArray('[data-char]')
     charEls.forEach((el, i) => {
@@ -107,7 +113,10 @@ export default function WhelmStory() {
       4.4,
     )
 
-    return () => intro.kill()
+    return () => {
+      releaseIntroScroll()
+      intro.kill()
+    }
   }, { scope: sectionRef })
 
   return (
@@ -144,6 +153,7 @@ export default function WhelmStory() {
           the centered placeholder. */}
       {SECTIONS.map(s => {
         if (s.id === 'gap') return <WhelmGap key={s.id} />
+        if (s.id === 'need') return <WhelmNeed key={s.id} />
         return (
           <section key={s.id} id={s.id} className={styles.editorialSection}>
             <div className={styles.editorialInner}>

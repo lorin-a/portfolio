@@ -32,7 +32,7 @@ const crimsonPro = Crimson_Pro({
    labels. All caps, regular weight, generous tracking. */
 const notoSans = Noto_Sans({
   subsets: ['latin'],
-  weight: ['400', '500'],
+  weight: ['300', '400', '500'],
   variable: '--font-noto-sans',
   display: 'swap',
 })
