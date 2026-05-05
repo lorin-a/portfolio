@@ -582,8 +582,144 @@
   z-index: 4;
 }
 
+/* =====================================================================
+   THE GAP — Section 1 thesis composition
+   Three "Overwhelm" lines waterfall from a single origin, then
+   "is overlooked." types in below with a persistent blinking cursor.
+   Section is its own composition — overrides .editorialSection.
+   ===================================================================== */
+
+/* Outer track — provides scroll room while the inner stage stays
+   anchored. 220vh = ~120vh of "anchored viewing" after the user
+   scrolls the sticky into place. Project pattern (CinematicIntro):
+   tall wrapper + position:sticky inner stage. */
+.gapSection {
+  position: relative;
+  width: 100%;
+  height: 220vh;
+  background: var(--whelm-bg);
+  scroll-margin-top: 72px;
+}
+
+/* Sticky stage — pins the composition viewport-centered while the
+   outer track scrolls past. Animation triggers when this enters
+   view at ~85% threshold (i.e. once it's effectively pinned). */
+.gapSticky {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--s-9) var(--page-margin);
+}
+
+/* Composition: stacked Overwhelms with the punchline beside the
+   bottom-most one. The third "Overwhelm" + "is overlooked." share a
+   baseline-aligned flex row, so the punchline reads as the answer
+   spoken alongside the last repetition. */
+.gapComposition {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--s-8);
+}
+
+/* Punchline sits as the 4th column item, pushed to the stack's right
+   edge so it lands below-right of the 3rd "Overwhelm" — like a quiet
+   aside answering the stacked thesis. align-self overrides the stack's
+   flex-start to right-anchor this one item against the stack's width
+   (which equals the Overwhelm word's width). */
+
+/* Arrow lives at the bottom of the sticky stage, not in the centered
+   composition flow — invitation to keep scrolling sits well clear of
+   the thesis itself. */
+.gapArrow {
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin-inline: auto;
+  bottom: 16vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 28px;
+  color: var(--whelm-cream);
+  opacity: 0.85;
+  animation: scrollCueBob 2.4s ease-in-out infinite;
+}
+
+.gapArrow svg {
+  width: 100%;
+  height: 100%;
+}
+
+.gapPunchline {
+  display: inline-flex;
+  align-items: baseline;
+  align-self: flex-end;
+  margin: var(--s-4) 0 0 0;
+  font-family: var(--whelm-editorial-font);
+  font-size: var(--t-h2);
+  font-weight: 300;
+  font-style: normal;
+  line-height: var(--lh-snug);
+  color: var(--whelm-cream);
+  white-space: nowrap;
+}
+
+.gapPunchlineInner {
+  display: inline-flex;
+  align-items: baseline;
+}
+
+.gapPunchlineChar {
+  display: inline-block;
+  max-width: 0;
+  overflow: hidden;
+  opacity: 0;
+  white-space: pre;
+}
+
+.gapPunchlineChar[data-italic='true'] {
+  font-style: italic;
+  letter-spacing: 0.02em;
+}
+
+.gapPunchlineCursor {
+  display: inline-block;
+  width: 0.05em;
+  height: 0.85em;
+  margin-left: 0.06em;
+  background: currentColor;
+  vertical-align: -0.05em;
+  animation: cursorBlink 1s steps(1, end) infinite;
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 .overcomeLine {
   display: block;
+}
+
+/* Mackinac's r→w pair sits tight at display sizes — surgical kern just
+   on that boundary so other pairs (over, hel, lm) keep their natural
+   spacing. Adjust by changing the margin-left value. */
+.overwhelmKern {
+  margin-left: 0.04em;
 }
 
 .overcomeLine[data-tier='1'] { color: var(--whelm-cream); }
@@ -741,5 +877,16 @@
   }
   .scrollCue {
     animation: none;
+  }
+  .gapPunchlineChar {
+    max-width: none !important;
+    opacity: 1 !important;
+  }
+  .gapPunchlineCursor {
+    display: none;
+  }
+  .gapArrow {
+    animation: none;
+    opacity: 1 !important;
   }
 }

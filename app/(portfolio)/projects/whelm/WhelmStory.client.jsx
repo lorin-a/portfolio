@@ -7,6 +7,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 import { ELEMENT_REGISTRY } from './elements/registry'
 import WhelmAgendaNav from './WhelmAgendaNav'
+import WhelmGap from './sections/WhelmGap'
 import { COPY } from './content'
 import { SECTIONS } from './data'
 import styles from './whelm.module.css'
@@ -138,16 +139,20 @@ export default function WhelmStory() {
 
       <WhelmAgendaNav sentinelRef={heroRef} />
 
-      {/* Six agenda sections — each fills in iteratively. Centered
-          editorial layout; entrance animations land per section. */}
-      {SECTIONS.map(s => (
-        <section key={s.id} id={s.id} className={styles.editorialSection}>
-          <div className={styles.editorialInner}>
-            <p className={styles.editorialEyebrow}>{s.label}</p>
-            <p className={styles.editorialPlaceholder}>Content coming soon.</p>
-          </div>
-        </section>
-      ))}
+      {/* Six agenda sections — each fills in iteratively. Built sections
+          render their own composition; unbuilt sections fall back to
+          the centered placeholder. */}
+      {SECTIONS.map(s => {
+        if (s.id === 'gap') return <WhelmGap key={s.id} />
+        return (
+          <section key={s.id} id={s.id} className={styles.editorialSection}>
+            <div className={styles.editorialInner}>
+              <p className={styles.editorialEyebrow}>{s.label}</p>
+              <p className={styles.editorialPlaceholder}>Content coming soon.</p>
+            </div>
+          </section>
+        )
+      })}
     </section>
   )
 }
