@@ -74,10 +74,10 @@ export default function Home() {
             {
               label: 'UX Research',
               gallery: [
-                { src: cloudImg(HOME_IMAGES['bs'], 1200), type: 'image', alt: 'BirthStory cover' },
-                { src: cloudImg(HOME_IMAGES['bs-55'], 1200), type: 'image', alt: 'BirthStory site architecture map' },
-                { src: cloudImg(HOME_IMAGES['bs-49'], 1200), type: 'image', alt: 'BirthStory navigation map' },
-                { src: cloudImg(HOME_IMAGES['bs-73'], 1200), type: 'image', alt: 'BirthStory research artifact' },
+                { src: cloudImg(HOME_IMAGES['bs-49'], 1200), type: 'image', alt: 'BirthStory research process' },
+                { src: cloudImg(HOME_IMAGES['bs-73'], 1200), type: 'image', alt: 'BirthStory site architecture' },
+                { src: cloudImg(HOME_IMAGES['bs-55'], 1200), type: 'image', alt: 'BirthStory research approach' },
+                { src: cloudImg(HOME_IMAGES['bs-27'], 1200), type: 'image', alt: 'BirthStory site navigation map' },
               ],
             },
             {
