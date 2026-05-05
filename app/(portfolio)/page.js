@@ -208,8 +208,23 @@ export default function Home() {
           tagline="Roots to Resilience: A Food Justice Future"
           description="A systems-level design response to food insecurity in Pittsburgh using Transition Design methods."
           contributions={[
-            { label: 'Systems Mapping' },
-            { label: 'Research Synthesis' },
+            {
+              label: 'Systems Mapping',
+              gallery: [
+                { src: cloudVideo(HOME_VIDEOS['transition-design-default'], 1200), type: 'video', alt: 'Transition design preview' },
+                { src: cloudImg(HOME_IMAGES['td-stakeholders-full'], 1200), type: 'image', alt: 'Stakeholder relations map' },
+                { src: cloudImg(HOME_IMAGES['td-timeline-full'], 1200), type: 'image', alt: 'Food insecurity timeline' },
+              ],
+            },
+            {
+              label: 'Design Futures',
+              gallery: [
+                { src: cloudVideo(HOME_VIDEOS['transition-design-hover'], 1200), type: 'video', alt: 'Transition design preview' },
+                { src: cloudImg(HOME_IMAGES['td-scales'], 1200), type: 'image', alt: 'Scales of transition design intervention' },
+                { src: cloudImg(HOME_IMAGES['td-roots'], 1200), type: 'image', alt: 'Roots to Resilience design future' },
+                { src: cloudImg(HOME_IMAGES['td-4b'], 1200), type: 'image', alt: 'Transition design speculative artifact' },
+              ],
+            },
           ]}
           pillVariant="sense"
           mediaSrc={cloudVideo(HOME_VIDEOS['transition-design-default'], 1600)}
