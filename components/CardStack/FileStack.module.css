@@ -1,0 +1,445 @@
+/* ===========================================
+   FILE STACK — portfolio teaser carousel.
+   Outline aesthetic. Stack aspect-ratio matches the SVG viewBox
+   so the tab portion and the button height are exactly equal —
+   labels center inside the visible tab. Matte sits BELOW the tab
+   region, inset generously inside the body so the folder visibly
+   frames the content.
+   =========================================== */
+
+.stack {
+  position: relative;
+  width: 100%;
+  /* Pull the cards inward from the mediaWrap edges so they don't
+     reach close to the page edge — gives the folder-stack frame
+     room to breathe. */
+  max-width: 88%;
+  margin-inline: auto;
+  /* Stack aspect = taller body + tab on top. ViewBox is
+     1600 wide × (1036 body + 64 tab) = 1600 × 1100. The body is
+     intentionally taller than 16:9 so a 16:9 matte plus matte-
+     insets and the gallery-nav strip fit without crowding. The
+     CSS aspect-ratio matches the viewBox so the SVG fills 1:1
+     and the tab portion in the SVG corresponds exactly to the
+     tab portion in CSS. */
+  aspect-ratio: 1600 / 1100;
+  /* Stack itself is non-interactive — only the tab buttons inside
+     should receive clicks. With preserve-3d the parent's hit area
+     can otherwise mask child buttons that sit at negative Z. */
+  pointer-events: none;
+  perspective: 1600px;
+  /* Vanishing point near the top — receded cards stair-step UP */
+  perspective-origin: 50% 8%;
+  transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+
+  --stroke: var(--color-ink, #E9E9E9);
+  --stroke-w: 1.5;
+  --stroke-w-active: 2.25;
+  --label: var(--color-ink, #E9E9E9);
+  --bg-mask: var(--color-cream, #1f1f1d);
+
+  --slot-count: 3;
+
+  /* Tab portion — matches viewBox exactly: 64 / 1100 = 5.82% */
+  --tab-portion: 5.82%;
+  --matte-inset: clamp(20px, 2.6vw, 36px);
+}
+
+/* ===========================================
+   CARD — full folder. Drop-shadow gives each card paper weight;
+   active is grounded by a deeper shadow. GSAP drives 3D motion.
+   =========================================== */
+.card {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  will-change: transform, opacity;
+  filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.32));
+  transition: filter 360ms var(--ease-out);
+}
+
+.card[data-active="true"] {
+  filter: drop-shadow(0 14px 28px rgba(0, 0, 0, 0.5));
+}
+
+/* ===========================================
+   SILHOUETTE — fills the card 1:1 with the viewBox. Two paths:
+     1. Body fill — page-bg-colored, opaque. Masks receded cards
+        behind active without showing as a visible fill.
+     2. Outline stroke — every card; active is thicker + opaque.
+   =========================================== */
+.silhouette {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.silhouetteFill {
+  fill: var(--bg-mask);
+  /* SVG paths default to pointer-events: visiblePainted, which makes
+     filled areas hit-testable even though the parent SVG has
+     pointer-events:none. Force none on the paths so clicks pass
+     through to the tab buttons positioned over them. */
+  pointer-events: none;
+}
+
+.silhouetteStroke {
+  fill: none;
+  stroke: var(--stroke);
+  stroke-width: var(--stroke-w);
+  stroke-linejoin: round;
+  opacity: 0.4;
+  pointer-events: none;
+  transition:
+    stroke-width 320ms var(--ease-out),
+    opacity 320ms var(--ease-out);
+}
+
+.card[data-active="true"] .silhouetteStroke {
+  stroke-width: var(--stroke-w-active);
+  opacity: 1;
+}
+
+/* ===========================================
+   TAB BUTTON — sits over the SVG tab portion. Height EXACTLY
+   matches the SVG tab portion so labels center visibly inside
+   the tab. Outline-only differentiation (no color fill).
+   =========================================== */
+.tabHit {
+  position: absolute;
+  top: 0;
+  /* Full slot width minus a thin margin so adjacent tabs don't
+     fight for clicks at slot boundaries (perspective scaling makes
+     receded slots slightly different widths). */
+  left: calc(100% / var(--slot-count) * var(--slot-i) + (100% / var(--slot-count)) * 0.02);
+  width: calc(100% / var(--slot-count) * 0.96);
+  /* Click area covers the entire visible region of this card —
+     active = tab + a small Q-junction tolerance buffer.
+     Receded = also the body strip that peeks above the active
+     card's body top edge (--depth-strip, set inline per card).
+     Without this, clicks on the body-strip area between a receded
+     tab and active body fall through to dead space.
+
+     IMPORTANT: padding % resolves to the parent's WIDTH, but height
+     % resolves to the parent's HEIGHT. Mixing them caused the label
+     drift in the unselected state. Both extensions here use fixed
+     pixels (or the same px depth-strip) so content area = exactly
+     tab-portion, regardless of card dimensions. */
+  box-sizing: border-box;
+  --tab-junction-buffer: 8px;
+  height: calc(var(--tab-portion) + var(--tab-junction-buffer) + var(--depth-strip, 0px));
+  /* Constrain the flex content area to the RECTANGULAR tab area
+     only (not the curve-junction sweep below, not the body strip).
+     Labels then center inside the visual rectangle of the tab,
+     where the eye expects them — and stay centered in unselected
+     state regardless of depth. */
+  padding-bottom: calc(var(--tab-junction-buffer) + var(--depth-strip, 0px));
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 0 12px;
+  background: transparent;
+  border: 0;
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--label);
+  opacity: 0.7;
+  white-space: nowrap;
+  overflow: hidden;
+  cursor: pointer;
+  pointer-events: auto;
+  z-index: 4;
+  transition: opacity 320ms var(--ease-out);
+}
+
+.card[data-active="true"] .tabHit {
+  opacity: 1;
+  font-weight: 600;
+}
+
+@media (hover: hover) {
+  .card:not([data-active="true"]) .tabHit:hover {
+    opacity: 0.8;
+  }
+}
+
+.tabHit:focus-visible {
+  outline: 2px solid var(--stroke);
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+
+.tabIndex {
+  font-variant-numeric: tabular-nums;
+  font-weight: 500;
+  opacity: 0.7;
+}
+
+.tabLabelText {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ===========================================
+   MATTE — holds the project media. Top edge sits at the tab
+   portion baseline, then inset on all sides so the body visibly
+   frames the content. Only the active card's matte is visible
+   (autoAlpha controlled by GSAP).
+   =========================================== */
+.matte {
+  position: absolute;
+  top: calc(var(--tab-portion) + var(--matte-inset));
+  left: var(--matte-inset);
+  right: var(--matte-inset);
+  /* Explicit 16:9 frame — width is fixed by the inset bounds and
+     height derives from the aspect-ratio. The body has been sized
+     taller than 16:9 (see .stack aspect-ratio) so the matte fits
+     with matte-insets + gallery-nav strip below. */
+  aspect-ratio: 16 / 9;
+  border-radius: 6px;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.media {
+  width: 100%;
+  height: 100%;
+  /* Letterbox rather than crop — the matte is a 16:9 frame, and
+     non-16:9 source images (like the brand identity board) should
+     show in full inside the frame. */
+  object-fit: contain;
+  display: block;
+}
+
+/* ===========================================
+   GALLERY ADVANCE — invisible button overlaying the matte so the
+   image itself acts as a "next" affordance. Sits above the media
+   but below the cardLink (which keeps its own click target).
+   =========================================== */
+.galleryAdvance {
+  position: absolute;
+  inset: 0;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  pointer-events: auto;
+  z-index: 1;
+}
+
+.galleryAdvance:focus-visible {
+  outline: 2px solid var(--stroke);
+  outline-offset: -3px;
+}
+
+/* ===========================================
+   GALLERY NAV — arrows + dots inside the body's bottom inset
+   strip. Only rendered for the active card when its gallery has
+   more than one image. Sets --gallery-nav-h on the parent stack
+   so .matte reserves the right amount of space.
+   =========================================== */
+.galleryNav {
+  position: absolute;
+  bottom: calc(var(--matte-inset) * 0.5);
+  left: var(--matte-inset);
+  right: var(--matte-inset);
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  pointer-events: none;
+  z-index: 3;
+}
+
+.galleryArrow {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1px solid var(--stroke);
+  background: transparent;
+  color: var(--stroke);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  pointer-events: auto;
+  opacity: 0.6;
+  transition:
+    opacity 220ms var(--ease-out),
+    background 220ms var(--ease-out),
+    color 220ms var(--ease-out);
+}
+
+@media (hover: hover) {
+  .galleryArrow:hover {
+    opacity: 1;
+    background: var(--stroke);
+    color: var(--bg-mask);
+  }
+}
+
+.galleryArrow:focus-visible {
+  outline: 2px solid var(--stroke);
+  outline-offset: 2px;
+  opacity: 1;
+}
+
+.galleryArrow svg {
+  width: 14px;
+  height: 14px;
+}
+
+.galleryDots {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  pointer-events: auto;
+}
+
+.galleryDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: 1px solid var(--stroke);
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+  opacity: 0.5;
+  transition:
+    background 220ms var(--ease-out),
+    opacity 220ms var(--ease-out),
+    transform 220ms var(--ease-out);
+}
+
+.galleryDotActive {
+  background: var(--stroke);
+  opacity: 1;
+  transform: scale(1.15);
+}
+
+.galleryDot:focus-visible {
+  outline: 2px solid var(--stroke);
+  outline-offset: 2px;
+  opacity: 1;
+}
+
+/* When the active card has a gallery, the JSX adds a galleryNav
+   inside the card. Reserve 36px of bottom space in the matte so
+   the controls don't overlap the media. */
+.card[data-active="true"]:has(.galleryNav) {
+  --gallery-nav-h: 36px;
+}
+
+/* ===========================================
+   LINK — case-study arrow at bottom-right of matte.
+   =========================================== */
+.cardLink {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  width: clamp(30px, 2.6vw, 38px);
+  height: clamp(30px, 2.6vw, 38px);
+  border-radius: 50%;
+  border: 1.5px solid var(--stroke);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--stroke);
+  text-decoration: none;
+  background: rgba(0, 0, 0, 0.32);
+  pointer-events: auto;
+  z-index: 2;
+  transition:
+    transform 280ms var(--ease-out),
+    background 280ms var(--ease-out),
+    color 280ms var(--ease-out);
+}
+
+@media (hover: hover) {
+  .cardLink:hover {
+    background: var(--stroke);
+    color: var(--bg-mask);
+    transform: translate(2px, -2px);
+  }
+}
+
+.cardLink:focus-visible {
+  outline: 2px solid var(--stroke);
+  outline-offset: 3px;
+}
+
+.cardLink svg {
+  width: 50%;
+  height: 50%;
+}
+
+/* ===========================================
+   REDUCED MOTION
+   =========================================== */
+@media (prefers-reduced-motion: reduce) {
+  .stack { perspective: none; transform-style: flat; }
+  .card { transform: none !important; opacity: 1 !important; filter: none !important; }
+  .matte { opacity: 1 !important; visibility: visible !important; }
+}
+
+/* ===========================================
+   MOBILE — drop the 3D depth.
+   =========================================== */
+@media (max-width: 768px) {
+  .stack {
+    aspect-ratio: auto;
+    perspective: none;
+    transform-style: flat;
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .card { display: contents; filter: none; }
+  .silhouette { display: none; }
+  .tabHit {
+    position: relative;
+    top: auto;
+    left: auto;
+    width: auto;
+    flex: 1 1 0;
+    min-width: 0;
+    order: var(--slot-i);
+    height: 38px;
+    margin-right: 4px;
+    border: 1.5px solid var(--stroke);
+    border-bottom: none;
+    border-radius: 8px 8px 0 0;
+    opacity: 0.55;
+  }
+  .card[data-active="true"] .tabHit {
+    opacity: 1;
+    border-width: 2px;
+  }
+  .matte {
+    order: 99;
+    flex: 1 0 100%;
+    position: relative;
+    inset: auto;
+    aspect-ratio: 16 / 9;
+    border: 1.5px solid var(--stroke);
+    border-radius: 0 12px 12px 12px;
+    margin-top: -1px;
+    padding: var(--matte-inset);
+  }
+  .card:not([data-active="true"]) .matte { display: none; }
+}

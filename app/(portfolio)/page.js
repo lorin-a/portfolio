@@ -88,9 +88,33 @@ export default function Home() {
           tagline="Approachable Socialization for Busy Buddies"
           description="A product and brand system for university campuses, helping busy students connect over shared values through low-effort socializing."
           contributions={[
-            { label: 'Brand Identity' },
-            { label: 'UX' },
-            { label: 'Animation' },
+            {
+              label: 'Brand Identity',
+              gallery: [
+                { src: cloudVideo(HOME_VIDEOS['somebuddy-logo'], 1600), type: 'video', alt: 'SomeBuddy animated logo' },
+                { src: cloudImg(HOME_IMAGES['somebuddy-22'], 1200), type: 'image', alt: 'SomeBuddy brand detail' },
+                { src: cloudImg(HOME_IMAGES['somebuddy-23'], 1200), type: 'image', alt: 'SomeBuddy brand detail' },
+                { src: cloudVideo(HOME_VIDEOS['somebuddy-reel-2'], 1200), type: 'video', alt: 'SomeBuddy brand reel' },
+              ],
+            },
+            {
+              label: 'Animation',
+              gallery: [
+                { src: cloudVideo(HOME_VIDEOS['somebuddy-animation'], 1200), type: 'video', alt: 'SomeBuddy animation detail' },
+                { src: cloudVideo(HOME_VIDEOS['somebuddy-animation-2'], 1200), type: 'video', alt: 'SomeBuddy animation detail' },
+                { src: cloudVideo(HOME_VIDEOS['somebuddy-animation-3'], 1200), type: 'video', alt: 'SomeBuddy animation detail' },
+              ],
+            },
+            {
+              label: 'UX',
+              gallery: [
+                { src: cloudVideo(HOME_VIDEOS['somebuddy-ux'], 1200), type: 'video', alt: 'SomeBuddy UX flow' },
+                { src: cloudVideo(HOME_VIDEOS['somebuddy-ux-2'], 1200), type: 'video', alt: 'SomeBuddy UX flow detail' },
+                { src: cloudImg(HOME_IMAGES['somebuddy-28'], 1200), type: 'image', alt: 'SomeBuddy UX detail' },
+                { src: cloudImg(HOME_IMAGES['somebuddy-30'], 1200), type: 'image', alt: 'SomeBuddy UX detail' },
+                { src: cloudImg(HOME_IMAGES['somebuddy-31'], 1200), type: 'image', alt: 'SomeBuddy UX detail' },
+              ],
+            },
           ]}
           pillVariant="sense"
           mediaSrc={cloudVideo(HOME_VIDEOS['somebuddy-logo'], 1600)}
