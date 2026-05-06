@@ -765,7 +765,4 @@
   .transport {
     gap: 18px;
   }
-  .poemFrame {
-    height: clamp(340px, 56vh, 460px);
-  }
 }
