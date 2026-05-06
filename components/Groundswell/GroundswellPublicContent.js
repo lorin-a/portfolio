@@ -606,6 +606,15 @@ export default function GroundswellPublicContent() {
         </div>
       </section>
 
+      {/* Page break symbol — quiet visual punctuation between the
+          credits and the final invitation. */}
+      <div className={styles.pageBreakSymbol} aria-hidden="true">
+        <img
+          src="https://res.cloudinary.com/dc17mvdyv/image/upload/v1778077875/CTB-Page_Break_Symbol_SVG.svg"
+          alt=""
+        />
+      </div>
+
       {/* ==================== GET IN TOUCH ====================
           Final invitation — sits at the very bottom of the page so the
           last thing the visitor sees is the door open to them. */}

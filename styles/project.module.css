@@ -180,6 +180,24 @@
   margin: var(--space-lg) 0;
 }
 
+/* Page break symbol — quiet flourish between two adjacent sections.
+   Sits on the project's dark register so the cream-on-dark chapter
+   rhythm is preserved across the break. */
+.pageBreakSymbol {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: clamp(56px, 8vh, 96px) var(--container-padding);
+  background-color: var(--project-accent);
+}
+
+.pageBreakSymbol img {
+  width: clamp(56px, 6vw, 88px);
+  height: auto;
+  display: block;
+  opacity: 0.85;
+}
+
 .subheading {
   font-family: var(--font-serif);
   font-size: var(--text-h3);
