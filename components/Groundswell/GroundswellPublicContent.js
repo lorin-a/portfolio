@@ -516,7 +516,14 @@ export default function GroundswellPublicContent() {
       </section>
 
       {/* ==================== ACKNOWLEDGEMENTS ==================== */}
-      <section id="acknowledgements" className={styles.sectionDark}>
+      <section
+        id="acknowledgements"
+        className={styles.sectionDark}
+        style={{
+          paddingTop: 'clamp(112px, 16vh, 192px)',
+          paddingBottom: 'clamp(112px, 16vh, 192px)',
+        }}
+      >
         <div className={styles.sectionContent}>
           <AnimatedElement>
             <p className={styles.componentLabelLight} style={{ textAlign: 'center' }}>In gratitude</p>
