@@ -443,7 +443,7 @@ export default function GroundswellPublicContent() {
       <section id="timeline" className={styles.timelineSection}>
         <div className={styles.timelineSectionInner}>
           <AnimatedElement>
-            <p className={styles.componentLabelCenter}>Project arc</p>
+            <p className={styles.componentLabelLight}>Project arc</p>
             <h2 className={styles.timelineSectionTitle}>Where this is headed</h2>
           </AnimatedElement>
 
