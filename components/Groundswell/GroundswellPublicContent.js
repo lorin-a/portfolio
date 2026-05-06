@@ -26,8 +26,9 @@ const sectionLabels = {
   'cards': 'The Ecosystem',
   'outcomes': 'Outcomes',
   'press': 'Press',
+  'timeline': 'Timeline',
   'case-study': 'Case Study',
-  'whats-next': 'Timeline',
+  'whats-next': 'Get in Touch',
   'acknowledgements': 'Credits',
 }
 
@@ -434,52 +435,18 @@ export default function GroundswellPublicContent() {
         </div>
       </section>
 
-      {/* ==================== READ THE CASE STUDY ====================
-          Big editorial CTA inviting visitors to read the full design
-          process and case study. Replaces the prior #context block.
-          Lorin owns voice — placeholders below are structural. */}
-      <section id="case-study" className={styles.caseStudyCta}>
-        <div className={styles.caseStudyCtaInner}>
+      {/* ==================== TIMELINE ====================
+          Horizontal project timeline. Filled dots = past or in progress;
+          outlined dots = future. Sits between Press and the case-study
+          CTA so the reader gets a quick "where this is" before the
+          invitation to read more. */}
+      <section id="timeline" className={styles.timelineSection}>
+        <div className={styles.timelineSectionInner}>
           <AnimatedElement>
-            <p className={styles.componentLabelCenter}>The full story</p>
-            {/* PUBLIC-TONE TBD: title for this CTA section. */}
-            <h2 className={styles.caseStudyCtaTitle}>
-              Read the case study
-            </h2>
-            <p className={styles.caseStudyCtaBody}>
-              The case study covers the co-design and research with oncology staff, the insights that shaped Groundswell, and the behind-the-scenes of building and installing it.
-            </p>
+            <p className={styles.componentLabelCenter}>Project arc</p>
+            <h2 className={styles.timelineSectionTitle}>Where this is headed</h2>
           </AnimatedElement>
 
-          <AnimatedElement>
-            <a
-              href="/projects/groundswell"
-              className={styles.caseStudyCtaButton}
-            >
-              <span className={styles.caseStudyCtaButtonLabel}>View the full case study</span>
-              <span className={styles.caseStudyCtaButtonArrow} aria-hidden="true">&rarr;</span>
-            </a>
-          </AnimatedElement>
-        </div>
-      </section>
-
-      {/* ==================== TIMELINE + REACH OUT ====================
-          Closing section: simple project timeline (past phases shipped +
-          ideal future phases) followed by an invitation to reach out.
-          Lorin owns voice — phase rows below are structural placeholders. */}
-      <section id="whats-next" className={styles.sectionDark}>
-        <div className={styles.sectionContent}>
-          <AnimatedElement>
-            <h2 className={styles.sectionHeadingLightCentered}>Where this is headed</h2>
-            {/* CLOSING BODY TBD: 1-2 sentence frame for the timeline below. */}
-            <p className={styles.bodyTextLightCenteredBold}>
-              [TBD: a short frame for the timeline — what's shipped, what's underway, and where the work could go next.]
-            </p>
-          </AnimatedElement>
-
-          {/* Horizontal timeline. Filled dots = done or in progress;
-              outlined dots = future phases. Connecting line behind the
-              dots reinforces continuity. Mobile gracefully stacks. */}
           <AnimatedElement>
             <ol className={styles.timeline} aria-label="Project timeline">
               <li className={`${styles.timelinePhase} ${styles.timelinePhasePast}`}>
@@ -516,19 +483,57 @@ export default function GroundswellPublicContent() {
               </li>
             </ol>
           </AnimatedElement>
+        </div>
+      </section>
 
-          {/* Reach-out invitation. Single warm CTA — email or contact form. */}
+      {/* ==================== READ THE CASE STUDY ====================
+          Big editorial CTA inviting visitors to read the full design
+          process and case study. Replaces the prior #context block.
+          Lorin owns voice — placeholders below are structural. */}
+      <section id="case-study" className={styles.caseStudyCta}>
+        <div className={styles.caseStudyCtaInner}>
+          <AnimatedElement>
+            <p className={styles.componentLabelCenter}>The full story</p>
+            {/* PUBLIC-TONE TBD: title for this CTA section. */}
+            <h2 className={styles.caseStudyCtaTitle}>
+              Read the case study
+            </h2>
+            <p className={styles.caseStudyCtaBody}>
+              The case study covers the co-design and research with oncology staff, the insights that shaped Groundswell, and the behind-the-scenes of building and installing it.
+            </p>
+          </AnimatedElement>
+
+          <AnimatedElement>
+            <a
+              href="/projects/groundswell"
+              className={styles.caseStudyCtaButton}
+            >
+              <span className={styles.caseStudyCtaButtonLabel}>View the full case study</span>
+              <span className={styles.caseStudyCtaButtonArrow} aria-hidden="true">&rarr;</span>
+            </a>
+          </AnimatedElement>
+        </div>
+      </section>
+
+      {/* ==================== GET IN TOUCH ====================
+          Single warm closing invitation. Lorin owns voice + email. */}
+      <section id="whats-next" className={styles.sectionDark}>
+        <div className={styles.sectionContent}>
+          <AnimatedElement>
+            <h2 className={styles.sectionHeadingLightCentered}>Get in touch</h2>
+            {/* PUBLIC-TONE TBD: 1-2 sentence invitation to reach out. */}
+            <p className={styles.bodyTextLightCenteredBold}>
+              [TBD: a warm 1-2 sentence invitation — for partners, hospitals, press, or anyone who wants to bring this work to their team.]
+            </p>
+          </AnimatedElement>
+
           <AnimatedElement>
             <div className={styles.reachOut}>
-              {/* PUBLIC-TONE TBD: 1-2 sentence invitation to reach out. */}
-              <p className={styles.reachOutBody}>
-                [TBD: a warm 1-2 sentence invitation — for partners, hospitals, press, or anyone who wants to bring this work to their team.]
-              </p>
               <a
                 href="mailto:[EMAIL TBD]"
                 className={styles.reachOutButton}
               >
-                <span className={styles.reachOutButtonLabel}>Get in touch</span>
+                <span className={styles.reachOutButtonLabel}>Reach out</span>
                 <span className={styles.reachOutButtonArrow} aria-hidden="true">&rarr;</span>
               </a>
             </div>

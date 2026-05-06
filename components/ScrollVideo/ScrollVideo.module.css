@@ -18,7 +18,7 @@
 
 /* Blur effect to obscure sensitive data */
 .scrollVideoBlurred {
-  filter: blur(20px);
+  filter: blur(5px);
 }
 
 /* Notice overlay for blurred videos */
