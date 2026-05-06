@@ -149,19 +149,23 @@ export default function WhelmNeed() {
 
       const swapForward = gsap.timeline({ paused: true })
       swapForward
-        /* Close prev predicate: clip collapses from right (text retracts).
-           --reveal animated on the layer so cursor (if visible) tracks. */
+        /* 1. Question swaps first, fully. Close prev predicate (clip
+           collapses from right), hide it, reveal next layer, cursor
+           lands, new predicate wipes in, cursor exits. */
         .to(prevLayer, { '--reveal': '100%', duration: dur * 0.6, ease: 'power2.inOut' })
-        /* Hide prev layer once clipped, swap visible layer to next. */
         .set(prevLayer, { autoAlpha: 0 })
         .set(nextLayer, { autoAlpha: 1 })
-        /* New cursor lands then wipe opens. */
         .to(nextCursor, { autoAlpha: 1, duration: 0.2, ease: 'power2.out' })
-        .to(nextLayer, { '--reveal': '0%', duration: dur, ease: 'power2.inOut' }, '<+=0.05')
+        .addLabel('predicate-wipe-in', '<+=0.05')
+        .to(nextLayer, { '--reveal': '0%', duration: dur, ease: 'power2.inOut' }, 'predicate-wipe-in')
         .to(nextCursor, { autoAlpha: 0, duration: 0.3, ease: 'power2.out' }, '+=0.15')
-        /* Body crossfade. */
-        .to(bodyLayers[i - 1], { autoAlpha: 0, y: -12, duration: 0.5, ease: 'power2.in' }, 0)
-        .to(bodyLayers[i], { autoAlpha: 1, y: 0, duration: 0.7, ease: 'power1.out' }, 0.3)
+        /* 2. Paragraph swaps sequentially — old fades fully out before
+           new fades in, so the two never overlap mid-crossfade in the
+           shared grid cell. Fade-out kicks off while the new question
+           is still wiping in, so the body is fresh by the time the
+           reader's eye drops to it. */
+        .to(bodyLayers[i - 1], { autoAlpha: 0, y: -12, duration: 0.4, ease: 'power2.in' }, `predicate-wipe-in+=${dur * 0.4}`)
+        .to(bodyLayers[i], { autoAlpha: 1, y: 0, duration: 0.6, ease: 'power1.out' })
 
       beatTimelines.push(swapForward)
 

@@ -44,7 +44,7 @@
 .link {
   display: inline-block;
   font-family: var(--font-noto-sans), -apple-system, sans-serif;
-  font-size: 12px;
+  font-size: 14px;
   font-style: normal;
   font-weight: 400;
   letter-spacing: 0.20em;
@@ -81,7 +81,7 @@
     flex-wrap: wrap;
   }
   .link {
-    font-size: 13px;
+    font-size: 15px;
   }
 }
 

@@ -751,7 +751,7 @@
   align-items: center;
   gap: var(--s-3);
   font-family: var(--font-noto-sans), -apple-system, sans-serif;
-  font-size: 12px;
+  font-size: 13px;
   font-style: normal;
   font-weight: 400;
   text-transform: uppercase;
@@ -789,14 +789,14 @@
 
 .tangleLabel {
   font-family: var(--whelm-body-font);
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 400;
   letter-spacing: 0.01em;
 }
 
 .portalCoreLabel {
   font-family: var(--whelm-body-font);
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 500;
   letter-spacing: 0.02em;
 }
@@ -1132,7 +1132,7 @@
   font-family: var(--whelm-editorial-font);
   font-style: italic;
   font-weight: 400;
-  font-size: clamp(12px, 1.05vw, 16px);
+  font-size: clamp(14px, 1.15vw, 18px);
   line-height: 1;
   color: var(--whelm-cream);
   white-space: nowrap;
@@ -1156,7 +1156,7 @@
   font-family: var(--whelm-editorial-font);
   font-style: italic;
   font-weight: 400;
-  font-size: clamp(13px, 1.15vw, 18px);
+  font-size: clamp(15px, 1.3vw, 20px);
   line-height: 1;
   color: var(--whelm-mauve);
   white-space: nowrap;
@@ -1213,7 +1213,7 @@
   font-family: var(--whelm-editorial-font);
   font-style: italic;
   font-weight: 300;
-  font-size: clamp(15px, 1.4vw, 22px);
+  font-size: clamp(17px, 1.55vw, 24px);
   line-height: 1.5;
   color: var(--whelm-cream);
   opacity: 0;
