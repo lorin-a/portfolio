@@ -1,6 +1,7 @@
 'use client'
 
 import { useCallback, useMemo, useRef, useState } from 'react'
+import { flushSync } from 'react-dom'
 import { gsap } from '@/lib/gsap'
 import { useGSAP } from '@gsap/react'
 import styles from './MobileCardStack.module.css'
@@ -8,13 +9,13 @@ import styles from './MobileCardStack.module.css'
 gsap.registerPlugin(useGSAP)
 
 /**
- * MobileCardStack — flattened stack-of-cards gallery for narrow viewports.
+ * MobileCardStack — single-card gallery for narrow viewports.
  *
  * Pools every image from the desktop card galleries into one ordered
- * list. Renders a static stack of two decorative back layers + a single
- * active media card. The back layers never move; only the active card
- * animates. Tap or swipe-left advances the active card to the left;
- * the new image slides in from the right.
+ * list. Renders the active image alone in a clean rounded frame. Tap
+ * or swipe up advances: the active card slides off the top, content
+ * is swapped synchronously while offscreen (flushSync), and the new
+ * image rises from the bottom. Swipe down reverses.
  */
 export default function MobileCardStack({ slides = [], contributions = [], href }) {
   const images = useMemo(() => {
@@ -28,7 +29,7 @@ export default function MobileCardStack({ slides = [], contributions = [], href 
   const [activeIdx, setActiveIdx] = useState(0)
   const cardRef = useRef(null)
   const animatingRef = useRef(false)
-  const touchStartX = useRef(null)
+  const touchStartY = useRef(null)
 
   const advance = useCallback(
     (dir = 1) => {
@@ -58,7 +59,14 @@ export default function MobileCardStack({ slides = [], contributions = [], href 
         ease: 'power2.in',
       })
         .add(() => {
-          setActiveIdx(prev => (prev + dir + count) % count)
+          /* flushSync forces React to commit the new image to the DOM
+             before GSAP's next .set() runs. Without it, the state
+             update batches asynchronously and the card slides back in
+             still showing the old image — popping mid-flight when
+             React finally re-renders. */
+          flushSync(() => {
+            setActiveIdx(prev => (prev + dir + count) % count)
+          })
         })
         .set(el, { yPercent: dir > 0 ? 110 : -110 })
         .to(el, {
@@ -70,11 +78,11 @@ export default function MobileCardStack({ slides = [], contributions = [], href 
     [count]
   )
 
-  const onTouchStart = (e) => { touchStartX.current = e.touches[0].clientY }
+  const onTouchStart = (e) => { touchStartY.current = e.touches[0].clientY }
   const onTouchEnd = (e) => {
-    if (touchStartX.current == null) return
-    const dy = e.changedTouches[0].clientY - touchStartX.current
-    touchStartX.current = null
+    if (touchStartY.current == null) return
+    const dy = e.changedTouches[0].clientY - touchStartY.current
+    touchStartY.current = null
     if (Math.abs(dy) < 40) {
       advance(1)
       return
@@ -99,7 +107,7 @@ export default function MobileCardStack({ slides = [], contributions = [], href 
         onTouchStart={onTouchStart}
         onTouchEnd={onTouchEnd}
       >
-        <div ref={cardRef} className={styles.card} aria-live="polite">
+        <div ref={cardRef} className={styles.card}>
           {current.type === 'video' ? (
             <video
               key={`v-${activeIdx}`}
