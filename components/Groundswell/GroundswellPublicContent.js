@@ -28,8 +28,8 @@ const sectionLabels = {
   'press': 'Press',
   'timeline': 'Timeline',
   'case-study': 'Case Study',
-  'whats-next': 'Get in Touch',
   'acknowledgements': 'Credits',
+  'whats-next': 'Get in Touch',
 }
 
 const darkSections = ['hero', 'vision', 'ctb', 'artwall', 'outcomes', 'acknowledgements', 'whats-next']
@@ -444,7 +444,7 @@ export default function GroundswellPublicContent() {
         <div className={styles.timelineSectionInner}>
           <AnimatedElement>
             <p className={styles.componentLabelLight}>Project arc</p>
-            <h2 className={styles.timelineSectionTitle}>Where this is headed</h2>
+            <h2 className={styles.timelineSectionTitle}>Timeline</h2>
           </AnimatedElement>
 
           <AnimatedElement>
@@ -511,32 +511,6 @@ export default function GroundswellPublicContent() {
               <span className={styles.caseStudyCtaButtonLabel}>View the full case study</span>
               <span className={styles.caseStudyCtaButtonArrow} aria-hidden="true">&rarr;</span>
             </a>
-          </AnimatedElement>
-        </div>
-      </section>
-
-      {/* ==================== GET IN TOUCH ====================
-          Single warm closing invitation. Lorin owns voice + email. */}
-      <section id="whats-next" className={styles.sectionDark}>
-        <div className={styles.sectionContent}>
-          <AnimatedElement>
-            <h2 className={styles.sectionHeadingLightCentered}>Get in touch</h2>
-            {/* PUBLIC-TONE TBD: 1-2 sentence invitation to reach out. */}
-            <p className={styles.bodyTextLightCenteredBold}>
-              [TBD: a warm 1-2 sentence invitation — for partners, hospitals, press, or anyone who wants to bring this work to their team.]
-            </p>
-          </AnimatedElement>
-
-          <AnimatedElement>
-            <div className={styles.reachOut}>
-              <a
-                href="mailto:lorinanderberg1@gmail.com"
-                className={styles.reachOutButton}
-              >
-                <span className={styles.reachOutButtonLabel}>Reach out</span>
-                <span className={styles.reachOutButtonArrow} aria-hidden="true">&rarr;</span>
-              </a>
-            </div>
           </AnimatedElement>
         </div>
       </section>
@@ -628,6 +602,32 @@ export default function GroundswellPublicContent() {
             <p className={styles.bodyTextLightCenteredItalic}>
               To everyone who played a role in bringing this project to life—thank you.
             </p>
+          </AnimatedElement>
+        </div>
+      </section>
+
+      {/* ==================== GET IN TOUCH ====================
+          Final invitation — sits at the very bottom of the page so the
+          last thing the visitor sees is the door open to them. */}
+      <section id="whats-next" className={styles.sectionDark}>
+        <div className={styles.sectionContent}>
+          <AnimatedElement>
+            <h2 className={styles.sectionHeadingLightCentered}>Get in touch</h2>
+            <p className={styles.bodyTextLightCenteredBold}>
+              Want to learn more or support the work? We&rsquo;d love to hear from you.
+            </p>
+          </AnimatedElement>
+
+          <AnimatedElement>
+            <div className={styles.reachOut}>
+              <a
+                href="mailto:lorinanderberg1@gmail.com"
+                className={styles.reachOutButton}
+              >
+                <span className={styles.reachOutButtonLabel}>Reach out</span>
+                <span className={styles.reachOutButtonArrow} aria-hidden="true">&rarr;</span>
+              </a>
+            </div>
           </AnimatedElement>
         </div>
       </section>
