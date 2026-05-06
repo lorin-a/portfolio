@@ -17,8 +17,16 @@
 }
 
 /* Blur effect to obscure sensitive data */
+/* Soft, ambient blur — heavier blur radius reads smoother than a small
+   blur on moving video (small blurs make detail flicker, which the eye
+   keeps trying to resolve). Slight scale prevents the dark fringe that
+   blur creates at the element edges, and a small brightness+saturate
+   pull lets the underlying motion read as colour-mood instead of
+   half-legible UI. */
 .scrollVideoBlurred {
-  filter: blur(2px);
+  filter: blur(2px) brightness(0.97) saturate(0.92);
+  transform: scale(1.02);
+  transform-origin: center;
 }
 
 /* Notice overlay for blurred videos */

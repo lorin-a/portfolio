@@ -6,11 +6,12 @@ A design research portfolio for lorin.work. The audience is hiring managers who 
 
 ## Before Doing Any Work
 
-Read these three files. They are the complete project context:
+Read these four files. They are the complete project context:
 
 1. **`DESIGN_SPEC.md`** — All design tokens, engineering decisions, accessibility standards, motion system, case study structure. This is the source of truth. If something contradicts this file, this file wins.
 2. **`docs/WORKING_WITH_LORIN.md`** — How Lorin thinks, her creative taste, her strengths, her growth edges, and how to collaborate with her effectively.
 3. **`GSAP_PATTERNS.md`** — GSAP animation patterns, plugin usage, React integration, and conventions for this project. All animation code must follow these patterns.
+4. **`docs/AGENT_PROTOCOL.md`** — Standing operating rules for Claude on this project (loop discipline, handoff discipline, build hygiene). Binding, not optional.
 
 Do not reference any files in `docs/archive/`. They contain outdated values from earlier project phases.
 

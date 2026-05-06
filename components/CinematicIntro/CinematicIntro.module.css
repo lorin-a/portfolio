@@ -1,0 +1,760 @@
+/* ============================================================================
+   CinematicIntro — Sticky watercolor + purple wash, text beats scroll over.
+   Sits between the hero strip and #vision on /groundswell only.
+   Type follows site-wide tokens: --text-* sizes, --weight-*, --leading-*,
+   --font-heading / --font-body / --font-soft.
+============================================================================ */
+
+.cinematic {
+  position: relative;
+  /* Deep plum carrier behind the watercolor + wash. Mostly hidden by the
+     reveal but sets the anchor color before the painting loads and at any
+     compositing edges. Scoped to this component -- the cinematic is the
+     only deep-plum surface on the site; rest of /groundswell is cream. */
+  --cinematic-carrier: #1a1320;
+  /* Groundswell project cream -- warmer than the site default --cream.
+     Used for all type that sits on the watercolor. */
+  --gs-cream: #f8ebe5;
+  background: var(--cinematic-carrier);
+  color: var(--gs-cream);
+  isolation: isolate;
+  /* Override the global `section` rule that adds 64px top/bottom padding */
+  padding: 0;
+}
+
+/* Sticky backdrop: watercolor + wash anchor the visual frame for the
+   entire cinematic. Sticks at viewport top while the beats below scroll
+   past it. The cinematic section's total height is determined by its
+   children (.scrollColumn + this), so sticky has room to stick. */
+.stickyBackdrop {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+  z-index: 0;
+}
+
+/* Brand white base -- the cinematic opens on a clean canvas before
+   the watercolor blooms over it. Also serves as the background-of-
+   record at any compositing edges. */
+.whiteBase {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  inset: 0;
+  background: var(--cream, #f8ebe5);
+  z-index: 0;
+}
+
+/* Blue Garden watercolor layer: full-bleed wrapper for the WebGL
+   reveal. Stays at full opacity until scroll crossfades it out. */
+.blueGardenLayer {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  inset: 0;
+  z-index: 1;
+}
+
+/* Hero photograph: hidden at first; fades in via scroll scrub as the
+   Blue Garden watercolor fades out. Sits beneath the wash so the wash
+   provides constant brand-purple legibility regardless of which image
+   is visible. */
+.heroBackdropImage {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 2;
+  /* GSAP-controlled visibility */
+  opacity: 0;
+  visibility: hidden;
+}
+
+/* Brand purple wash (#554E65). Fades in after watercolor reveal and
+   stays at full opacity for the entire cinematic -- the brand color
+   carrier across both the Blue Garden and the gs-hero photograph. */
+.purpleWash {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  inset: 0;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(85, 78, 101, 0.65) 0%,
+    rgba(70, 64, 84, 0.86) 55%,
+    rgba(55, 50, 67, 0.95) 100%
+  );
+  z-index: 3;
+  /* GSAP-animated initial state */
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* Hero overlay: logo + descriptor + scroll cue. Sits above wash. Fades
+   in once wash is in place; fades out via scrub as user scrolls into
+   the cinematic interior. */
+.heroLayer {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  inset: 0;
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  /* GSAP-animated initial state */
+  opacity: 0;
+  visibility: hidden;
+}
+
+.heroLogo {
+  display: block;
+  width: clamp(360px, 60vw, 920px);
+  height: auto;
+  margin: 0 auto;
+  /* GSAP-animated initial state: scale + blur settle in */
+  opacity: 0;
+  visibility: hidden;
+  will-change: transform, opacity, filter;
+}
+
+.heroDescriptor {
+  /* GSAP-animated initial state: SplitText line stagger */
+  opacity: 0;
+  visibility: hidden;
+  will-change: transform, opacity, filter;
+}
+
+.heroDescriptor {
+  margin: var(--space-md) auto 0;
+  max-width: min(56ch, 88vw);
+  font-family: var(--font-body);
+  font-size: var(--text-body-large);
+  font-weight: var(--weight-body);
+  line-height: var(--leading-normal);
+  color: var(--gs-cream);
+  text-align: center;
+  text-wrap: pretty;
+}
+
+/* Sentinel track: invisible scroll-progress markers below the sticky
+   backdrop. Each sentinel corresponds to one beat in the anchored
+   stage above. The first sentinel includes a hero-zone offset so beat 1
+   doesn't fade in until the user has scrolled past the hero crossfade. */
+.sentinelTrack {
+  position: relative;
+  z-index: 1;
+}
+
+.sentinel {
+  /* Each sentinel = the scroll dwell time for one beat. Longer = beat
+     stays anchored at center for longer before the next replaces it.
+     ~110vh gives the user time to read each moment before scroll
+     advances them to the next. */
+  height: 110vh;
+  height: 110dvh;
+}
+
+/* The first sentinel needs to push beat 1's activation past the hero
+   crossfade zone. Splitting the offset between a track padding-top and
+   sentinel 1 itself keeps each sentinel close to the same height -- so
+   adjacent sentinels don't both fall inside the IO middle band. */
+.sentinelTrack {
+  /* Push beat 1 (thesis) past the hero fade-out so the logo fully
+     dissolves into blank purple wash before the thesis fades in. Hero
+     scrubs out across 160vh; sentinel1 IO-band entry sits at
+     paddingTop + 35vh, so 150vh keeps a ~25vh breath of empty wash
+     between logo gone and thesis arriving. */
+  padding-top: 150vh;
+  padding-top: 150dvh;
+  /* Trailing dwell after sentinel 4's IO-band window so the poem holds
+     at center long enough to be taken in before the sticky backdrop
+     releases and the rest of the site arrives. */
+  padding-bottom: 80vh;
+  padding-bottom: 80dvh;
+  /* Sentinels are scroll-trigger geometry only -- never receive clicks
+     or scroll-target focus. Without this, the sentinels (which sit
+     above the sticky stage in stacking order) would intercept the
+     poem player's clicks and the transcript's scroll wheel. */
+  pointer-events: none;
+}
+
+/* Last sentinel matches the others now that audio controls live in
+   the nav. The user can leave the poem section without losing audio,
+   so we don't need to pin them here longer than the other beats. */
+.sentinelLast {
+  height: 100vh !important;
+  height: 100dvh !important;
+}
+
+/* Each beat is 60vh tall with flex-centered content. As the user scrolls,
+   the beat passes through viewport and the content briefly lands near
+   center. Breath plays in via IO play-once. Beats are short enough that
+   travel is contained but tall enough that only one beat's content is
+   visible at any scroll position. */
+/* All beats sit absolutely-positioned inside the sticky stage, anchored
+   at viewport center. Sentinels below drive which one is visible via
+   crossfade -- no travel, no translation, only opacity. */
+.beat {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  inset: 0;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(32px, 5vh, 56px) clamp(20px, 5vw, 48px);
+  pointer-events: none;
+  /* GSAP-controlled visibility */
+  opacity: 0;
+  visibility: hidden;
+}
+
+/* Poem beat is interactive -- needs pointer events so the play button,
+   scrubber, and transcript scroll all work. Stays at the same z-index
+   as the other beats so the heroLayer doesn't trap clicks above it. */
+.beatPoem {
+  pointer-events: auto;
+}
+
+.beatInner {
+  max-width: 600px;
+  width: 100%;
+  margin: 0 auto;
+  text-align: center;
+}
+
+/* SplitText line-mask wrapper. Each line gets clipped via overflow:hidden;
+   slight vertical padding keeps descenders/ascenders intact during the wipe. */
+.splitLine {
+  padding: 0.06em 0;
+}
+
+/* ----------------------------------------------------------------------------
+   Beat 1 — Pull quote (visible at scroll 0, layers in via GSAP)
+---------------------------------------------------------------------------- */
+
+.pullQuote {
+  margin: 0 auto;
+  max-width: min(900px, 94vw);
+  text-align: center;
+}
+
+/* Pull quote and thesis share one display register: same family, size,
+   weight, and leading. The pull quote sets itself apart only with italic.
+   Each clause is wrapped in its own span (display:block) so the three
+   visual lines are guaranteed regardless of container width. */
+.quoteText {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: var(--text-h2);
+  font-weight: var(--weight-hero);
+  font-style: italic;
+  line-height: var(--leading-tight);
+  font-variation-settings: var(--font-soft);
+  color: var(--gs-cream);
+  /* GSAP-animated initial state -- parent fades in, SplitText wipes lines */
+  opacity: 0;
+  visibility: hidden;
+  will-change: transform, opacity, filter;
+}
+
+.quoteText > span {
+  display: block;
+}
+
+.attribution {
+  display: block;
+  margin-top: 1.75em;
+  font-family: var(--font-body);
+  font-size: var(--text-body-small);
+  font-weight: var(--weight-label);
+  font-style: normal;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(248, 235, 229, 0.6);
+  /* GSAP-animated initial state */
+  opacity: 0;
+  visibility: hidden;
+}
+
+/* Scroll cue: sits inside the hero content block, well below the tags
+   with breathing room so it reads as a quiet invitation rather than a
+   crowded UI element. */
+.scrollCue {
+  margin-top: clamp(72px, 9vh, 120px);
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  color: rgba(247, 247, 247, 0.7);
+  animation: scrollCueBob 2.2s ease-in-out infinite;
+}
+
+.scrollLabel {
+  font-family: var(--font-body);
+  font-size: var(--text-body-small);
+  font-weight: var(--weight-body);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+@keyframes scrollCueBob {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(5px); }
+}
+
+/* Per-beat scroll cue: lives inside each beat's content stack, below
+   the main text/element, so its vertical position adapts to whatever
+   content sits above it. Inherits the beat's opacity (fades in/out
+   with the beat). Bobs gently to suggest "keep scrolling." */
+.beatCue {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin: clamp(40px, 6vh, 80px) auto 0;
+  width: 22px;
+  height: 28px;
+  color: rgba(247, 247, 247, 0.85);
+  pointer-events: none;
+  animation: scrollCueBob 2.2s ease-in-out infinite;
+}
+
+.beatCue svg {
+  width: 22px;
+  height: 28px;
+}
+
+/* ----------------------------------------------------------------------------
+   Beat 2 — Thesis + framing
+---------------------------------------------------------------------------- */
+
+/* Same display register as the pull quote -- only difference is roman vs italic. */
+.thesis {
+  margin: 0 auto;
+  max-width: min(22ch, 92vw);
+  font-family: var(--font-heading);
+  font-size: var(--text-h2);
+  font-weight: var(--weight-hero);
+  line-height: var(--leading-tight);
+  font-variation-settings: var(--font-soft);
+  color: var(--gs-cream);
+  text-align: center;
+  text-wrap: pretty;
+  /* GSAP-animated initial state -- SplitText wipes the lines */
+  opacity: 0;
+  visibility: hidden;
+  will-change: transform, opacity, filter;
+}
+
+/* Framing line: same display register as the thesis (and pull quote)
+   -- the cinematic uses one type system for its three text moments
+   instead of dropping into body register for the last one. */
+.framing {
+  margin: 0 auto;
+  max-width: min(28ch, 92vw);
+  font-family: var(--font-heading);
+  font-size: var(--text-h2);
+  font-weight: var(--weight-hero);
+  line-height: var(--leading-tight);
+  font-variation-settings: var(--font-soft);
+  color: var(--gs-cream);
+  text-align: center;
+  text-wrap: pretty;
+  /* GSAP-animated initial state */
+  opacity: 0;
+  visibility: hidden;
+  will-change: transform, opacity, filter;
+}
+
+/* ----------------------------------------------------------------------------
+   Beat 4 — Single column: header strip / scrolling transcript / player chrome.
+   Apple Podcasts-style. The whole column sits on the cinematic carrier.
+---------------------------------------------------------------------------- */
+
+.poemColumn {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(20px, 3vh, 32px);
+  width: 100%;
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+/* Header strip: the calm anchor at the top of the column. Mirrors the
+   small "now playing" card in Apple Podcasts but flatter -- no album
+   art, just title + reader credit on the carrier. */
+.poemHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  text-align: center;
+  padding-bottom: 4px;
+  /* GSAP-animated initial state */
+  opacity: 0;
+  visibility: hidden;
+}
+
+.poemHeaderEyebrow {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--text-body-small);
+  font-weight: var(--weight-label);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(248, 235, 229, 0.55);
+}
+
+.poemHeaderTitle {
+  margin: 6px 0 0;
+  font-family: var(--font-heading);
+  font-size: var(--text-h3);
+  font-weight: var(--weight-label);
+  font-variation-settings: var(--font-soft);
+  color: var(--gs-cream);
+  line-height: var(--leading-tight);
+}
+
+.poemHeaderSubtitle {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: var(--text-body-small);
+  font-weight: var(--weight-quote);
+  font-style: italic;
+  font-variation-settings: var(--font-soft);
+  color: rgba(248, 235, 229, 0.7);
+}
+
+/* ----------------------------------------------------------------------------
+   Player chrome — scrubber + transport, persistent at the bottom of the column.
+---------------------------------------------------------------------------- */
+
+.poemChrome {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  align-items: center;
+  /* GSAP-animated initial state */
+  opacity: 0;
+  visibility: hidden;
+}
+
+.scrubberRow {
+  width: 100%;
+  max-width: 360px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.scrubber {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 22px;
+  background: transparent;
+  cursor: pointer;
+  margin: 0;
+}
+
+/* WebKit track */
+.scrubber::-webkit-slider-runnable-track {
+  height: 3px;
+  border-radius: var(--radius-pill);
+  background: linear-gradient(
+    to right,
+    rgba(248, 235, 229, 0.85) 0%,
+    rgba(248, 235, 229, 0.85) var(--progress, 0%),
+    rgba(248, 235, 229, 0.18) var(--progress, 0%),
+    rgba(248, 235, 229, 0.18) 100%
+  );
+}
+
+.scrubber::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--gs-cream);
+  margin-top: -4.5px;
+  border: none;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
+}
+
+/* Firefox */
+.scrubber::-moz-range-track {
+  height: 3px;
+  border-radius: var(--radius-pill);
+  background: rgba(248, 235, 229, 0.18);
+}
+
+.scrubber::-moz-range-progress {
+  height: 3px;
+  border-radius: var(--radius-pill);
+  background: rgba(248, 235, 229, 0.85);
+}
+
+.scrubber::-moz-range-thumb {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--gs-cream);
+  border: none;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
+}
+
+.scrubber:focus-visible {
+  outline: 2px solid var(--gs-cream);
+  outline-offset: 4px;
+  border-radius: var(--radius-pill);
+}
+
+.scrubberTimes {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: var(--weight-body);
+  letter-spacing: 0.04em;
+  font-variant-numeric: tabular-nums;
+  color: rgba(248, 235, 229, 0.65);
+}
+
+.transport {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  margin-top: 4px;
+}
+
+.playButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: clamp(64px, 8vw, 80px);
+  height: clamp(64px, 8vw, 80px);
+  border: 1px solid rgba(248, 235, 229, 0.4);
+  border-radius: 50%;
+  background: rgba(248, 235, 229, 0.08);
+  color: var(--gs-cream);
+  cursor: pointer;
+  padding: 0;
+  transition:
+    background-color var(--motion-fast) var(--ease-out),
+    border-color var(--motion-fast) var(--ease-out),
+    transform var(--motion-fast) var(--ease-out);
+}
+
+.playButton[aria-pressed='false'] svg {
+  /* Optical offset for play triangle */
+  margin-left: 3px;
+}
+
+@media (hover: hover) {
+  .playButton:hover {
+    background: rgba(248, 235, 229, 0.16);
+    border-color: rgba(248, 235, 229, 0.75);
+    transform: scale(1.02);
+  }
+}
+
+.playButton:focus-visible {
+  outline: 2px solid var(--gs-cream);
+  outline-offset: 4px;
+}
+
+
+/* Contained transcript frame: fixed height, scrolls as audio plays through.
+   Mask gradient softens the top + bottom edges so lines breathe in and out.
+   The frame itself takes the entry-fade autoAlpha; .poemBody inside is
+   just content. */
+.poemFrame {
+  position: relative;
+  width: 100%;
+  height: clamp(380px, 60vh, 560px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent 0,
+    #000 14%,
+    #000 86%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 0,
+    #000 14%,
+    #000 86%,
+    transparent 100%
+  );
+  /* GSAP-animated initial state */
+  opacity: 0;
+  visibility: hidden;
+  will-change: transform, opacity, filter;
+  /* Visible-enough scrollbar that users know the transcript is
+     scrollable. Keeps the cinematic mood by staying in the cream
+     register but with stronger contrast than a hairline. */
+  scrollbar-width: thin;
+  scrollbar-color: rgba(248, 235, 229, 0.4) rgba(248, 235, 229, 0.08);
+}
+
+.poemFrame::-webkit-scrollbar {
+  width: 8px;
+}
+
+.poemFrame::-webkit-scrollbar-thumb {
+  background: rgba(248, 235, 229, 0.42);
+  border-radius: var(--radius-pill);
+}
+
+.poemFrame::-webkit-scrollbar-thumb:hover {
+  background: rgba(248, 235, 229, 0.62);
+}
+
+.poemFrame::-webkit-scrollbar-track {
+  background: rgba(248, 235, 229, 0.08);
+  border-radius: var(--radius-pill);
+}
+
+.poemBody {
+  margin: 0;
+  /* Generous top + bottom padding so the mask gradient at the frame
+     edges fades empty space rather than the first/last poem lines. */
+  padding: 4em 1em 4em 1em;
+  font-family: var(--font-heading);
+  font-size: var(--text-body-large);
+  font-weight: var(--weight-quote);
+  line-height: var(--leading-normal);
+  font-variation-settings: var(--font-soft);
+  color: rgba(248, 235, 229, 0.88);
+  text-align: center;
+}
+
+.poemOpener {
+  margin: 0 0 1.4em;
+  font-family: var(--font-heading);
+  font-size: var(--text-h3);
+  font-weight: var(--weight-label);
+  color: var(--gs-cream);
+  font-variation-settings: var(--font-soft);
+  line-height: var(--leading-tight);
+}
+
+.stanza {
+  margin: 0 0 1.4em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.stanza:last-child {
+  margin-bottom: 0;
+}
+
+.poemLine {
+  display: block;
+}
+
+/* Stanza-level highlight. While audio plays, the stanza whose timestamp
+   is current stays at full opacity; siblings dim so the eye is led to
+   where the voice is. 600ms power1.inOut to feel calm, not snappy. */
+.poemBody [data-stanza-index] {
+  transition: color 600ms cubic-bezier(0.42, 0, 0.58, 1);
+}
+
+/* Dim/active states use color, not opacity, so text renders cleanly
+   regardless of state -- opacity on text reduces glyph rendering quality. */
+.stanzaDim {
+  color: rgba(248, 235, 229, 0.32);
+}
+
+.stanzaActive {
+  color: var(--gs-cream);
+}
+
+/* ----------------------------------------------------------------------------
+   Reduced motion — content visible, no animation
+---------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  /* Backdrop releases sticky, scroll column drops the negative margin --
+     beats stack normally and all content is statically visible. */
+  .stickyBackdrop {
+    position: relative;
+    height: 100vh;
+    height: 100dvh;
+  }
+  .scrollColumn {
+    margin-top: 0;
+    padding-top: 0;
+  }
+  /* Cross-fade is gone in reduced motion. The hero photo stays visible
+     above the watercolor for its 100vh; beats follow below. */
+  .heroLayer {
+    opacity: 1;
+    visibility: visible;
+  }
+  .purpleWash,
+  .quoteText,
+  .attribution,
+  .thesis,
+  .framing,
+  .poemHeader,
+  .poemFrame,
+  .poemChrome {
+    opacity: 1;
+    visibility: visible;
+  }
+  .poemBody [data-stanza-index] {
+    transition: none;
+  }
+  .scrollCue {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%);
+    animation: none;
+  }
+}
+
+/* ----------------------------------------------------------------------------
+   Mobile
+---------------------------------------------------------------------------- */
+
+@media (max-width: 600px) {
+  .beat {
+    padding: clamp(40px, 6vh, 72px) var(--space-md);
+  }
+  /* Single column already stacks naturally; just tighten the chrome on
+     small screens. */
+  .transport {
+    gap: 18px;
+  }
+  .poemFrame {
+    height: clamp(340px, 56vh, 460px);
+  }
+}

@@ -23,6 +23,7 @@ import Footer from '@/components/Footer/Footer'
 export default function PortfolioShell({ children }) {
   const pathname = usePathname()
   const isHomepage = pathname === '/'
+  const hideGlobalNav = pathname === '/projects/groundswell'
   const lenisRef = useRef(null)
 
   // Homepage uses dark tokens (scoped via data-theme on <html>). The inline
@@ -74,7 +75,7 @@ export default function PortfolioShell({ children }) {
 
   return (
     <HeroIntroProvider isHomepage={isHomepage}>
-      <Nav />
+      {!hideGlobalNav && <Nav />}
       <main id="main-content">
         {children}
       </main>
