@@ -87,14 +87,14 @@ const playtestingQuotes = [
 ]
 
 
-/** Dashboard screen recordings — displayed in Outcomes scroll column */
+/** Dashboard screen recordings — displayed in Outcomes scroll column.
+ * Public-safe alternates, all blurred to obscure unpublished study findings. */
 const dashboardClips = [
-  { src: gsVid('entrypage'), label: 'Entry Screen' },
-  { src: gsVid('moduleview'), label: 'Data Module', blur: true },
-  { src: gsVid('popup'), label: 'Click-through Overlay', blur: true },
-  { src: gsVid('chartview'), label: 'Chart View', blur: true },
-  { src: gsVid('displayview'), label: 'Display View', blur: true },
-  { src: gsVid('admin'), label: 'Admin Page', blur: true },
+  { src: gsVid('gs-intro-artwall'), label: 'Entry Screen' },
+  { src: gsVid('gs-pod-data'), label: 'Pod Usage' },
+  { src: gsVid('gs-display-view'), label: 'Display View' },
+  { src: gsVid('gs-overlay'), label: 'About Page' },
+  { src: gsVid('gs-new-meditations'), label: 'Meditations Data' },
 ]
 
 /** Pod audio resources */
@@ -414,7 +414,7 @@ export default function GroundswellContent() {
         <div className={styles.parallaxScroll}>
           {dashboardClips.map((clip, i) => (
             <AnimatedElement key={i}>
-              <ScrollVideo src={clip.src} label={clip.label} autoplay blur={clip.blur} />
+              <ScrollVideo src={clip.src} label={clip.label} autoplay blur />
             </AnimatedElement>
           ))}
         </div>
@@ -848,11 +848,19 @@ export default function GroundswellContent() {
       </section>
 
       {/* ==================== ACKNOWLEDGEMENTS ==================== */}
-      <section id="acknowledgements" className={styles.sectionDark}>
+      <section
+        id="acknowledgements"
+        className={styles.sectionDark}
+        style={{
+          paddingTop: 'clamp(112px, 16vh, 192px)',
+          paddingBottom: 'clamp(48px, 7vh, 72px)',
+        }}
+      >
         <div className={styles.sectionContent}>
 
           {/* Intro */}
           <AnimatedElement>
+            <p className={styles.componentLabelLight} style={{ textAlign: 'center' }}>In gratitude</p>
             <h2 className={styles.sectionHeadingLightCentered}>Acknowledgements</h2>
             <p className={styles.bodyTextLightCenteredBold}>
               This project is a tribute to the quiet strength, deep compassion, and collective spirit of those who provide oncology care. It was shaped by the voices of staff who shared their experiences—those who live this work every day.
@@ -941,6 +949,32 @@ export default function GroundswellContent() {
             </p>
           </AnimatedElement>
 
+        </div>
+      </section>
+
+      {/* Page break symbol — quiet visual punctuation between the
+          credits and the project-site invitation. */}
+      <div className={styles.pageBreakSymbol} aria-hidden="true">
+        <img
+          src="https://res.cloudinary.com/dc17mvdyv/image/upload/v1778077875/CTB-Page_Break_Symbol_SVG.svg"
+          alt=""
+        />
+      </div>
+
+      {/* ==================== VIEW PROJECT SITE ====================
+          Final CTA — the case study points readers to the live public
+          site at /groundswell. Button-only, no heading or body. */}
+      <section
+        className={styles.sectionDark}
+        style={{ paddingTop: 'clamp(48px, 7vh, 72px)' }}
+      >
+        <div className={styles.sectionContent}>
+          <div className={styles.reachOut}>
+            <a href="/groundswell" className={styles.reachOutButton}>
+              <span className={styles.reachOutButtonLabel}>View project site</span>
+              <span className={styles.reachOutButtonArrow} aria-hidden="true">&rarr;</span>
+            </a>
+          </div>
         </div>
       </section>
 

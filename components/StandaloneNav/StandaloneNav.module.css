@@ -22,8 +22,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  max-width: var(--max-width);
-  margin: 0 auto;
   padding: var(--space-xs) var(--space-md);
   height: 60px;
 }
@@ -144,6 +142,61 @@
 }
 
 /* ===========================================
+   Chapter labels (case study nav) — minimal row
+   of section titles. The active chapter is
+   illuminated; the rest stay dim. Overall page
+   progress is shown by ProgressNav, not here.
+   =========================================== */
+.chapters {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-md);
+  flex: 1 1 auto;
+}
+
+.chapterItem {
+  display: inline-flex;
+}
+
+.chapterButton {
+  background: none;
+  border: none;
+  padding: var(--space-xs) var(--space-xs);
+  cursor: pointer;
+  color: var(--cream);
+  font-family: var(--font-sans);
+  font-size: var(--text-body-small);
+  font-weight: var(--weight-label);
+  letter-spacing: 0.04em;
+  opacity: 0.5;
+  transition: opacity var(--motion-fast) var(--ease-in-out);
+  white-space: nowrap;
+}
+
+.chapterButton:focus-visible {
+  outline: 2px solid var(--cream);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+.chapterButtonActive {
+  opacity: 1;
+}
+
+@media (hover: hover) {
+  .chapterButton:hover {
+    opacity: 0.85;
+  }
+  .chapterButtonActive:hover {
+    opacity: 1;
+  }
+}
+
+/* ===========================================
    RESPONSIVE — TABLET (900px)
    =========================================== */
 @media (max-width: 900px) {
@@ -158,6 +211,14 @@
 @media (max-width: 600px) {
   .nav {
     height: 52px;
+  }
+}
+
+/* Chapter bar takes too much room on narrow viewports; collapse to
+   just the back link + back-to-top button below the tablet breakpoint. */
+@media (max-width: 900px) {
+  .chapters {
+    display: none;
   }
 }
 

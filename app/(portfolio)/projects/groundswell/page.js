@@ -11,10 +11,26 @@ export const metadata = {
   },
 }
 
+// Five-chapter progress through the case study. Each chapter spans the
+// section ids it covers; StandaloneNav fills each segment based on how
+// far the viewport has advanced through that range.
+const chapters = [
+  { label: 'Ecosystem',  sectionIds: ['vision', 'ecosystem', 'artwall', 'pod', 'ctb', 'cards'] },
+  { label: 'Outcomes',   sectionIds: ['outcomes'] },
+  { label: 'Research',   sectionIds: ['context', 'research', 'workshops', 'synthesis', 'the-void'] },
+  { label: 'Production', sectionIds: ['making', 'playtesting', 'playtest-feedback'] },
+  { label: 'Reflection', sectionIds: ['reflection', 'acknowledgements'] },
+]
+
 export default function GroundswellPage() {
   return (
     <>
-      <StandaloneNav backHref="/" backLabel="All work" revealAfter="#vision" />
+      <StandaloneNav
+        backHref="/"
+        backLabel="All work"
+        revealAfter="#vision"
+        chapters={chapters}
+      />
       <GroundswellContent />
     </>
   )
