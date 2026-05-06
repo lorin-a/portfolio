@@ -9,6 +9,7 @@ import { ELEMENT_REGISTRY } from './elements/registry'
 import WhelmAgendaNav from './WhelmAgendaNav'
 import WhelmGap from './sections/WhelmGap'
 import WhelmNeed from './sections/WhelmNeed'
+import WhelmTangle from './sections/WhelmTangle'
 import { lockForwardScroll } from './lib/scrollLock'
 import { COPY } from './content'
 import { SECTIONS } from './data'
@@ -153,7 +154,14 @@ export default function WhelmStory() {
           the centered placeholder. */}
       {SECTIONS.map(s => {
         if (s.id === 'gap') return <WhelmGap key={s.id} />
-        if (s.id === 'need') return <WhelmNeed key={s.id} />
+        if (s.id === 'need') {
+          return (
+            <div key={s.id}>
+              <WhelmNeed />
+              <WhelmTangle />
+            </div>
+          )
+        }
         return (
           <section key={s.id} id={s.id} className={styles.editorialSection}>
             <div className={styles.editorialInner}>
