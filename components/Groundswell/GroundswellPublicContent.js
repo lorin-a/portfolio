@@ -477,60 +477,42 @@ export default function GroundswellPublicContent() {
             </p>
           </AnimatedElement>
 
-          {/* Timeline rows. Each row = year/timeframe + title + 1-2 line
-              description. Use `timelinePhasePast` for shipped phases and
-              `timelinePhaseFuture` for ideal future phases. Lorin: rename,
-              reorder, add or drop rows. */}
+          {/* Horizontal timeline. Filled dots = done or in progress;
+              outlined dots = future phases. Connecting line behind the
+              dots reinforces continuity. Mobile gracefully stacks. */}
           <AnimatedElement>
-            <ol className={styles.timeline}>
+            <ol className={styles.timeline} aria-label="Project timeline">
               <li className={`${styles.timelinePhase} ${styles.timelinePhasePast}`}>
-                <span className={styles.timelinePhaseTime}>[YEAR TBD]</span>
-                <div className={styles.timelinePhaseContent}>
-                  <h3 className={styles.timelinePhaseTitle}>[PHASE 1 TITLE TBD]</h3>
-                  <p className={styles.timelinePhaseBody}>
-                    [TBD: 1-2 lines on what this phase covered.]
-                  </p>
-                </div>
+                <span className={styles.timelineDot} aria-hidden="true" />
+                <span className={styles.timelinePhaseTime}>Jan–May 2025</span>
+                <h3 className={styles.timelinePhaseTitle}>Development &amp; research</h3>
               </li>
 
               <li className={`${styles.timelinePhase} ${styles.timelinePhasePast}`}>
-                <span className={styles.timelinePhaseTime}>[YEAR TBD]</span>
-                <div className={styles.timelinePhaseContent}>
-                  <h3 className={styles.timelinePhaseTitle}>[PHASE 2 TITLE TBD]</h3>
-                  <p className={styles.timelinePhaseBody}>
-                    [TBD: 1-2 lines on what this phase covered.]
-                  </p>
-                </div>
+                <span className={styles.timelineDot} aria-hidden="true" />
+                <span className={styles.timelinePhaseTime}>Jun–Aug 2025</span>
+                <h3 className={styles.timelinePhaseTitle}>Build &amp; installation</h3>
               </li>
 
               <li className={`${styles.timelinePhase} ${styles.timelinePhasePast}`}>
-                <span className={styles.timelinePhaseTime}>2026</span>
-                <div className={styles.timelinePhaseContent}>
-                  <h3 className={styles.timelinePhaseTitle}>Installed at UPMC Magee-Womens Hospital</h3>
-                  <p className={styles.timelinePhaseBody}>
-                    [TBD: short line — Groundswell installed, 12-month quality improvement study underway.]
-                  </p>
-                </div>
+                <span className={styles.timelineDot} aria-hidden="true" />
+                <span className={styles.timelinePhaseTime}>Oct 2025–Jul 2026</span>
+                <h3 className={styles.timelinePhaseTitle}>Pilot study with pre/mid/post surveys</h3>
               </li>
 
               <li className={`${styles.timelinePhase} ${styles.timelinePhaseFuture}`}>
-                <span className={styles.timelinePhaseTime}>[FUTURE]</span>
-                <div className={styles.timelinePhaseContent}>
-                  <h3 className={styles.timelinePhaseTitle}>[FUTURE PHASE 1 TITLE TBD]</h3>
-                  <p className={styles.timelinePhaseBody}>
-                    [TBD: 1-2 lines describing the next ideal phase — expansion, study findings, replication, etc.]
-                  </p>
-                </div>
+                <span className={styles.timelineDot} aria-hidden="true" />
+                <span className={styles.timelinePhaseTime}>Jul–Oct 2026</span>
+                <h3 className={styles.timelinePhaseTitle}>Analysis, publication &amp; case study site</h3>
               </li>
 
               <li className={`${styles.timelinePhase} ${styles.timelinePhaseFuture}`}>
-                <span className={styles.timelinePhaseTime}>[FUTURE]</span>
-                <div className={styles.timelinePhaseContent}>
-                  <h3 className={styles.timelinePhaseTitle}>[FUTURE PHASE 2 TITLE TBD]</h3>
-                  <p className={styles.timelinePhaseBody}>
-                    [TBD: 1-2 lines describing a further future phase — bringing this to other hospitals, publishing the work, etc.]
-                  </p>
-                </div>
+                <span className={styles.timelineDot} aria-hidden="true" />
+                <span className={styles.timelinePhaseTime}>2027</span>
+                <h3 className={styles.timelinePhaseTitle}>A model for expansion &amp; iteration</h3>
+                <p className={styles.timelinePhaseBody}>
+                  Improved pod design, stewardship training, and a mobile model for rural clinics and family caregivers.
+                </p>
               </li>
             </ol>
           </AnimatedElement>
