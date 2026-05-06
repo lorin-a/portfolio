@@ -18,7 +18,7 @@ import styles from '../whelm.module.css'
    then animate the two stroke paths drawing on while the rest of the
    composition fades in. */
 
-const TANGLE_SRC = '/brand/NewTangle.svg'
+const TANGLE_SRC = '/brand/Newest_Tangle.svg'
 
 export default function WhelmTangle() {
   const sectionRef = useRef(null)
@@ -58,19 +58,46 @@ export default function WhelmTangle() {
     svgEl.style.display = 'block'
     svgEl.setAttribute('preserveAspectRatio', 'xMidYMid meet')
 
-    /* Threads are differentiated by stroke color: cream = needs,
-       purple = expectations. Fills are the labels (cream) and the
-       intersection dots + endpoint (purple). */
-    const needsThread = svgEl.querySelector('path[stroke="#F3EFF7"]')
-    const expectThread = svgEl.querySelector('path[stroke="#B168EF"]')
-    const needsLabels = svgEl.querySelectorAll('path[fill="#F3EFF7"]')
-    const expectDots = svgEl.querySelectorAll('path[fill="#B168EF"]')
+    /* Newest_Tangle.svg palette (corrected mapping):
+       - stroke="#F3EFF7" — 11 paths: longest = needs thread, rest = cream tendrils
+       - stroke="#B168EF" — 2 paths: longest = expectations thread, other = decor
+       - fill="#F3EFF7" (cream, 9) = NEEDS WORDS — "Needs" header + 8 paired words
+       - fill="#B168EF" (purple, 9) = EXPECTATION WORDS — "Expectations" header + 8 paired
+       - fill="#BDB7E9" (mauve, 9) = intersection dots / nodules
 
-    /* Composition order: dots above threads (so the nodules sit on
-       top of the line crossings), labels above everything. */
+       Each pair label has a cream needs-word and a purple expect-word that
+       sit near each other at the knot — animation routes them by color:
+       cream fades in during Phase 1 (needs draw), purple in Phase 2.
+
+       Length-based thread detection (rather than stroke-width) because the
+       SVG export uses arbitrary precise widths that change on re-export. */
+    const pickMainAndDecor = (paths) => {
+      const list = Array.from(paths)
+      if (list.length === 0) return { main: null, decor: [] }
+      let main = list[0]
+      let mainLen = main.getTotalLength()
+      for (let i = 1; i < list.length; i++) {
+        const len = list[i].getTotalLength()
+        if (len > mainLen) { main = list[i]; mainLen = len }
+      }
+      return { main, decor: list.filter(p => p !== main) }
+    }
+
+    const creamStroked = svgEl.querySelectorAll('path[stroke="#F3EFF7"]')
+    const purpleStroked = svgEl.querySelectorAll('path[stroke="#B168EF"]')
+    const { main: needsThread, decor: needsDecor } = pickMainAndDecor(creamStroked)
+    const { main: expectThread, decor: expectDecor } = pickMainAndDecor(purpleStroked)
+    const needsWords = svgEl.querySelectorAll('path[fill="#F3EFF7"]')
+    const expectWords = svgEl.querySelectorAll('path[fill="#B168EF"]')
+    const dots = svgEl.querySelectorAll('path[fill="#BDB7E9"]')
+    const ornament = svgEl.querySelectorAll('path[fill="#F0E2FF"]')
+
+    /* Composition order: dots above threads (so nodules sit on top of
+       crossings), then words above dots (so glyphs read clearly). */
     const reorder = (el) => el && svgEl.appendChild(el)
-    needsLabels.forEach(reorder)
-    expectDots.forEach(reorder)
+    dots.forEach(reorder)
+    needsWords.forEach(reorder)
+    expectWords.forEach(reorder)
 
     const strokedPaths = [needsThread, expectThread].filter(Boolean)
 
@@ -79,69 +106,225 @@ export default function WhelmTangle() {
 
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
-    /* Initial state — threads hidden via dashoffset, all fills invisible. */
+    /* Initial state — threads hidden via dashoffset, decorative
+       strokes + all fills invisible. */
     strokedPaths.forEach(p => {
       const len = p.getTotalLength()
       p.style.strokeDasharray = `${len}`
       p.style.strokeDashoffset = `${len}`
     })
 
-    gsap.set(needsLabels, { autoAlpha: 0 })
-    gsap.set(expectDots, { autoAlpha: 0 })
+    gsap.set(needsDecor, { autoAlpha: 0 })
+    gsap.set(expectDecor, { autoAlpha: 0 })
+    gsap.set(needsWords, { autoAlpha: 0 })
+    gsap.set(expectWords, { autoAlpha: 0 })
+    gsap.set(dots, { autoAlpha: 0 })
+    gsap.set(ornament, { autoAlpha: 0 })
     if (headingLine) headingLine.style.setProperty('--reveal', '100%')
     gsap.set(headingBody, { autoAlpha: 0, y: 14 })
 
+    /* Reveal the SVG host now that initial state is locked. The host
+       starts visibility:hidden via CSS to prevent a flash of fully-
+       composed artwork between dangerouslySetInnerHTML mount and this
+       useGSAP hook running. */
+    host.style.visibility = 'visible'
+
     if (prefersReduced) {
       strokedPaths.forEach(p => { p.style.strokeDashoffset = '0' })
-      gsap.set(needsLabels, { autoAlpha: 1 })
-      gsap.set(expectDots, { autoAlpha: 1 })
+      gsap.set([needsDecor, expectDecor, needsWords, expectWords, dots, ornament], { autoAlpha: 1 })
       if (headingLine) headingLine.style.setProperty('--reveal', '0%')
       gsap.set(headingBody, { autoAlpha: 1, y: 0 })
       return
     }
 
+    /* ---------- Spatial timing helpers ----------
+       For each marker, find the parameter t (0..1) along the thread
+       where the thread point is closest to the marker's center, plus
+       the squared distance to that point. Markers fade in at the
+       moment the drawing tip reaches them (or shortly after for
+       readability). */
+    const sampleThread = (thread, samples = 240) => {
+      if (!thread) return []
+      const total = thread.getTotalLength()
+      const pts = []
+      for (let i = 0; i <= samples; i++) {
+        const p = thread.getPointAtLength((i / samples) * total)
+        pts.push({ x: p.x, y: p.y, t: i / samples })
+      }
+      return pts
+    }
+    const closestOnSamples = (samples, cx, cy) => {
+      let bestT = 0, bestD = Infinity
+      for (const p of samples) {
+        const d = (p.x - cx) ** 2 + (p.y - cy) ** 2
+        if (d < bestD) { bestD = d; bestT = p.t }
+      }
+      return { t: bestT, d2: bestD }
+    }
+    const centerOf = (el) => {
+      const b = el.getBBox()
+      return { cx: b.x + b.width / 2, cy: b.y + b.height / 2 }
+    }
+
+    const needsSamples = sampleThread(needsThread)
+    const expectSamples = sampleThread(expectThread)
+
+    /* Direction detection — the SVG path may natively start at either
+       end. Needs should draw left-to-right; Expectations right-to-left.
+       If the path's natural start is at the wrong end, flip the
+       dashoffset sign so it draws in reverse, and remap the marker
+       timings: when drawing in reverse, a marker at path-t = T is
+       reached at phase time (1 - T) * phaseDur instead of T * phaseDur. */
+    const needsReversed = needsSamples.length > 0
+      && needsSamples[0].x > needsSamples[needsSamples.length - 1].x
+    const expectReversed = expectSamples.length > 0
+      && expectSamples[0].x < expectSamples[expectSamples.length - 1].x
+
+    const drawTime = (t, reversed, phaseDur) =>
+      (reversed ? 1 - t : t) * phaseDur
+
+    /* Re-init dashoffset to negative when we want reverse draw. */
+    if (needsThread && needsReversed) {
+      const len = needsThread.getTotalLength()
+      needsThread.style.strokeDashoffset = `-${len}`
+    }
+    if (expectThread && expectReversed) {
+      const len = expectThread.getTotalLength()
+      expectThread.style.strokeDashoffset = `-${len}`
+    }
+
+    /* ---------- Identify named markers ----------
+       Animation routes by color:
+       - Cream words → Phase 1 (needs draw, L→R)
+       - Purple words → Phase 2 (expectations draw, R→L)
+       - Mauve dots → split: leftmost dot pairs with "Needs" header
+         (Phase 1 pre-roll), rightmost dot pairs with "Expectations"
+         header (Phase 2 pre-roll), the remaining 7 are intersection
+         nodules that appear during Phase 2 spatial timing.
+
+       "Needs" header = leftmost cream word.
+       "Expectations" header = rightmost purple word. */
+    const cream = Array.from(needsWords).map(el => ({ el, ...centerOf(el) }))
+    const purple = Array.from(expectWords).map(el => ({ el, ...centerOf(el) }))
+    const mauve = Array.from(dots).map(el => ({ el, ...centerOf(el) }))
+
+    const needsHeader = cream.length
+      ? cream.reduce((a, b) => (a.cx <= b.cx ? a : b))
+      : null
+    const expectHeader = purple.length
+      ? purple.reduce((a, b) => (a.cx >= b.cx ? a : b))
+      : null
+    const needsHeaderDot = mauve.length
+      ? mauve.reduce((a, b) => (a.cx <= b.cx ? a : b))
+      : null
+    const expectHeaderDot = mauve.length
+      ? mauve.reduce((a, b) => (a.cx >= b.cx ? a : b))
+      : null
+
+    const namedSet = new Set(
+      [needsHeader?.el, expectHeader?.el, needsHeaderDot?.el, expectHeaderDot?.el].filter(Boolean),
+    )
+
     const tl = gsap.timeline({ paused: true })
-    /* Each thread takes the same draw duration, played sequentially. */
-    const phaseDur = 4.0
+    const namedDur = 0.9
+    const needsPhaseDur = 5.6
+    const expectPhaseDur = 8.0  /* slower than needs, per Lorin */
 
-    /* Phase 1 — Needs thread (cream) draws on alone. As it draws,
-       the cream labels fade in left-to-right so the user reads the
-       system of needs first, with no dots or expectations yet. */
+    /* ---------- Phase 1 — Needs ---------- */
+    const phase1NameStart = 0
+    const phase1DrawStart = phase1NameStart + namedDur
+    if (needsHeader) {
+      tl.to(needsHeader.el, {
+        autoAlpha: 1, duration: 0.7, ease: 'power2.out',
+      }, phase1NameStart)
+    }
+    if (needsHeaderDot) {
+      tl.to(needsHeaderDot.el, {
+        autoAlpha: 1, duration: 0.55, ease: 'back.out(1.6)',
+      }, phase1NameStart + 0.1)
+    }
+
     if (needsThread) {
-      tl.to(needsThread, {
-        strokeDashoffset: 0,
-        duration: phaseDur,
-        ease: 'power1.inOut',
-      }, 0)
+      tl.fromTo(needsThread,
+        { strokeDashoffset: needsReversed ? -needsThread.getTotalLength() : needsThread.getTotalLength() },
+        { strokeDashoffset: 0, duration: needsPhaseDur, ease: 'power1.inOut' },
+        phase1DrawStart,
+      )
     }
 
-    if (needsLabels.length > 0) {
-      tl.to(needsLabels, {
-        autoAlpha: 1,
-        duration: 0.5,
-        ease: 'power2.out',
-        stagger: { each: phaseDur * 0.65 / needsLabels.length, from: 'start' },
-      }, phaseDur * 0.3)
+    /* Decorative cream tendrils — fade as needs tip passes them. */
+    needsDecor.forEach(el => {
+      const { cx, cy } = centerOf(el)
+      const { t } = closestOnSamples(needsSamples, cx, cy)
+      tl.to(el, {
+        autoAlpha: 1, duration: 0.5, ease: 'power2.out',
+      }, phase1DrawStart + drawTime(t, needsReversed, needsPhaseDur))
+    })
+
+    /* Remaining cream words appear as the line passes through them. */
+    cream.forEach(m => {
+      if (namedSet.has(m.el)) return
+      const { t } = closestOnSamples(needsSamples, m.cx, m.cy)
+      tl.to(m.el, {
+        autoAlpha: 1, duration: 0.5, ease: 'power2.out',
+      }, phase1DrawStart + drawTime(t, needsReversed, needsPhaseDur) + 0.05)
+    })
+
+    /* ---------- Phase 2 — Expectations ---------- */
+    const phase2NameStart = phase1DrawStart + needsPhaseDur + 0.5
+    const phase2DrawStart = phase2NameStart + namedDur
+    if (expectHeader) {
+      tl.to(expectHeader.el, {
+        autoAlpha: 1, duration: 0.7, ease: 'power2.out',
+      }, phase2NameStart)
+    }
+    if (expectHeaderDot) {
+      tl.to(expectHeaderDot.el, {
+        autoAlpha: 1, duration: 0.55, ease: 'back.out(1.6)',
+      }, phase2NameStart + 0.1)
     }
 
-    /* Phase 2 — Expectations thread (purple) draws on. The dots /
-       endpoints fade in as it crosses, giving the friction points
-       their visible markers. */
     if (expectThread) {
-      tl.to(expectThread, {
-        strokeDashoffset: 0,
-        duration: phaseDur,
-        ease: 'power1.inOut',
-      }, phaseDur + 0.3)
+      tl.fromTo(expectThread,
+        { strokeDashoffset: expectReversed ? -expectThread.getTotalLength() : expectThread.getTotalLength() },
+        { strokeDashoffset: 0, duration: expectPhaseDur, ease: 'power1.inOut' },
+        phase2DrawStart,
+      )
     }
 
-    if (expectDots.length > 0) {
-      tl.to(expectDots, {
-        autoAlpha: 1,
-        duration: 0.5,
-        ease: 'back.out(1.6)',
-        stagger: { each: phaseDur * 0.7 / expectDots.length, from: 'start' },
-      }, phaseDur + 0.6)
+    /* Decorative purple tendrils. */
+    expectDecor.forEach(el => {
+      const { cx, cy } = centerOf(el)
+      const { t } = closestOnSamples(expectSamples, cx, cy)
+      tl.to(el, {
+        autoAlpha: 1, duration: 0.5, ease: 'power2.out',
+      }, phase2DrawStart + drawTime(t, expectReversed, expectPhaseDur))
+    })
+
+    /* Remaining purple words appear as the expect line passes them. */
+    purple.forEach(m => {
+      if (namedSet.has(m.el)) return
+      const { t } = closestOnSamples(expectSamples, m.cx, m.cy)
+      tl.to(m.el, {
+        autoAlpha: 1, duration: 0.5, ease: 'power2.out',
+      }, phase2DrawStart + drawTime(t, expectReversed, expectPhaseDur) + 0.05)
+    })
+
+    /* Remaining mauve dots — intersection nodules. Appear as expect
+       line passes each crossing. Both threads share these points but
+       the expect draw is what "completes" the knot. */
+    mauve.forEach(m => {
+      if (namedSet.has(m.el)) return
+      const { t } = closestOnSamples(expectSamples, m.cx, m.cy)
+      tl.to(m.el, {
+        autoAlpha: 1, duration: 0.5, ease: 'back.out(1.6)',
+      }, phase2DrawStart + drawTime(t, expectReversed, expectPhaseDur))
+    })
+
+    if (ornament.length > 0) {
+      tl.to(ornament, {
+        autoAlpha: 1, duration: 0.7, ease: 'power2.out',
+      }, phase2DrawStart + expectPhaseDur)
     }
 
     tl.to(headingLine, {

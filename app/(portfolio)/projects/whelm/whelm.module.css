@@ -1106,12 +1106,25 @@
 }
 
 /* Container for the inlined SVG. The SVG has its width/height set
-   to 100% in JS so it fills this host. */
+   to 100% in JS so it fills this host.
+
+   visibility: hidden initially — the SVG mounts via
+   dangerouslySetInnerHTML and is fully composed before useGSAP runs;
+   without this the user sees a flash of all words / dots / threads
+   before initial autoAlpha 0 + dashoffset are applied. JS reveals the
+   host after the gsap.set initial-state block. */
 .tangleSvgHost {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
+  visibility: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tangleSvgHost {
+    visibility: visible;
+  }
 }
 
 .tangleSvgHost svg {
