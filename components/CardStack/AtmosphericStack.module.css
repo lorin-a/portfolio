@@ -1,0 +1,146 @@
+/* ===========================================
+   ATMOSPHERIC STACK — skeuomorphic card deck.
+   3 cards visible: front in full, two behind peeking with reduced
+   scale, soft upward Y-offset, lower opacity, slight rotation.
+   =========================================== */
+
+.stack {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  /* overflow: visible so back cards can peek above the frame */
+  overflow: visible;
+}
+
+.card {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 16px;
+  overflow: hidden;
+  background: var(--color-cream, #f7f7f7);
+  box-shadow:
+    0 1px 2px rgba(44, 44, 40, 0.08),
+    0 12px 28px -10px rgba(44, 44, 40, 0.18);
+  transform-origin: center top;
+  transition:
+    transform 600ms var(--ease-out),
+    opacity 500ms var(--ease-out),
+    box-shadow 600ms var(--ease-out);
+  will-change: transform, opacity;
+}
+
+/* Distance-driven layering. data-distance comes from React state. */
+
+/* Active (front) card */
+.card[data-distance="0"] {
+  transform: translateY(0) scale(1) rotate(0deg);
+  opacity: 1;
+  z-index: 4;
+  cursor: pointer;
+}
+
+/* One card behind */
+.card[data-distance="1"] {
+  transform: translateY(-8px) scale(0.96) rotate(-1deg);
+  opacity: 0.65;
+  z-index: 3;
+  pointer-events: none;
+}
+
+/* Two cards behind */
+.card[data-distance="2"] {
+  transform: translateY(-14px) scale(0.92) rotate(-1.8deg);
+  opacity: 0.35;
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* Hidden — beyond the visible peek depth */
+.card[data-visible="false"] {
+  transform: translateY(-20px) scale(0.88) rotate(-2.4deg);
+  opacity: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+@media (hover: hover) {
+  .card[data-distance="0"]:hover {
+    transform: translateY(-3px) scale(1) rotate(0deg);
+    box-shadow:
+      0 2px 4px rgba(44, 44, 40, 0.1),
+      0 18px 36px -12px rgba(44, 44, 40, 0.22);
+  }
+}
+
+.card[data-distance="0"]:focus-visible {
+  outline: 2px solid var(--color-ink);
+  outline-offset: 4px;
+}
+
+.media {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ===========================================
+   REDUCED MOTION — collapse the depth, no rotation
+   =========================================== */
+@media (prefers-reduced-motion: reduce) {
+  .card {
+    transition: opacity 200ms linear !important;
+  }
+
+  .card[data-distance="0"],
+  .card[data-distance="1"],
+  .card[data-distance="2"],
+  .card[data-visible="false"] {
+    transform: none !important;
+    rotate: 0deg !important;
+  }
+
+  .card[data-distance="0"] { opacity: 1; }
+  .card[data-distance="1"],
+  .card[data-distance="2"],
+  .card[data-visible="false"] { opacity: 0; }
+}
+
+/* ===========================================
+   MOBILE — flatten to vertical stack, no peek
+   =========================================== */
+@media (max-width: 900px) {
+  .stack {
+    aspect-ratio: auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    overflow: visible;
+  }
+
+  .card {
+    position: relative;
+    inset: auto;
+    aspect-ratio: 16 / 9;
+    transform: none !important;
+    opacity: 1 !important;
+    z-index: auto !important;
+    pointer-events: auto !important;
+    cursor: default !important;
+  }
+}
