@@ -100,7 +100,8 @@ export default function Home() {
             { src: cloudImg(HOME_IMAGES['bs'], 1200), type: 'image', alt: 'BirthStory cover' },
           ]}
           cardVariant="file"
-          comingSoon
+          href="https://medium.com/ma-in-design-carnegie-mellon/client-project-birthstory-a-micro-app-for-birthing-parents-to-record-reflect-on-their-138849c42a38"
+          external
           flip
         />
 
@@ -198,7 +199,8 @@ export default function Home() {
             { src: cloudVideo(HOME_VIDEOS['somebuddy-reel-2'], 1200), type: 'video', alt: 'SomeBuddy reel continued' },
           ]}
           cardVariant="file"
-          comingSoon
+          href="https://medium.com/ma-in-design-carnegie-mellon/somebuddy-a-social-app-for-busy-grad-students-60c22c579d78"
+          external
           flip
         />
 
@@ -237,7 +239,8 @@ export default function Home() {
             { src: cloudImg(HOME_IMAGES['td-stakeholders'], 1200), type: 'image', alt: 'Stakeholder relations map' },
           ]}
           cardVariant="file"
-          comingSoon
+          href="https://medium.com/transition-design-seminar-spring-25-carnegie"
+          external
         />
 
         <ProjectPreview
@@ -287,7 +290,8 @@ export default function Home() {
             { src: cloudImg(HOME_IMAGES['btg-33'], 1200), type: 'image', alt: 'Bridging the G.A.P. campaign detail' },
           ]}
           cardVariant="file"
-          comingSoon
+          href="https://medium.com/ma-in-design-carnegie-mellon/cmu-design-ma-visual-comms-studio-project-4-communications-rebrand-4ddc692dec05"
+          external
           flip
         />
       </div>
