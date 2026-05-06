@@ -521,7 +521,7 @@ export default function GroundswellPublicContent() {
         className={styles.sectionDark}
         style={{
           paddingTop: 'clamp(112px, 16vh, 192px)',
-          paddingBottom: 'clamp(112px, 16vh, 192px)',
+          paddingBottom: 'clamp(48px, 7vh, 72px)',
         }}
       >
         <div className={styles.sectionContent}>
@@ -626,7 +626,11 @@ export default function GroundswellPublicContent() {
       {/* ==================== GET IN TOUCH ====================
           Final invitation — sits at the very bottom of the page so the
           last thing the visitor sees is the door open to them. */}
-      <section id="whats-next" className={styles.sectionDark}>
+      <section
+        id="whats-next"
+        className={styles.sectionDark}
+        style={{ paddingTop: 'clamp(48px, 7vh, 72px)' }}
+      >
         <div className={styles.sectionContent}>
           <AnimatedElement>
             <h2 className={styles.sectionHeadingLightCentered}>Get in touch</h2>

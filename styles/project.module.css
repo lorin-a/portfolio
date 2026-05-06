@@ -187,7 +187,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: clamp(56px, 8vh, 96px) var(--container-padding);
+  padding: clamp(24px, 4vh, 48px) var(--container-padding);
   background-color: var(--project-accent);
 }
 
