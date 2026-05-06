@@ -13,8 +13,8 @@ import AnimatedElement from '@/components/AnimatedElement/AnimatedElement'
 import ProgressNav from '@/components/ProgressNav/ProgressNav'
 import AudioPlayer from './parts/AudioPlayer'
 import DiagramTabs from './parts/DiagramTabs'
-import WorkshopCarousel from './parts/WorkshopCarousel'
-import PlaytestCarousel from './parts/PlaytestCarousel'
+import WorkshopGrid from './parts/WorkshopGrid'
+import PlaytestGrid from './parts/PlaytestGrid'
 import VoiceCard from './parts/VoiceCard'
 import Lightbox from '@/components/Lightbox/Lightbox'
 
@@ -523,7 +523,7 @@ export default function GroundswellContent() {
             </p>
           </AnimatedElement>
         </div>
-        <WorkshopCarousel />
+        <WorkshopGrid />
       </section>
 
 
@@ -698,8 +698,8 @@ export default function GroundswellContent() {
             />
           </AnimatedElement>
 
-          {/* Iteration Carousel */}
-          <PlaytestCarousel />
+          {/* Iteration grid — three iterations side by side */}
+          <PlaytestGrid />
 
         </div>
       </section>
