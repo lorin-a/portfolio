@@ -28,7 +28,7 @@ export default function ProjectPreview({
   num, title, tagline, description, contributions = [],
   pillVariant = 'weave', mediaSrc, mediaType = 'image', mediaAlt = '',
   mediaSequence = [],
-  href, comingSoon = false, flip = false,
+  href, external = false, ctaLabel, comingSoon = false, flip = false,
   /** 'carousel' (default) | 'atmospheric' | 'file' */
   cardVariant = 'carousel',
 }) {
@@ -281,8 +281,13 @@ export default function ProjectPreview({
           </div>
         )}
         {href && !comingSoon && (
-          <a href={href} className={styles.cta}>
-            View Case Study <span aria-hidden="true">&rarr;</span>
+          <a
+            href={href}
+            className={styles.cta}
+            {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+          >
+            {ctaLabel || (external ? 'Read on Medium' : 'View Case Study')}{' '}
+            <span aria-hidden="true">&rarr;</span>
           </a>
         )}
         {comingSoon && (
