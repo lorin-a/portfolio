@@ -966,7 +966,10 @@ export default function GroundswellContent() {
           site at /groundswell. Button-only, no heading or body. */}
       <section
         className={styles.sectionDark}
-        style={{ paddingTop: 'clamp(48px, 7vh, 72px)' }}
+        style={{
+          paddingTop: 'clamp(8px, 1.5vh, 20px)',
+          paddingBottom: 'clamp(48px, 7vh, 72px)',
+        }}
       >
         <div className={styles.sectionContent}>
           <div className={styles.reachOut}>
