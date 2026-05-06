@@ -33,13 +33,15 @@ const sectionLabels = {
 
 const darkSections = ['hero', 'vision', 'ctb', 'artwall', 'outcomes', 'acknowledgements', 'whats-next']
 
-// LABELS TBD — Lorin owns. Clips swapped to public-safe alternates 2026-05-04.
+// Dashboard clips: 5 public-safe alternates, all blurred to obscure
+// unpublished study findings. Labels intentionally omitted — the
+// outcomes copy carries the framing; individual videos don't need names.
 const dashboardClips = [
-  { src: gsVid('gs-intro-artwall'), label: '[LABEL TBD]' },
-  { src: gsVid('gs-pod-data'), label: '[LABEL TBD]' },
-  { src: gsVid('gs-display-view'), label: '[LABEL TBD]' },
-  { src: gsVid('gs-overlay'), label: '[LABEL TBD]' },
-  { src: gsVid('gs-new-meditations'), label: '[LABEL TBD]' },
+  { src: gsVid('gs-intro-artwall') },
+  { src: gsVid('gs-pod-data') },
+  { src: gsVid('gs-display-view') },
+  { src: gsVid('gs-overlay') },
+  { src: gsVid('gs-new-meditations') },
 ]
 
 const audioTracks = [
@@ -357,7 +359,7 @@ export default function GroundswellPublicContent() {
         <div className={styles.parallaxScroll}>
           {dashboardClips.map((clip, i) => (
             <AnimatedElement key={i}>
-              <ScrollVideo src={clip.src} label={clip.label} autoplay blur={clip.blur} />
+              <ScrollVideo src={clip.src} autoplay blur />
             </AnimatedElement>
           ))}
         </div>
