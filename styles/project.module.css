@@ -3258,6 +3258,13 @@
     gap: var(--space-content-gap);
   }
 
+  /* Old mobile rules zero out element margins and rely on a flex
+     gap on the card. The new WorkshopGrid uses .workshopGridBody as
+     its flex column, so add the gap there to match. */
+  .workshopGridBody {
+    gap: var(--space-content-gap);
+  }
+
   .workshopLabel {
     margin-bottom: 0;
   }
