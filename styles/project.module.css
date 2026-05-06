@@ -130,7 +130,7 @@
 
 .sectionHeadingLightCentered {
   font-family: var(--font-serif);
-  font-size: var(--text-h2);
+  font-size: clamp(2rem, 4vw, 3rem);
   font-weight: var(--weight-title);
   color: var(--project-accent-light);
   margin-bottom: var(--space-md);
@@ -192,7 +192,7 @@
 }
 
 .pageBreakSymbol img {
-  width: clamp(56px, 6vw, 88px);
+  width: clamp(112px, 12vw, 176px);
   height: auto;
   display: block;
   opacity: 0.85;
@@ -4278,7 +4278,7 @@
 
 .caseStudyCtaTitle {
   font-family: var(--font-serif);
-  font-size: var(--text-h2);
+  font-size: clamp(2rem, 4vw, 3rem);
   font-weight: var(--weight-title);
   color: var(--project-accent);
   margin: var(--space-sm) 0 var(--space-md);
@@ -4367,11 +4367,10 @@
 .timelineSectionTitle {
   margin: var(--space-sm) 0 0;
   font-family: var(--font-serif);
-  font-size: var(--text-h2);
+  font-size: clamp(2rem, 4vw, 3rem);
   font-weight: var(--weight-title);
   color: var(--project-accent-light);
   line-height: 1.05;
-  letter-spacing: -0.01em;
   text-align: center;
   text-wrap: pretty;
 }

@@ -24,8 +24,8 @@
    pull lets the underlying motion read as colour-mood instead of
    half-legible UI. */
 .scrollVideoBlurred {
-  filter: blur(12px) brightness(0.96) saturate(0.9);
-  transform: scale(1.04);
+  filter: blur(6px) brightness(0.97) saturate(0.92);
+  transform: scale(1.03);
   transform-origin: center;
 }
 
