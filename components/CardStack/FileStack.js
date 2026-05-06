@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import { gsap } from '@/lib/gsap'
 import { useGSAP } from '@gsap/react'
 import styles from './FileStack.module.css'
+import MobileCardStack from './MobileCardStack'
 
 gsap.registerPlugin(useGSAP)
 
@@ -334,9 +335,17 @@ export default function FileStack({
   }, [activeIndex, depthOf])
 
   return (
+    <>
+      <div className={styles.mobileOnly}>
+        <MobileCardStack
+          slides={slides}
+          contributions={contributions}
+          href={href}
+        />
+      </div>
     <div
       ref={containerRef}
-      className={`${styles.stack} ${variantClass}`}
+      className={`${styles.stack} ${variantClass} ${styles.desktopOnly}`}
       data-count={cardCount}
       style={{ '--slot-count': cardCount }}
       role="tablist"
@@ -497,5 +506,6 @@ export default function FileStack({
         )
       })}
     </div>
+    </>
   )
 }
