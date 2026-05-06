@@ -35,14 +35,14 @@ const sectionLabels = {
 const darkSections = ['hero', 'vision', 'ctb', 'artwall', 'outcomes', 'acknowledgements', 'whats-next']
 
 // Dashboard clips: 5 public-safe alternates, all blurred to obscure
-// unpublished study findings. Labels intentionally omitted — the
-// outcomes copy carries the framing; individual videos don't need names.
+// unpublished study findings. Labels name what each view is so the
+// reader can orient without seeing the underlying data.
 const dashboardClips = [
-  { src: gsVid('gs-intro-artwall') },
-  { src: gsVid('gs-pod-data') },
-  { src: gsVid('gs-display-view') },
-  { src: gsVid('gs-overlay') },
-  { src: gsVid('gs-new-meditations') },
+  { src: gsVid('gs-intro-artwall'), label: 'Entry Screen' },
+  { src: gsVid('gs-pod-data'), label: 'Pod Usage' },
+  { src: gsVid('gs-display-view'), label: 'Display View' },
+  { src: gsVid('gs-overlay'), label: 'About Page' },
+  { src: gsVid('gs-new-meditations'), label: 'Meditations Data' },
 ]
 
 const audioTracks = [
@@ -360,7 +360,7 @@ export default function GroundswellPublicContent() {
         <div className={styles.parallaxScroll}>
           {dashboardClips.map((clip, i) => (
             <AnimatedElement key={i}>
-              <ScrollVideo src={clip.src} autoplay blur />
+              <ScrollVideo src={clip.src} label={clip.label} autoplay blur />
             </AnimatedElement>
           ))}
         </div>
@@ -530,7 +530,7 @@ export default function GroundswellPublicContent() {
           <AnimatedElement>
             <div className={styles.reachOut}>
               <a
-                href="mailto:[EMAIL TBD]"
+                href="mailto:lorinanderberg1@gmail.com"
                 className={styles.reachOutButton}
               >
                 <span className={styles.reachOutButtonLabel}>Reach out</span>
