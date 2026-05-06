@@ -57,13 +57,14 @@ export default function WhelmGap() {
     tl.to(lines, {
       yPercent: 0,
       autoAlpha: 1,
-      duration: 0.75,
+      duration: 0.6,
       ease: 'power2.out',
-      stagger: 0.28,
+      stagger: 0.22,
     })
 
-    /* Cursor lands at the punchline origin. */
-    tl.to(cursor, { autoAlpha: 1, duration: 0.4, ease: 'power2.out' }, '+=0.35')
+    /* Cursor lands as the last line is still settling — overlaps the
+       waterfall so "is overlooked" arrives a beat sooner. */
+    tl.to(cursor, { autoAlpha: 1, duration: 0.3, ease: 'power2.out' }, '-=0.3')
 
     /* Typewriter: per-char max-width grow + opacity. Snappier than hero.
        onComplete clears max-width so italic letterforms (Crimson Pro

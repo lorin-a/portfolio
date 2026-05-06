@@ -865,9 +865,12 @@
   right: 0;
   bottom: 0;
   left: 0;
-  display: flex;
-  align-items: center;
-  padding: var(--s-9) var(--page-margin);
+  /* Grid + place-content: center reliably centers the inner block on
+     both axes regardless of content height — flex + align-items had
+     edge cases where the composition drifted off center. */
+  display: grid;
+  place-content: center;
+  padding: var(--s-7) var(--page-margin);
 }
 
 .needComposition {
@@ -876,10 +879,11 @@
      stagger inside the centered column. */
   width: max-content;
   max-width: min(100%, 1200px);
-  margin-inline: auto;
   display: flex;
   flex-direction: column;
-  gap: clamp(48px, 6vw, 96px);
+  /* Tighter vertical rhythm — lines + body sit closer so the
+     composition feels like a single thought, not a stretched poster. */
+  gap: clamp(28px, 3.6vw, 56px);
 }
 
 .needHeading {
@@ -1037,7 +1041,9 @@
 .tangleStage {
   position: relative;
   width: 100%;
-  max-width: 1100px;
+  /* Bigger — fills the available width up to 1500px. The diagram is
+     the reading element; hand-drawn detail and labels need room. */
+  max-width: 1500px;
   margin-inline: auto;
   /* Aspect-locked to Lorin's hand-drawn SVG viewBox (1920×1080). */
   aspect-ratio: 1920 / 1080;

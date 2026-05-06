@@ -59,8 +59,8 @@ const BEATS = [
    capped so a 6-char line still has presence. Tuned slow on purpose:
    the wipe should read as breath, not as a typewriter race. */
 function wipeDuration(text) {
-  const perChar = 0.075
-  const min = 1.4
+  const perChar = 0.045
+  const min = 0.85
   return Math.max(min, text.length * perChar)
 }
 
@@ -101,34 +101,31 @@ export default function WhelmNeed() {
 
       const tl = gsap.timeline({ paused: true })
 
-      /* Line 1 — cursor lands, then text wipes open in one motion.
-         power2.inOut keeps the wipe calm at both edges. */
-      tl.to(cursorEls[0], { autoAlpha: 1, duration: 0.35, ease: 'power2.out' })
+      /* Line 1 — cursor lands, then text wipes open in one motion. */
+      tl.to(cursorEls[0], { autoAlpha: 1, duration: 0.2, ease: 'power2.out' })
       tl.to(
         lineEls[0],
         { '--reveal': '0%', duration: dur1, ease: 'power2.inOut' },
-        '<+=0.1',
+        '<+=0.05',
       )
-      tl.to(cursorEls[0], { autoAlpha: 0, duration: 0.35, ease: 'power2.out' }, '+=0.15')
+      tl.to(cursorEls[0], { autoAlpha: 0, duration: 0.2, ease: 'power2.out' }, '-=0.05')
 
-      /* Line 2 — italic mauve. Cursor fades in at the start of line 2
-         while line 1's cursor exits; small overlap reads as the cursor
-         hopping down. */
-      tl.to(cursorEls[1], { autoAlpha: 1, duration: 0.35, ease: 'power2.out' }, '-=0.15')
+      /* Line 2 — italic mauve. Cursor swap is tight; the question
+         should arrive in one breath, not two. */
+      tl.to(cursorEls[1], { autoAlpha: 1, duration: 0.2, ease: 'power2.out' }, '-=0.1')
       tl.to(
         lineEls[1],
         { '--reveal': '0%', duration: dur2, ease: 'power2.inOut' },
-        '<+=0.1',
+        '<+=0.05',
       )
-      tl.to(cursorEls[1], { autoAlpha: 0, duration: 0.6, ease: 'power2.out' }, '+=0.4')
+      tl.to(cursorEls[1], { autoAlpha: 0, duration: 0.3, ease: 'power2.out' }, '+=0.15')
 
-      /* Body — slow cinematic fade-up. Starts as the cursor finishes
-         its exit so the question lands first; long duration + power1
-         ease reads as a held breath rather than a snap. */
+      /* Body fades up close behind the question — keeps user moving
+         instead of waiting for the next beat. */
       tl.to(
         bodyEl,
-        { autoAlpha: 1, y: 0, duration: 1.8, ease: 'power1.inOut' },
-        '+=0.3',
+        { autoAlpha: 1, y: 0, duration: 0.8, ease: 'power1.out' },
+        '-=0.1',
       )
 
       return tl

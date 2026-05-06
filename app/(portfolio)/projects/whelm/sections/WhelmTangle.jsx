@@ -58,60 +58,91 @@ export default function WhelmTangle() {
     svgEl.style.display = 'block'
     svgEl.setAttribute('preserveAspectRatio', 'xMidYMid meet')
 
-    /* Stroked paths = the two threads. Filled paths = endpoint dots,
-       intersection nodules, and outlined text labels. */
-    const strokedPaths = svgEl.querySelectorAll('path[stroke]')
-    const filledPaths = svgEl.querySelectorAll('path[fill]')
+    /* Threads are differentiated by stroke color: cream = needs,
+       purple = expectations. Fills are the labels (cream) and the
+       intersection dots + endpoint (purple). */
+    const needsThread = svgEl.querySelector('path[stroke="#F3EFF7"]')
+    const expectThread = svgEl.querySelector('path[stroke="#B168EF"]')
+    const needsLabels = svgEl.querySelectorAll('path[fill="#F3EFF7"]')
+    const expectDots = svgEl.querySelectorAll('path[fill="#B168EF"]')
+
+    /* Composition order: dots above threads (so the nodules sit on
+       top of the line crossings), labels above everything. */
+    const reorder = (el) => el && svgEl.appendChild(el)
+    needsLabels.forEach(reorder)
+    expectDots.forEach(reorder)
+
+    const strokedPaths = [needsThread, expectThread].filter(Boolean)
 
     const headingLine = root.querySelector('[data-tangle-line]')
     const headingBody = root.querySelector('[data-tangle-body]')
 
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
-    /* Initial state — threads hidden via dashoffset, fills invisible. */
-    const lengths = []
+    /* Initial state — threads hidden via dashoffset, all fills invisible. */
     strokedPaths.forEach(p => {
       const len = p.getTotalLength()
-      lengths.push(len)
       p.style.strokeDasharray = `${len}`
       p.style.strokeDashoffset = `${len}`
     })
 
-    gsap.set(filledPaths, { autoAlpha: 0 })
+    gsap.set(needsLabels, { autoAlpha: 0 })
+    gsap.set(expectDots, { autoAlpha: 0 })
     if (headingLine) headingLine.style.setProperty('--reveal', '100%')
     gsap.set(headingBody, { autoAlpha: 0, y: 14 })
 
     if (prefersReduced) {
       strokedPaths.forEach(p => { p.style.strokeDashoffset = '0' })
-      gsap.set(filledPaths, { autoAlpha: 1 })
+      gsap.set(needsLabels, { autoAlpha: 1 })
+      gsap.set(expectDots, { autoAlpha: 1 })
       if (headingLine) headingLine.style.setProperty('--reveal', '0%')
       gsap.set(headingBody, { autoAlpha: 1, y: 0 })
       return
     }
 
     const tl = gsap.timeline({ paused: true })
-    const drawDur = 5.5
+    /* Each thread takes the same draw duration, played sequentially. */
+    const phaseDur = 4.0
 
-    /* Both threads draw simultaneously — calm, like two pens
-       gesturing toward each other across the page. */
-    strokedPaths.forEach(p => {
-      tl.to(p, {
+    /* Phase 1 — Needs thread (cream) draws on alone. As it draws,
+       the cream labels fade in left-to-right so the user reads the
+       system of needs first, with no dots or expectations yet. */
+    if (needsThread) {
+      tl.to(needsThread, {
         strokeDashoffset: 0,
-        duration: drawDur,
+        duration: phaseDur,
         ease: 'power1.inOut',
       }, 0)
-    })
+    }
 
-    /* Endpoint dots, nodules, and text labels fade in across the
-       latter half of the draw — by the time the threads finish the
-       full diagram is composed. Stagger from start gives the labels
-       a left-to-right reading reveal. */
-    tl.to(filledPaths, {
-      autoAlpha: 1,
-      duration: 0.6,
-      ease: 'power2.out',
-      stagger: { each: drawDur * 0.55 / Math.max(filledPaths.length, 1), from: 'start' },
-    }, drawDur * 0.45)
+    if (needsLabels.length > 0) {
+      tl.to(needsLabels, {
+        autoAlpha: 1,
+        duration: 0.5,
+        ease: 'power2.out',
+        stagger: { each: phaseDur * 0.65 / needsLabels.length, from: 'start' },
+      }, phaseDur * 0.3)
+    }
+
+    /* Phase 2 — Expectations thread (purple) draws on. The dots /
+       endpoints fade in as it crosses, giving the friction points
+       their visible markers. */
+    if (expectThread) {
+      tl.to(expectThread, {
+        strokeDashoffset: 0,
+        duration: phaseDur,
+        ease: 'power1.inOut',
+      }, phaseDur + 0.3)
+    }
+
+    if (expectDots.length > 0) {
+      tl.to(expectDots, {
+        autoAlpha: 1,
+        duration: 0.5,
+        ease: 'back.out(1.6)',
+        stagger: { each: phaseDur * 0.7 / expectDots.length, from: 'start' },
+      }, phaseDur + 0.6)
+    }
 
     tl.to(headingLine, {
       '--reveal': '0%',
