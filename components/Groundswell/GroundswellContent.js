@@ -16,6 +16,7 @@ import DiagramTabs from './parts/DiagramTabs'
 import WorkshopCarousel from './parts/WorkshopCarousel'
 import PlaytestCarousel from './parts/PlaytestCarousel'
 import VoiceCard from './parts/VoiceCard'
+import Lightbox from '@/components/Lightbox/Lightbox'
 
 
 // ============================================

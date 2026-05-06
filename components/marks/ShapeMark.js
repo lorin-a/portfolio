@@ -52,7 +52,7 @@ export default function ShapeMark({ animate = false, delay = 0, replay = 0, clas
   const [instanceId] = useState(() => ++instanceCount)
   const strokeClipId = `shapeStrokeClip-${instanceId}`
   const brushClipId = `shapeBrushClip-${instanceId}`
-  const petalMaskId = `shapePetalMask-${instanceId}`
+  const waterMaskId = `shapeWaterMask-${instanceId}`
   const gradId = `${GRADIENT_ID}-${instanceId}`
   const fillColor = gradientColors ? `url(#${gradId})` : (color || DEFAULT_COLOR)
   const svgRef = useRef(null)
@@ -60,9 +60,9 @@ export default function ShapeMark({ animate = false, delay = 0, replay = 0, clas
   const petalMaskRefs = useRef([])
   const [brushVisible, setBrushVisible] = useState(false)
   const [strokeReady, setStrokeReady] = useState(fillReveal)
-  // Once the fill animation lands, drop the mask so the brush renders
-  // as plain SVG. Avoids depending on GSAP transforms surviving every
-  // later re-render, scroll-timeline tween, or hover rotation.
+  // Once the fill animation lands, drop the mask so the brush renders as
+  // plain SVG. Avoids depending on GSAP transforms surviving every later
+  // re-render, scroll-timeline tween, or hover rotation.
   const [filled, setFilled] = useState(false)
 
   useEffect(() => {
@@ -76,10 +76,9 @@ export default function ShapeMark({ animate = false, delay = 0, replay = 0, clas
     }
 
     if (fillReveal) {
-      /* ── Fill reveal: brush silhouette is masked by 8 petal paths
-         that scale from the flower's center outward, staggered as a
-         clockwise sweep. After the spin lands, the mask is dropped so
-         the brush renders as plain SVG. ── */
+      /* ── Fill reveal: each of the 8 petals fills via a mask path that
+         scales from the flower's center outward, staggered ~80ms apart.
+         End state is the existing brush silhouette, untouched. ── */
       setStrokeReady(true)
       setBrushVisible(false)
       setFilled(false)
@@ -109,8 +108,9 @@ export default function ShapeMark({ animate = false, delay = 0, replay = 0, clas
         const containerEl = brushEl.parentElement
 
         // Single timeline so spin overlaps the tail of the petal reveal
-        // (no pause between phases). brushVisible flips at the end to
-        // fade the stroke outlines out, after the spin lands.
+        // (no pause between phases). State updates collapse into the
+        // timeline's onComplete so React re-render + DOM mutation
+        // happen after the spin lands, not during it.
         tl = gsap.timeline({
           delay: effectiveDelay,
           onComplete: () => {
@@ -213,10 +213,7 @@ export default function ShapeMark({ animate = false, delay = 0, replay = 0, clas
         </g>
       </svg>
 
-      {/* Brush layer. In fillReveal mode the brush silhouette is masked
-          by 8 petal paths that animate scale-up from center; once the
-          fill lands, the mask is dropped and the brush renders as
-          plain SVG. */}
+      {/* Brush layer */}
       <div ref={brushRef} className={`${styles.shapeBrush} ${brushVisible ? styles.shapeBrushVisible : ''}`}>
         <svg viewBox="-4 -4 199 200" fill="none" overflow="hidden" style={{ width: '100%', height: 'auto' }}>
           <defs>
@@ -225,7 +222,7 @@ export default function ShapeMark({ animate = false, delay = 0, replay = 0, clas
             </clipPath>
             <GradientDef id={gradId} colors={gradientColors} viewBox={[-4, -4, 199, 200]} />
             {fillReveal && !filled && (
-              <mask id={petalMaskId} maskUnits="userSpaceOnUse" x="-20" y="-20" width="240" height="240">
+              <mask id={waterMaskId} maskUnits="userSpaceOnUse" x="-20" y="-20" width="240" height="240">
                 {PETAL_PATHS.map((d, i) => (
                   <g
                     key={i}
@@ -237,7 +234,7 @@ export default function ShapeMark({ animate = false, delay = 0, replay = 0, clas
               </mask>
             )}
           </defs>
-          <g clipPath={`url(#${brushClipId})`} {...(fillReveal && !filled ? { mask: `url(#${petalMaskId})` } : {})}>
+          <g clipPath={`url(#${brushClipId})`} {...(fillReveal && !filled ? { mask: `url(#${waterMaskId})` } : {})}>
             <path d={SHAPE_BRUSH_PATH} fill={fillColor} />
           </g>
         </svg>
