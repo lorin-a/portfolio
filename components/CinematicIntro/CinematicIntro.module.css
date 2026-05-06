@@ -595,7 +595,11 @@
 .poemFrame {
   position: relative;
   width: 100%;
-  height: clamp(380px, 60vh, 560px);
+  /* Tightened from 380-560px to ~one paragraph of breathing room.
+     Smaller frame keeps the cinematic from feeling top-heavy on
+     desktop and stops the transcript from eating the entire screen
+     on mobile. */
+  height: clamp(220px, 36vh, 340px);
   overflow-y: auto;
   overscroll-behavior: contain;
   -webkit-mask-image: linear-gradient(
@@ -643,9 +647,10 @@
 
 .poemBody {
   margin: 0;
-  /* Generous top + bottom padding so the mask gradient at the frame
-     edges fades empty space rather than the first/last poem lines. */
-  padding: 4em 1em 4em 1em;
+  /* Top/bottom padding sized to the mask gradient so the fade lands
+     on empty space rather than the first/last poem lines. Reduced
+     from 4em to match the smaller poem frame height. */
+  padding: 2em 1em;
   font-family: var(--font-heading);
   font-size: var(--text-body-large);
   font-weight: var(--weight-quote);
@@ -748,6 +753,12 @@
 @media (max-width: 600px) {
   .beat {
     padding: clamp(40px, 6vh, 72px) var(--space-md);
+  }
+  /* Equalize line lengths only at narrow widths -- the desktop wrap
+     reads better with the default `pretty` behavior. */
+  .thesis,
+  .framing {
+    text-wrap: balance;
   }
   /* Single column already stacks naturally; just tighten the chrome on
      small screens. */
