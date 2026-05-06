@@ -401,45 +401,15 @@
 /* ===========================================
    MOBILE — drop the 3D depth.
    =========================================== */
+/* Desktop / mobile component toggle. Below 768px the categorized
+   folder-stack is replaced by MobileCardStack — a single pooled
+   gallery with a shallow stack-of-cards depth cue. The folder
+   metaphor stops earning its keep at narrow widths where labels
+   truncate and parallel scanning isn't possible. */
+.desktopOnly { display: block; }
+.mobileOnly { display: none; }
+
 @media (max-width: 768px) {
-  .stack {
-    aspect-ratio: auto;
-    perspective: none;
-    transform-style: flat;
-    display: flex;
-    flex-wrap: wrap;
-  }
-  .card { display: contents; filter: none; }
-  .silhouette { display: none; }
-  .tabHit {
-    position: relative;
-    top: auto;
-    left: auto;
-    width: auto;
-    flex: 1 1 0;
-    min-width: 0;
-    order: var(--slot-i);
-    height: 38px;
-    margin-right: 4px;
-    border: 1.5px solid var(--stroke);
-    border-bottom: none;
-    border-radius: 8px 8px 0 0;
-    opacity: 0.55;
-  }
-  .card[data-active="true"] .tabHit {
-    opacity: 1;
-    border-width: 2px;
-  }
-  .matte {
-    order: 99;
-    flex: 1 0 100%;
-    position: relative;
-    inset: auto;
-    aspect-ratio: 16 / 9;
-    border: 1.5px solid var(--stroke);
-    border-radius: 0 12px 12px 12px;
-    margin-top: -1px;
-    padding: var(--matte-inset);
-  }
-  .card:not([data-active="true"]) .matte { display: none; }
+  .desktopOnly { display: none; }
+  .mobileOnly { display: block; }
 }
