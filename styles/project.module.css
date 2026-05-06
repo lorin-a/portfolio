@@ -4240,3 +4240,277 @@
   white-space: nowrap;
   border: 0;
 }
+
+/* ===========================================
+   12. CASE STUDY CTA (replaces #context on /groundswell)
+   =========================================== */
+.caseStudyCta {
+  padding: clamp(96px, 14vh, 200px) var(--container-padding);
+  background-color: var(--cream);
+}
+
+.caseStudyCtaInner {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(32px, 5vh, 56px);
+}
+
+.caseStudyCtaTitle {
+  font-family: var(--font-serif);
+  font-size: clamp(2.25rem, 5vw, 3.75rem);
+  font-weight: var(--weight-title);
+  font-variation-settings: 'SOFT' 100, 'WONK' 1;
+  color: var(--project-accent);
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+  margin: var(--space-sm) 0 var(--space-md);
+  text-wrap: pretty;
+}
+
+.caseStudyCtaBody {
+  font-family: var(--font-sans);
+  font-size: var(--text-body-large);
+  line-height: var(--leading-relaxed);
+  color: var(--text-heading);
+  max-width: 56ch;
+  margin: 0 auto;
+  text-wrap: pretty;
+}
+
+.caseStudyCtaButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  align-self: center;
+  padding: 18px 32px;
+  border: 1px solid var(--project-accent);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--project-accent);
+  font-family: var(--font-serif);
+  font-size: 20px;
+  font-weight: var(--weight-quote, 300);
+  font-style: italic;
+  font-variation-settings: 'SOFT' 100, 'WONK' 1;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    background-color var(--motion-fast, 300ms) var(--ease-out, ease-out),
+    color var(--motion-fast, 300ms) var(--ease-out, ease-out),
+    transform var(--motion-fast, 300ms) var(--ease-out, ease-out);
+}
+
+.caseStudyCtaButtonLabel {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-thickness: 1px;
+}
+
+.caseStudyCtaButtonArrow {
+  display: inline-block;
+  font-style: normal;
+  transition: transform var(--motion-fast, 300ms) var(--ease-out, ease-out);
+}
+
+@media (hover: hover) {
+  .caseStudyCtaButton:hover {
+    background-color: var(--project-accent);
+    color: var(--cream, #f8ebe5);
+    transform: translateY(-1px);
+  }
+  .caseStudyCtaButton:hover .caseStudyCtaButtonArrow {
+    transform: translateX(4px);
+  }
+}
+
+.caseStudyCtaButton:focus-visible {
+  outline: 2px solid var(--project-accent);
+  outline-offset: 4px;
+}
+
+/* ===========================================
+   13. TIMELINE (closing section on /groundswell)
+   =========================================== */
+.timeline {
+  list-style: none;
+  margin: clamp(48px, 6vh, 80px) auto 0;
+  padding: 0;
+  max-width: 760px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(28px, 4vh, 48px);
+}
+
+/* Vertical rule connecting timeline phases. Stops short of the last
+   item so the line doesn't terminate flush with the final dot. */
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: clamp(12px, 1.5vw, 18px);
+  top: 6px;
+  bottom: 6px;
+  width: 1px;
+  background: rgba(247, 247, 247, 0.18);
+  pointer-events: none;
+}
+
+.timelinePhase {
+  position: relative;
+  display: grid;
+  grid-template-columns: clamp(120px, 16vw, 180px) 1fr;
+  gap: clamp(20px, 3vw, 40px);
+  padding-left: clamp(36px, 4vw, 52px);
+  align-items: baseline;
+}
+
+/* Phase dot — sits on the vertical rule. Filled for past, hollow for
+   future, so the timeline reads at a glance. */
+.timelinePhase::before {
+  content: '';
+  position: absolute;
+  left: clamp(8px, 1.2vw, 14px);
+  top: 0.5em;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--cream, #f8ebe5);
+  box-shadow: 0 0 0 4px rgba(34, 28, 46, 1);
+}
+
+.timelinePhaseFuture::before {
+  background: transparent;
+  border: 1px solid rgba(247, 247, 247, 0.55);
+}
+
+.timelinePhaseTime {
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: var(--weight-label, 500);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(247, 247, 247, 0.55);
+  line-height: 1.4;
+  padding-top: 0.2em;
+}
+
+.timelinePhaseFuture .timelinePhaseTime {
+  color: rgba(247, 247, 247, 0.4);
+}
+
+.timelinePhaseContent {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.timelinePhaseTitle {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-size: clamp(1.25rem, 2vw, 1.625rem);
+  font-weight: var(--weight-label, 500);
+  font-variation-settings: 'SOFT' 100, 'WONK' 1;
+  color: var(--cream, #f8ebe5);
+  line-height: 1.2;
+  text-wrap: pretty;
+}
+
+.timelinePhaseFuture .timelinePhaseTitle {
+  color: rgba(247, 247, 247, 0.78);
+}
+
+.timelinePhaseBody {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: var(--text-body, 18px);
+  line-height: var(--leading-normal, 1.5);
+  color: rgba(247, 247, 247, 0.7);
+  text-wrap: pretty;
+}
+
+@media (max-width: 600px) {
+  .timelinePhase {
+    grid-template-columns: 1fr;
+    gap: 6px;
+    padding-left: clamp(28px, 6vw, 36px);
+  }
+  .timelinePhaseTime {
+    padding-top: 0;
+  }
+}
+
+/* ===========================================
+   14. REACH OUT (closes the timeline section)
+   =========================================== */
+.reachOut {
+  margin: clamp(56px, 8vh, 96px) auto 0;
+  max-width: 640px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(20px, 3vh, 32px);
+  align-items: center;
+}
+
+.reachOutBody {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: var(--text-body-large, 1.125rem);
+  line-height: var(--leading-relaxed, 1.65);
+  color: rgba(247, 247, 247, 0.85);
+  text-wrap: pretty;
+}
+
+.reachOutButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  padding: 18px 32px;
+  border: 1px solid rgba(247, 247, 247, 0.5);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--cream, #f8ebe5);
+  font-family: var(--font-serif);
+  font-size: 20px;
+  font-weight: var(--weight-quote, 300);
+  font-style: italic;
+  font-variation-settings: 'SOFT' 100, 'WONK' 1;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    background-color var(--motion-fast, 300ms) var(--ease-out, ease-out),
+    border-color var(--motion-fast, 300ms) var(--ease-out, ease-out),
+    color var(--motion-fast, 300ms) var(--ease-out, ease-out),
+    transform var(--motion-fast, 300ms) var(--ease-out, ease-out);
+}
+
+.reachOutButtonLabel {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-thickness: 1px;
+}
+
+.reachOutButtonArrow {
+  display: inline-block;
+  font-style: normal;
+  transition: transform var(--motion-fast, 300ms) var(--ease-out, ease-out);
+}
+
+@media (hover: hover) {
+  .reachOutButton:hover {
+    background: rgba(247, 247, 247, 0.08);
+    border-color: rgba(247, 247, 247, 0.85);
+    transform: translateY(-1px);
+  }
+  .reachOutButton:hover .reachOutButtonArrow {
+    transform: translateX(4px);
+  }
+}
+
+.reachOutButton:focus-visible {
+  outline: 2px solid var(--cream, #f8ebe5);
+  outline-offset: 4px;
+}

@@ -26,16 +26,15 @@ const sectionLabels = {
   'cards': 'The Ecosystem',
   'outcomes': 'Outcomes',
   'press': 'Press',
-  'context': 'Context',
+  'case-study': 'Case Study',
+  'whats-next': 'Timeline',
   'acknowledgements': 'Credits',
-  'whats-next': "What's Next",
 }
 
 const darkSections = ['hero', 'vision', 'ctb', 'artwall', 'outcomes', 'acknowledgements', 'whats-next']
 
 // LABELS TBD — Lorin owns. Clips swapped to public-safe alternates 2026-05-04.
 const dashboardClips = [
-  { src: gsVid('gs-opener'), label: '[LABEL TBD]' },
   { src: gsVid('gs-intro-artwall'), label: '[LABEL TBD]' },
   { src: gsVid('gs-pod-data'), label: '[LABEL TBD]' },
   { src: gsVid('gs-display-view'), label: '[LABEL TBD]' },
@@ -433,152 +432,125 @@ export default function GroundswellPublicContent() {
         </div>
       </section>
 
-      {/* ==================== CONTEXT ==================== */}
-      <section id="context" className={styles.parallaxSection}>
-        <div className={styles.parallaxSticky}>
-          <div className={styles.stickyContent}>
-            <h2 className={styles.stickyTitle}>The Context</h2>
-            {/* PUBLIC-TONE TBD: "How might we…" is design-research framing.
-                For public, consider stating the question plainly — "What
-                would it look like to actually care for the people who
-                care for everyone else?" or similar. */}
-            <p className={styles.stickyBodyBold}>
-              How might we create supportive environments where staff can feel nurtured, recognized, and celebrated?
+      {/* ==================== READ THE CASE STUDY ====================
+          Big editorial CTA inviting visitors to read the full design
+          process and case study. Replaces the prior #context block.
+          Lorin owns voice — placeholders below are structural. */}
+      <section id="case-study" className={styles.caseStudyCta}>
+        <div className={styles.caseStudyCtaInner}>
+          <AnimatedElement>
+            <p className={styles.componentLabelCenter}>The full story</p>
+            {/* PUBLIC-TONE TBD: title for this CTA section. */}
+            <h2 className={styles.caseStudyCtaTitle}>
+              Read the case study
+            </h2>
+            {/* PUBLIC-TONE TBD: 2-4 sentence invitation. Mention the
+                research, the co-design process, the constraints, the
+                team — whatever signals "there is depth here for those
+                who want it." */}
+            <p className={styles.caseStudyCtaBody}>
+              [TBD: a short invitation describing what the case study covers — the research, the co-design with oncology staff, the design decisions, and how the project went from question to installation.]
             </p>
-            <p className={styles.stickyBody}>
-              Healthcare workers face a dual burden: the inherently compassionate nature of their work—constant exposure to grief, loss, and trauma—combined with excessive administrative tasks that disconnect them from their original purpose of patient care.
-            </p>
-            <p className={styles.stickyBody}>
-              We learned about the phenomenon of{' '}
-              <a href="https://pubmed.ncbi.nlm.nih.gov/7600555/" target="_blank" rel="noopener noreferrer" className={styles.inlineLink}>
-                &ldquo;chronic compounded grief&rdquo;
-              </a>
-              {' '}among oncology nurses, and how repeated exposure to loss accumulates over time when not properly processed. Over 1 in 5 healthcare workers in the U.S. have experienced{' '}
-              <a href="https://ndpanalytics.com/wp-content/uploads/HCW-Shortage-Final-Mar-2023.pdf" target="_blank" rel="noopener noreferrer" className={styles.inlineLink}>
-                PTSD
-              </a>
-              .{' '}
-              <a href="https://www.emergencyphysicians.org/article/mental-health/poll-workplace-stigma-fear-of-professional-consequences-prevent-emergency-physicians-from-seeking-mental-health-care" target="_blank" rel="noopener noreferrer" className={styles.inlineLink}>
-                73% of emergency physicians report stigma around mental health treatment
-              </a>
-              {' '}in their workplace, with 27% avoiding treatment entirely due to fear of professional consequences.
-            </p>
-            <blockquote className={styles.stickyStatement}>
-              This is not an individual failure.<br />It is a systemic one.
-            </blockquote>
-
-            {/* Behind-the-scenes beats. Four prompts in Lorin's voice — the
-                human story behind what Groundswell became. Lorin can rename,
-                reorder, drop, or merge any of these. Each [TBD] gets a short
-                paragraph (2-4 sentences) in her voice. */}
-            <div className={styles.behindTheScenes}>
-              <h3 className={styles.behindTheScenesHeading}>The question that started it</h3>
-              {/* BEHIND-THE-SCENES TBD: what brought the team into Magee, what
-                  was originally asked, what shifted once you got there. */}
-              <p className={styles.stickyBody}>
-                [TBD: a short paragraph about how the project began — what the team was asked to look at, and what changed once they were on the ground.]
-              </p>
-
-              <h3 className={styles.behindTheScenesHeading}>Who we listened to</h3>
-              {/* BEHIND-THE-SCENES TBD: who the conversations were with, what
-                  kinds of moments surfaced, what surprised the team. */}
-              <p className={styles.stickyBody}>
-                [TBD: who the staff were, what kinds of conversations happened, the moments that shifted the team's understanding.]
-              </p>
-
-              <h3 className={styles.behindTheScenesHeading}>What we learned</h3>
-              {/* BEHIND-THE-SCENES TBD: the human insight that shaped every
-                  component — e.g., the realization that the CTB email was
-                  already a staff act of compassion, or the discovery that
-                  emotional labor needed real space. */}
-              <p className={styles.stickyBody}>
-                [TBD: the core insight that came out of listening — what the team learned that changed how they designed.]
-              </p>
-
-              <h3 className={styles.behindTheScenesHeading}>How we built</h3>
-              {/* BEHIND-THE-SCENES TBD: the team, the donors, the constraints
-                  that shaped the work (lockable doors, $30k of donated materials,
-                  the 10-week sprint). What it took to get this from idea to
-                  installation. */}
-              <p className={styles.stickyBody}>
-                [TBD: the people, partnerships, and constraints that made this real — what it took to bring the work from concept to installation.]
-              </p>
-            </div>
-          </div>
-        </div>
-        <div className={styles.parallaxScroll}>
-          <AnimatedElement>
-            <img src={gsImg('gs-install-upmc', 1200)} alt="Groundswell installation at UPMC" className={styles.scrollImage} />
           </AnimatedElement>
+
           <AnimatedElement>
-            <img src={gsImg('gs-context-01', 1200)} alt="Research at UPMC Magee-Womens Hospital" className={styles.scrollImage} />
-          </AnimatedElement>
-          <AnimatedElement>
-            <img src={gsImg('gs-context-02', 1200)} alt="Engaging with healthcare workers" className={styles.scrollImage} />
-          </AnimatedElement>
-          <AnimatedElement>
-            <img src={gsImg('gs-context-03', 1200)} alt="Rehearsing Research Activities" className={styles.scrollImage} />
+            <a
+              href="/projects/groundswell"
+              className={styles.caseStudyCtaButton}
+            >
+              <span className={styles.caseStudyCtaButtonLabel}>View the full case study</span>
+              <span className={styles.caseStudyCtaButtonArrow} aria-hidden="true">&rarr;</span>
+            </a>
           </AnimatedElement>
         </div>
       </section>
 
-      {/* ==================== WHAT'S NEXT / GET INVOLVED ====================
-          Closing invitation. Lorin owns voice + which CTAs go here. The
-          structural skeleton uses the same dark register as Acknowledgements
-          for visual continuity, and the same press-card pattern as the
-          Press section above for the action items so the visual language
-          stays consistent. */}
+      {/* ==================== TIMELINE + REACH OUT ====================
+          Closing section: simple project timeline (past phases shipped +
+          ideal future phases) followed by an invitation to reach out.
+          Lorin owns voice — phase rows below are structural placeholders. */}
       <section id="whats-next" className={styles.sectionDark}>
         <div className={styles.sectionContent}>
           <AnimatedElement>
-            {/* CLOSING HEADING TBD: pick one — "What's Next", "Stay Connected",
-                "Help Us Continue", "Keep the Work Going" */}
-            <h2 className={styles.sectionHeadingLightCentered}>What&rsquo;s Next</h2>
-            {/* CLOSING BODY TBD: 2-3 sentences inviting visitors to follow,
-                support, or get involved. In Lorin's voice. The current
-                placeholder reads as the structural intent only. */}
+            <h2 className={styles.sectionHeadingLightCentered}>Where this is headed</h2>
+            {/* CLOSING BODY TBD: 1-2 sentence frame for the timeline below. */}
             <p className={styles.bodyTextLightCenteredBold}>
-              [CLOSING BODY TBD] A brief, warm invitation to follow the work, support its continuation, or get involved as the study expands.
+              [TBD: a short frame for the timeline — what's shipped, what's underway, and where the work could go next.]
             </p>
           </AnimatedElement>
 
+          {/* Timeline rows. Each row = year/timeframe + title + 1-2 line
+              description. Use `timelinePhasePast` for shipped phases and
+              `timelinePhaseFuture` for ideal future phases. Lorin: rename,
+              reorder, add or drop rows. */}
           <AnimatedElement>
-            {/* Action cards. Use 1-3 of these. Likely candidates:
-                - Email signup for project updates
-                - Donation / support link
-                - Link to /projects/groundswell case study for those who want
-                  the design story
-                - Press / academic publication preorder
-                - Social follow
-                Lorin: pick which ones, fill href + copy. */}
-            <div className={styles.reflectionPressGrid}>
-              <div className={styles.reflectionPressCardWrapper}>
-                <a
-                  href="#"
-                  className={styles.reflectionPressCard}
-                >
-                  <span className={styles.reflectionPressSource}>[CTA 1 LABEL TBD]</span>
-                  <h4 className={styles.reflectionPressTitle}>
-                    [CTA 1 TITLE TBD]
-                  </h4>
-                  <span className={styles.reflectionPressLink}>[CTA 1 ACTION] &rarr;</span>
-                </a>
-                <span className={styles.reflectionPressFold} aria-hidden="true" />
-              </div>
+            <ol className={styles.timeline}>
+              <li className={`${styles.timelinePhase} ${styles.timelinePhasePast}`}>
+                <span className={styles.timelinePhaseTime}>[YEAR TBD]</span>
+                <div className={styles.timelinePhaseContent}>
+                  <h3 className={styles.timelinePhaseTitle}>[PHASE 1 TITLE TBD]</h3>
+                  <p className={styles.timelinePhaseBody}>
+                    [TBD: 1-2 lines on what this phase covered.]
+                  </p>
+                </div>
+              </li>
 
-              <div className={styles.reflectionPressCardWrapper}>
-                <a
-                  href="#"
-                  className={styles.reflectionPressCard}
-                >
-                  <span className={styles.reflectionPressSource}>[CTA 2 LABEL TBD]</span>
-                  <h4 className={styles.reflectionPressTitle}>
-                    [CTA 2 TITLE TBD]
-                  </h4>
-                  <span className={styles.reflectionPressLink}>[CTA 2 ACTION] &rarr;</span>
-                </a>
-                <span className={styles.reflectionPressFold} aria-hidden="true" />
-              </div>
+              <li className={`${styles.timelinePhase} ${styles.timelinePhasePast}`}>
+                <span className={styles.timelinePhaseTime}>[YEAR TBD]</span>
+                <div className={styles.timelinePhaseContent}>
+                  <h3 className={styles.timelinePhaseTitle}>[PHASE 2 TITLE TBD]</h3>
+                  <p className={styles.timelinePhaseBody}>
+                    [TBD: 1-2 lines on what this phase covered.]
+                  </p>
+                </div>
+              </li>
+
+              <li className={`${styles.timelinePhase} ${styles.timelinePhasePast}`}>
+                <span className={styles.timelinePhaseTime}>2026</span>
+                <div className={styles.timelinePhaseContent}>
+                  <h3 className={styles.timelinePhaseTitle}>Installed at UPMC Magee-Womens Hospital</h3>
+                  <p className={styles.timelinePhaseBody}>
+                    [TBD: short line — Groundswell installed, 12-month quality improvement study underway.]
+                  </p>
+                </div>
+              </li>
+
+              <li className={`${styles.timelinePhase} ${styles.timelinePhaseFuture}`}>
+                <span className={styles.timelinePhaseTime}>[FUTURE]</span>
+                <div className={styles.timelinePhaseContent}>
+                  <h3 className={styles.timelinePhaseTitle}>[FUTURE PHASE 1 TITLE TBD]</h3>
+                  <p className={styles.timelinePhaseBody}>
+                    [TBD: 1-2 lines describing the next ideal phase — expansion, study findings, replication, etc.]
+                  </p>
+                </div>
+              </li>
+
+              <li className={`${styles.timelinePhase} ${styles.timelinePhaseFuture}`}>
+                <span className={styles.timelinePhaseTime}>[FUTURE]</span>
+                <div className={styles.timelinePhaseContent}>
+                  <h3 className={styles.timelinePhaseTitle}>[FUTURE PHASE 2 TITLE TBD]</h3>
+                  <p className={styles.timelinePhaseBody}>
+                    [TBD: 1-2 lines describing a further future phase — bringing this to other hospitals, publishing the work, etc.]
+                  </p>
+                </div>
+              </li>
+            </ol>
+          </AnimatedElement>
+
+          {/* Reach-out invitation. Single warm CTA — email or contact form. */}
+          <AnimatedElement>
+            <div className={styles.reachOut}>
+              {/* PUBLIC-TONE TBD: 1-2 sentence invitation to reach out. */}
+              <p className={styles.reachOutBody}>
+                [TBD: a warm 1-2 sentence invitation — for partners, hospitals, press, or anyone who wants to bring this work to their team.]
+              </p>
+              <a
+                href="mailto:[EMAIL TBD]"
+                className={styles.reachOutButton}
+              >
+                <span className={styles.reachOutButtonLabel}>Get in touch</span>
+                <span className={styles.reachOutButtonArrow} aria-hidden="true">&rarr;</span>
+              </a>
             </div>
           </AnimatedElement>
         </div>
