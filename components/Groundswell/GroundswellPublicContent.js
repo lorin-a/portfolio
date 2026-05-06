@@ -519,6 +519,7 @@ export default function GroundswellPublicContent() {
       <section id="acknowledgements" className={styles.sectionDark}>
         <div className={styles.sectionContent}>
           <AnimatedElement>
+            <p className={styles.componentLabelLight} style={{ textAlign: 'center' }}>In gratitude</p>
             <h2 className={styles.sectionHeadingLightCentered}>Acknowledgements</h2>
             <p className={styles.bodyTextLightCenteredBold}>
               This project is a tribute to the quiet strength, deep compassion, and collective spirit of those who provide oncology care. It was shaped by the voices of staff who shared their experiences—those who live this work every day.
@@ -623,21 +624,25 @@ export default function GroundswellPublicContent() {
           <AnimatedElement>
             <h2 className={styles.sectionHeadingLightCentered}>Get in touch</h2>
             <p className={styles.bodyTextLightCenteredBold}>
-              Want to learn more or support the work? We&rsquo;d love to hear from you.
+              Want to learn more or support the work?
+              <br />
+              We&rsquo;d love to hear from you.
             </p>
           </AnimatedElement>
 
-          <AnimatedElement>
-            <div className={styles.reachOut}>
-              <a
-                href="mailto:lorinanderberg1@gmail.com"
-                className={styles.reachOutButton}
-              >
-                <span className={styles.reachOutButtonLabel}>Reach out</span>
-                <span className={styles.reachOutButtonArrow} aria-hidden="true">&rarr;</span>
-              </a>
-            </div>
-          </AnimatedElement>
+          {/* Button rendered without AnimatedElement wrapper — sits at the
+              very bottom of the page where the IntersectionObserver's
+              -100px bottom rootMargin can fail to trigger and leave it
+              stuck at opacity 0. The button must always be visible. */}
+          <div className={styles.reachOut}>
+            <a
+              href="mailto:lorinanderberg1@gmail.com"
+              className={styles.reachOutButton}
+            >
+              <span className={styles.reachOutButtonLabel}>Reach out</span>
+              <span className={styles.reachOutButtonArrow} aria-hidden="true">&rarr;</span>
+            </a>
+          </div>
         </div>
       </section>
     </div>

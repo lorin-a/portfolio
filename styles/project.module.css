@@ -192,7 +192,7 @@
 }
 
 .pageBreakSymbol img {
-  width: clamp(112px, 12vw, 176px);
+  width: clamp(224px, 24vw, 352px);
   height: auto;
   display: block;
   opacity: 0.85;
