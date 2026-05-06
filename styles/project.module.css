@@ -4511,42 +4511,37 @@
 .reachOutButton {
   display: inline-flex;
   align-items: center;
-  gap: 14px;
-  padding: 18px 32px;
-  border: 1px solid rgba(247, 247, 247, 0.5);
+  gap: 12px;
+  padding: 18px 36px;
+  border: 1px solid var(--project-accent-light);
   border-radius: 999px;
-  background: transparent;
-  color: var(--cream, #f8ebe5);
-  font-family: var(--font-serif);
-  font-size: 20px;
-  font-weight: var(--weight-quote, 300);
-  font-style: italic;
-  font-variation-settings: 'SOFT' 100, 'WONK' 1;
+  background: var(--project-accent-light);
+  color: var(--project-accent);
+  font-family: var(--font-sans);
+  font-size: var(--text-body);
+  font-weight: var(--weight-label);
+  letter-spacing: 0.04em;
   text-decoration: none;
   cursor: pointer;
   transition:
     background-color var(--motion-fast, 300ms) var(--ease-out, ease-out),
-    border-color var(--motion-fast, 300ms) var(--ease-out, ease-out),
     color var(--motion-fast, 300ms) var(--ease-out, ease-out),
     transform var(--motion-fast, 300ms) var(--ease-out, ease-out);
 }
 
 .reachOutButtonLabel {
-  text-decoration: underline;
-  text-underline-offset: 4px;
-  text-decoration-thickness: 1px;
+  /* Solid CTA — no underline; the button shape carries the affordance. */
 }
 
 .reachOutButtonArrow {
   display: inline-block;
-  font-style: normal;
   transition: transform var(--motion-fast, 300ms) var(--ease-out, ease-out);
 }
 
 @media (hover: hover) {
   .reachOutButton:hover {
-    background: rgba(247, 247, 247, 0.08);
-    border-color: rgba(247, 247, 247, 0.85);
+    background: transparent;
+    color: var(--project-accent-light);
     transform: translateY(-1px);
   }
   .reachOutButton:hover .reachOutButtonArrow {
@@ -4555,6 +4550,6 @@
 }
 
 .reachOutButton:focus-visible {
-  outline: 2px solid var(--cream, #f8ebe5);
+  outline: 2px solid var(--project-accent-light);
   outline-offset: 4px;
 }
