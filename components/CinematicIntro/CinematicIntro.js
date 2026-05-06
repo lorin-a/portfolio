@@ -370,11 +370,84 @@ export default function CinematicIntro({ onActiveChange }) {
     )
     activeObserver.observe(rootRef.current)
 
-    // Robust mount: deferred to rAF so we read window.scrollY *after*
-    // the browser has applied scroll restoration, refresh ScrollTriggers
-    // against the final layout, and ignore the IntersectionObserver
-    // initial microtask (gated by `observersPrimed`).
-    const refreshAndPickRaf = requestAnimationFrame(() => {
+    // Robust mount runs in two passes -- the first in rAF so layout
+    // has settled, the second on the first scroll event so we catch
+    // browsers (notably Chrome on Android) whose scroll restoration
+    // fires *after* our rAF. Both passes go through the same handler;
+    // it's idempotent and will roll back the entry timeline to its
+    // final state if the first pass guessed wrong.
+    let entryRan = false
+    let entryWasPastHero = false
+
+    const startEntryTimeline = () => {
+      washIn = gsap.fromTo(
+        washRef.current,
+        { autoAlpha: 0 },
+        { autoAlpha: 1, duration: 4.0, delay: 0.8, ease: 'power1.inOut', overwrite: false }
+      )
+
+      logoIn = gsap.fromTo(
+        heroLogoRef.current,
+        { autoAlpha: 0, scale: 0.92, filter: 'blur(8px)' },
+        {
+          autoAlpha: 1,
+          scale: 1,
+          filter: 'blur(0px)',
+          duration: 2.2,
+          delay: 3.0,
+          ease: 'power2.out',
+          overwrite: false,
+        }
+      )
+
+      // Descriptor lines reveal in soft stagger — built on a second
+      // rAF so SplitText measures actual line breaks once layout has
+      // settled.
+      requestAnimationFrame(() => {
+        if (!heroDescriptorRef.current) return
+        descriptorSplit = SplitText.create(heroDescriptorRef.current, { type: 'lines' })
+        gsap.set(heroDescriptorRef.current, { autoAlpha: 1 })
+        descriptorIn = gsap.fromTo(
+          descriptorSplit.lines,
+          { autoAlpha: 0, y: 14, filter: 'blur(4px)' },
+          {
+            autoAlpha: 1,
+            y: 0,
+            filter: 'blur(0px)',
+            duration: 1.4,
+            delay: 4.4,
+            stagger: 0.16,
+            ease: 'power2.out',
+            overwrite: false,
+          }
+        )
+      })
+
+      cueIn = gsap.fromTo(
+        scrollCueRef.current,
+        { autoAlpha: 0, y: 6 },
+        { autoAlpha: 1, y: 0, duration: 0.9, delay: 5.6, ease: 'power2.out', overwrite: false }
+      )
+    }
+
+    const jumpEntryToFinal = () => {
+      // Kill any in-flight entry tweens from a previous pass (Chrome
+      // mobile case: rAF saw scrollY=0 and started the timeline; the
+      // late scroll-restoration event runs us again with pastHero=true,
+      // so we cancel and snap to the composed end state).
+      washIn?.kill(); washIn = null
+      logoIn?.kill(); logoIn = null
+      cueIn?.kill(); cueIn = null
+      descriptorIn?.kill(); descriptorIn = null
+      descriptorSplit?.revert(); descriptorSplit = null
+
+      gsap.set(washRef.current, { autoAlpha: 1 })
+      gsap.set(heroLogoRef.current, { autoAlpha: 1, scale: 1, filter: 'blur(0px)' })
+      gsap.set(scrollCueRef.current, { autoAlpha: 1, y: 0 })
+      gsap.set(heroDescriptorRef.current, { autoAlpha: 1 })
+    }
+
+    const decideAndApply = () => {
       ScrollTrigger.refresh()
 
       if (!cinematicRoot) {
@@ -389,68 +462,21 @@ export default function CinematicIntro({ onActiveChange }) {
       const viewportCenter = scrollY + window.innerHeight / 2
       const pastHero = scrollY > heroZoneEnd
 
-      // Entry choreography vs. jump-to-final. On a refresh that landed
-      // past the hero zone, skip the delayed entry tweens and jump
-      // wash / logo / descriptor / cue to their final composed state.
-      // Otherwise (fresh load near top), run the original entry
-      // timeline.
-      if (pastHero) {
-        gsap.set(washRef.current, { autoAlpha: 1 })
-        gsap.set(heroLogoRef.current, { autoAlpha: 1, scale: 1, filter: 'blur(0px)' })
-        gsap.set(scrollCueRef.current, { autoAlpha: 1, y: 0 })
-        gsap.set(heroDescriptorRef.current, { autoAlpha: 1 })
-      } else {
-        washIn = gsap.fromTo(
-          washRef.current,
-          { autoAlpha: 0 },
-          { autoAlpha: 1, duration: 4.0, delay: 0.8, ease: 'power1.inOut', overwrite: false }
-        )
-
-        logoIn = gsap.fromTo(
-          heroLogoRef.current,
-          { autoAlpha: 0, scale: 0.92, filter: 'blur(8px)' },
-          {
-            autoAlpha: 1,
-            scale: 1,
-            filter: 'blur(0px)',
-            duration: 2.2,
-            delay: 3.0,
-            ease: 'power2.out',
-            overwrite: false,
-          }
-        )
-
-        // Descriptor lines reveal in soft stagger — built on a second
-        // rAF so SplitText measures actual line breaks once layout has
-        // settled.
-        requestAnimationFrame(() => {
-          if (!heroDescriptorRef.current) return
-          descriptorSplit = SplitText.create(heroDescriptorRef.current, { type: 'lines' })
-          gsap.set(heroDescriptorRef.current, { autoAlpha: 1 })
-          descriptorIn = gsap.fromTo(
-            descriptorSplit.lines,
-            { autoAlpha: 0, y: 14, filter: 'blur(4px)' },
-            {
-              autoAlpha: 1,
-              y: 0,
-              filter: 'blur(0px)',
-              duration: 1.4,
-              delay: 4.4,
-              stagger: 0.16,
-              ease: 'power2.out',
-              overwrite: false,
-            }
-          )
-        })
-
-        cueIn = gsap.fromTo(
-          scrollCueRef.current,
-          { autoAlpha: 0, y: 6 },
-          { autoAlpha: 1, y: 0, duration: 0.9, delay: 5.6, ease: 'power2.out', overwrite: false }
-        )
+      // Entry decision. Apply only when the pastHero state changes
+      // from a previous pass (or is being set for the first time).
+      if (!entryRan) {
+        entryRan = true
+        entryWasPastHero = pastHero
+        if (pastHero) jumpEntryToFinal()
+        else startEntryTimeline()
+      } else if (!entryWasPastHero && pastHero) {
+        // Second pass detected a late scroll restoration past the hero
+        // zone; cancel the in-flight entry tweens and snap to final.
+        entryWasPastHero = true
+        jumpEntryToFinal()
       }
 
-      // Initial beat pick.
+      // Beat pick.
       if (viewportCenter > rootBottom) {
         // Past the cinematic -- hide all beats so the user sees the
         // composed final state above them as they scroll up.
@@ -477,10 +503,17 @@ export default function CinematicIntro({ onActiveChange }) {
       // shows; observers will fire as the user scrolls.)
 
       observersPrimed = true
-    })
+    }
+
+    const refreshAndPickRaf = requestAnimationFrame(decideAndApply)
+    // Re-run on the first scroll event so we catch late scroll
+    // restoration on Chrome mobile.
+    const onFirstScroll = () => decideAndApply()
+    window.addEventListener('scroll', onFirstScroll, { once: true, passive: true })
 
     return () => {
       cancelAnimationFrame(refreshAndPickRaf)
+      window.removeEventListener('scroll', onFirstScroll)
       observers.forEach((o) => o.disconnect())
       activeObserver.disconnect()
       heroFadeOut.scrollTrigger?.kill()
