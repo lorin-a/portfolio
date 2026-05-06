@@ -178,14 +178,18 @@
    sentinel 1 itself keeps each sentinel close to the same height -- so
    adjacent sentinels don't both fall inside the IO middle band. */
 .sentinelTrack {
-  padding-top: 80vh;
-  padding-top: 80dvh;
-  /* Just enough trailing space to keep the sticky pinned while sentinel
-     4 finishes its active range. Audio controls are now globally
-     available via the StandaloneNav, so we don't need to trap the user
-     on the poem -- they can scroll out and the audio keeps playing. */
-  padding-bottom: 20vh;
-  padding-bottom: 20dvh;
+  /* Push beat 1 (thesis) past the hero fade-out so the logo fully
+     dissolves into blank purple wash before the thesis fades in. Hero
+     scrubs out across 160vh; sentinel1 IO-band entry sits at
+     paddingTop + 35vh, so 150vh keeps a ~25vh breath of empty wash
+     between logo gone and thesis arriving. */
+  padding-top: 150vh;
+  padding-top: 150dvh;
+  /* Trailing dwell after sentinel 4's IO-band window so the poem holds
+     at center long enough to be taken in before the sticky backdrop
+     releases and the rest of the site arrives. */
+  padding-bottom: 80vh;
+  padding-bottom: 80dvh;
   /* Sentinels are scroll-trigger geometry only -- never receive clicks
      or scroll-target focus. Without this, the sentinels (which sit
      above the sticky stage in stacking order) would intercept the
@@ -197,8 +201,8 @@
    the nav. The user can leave the poem section without losing audio,
    so we don't need to pin them here longer than the other beats. */
 .sentinelLast {
-  height: 60vh !important;
-  height: 60dvh !important;
+  height: 100vh !important;
+  height: 100dvh !important;
 }
 
 /* Each beat is 60vh tall with flex-centered content. As the user scrolls,
