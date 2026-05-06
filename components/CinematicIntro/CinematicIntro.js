@@ -274,11 +274,20 @@ export default function CinematicIntro({ onActiveChange }) {
       sentinel3Ref.current,
       sentinel4Ref.current,
     ]
+    // Observer callbacks are gated until we've finished the initial
+    // beat pick below. IntersectionObserver fires its initial state in
+    // a microtask after observe(), and when several sentinels are
+    // simultaneously intersecting on refresh, the "last wins" ordering
+    // can leave the wrong beat active (e.g. stuck on poem). The manual
+    // pick that runs in the rAF below is authoritative; we flip this
+    // flag once it has run so subsequent scroll-driven changes work.
+    let observersPrimed = false
     const observers = []
     sentinels.forEach((sentinel, idx) => {
       if (!sentinel) return
       const observer = new IntersectionObserver(
         ([entry]) => {
+          if (!observersPrimed) return
           if (entry.isIntersecting) showBeat(idx)
         },
         { rootMargin: '-35% 0px -35% 0px', threshold: 0 }
@@ -298,76 +307,34 @@ export default function CinematicIntro({ onActiveChange }) {
       onEnterBack: () => showBeat(-1),
     })
 
-    // Entry timeline (no scroll required). On page load:
-    //   1. Watercolor reveal plays in its own component (WebGL bloom).
-    //   2. Purple wash fades in over the painting -- the brand register
-    //      arrives.
-    //   3. Hero overlay (logo + descriptor + scroll cue) fades in over
-    //      the wash.
-    // Initial states: wash hidden, hero overlay hidden, gs-hero photo
-    // hidden, Blue Garden visible (its own WebGL handles its reveal).
+    // Initial states (always). Everything that's about to animate
+    // starts hidden so we don't flash content during the brief window
+    // before the deferred entry decision runs in the rAF below.
+    //   - wash: hidden until either entry tween fades it in OR
+    //     pastHero jumps it to visible
+    //   - heroLayer parent: visible (its children carry the entry
+    //     animations; the parent fades out via scroll scrub later)
+    //   - hero children (logo / descriptor / cue): hidden until
+    //     entry tweens fade them in OR pastHero jumps them
+    //   - heroPhoto: hidden until scrub fades it in as Blue Garden
+    //     fades out
     gsap.set(washRef.current, { autoAlpha: 0 })
-    gsap.set(heroLayerRef.current, { autoAlpha: 0 })
-    gsap.set(heroPhotoRef.current, { autoAlpha: 0 })
-
-    // Wash bloom + cinematic reveal of the title block. The wash starts
-    // early and rises slowly behind the watercolor; the logo settles in
-    // with a subtle scale + blur dissolve; the descriptor's lines reveal
-    // in stagger; the scroll cue arrives last as a quiet invitation.
-    // The heroLayer parent stays at autoAlpha 1 throughout so the scroll
-    // scrub can fade the whole block out as one unit when the visitor
-    // begins moving.
     gsap.set(heroLayerRef.current, { autoAlpha: 1 })
+    gsap.set(heroPhotoRef.current, { autoAlpha: 0 })
+    gsap.set(heroLogoRef.current, { autoAlpha: 0, scale: 0.92, filter: 'blur(8px)' })
+    gsap.set(scrollCueRef.current, { autoAlpha: 0, y: 6 })
+    gsap.set(heroDescriptorRef.current, { autoAlpha: 0 })
 
-    const washIn = gsap.fromTo(
-      washRef.current,
-      { autoAlpha: 0 },
-      { autoAlpha: 1, duration: 4.0, delay: 0.8, ease: 'power1.inOut', overwrite: false }
-    )
-
-    const logoIn = gsap.fromTo(
-      heroLogoRef.current,
-      { autoAlpha: 0, scale: 0.92, filter: 'blur(8px)' },
-      {
-        autoAlpha: 1,
-        scale: 1,
-        filter: 'blur(0px)',
-        duration: 2.2,
-        delay: 3.0,
-        ease: 'power2.out',
-        overwrite: false,
-      }
-    )
-
-    // Descriptor lines reveal in soft stagger — built on next tick so
-    // SplitText measures actual line breaks once the layout has settled.
+    // Entry tween handles -- created inside the rAF below so we can
+    // read window.scrollY *after* the browser has applied scroll
+    // restoration. With scrollRestoration='auto' on this layout, the
+    // restored scroll position isn't always settled at React mount.
+    let washIn = null
+    let logoIn = null
+    let cueIn = null
     let descriptorSplit = null
     let descriptorIn = null
-    requestAnimationFrame(() => {
-      if (!heroDescriptorRef.current) return
-      descriptorSplit = SplitText.create(heroDescriptorRef.current, { type: 'lines' })
-      gsap.set(heroDescriptorRef.current, { autoAlpha: 1 })
-      descriptorIn = gsap.fromTo(
-        descriptorSplit.lines,
-        { autoAlpha: 0, y: 14, filter: 'blur(4px)' },
-        {
-          autoAlpha: 1,
-          y: 0,
-          filter: 'blur(0px)',
-          duration: 1.4,
-          delay: 4.4,
-          stagger: 0.16,
-          ease: 'power2.out',
-          overwrite: false,
-        }
-      )
-    })
-
-    const cueIn = gsap.fromTo(
-      scrollCueRef.current,
-      { autoAlpha: 0, y: 6 },
-      { autoAlpha: 1, y: 0, duration: 0.9, delay: 5.6, ease: 'power2.out', overwrite: false }
-    )
+    const cinematicRoot = rootRef.current
 
     // Scroll scrub (0–80vh of section): hero overlay fades out, Blue
     // Garden fades out, gs-hero photograph fades in. Wash stays at
@@ -403,7 +370,117 @@ export default function CinematicIntro({ onActiveChange }) {
     )
     activeObserver.observe(rootRef.current)
 
+    // Robust mount: deferred to rAF so we read window.scrollY *after*
+    // the browser has applied scroll restoration, refresh ScrollTriggers
+    // against the final layout, and ignore the IntersectionObserver
+    // initial microtask (gated by `observersPrimed`).
+    const refreshAndPickRaf = requestAnimationFrame(() => {
+      ScrollTrigger.refresh()
+
+      if (!cinematicRoot) {
+        observersPrimed = true
+        return
+      }
+
+      const rootTop = cinematicRoot.offsetTop
+      const rootBottom = rootTop + cinematicRoot.offsetHeight
+      const heroZoneEnd = rootTop + window.innerHeight * 0.5
+      const scrollY = window.scrollY
+      const viewportCenter = scrollY + window.innerHeight / 2
+      const pastHero = scrollY > heroZoneEnd
+
+      // Entry choreography vs. jump-to-final. On a refresh that landed
+      // past the hero zone, skip the delayed entry tweens and jump
+      // wash / logo / descriptor / cue to their final composed state.
+      // Otherwise (fresh load near top), run the original entry
+      // timeline.
+      if (pastHero) {
+        gsap.set(washRef.current, { autoAlpha: 1 })
+        gsap.set(heroLogoRef.current, { autoAlpha: 1, scale: 1, filter: 'blur(0px)' })
+        gsap.set(scrollCueRef.current, { autoAlpha: 1, y: 0 })
+        gsap.set(heroDescriptorRef.current, { autoAlpha: 1 })
+      } else {
+        washIn = gsap.fromTo(
+          washRef.current,
+          { autoAlpha: 0 },
+          { autoAlpha: 1, duration: 4.0, delay: 0.8, ease: 'power1.inOut', overwrite: false }
+        )
+
+        logoIn = gsap.fromTo(
+          heroLogoRef.current,
+          { autoAlpha: 0, scale: 0.92, filter: 'blur(8px)' },
+          {
+            autoAlpha: 1,
+            scale: 1,
+            filter: 'blur(0px)',
+            duration: 2.2,
+            delay: 3.0,
+            ease: 'power2.out',
+            overwrite: false,
+          }
+        )
+
+        // Descriptor lines reveal in soft stagger — built on a second
+        // rAF so SplitText measures actual line breaks once layout has
+        // settled.
+        requestAnimationFrame(() => {
+          if (!heroDescriptorRef.current) return
+          descriptorSplit = SplitText.create(heroDescriptorRef.current, { type: 'lines' })
+          gsap.set(heroDescriptorRef.current, { autoAlpha: 1 })
+          descriptorIn = gsap.fromTo(
+            descriptorSplit.lines,
+            { autoAlpha: 0, y: 14, filter: 'blur(4px)' },
+            {
+              autoAlpha: 1,
+              y: 0,
+              filter: 'blur(0px)',
+              duration: 1.4,
+              delay: 4.4,
+              stagger: 0.16,
+              ease: 'power2.out',
+              overwrite: false,
+            }
+          )
+        })
+
+        cueIn = gsap.fromTo(
+          scrollCueRef.current,
+          { autoAlpha: 0, y: 6 },
+          { autoAlpha: 1, y: 0, duration: 0.9, delay: 5.6, ease: 'power2.out', overwrite: false }
+        )
+      }
+
+      // Initial beat pick.
+      if (viewportCenter > rootBottom) {
+        // Past the cinematic -- hide all beats so the user sees the
+        // composed final state above them as they scroll up.
+        showBeat(-1)
+      } else if (pastHero) {
+        // Mid-cinematic refresh -- pick the sentinel whose center is
+        // closest to the viewport center. Resolves "last wins" when
+        // several sentinels intersect simultaneously on refresh.
+        let bestIdx = -1
+        let bestDist = Infinity
+        sentinels.forEach((s, idx) => {
+          if (!s) return
+          const rect = s.getBoundingClientRect()
+          const center = rect.top + rect.height / 2
+          const dist = Math.abs(center - window.innerHeight / 2)
+          if (dist < bestDist) {
+            bestDist = dist
+            bestIdx = idx
+          }
+        })
+        if (bestIdx >= 0) showBeat(bestIdx)
+      }
+      // (Fresh load near top: leave activeIdx at -1 so the hero state
+      // shows; observers will fire as the user scrolls.)
+
+      observersPrimed = true
+    })
+
     return () => {
+      cancelAnimationFrame(refreshAndPickRaf)
       observers.forEach((o) => o.disconnect())
       activeObserver.disconnect()
       heroFadeOut.scrollTrigger?.kill()
@@ -412,9 +489,9 @@ export default function CinematicIntro({ onActiveChange }) {
       heroFadeOut.kill()
       blueFadeOut.kill()
       photoFadeIn.kill()
-      washIn.kill()
-      logoIn.kill()
-      cueIn.kill()
+      washIn?.kill()
+      logoIn?.kill()
+      cueIn?.kill()
       descriptorIn?.kill()
       descriptorSplit?.revert()
       heroZoneTrigger.kill()
