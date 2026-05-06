@@ -4246,7 +4246,7 @@
    =========================================== */
 .caseStudyCta {
   padding: clamp(96px, 14vh, 200px) var(--container-padding);
-  background-color: var(--cream);
+  background-color: #E4E0EB;
 }
 
 .caseStudyCtaInner {

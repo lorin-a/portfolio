@@ -446,12 +446,8 @@ export default function GroundswellPublicContent() {
             <h2 className={styles.caseStudyCtaTitle}>
               Read the case study
             </h2>
-            {/* PUBLIC-TONE TBD: 2-4 sentence invitation. Mention the
-                research, the co-design process, the constraints, the
-                team — whatever signals "there is depth here for those
-                who want it." */}
             <p className={styles.caseStudyCtaBody}>
-              [TBD: a short invitation describing what the case study covers — the research, the co-design with oncology staff, the design decisions, and how the project went from question to installation.]
+              The case study covers the co-design and research with oncology staff, the insights that shaped Groundswell, and the behind-the-scenes of building and installing it.
             </p>
           </AnimatedElement>
 
