@@ -33,13 +33,16 @@
   --whelm-editorial-font: var(--font-crimson-pro, 'Crimson Pro'), Georgia, serif;
   --whelm-body-font:      var(--font-open-sans, 'Open Sans'), -apple-system, sans-serif;
 
-  /* ─── TYPE SIZES ─── 1.25 ratio modular scale. */
+  /* ─── TYPE SIZES ─── coordinated ramp covering hero → eyebrow.
+     Two body sizes (body / body-lg) and two heading sizes (h2 / h1)
+     cover the post-hero sections without per-section clamp() one-offs. */
   --t-eyebrow: clamp(11px, 0.78vw, 13px);
   --t-body:    clamp(15px, 1.05vw, 18px);
+  --t-body-lg: clamp(17px, 1.55vw, 26px);
   --t-lead:    clamp(19px, 1.35vw, 22px);
   --t-h3:      clamp(23px, 1.7vw,  28px);
-  --t-h2:      clamp(30px, 2.4vw,  44px);
-  --t-h1:      clamp(46px, 4.2vw,  72px);
+  --t-h2:      clamp(32px, 3.6vw,  60px);
+  --t-h1:      clamp(40px, 5.2vw,  84px);
   --t-display: clamp(72px, 7.5vw,  140px);
   --t-hero:    clamp(108px, 11vw,  220px);
 
@@ -826,196 +829,193 @@
 }
 
 /* =====================================================================
-   SECTION 2 — NEED. Three "What if" beats stacked vertically.
-   Each beat is a sticky 100dvh stage with a centered composition:
-   heading anchored upper-mid-left, body paragraph below it. Reveal
-   is per-beat via paused timeline + IntersectionObserver play-once.
+   SECTION 2 — NEED. Scroll-pinned dawn transition.
+
+   One pinned viewport. Two overlaid beats share the same composition
+   position. As the reader scrolls, the master timeline progresses:
+
+     Phase 1  Beat 1 reveal    chars descend → squiggle draws → body
+     Phase 2  Dawn transition  cream gradient descends from above
+                               + bridge draws across dissolving frame
+                               + Beat 1 fades out, Beat 2 fades in
+     Phase 3  Beat 2 reveal    chars descend → squiggle draws → body
+
+   The bg color transition is a soft vertical gradient (animated stops
+   on `--horizon-start` / `--horizon-end`) — cream descends from above
+   like dawn, with a feather zone between dark and cream so there is
+   no hard edge crossing the viewport.
+
+   Squiggle paths share a 3-stop gradient matching the hero cursive,
+   4px non-scaling-stroke, round caps + joins, 0.92 stroke opacity.
    ===================================================================== */
 
-/* Outer track is 4 viewport heights tall: 100vh sticky + 300vh of
-   pin range = three 100vh slots, one per beat. ScrollTrigger
-   crossfades the active beat layer as the user scrolls past each
-   slot; the viewport itself stays still. */
-.needSection {
+.needWrap {
   position: relative;
   width: 100%;
-  height: 400vh;
-  /* Override globals.css `section { padding: var(--space-lg) 0 }` —
-     Whelm sections manage their own vertical rhythm via sticky stages
-     and the global padding throws off the pin range + sticky offset. */
   padding: 0;
-  background: var(--whelm-bg);
   scroll-margin-top: 72px;
 }
 
-.needSticky {
-  position: sticky;
-  top: 0;
+/* Sticky pin viewport. Bg is a vertical linear-gradient with two
+   animated stops driving the dawn transition: --horizon-start (where
+   cream solid ends) and --horizon-end (where dark solid begins). The
+   gap between them is the soft feather zone — ~20% of viewport. */
+.needPin {
+  --horizon-start: -30%;
+  --horizon-end: -10%;
+  position: relative;
   width: 100%;
   height: 100vh;
   height: 100dvh;
   overflow: hidden;
-  /* Centers the composition both axes regardless of content height —
-     replaces the per-beat .needLayer wrapper that used to do this. */
-  display: grid;
-  place-content: center;
-  padding: var(--s-7) var(--page-margin);
+  background: linear-gradient(
+    180deg,
+    var(--whelm-bg-cream) 0%,
+    var(--whelm-bg-cream) var(--horizon-start),
+    var(--whelm-bg) var(--horizon-end),
+    var(--whelm-bg) 100%
+  );
 }
 
-/* Beat layers stack atop one another inside the sticky stage. Only one
-   is fully visible at a time; the others sit at autoAlpha 0. */
-.needLayer {
+.needGradientHost {
   position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  /* Grid + place-content: center reliably centers the inner block on
-     both axes regardless of content height — flex + align-items had
-     edge cases where the composition drifted off center. */
-  display: grid;
-  place-content: center;
-  padding: var(--s-7) var(--page-margin);
+  width: 0;
+  height: 0;
+  pointer-events: none;
 }
 
-.needComposition {
-  /* Shrink to longest child (the heading) so the composition centers
-     as a block. Heading + body retain their left-aligned editorial
-     stagger inside the centered column. */
-  width: max-content;
-  max-width: min(100%, 1200px);
-  display: flex;
-  flex-direction: column;
-  /* Tighter vertical rhythm — lines + body sit closer so the
-     composition feels like a single thought, not a stretched poster. */
-  gap: clamp(28px, 3.6vw, 56px);
+/* Both beats overlay the same viewport. Same composition grid; only
+   the text color differs. autoAlpha animated by GSAP swaps which
+   beat is visible during the dawn phase. */
+.needBeat {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  padding: clamp(48px, 8vh, 120px) clamp(40px, 6vw, 120px);
+}
+
+.needBeatDark {
+  color: var(--whelm-cream);
+  z-index: 1;
+}
+
+.needBeatCream {
+  color: var(--whelm-bg);
+  z-index: 2;
+}
+
+/* Inner composition: heading upper-left, squiggle middle, body
+   lower-right. Same in both beats so they overlay cleanly. */
+.needBeatInner {
+  position: relative;
+  width: 100%;
+  max-width: 1500px;
+  height: 100%;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-template-rows: auto 1fr auto;
+  column-gap: clamp(20px, 2.5vw, 40px);
+  row-gap: clamp(20px, 3vh, 40px);
 }
 
 .needHeading {
+  grid-column: 1 / span 8;
+  grid-row: 1;
+  align-self: end;
+  margin: 0;
   font-family: var(--whelm-display-font);
-  font-size: clamp(40px, 5.6vw, 84px);
+  font-size: clamp(34px, 4.6vw, 78px);
   font-weight: 400;
   line-height: 1.1;
   letter-spacing: -0.02em;
-  color: var(--whelm-cream);
-  margin: 0;
-  max-width: 22ch;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
 }
 
-/* Each line is a relatively-positioned shrink-to-fit container. The
-   text inside is clipped via clip-path inset(... var(--reveal) ... 0):
-   --reveal goes from 100% (fully clipped) to 0% (fully visible) and
-   the cursor's left position is bound to the same value, so the
-   cursor rides the wipe edge in lockstep. Negative top/bottom inset
-   keeps italic ascenders/descenders from being clipped. */
-.needLine {
-  --reveal: 100%;
-  position: relative;
+.needHeadingLine {
   display: block;
-  width: max-content;
-  max-width: 100%;
+  white-space: nowrap;
 }
 
-/* Right padding gives the clip-path room past the glyph advance so
-   italic ascenders/overhang on terminal characters (esp. the slanted
-   "?" tail in Mackinac italic) aren't sliced off when --reveal: 0%. */
-.needLineText {
-  display: inline-block;
-  padding-right: 0.2em;
-  clip-path: inset(-0.2em var(--reveal) -0.25em 0);
-  will-change: clip-path;
-}
-
-.needLineAccent {
+.needHeadingItalic {
   font-style: italic;
+  font-weight: 400;
+}
+
+.needBeatDark .needHeadingAccent {
   color: var(--whelm-mauve);
 }
 
-.needCursor {
-  position: absolute;
-  top: 0.08em;
-  left: calc(100% - var(--reveal));
-  width: 0.04em;
-  height: 0.85em;
-  background: currentColor;
-  opacity: 0;
+.needBeatCream .needHeadingAccent {
+  color: var(--whelm-orchid);
+}
+
+.needLineSvg {
+  grid-column: 3 / span 9;
+  grid-row: 2;
+  width: 100%;
+  height: 100%;
+  display: block;
   pointer-events: none;
-}
-
-/* Predicate slot — line 2 of the question. Three layers stacked in
-   the SAME grid cell so they overlap in layout. The slot sizes to the
-   widest/tallest layer and the composition above doesn't reflow when
-   beats swap. (Absolute positioning was wrong here: with a 0-width
-   containing block, layers shrink-to-fit to min-content and wrap one
-   word per line. Grid-cell stacking keeps each layer at its natural
-   max-content width.) */
-.needPredicateSlot {
-  display: grid;
-}
-
-.needPredicateLayer {
-  grid-area: 1 / 1;
-  /* All three layers in cell (1,1); slot sizes to the widest. */
-}
-
-/* Body slot — three paragraphs stacked in the same grid cell. Slot
-   sizes to the widest body (within max-width cap) and the tallest. */
-.needBodySlot {
-  display: grid;
+  align-self: stretch;
+  justify-self: stretch;
+  opacity: 0.92;
 }
 
 .needBody {
-  grid-area: 1 / 1;
+  grid-column: 6 / span 7;
+  grid-row: 3;
+  align-self: start;
+  justify-self: end;
+  margin: 0;
   font-family: var(--font-noto-sans), var(--whelm-body-font);
-  font-size: clamp(18px, 1.85vw, 30px);
   font-weight: 300;
-  line-height: 1.4;
-  letter-spacing: 0.005em;
-  color: var(--whelm-cream);
-  max-width: clamp(400px, 45.5vw, 738px);
-  /* Initial state mirrors the GSAP set. */
-  opacity: 0;
-}
-
-/* Scroll cue — bottom-center of the sticky stage, pulses while there
-   are more "What if" beats to scroll into. Fades out on the final beat. */
-.needScrollCue {
-  position: absolute;
-  left: 0;
-  right: 0;
-  margin-inline: auto;
-  bottom: 6vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 24px;
-  height: 28px;
-  color: var(--whelm-cream);
-  opacity: 0;
-  animation: scrollCueBob 2.4s ease-in-out infinite;
-  pointer-events: none;
-}
-
-.needScrollCue svg {
-  width: 100%;
-  height: 100%;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .needScrollCue {
-    animation: none;
-  }
-}
-
-/* Per-paragraph balance gives a calmer rag on multi-line bodies; the
-   browser distributes line breaks so no line dangles short. */
-.needBodyP {
-  margin: 0 0 0.5em 0;
+  font-size: clamp(17px, 1.6vw, 22px);
+  line-height: 1.45;
+  letter-spacing: 0.01em;
+  max-width: 48ch;
   text-wrap: balance;
+  font-variation-settings: 'CTGR' 0, 'wdth' 100;
 }
 
-.needBodyP:last-child {
-  margin-bottom: 0;
+/* Bridge sits centered in the pin viewport. It draws during the
+   dawn transition so the eye has a visible thread to follow while
+   the bg dissolves around it. Z-index above both beats. */
+.needBridge {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: clamp(420px, 50vw, 780px);
+  height: auto;
+  z-index: 6;
+  pointer-events: none;
+  overflow: visible;
+}
+
+/* Narrow viewports: collapse inner grid to a single column. */
+@media (max-width: 900px) {
+  .needBeatInner {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto minmax(120px, 1fr) auto;
+    row-gap: clamp(24px, 4vh, 48px);
+  }
+  .needHeading,
+  .needLineSvg,
+  .needBody {
+    grid-column: 1;
+    justify-self: start;
+  }
+  .needBody {
+    max-width: 36ch;
+  }
+  .needBridge {
+    width: clamp(260px, 70vw, 460px);
+  }
 }
 
 /* =====================================================================
@@ -1086,20 +1086,30 @@
   height: 100vh;
   height: 100dvh;
   overflow: hidden;
+  /* Same 14-col grid as hero + Need. Two rows: diagram fills the
+     content area, claim sits below in a centered span-6 column. */
   display: grid;
+  grid-template-columns:
+    [sidebar-start] var(--sidebar-w)
+    [sidebar-end content-start]
+    repeat(12, 1fr)
+    [content-end];
   grid-template-rows: 1fr auto;
+  column-gap: var(--gutter);
+  row-gap: clamp(24px, 3vw, 56px);
   align-items: center;
   padding: var(--s-7) var(--page-margin) var(--s-9);
-  gap: clamp(24px, 3vw, 56px);
 }
 
 .tangleStage {
+  /* Spans the full content area; diagram is the reading element so it
+     wants the most width the grid allows. */
+  grid-column: content-start / content-end;
+  grid-row: 1;
   position: relative;
   width: 100%;
-  /* Bigger — fills the available width up to 1500px. The diagram is
-     the reading element; hand-drawn detail and labels need room. */
   max-width: 1500px;
-  margin-inline: auto;
+  justify-self: center;
   /* Aspect-locked to Lorin's hand-drawn SVG viewBox (1920×1080). */
   aspect-ratio: 1920 / 1080;
   color: var(--whelm-cream);
@@ -1187,6 +1197,10 @@
 }
 
 .tangleClaim {
+  /* Centered span on row 2 — the claim breathes inside its column,
+     not bleeding to viewport edges. */
+  grid-column: 4 / span 8;
+  grid-row: 2;
   width: 100%;
   max-width: 960px;
   margin-inline: auto;
@@ -1195,9 +1209,9 @@
 
 .tangleHeading {
   font-family: var(--whelm-display-font);
-  font-size: clamp(32px, 4.4vw, 64px);
+  font-size: var(--t-h2);
   font-weight: 400;
-  line-height: 1.15;
+  line-height: var(--lh-snug);
   letter-spacing: -0.02em;
   color: var(--whelm-cream);
   margin: 0 0 var(--s-4) 0;
@@ -1226,8 +1240,8 @@
   font-family: var(--whelm-editorial-font);
   font-style: italic;
   font-weight: 300;
-  font-size: clamp(17px, 1.55vw, 24px);
-  line-height: 1.5;
+  font-size: var(--t-body-lg);
+  line-height: var(--lh-relaxed);
   color: var(--whelm-cream);
   opacity: 0;
   margin: 0 auto;
@@ -1271,15 +1285,20 @@
     animation: none;
     opacity: 1 !important;
   }
-  .needLine {
+  /* Need section in reduced motion: heading wipes resolve, lines
+     show fully drawn, bodies visible. Both beats already lay out
+     naturally as stacked sections, so no architectural override
+     needed — only the per-element animation initial states. */
+  .needHeadingLine {
     --reveal: 0% !important;
-  }
-  .needCursor {
-    display: none;
   }
   .needBody {
     opacity: 1 !important;
     transform: none !important;
+  }
+  .needLineSvg path,
+  .needBridge path {
+    stroke-dashoffset: 0 !important;
   }
   .tangleLine {
     --reveal: 0% !important;
