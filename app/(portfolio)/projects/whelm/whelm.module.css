@@ -829,24 +829,28 @@
 }
 
 /* =====================================================================
-   SECTION 2 — NEED. Scroll-pinned dawn transition.
+   SECTION 2 — NEED. Scroll-pinned dissolution-and-dawn.
 
-   One pinned viewport. Two overlaid beats share the same composition
-   position. As the reader scrolls, the master timeline progresses:
+   One pinned viewport. Two overlaid beats share the same composition.
+   As the reader scrolls, the master timeline progresses:
 
-     Phase 1  Beat 1 reveal    chars descend → squiggle draws → body
-     Phase 2  Dawn transition  cream gradient descends from above
-                               + bridge draws across dissolving frame
-                               + Beat 1 fades out, Beat 2 fades in
-     Phase 3  Beat 2 reveal    chars descend → squiggle draws → body
+     Phase 1  Beat 1 reveal    chars descend → line draws → body lifts
+     Phase 2  Dissolve + dawn  chars rise + body rises + line undraws
+                               + cream bloom rises (one envelope —
+                               the release of the old thought is what
+                               brings the light)
+     Phase 3  Beat 2 reveal    chars descend → line draws → body lifts
 
-   The bg color transition is a soft vertical gradient (animated stops
-   on `--horizon-start` / `--horizon-end`) — cream descends from above
-   like dawn, with a feather zone between dark and cream so there is
-   no hard edge crossing the viewport.
+   Dawn renders as a radial cream bloom whose origin sits in the
+   upper-left of the frame (where the heading is held). A single
+   `--dawn` (0→1) variable on the pin drives both bloom radius and
+   opacity, so the light expands through space rather than fading
+   on top of it.
 
-   Squiggle paths share a 3-stop gradient matching the hero cursive,
-   4px non-scaling-stroke, round caps + joins, 0.92 stroke opacity.
+   Line paths share a 3-stop gradient matching the hero cursive:
+   4px non-scaling-stroke, round caps + joins, 0.92 opacity. Paths
+   are pre-hidden in markup with `pathLength="1"` +
+   `strokeDasharray="1"` + `strokeDashoffset="1"` so they never FOUC.
    ===================================================================== */
 
 .needWrap {
@@ -856,25 +860,42 @@
   scroll-margin-top: 72px;
 }
 
-/* Sticky pin viewport. Bg is a vertical linear-gradient with two
-   animated stops driving the dawn transition: --horizon-start (where
-   cream solid ends) and --horizon-end (where dark solid begins). The
-   gap between them is the soft feather zone — ~20% of viewport. */
+/* Sticky pin viewport. Dawn is rendered as a radial cream bloom
+   originating in the upper-left of the frame (where the heading is
+   held) and soaking outward across the room. A single `--dawn`
+   (0→1) variable drives both the bloom radius and its opacity, so
+   the light expands through space rather than fading on top of it.
+   Corners stay dark longest. The dissolve tweens (chars rising,
+   body rising, line undrawing) share `--dawn`'s envelope so the
+   release of the old thought *is* the dawn. */
 .needPin {
-  --horizon-start: -30%;
-  --horizon-end: -10%;
+  --dawn: 0;
   position: relative;
   width: 100%;
   height: 100vh;
   height: 100dvh;
   overflow: hidden;
-  background: linear-gradient(
-    180deg,
+  background-color: var(--whelm-bg);
+  isolation: isolate;
+}
+
+.needPin::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 0;
+  background: radial-gradient(
+    ellipse 150% 130% at 22% 28%,
     var(--whelm-bg-cream) 0%,
-    var(--whelm-bg-cream) var(--horizon-start),
-    var(--whelm-bg) var(--horizon-end),
-    var(--whelm-bg) 100%
+    var(--whelm-bg-cream) calc(var(--dawn) * 55%),
+    transparent calc(40% + var(--dawn) * 80%)
   );
+  opacity: var(--dawn);
+  will-change: opacity;
 }
 
 .needGradientHost {
@@ -907,8 +928,11 @@
   z-index: 2;
 }
 
-/* Inner composition: heading upper-left, squiggle middle, body
-   lower-right. Same in both beats so they overlay cleanly. */
+/* Editorial composition: heading + line + body form a vertically
+   centered paragraph stack. Top and bottom 1fr rows hold symmetric
+   breathing space so the thought sits in the middle of the frame.
+   The line lives in a defined middle band — the writer's hand
+   pausing between thoughts. */
 .needBeatInner {
   position: relative;
   width: 100%;
@@ -916,14 +940,14 @@
   height: 100%;
   display: grid;
   grid-template-columns: repeat(12, 1fr);
-  grid-template-rows: auto 1fr auto;
+  grid-template-rows: 1fr auto clamp(140px, 22vh, 260px) auto 1fr;
   column-gap: clamp(20px, 2.5vw, 40px);
-  row-gap: clamp(20px, 3vh, 40px);
+  row-gap: clamp(12px, 2vh, 24px);
 }
 
 .needHeading {
-  grid-column: 1 / span 8;
-  grid-row: 1;
+  grid-column: 1 / span 9;
+  grid-row: 2;
   align-self: end;
   margin: 0;
   font-family: var(--whelm-display-font);
@@ -954,21 +978,27 @@
   color: var(--whelm-orchid);
 }
 
+/* Squiggle sits in row 2 — a defined-height gesture band between
+   heading and body. preserveAspectRatio="none" lets the hand-drawn
+   curve fill the band edge-to-edge; organic line work absorbs the
+   horizontal stretch as natural variation. Slight column inset so
+   the gesture starts and ends inboard of the type's outer edges. */
 .needLineSvg {
-  grid-column: 3 / span 9;
-  grid-row: 2;
+  grid-column: 2 / span 10;
+  grid-row: 3;
+  align-self: stretch;
+  justify-self: stretch;
   width: 100%;
   height: 100%;
   display: block;
   pointer-events: none;
-  align-self: stretch;
-  justify-self: stretch;
   opacity: 0.92;
+  overflow: visible;
 }
 
 .needBody {
   grid-column: 6 / span 7;
-  grid-row: 3;
+  grid-row: 4;
   align-self: start;
   justify-self: end;
   margin: 0;
@@ -982,27 +1012,12 @@
   font-variation-settings: 'CTGR' 0, 'wdth' 100;
 }
 
-/* Bridge sits centered in the pin viewport. It draws during the
-   dawn transition so the eye has a visible thread to follow while
-   the bg dissolves around it. Z-index above both beats. */
-.needBridge {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: clamp(420px, 50vw, 780px);
-  height: auto;
-  z-index: 6;
-  pointer-events: none;
-  overflow: visible;
-}
-
 /* Narrow viewports: collapse inner grid to a single column. */
 @media (max-width: 900px) {
   .needBeatInner {
     grid-template-columns: 1fr;
-    grid-template-rows: auto minmax(120px, 1fr) auto;
-    row-gap: clamp(24px, 4vh, 48px);
+    grid-template-rows: 1fr auto clamp(120px, 18vh, 200px) auto 1fr;
+    row-gap: clamp(12px, 2vh, 24px);
   }
   .needHeading,
   .needLineSvg,
@@ -1012,9 +1027,6 @@
   }
   .needBody {
     max-width: 36ch;
-  }
-  .needBridge {
-    width: clamp(260px, 70vw, 460px);
   }
 }
 
@@ -1296,8 +1308,7 @@
     opacity: 1 !important;
     transform: none !important;
   }
-  .needLineSvg path,
-  .needBridge path {
+  .needLineSvg path {
     stroke-dashoffset: 0 !important;
   }
   .tangleLine {

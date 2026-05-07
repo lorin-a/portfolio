@@ -132,6 +132,7 @@ When V2 decisions are made during homepage work, update `DESIGN_SPEC.md` immedia
 | Orphaned words on mobile | Missing `text-wrap: pretty` or test at 400px |
 | Inconsistent easing | Using old 6+ curve system — only 3 active curves now |
 | Hardcoded spacing values | Should use tokens from `globals.css` unless one-off is justified |
+| Centered flex content drifts off vertical center | `align-items: center` + tall padding has edge cases on tall sections; use `display: grid; place-content: center` instead |
 
 ## The Feeling Test
 
