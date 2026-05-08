@@ -8,8 +8,10 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { ELEMENT_REGISTRY } from './elements/registry'
 import WhelmAgendaNav from './WhelmAgendaNav'
 import WhelmGap from './sections/WhelmGap'
-import WhelmNeed from './sections/WhelmNeed'
+import WhelmSignal from './sections/WhelmSignal'
 import WhelmTangle from './sections/WhelmTangle'
+import WhelmPortal from './sections/WhelmPortal'
+import WhelmReveal from './sections/WhelmReveal'
 import { lockForwardScroll } from './lib/scrollLock'
 import { COPY } from './content'
 import { SECTIONS } from './data'
@@ -157,8 +159,10 @@ export default function WhelmStory() {
         if (s.id === 'need') {
           return (
             <div key={s.id}>
-              <WhelmNeed />
+              <WhelmSignal />
               <WhelmTangle />
+              <WhelmPortal />
+              <WhelmReveal />
             </div>
           )
         }

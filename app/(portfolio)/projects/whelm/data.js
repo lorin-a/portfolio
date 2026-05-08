@@ -75,7 +75,7 @@ export const INITIAL_COPY = 'hero'
    `section` field on BEATS for active-state detection. */
 export const SECTIONS = [
   { id: 'gap',       label: 'The Gap' },
-  { id: 'need',      label: 'The Need' },
+  { id: 'need',      label: 'The Lenses' },
   { id: 'audience',  label: 'The Audience' },
   { id: 'framework', label: 'The Framework' },
   { id: 'research',  label: 'The Research' },

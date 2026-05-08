@@ -58,6 +58,21 @@ export default function WhelmTangle() {
     svgEl.style.display = 'block'
     svgEl.setAttribute('preserveAspectRatio', 'xMidYMid meet')
 
+    /* Auto-crop the viewBox to actual content bounds. The hand-drawn
+       export has internal padding around the weave; cropping makes
+       the artwork (and its label glyphs) render larger in the
+       container. Run after a tick so getBBox sees laid-out paths. */
+    requestAnimationFrame(() => {
+      try {
+        const b = svgEl.getBBox()
+        const pad = 24
+        svgEl.setAttribute(
+          'viewBox',
+          `${b.x - pad} ${b.y - pad} ${b.width + pad * 2} ${b.height + pad * 2}`,
+        )
+      } catch {}
+    })
+
     /* Newest_Tangle.svg palette (corrected mapping):
        - stroke="#F3EFF7" — 11 paths: longest = needs thread, rest = cream tendrils
        - stroke="#B168EF" — 2 paths: longest = expectations thread, other = decor
@@ -226,12 +241,28 @@ export default function WhelmTangle() {
     )
 
     const tl = gsap.timeline({ paused: true })
-    const namedDur = 0.9
-    const needsPhaseDur = 5.6
-    const expectPhaseDur = 8.0  /* slower than needs, per Lorin */
+    const namedDur = 0.7
+    const needsPhaseDur = 3.2  /* compressed from 5.6 */
+    const expectPhaseDur = 4.0 /* compressed from 8.0 */
+
+    /* ---------- Text first ----------
+       Heading wipes in, body lifts right behind it. Both land
+       before the threads start drawing. */
+    if (headingLine) {
+      tl.to(headingLine, {
+        '--reveal': '0%',
+        duration: 1.0, ease: 'power2.inOut',
+      }, 0)
+    }
+    if (headingBody) {
+      tl.to(headingBody, {
+        autoAlpha: 1, y: 0,
+        duration: 0.7, ease: 'power1.out',
+      }, 0.5)
+    }
 
     /* ---------- Phase 1 — Needs ---------- */
-    const phase1NameStart = 0
+    const phase1NameStart = 1.3
     const phase1DrawStart = phase1NameStart + namedDur
     if (needsHeader) {
       tl.to(needsHeader.el, {
@@ -327,15 +358,6 @@ export default function WhelmTangle() {
       }, phase2DrawStart + expectPhaseDur)
     }
 
-    tl.to(headingLine, {
-      '--reveal': '0%',
-      duration: 1.4,
-      ease: 'power2.inOut',
-    }, '+=0.3')
-    tl.to(headingBody, {
-      autoAlpha: 1, y: 0,
-      duration: 1.0, ease: 'power1.inOut',
-    }, '-=0.4')
 
     const stickyEl = root.querySelector('[data-tangle-sticky]')
     let played = false
@@ -360,18 +382,10 @@ export default function WhelmTangle() {
   return (
     <section ref={sectionRef} id="tangle" className={styles.tangleSection}>
       <div data-tangle-sticky="true" className={styles.tangleSticky}>
-        <div className={styles.tangleStage}>
-          <div
-            ref={svgHostRef}
-            className={styles.tangleSvgHost}
-            aria-hidden="true"
-            dangerouslySetInnerHTML={{ __html: svgMarkup }}
-          />
-        </div>
-
         <div className={styles.tangleClaim}>
           <p className={styles.srOnly}>
-            Overwhelm is a tangle of core needs and internalized expectations.
+            Overwhelm is a tangle. Where unmet needs and internalized
+            expectations clash.
           </p>
           <h2 className={styles.tangleHeading} aria-hidden="true">
             <span className={styles.tangleLine} data-tangle-line>
@@ -382,10 +396,17 @@ export default function WhelmTangle() {
             </span>
           </h2>
           <p data-tangle-body className={styles.tangleBody}>
-            Each knot is where a need meets a rule. Rest tangled in productivity
-            you call burnout. Self-expression tangled in self-doubt you call
-            masking. Each name is a meeting.
+            Where unmet needs and internalized expectations clash.
           </p>
+        </div>
+
+        <div className={styles.tangleStage}>
+          <div
+            ref={svgHostRef}
+            className={styles.tangleSvgHost}
+            aria-hidden="true"
+            dangerouslySetInnerHTML={{ __html: svgMarkup }}
+          />
         </div>
       </div>
     </section>

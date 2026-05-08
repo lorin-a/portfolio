@@ -78,6 +78,11 @@
   --sidebar-w: clamp(220px, 18vw, 320px);
   --page-margin: var(--s-7);
   --gutter: var(--s-5);
+  /* Agenda nav height — fixed-position bar that appears once the user
+     scrolls past the hero. All sticky sections offset their `top` and
+     reduce their height by this so pinned content sits below the nav
+     instead of behind it. */
+  --whelm-nav-offset: 56px;
 
   /* ─── Story container ─── */
   position: relative;
@@ -609,10 +614,10 @@
    view at ~85% threshold (i.e. once it's effectively pinned). */
 .gapSticky {
   position: sticky;
-  top: 0;
+  top: var(--whelm-nav-offset);
   width: 100%;
-  height: 100vh;
-  height: 100dvh;
+  height: calc(100vh - var(--whelm-nav-offset));
+  height: calc(100dvh - var(--whelm-nav-offset));
   display: flex;
   align-items: center;
   justify-content: center;
@@ -829,208 +834,6 @@
 }
 
 /* =====================================================================
-   SECTION 2 — NEED. Scroll-pinned dissolution-and-dawn.
-
-   One pinned viewport. Two overlaid beats share the same composition.
-   As the reader scrolls, the master timeline progresses:
-
-     Phase 1  Beat 1 reveal    chars descend → line draws → body lifts
-     Phase 2  Dissolve + dawn  chars rise + body rises + line undraws
-                               + cream bloom rises (one envelope —
-                               the release of the old thought is what
-                               brings the light)
-     Phase 3  Beat 2 reveal    chars descend → line draws → body lifts
-
-   Dawn renders as a radial cream bloom whose origin sits in the
-   upper-left of the frame (where the heading is held). A single
-   `--dawn` (0→1) variable on the pin drives both bloom radius and
-   opacity, so the light expands through space rather than fading
-   on top of it.
-
-   Line paths share a 3-stop gradient matching the hero cursive:
-   4px non-scaling-stroke, round caps + joins, 0.92 opacity. Paths
-   are pre-hidden in markup with `pathLength="1"` +
-   `strokeDasharray="1"` + `strokeDashoffset="1"` so they never FOUC.
-   ===================================================================== */
-
-.needWrap {
-  position: relative;
-  width: 100%;
-  padding: 0;
-  scroll-margin-top: 72px;
-}
-
-/* Sticky pin viewport. Dawn is rendered as a radial cream bloom
-   originating in the upper-left of the frame (where the heading is
-   held) and soaking outward across the room. A single `--dawn`
-   (0→1) variable drives both the bloom radius and its opacity, so
-   the light expands through space rather than fading on top of it.
-   Corners stay dark longest. The dissolve tweens (chars rising,
-   body rising, line undrawing) share `--dawn`'s envelope so the
-   release of the old thought *is* the dawn. */
-.needPin {
-  --dawn: 0;
-  position: relative;
-  width: 100%;
-  height: 100vh;
-  height: 100dvh;
-  overflow: hidden;
-  background-color: var(--whelm-bg);
-  isolation: isolate;
-}
-
-.needPin::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  pointer-events: none;
-  z-index: 0;
-  background: radial-gradient(
-    ellipse 150% 130% at 22% 28%,
-    var(--whelm-bg-cream) 0%,
-    var(--whelm-bg-cream) calc(var(--dawn) * 55%),
-    transparent calc(40% + var(--dawn) * 80%)
-  );
-  opacity: var(--dawn);
-  will-change: opacity;
-}
-
-.needGradientHost {
-  position: absolute;
-  width: 0;
-  height: 0;
-  pointer-events: none;
-}
-
-/* Both beats overlay the same viewport. Same composition grid; only
-   the text color differs. autoAlpha animated by GSAP swaps which
-   beat is visible during the dawn phase. */
-.needBeat {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  padding: clamp(48px, 8vh, 120px) clamp(40px, 6vw, 120px);
-}
-
-.needBeatDark {
-  color: var(--whelm-cream);
-  z-index: 1;
-}
-
-.needBeatCream {
-  color: var(--whelm-bg);
-  z-index: 2;
-}
-
-/* Editorial composition: heading + line + body form a vertically
-   centered paragraph stack. Top and bottom 1fr rows hold symmetric
-   breathing space so the thought sits in the middle of the frame.
-   The line lives in a defined middle band — the writer's hand
-   pausing between thoughts. */
-.needBeatInner {
-  position: relative;
-  width: 100%;
-  max-width: 1500px;
-  height: 100%;
-  display: grid;
-  grid-template-columns: repeat(12, 1fr);
-  grid-template-rows: 1fr auto clamp(140px, 22vh, 260px) auto 1fr;
-  column-gap: clamp(20px, 2.5vw, 40px);
-  row-gap: clamp(12px, 2vh, 24px);
-}
-
-.needHeading {
-  grid-column: 1 / span 9;
-  grid-row: 2;
-  align-self: end;
-  margin: 0;
-  font-family: var(--whelm-display-font);
-  font-size: clamp(34px, 4.6vw, 78px);
-  font-weight: 400;
-  line-height: 1.1;
-  letter-spacing: -0.02em;
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-}
-
-.needHeadingLine {
-  display: block;
-  white-space: nowrap;
-}
-
-.needHeadingItalic {
-  font-style: italic;
-  font-weight: 400;
-}
-
-.needBeatDark .needHeadingAccent {
-  color: var(--whelm-mauve);
-}
-
-.needBeatCream .needHeadingAccent {
-  color: var(--whelm-orchid);
-}
-
-/* Squiggle sits in row 2 — a defined-height gesture band between
-   heading and body. preserveAspectRatio="none" lets the hand-drawn
-   curve fill the band edge-to-edge; organic line work absorbs the
-   horizontal stretch as natural variation. Slight column inset so
-   the gesture starts and ends inboard of the type's outer edges. */
-.needLineSvg {
-  grid-column: 2 / span 10;
-  grid-row: 3;
-  align-self: stretch;
-  justify-self: stretch;
-  width: 100%;
-  height: 100%;
-  display: block;
-  pointer-events: none;
-  opacity: 0.92;
-  overflow: visible;
-}
-
-.needBody {
-  grid-column: 6 / span 7;
-  grid-row: 4;
-  align-self: start;
-  justify-self: end;
-  margin: 0;
-  font-family: var(--font-noto-sans), var(--whelm-body-font);
-  font-weight: 300;
-  font-size: clamp(17px, 1.6vw, 22px);
-  line-height: 1.45;
-  letter-spacing: 0.01em;
-  max-width: 48ch;
-  text-wrap: balance;
-  font-variation-settings: 'CTGR' 0, 'wdth' 100;
-}
-
-/* Narrow viewports: collapse inner grid to a single column. */
-@media (max-width: 900px) {
-  .needBeatInner {
-    grid-template-columns: 1fr;
-    grid-template-rows: 1fr auto clamp(120px, 18vh, 200px) auto 1fr;
-    row-gap: clamp(12px, 2vh, 24px);
-  }
-  .needHeading,
-  .needLineSvg,
-  .needBody {
-    grid-column: 1;
-    justify-self: start;
-  }
-  .needBody {
-    max-width: 36ch;
-  }
-}
-
-/* =====================================================================
    EDITORIAL SECTIONS — post-hero scroll content
    Centered, generous breathing room. Each section fills in over its
    own iteration; placeholders here are the scaffolding only.
@@ -1075,6 +878,95 @@
 }
 
 /* =====================================================================
+   SECTION 2.5 — REVEAL. "Overwhelm → whelm."
+
+   One typographic moment: the word lays in, a hand-drawn cancellation
+   crosses out "Over," and "Over" lifts away leaving "whelm." The
+   strike SVG is sized to overlay the "Over" span exactly via
+   absolute positioning. preserveAspectRatio="none" lets the curve
+   stretch to whatever the span renders at.
+   ===================================================================== */
+
+.revealWrap {
+  position: relative;
+  width: 100%;
+  height: 180vh;
+  background-color: var(--whelm-bg);
+  scroll-margin-top: 72px;
+}
+
+.revealSticky {
+  position: sticky;
+  top: var(--whelm-nav-offset);
+  width: 100%;
+  height: calc(100vh - var(--whelm-nav-offset));
+  height: calc(100dvh - var(--whelm-nav-offset));
+  overflow: hidden;
+  background-color: var(--whelm-bg);
+  color: var(--whelm-cream);
+  display: grid;
+  place-items: center;
+  isolation: isolate;
+}
+
+.revealStage {
+  width: 100%;
+  max-width: 1500px;
+  padding: 0 clamp(40px, 6vw, 120px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.revealHeading {
+  margin: 0;
+  font-family: var(--whelm-display-font);
+  font-size: clamp(72px, 13vw, 200px);
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -0.025em;
+  display: inline-flex;
+  align-items: baseline;
+  white-space: nowrap;
+}
+
+.revealOverWrap {
+  position: relative;
+  display: inline-block;
+}
+
+.revealOver {
+  display: inline-block;
+}
+
+/* Strike sits on top of the "Over" span. Sized to the span's box via
+   absolute positioning + 100% width/height. */
+.revealStrike {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  width: 100%;
+  height: 0.55em;
+  transform: translateY(-50%);
+  pointer-events: none;
+  overflow: visible;
+  opacity: 0.95;
+}
+
+.revealWhelm {
+  display: inline-block;
+  font-style: italic;
+  color: var(--whelm-mauve);
+}
+
+@media (max-width: 700px) {
+  .revealHeading {
+    font-size: clamp(56px, 18vw, 120px);
+  }
+}
+
+/* =====================================================================
    THE TANGLE — single-path line draws on through scattered words
    "Overwhelm is a tangle." Words layer (muted lavender, behind),
    then the line, then dots at crossings, then the claim heading.
@@ -1093,37 +985,35 @@
 
 .tangleSticky {
   position: sticky;
-  top: 0;
+  top: var(--whelm-nav-offset);
   width: 100%;
-  height: 100vh;
-  height: 100dvh;
+  height: calc(100vh - var(--whelm-nav-offset));
+  height: calc(100dvh - var(--whelm-nav-offset));
   overflow: hidden;
-  /* Same 14-col grid as hero + Need. Two rows: diagram fills the
-     content area, claim sits below in a centered span-6 column. */
-  display: grid;
-  grid-template-columns:
-    [sidebar-start] var(--sidebar-w)
-    [sidebar-end content-start]
-    repeat(12, 1fr)
-    [content-end];
-  grid-template-rows: 1fr auto;
-  column-gap: var(--gutter);
-  row-gap: clamp(24px, 3vw, 56px);
-  align-items: center;
-  padding: var(--s-7) var(--page-margin) var(--s-9);
+  /* Flex column, center-aligned. The claim+stage stack reads as one
+     unit, vertically centered in the viewport so top and bottom
+     breathing space match. */
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: center;
+  gap: clamp(12px, 1.6vh, 24px);
+  padding: clamp(40px, 5vh, 72px) var(--page-margin);
 }
 
 .tangleStage {
-  /* Spans the full content area; diagram is the reading element so it
-     wants the most width the grid allows. */
-  grid-column: content-start / content-end;
-  grid-row: 1;
+  /* Fills remaining flex space below the claim, centered. The SVG
+     inside uses preserveAspectRatio="xMidYMid meet" to scale itself
+     to fit while keeping the artwork's 1920×1080 proportions. No
+     explicit aspect-ratio on the stage div — that would set a
+     natural height which can overflow the sticky on short viewports
+     and clip the heading at top. */
   position: relative;
   width: 100%;
   max-width: 1500px;
-  justify-self: center;
-  /* Aspect-locked to Lorin's hand-drawn SVG viewBox (1920×1080). */
-  aspect-ratio: 1920 / 1080;
+  margin: 0 auto;
+  flex: 1 1 auto;
+  min-height: 0;
   color: var(--whelm-cream);
 }
 
@@ -1167,7 +1057,7 @@
   font-family: var(--whelm-editorial-font);
   font-style: italic;
   font-weight: 400;
-  font-size: clamp(14px, 1.15vw, 18px);
+  font-size: clamp(16px, 1.5vw, 22px);
   line-height: 1;
   color: var(--whelm-cream);
   white-space: nowrap;
@@ -1209,12 +1099,12 @@
 }
 
 .tangleClaim {
-  /* Centered span on row 2 — the claim breathes inside its column,
-     not bleeding to viewport edges. */
-  grid-column: 4 / span 8;
-  grid-row: 2;
+  /* Claim sits above the diagram, centered horizontally to align
+     with the wide artwork below. */
+  grid-column: 1;
+  grid-row: 1;
   width: 100%;
-  max-width: 960px;
+  max-width: 720px;
   margin-inline: auto;
   text-align: center;
 }
@@ -1226,7 +1116,7 @@
   line-height: var(--lh-snug);
   letter-spacing: -0.02em;
   color: var(--whelm-cream);
-  margin: 0 0 var(--s-4) 0;
+  margin: 0 0 clamp(8px, 1.2vh, 16px) 0;
 }
 
 .tangleLine {
@@ -1239,7 +1129,7 @@
 .tangleLineText {
   display: inline-block;
   padding-right: 0.2em;
-  clip-path: inset(-0.2em var(--reveal) -0.25em 0);
+  clip-path: inset(-0.2em var(--reveal) -0.55em 0);
   will-change: clip-path;
 }
 
@@ -1249,16 +1139,207 @@
 }
 
 .tangleBody {
-  font-family: var(--whelm-editorial-font);
-  font-style: italic;
-  font-weight: 300;
-  font-size: var(--t-body-lg);
-  line-height: var(--lh-relaxed);
+  font-family: var(--font-noto-sans), var(--whelm-body-font);
+  font-style: normal;
+  font-weight: 400;
+  font-size: clamp(17px, 1.4vw, 22px);
+  line-height: 1.5;
+  letter-spacing: 0.01em;
   color: var(--whelm-cream);
   opacity: 0;
   margin: 0 auto;
   max-width: 52ch;
   text-wrap: pretty;
+  font-variation-settings: 'CTGR' 0, 'wdth' 100;
+}
+
+/* =====================================================================
+   THE SIGNAL — central pulse + 5 radiating rays + word labels.
+   Placeholder geometry; replace with hand-drawn SVG when ready.
+   Same sticky-anchor pattern as Tangle.
+   ===================================================================== */
+
+/* =====================================================================
+   LENS SECTIONS — Signal / Portal share a left-right split layout
+   (claim column on the left, artwork on the right). Tangle keeps its
+   wide artwork below text — see its own block. Type anchors left
+   so the page reads top-down, left-to-right per beat.
+   ===================================================================== */
+
+.signalSection,
+.portalSection {
+  position: relative;
+  width: 100%;
+  /* Internal timeline runs ~3.5s per beat. 180vh gives the sticky
+     stage room to play through without overstaying. Tangle keeps its
+     220vh because its threads draw for 13s+. */
+  height: 180vh;
+  padding: 0;
+  background: var(--whelm-bg);
+  scroll-margin-top: 72px;
+}
+
+.signalSticky,
+.portalSticky {
+  position: sticky;
+  top: var(--whelm-nav-offset);
+  width: 100%;
+  height: calc(100vh - var(--whelm-nav-offset));
+  height: calc(100dvh - var(--whelm-nav-offset));
+  overflow: hidden;
+  /* Five-column track: outer spacers push the claim+stage unit to
+     center; inner gap sits between them. The unit reads as one
+     editorial spread instead of two elements anchored to opposite
+     sides of the viewport. */
+  display: grid;
+  grid-template-columns:
+    1fr
+    minmax(0, 460px)
+    clamp(40px, 5vw, 96px)
+    minmax(0, 460px)
+    1fr;
+  grid-template-rows: 1fr;
+  align-items: center;
+  padding: var(--s-7) var(--page-margin);
+}
+
+.signalClaim,
+.portalClaim {
+  grid-column: 2;
+  grid-row: 1;
+  align-self: center;
+  justify-self: end;
+  text-align: left;
+  max-width: 44ch;
+}
+
+.signalStage,
+.portalStage {
+  grid-column: 4;
+  grid-row: 1;
+  align-self: center;
+  justify-self: start;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.signalSvg,
+.portalSvg {
+  width: 100%;
+  height: 100%;
+  max-height: 72vh;
+  display: block;
+  overflow: visible;
+}
+
+.signalSvgHost {
+  width: 100%;
+  height: 100%;
+  max-height: 72vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  visibility: hidden;
+}
+
+.signalSvgHost svg {
+  width: 100%;
+  height: 100%;
+  max-height: 72vh;
+}
+
+.signalLabel {
+  position: absolute;
+  font-family: var(--whelm-editorial-font);
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(14px, 1.2vw, 19px);
+  line-height: 1;
+  color: var(--whelm-mauve);
+  white-space: nowrap;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.signalHeading,
+.portalHeading {
+  font-family: var(--whelm-display-font);
+  font-size: clamp(42px, 4.8vw, 84px);
+  font-weight: 400;
+  line-height: 1.04;
+  letter-spacing: -0.025em;
+  color: var(--whelm-cream);
+  /* Generous gap between claim and body — lets the body line read as
+     a deliberate caption rather than a continuation. */
+  margin: 0 0 clamp(28px, 3.2vh, 48px) 0;
+}
+
+.signalLine,
+.portalLine {
+  --reveal: 100%;
+  position: relative;
+  display: inline-block;
+  max-width: 100%;
+}
+
+.signalLineText,
+.portalLineText {
+  display: inline-block;
+  padding-right: 0.2em;
+  /* Italic Mackinac descenders (lowercase p, g) extend well below the
+     baseline at display sizes — give the bottom inset enough negative
+     room so the clip wipe never crops them. */
+  clip-path: inset(-0.2em var(--reveal) -0.55em 0);
+  will-change: clip-path;
+}
+
+.signalAccent,
+.portalAccent {
+  font-style: italic;
+  color: var(--whelm-mauve);
+}
+
+.signalBody,
+.portalBody {
+  font-family: var(--font-noto-sans), var(--whelm-body-font);
+  font-style: normal;
+  font-weight: 400;
+  font-size: clamp(17px, 1.4vw, 22px);
+  line-height: 1.5;
+  letter-spacing: 0.01em;
+  color: var(--whelm-cream);
+  opacity: 0;
+  margin: 0;
+  max-width: 36ch;
+  text-wrap: pretty;
+  font-variation-settings: 'CTGR' 0, 'wdth' 100;
+}
+
+/* Narrow viewports — collapse to stacked column. Type top, art below. */
+@media (max-width: 900px) {
+  .signalSticky,
+  .portalSticky {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
+    align-items: start;
+    row-gap: clamp(20px, 4vh, 40px);
+    padding: var(--s-7) var(--page-margin);
+  }
+  .signalClaim,
+  .portalClaim {
+    grid-column: 1;
+    grid-row: 1;
+    max-width: 100%;
+  }
+  .signalStage,
+  .portalStage {
+    grid-column: 1;
+    grid-row: 2;
+  }
 }
 
 /* =====================================================================
@@ -1297,20 +1378,6 @@
     animation: none;
     opacity: 1 !important;
   }
-  /* Need section in reduced motion: heading wipes resolve, lines
-     show fully drawn, bodies visible. Both beats already lay out
-     naturally as stacked sections, so no architectural override
-     needed — only the per-element animation initial states. */
-  .needHeadingLine {
-    --reveal: 0% !important;
-  }
-  .needBody {
-    opacity: 1 !important;
-    transform: none !important;
-  }
-  .needLineSvg path {
-    stroke-dashoffset: 0 !important;
-  }
   .tangleLine {
     --reveal: 0% !important;
   }
@@ -1319,6 +1386,17 @@
   }
   .tangleLabel,
   .tangleEndpointLabel {
+    opacity: 0.9 !important;
+  }
+  .signalLine,
+  .portalLine {
+    --reveal: 0% !important;
+  }
+  .signalBody,
+  .portalBody {
+    opacity: 1 !important;
+  }
+  .signalLabel {
     opacity: 0.9 !important;
   }
 }
