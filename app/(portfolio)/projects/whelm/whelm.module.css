@@ -591,33 +591,89 @@
 }
 
 /* =====================================================================
+   STICKY SECTION PRIMITIVE
+   The shape every post-hero beat sits inside. Outer track provides
+   scroll room; inner stage pins at top:nav-offset and fills the rest
+   of the viewport. Per-beat compositions live INSIDE the sticky and
+   bring their own grid/flex rules.
+
+   Tracks:
+     short  = 140vh  — quick beats (small SVG, simple type reveal)
+     medium = 180vh  — standard lens beat (Signal/Portal/Reveal)
+     long   = 220vh  — long timelines (Tangle threads, Gap waterfall)
+
+   Stages:
+     default = grid place-items: center (most beats want centering)
+     grid    = no inner display; section provides its own rules
+   ===================================================================== */
+
+.section {
+  position: relative;
+  width: 100%;
+  background: var(--whelm-bg);
+  scroll-margin-top: var(--whelm-nav-offset);
+}
+
+.section_track_short  { height: 140vh; }
+.section_track_medium { height: 180vh; }
+.section_track_long   { height: 220vh; }
+
+.sectionSticky {
+  position: sticky;
+  top: var(--whelm-nav-offset);
+  width: 100%;
+  height: calc(100vh - var(--whelm-nav-offset));
+  height: calc(100dvh - var(--whelm-nav-offset));
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.sectionSticky[data-stage='default'] {
+  display: grid;
+  place-items: center;
+  padding: var(--s-7) var(--page-margin);
+}
+
+/* lensSplit — the L/R split layout used by Signal and Portal.
+   Five tracks: outer spacers push the claim+stage unit to center,
+   inner gap separates them. The unit reads as one editorial spread,
+   not two halves anchored to opposite viewport edges. */
+.lensSplit {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns:
+    1fr
+    minmax(0, 460px)
+    clamp(40px, 5vw, 96px)
+    minmax(0, 460px)
+    1fr;
+  grid-template-rows: 1fr;
+  align-items: center;
+  padding: var(--s-7) var(--page-margin);
+}
+
+@media (max-width: 900px) {
+  .lensSplit {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
+    align-items: start;
+    row-gap: clamp(20px, 4vh, 40px);
+  }
+}
+
+/* =====================================================================
    THE GAP — Section 1 thesis composition
    Three "Overwhelm" lines waterfall from a single origin, then
    "is overlooked." types in below with a persistent blinking cursor.
    Section is its own composition — overrides .editorialSection.
    ===================================================================== */
 
-/* Outer track — provides scroll room while the inner stage stays
-   anchored. 220vh = ~120vh of "anchored viewing" after the user
-   scrolls the sticky into place. Project pattern (CinematicIntro):
-   tall wrapper + position:sticky inner stage. */
-.gapSection {
-  position: relative;
-  width: 100%;
-  height: 220vh;
-  background: var(--whelm-bg);
-  scroll-margin-top: 72px;
-}
-
-/* Sticky stage — pins the composition viewport-centered while the
-   outer track scrolls past. Animation triggers when this enters
-   view at ~85% threshold (i.e. once it's effectively pinned). */
+/* Inner content host — centers the composition inside the sticky
+   stage. Outer sticky/track is owned by <StickySection>. */
 .gapSticky {
-  position: sticky;
-  top: var(--whelm-nav-offset);
   width: 100%;
-  height: calc(100vh - var(--whelm-nav-offset));
-  height: calc(100dvh - var(--whelm-nav-offset));
+  height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -887,28 +943,6 @@
    stretch to whatever the span renders at.
    ===================================================================== */
 
-.revealWrap {
-  position: relative;
-  width: 100%;
-  height: 180vh;
-  background-color: var(--whelm-bg);
-  scroll-margin-top: 72px;
-}
-
-.revealSticky {
-  position: sticky;
-  top: var(--whelm-nav-offset);
-  width: 100%;
-  height: calc(100vh - var(--whelm-nav-offset));
-  height: calc(100dvh - var(--whelm-nav-offset));
-  overflow: hidden;
-  background-color: var(--whelm-bg);
-  color: var(--whelm-cream);
-  display: grid;
-  place-items: center;
-  isolation: isolate;
-}
-
 .revealStage {
   width: 100%;
   max-width: 1500px;
@@ -972,27 +1006,11 @@
    then the line, then dots at crossings, then the claim heading.
    ===================================================================== */
 
-.tangleSection {
-  position: relative;
-  width: 100%;
-  /* Tall enough to give the sticky stage room to play through its
-     ~5s timeline without the user blowing past mid-build. */
-  height: 220vh;
-  padding: 0;
-  background: var(--whelm-bg);
-  scroll-margin-top: 72px;
-}
-
+/* Inner stack: claim above, stage below — centered as one editorial
+   unit inside the sticky frame. Outer sticky/track is <StickySection>. */
 .tangleSticky {
-  position: sticky;
-  top: var(--whelm-nav-offset);
   width: 100%;
-  height: calc(100vh - var(--whelm-nav-offset));
-  height: calc(100dvh - var(--whelm-nav-offset));
-  overflow: hidden;
-  /* Flex column, center-aligned. The claim+stage stack reads as one
-     unit, vertically centered in the viewport so top and bottom
-     breathing space match. */
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: stretch;
@@ -1166,43 +1184,6 @@
    so the page reads top-down, left-to-right per beat.
    ===================================================================== */
 
-.signalSection,
-.portalSection {
-  position: relative;
-  width: 100%;
-  /* Internal timeline runs ~3.5s per beat. 180vh gives the sticky
-     stage room to play through without overstaying. Tangle keeps its
-     220vh because its threads draw for 13s+. */
-  height: 180vh;
-  padding: 0;
-  background: var(--whelm-bg);
-  scroll-margin-top: 72px;
-}
-
-.signalSticky,
-.portalSticky {
-  position: sticky;
-  top: var(--whelm-nav-offset);
-  width: 100%;
-  height: calc(100vh - var(--whelm-nav-offset));
-  height: calc(100dvh - var(--whelm-nav-offset));
-  overflow: hidden;
-  /* Five-column track: outer spacers push the claim+stage unit to
-     center; inner gap sits between them. The unit reads as one
-     editorial spread instead of two elements anchored to opposite
-     sides of the viewport. */
-  display: grid;
-  grid-template-columns:
-    1fr
-    minmax(0, 460px)
-    clamp(40px, 5vw, 96px)
-    minmax(0, 460px)
-    1fr;
-  grid-template-rows: 1fr;
-  align-items: center;
-  padding: var(--s-7) var(--page-margin);
-}
-
 .signalClaim,
 .portalClaim {
   grid-column: 2;
@@ -1319,16 +1300,9 @@
   font-variation-settings: 'CTGR' 0, 'wdth' 100;
 }
 
-/* Narrow viewports — collapse to stacked column. Type top, art below. */
+/* Narrow viewports — collapse to stacked column inside .lensSplit.
+   Type top, art below. */
 @media (max-width: 900px) {
-  .signalSticky,
-  .portalSticky {
-    grid-template-columns: 1fr;
-    grid-template-rows: auto 1fr;
-    align-items: start;
-    row-gap: clamp(20px, 4vh, 40px);
-    padding: var(--s-7) var(--page-margin);
-  }
   .signalClaim,
   .portalClaim {
     grid-column: 1;

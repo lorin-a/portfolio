@@ -1,15 +1,14 @@
 'use client'
 
-import { useRef } from 'react'
 import gsap from 'gsap'
-import { useGSAP } from '@gsap/react'
 
+import { StickySection } from '../components/StickySection'
+import { useStickyReveal, prefersReducedMotion } from '../lib/useStickyReveal'
 import styles from '../whelm.module.css'
 
 /* Section 1 — The Gap.
-   Thesis statement: three "Overwhelm" lines waterfall down from the same
-   point, then "is overlooked." types in below with a blinking cursor.
-   Paused timeline, IntersectionObserver play-once — no scrub. */
+   Three "Overwhelm" lines waterfall down from the same point, then
+   "is overlooked." types in below with a blinking cursor. */
 
 const PUNCHLINE = [
   { text: 'is  ', italic: false },
@@ -22,106 +21,72 @@ const PUNCHLINE_CHARS = PUNCHLINE.flatMap(seg =>
 )
 
 export default function WhelmGap() {
-  const sectionRef = useRef(null)
+  const { sectionRef } = useStickyReveal({
+    threshold: 0.85,
+    build(tl, root) {
+      const lines = root.querySelectorAll('[data-gap-line]')
+      const chars = root.querySelectorAll('[data-gap-char]')
+      const cursor = root.querySelector('[data-gap-cursor]')
+      const arrow = root.querySelector('[data-gap-arrow]')
 
-  useGSAP(() => {
-    const root = sectionRef.current
-    if (!root) return
+      if (prefersReducedMotion()) {
+        gsap.set(lines, { yPercent: 0, autoAlpha: 1 })
+        gsap.set(chars, { maxWidth: 'none', opacity: 1 })
+        gsap.set(cursor, { autoAlpha: 0 })
+        gsap.set(arrow, { autoAlpha: 1 })
+        return
+      }
 
-    const sticky = root.querySelector('[data-gap-sticky]')
-    const lines = root.querySelectorAll('[data-gap-line]')
-    const chars = root.querySelectorAll('[data-gap-char]')
-    const cursor = root.querySelector('[data-gap-cursor]')
-    const arrow = root.querySelector('[data-gap-arrow]')
-
-    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-
-    if (prefersReduced) {
-      gsap.set(lines, { yPercent: 0, autoAlpha: 1 })
-      gsap.set(chars, { maxWidth: 'none', opacity: 1 })
+      gsap.set(lines, { yPercent: i => -100 * i, autoAlpha: 0 })
+      gsap.set(chars, { maxWidth: 0, opacity: 0 })
       gsap.set(cursor, { autoAlpha: 0 })
-      gsap.set(arrow, { autoAlpha: 1 })
-      return
-    }
+      gsap.set(arrow, { autoAlpha: 0 })
 
-    /* Initial: lines collapsed atop tier-1; cursor + chars + arrow hidden.
-       Arrow uses opacity-only fade so the CSS bob keyframe owns transform. */
-    gsap.set(lines, { yPercent: i => -100 * i, autoAlpha: 0 })
-    gsap.set(chars, { maxWidth: 0, opacity: 0 })
-    gsap.set(cursor, { autoAlpha: 0 })
-    gsap.set(arrow, { autoAlpha: 0 })
+      tl.to(lines, {
+        yPercent: 0,
+        autoAlpha: 1,
+        duration: 0.6,
+        ease: 'power2.out',
+        stagger: 0.22,
+      })
 
-    const tl = gsap.timeline({ paused: true })
+      tl.to(cursor, { autoAlpha: 1, duration: 0.3, ease: 'power2.out' }, '-=0.3')
 
-    /* Waterfall: each line falls into its stacked home from the line above. */
-    tl.to(lines, {
-      yPercent: 0,
-      autoAlpha: 1,
-      duration: 0.6,
-      ease: 'power2.out',
-      stagger: 0.22,
-    })
-
-    /* Cursor lands as the last line is still settling — overlaps the
-       waterfall so "is overlooked" arrives a beat sooner. */
-    tl.to(cursor, { autoAlpha: 1, duration: 0.3, ease: 'power2.out' }, '-=0.3')
-
-    /* Typewriter: per-char max-width grow + opacity. Snappier than hero.
-       onComplete clears max-width so italic letterforms (Crimson Pro
-       slant) aren't clipped at the right edge — scrollWidth reports
-       only the glyph's advance, not the italic overhang. */
-    chars.forEach((el, i) => {
-      tl.to(
-        el,
-        {
-          maxWidth: el.scrollWidth,
-          opacity: 1,
-          duration: 0.12,
-          ease: 'power2.out',
-          onComplete: () => {
-            el.style.maxWidth = 'none'
-            el.style.overflow = 'visible'
+      chars.forEach((el, i) => {
+        tl.to(
+          el,
+          {
+            maxWidth: el.scrollWidth,
+            opacity: 1,
+            duration: 0.12,
+            ease: 'power2.out',
+            onComplete: () => {
+              el.style.maxWidth = 'none'
+              el.style.overflow = 'visible'
+            },
           },
-        },
-        `>${i === 0 ? 0 : -0.05}`,
-      )
-    })
+          `>${i === 0 ? 0 : -0.05}`,
+        )
+      })
 
-    /* Cursor fades out once typing finishes — sentence has landed. */
-    tl.to(cursor, { autoAlpha: 0, duration: 0.5, ease: 'power2.out' }, '+=0.4')
-
-    /* Scroll arrow lands after the cursor exits — invitation to keep going. */
-    tl.to(arrow, { autoAlpha: 1, duration: 0.7, ease: 'power2.out' }, '+=0.2')
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          tl.play()
-          observer.disconnect()
-        }
-      },
-      { threshold: 0.85 },
-    )
-    observer.observe(sticky)
-
-    return () => {
-      observer.disconnect()
-      tl.kill()
-    }
-  }, { scope: sectionRef })
+      tl.to(cursor, { autoAlpha: 0, duration: 0.5, ease: 'power2.out' }, '+=0.4')
+      tl.to(arrow, { autoAlpha: 1, duration: 0.7, ease: 'power2.out' }, '+=0.2')
+    },
+  })
 
   return (
-    <section
+    <StickySection
       ref={sectionRef}
       id="gap"
-      className={styles.gapSection}
+      track="long"
+      stage="grid"
       aria-labelledby="gap-thesis"
     >
       <p id="gap-thesis" className={styles.srOnly}>
         Overwhelm is overlooked.
       </p>
 
-      <div data-gap-sticky="true" className={styles.gapSticky}>
+      <div className={styles.gapSticky}>
         <div className={styles.gapComposition}>
           <div className={styles.overcomeStack} aria-hidden="true">
             <span className={styles.overcomeLine} data-tier="1" data-gap-line="0">Over<span className={styles.overwhelmKern}>w</span>helm</span>
@@ -161,6 +126,6 @@ export default function WhelmGap() {
           </div>
         </div>
       </div>
-    </section>
+    </StickySection>
   )
 }

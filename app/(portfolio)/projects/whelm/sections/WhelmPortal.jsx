@@ -1,59 +1,30 @@
 'use client'
 
-import { useRef } from 'react'
 import gsap from 'gsap'
-import { useGSAP } from '@gsap/react'
 
+import { StickySection } from '../components/StickySection'
+import { useStickyReveal, prefersReducedMotion } from '../lib/useStickyReveal'
 import styles from '../whelm.module.css'
 
-gsap.registerPlugin(useGSAP)
-
-/* Section 2.6 — The Portal lens. Third of the three.
-
-   "Overwhelm is a portal." Heightened sensation surfaces what is
-   ready to be seen. Three nested arches draw from outermost inward,
-   like a passage opening — depth implied by the contour stack.
-   Inside the innermost arch, a soft glow swells as the gesture
-   completes. The claim panel resolves below.
-
-   ─── Placeholder geometry ───
-   Three open arches (outline only, no base line) inlined directly.
-   Lavender-only palette. When Lorin provides her hand-drawn Portal
-   SVG, drop it in to replace the geometry — animation hooks
-   (data-portal-arch, data-portal-glow) carry through.
-
-   ─── Pattern ───
-   Cinematic-anchor sticky + paused timeline + IntersectionObserver
-   play-once. Mirrors Tangle and Signal. */
+/* Section 2.6 — The Portal lens. "Overwhelm is a portal."
+   Three nested arches draw outermost-inward, like a passage opening.
+   A soft glow swells inside the innermost arch as the gesture
+   completes. */
 
 const ARCHES = [
-  /* Outermost → innermost. Each arch is an open path: vertical down
-     left side, semicircle over the top, vertical down right side.
-     Sized to fill ~92% of the viewBox vertically so the passage
-     dominates its column instead of floating. */
   { id: 'outer',  d: 'M 200 480 L 200 220 A 200 200 0 0 1 600 220 L 600 480' },
   { id: 'mid',    d: 'M 260 480 L 260 250 A 140 140 0 0 1 540 250 L 540 480' },
   { id: 'inner',  d: 'M 330 480 L 330 290 A 70 70 0 0 1 470 290 L 470 480'   },
 ]
 
 export default function WhelmPortal() {
-  const sectionRef = useRef(null)
-
-  useGSAP(
-    () => {
-      const root = sectionRef.current
-      if (!root) return
-
-      const sticky = root.querySelector('[data-portal-sticky]')
+  const { sectionRef } = useStickyReveal({
+    threshold: 0.5,
+    build(tl, root) {
       const arches = Array.from(root.querySelectorAll('[data-portal-arch]'))
       const glow = root.querySelector('[data-portal-glow]')
       const heading = root.querySelector('[data-portal-line]')
       const body = root.querySelector('[data-portal-body]')
-      if (!sticky) return
-
-      const prefersReduced = window.matchMedia(
-        '(prefers-reduced-motion: reduce)',
-      ).matches
 
       arches.forEach(p => {
         const len = p.getTotalLength()
@@ -64,7 +35,7 @@ export default function WhelmPortal() {
       if (heading) heading.style.setProperty('--reveal', '100%')
       gsap.set(body, { autoAlpha: 0, y: 14 })
 
-      if (prefersReduced) {
+      if (prefersReducedMotion()) {
         arches.forEach(p => { p.style.strokeDashoffset = '0' })
         gsap.set(glow, { autoAlpha: 0.5, scale: 1 })
         if (heading) heading.style.setProperty('--reveal', '0%')
@@ -72,23 +43,11 @@ export default function WhelmPortal() {
         return
       }
 
-      const tl = gsap.timeline({ paused: true })
-
-      /* Text first — heading wipes in, body lifts right behind it.
-         Both land before the passage opens so the framing claim
-         arrives before any visual. */
       if (heading) {
-        tl.to(heading, {
-          '--reveal': '0%',
-          duration: 1.0, ease: 'power2.inOut',
-        }, 0)
+        tl.to(heading, { '--reveal': '0%', duration: 1.0, ease: 'power2.inOut' }, 0)
       }
-      tl.to(body, {
-        autoAlpha: 1, y: 0, duration: 0.7, ease: 'power1.out',
-      }, 0.5)
+      tl.to(body, { autoAlpha: 1, y: 0, duration: 0.7, ease: 'power1.out' }, 0.5)
 
-      /* Arches draw outermost in, passage opening once text has
-         settled. */
       const archStart = 1.3
       arches.forEach((p, i) => {
         tl.to(p, {
@@ -99,40 +58,16 @@ export default function WhelmPortal() {
       })
 
       const archEnd = archStart + (arches.length - 1) * 0.4 + 1.3
-
       tl.to(glow, {
         autoAlpha: 0.55, scale: 1,
         duration: 1.4, ease: 'power2.out',
       }, archEnd - 0.6)
-
-      let played = false
-      const observer = new IntersectionObserver(
-        ([entry]) => {
-          if (entry.isIntersecting && !played) {
-            played = true
-            tl.play()
-            observer.disconnect()
-          }
-        },
-        { threshold: 0.5 },
-      )
-      observer.observe(sticky)
-
-      return () => {
-        observer.disconnect()
-        tl.kill()
-      }
     },
-    { scope: sectionRef },
-  )
+  })
 
   return (
-    <section
-      ref={sectionRef}
-      id="portal"
-      className={styles.portalSection}
-    >
-      <div data-portal-sticky="true" className={styles.portalSticky}>
+    <StickySection ref={sectionRef} id="portal" track="medium" stage="grid">
+      <div className={styles.lensSplit}>
         <div className={styles.portalStage}>
           <svg
             className={styles.portalSvg}
@@ -154,10 +89,7 @@ export default function WhelmPortal() {
 
             <ellipse
               data-portal-glow
-              cx="400"
-              cy="400"
-              rx="60"
-              ry="100"
+              cx="400" cy="400" rx="60" ry="100"
               fill="url(#portalGlowGradient)"
             />
 
@@ -198,6 +130,6 @@ export default function WhelmPortal() {
           </p>
         </div>
       </div>
-    </section>
+    </StickySection>
   )
 }
