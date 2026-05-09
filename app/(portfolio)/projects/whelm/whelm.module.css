@@ -31,7 +31,7 @@
   /* ─── TYPE FAMILIES ─── */
   --whelm-display-font:   'p22-mackinac-pro', var(--font-fraunces, 'Fraunces'), Georgia, serif;
   --whelm-editorial-font: var(--font-crimson-pro, 'Crimson Pro'), Georgia, serif;
-  --whelm-body-font:      var(--font-open-sans, 'Open Sans'), -apple-system, sans-serif;
+  --whelm-body-font:      var(--font-noto-sans, 'Noto Sans'), -apple-system, sans-serif;
 
   /* ─── TYPE SIZES ─── coordinated ramp covering hero → eyebrow.
      Two body sizes (body / body-lg) and two heading sizes (h2 / h1)
@@ -679,7 +679,7 @@
 }
 
 .claim_body {
-  font-family: var(--font-noto-sans), var(--whelm-body-font);
+  font-family: var(--whelm-body-font);
   font-style: normal;
   font-weight: 400;
   font-size: clamp(17px, 1.4vw, 22px);
@@ -878,7 +878,7 @@
   flex-direction: column;
   align-items: center;
   gap: var(--s-3);
-  font-family: var(--font-noto-sans), -apple-system, sans-serif;
+  font-family: var(--whelm-body-font);
   font-size: 13px;
   font-style: normal;
   font-weight: 400;
@@ -966,7 +966,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  scroll-margin-top: 72px;
+  scroll-margin-top: var(--whelm-nav-offset);
 }
 
 .editorialInner {
