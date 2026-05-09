@@ -12,6 +12,7 @@ import WhelmSignal from './sections/WhelmSignal'
 import WhelmTangle from './sections/WhelmTangle'
 import WhelmPortal from './sections/WhelmPortal'
 import WhelmReveal from './sections/WhelmReveal'
+import WhelmAudience from './sections/WhelmAudience'
 import { lockForwardScroll } from './lib/scrollLock'
 import { COPY } from './content'
 import { SECTIONS } from './data'
@@ -166,6 +167,7 @@ export default function WhelmStory() {
             </div>
           )
         }
+        if (s.id === 'audience') return <WhelmAudience key={s.id} />
         return (
           <section key={s.id} id={s.id} className={styles.editorialSection}>
             <div className={styles.editorialInner}>
