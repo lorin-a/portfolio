@@ -3,7 +3,9 @@
 import { useEffect, useRef, useState } from 'react'
 import gsap from 'gsap'
 
+import LensClaim, { Accent } from '../components/LensClaim'
 import { StickySection } from '../components/StickySection'
+import { revealClaim, snapClaim } from '../lib/revealClaim'
 import { useStickyReveal, prefersReducedMotion } from '../lib/useStickyReveal'
 import styles from '../whelm.module.css'
 
@@ -91,8 +93,6 @@ export default function WhelmTangle() {
       expectWords.forEach(reorder)
 
       const strokedPaths = [needsThread, expectThread].filter(Boolean)
-      const headingLine = root.querySelector('[data-tangle-line]')
-      const headingBody = root.querySelector('[data-tangle-body]')
 
       strokedPaths.forEach(p => {
         const len = p.getTotalLength()
@@ -106,16 +106,13 @@ export default function WhelmTangle() {
       gsap.set(expectWords, { autoAlpha: 0 })
       gsap.set(dots, { autoAlpha: 0 })
       gsap.set(ornament, { autoAlpha: 0 })
-      if (headingLine) headingLine.style.setProperty('--reveal', '100%')
-      gsap.set(headingBody, { autoAlpha: 0, y: 14 })
 
       host.style.visibility = 'visible'
 
       if (prefersReducedMotion()) {
         strokedPaths.forEach(p => { p.style.strokeDashoffset = '0' })
         gsap.set([needsDecor, expectDecor, needsWords, expectWords, dots, ornament], { autoAlpha: 1 })
-        if (headingLine) headingLine.style.setProperty('--reveal', '0%')
-        gsap.set(headingBody, { autoAlpha: 1, y: 0 })
+        snapClaim(root)
         return
       }
 
@@ -189,15 +186,8 @@ export default function WhelmTangle() {
       const needsPhaseDur = 3.2
       const expectPhaseDur = 4.0
 
-      if (headingLine) {
-        tl.to(headingLine, { '--reveal': '0%', duration: 1.0, ease: 'power2.inOut' }, 0)
-      }
-      if (headingBody) {
-        tl.to(headingBody, { autoAlpha: 1, y: 0, duration: 0.7, ease: 'power1.out' }, 0.5)
-      }
-
-      /* Phase 1 — Needs */
-      const phase1NameStart = 1.3
+      /* Phase 1 — Needs (after the claim has landed) */
+      const phase1NameStart = revealClaim(tl, root)
       const phase1DrawStart = phase1NameStart + namedDur
       if (needsHeader) {
         tl.to(needsHeader.el, { autoAlpha: 1, duration: 0.7, ease: 'power2.out' }, phase1NameStart)
@@ -269,23 +259,12 @@ export default function WhelmTangle() {
   return (
     <StickySection ref={sectionRef} id="tangle" track="long" stage="grid">
       <div className={styles.tangleSticky}>
-        <div className={styles.tangleClaim}>
-          <p className={styles.srOnly}>
-            Overwhelm is a tangle. Where unmet needs and internalized
-            expectations clash.
-          </p>
-          <h2 className={styles.tangleHeading} aria-hidden="true">
-            <span className={styles.tangleLine} data-tangle-line>
-              <span className={styles.tangleLineText}>
-                Over<span className={styles.overwhelmKern}>w</span>helm is a{' '}
-                <em className={styles.tangleAccent}>tangle</em>.
-              </span>
-            </span>
-          </h2>
-          <p data-tangle-body className={styles.tangleBody}>
-            Where unmet needs and internalized expectations clash.
-          </p>
-        </div>
+        <LensClaim
+          className={styles.tangleClaim}
+          srText="Overwhelm is a tangle. Where unmet needs and internalized expectations clash."
+          heading={<>Over<span className={styles.overwhelmKern}>w</span>helm is a <Accent>tangle</Accent>.</>}
+          body="Where unmet needs and internalized expectations clash."
+        />
 
         <div className={styles.tangleStage}>
           <div

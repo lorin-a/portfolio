@@ -3,7 +3,9 @@
 import { useEffect, useRef, useState } from 'react'
 import gsap from 'gsap'
 
+import LensClaim, { Accent } from '../components/LensClaim'
 import { StickySection } from '../components/StickySection'
+import { revealClaim, snapClaim } from '../lib/revealClaim'
 import { useStickyReveal, prefersReducedMotion } from '../lib/useStickyReveal'
 import styles from '../whelm.module.css'
 
@@ -55,29 +57,18 @@ export default function WhelmSignal() {
       const otherPaths = Array.from(svgEl.querySelectorAll('path'))
         .filter(p => !bandPaths.includes(p))
 
-      const heading = root.querySelector('[data-signal-line]')
-      const body = root.querySelector('[data-signal-body]')
-
       gsap.set(bandPaths.filter(Boolean), { autoAlpha: 0, y: -16 })
       gsap.set(otherPaths, { autoAlpha: 0 })
-      if (heading) heading.style.setProperty('--reveal', '100%')
-      gsap.set(body, { autoAlpha: 0, y: 14 })
 
       host.style.visibility = 'visible'
 
       if (prefersReducedMotion()) {
         gsap.set([...bandPaths.filter(Boolean), ...otherPaths], { autoAlpha: 1, y: 0 })
-        if (heading) heading.style.setProperty('--reveal', '0%')
-        gsap.set(body, { autoAlpha: 1, y: 0 })
+        snapClaim(root)
         return
       }
 
-      if (heading) {
-        tl.to(heading, { '--reveal': '0%', duration: 1.0, ease: 'power2.inOut' }, 0)
-      }
-      tl.to(body, { autoAlpha: 1, y: 0, duration: 0.7, ease: 'power1.out' }, 0.5)
-
-      const bandStart = 1.3
+      const bandStart = revealClaim(tl, root)
       const bandStep = 0.3
       bandPaths.forEach((p, i) => {
         if (!p) return
@@ -119,23 +110,12 @@ export default function WhelmSignal() {
           />
         </div>
 
-        <div className={styles.signalClaim}>
-          <p className={styles.srOnly}>
-            Overwhelm is a signal. A message from the nervous system, asking
-            for support.
-          </p>
-          <h2 className={styles.signalHeading} aria-hidden="true">
-            <span className={styles.signalLine} data-signal-line>
-              <span className={styles.signalLineText}>
-                Over<span className={styles.overwhelmKern}>w</span>helm is a{' '}
-                <em className={styles.signalAccent}>signal</em>.
-              </span>
-            </span>
-          </h2>
-          <p data-signal-body className={styles.signalBody}>
-            A message from the nervous system, asking for support.
-          </p>
-        </div>
+        <LensClaim
+          className={styles.signalClaim}
+          srText="Overwhelm is a signal. A message from the nervous system, asking for support."
+          heading={<>Over<span className={styles.overwhelmKern}>w</span>helm is a <Accent>signal</Accent>.</>}
+          body="A message from the nervous system, asking for support."
+        />
       </div>
     </StickySection>
   )

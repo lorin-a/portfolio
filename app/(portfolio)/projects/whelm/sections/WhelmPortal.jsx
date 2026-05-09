@@ -2,7 +2,9 @@
 
 import gsap from 'gsap'
 
+import LensClaim, { Accent } from '../components/LensClaim'
 import { StickySection } from '../components/StickySection'
+import { revealClaim, snapClaim } from '../lib/revealClaim'
 import { useStickyReveal, prefersReducedMotion } from '../lib/useStickyReveal'
 import styles from '../whelm.module.css'
 
@@ -23,8 +25,6 @@ export default function WhelmPortal() {
     build(tl, root) {
       const arches = Array.from(root.querySelectorAll('[data-portal-arch]'))
       const glow = root.querySelector('[data-portal-glow]')
-      const heading = root.querySelector('[data-portal-line]')
-      const body = root.querySelector('[data-portal-body]')
 
       arches.forEach(p => {
         const len = p.getTotalLength()
@@ -32,23 +32,15 @@ export default function WhelmPortal() {
         p.style.strokeDashoffset = String(len)
       })
       gsap.set(glow, { autoAlpha: 0, transformOrigin: '50% 75%', scale: 0.6 })
-      if (heading) heading.style.setProperty('--reveal', '100%')
-      gsap.set(body, { autoAlpha: 0, y: 14 })
 
       if (prefersReducedMotion()) {
         arches.forEach(p => { p.style.strokeDashoffset = '0' })
         gsap.set(glow, { autoAlpha: 0.5, scale: 1 })
-        if (heading) heading.style.setProperty('--reveal', '0%')
-        gsap.set(body, { autoAlpha: 1, y: 0 })
+        snapClaim(root)
         return
       }
 
-      if (heading) {
-        tl.to(heading, { '--reveal': '0%', duration: 1.0, ease: 'power2.inOut' }, 0)
-      }
-      tl.to(body, { autoAlpha: 1, y: 0, duration: 0.7, ease: 'power1.out' }, 0.5)
-
-      const archStart = 1.3
+      const archStart = revealClaim(tl, root)
       arches.forEach((p, i) => {
         tl.to(p, {
           strokeDashoffset: 0,
@@ -111,24 +103,12 @@ export default function WhelmPortal() {
           </svg>
         </div>
 
-        <div className={styles.portalClaim}>
-          <p className={styles.srOnly}>
-            Overwhelm is a portal. Heightened sensation surfaces what is
-            ready to be seen — for observation, reflection, release.
-          </p>
-          <h2 className={styles.portalHeading} aria-hidden="true">
-            <span className={styles.portalLine} data-portal-line>
-              <span className={styles.portalLineText}>
-                Over<span className={styles.overwhelmKern}>w</span>helm is a{' '}
-                <em className={styles.portalAccent}>portal</em>.
-              </span>
-            </span>
-          </h2>
-          <p data-portal-body className={styles.portalBody}>
-            Heightened sensation surfaces what is ready to be seen — for
-            observation, reflection, release.
-          </p>
-        </div>
+        <LensClaim
+          className={styles.portalClaim}
+          srText="Overwhelm is a portal. Heightened sensation surfaces what is ready to be seen — for observation, reflection, release."
+          heading={<>Over<span className={styles.overwhelmKern}>w</span>helm is a <Accent>portal</Accent>.</>}
+          body="Heightened sensation surfaces what is ready to be seen — for observation, reflection, release."
+        />
       </div>
     </StickySection>
   )

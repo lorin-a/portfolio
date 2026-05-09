@@ -634,6 +634,70 @@
   padding: var(--s-7) var(--page-margin);
 }
 
+/* =====================================================================
+   LENS CLAIM — heading + body typographic moment shared across
+   Signal/Tangle/Portal. The visible heading uses Mackinac display, the
+   accent uses Crimson italic mauve, the body uses Noto Sans body. The
+   wipe target is .claim_lineText with a clip-path driven by --reveal.
+   ===================================================================== */
+
+.claim {
+  /* Layout host — the section decides max-width and alignment. */
+  margin: 0;
+}
+
+.claim_heading {
+  font-family: var(--whelm-display-font);
+  font-size: clamp(42px, 4.8vw, 84px);
+  font-weight: 400;
+  line-height: 1.04;
+  letter-spacing: -0.025em;
+  color: var(--whelm-cream);
+  margin: 0 0 clamp(28px, 3.2vh, 48px) 0;
+}
+
+.claim_line {
+  --reveal: 100%;
+  position: relative;
+  display: inline-block;
+  max-width: 100%;
+}
+
+.claim_lineText {
+  display: inline-block;
+  padding-right: 0.2em;
+  /* Italic Mackinac descenders (lowercase p, g) extend below the
+     baseline at display sizes — generous bottom inset prevents the
+     wipe from clipping them. */
+  clip-path: inset(-0.2em var(--reveal) -0.55em 0);
+  will-change: clip-path;
+}
+
+.claim_accent {
+  font-style: italic;
+  color: var(--whelm-mauve);
+}
+
+.claim_body {
+  font-family: var(--font-noto-sans), var(--whelm-body-font);
+  font-style: normal;
+  font-weight: 400;
+  font-size: clamp(17px, 1.4vw, 22px);
+  line-height: 1.5;
+  letter-spacing: 0.01em;
+  color: var(--whelm-cream);
+  opacity: 0;
+  margin: 0;
+  max-width: 36ch;
+  text-wrap: pretty;
+  font-variation-settings: 'CTGR' 0, 'wdth' 100;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .claim_line { --reveal: 0% !important; }
+  .claim_body { opacity: 1 !important; }
+}
+
 /* lensSplit — the L/R split layout used by Signal and Portal.
    Five tracks: outer spacers push the claim+stage unit to center,
    inner gap separates them. The unit reads as one editorial spread,
@@ -1127,49 +1191,10 @@
   text-align: center;
 }
 
-.tangleHeading {
-  font-family: var(--whelm-display-font);
-  font-size: var(--t-h2);
-  font-weight: 400;
-  line-height: var(--lh-snug);
-  letter-spacing: -0.02em;
-  color: var(--whelm-cream);
-  margin: 0 0 clamp(8px, 1.2vh, 16px) 0;
-}
-
-.tangleLine {
-  --reveal: 100%;
-  position: relative;
-  display: inline-block;
-  max-width: 100%;
-}
-
-.tangleLineText {
-  display: inline-block;
-  padding-right: 0.2em;
-  clip-path: inset(-0.2em var(--reveal) -0.55em 0);
-  will-change: clip-path;
-}
-
-.tangleAccent {
-  font-style: italic;
-  color: var(--whelm-mauve);
-}
-
-.tangleBody {
-  font-family: var(--font-noto-sans), var(--whelm-body-font);
-  font-style: normal;
-  font-weight: 400;
-  font-size: clamp(17px, 1.4vw, 22px);
-  line-height: 1.5;
-  letter-spacing: 0.01em;
-  color: var(--whelm-cream);
-  opacity: 0;
-  margin: 0 auto;
-  max-width: 52ch;
-  text-wrap: pretty;
-  font-variation-settings: 'CTGR' 0, 'wdth' 100;
-}
+/* Tangle claim sits centered above the diagram. Wider than the lens
+   default (52ch vs 36ch) so the call-and-response reads as one line. */
+.tangleClaim .claim_body { max-width: 52ch; margin: 0 auto; }
+.tangleClaim .claim_heading { margin-bottom: clamp(8px, 1.2vh, 16px); }
 
 /* =====================================================================
    THE SIGNAL — central pulse + 5 radiating rays + word labels.
@@ -1246,60 +1271,6 @@
   pointer-events: none;
 }
 
-.signalHeading,
-.portalHeading {
-  font-family: var(--whelm-display-font);
-  font-size: clamp(42px, 4.8vw, 84px);
-  font-weight: 400;
-  line-height: 1.04;
-  letter-spacing: -0.025em;
-  color: var(--whelm-cream);
-  /* Generous gap between claim and body — lets the body line read as
-     a deliberate caption rather than a continuation. */
-  margin: 0 0 clamp(28px, 3.2vh, 48px) 0;
-}
-
-.signalLine,
-.portalLine {
-  --reveal: 100%;
-  position: relative;
-  display: inline-block;
-  max-width: 100%;
-}
-
-.signalLineText,
-.portalLineText {
-  display: inline-block;
-  padding-right: 0.2em;
-  /* Italic Mackinac descenders (lowercase p, g) extend well below the
-     baseline at display sizes — give the bottom inset enough negative
-     room so the clip wipe never crops them. */
-  clip-path: inset(-0.2em var(--reveal) -0.55em 0);
-  will-change: clip-path;
-}
-
-.signalAccent,
-.portalAccent {
-  font-style: italic;
-  color: var(--whelm-mauve);
-}
-
-.signalBody,
-.portalBody {
-  font-family: var(--font-noto-sans), var(--whelm-body-font);
-  font-style: normal;
-  font-weight: 400;
-  font-size: clamp(17px, 1.4vw, 22px);
-  line-height: 1.5;
-  letter-spacing: 0.01em;
-  color: var(--whelm-cream);
-  opacity: 0;
-  margin: 0;
-  max-width: 36ch;
-  text-wrap: pretty;
-  font-variation-settings: 'CTGR' 0, 'wdth' 100;
-}
-
 /* Narrow viewports — collapse to stacked column inside .lensSplit.
    Type top, art below. */
 @media (max-width: 900px) {
@@ -1352,25 +1323,13 @@
     animation: none;
     opacity: 1 !important;
   }
-  .tangleLine {
-    --reveal: 0% !important;
-  }
-  .tangleBody {
-    opacity: 1 !important;
-  }
   .tangleLabel,
   .tangleEndpointLabel {
     opacity: 0.9 !important;
   }
-  .signalLine,
-  .portalLine {
-    --reveal: 0% !important;
-  }
-  .signalBody,
-  .portalBody {
-    opacity: 1 !important;
-  }
   .signalLabel {
     opacity: 0.9 !important;
   }
+  /* .claim_line and .claim_body reduced-motion handled in the
+     LensClaim block above. */
 }
