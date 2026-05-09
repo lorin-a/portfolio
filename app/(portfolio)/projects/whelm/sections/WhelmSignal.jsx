@@ -1,11 +1,11 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
 import gsap from 'gsap'
 
 import LensClaim, { Accent } from '../components/LensClaim'
 import { StickySection } from '../components/StickySection'
 import { revealClaim, snapClaim } from '../lib/revealClaim'
+import { useInlineSvg } from '../lib/useInlineSvg'
 import { useStickyReveal, prefersReducedMotion } from '../lib/useStickyReveal'
 import styles from '../whelm.module.css'
 
@@ -16,16 +16,7 @@ import styles from '../whelm.module.css'
 const SIGNAL_SRC = '/images/projects/whelm/Signal.svg'
 
 export default function WhelmSignal() {
-  const svgHostRef = useRef(null)
-  const [svgMarkup, setSvgMarkup] = useState('')
-
-  useEffect(() => {
-    let cancelled = false
-    fetch(SIGNAL_SRC)
-      .then(r => r.text())
-      .then(text => { if (!cancelled) setSvgMarkup(text) })
-    return () => { cancelled = true }
-  }, [])
+  const { hostRef: svgHostRef, markup: svgMarkup } = useInlineSvg(SIGNAL_SRC, { padding: 8 })
 
   const { sectionRef } = useStickyReveal({
     threshold: 0.5,
@@ -35,22 +26,6 @@ export default function WhelmSignal() {
       if (!host) return
       const svgEl = host.querySelector('svg')
       if (!svgEl) return
-
-      svgEl.setAttribute('width', '100%')
-      svgEl.setAttribute('height', '100%')
-      svgEl.style.display = 'block'
-      svgEl.setAttribute('preserveAspectRatio', 'xMidYMid meet')
-
-      requestAnimationFrame(() => {
-        try {
-          const b = svgEl.getBBox()
-          const pad = 8
-          svgEl.setAttribute(
-            'viewBox',
-            `${b.x - pad} ${b.y - pad} ${b.width + pad * 2} ${b.height + pad * 2}`,
-          )
-        } catch {}
-      })
 
       const bandColors = ['#49325D', '#895FAE', '#BDB7E9', '#F0E2FF']
       const bandPaths = bandColors.map(c => svgEl.querySelector(`path[fill="${c}"]`))
