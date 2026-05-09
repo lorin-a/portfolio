@@ -109,6 +109,16 @@ Compress timelines to ~1-2s so all beats land within the section's natural viewi
 
 **Deprecated:** `scrub: true`, `scrub: 0.4`, scrub-pinned timelines. These were on every homepage section before 2026-04-29. They created reverse-on-backscroll, pin spacer friction, and "stuck" feel. Don't reintroduce. Hero (HeroScatter) is the only remaining scrub-tied animation on the homepage and is intentional.
 
+## Whelm Case Study Primitives (audit refactor, 2026-05-09)
+
+The Whelm case study (`app/(portfolio)/projects/whelm/`) sits on a small set of primitives. New sections compose these. Reinvent only when bespoke composition genuinely demands it.
+
+- `<StickySection>` (`components/StickySection.jsx`) — outer track + sticky frame. Props: `track="short|medium|long"` (140/180/220vh), `stage="default|grid"`. Owns positioning, `dvh` fallback, scroll-margin, and the `[data-sticky]` IntersectionObserver hook.
+- `<LensClaim>` + `<Accent>` (`components/LensClaim.jsx`) — the heading + body editorial moment shared by Tangle/Signal/Portal. Renders sr-only fallback, aria-hidden visible heading with clip-path target, body with lift target. `data-claim-line` and `data-claim-body` are the animation hooks.
+- `useStickyReveal` (`lib/useStickyReveal.js`) — paused timeline + IntersectionObserver play-once. Pass `{ build(tl, root), threshold, deps }`. Sections own their own reduced-motion fallback inside `build`.
+- `useInlineSvg` (`lib/useInlineSvg.js`) — fetch + inline + auto-crop hand-drawn SVGs. Returns `{ hostRef, markup }`. Pass `markup` as a `useStickyReveal` dep so the timeline rebuilds once the SVG parses into the DOM.
+- `revealClaim(tl, root)` / `snapClaim(root)` (`lib/revealClaim.js`) — universal "text first" beat. Heading wipes in, body lifts behind. Returns end time so consumers chain the graphic reveal after.
+
 ## V1 → V2 Migration
 
 The site is mid-build. V1 is deployed and must not break. V2 is being built on the homepage first, then applied to other pages.
@@ -124,7 +134,7 @@ When V2 decisions are made during homepage work, update `DESIGN_SPEC.md` immedia
 
 | Symptom | Cause |
 |---------|-------|
-| Using DM Sans references | Stale docs — actual font is Open Sans |
+| Using DM Sans or Open Sans references | Stale docs — body font is Noto Sans (audit refactor 2026-05-09, commit cd905d0) |
 | V1 color tokens in new code | Check deprecated list above |
 | `--font-sharp` in CSS | Retired — replace with `--font-soft` |
 | Invisible content on reduced motion | Component missing explicit `opacity: 1; transform: none` |
