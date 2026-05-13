@@ -24,6 +24,17 @@ npm-debug.log*
 # Backup files
 *.backup
 
+# Iteration screenshots (captured during dev/audit, not source)
+/tangle-v*.png
+/signal-v*.png
+/portal-v*.png
+/need-*.png
+/whatif-*.png
+/reveal-*.png
+/audit-*.png
+/tangle-bigger.png
+.playwright-mcp/
+
 # Large video files (use external hosting)
 *.mov
 *.MOV

@@ -1,0 +1,1604 @@
+/* =====================================================================
+   Whelm design system — tokens, grid, type ramp, spacing, motion.
+
+   Scope: every token lives on .story so portfolio defaults are not
+   disturbed. Bg #1f0536 (slide-source deep purple) hardcoded; cream
+   panels override locally with #f0e2ff (also slide-exact).
+
+   Layout: a 14-column CSS Grid on .stage —
+     [sidebar | margin | 12 content cols | margin]
+   Position presets place copy and elements by grid-area instead of
+   ad-hoc xy values. Element wrappers default to full content area.
+
+   Type: 1.25 modular scale, base 18px. Eyebrow → Body → Lead → H3 →
+   H2 → H1 → Display → Hero. Each kind binds a font, weight, size, and
+   line-height in one rule so they read as a coordinated ramp.
+
+   Spacing: 4px base. Use --s-N tokens, never raw px.
+   Motion: --m-fast / --m-medium / --m-slow / --m-emphasis.
+   ===================================================================== */
+
+.story {
+  /* ─── COLOR ─── slide-source exact, hardcoded (not normalized). */
+  --whelm-bg:        #1f0536;
+  --whelm-bg-cream:  #f0e2ff;
+  --whelm-cream:     #f3eff7;
+  --whelm-mauve:     #bdb7e9;
+  --whelm-plum:      #49325d;
+  --whelm-orchid:    #895fae;
+  --whelm-deep:      #3a2553;
+
+  /* ─── TYPE FAMILIES ─── */
+  --whelm-display-font:   'p22-mackinac-pro', var(--font-fraunces, 'Fraunces'), Georgia, serif;
+  --whelm-editorial-font: var(--font-crimson-pro, 'Crimson Pro'), Georgia, serif;
+  --whelm-body-font:      var(--font-noto-sans, 'Noto Sans'), -apple-system, sans-serif;
+
+  /* ─── TYPE SIZES ─── coordinated ramp covering hero → eyebrow.
+     Two body sizes (body / body-lg) and two heading sizes (h2 / h1)
+     cover the post-hero sections without per-section clamp() one-offs. */
+  --t-eyebrow: clamp(11px, 0.78vw, 13px);
+  --t-body:    clamp(15px, 1.05vw, 18px);
+  --t-body-lg: clamp(17px, 1.55vw, 26px);
+  --t-lead:    clamp(19px, 1.35vw, 22px);
+  --t-h3:      clamp(23px, 1.7vw,  28px);
+  --t-h2:      clamp(32px, 3.6vw,  60px);
+  --t-h1:      clamp(40px, 5.2vw,  84px);
+  --t-display: clamp(72px, 7.5vw,  140px);
+  --t-hero:    clamp(108px, 11vw,  220px);
+
+  /* Line heights paired with sizes. */
+  --lh-tight:   1.0;
+  --lh-display: 1.05;
+  --lh-snug:    1.15;
+  --lh-normal:  1.35;
+  --lh-relaxed: 1.5;
+
+  /* ─── SPACING ─── 4px base. Use semantically. */
+  --s-1:  4px;
+  --s-2:  8px;
+  --s-3:  12px;
+  --s-4:  16px;
+  --s-5:  24px;
+  --s-6:  32px;
+  --s-7:  48px;
+  --s-8:  64px;
+  --s-9:  96px;
+  --s-10: 128px;
+
+  /* ─── MOTION ─── */
+  --m-fast:     240ms;
+  --m-medium:   480ms;
+  --m-slow:     800ms;
+  --m-emphasis: 1200ms;
+  --m-out:      cubic-bezier(0.22, 1, 0.36, 1);
+  --m-inout:    cubic-bezier(0.42, 0, 0.58, 1);
+  --m-bounce:   cubic-bezier(0.34, 1.4, 0.64, 1);
+
+  /* ─── LAYOUT ─── */
+  --sidebar-w: clamp(220px, 18vw, 320px);
+  --page-margin: var(--s-7);
+  --gutter: var(--s-5);
+  /* Agenda nav height — fixed-position bar that appears once the user
+     scrolls past the hero. All sticky sections offset their `top` and
+     reduce their height by this so pinned content sits below the nav
+     instead of behind it. */
+  --whelm-nav-offset: 56px;
+
+  /* ─── Story container ─── */
+  position: relative;
+  width: 100%;
+  background: var(--whelm-bg);
+  color: var(--whelm-cream);
+  font-family: var(--whelm-body-font);
+  font-size: var(--t-body);
+  line-height: var(--lh-relaxed);
+}
+
+/* =====================================================================
+   STAGE GRID
+   ===================================================================== */
+
+.stage {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  overflow: visible;
+  display: grid;
+  grid-template-columns:
+    [sidebar-start] var(--sidebar-w)
+    [sidebar-end content-start]
+    repeat(12, 1fr)
+    [content-end];
+  grid-template-rows: [stage-start] 1fr [stage-end];
+  column-gap: var(--gutter);
+  isolation: isolate;
+}
+
+/* Stage wrapper — `display: contents` makes its children direct grid
+   participants in .stage so element wrappers, sidebar, and copy layers
+   all share the same grid context. */
+.canvasWrap {
+  display: contents;
+}
+
+/* =====================================================================
+   ELEMENT WRAPPERS
+   Default: full content area, full height. Beat-driven opacity via --eo.
+   ===================================================================== */
+
+.element {
+  grid-column: content-start / content-end;
+  grid-row: stage-start / stage-end;
+  position: relative;
+  align-self: stretch;
+  justify-self: stretch;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  opacity: var(--eo, 0);
+  z-index: 1;
+}
+
+/* Hero-tier elements that should bleed past content edges into sidebar
+   territory (cursive flourish, decorative accents). */
+.element[data-layer='bleed'] {
+  grid-column: sidebar-start / content-end;
+  z-index: 0;
+}
+
+/* Foreground elements (scroll cue, type marks) sit above bg layers. */
+.element[data-layer='fore'] {
+  z-index: 2;
+}
+
+/* Specific element overrides — different default placement than centered. */
+.element[data-element-id='wordmark'] {
+  grid-column: sidebar-start / content-end;
+  padding-bottom: 12vh;
+}
+
+.element[data-element-id='scroll-cue'] {
+  grid-column: sidebar-start / content-end;
+  align-items: flex-start;
+  padding-top: 78vh;
+  z-index: 6;
+}
+
+/* =====================================================================
+   COPY LAYER — grid-positioned blocks
+   ===================================================================== */
+
+.copyLayer {
+  display: contents;
+}
+
+.copyBlock {
+  grid-row: stage-start / stage-end;
+  z-index: 5;
+  visibility: visible;
+  pointer-events: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Position presets — grid-column + alignment.
+   All presets use `justify-self: stretch` so the block fills its
+   column allocation; text-align controls horizontal alignment of the
+   content inside. This prevents intrinsic-size shrinkage that was
+   collapsing italic punchlines into 2-3 char columns. */
+.pos_tl {
+  grid-column: content-start / span 7;
+  align-self: start;
+  justify-self: stretch;
+  padding: var(--s-9) 0 0 0;
+  text-align: left;
+}
+
+.pos_tr {
+  grid-column: span 7 / content-end;
+  align-self: start;
+  justify-self: stretch;
+  padding: var(--s-9) 0 0 0;
+  text-align: right;
+}
+
+.pos_bl {
+  grid-column: content-start / span 7;
+  align-self: end;
+  justify-self: stretch;
+  padding: 0 0 var(--s-9) 0;
+  text-align: left;
+}
+
+.pos_br {
+  grid-column: span 7 / content-end;
+  align-self: end;
+  justify-self: stretch;
+  padding: 0 0 var(--s-9) 0;
+  text-align: right;
+}
+
+.pos_ml {
+  grid-column: content-start / span 7;
+  align-self: center;
+  justify-self: stretch;
+  text-align: left;
+}
+
+.pos_mr {
+  grid-column: span 7 / content-end;
+  align-self: center;
+  justify-self: stretch;
+  text-align: right;
+}
+
+.pos_center {
+  grid-column: 4 / span 6;
+  align-self: center;
+  justify-self: stretch;
+  text-align: center;
+}
+
+/* Centered presets — span the full content area (matching the wordmark)
+   and use `justify-self: center` so max-width-constrained kind blocks
+   center within the column instead of pinning at the left edge.
+   Fixes the tagline and any other narrow-by-max-width content getting
+   left-anchored under stretch. */
+.pos_below_center {
+  grid-column: sidebar-start / content-end;
+  align-self: center;
+  justify-self: center;
+  text-align: center;
+  padding-top: 8vh;
+}
+
+.pos_top_center {
+  grid-column: content-start / content-end;
+  align-self: start;
+  justify-self: center;
+  text-align: center;
+  padding-top: var(--s-9);
+}
+
+.pos_mid_center {
+  grid-column: content-start / content-end;
+  align-self: center;
+  justify-self: center;
+  text-align: center;
+}
+
+.pos_bot_center {
+  grid-column: content-start / content-end;
+  align-self: end;
+  justify-self: center;
+  text-align: center;
+  padding-bottom: var(--s-9);
+}
+
+.pos_top_center > *,
+.pos_mid_center > *,
+.pos_bot_center > * {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Stretch the copy text inside max-width so right-aligned text reads
+   from the right edge inward. */
+.pos_tl > *,
+.pos_bl > *,
+.pos_ml > * { margin-right: auto; }
+.pos_tr > *,
+.pos_br > *,
+.pos_mr > * { margin-left: auto; }
+.pos_center > *,
+.pos_below_center > * { margin-left: auto; margin-right: auto; }
+
+/* =====================================================================
+   TYPE KINDS — coordinated ramp
+   ===================================================================== */
+
+.kind_eyebrow {
+  font-family: var(--whelm-body-font);
+  font-size: var(--t-eyebrow);
+  font-weight: 400;
+  line-height: var(--lh-tight);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--whelm-mauve);
+}
+
+.kind_body {
+  font-family: var(--whelm-body-font);
+  font-size: var(--t-body);
+  font-weight: 400;
+  line-height: var(--lh-relaxed);
+  color: var(--whelm-cream);
+  max-width: 36ch;
+  opacity: 0.92;
+}
+
+.kind_lead {
+  font-family: var(--whelm-editorial-font);
+  font-size: var(--t-h2);
+  font-weight: 300;
+  font-style: italic;
+  line-height: var(--lh-snug);
+  color: var(--whelm-cream);
+  max-width: 22ch;
+  margin: 0;
+}
+
+.kind_sub {
+  font-family: var(--whelm-editorial-font);
+  font-size: clamp(38px, 3.4vw, 58px);
+  font-weight: 300;
+  font-style: italic;
+  line-height: var(--lh-snug);
+  color: var(--whelm-mauve);
+  max-width: 22ch;
+}
+
+.kind_h2_inline {
+  font-family: var(--whelm-display-font);
+  font-size: var(--t-h2);
+  font-weight: 400;
+  line-height: var(--lh-snug);
+  letter-spacing: -0.012em;
+  color: var(--whelm-cream);
+  max-width: 14ch;
+  margin: 0;
+}
+
+.kind_h2_inline em {
+  font-family: var(--whelm-editorial-font);
+  font-style: italic;
+  font-weight: 300;
+}
+
+.kind_h1 {
+  font-family: var(--whelm-display-font);
+  font-size: var(--t-display);
+  font-weight: 400;
+  line-height: var(--lh-display);
+  letter-spacing: -0.025em;
+  color: var(--whelm-cream);
+  margin: 0;
+}
+
+.kind_quote {
+  font-family: var(--whelm-editorial-font);
+  font-size: var(--t-lead);
+  font-weight: 300;
+  font-style: italic;
+  line-height: var(--lh-snug);
+  color: var(--whelm-cream);
+  max-width: 28ch;
+}
+
+.kind_quote q::before { content: '\201C'; }
+.kind_quote q::after  { content: '\201D'; }
+
+.kind_tag {
+  font-family: var(--whelm-editorial-font);
+  font-size: var(--t-h3);
+  font-weight: 300;
+  font-style: italic;
+  color: var(--whelm-mauve);
+}
+
+/* =====================================================================
+   SIDEBAR — full-viewport vertical strip
+   ===================================================================== */
+
+.sidebar {
+  grid-column: sidebar-start / sidebar-end;
+  grid-row: stage-start / stage-end;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: var(--s-9) var(--s-7) var(--s-9) var(--s-8);
+  background: linear-gradient(
+    180deg,
+    rgba(58, 37, 83, 0.0)   0%,
+    rgba(58, 37, 83, 0.55) 18%,
+    rgba(58, 37, 83, 0.65) 50%,
+    rgba(58, 37, 83, 0.55) 82%,
+    rgba(58, 37, 83, 0.0) 100%
+  );
+  border-right: 1px solid rgba(189, 183, 233, 0.18);
+  z-index: 8;
+  opacity: 0;
+  transition: opacity var(--m-slow) var(--m-out);
+}
+
+.sidebar[data-state='visible'] { opacity: 1; }
+
+.sidebarTitle {
+  margin: 0 0 var(--s-7) 0;
+  font-family: var(--whelm-body-font);
+  font-size: var(--t-eyebrow);
+  font-weight: 500;
+  line-height: var(--lh-tight);
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--whelm-mauve);
+  opacity: 0.7;
+}
+
+.sidebarList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-5);
+}
+
+.sidebarItem {
+  display: flex;
+  align-items: center;
+  gap: var(--s-4);
+  font-family: var(--whelm-editorial-font);
+  font-size: var(--t-h3);
+  font-weight: 300;
+  font-style: italic;
+  line-height: var(--lh-tight);
+  color: rgba(243, 239, 247, 0.30);
+  transition: color var(--m-medium) var(--m-out);
+}
+
+.sidebarDot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 1.5px solid currentColor;
+  flex: 0 0 auto;
+  background: transparent;
+  transition: background var(--m-medium) var(--m-out),
+              transform   var(--m-medium) var(--m-out);
+}
+
+.sidebarLabel {
+  white-space: nowrap;
+}
+
+/* Active highlight — grouped attribute selector for all 6 sections. */
+.sidebar[data-active-section='gap']       .sidebarItem[data-section='gap'],
+.sidebar[data-active-section='need']      .sidebarItem[data-section='need'],
+.sidebar[data-active-section='audience']  .sidebarItem[data-section='audience'],
+.sidebar[data-active-section='framework'] .sidebarItem[data-section='framework'],
+.sidebar[data-active-section='research']  .sidebarItem[data-section='research'],
+.sidebar[data-active-section='design']    .sidebarItem[data-section='design'] {
+  color: var(--whelm-cream);
+}
+
+.sidebar[data-active-section='gap']       .sidebarItem[data-section='gap']       .sidebarDot,
+.sidebar[data-active-section='need']      .sidebarItem[data-section='need']      .sidebarDot,
+.sidebar[data-active-section='audience']  .sidebarItem[data-section='audience']  .sidebarDot,
+.sidebar[data-active-section='framework'] .sidebarItem[data-section='framework'] .sidebarDot,
+.sidebar[data-active-section='research']  .sidebarItem[data-section='research']  .sidebarDot,
+.sidebar[data-active-section='design']    .sidebarItem[data-section='design']    .sidebarDot {
+  background: var(--whelm-cream);
+  transform: scale(1.4);
+}
+
+/* =====================================================================
+   ELEMENT RENDERERS
+   ===================================================================== */
+
+/* Wordmark — slide 255:355. */
+.wordmark {
+  margin: 0;
+  font-family: var(--whelm-display-font);
+  font-size: var(--t-hero);
+  font-weight: 300;
+  line-height: var(--lh-tight);
+  letter-spacing: -0.025em;
+  color: var(--whelm-cream);
+  text-align: center;
+  white-space: nowrap;
+  user-select: none;
+  z-index: 4;
+  position: relative;
+}
+
+.wordmarkInner {
+  display: inline-flex;
+  align-items: baseline;
+}
+
+.wordmarkChar {
+  display: inline-block;
+  max-width: 0;
+  overflow: hidden;
+  opacity: 0;
+}
+
+.wordmarkCursor {
+  display: inline-block;
+  width: 0.025em;
+  height: 0.7em;
+  margin-left: 0.04em;
+  background: currentColor;
+  vertical-align: -0.02em;
+  animation: cursorBlink 1s steps(1, end) infinite;
+}
+
+@keyframes cursorBlink {
+  0%, 50% { opacity: 1; }
+  50.01%, 100% { opacity: 0; }
+}
+
+/* Background-asset SVG layer — full-bleed image fill. */
+.bleedAsset {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: center;
+  pointer-events: none;
+}
+
+.bleedAssetMauve {
+  /* Tinted/muted variant */
+  opacity: 0.6;
+  mix-blend-mode: screen;
+}
+
+/* Hero cursive flourish — inline SVG centerline path, stroked with
+   the gradient. Sized to match hero with slice fill, then transformed
+   for a slight diagonal tilt and modest oversize. Asymmetric origin
+   nudges the cursive so the start loops are upper-left of the hero
+   and the trailing "m" and curls come into view at lower-right —
+   matches the Figma frame composition. */
+.cursiveSvg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  pointer-events: none;
+  overflow: visible;
+  transform: translate(-4%, -4%) scale(1.18) rotate(-2.5deg);
+  transform-origin: 50% 50%;
+}
+
+/* Hero flourish spans the full hero width (sidebar is hidden during
+   the hero beat, so we extend past content-start into that column).
+   Bleeds past edges. Sits BEHIND wordmark + copy so all text reads
+   on top of the cursive. */
+.element[data-element-id='hero-flourish'] {
+  grid-column: sidebar-start / content-end;
+  overflow: visible;
+  z-index: 0;
+}
+
+/* Overcome stack — slide 255:357. */
+.overcomeStack {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--s-1);
+  font-family: var(--whelm-display-font);
+  font-size: var(--t-display);
+  font-weight: 400;
+  line-height: var(--lh-tight);
+  letter-spacing: -0.012em;
+  user-select: none;
+  z-index: 4;
+}
+
+/* =====================================================================
+   STICKY SECTION PRIMITIVE
+   The shape every post-hero beat sits inside. Outer track provides
+   scroll room; inner stage pins at top:nav-offset and fills the rest
+   of the viewport. Per-beat compositions live INSIDE the sticky and
+   bring their own grid/flex rules.
+
+   Tracks:
+     short  = 140vh  — quick beats (small SVG, simple type reveal)
+     medium = 180vh  — standard lens beat (Signal/Portal/Reveal)
+     long   = 220vh  — long timelines (Tangle threads, Gap waterfall)
+
+   Stages:
+     default = grid place-items: center (most beats want centering)
+     grid    = no inner display; section provides its own rules
+   ===================================================================== */
+
+.section {
+  position: relative;
+  width: 100%;
+  background: var(--whelm-bg);
+  scroll-margin-top: var(--whelm-nav-offset);
+}
+
+.section_track_short  { height: 140vh; }
+.section_track_medium { height: 180vh; }
+.section_track_long   { height: 220vh; }
+
+.sectionSticky {
+  position: sticky;
+  top: var(--whelm-nav-offset);
+  width: 100%;
+  height: calc(100vh - var(--whelm-nav-offset));
+  height: calc(100dvh - var(--whelm-nav-offset));
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.sectionSticky[data-stage='default'] {
+  display: grid;
+  place-items: center;
+  padding: var(--s-7) var(--page-margin);
+}
+
+/* =====================================================================
+   LENS CLAIM — heading + body typographic moment shared across
+   Signal/Tangle/Portal. The visible heading uses Mackinac display, the
+   accent uses Crimson italic mauve, the body uses Noto Sans body. The
+   wipe target is .claim_lineText with a clip-path driven by --reveal.
+   ===================================================================== */
+
+.claim {
+  /* Layout host — the section decides max-width and alignment. */
+  margin: 0;
+}
+
+.claim_heading {
+  font-family: var(--whelm-display-font);
+  font-size: clamp(42px, 4.8vw, 84px);
+  font-weight: 400;
+  line-height: 1.04;
+  letter-spacing: -0.025em;
+  color: var(--whelm-cream);
+  margin: 0 0 clamp(28px, 3.2vh, 48px) 0;
+}
+
+.claim_line {
+  --reveal: 100%;
+  position: relative;
+  display: inline-block;
+  max-width: 100%;
+}
+
+.claim_lineText {
+  display: inline-block;
+  padding-right: 0.2em;
+  /* Italic Mackinac descenders (lowercase p, g) extend below the
+     baseline at display sizes — generous bottom inset prevents the
+     wipe from clipping them. */
+  clip-path: inset(-0.2em var(--reveal) -0.55em 0);
+  will-change: clip-path;
+}
+
+.claim_accent {
+  font-style: italic;
+  color: var(--whelm-mauve);
+}
+
+.claim_body {
+  font-family: var(--whelm-body-font);
+  font-style: normal;
+  font-weight: 400;
+  font-size: clamp(17px, 1.4vw, 22px);
+  line-height: 1.5;
+  letter-spacing: 0.01em;
+  color: var(--whelm-cream);
+  opacity: 0;
+  margin: 0;
+  max-width: 36ch;
+  text-wrap: pretty;
+  font-variation-settings: 'CTGR' 0, 'wdth' 100;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .claim_line { --reveal: 0% !important; }
+  .claim_body { opacity: 1 !important; }
+}
+
+/* lensSplit — the L/R split layout used by Signal and Portal.
+   Five tracks: outer spacers push the claim+stage unit to center,
+   inner gap separates them. The unit reads as one editorial spread,
+   not two halves anchored to opposite viewport edges. */
+.lensSplit {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns:
+    1fr
+    minmax(0, 460px)
+    clamp(40px, 5vw, 96px)
+    minmax(0, 460px)
+    1fr;
+  grid-template-rows: 1fr;
+  align-items: center;
+  padding: var(--s-7) var(--page-margin);
+}
+
+@media (max-width: 900px) {
+  .lensSplit {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
+    align-items: start;
+    row-gap: clamp(20px, 4vh, 40px);
+  }
+}
+
+/* =====================================================================
+   THE GAP — Section 1 thesis composition
+   Three "Overwhelm" lines waterfall from a single origin, then
+   "is overlooked." types in below with a persistent blinking cursor.
+   Section is its own composition — overrides .editorialSection.
+   ===================================================================== */
+
+/* Inner content host — centers the composition inside the sticky
+   stage. Outer sticky/track is owned by <StickySection>. */
+.gapSticky {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--s-9) var(--page-margin);
+}
+
+/* Composition: stacked Overwhelms with the punchline beside the
+   bottom-most one. The third "Overwhelm" + "is overlooked." share a
+   baseline-aligned flex row, so the punchline reads as the answer
+   spoken alongside the last repetition. */
+.gapComposition {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--s-8);
+}
+
+/* Punchline sits as the 4th column item, pushed to the stack's right
+   edge so it lands below-right of the 3rd "Overwhelm" — like a quiet
+   aside answering the stacked thesis. align-self overrides the stack's
+   flex-start to right-anchor this one item against the stack's width
+   (which equals the Overwhelm word's width). */
+
+/* Arrow lives at the bottom of the sticky stage, not in the centered
+   composition flow — invitation to keep scrolling sits well clear of
+   the thesis itself. */
+.gapArrow {
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin-inline: auto;
+  bottom: 16vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 28px;
+  color: var(--whelm-cream);
+  opacity: 0.85;
+  animation: scrollCueBob 2.4s ease-in-out infinite;
+}
+
+.gapArrow svg {
+  width: 100%;
+  height: 100%;
+}
+
+.gapPunchline {
+  display: inline-flex;
+  align-items: baseline;
+  align-self: flex-end;
+  margin: var(--s-4) 0 0 0;
+  font-family: var(--whelm-editorial-font);
+  font-size: var(--t-h2);
+  font-weight: 300;
+  font-style: normal;
+  line-height: var(--lh-snug);
+  color: var(--whelm-cream);
+  white-space: nowrap;
+}
+
+.gapPunchlineInner {
+  display: inline-flex;
+  align-items: baseline;
+}
+
+.gapPunchlineChar {
+  display: inline-block;
+  max-width: 0;
+  overflow: hidden;
+  opacity: 0;
+  white-space: pre;
+}
+
+.gapPunchlineChar[data-italic='true'] {
+  font-style: italic;
+  letter-spacing: 0.02em;
+}
+
+.gapPunchlineCursor {
+  display: inline-block;
+  width: 0.05em;
+  height: 0.85em;
+  margin-left: 0.06em;
+  background: currentColor;
+  vertical-align: -0.05em;
+  animation: cursorBlink 1s steps(1, end) infinite;
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.overcomeLine {
+  display: block;
+}
+
+/* Universal rule for the word "Overwhelm" wherever it renders in
+   P22 Mackinac Pro on this site: wrap the "w" in this span —
+   `Over<span class="overwhelmKern">w</span>helm` — so the r→w pair
+   gets a small kern. Mackinac collapses that pair too tight at
+   editorial sizes; the em-relative margin scales with the type so it
+   stays consistent across sizes.
+
+   The selector is exposed as both a CSS-Modules class (for JSX use
+   with `styles.overwhelmKern`) and a `:global` class (for use in
+   `dangerouslySetInnerHTML` strings such as the entries in
+   `content.js`, where the literal class name in HTML must match). */
+.overwhelmKern {
+  margin-left: 0.04em;
+}
+
+/* Global alias scoped under .story so the literal class name in
+   `dangerouslySetInnerHTML` strings (content.js) resolves. Scoping
+   keeps the global selector "pure" for Next.js CSS Modules and
+   confines its effect to the Whelm story container. */
+.story :global(.overwhelmKern) {
+  margin-left: 0.04em;
+}
+
+.overcomeLine[data-tier='1'] { color: var(--whelm-cream); }
+.overcomeLine[data-tier='2'] { color: var(--whelm-mauve); }
+.overcomeLine[data-tier='3'] { color: rgba(189, 183, 233, 0.45); }
+
+/* Scroll cue — Hero "Learn More" + chevron. Crimson Pro all-caps
+   tracked, light weight (not bold, not italic). Reads like a small
+   editorial label rather than a typeset label. */
+.scrollCue {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--s-3);
+  font-family: var(--whelm-body-font);
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  color: var(--whelm-cream);
+  animation: scrollCueBob 2.4s ease-in-out infinite;
+  z-index: 6;
+}
+
+.scrollCueArrow {
+  color: var(--whelm-cream);
+  opacity: 0.85;
+}
+
+@keyframes scrollCueBob {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(6px); }
+}
+
+/* Diagram base for inline-SVG renderers (Section 3 fallback if assets
+   are not used as bleeds). */
+.diagram {
+  width: clamp(320px, 38vw, 560px);
+  height: clamp(320px, 38vw, 560px);
+  display: block;
+  overflow: visible;
+}
+
+.signalLabel {
+  font-family: var(--whelm-body-font);
+  font-size: 18px;
+  font-weight: 400;
+  letter-spacing: 0.005em;
+}
+
+.tangleLabel {
+  font-family: var(--whelm-body-font);
+  font-size: 16px;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+}
+
+.portalCoreLabel {
+  font-family: var(--whelm-body-font);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+/* Phase 0 placeholder visual (kept for elements not yet rebuilt). */
+.placeholder {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--s-4) var(--s-5);
+  background: rgba(189, 183, 233, 0.10);
+  border: 1px dashed var(--whelm-mauve);
+  border-radius: 8px;
+  font-family: var(--whelm-editorial-font);
+  font-size: var(--t-body);
+  color: var(--whelm-cream);
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+.placeholder[data-kind='diagram'],
+.placeholder[data-kind='venn'],
+.placeholder[data-kind='journey'] {
+  width: clamp(280px, 36vw, 540px);
+  height: clamp(280px, 36vw, 540px);
+  border-radius: 50%;
+}
+
+/* =====================================================================
+   EDITORIAL SECTIONS — post-hero scroll content
+   Centered, generous breathing room. Each section fills in over its
+   own iteration; placeholders here are the scaffolding only.
+   ===================================================================== */
+
+.editorialSection {
+  position: relative;
+  min-height: 80vh;
+  padding: var(--s-9) var(--page-margin);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  scroll-margin-top: var(--whelm-nav-offset);
+}
+
+.editorialInner {
+  width: 100%;
+  max-width: 720px;
+  text-align: center;
+}
+
+.editorialEyebrow {
+  font-family: var(--whelm-body-font);
+  font-size: var(--t-eyebrow);
+  font-weight: 500;
+  line-height: var(--lh-tight);
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--whelm-mauve);
+  opacity: 0.7;
+  margin: 0 0 var(--s-5) 0;
+}
+
+.editorialPlaceholder {
+  font-family: var(--whelm-editorial-font);
+  font-size: var(--t-h2);
+  font-style: italic;
+  font-weight: 300;
+  color: var(--whelm-cream);
+  opacity: 0.4;
+  margin: 0;
+}
+
+/* =====================================================================
+   SECTION 2.5 — REVEAL. "Overwhelm → whelm."
+
+   One typographic moment: the word lays in, a hand-drawn cancellation
+   crosses out "Over," and "Over" lifts away leaving "whelm." The
+   strike SVG is sized to overlay the "Over" span exactly via
+   absolute positioning. preserveAspectRatio="none" lets the curve
+   stretch to whatever the span renders at.
+   ===================================================================== */
+
+.revealStage {
+  width: 100%;
+  max-width: 1500px;
+  padding: 0 clamp(40px, 6vw, 120px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.revealHeading {
+  margin: 0;
+  font-family: var(--whelm-display-font);
+  font-size: clamp(72px, 13vw, 200px);
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -0.025em;
+  display: inline-flex;
+  align-items: baseline;
+  white-space: nowrap;
+}
+
+.revealOverWrap {
+  position: relative;
+  display: inline-block;
+}
+
+.revealOver {
+  display: inline-block;
+}
+
+/* Strike sits on top of the "Over" span. Sized to the span's box via
+   absolute positioning + 100% width/height. */
+.revealStrike {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  width: 100%;
+  height: 0.55em;
+  transform: translateY(-50%);
+  pointer-events: none;
+  overflow: visible;
+  opacity: 0.95;
+}
+
+.revealWhelm {
+  display: inline-block;
+  font-style: italic;
+  color: var(--whelm-mauve);
+}
+
+@media (max-width: 700px) {
+  .revealHeading {
+    font-size: clamp(56px, 18vw, 120px);
+  }
+}
+
+/* =====================================================================
+   THE TANGLE — single-path line draws on through scattered words
+   "Overwhelm is a tangle." Words layer (muted lavender, behind),
+   then the line, then dots at crossings, then the claim heading.
+   ===================================================================== */
+
+/* Inner stack: claim above, stage below — centered as one editorial
+   unit inside the sticky frame. Outer sticky/track is <StickySection>. */
+.tangleSticky {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: center;
+  gap: clamp(12px, 1.6vh, 24px);
+  padding: clamp(40px, 5vh, 72px) var(--page-margin);
+}
+
+.tangleStage {
+  /* Fills remaining flex space below the claim, centered. The SVG
+     inside uses preserveAspectRatio="xMidYMid meet" to scale itself
+     to fit while keeping the artwork's 1920×1080 proportions. No
+     explicit aspect-ratio on the stage div — that would set a
+     natural height which can overflow the sticky on short viewports
+     and clip the heading at top. */
+  position: relative;
+  width: 100%;
+  max-width: 1500px;
+  margin: 0 auto;
+  flex: 1 1 auto;
+  min-height: 0;
+  color: var(--whelm-cream);
+}
+
+/* Container for the inlined SVG. The SVG has its width/height set
+   to 100% in JS so it fills this host.
+
+   visibility: hidden initially — the SVG mounts via
+   dangerouslySetInnerHTML and is fully composed before useGSAP runs;
+   without this the user sees a flash of all words / dots / threads
+   before initial autoAlpha 0 + dashoffset are applied. JS reveals the
+   host after the gsap.set initial-state block. */
+.tangleSvgHost {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  visibility: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tangleSvgHost {
+    visibility: visible;
+  }
+}
+
+.tangleSvgHost svg {
+  width: 100%;
+  height: 100%;
+}
+
+.tangleLabels {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+/* Pair labels at cross-thread intersections — small italic, like
+   editorial annotations on a hand-drawn diagram. */
+.tangleLabel {
+  position: absolute;
+  font-family: var(--whelm-editorial-font);
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(16px, 1.5vw, 22px);
+  line-height: 1;
+  color: var(--whelm-cream);
+  white-space: nowrap;
+  opacity: 0;
+  transform: translate(-50%, -50%);
+  will-change: opacity, transform;
+}
+
+.tangleLabel_above {
+  /* No additional offset; default translate centers it on its (left,top). */
+}
+
+.tangleLabel_below {
+  /* Same default — JS already offset y by ±30. */
+}
+
+/* Endpoint labels — italic, slightly smaller, sit beneath the
+   endpoint dots. */
+.tangleEndpointLabel {
+  position: absolute;
+  font-family: var(--whelm-editorial-font);
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(15px, 1.3vw, 20px);
+  line-height: 1;
+  color: var(--whelm-mauve);
+  white-space: nowrap;
+  opacity: 0;
+  transform: translate(-50%, 0);
+  will-change: opacity, transform;
+}
+
+.tangleEndpointLeft {
+  color: var(--whelm-mauve);
+}
+
+.tangleEndpointRight {
+  color: var(--whelm-cream);
+}
+
+.tangleClaim {
+  /* Claim sits above the diagram, centered horizontally to align
+     with the wide artwork below. */
+  grid-column: 1;
+  grid-row: 1;
+  width: 100%;
+  max-width: 720px;
+  margin-inline: auto;
+  text-align: center;
+}
+
+/* Tangle claim sits centered above the diagram. Wider than the lens
+   default (52ch vs 36ch) so the call-and-response reads as one line. */
+.tangleClaim .claim_body { max-width: 52ch; margin: 0 auto; }
+.tangleClaim .claim_heading { margin-bottom: clamp(8px, 1.2vh, 16px); }
+
+/* =====================================================================
+   THE SIGNAL — central pulse + 5 radiating rays + word labels.
+   Placeholder geometry; replace with hand-drawn SVG when ready.
+   Same sticky-anchor pattern as Tangle.
+   ===================================================================== */
+
+/* =====================================================================
+   LENS SECTIONS — Signal / Portal share a left-right split layout
+   (claim column on the left, artwork on the right). Tangle keeps its
+   wide artwork below text — see its own block. Type anchors left
+   so the page reads top-down, left-to-right per beat.
+   ===================================================================== */
+
+.signalClaim,
+.portalClaim {
+  grid-column: 2;
+  grid-row: 1;
+  align-self: center;
+  justify-self: end;
+  text-align: left;
+  max-width: 44ch;
+}
+
+.signalStage,
+.portalStage {
+  grid-column: 4;
+  grid-row: 1;
+  align-self: center;
+  justify-self: start;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.signalSvg,
+.portalSvg {
+  width: 100%;
+  height: 100%;
+  max-height: 72vh;
+  display: block;
+  overflow: visible;
+}
+
+.signalSvgHost {
+  width: 100%;
+  height: 100%;
+  max-height: 72vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  visibility: hidden;
+}
+
+.signalSvgHost svg {
+  width: 100%;
+  height: 100%;
+  max-height: 72vh;
+}
+
+.signalLabel {
+  position: absolute;
+  font-family: var(--whelm-editorial-font);
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(14px, 1.2vw, 19px);
+  line-height: 1;
+  color: var(--whelm-mauve);
+  white-space: nowrap;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+/* Narrow viewports — collapse to stacked column inside .lensSplit.
+   Type top, art below. */
+@media (max-width: 900px) {
+  .signalClaim,
+  .portalClaim {
+    grid-column: 1;
+    grid-row: 1;
+    max-width: 100%;
+  }
+  .signalStage,
+  .portalStage {
+    grid-column: 1;
+    grid-row: 2;
+  }
+}
+
+/* =====================================================================
+   THE AUDIENCE — Section 4
+   Two beats: a "Whelm is for All" intro, then four nested rings cycling
+   through the persona set. Both sit inside their own StickySection.
+   ===================================================================== */
+
+/* ─── A. Intro: declarative "for all" composition ─── */
+
+.audienceIntroSticky {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-content: center;
+  padding: clamp(48px, 7vh, 96px) var(--page-margin);
+  text-align: left;
+}
+
+.audienceIntroSticky > * {
+  max-width: 920px;
+  margin-inline: auto;
+  width: 100%;
+}
+
+.audienceEyebrow {
+  font-family: var(--whelm-body-font);
+  font-size: var(--t-eyebrow);
+  font-weight: 500;
+  line-height: var(--lh-tight);
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--whelm-mauve);
+  opacity: 0.72;
+  margin: 0 0 var(--s-7) 0;
+}
+
+.audienceIntroHeading {
+  --reveal: 100%;
+  font-family: var(--whelm-display-font);
+  font-size: clamp(56px, 7.4vw, 116px);
+  font-weight: 400;
+  line-height: 1.04;
+  letter-spacing: -0.025em;
+  color: var(--whelm-cream);
+  margin: 0 0 clamp(36px, 4.5vh, 64px) 0;
+}
+
+.audienceIntroHeadingClip {
+  display: inline-block;
+  padding-right: 0.18em;
+  clip-path: inset(-0.2em var(--reveal) -0.55em 0);
+  will-change: clip-path;
+}
+
+.audienceIntroList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(14px, 1.8vh, 26px);
+  max-width: 720px;
+}
+
+.audienceIntroBullet {
+  position: relative;
+  padding-left: 1.6em;
+  font-family: var(--whelm-editorial-font);
+  font-size: clamp(20px, 2.0vw, 30px);
+  font-weight: 300;
+  font-style: italic;
+  line-height: 1.34;
+  color: var(--whelm-cream);
+  text-wrap: pretty;
+}
+
+.audienceIntroBullet::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.62em;
+  width: 0.55em;
+  height: 1px;
+  background: var(--whelm-mauve);
+  opacity: 0.7;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .audienceIntroHeading { --reveal: 0% !important; }
+  .audienceIntroBullet { opacity: 1 !important; transform: none !important; }
+}
+
+/* ─── B. Concentric rings + persona cycle ─── */
+
+.audienceRingsSticky {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns:
+    1fr
+    minmax(0, 540px)
+    clamp(40px, 5vw, 96px)
+    minmax(0, 460px)
+    1fr;
+  grid-template-rows: 1fr;
+  align-items: center;
+  padding: clamp(40px, 5vh, 72px) var(--page-margin);
+}
+
+.audienceArt {
+  grid-column: 2;
+  grid-row: 1;
+  position: relative;
+  width: 100%;
+  max-width: 620px;
+  aspect-ratio: 1;
+  align-self: center;
+  justify-self: end;
+}
+
+.audienceSvg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  overflow: visible;
+}
+
+.audienceRingGroup {
+  /* GSAP-driven scalars. */
+  --audr-fill: 0;
+  --audr-stroke: 0.1;
+  --audr-label: 0;
+}
+
+.audienceRingShape {
+  fill: rgba(189, 183, 233, 0);
+  stroke: rgba(243, 239, 247, var(--audr-stroke));
+  stroke-width: 1.4;
+  vector-effect: non-scaling-stroke;
+}
+
+/* Per-ring active fill — slide-source palette tuned within the lavender
+   family. Each ring picks up a different tone so the four don't read as
+   duplicates of each other. Inactive rings keep stroke-only. */
+.audienceRingGroup[data-ring='attuned'] .audienceRingShape {
+  fill: rgba(73, 50, 93, var(--audr-fill));
+}
+.audienceRingGroup[data-ring='approval'] .audienceRingShape {
+  fill: rgba(189, 183, 233, calc(0.95 * var(--audr-fill)));
+}
+.audienceRingGroup[data-ring='performing'] .audienceRingShape {
+  fill: rgba(137, 95, 174, calc(0.95 * var(--audr-fill)));
+}
+.audienceRingGroup[data-ring='overstim'] .audienceRingShape {
+  fill: rgba(73, 50, 93, calc(0.78 * var(--audr-fill)));
+}
+
+.audienceRingLabels {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.audienceRingLabel {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: var(--whelm-body-font);
+  font-size: clamp(13px, 1.05vw, 17px);
+  font-weight: 600;
+  letter-spacing: 0.015em;
+  white-space: nowrap;
+  text-shadow: 0 1px 10px rgba(31, 5, 54, 0.55);
+  opacity: 0;
+  color: var(--whelm-cream);
+}
+
+/* Approval Seeking ring fills mauve when active — its label needs dark
+   text for legible contrast. Same convention as the slide. */
+.audienceRingLabel[data-ring-id='approval'] {
+  color: var(--whelm-bg);
+  text-shadow: none;
+}
+
+.audienceBeats {
+  grid-column: 4;
+  grid-row: 1;
+  position: relative;
+  width: 100%;
+  max-width: 460px;
+  align-self: center;
+  justify-self: start;
+  min-height: clamp(220px, 32vh, 320px);
+}
+
+.audienceBeat {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(12px, 1.6vh, 22px);
+}
+
+.audienceBeatHeading {
+  font-family: var(--whelm-display-font);
+  font-size: clamp(30px, 3.4vw, 52px);
+  font-weight: 400;
+  line-height: 1.04;
+  letter-spacing: -0.02em;
+  color: var(--whelm-cream);
+  margin: 0;
+}
+
+.audienceBeatBody {
+  font-family: var(--whelm-body-font);
+  font-size: clamp(16px, 1.25vw, 20px);
+  font-weight: 400;
+  line-height: 1.55;
+  color: var(--whelm-cream);
+  opacity: 0.92;
+  max-width: 38ch;
+  margin: 0;
+  text-wrap: pretty;
+}
+
+@media (max-width: 900px) {
+  .audienceRingsSticky {
+    grid-template-columns: 1fr;
+    grid-template-rows: minmax(0, 1fr) auto;
+    row-gap: clamp(20px, 4vh, 36px);
+    padding: clamp(32px, 5vh, 56px) var(--page-margin);
+  }
+  .audienceArt {
+    grid-column: 1;
+    grid-row: 1;
+    max-width: 360px;
+    margin-inline: auto;
+    justify-self: center;
+  }
+  .audienceBeats {
+    grid-column: 1;
+    grid-row: 2;
+    margin-inline: auto;
+    text-align: center;
+    min-height: clamp(180px, 24vh, 240px);
+  }
+  .audienceBeat { align-items: center; }
+  .audienceBeatBody { margin-inline: auto; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .audienceBeats {
+    position: static;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    gap: clamp(20px, 3vh, 32px);
+  }
+  .audienceBeat {
+    position: relative;
+    inset: auto;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .audienceRingGroup {
+    --audr-stroke: 0.55 !important;
+    --audr-label: 1 !important;
+  }
+}
+
+/* =====================================================================
+   REDUCED MOTION
+   ===================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .copyBlock {
+    opacity: 1;
+    transform: none;
+  }
+  .kind_lead, .kind_h2_inline {
+    clip-path: none !important;
+  }
+  .wordmarkChar {
+    max-width: none !important;
+    opacity: 1 !important;
+  }
+  .wordmarkCursor {
+    display: none;
+  }
+  .cursiveSvg [data-cursive-path] {
+    stroke-dashoffset: 0 !important;
+  }
+  .scrollCue {
+    animation: none;
+  }
+  .gapPunchlineChar {
+    max-width: none !important;
+    opacity: 1 !important;
+  }
+  .gapPunchlineCursor {
+    display: none;
+  }
+  .gapArrow {
+    animation: none;
+    opacity: 1 !important;
+  }
+  .tangleLabel,
+  .tangleEndpointLabel {
+    opacity: 0.9 !important;
+  }
+  .signalLabel {
+    opacity: 0.9 !important;
+  }
+  /* .claim_line and .claim_body reduced-motion handled in the
+     LensClaim block above. */
+}

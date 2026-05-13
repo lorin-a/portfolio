@@ -28,6 +28,7 @@
     "three": "^0.160.1"
   },
   "devDependencies": {
+    "cloudinary": "^2.10.0",
     "stylelint": "^17.3.0",
     "stylelint-config-standard": "^40.0.0"
   }

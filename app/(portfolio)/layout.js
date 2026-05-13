@@ -1,5 +1,5 @@
 import '../globals.css'
-import { Fraunces, Open_Sans } from 'next/font/google'
+import { Fraunces, Open_Sans, Crimson_Pro, Noto_Sans } from 'next/font/google'
 import PortfolioShell from './PortfolioShell'
 
 const fraunces = Fraunces({
@@ -15,6 +15,25 @@ const openSans = Open_Sans({
   weight: ['400', '500', '600'],
   style: ['normal', 'italic'],
   variable: '--font-open-sans',
+  display: 'swap',
+})
+
+/* Used by the Whelm case study editorial register. Italics carry the
+   manifesto/sub voice; weights kept light for editorial register. */
+const crimsonPro = Crimson_Pro({
+  subsets: ['latin'],
+  weight: ['200', '300', '400'],
+  style: ['normal', 'italic'],
+  variable: '--font-crimson-pro',
+  display: 'swap',
+})
+
+/* Whelm UI/instruction register — sticky agenda, scroll cue, in-page
+   labels. All caps, regular weight, generous tracking. */
+const notoSans = Noto_Sans({
+  subsets: ['latin'],
+  weight: ['300', '400', '500'],
+  variable: '--font-noto-sans',
   display: 'swap',
 })
 
@@ -46,9 +65,13 @@ export const viewport = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={`${fraunces.variable} ${openSans.variable}`}>
+    <html lang="en" className={`${fraunces.variable} ${openSans.variable} ${crimsonPro.variable} ${notoSans.variable}`}>
       <head>
         <link rel="icon" href="/favicon.ico" sizes="any" />
+        {/* P22 Mackinac Pro via Adobe Fonts. Used by the Whelm case
+            study display register; loaded site-wide so route transitions
+            don't re-fetch. ~30KB; gzip-compressed by Typekit. */}
+        <link rel="stylesheet" href="https://use.typekit.net/ryb0aoq.css" />
         <script dangerouslySetInnerHTML={{ __html: `
           try {
             if (window.location.pathname === '/') {

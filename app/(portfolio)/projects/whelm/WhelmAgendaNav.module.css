@@ -1,0 +1,93 @@
+/* Whelm sticky agenda — appears once the user scrolls past the hero.
+   Slide-source colors hardcoded since whelm tokens scope to .story and
+   the nav mounts outside it. */
+
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  padding: 14px 32px;
+  background: rgba(31, 5, 54, 0.78);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(189, 183, 233, 0.14);
+  opacity: 0;
+  transform: translateY(-100%);
+  pointer-events: none;
+  transition:
+    opacity 600ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 600ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.nav[data-state='visible'] {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.list {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 36px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.item {
+  margin: 0;
+}
+
+.link {
+  display: inline-block;
+  font-family: var(--font-noto-sans), -apple-system, sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  letter-spacing: 0.20em;
+  text-transform: uppercase;
+  color: rgba(243, 239, 247, 0.50);
+  text-decoration: none;
+  padding: 4px 2px;
+  transition: color 300ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@media (hover: hover) {
+  .link:hover {
+    color: #f3eff7;
+  }
+}
+
+.link:focus-visible {
+  outline: 2px solid #bdb7e9;
+  outline-offset: 4px;
+  border-radius: 2px;
+}
+
+.link[data-active='true'] {
+  color: #f3eff7;
+  font-weight: 400;
+}
+
+@media (max-width: 768px) {
+  .nav {
+    padding: 10px 16px;
+  }
+  .list {
+    gap: 18px;
+    flex-wrap: wrap;
+  }
+  .link {
+    font-size: 15px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nav {
+    transition: opacity 200ms linear;
+    transform: none;
+  }
+}
