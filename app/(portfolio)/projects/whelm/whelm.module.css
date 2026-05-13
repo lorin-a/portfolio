@@ -761,28 +761,45 @@
    flex-start to right-anchor this one item against the stack's width
    (which equals the Overwhelm word's width). */
 
-/* Arrow lives at the bottom of the sticky stage, not in the centered
-   composition flow — invitation to keep scrolling sits well clear of
-   the thesis itself. */
-.gapArrow {
+/* Scroll cue — "Keep scrolling" small-caps label above a slim arrow,
+   pinned to the bottom of the sticky frame with ample breathing room
+   above so it doesn't crowd the punchline. The bob lives on the arrow
+   alone; the label stays still. */
+.gapScrollCue {
   position: absolute;
   left: 0;
   right: 0;
+  bottom: clamp(40px, 6vh, 64px);
   margin-inline: auto;
-  bottom: 16vh;
+  width: max-content;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  width: 24px;
-  height: 28px;
+  gap: clamp(10px, 1.4vh, 18px);
   color: var(--whelm-cream);
-  opacity: 0.85;
+  opacity: 0.62;
+}
+
+.gapScrollCueLabel {
+  font-family: var(--whelm-body-font);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  line-height: 1;
+  color: inherit;
+}
+
+.gapScrollCueArrow {
+  width: 14px;
+  height: 18px;
+  color: inherit;
   animation: scrollCueBob 2.4s ease-in-out infinite;
 }
 
-.gapArrow svg {
-  width: 100%;
-  height: 100%;
+.gapScrollCueArrow svg,
+.gapScrollCueArrow {
+  display: block;
 }
 
 .gapPunchline {
@@ -1033,29 +1050,33 @@
   display: inline-block;
 }
 
+/* "Over" — mauve, with a plain strikethrough that draws on left-to-right
+   via a pseudo-element scaled by the --strike CSS var (set by GSAP). */
 .revealOver {
+  --strike: 0;
+  position: relative;
   display: inline-block;
+  color: var(--whelm-mauve);
 }
 
-/* Strike sits on top of the "Over" span. Sized to the span's box via
-   absolute positioning + 100% width/height. */
-.revealStrike {
+.revealOver::after {
+  content: '';
   position: absolute;
   left: 0;
-  right: 0;
-  top: 50%;
+  top: 56%;
   width: 100%;
-  height: 0.55em;
-  transform: translateY(-50%);
+  height: 0.08em;
+  background: currentColor;
+  transform-origin: 0 50%;
+  transform: scaleX(var(--strike));
+  border-radius: 2px;
   pointer-events: none;
-  overflow: visible;
-  opacity: 0.95;
 }
 
 .revealWhelm {
   display: inline-block;
   font-style: italic;
-  color: var(--whelm-mauve);
+  color: var(--whelm-cream);
 }
 
 @media (max-width: 700px) {
@@ -1288,12 +1309,356 @@
 }
 
 /* =====================================================================
-   THE AUDIENCE — Section 4
-   Two beats: a "Whelm is for All" intro, then four nested rings cycling
-   through the persona set. Both sit inside their own StickySection.
+   THE AUDIENCE — Section 6 (Figma 255:371 + 255:372/373/374/633)
+
+   Two sticky beats:
+     A. Intro — split layout (cream LEFT, dark RIGHT with all 4 rings).
+     B. Cycle — full dark, focused-ring isolation + dashed elbow
+        leader to the persona body.
+
+   .audienceEyebrow / .audienceIntroHeading / .audienceIntroHeadingClip
+   are retained below as shared display-heading utilities consumed by
+   Experience + NextSteps.
    ===================================================================== */
 
-/* ─── A. Intro: declarative "for all" composition ─── */
+/* ─── A. Split intro ─── */
+
+.auIntroSticky {
+  display: block !important;
+  padding: 0 !important;
+  background: var(--whelm-bg);
+}
+
+.auIntroInner {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.auIntroLeft {
+  background: var(--whelm-bg-cream);
+  color: var(--whelm-bg);
+  padding: clamp(48px, 7vh, 96px) clamp(40px, 4vw, 80px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: clamp(16px, 2vh, 28px);
+}
+
+.auIntroRight {
+  background: var(--whelm-bg);
+  color: var(--whelm-bg-cream);
+  padding: clamp(32px, 4vh, 56px) clamp(32px, 4vw, 64px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.auEyebrow {
+  font-family: var(--whelm-body-font);
+  font-size: var(--t-eyebrow);
+  font-weight: 600;
+  line-height: var(--lh-tight);
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--whelm-bg);
+  margin: 0;
+}
+
+.auIntroHeading {
+  --reveal: 100%;
+  font-family: var(--whelm-display-font);
+  font-size: clamp(40px, 4.8vw, 72px);
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+  color: var(--whelm-bg);
+  margin: 0;
+}
+
+.auIntroHeadingClip {
+  display: inline-block;
+  padding-right: 0.18em;
+  clip-path: inset(-0.2em var(--reveal) -0.55em 0);
+  will-change: clip-path;
+}
+
+.auIntroBullets {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(10px, 1.4vh, 18px);
+  max-width: 32ch;
+}
+
+.auIntroBullet {
+  position: relative;
+  padding-left: 1.4em;
+  font-family: var(--whelm-body-font);
+  font-size: clamp(15px, 1.2vw, 20px);
+  font-weight: 400;
+  line-height: 1.45;
+  color: var(--whelm-bg);
+  opacity: 0.92;
+  text-wrap: pretty;
+}
+
+.auIntroBullet::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.7em;
+  width: 0.6em;
+  height: 1px;
+  background: var(--whelm-orchid);
+  opacity: 0.85;
+}
+
+.auIntroArt {
+  position: relative;
+  width: 100%;
+  max-width: 540px;
+  aspect-ratio: 1;
+}
+
+.auIntroSvg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  overflow: visible;
+}
+
+.auIntroRingGroup {
+  --au-ring-stroke: 0;
+  --au-ring-fill: 0;
+}
+
+.auIntroRingShape {
+  fill: rgba(189, 183, 233, calc(0 * var(--au-ring-fill)));
+  stroke: rgba(243, 239, 247, calc(0.6 * var(--au-ring-stroke)));
+  stroke-width: 1.4;
+  vector-effect: non-scaling-stroke;
+}
+
+.auIntroRingGroup[data-ring='attuned'] .auIntroRingShape {
+  fill: rgba(73, 50, 93, calc(0.85 * var(--au-ring-fill)));
+}
+.auIntroRingGroup[data-ring='approval'] .auIntroRingShape {
+  fill: rgba(189, 183, 233, calc(0.95 * var(--au-ring-fill)));
+}
+.auIntroRingGroup[data-ring='performing'] .auIntroRingShape {
+  fill: rgba(137, 95, 174, calc(0.95 * var(--au-ring-fill)));
+}
+.auIntroRingGroup[data-ring='overstim'] .auIntroRingShape {
+  fill: rgba(73, 50, 93, calc(0.6 * var(--au-ring-fill)));
+}
+
+.auIntroLabels {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.auIntroLabel {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: var(--whelm-body-font);
+  font-size: clamp(13px, 1vw, 16px);
+  font-weight: 600;
+  letter-spacing: 0.015em;
+  white-space: nowrap;
+  text-shadow: 0 1px 10px rgba(31, 5, 54, 0.55);
+  color: var(--whelm-bg-cream);
+  /* Approval Seeking ring fills bright mauve — its label needs dark. */
+}
+.auIntroLabel[data-ring-id='approval'] {
+  color: var(--whelm-bg);
+  text-shadow: none;
+}
+
+/* ─── B. Cycle with focused ring + dashed elbow leader ─── */
+
+.auCycleSticky {
+  display: block !important;
+  padding: 0 !important;
+  background: var(--whelm-bg);
+}
+
+.auCycleInner {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) clamp(64px, 8vw, 140px) minmax(0, 1fr);
+  grid-template-rows: 1fr;
+  align-items: center;
+  padding: clamp(40px, 5vh, 72px) clamp(40px, 5vw, 96px);
+}
+
+.auCycleArt {
+  grid-column: 1;
+  grid-row: 1;
+  position: relative;
+  width: 100%;
+  max-width: 540px;
+  aspect-ratio: 1;
+  justify-self: end;
+}
+
+.auCycleRingGroup {
+  --au-fill: 0;
+  --au-stroke: 0.18;
+}
+
+.auCycleRingShape {
+  fill: rgba(189, 183, 233, 0);
+  stroke: rgba(243, 239, 247, var(--au-stroke));
+  stroke-width: 1.4;
+  vector-effect: non-scaling-stroke;
+}
+
+.auCycleRingGroup[data-ring='attuned'] .auCycleRingShape {
+  fill: rgba(73, 50, 93, var(--au-fill));
+}
+.auCycleRingGroup[data-ring='approval'] .auCycleRingShape {
+  fill: rgba(189, 183, 233, calc(0.95 * var(--au-fill)));
+}
+.auCycleRingGroup[data-ring='performing'] .auCycleRingShape {
+  fill: rgba(137, 95, 174, calc(0.95 * var(--au-fill)));
+}
+.auCycleRingGroup[data-ring='overstim'] .auCycleRingShape {
+  fill: rgba(73, 50, 93, calc(0.6 * var(--au-fill)));
+}
+
+.auCycleLabels {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.auCycleRingLabel {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: var(--whelm-body-font);
+  font-size: clamp(13px, 1.05vw, 17px);
+  font-weight: 600;
+  letter-spacing: 0.015em;
+  white-space: nowrap;
+  text-shadow: 0 1px 10px rgba(31, 5, 54, 0.55);
+  color: var(--whelm-bg-cream);
+}
+.auCycleRingLabel[data-ring-id='approval'] {
+  color: var(--whelm-bg);
+  text-shadow: none;
+}
+
+.auElbow {
+  grid-column: 2;
+  grid-row: 1;
+  width: 100%;
+  height: 60%;
+  align-self: center;
+  display: block;
+  overflow: visible;
+}
+
+.auCycleBeats {
+  grid-column: 3;
+  grid-row: 1;
+  position: relative;
+  width: 100%;
+  max-width: 360px;
+  min-height: clamp(200px, 30vh, 280px);
+  align-self: center;
+  justify-self: start;
+}
+
+.auCycleBeat {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(10px, 1.4vh, 18px);
+}
+
+.auCycleBeatHeading {
+  font-family: var(--whelm-display-font);
+  font-size: clamp(28px, 2.6vw, 40px);
+  font-weight: 400;
+  line-height: 1.04;
+  letter-spacing: -0.02em;
+  color: var(--whelm-bg-cream);
+  margin: 0;
+}
+
+.auCycleBeatBody {
+  font-family: var(--whelm-body-font);
+  font-size: clamp(15px, 1.18vw, 19px);
+  line-height: 1.55;
+  color: var(--whelm-bg-cream);
+  opacity: 0.9;
+  margin: 0;
+  max-width: 36ch;
+  text-wrap: pretty;
+}
+
+@media (max-width: 900px) {
+  .auIntroInner,
+  .auCycleInner {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto;
+    row-gap: clamp(20px, 4vh, 36px);
+  }
+  .auIntroLeft,
+  .auIntroRight {
+    padding: clamp(32px, 5vh, 56px) clamp(24px, 5vw, 48px);
+  }
+  .auIntroArt,
+  .auCycleArt {
+    max-width: 360px;
+    margin-inline: auto;
+    justify-self: center;
+  }
+  .auElbow { display: none; }
+  .auCycleBeats {
+    justify-self: center;
+    text-align: center;
+    min-height: clamp(180px, 24vh, 240px);
+  }
+  .auCycleBeat { align-items: center; }
+  .auCycleBeatBody { margin-inline: auto; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .auIntroHeading,
+  .auCycleSticky { /* nothing extra — handled by per-element rules */ }
+  .auIntroHeading { --reveal: 0% !important; }
+  .auIntroBullet,
+  .auIntroLabel { opacity: 1 !important; transform: none !important; }
+  .auCycleBeats {
+    position: static;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    gap: clamp(20px, 3vh, 32px);
+  }
+  .auCycleBeat {
+    position: relative;
+    inset: auto;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .auCycleRingGroup { --au-stroke: 0.55 !important; }
+  .auCycleRingLabel { opacity: 1 !important; }
+}
+
+/* ─── Retained shared utilities (referenced by Experience + NextSteps;
+       safe to keep until those sections are unified onto the new
+       .auEyebrow / .auIntroHeading naming) ─── */
 
 .audienceIntroSticky {
   width: 100%;
@@ -1557,6 +1922,927 @@
 }
 
 /* =====================================================================
+   A RITUAL + THE MANIFESTO — Section 5 (Figma 255:367 + 255:368 + 255:370)
+
+   Merged composition. LEFT pane stays pinned (position: sticky) with
+   the Ritual title + hand-drawn Squiggle.svg as a persistent bridge.
+   RIGHT pane flows naturally — each manifesto beat takes ~viewport
+   height so as the user scrolls, beats pass against the static LEFT.
+
+   This replaces the earlier split-with-cycle approach. Solves both
+   the "three identical splits in a row" rhythm hit and the brittle
+   12s cycle problem in one structural change.
+   ===================================================================== */
+
+.mnSection {
+  position: relative;
+  width: 100%;
+  background: var(--whelm-bg);
+  scroll-margin-top: var(--whelm-nav-offset);
+}
+
+.mnGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: start;
+}
+
+.mnLeftSticky {
+  position: sticky;
+  top: var(--whelm-nav-offset);
+  height: calc(100vh - var(--whelm-nav-offset));
+  height: calc(100dvh - var(--whelm-nav-offset));
+  background: var(--whelm-bg-cream);
+  color: var(--whelm-bg);
+  align-self: start;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(48px, 7vh, 96px) clamp(40px, 4vw, 80px);
+}
+
+.mnLeftInner {
+  position: relative;
+  width: 100%;
+  max-width: 480px;
+}
+
+.mnRitualTitle {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  font-family: var(--whelm-display-font);
+  font-size: clamp(44px, 5.4vw, 84px);
+  font-weight: 400;
+  line-height: 1.02;
+  letter-spacing: -0.025em;
+  color: var(--whelm-bg);
+  margin: 0;
+}
+
+.mnRitualRow {
+  display: block;
+}
+
+.mnRitualClip {
+  --reveal: 100%;
+  display: inline-block;
+  padding-right: 0.18em;
+  clip-path: inset(-0.2em var(--reveal) -0.55em 0);
+  will-change: clip-path;
+}
+
+/* Squiggle bridge — large hand-drawn loop pinned to the right edge
+   of the left pane, overflowing into the dark right pane. Stays
+   visible while the right beats scroll past. */
+.mnSquiggle {
+  position: absolute;
+  right: clamp(-160px, -16vw, -80px);
+  top: 50%;
+  transform: translateY(-50%);
+  width: clamp(240px, 28vw, 420px);
+  aspect-ratio: 1.33;
+  pointer-events: none;
+  visibility: hidden;
+  z-index: 2;
+}
+
+.mnSquiggle svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+/* Right pane — dark, normal flow. Each beat is roughly viewport-tall
+   so as the user scrolls, one beat is in view at a time. */
+.mnRightFlow {
+  background: var(--whelm-bg);
+  color: var(--whelm-bg-cream);
+  display: flex;
+  flex-direction: column;
+  padding: 0 clamp(40px, 4vw, 80px);
+}
+
+.mnBeat {
+  min-height: calc(100vh - var(--whelm-nav-offset));
+  min-height: calc(100dvh - var(--whelm-nav-offset));
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: clamp(12px, 1.8vh, 24px);
+  padding: clamp(48px, 7vh, 96px) 0;
+  max-width: 36ch;
+}
+
+.mnEyebrow {
+  font-family: var(--whelm-body-font);
+  font-size: var(--t-eyebrow);
+  font-weight: 600;
+  line-height: var(--lh-tight);
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--whelm-mauve);
+  margin: 0 0 clamp(8px, 1.2vh, 16px) 0;
+}
+
+.mnAnchor {
+  font-family: var(--whelm-display-font);
+  font-size: clamp(32px, 3.6vw, 56px);
+  font-weight: 400;
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  color: var(--whelm-bg-cream);
+  margin: 0;
+  max-width: 16ch;
+  text-wrap: pretty;
+}
+
+.mnUnderline {
+  width: clamp(180px, 24vw, 320px);
+  height: clamp(20px, 2.4vw, 36px);
+  display: block;
+  margin: clamp(4px, 0.8vh, 12px) 0 0 0;
+  overflow: visible;
+  visibility: hidden;
+}
+
+.mnUnderline svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+/* Underline stroke takes its color from the orchid; the svg fill is
+   already mauve in the source. */
+.mnUnderline path {
+  stroke: var(--whelm-orchid);
+}
+
+.mnProcess {
+  font-family: var(--whelm-editorial-font);
+  font-size: clamp(18px, 1.6vw, 26px);
+  font-weight: 300;
+  font-style: italic;
+  line-height: 1.4;
+  color: var(--whelm-mauve);
+  margin: clamp(12px, 1.6vh, 20px) 0 0 0;
+  max-width: 26ch;
+  text-wrap: pretty;
+}
+
+.mnLitanyLine {
+  font-family: var(--whelm-editorial-font);
+  font-size: clamp(20px, 2vw, 30px);
+  font-weight: 300;
+  font-style: italic;
+  line-height: 1.36;
+  color: var(--whelm-bg-cream);
+  margin: 0 0 clamp(16px, 2.2vh, 28px) 0;
+  text-wrap: pretty;
+}
+
+.mnLitanyLine:last-child { margin-bottom: 0; }
+
+@media (max-width: 900px) {
+  .mnGrid { grid-template-columns: 1fr; }
+  .mnLeftSticky {
+    position: relative;
+    top: auto;
+    height: auto;
+    min-height: 70vh;
+  }
+  .mnSquiggle {
+    right: auto;
+    left: 50%;
+    top: auto;
+    bottom: -10vh;
+    transform: translateX(-50%);
+    width: clamp(180px, 50vw, 280px);
+  }
+  .mnRightFlow {
+    padding: 0 clamp(24px, 5vw, 48px);
+  }
+  .mnBeat {
+    min-height: auto;
+    padding: clamp(40px, 8vh, 80px) 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mnRitualClip { --reveal: 0% !important; }
+  .mnSquiggle { visibility: visible !important; opacity: 1 !important; }
+  .mnUnderline { visibility: visible !important; }
+  .mnUnderline path { stroke-dashoffset: 0 !important; }
+  .mnBeat { opacity: 1 !important; transform: none !important; }
+}
+
+/* =====================================================================
+   THE TYPOLOGIES — Section 7 (Figma 255:649)
+   Cream "page" floating inside the dark case study, matching the
+   Framework treatment. Top-left header (eyebrow + display heading);
+   below, three columns side-by-side with hand-drawn shape, name,
+   and description.
+   ===================================================================== */
+
+.typSticky {
+  background: var(--whelm-bg-cream);
+  display: block !important;
+  padding: 0 !important;
+  color: var(--whelm-bg);
+}
+
+.typInner {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  gap: clamp(28px, 4vh, 56px);
+  padding: clamp(32px, 4.5vh, 64px) clamp(40px, 5vw, 96px);
+  max-width: 1840px;
+  margin-inline: auto;
+}
+
+.typHeader {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(8px, 1vh, 16px);
+}
+
+.typEyebrow {
+  font-family: var(--whelm-body-font);
+  font-size: var(--t-eyebrow);
+  font-weight: 600;
+  line-height: var(--lh-tight);
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--whelm-bg);
+  margin: 0;
+}
+
+.typHeading {
+  --reveal: 100%;
+  font-family: var(--whelm-display-font);
+  /* Tier drop per design-review — was sitting in display range. */
+  font-size: clamp(40px, 5vw, 72px);
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+  color: var(--whelm-bg);
+  margin: 0;
+}
+
+.typHeadingClip {
+  display: inline-block;
+  padding-right: 0.18em;
+  clip-path: inset(-0.2em var(--reveal) -0.55em 0);
+  will-change: clip-path;
+}
+
+.typGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(28px, 3vw, 64px);
+  align-items: start;
+}
+
+.typCol {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  gap: clamp(14px, 1.8vh, 24px);
+}
+
+.typShape {
+  width: 100%;
+  max-width: 320px;
+  aspect-ratio: 1.2;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  visibility: hidden;
+}
+
+.typShape svg {
+  width: 100%;
+  height: 100%;
+}
+
+.typName {
+  font-family: var(--whelm-display-font);
+  font-size: clamp(26px, 2.4vw, 38px);
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: -0.018em;
+  color: var(--whelm-bg);
+  margin: 0;
+}
+
+.typBody {
+  font-family: var(--whelm-body-font);
+  font-size: clamp(15px, 1.05vw, 18px);
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--whelm-bg);
+  margin: 0;
+  max-width: 36ch;
+  text-wrap: pretty;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .typHeading { --reveal: 0% !important; }
+  .typShape { visibility: visible !important; }
+  .typCol,
+  .typName,
+  .typBody {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+@media (max-width: 900px) {
+  .typInner {
+    overflow-y: auto;
+    grid-template-rows: auto auto;
+  }
+  .typGrid {
+    grid-template-columns: 1fr;
+    gap: clamp(32px, 5vh, 56px);
+  }
+  .typShape { max-width: 260px; }
+}
+
+/* =====================================================================
+   THE FRAMEWORK — Section 8
+   Matches Figma slide 255:721. Light cream "page" floating inside the
+   dark case-study, with five rounded pills in a row (Arrive → Sense →
+   Release → Untangle → Integrate), each grading from deep bg to
+   mauve. Body copy (Activity, Outcome) sits under each pill. A
+   five-cell phase bar runs across the foot.
+   ===================================================================== */
+
+/* Cream-page stage. Overrides StickySection's default centering so the
+   editorial sheet fills the viewport-minus-nav region. */
+.fwSticky {
+  background: var(--whelm-bg-cream);
+  display: block !important;
+  padding: 0 !important;
+  color: var(--whelm-bg);
+}
+
+.fwInner {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  gap: clamp(20px, 3vh, 36px);
+  padding: clamp(32px, 4.5vh, 64px) clamp(40px, 5vw, 96px);
+  max-width: 1840px;
+  margin-inline: auto;
+}
+
+.fwEyebrow {
+  font-family: var(--whelm-body-font);
+  font-size: var(--t-eyebrow);
+  font-weight: 600;
+  line-height: var(--lh-tight);
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--whelm-bg);
+  margin: 0;
+}
+
+.fwGrid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: clamp(16px, 1.6vw, 28px);
+  align-items: start;
+}
+
+.fwCol {
+  display: grid;
+  grid-template-rows: auto auto 1fr;
+  row-gap: clamp(12px, 1.6vh, 20px);
+  position: relative;
+}
+
+/* Body slot — purpose and detail overlap so they can crossfade in
+   place during Phase A → Phase B. Min-height keeps the column tall
+   enough that the slot doesn't collapse when both are hidden. */
+.fwCol > .fwPurpose,
+.fwCol > .fwDetail {
+  grid-row: 3;
+  grid-column: 1;
+}
+
+.fwPurpose {
+  font-family: var(--whelm-body-font);
+  font-size: clamp(14px, 1.05vw, 18px);
+  line-height: 1.42;
+  color: var(--whelm-bg);
+  margin: 0;
+  text-wrap: pretty;
+  align-self: start;
+}
+
+.fwPill {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: clamp(56px, 5.4vh, 80px);
+  border-radius: 999px;
+  border: 2px solid var(--whelm-bg);
+  font-family: var(--whelm-display-font);
+  font-size: clamp(26px, 2.4vw, 44px);
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -0.018em;
+  text-align: center;
+  /* bg + color set inline per-step */
+}
+
+.fwCol > .fwRubric {
+  font-family: var(--whelm-body-font);
+  font-size: clamp(15px, 1.18vw, 22px);
+  font-weight: 700;
+  font-style: normal;
+  line-height: 1.3;
+  letter-spacing: 0.01em;
+  color: var(--whelm-bg);
+  margin: 0;
+  text-wrap: pretty;
+  font-variation-settings: 'CTGR' 100, 'wdth' 100;
+  max-width: none;
+  opacity: 1;
+}
+
+.fwDetail {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(10px, 1.4vh, 18px);
+  font-family: var(--whelm-body-font);
+  font-size: clamp(14px, 1.05vw, 18px);
+  line-height: 1.42;
+  color: var(--whelm-bg);
+}
+
+.fwDetail p {
+  margin: 0;
+  text-wrap: pretty;
+}
+
+.fwLabel {
+  font-weight: 700;
+  font-variation-settings: 'CTGR' 100, 'wdth' 100;
+}
+
+/* Phase bar: 5 cells under the columns, matching pill colors. The
+   wrapper provides a thin orchid rule above (matching the Figma
+   horizontal line). */
+.fwPhaseBarWrap {
+  position: relative;
+  padding-top: clamp(8px, 1vh, 14px);
+}
+
+.fwPhaseBarWrap::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--whelm-orchid);
+  opacity: 0.6;
+}
+
+.fwPhaseBar {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: clamp(2px, 0.3vw, 6px);
+  border: 1px solid var(--whelm-bg);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.fwPhaseCell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: clamp(46px, 4.8vh, 68px);
+  font-family: var(--whelm-display-font);
+  font-size: clamp(18px, 1.7vw, 32px);
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -0.018em;
+  text-align: center;
+  /* bg + color set inline per-step */
+}
+
+/* Narrow viewports — stack columns. Phase bar wraps into a 2×3 grid. */
+@media (max-width: 1100px) {
+  .fwInner {
+    grid-template-rows: auto auto auto;
+    overflow-y: auto;
+  }
+  .fwGrid {
+    grid-template-columns: 1fr;
+    gap: clamp(20px, 3vh, 36px);
+  }
+  .fwPhaseBar {
+    grid-template-columns: repeat(5, 1fr);
+    font-size: clamp(13px, 1.6vw, 18px);
+  }
+}
+
+@media (max-width: 700px) {
+  .fwPill { font-size: clamp(22px, 5.4vw, 32px); }
+  .fwPhaseBar { grid-template-columns: 1fr 1fr; }
+  .fwPhaseCell { height: 44px; font-size: 16px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fwCol,
+  .fwPill,
+  .fwPhaseCell {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .fwPhaseBar { transform: none !important; }
+}
+
+/* =====================================================================
+   THE EXPERIENCE — Section 9a
+   Two POC cards. Each has a framed media area (placeholder for now),
+   a name, a description, and a CTA opening the live prototype.
+   ===================================================================== */
+
+.expSticky {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-rows: auto auto 1fr;
+  gap: clamp(20px, 3vh, 36px);
+  padding: clamp(40px, 5vh, 72px) var(--page-margin);
+  max-width: 1280px;
+  margin-inline: auto;
+}
+
+.expSticky > .audienceEyebrow,
+.expSticky > .audienceIntroHeading {
+  max-width: 920px;
+  width: 100%;
+}
+
+.expGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: clamp(24px, 3vw, 56px);
+  align-items: start;
+}
+
+.expCard {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(10px, 1.4vh, 18px);
+}
+
+.expFrame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  border-radius: 14px;
+  background: rgba(189, 183, 233, 0.06);
+  border: 1px dashed rgba(189, 183, 233, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  margin-bottom: clamp(8px, 1.2vh, 14px);
+}
+
+.expFramePlaceholder {
+  font-family: var(--whelm-editorial-font);
+  font-style: italic;
+  font-size: clamp(15px, 1.2vw, 18px);
+  color: var(--whelm-mauve);
+  opacity: 0.7;
+  letter-spacing: 0.02em;
+}
+
+.expEyebrow {
+  font-family: var(--whelm-body-font);
+  font-size: var(--t-eyebrow);
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--whelm-mauve);
+  opacity: 0.85;
+  margin: 0;
+}
+
+.expTitle {
+  font-family: var(--whelm-display-font);
+  font-size: clamp(28px, 3vw, 44px);
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: var(--whelm-cream);
+  margin: 0;
+}
+
+.expBody {
+  font-family: var(--whelm-body-font);
+  font-size: clamp(15px, 1.2vw, 19px);
+  line-height: 1.55;
+  color: var(--whelm-cream);
+  opacity: 0.9;
+  margin: 0;
+  max-width: 40ch;
+  text-wrap: pretty;
+}
+
+.expLink {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.4em;
+  font-family: var(--whelm-editorial-font);
+  font-style: italic;
+  font-size: clamp(17px, 1.4vw, 22px);
+  color: var(--whelm-cream);
+  text-decoration: underline;
+  text-decoration-color: var(--whelm-mauve);
+  text-underline-offset: 0.18em;
+  margin-top: clamp(4px, 0.8vh, 10px);
+  transition: color var(--m-medium) var(--m-out),
+              text-decoration-color var(--m-medium) var(--m-out);
+}
+
+@media (hover: hover) {
+  .expLink:hover {
+    color: var(--whelm-mauve);
+    text-decoration-color: var(--whelm-cream);
+  }
+}
+
+.expLink:focus-visible {
+  outline: 2px solid var(--whelm-mauve);
+  outline-offset: 4px;
+  border-radius: 2px;
+}
+
+.expLinkArrow {
+  font-family: var(--whelm-body-font);
+  font-style: normal;
+}
+
+@media (max-width: 900px) {
+  .expGrid { grid-template-columns: 1fr; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .expCard { opacity: 1 !important; transform: none !important; }
+}
+
+/* =====================================================================
+   THE ROOT — Section 9b (Figma 255:677)
+   Cream "page" with a dark-inset middle row in the 2×4 grid. Top
+   row = cream cards (dark text). Middle row = inverse cards (dark
+   bg, cream text). The grid splits the eight modalities into two
+   registers without using a heading hierarchy.
+   ===================================================================== */
+
+.rtSticky {
+  background: var(--whelm-bg-cream);
+  display: block !important;
+  padding: 0 !important;
+  color: var(--whelm-bg);
+}
+
+.rtInner {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  gap: clamp(20px, 3vh, 36px);
+  padding: clamp(32px, 4.5vh, 64px) clamp(40px, 5vw, 96px);
+  max-width: 1840px;
+  margin-inline: auto;
+  overflow-y: auto;
+}
+
+.rtHeader {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(8px, 1vh, 16px);
+}
+
+.rtEyebrow {
+  font-family: var(--whelm-body-font);
+  font-size: var(--t-eyebrow);
+  font-weight: 600;
+  line-height: var(--lh-tight);
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--whelm-bg);
+  margin: 0;
+}
+
+.rtHeading {
+  --reveal: 100%;
+  font-family: var(--whelm-display-font);
+  font-size: clamp(40px, 5vw, 72px);
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+  color: var(--whelm-bg);
+  margin: 0;
+  max-width: 18ch;
+}
+
+.rtHeadingClip {
+  display: inline-block;
+  padding-right: 0.18em;
+  clip-path: inset(-0.2em var(--reveal) -0.55em 0);
+  will-change: clip-path;
+}
+
+.rtGrid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  /* Two equal rows — top row cream, middle row inverse. */
+  grid-auto-rows: 1fr;
+  gap: 0;
+  border: 1px solid var(--whelm-bg);
+  /* Slim hairline dividers between cells. */
+  background: var(--whelm-bg);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.rtCard {
+  background: var(--whelm-bg-cream);
+  color: var(--whelm-bg);
+  padding: clamp(20px, 2vw, 36px) clamp(22px, 2.2vw, 40px);
+  display: flex;
+  flex-direction: column;
+  gap: clamp(10px, 1.2vh, 16px);
+}
+
+.rtCard[data-inverse='true'] {
+  background: var(--whelm-bg);
+  color: var(--whelm-bg-cream);
+}
+
+.rtName {
+  font-family: var(--whelm-display-font);
+  font-size: clamp(18px, 1.4vw, 24px);
+  font-weight: 400;
+  line-height: 1.15;
+  letter-spacing: -0.012em;
+  color: inherit;
+  margin: 0;
+  text-wrap: pretty;
+}
+
+.rtNote {
+  font-family: var(--whelm-body-font);
+  font-size: clamp(13px, 1vw, 16px);
+  line-height: 1.5;
+  color: inherit;
+  opacity: 0.85;
+  margin: 0;
+  text-wrap: pretty;
+}
+
+.rtDisclaim {
+  font-family: var(--whelm-editorial-font);
+  font-style: italic;
+  font-size: clamp(14px, 1.1vw, 18px);
+  line-height: 1.55;
+  color: var(--whelm-bg);
+  opacity: 0.78;
+  margin: 0;
+  max-width: 56ch;
+  text-wrap: pretty;
+}
+
+@media (max-width: 1100px) {
+  .rtGrid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 700px) {
+  .rtGrid { grid-template-columns: 1fr; }
+  .rtHeading { font-size: clamp(34px, 8vw, 48px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rtHeading { --reveal: 0% !important; }
+  .rtCard {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+/* =====================================================================
+   WHAT'S NEXT — Section 10
+   Vertical timeline of milestones.
+   ===================================================================== */
+
+.nxSticky {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-rows: auto auto 1fr;
+  gap: clamp(20px, 3vh, 36px);
+  padding: clamp(40px, 5vh, 72px) var(--page-margin);
+  max-width: 1080px;
+  margin-inline: auto;
+  overflow-y: auto;
+}
+
+.nxTimeline {
+  list-style: none;
+  margin: 0;
+  padding: 0 0 0 clamp(24px, 3vw, 40px);
+  display: flex;
+  flex-direction: column;
+  gap: clamp(20px, 3vh, 36px);
+  position: relative;
+  border-left: 1px solid rgba(189, 183, 233, 0.28);
+}
+
+.nxBeat {
+  position: relative;
+  padding-left: clamp(16px, 2vw, 24px);
+  display: grid;
+  grid-template-columns: 100px 1fr;
+  gap: clamp(12px, 1.6vw, 22px);
+  align-items: baseline;
+}
+
+.nxMarker {
+  position: absolute;
+  left: calc(-1 * clamp(24px, 3vw, 40px) - 6px);
+  top: 0.55em;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: var(--whelm-mauve);
+  box-shadow: 0 0 0 4px var(--whelm-bg);
+}
+
+.nxWhen {
+  font-family: var(--whelm-body-font);
+  font-size: var(--t-eyebrow);
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--whelm-mauve);
+  opacity: 0.85;
+  margin: 0;
+  padding-top: 0.36em;
+}
+
+.nxTitle {
+  font-family: var(--whelm-display-font);
+  font-size: clamp(22px, 2.2vw, 32px);
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -0.018em;
+  color: var(--whelm-cream);
+  margin: 0;
+  grid-column: 2;
+}
+
+.nxBody {
+  grid-column: 2;
+  font-family: var(--whelm-body-font);
+  font-size: clamp(15px, 1.15vw, 18px);
+  line-height: 1.55;
+  color: var(--whelm-cream);
+  opacity: 0.9;
+  margin: 4px 0 0 0;
+  max-width: 56ch;
+  text-wrap: pretty;
+}
+
+@media (max-width: 700px) {
+  .nxBeat {
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+  .nxTitle,
+  .nxBody { grid-column: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nxBeat { opacity: 1 !important; transform: none !important; }
+}
+
+/* =====================================================================
    REDUCED MOTION
    ===================================================================== */
 
@@ -1588,9 +2874,11 @@
   .gapPunchlineCursor {
     display: none;
   }
-  .gapArrow {
+  .gapScrollCue {
+    opacity: 0.62 !important;
+  }
+  .gapScrollCueArrow {
     animation: none;
-    opacity: 1 !important;
   }
   .tangleLabel,
   .tangleEndpointLabel {

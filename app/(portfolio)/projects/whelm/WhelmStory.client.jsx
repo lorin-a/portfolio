@@ -13,6 +13,12 @@ import WhelmTangle from './sections/WhelmTangle'
 import WhelmPortal from './sections/WhelmPortal'
 import WhelmReveal from './sections/WhelmReveal'
 import WhelmAudience from './sections/WhelmAudience'
+import WhelmManifesto from './sections/WhelmManifesto'
+import WhelmTypologies from './sections/WhelmTypologies'
+import WhelmFramework from './sections/WhelmFramework'
+import WhelmExperience from './sections/WhelmExperience'
+import WhelmResearch from './sections/WhelmResearch'
+import WhelmNextSteps from './sections/WhelmNextSteps'
 import { lockForwardScroll } from './lib/scrollLock'
 import { COPY } from './content'
 import { SECTIONS } from './data'
@@ -167,7 +173,13 @@ export default function WhelmStory() {
             </div>
           )
         }
+        if (s.id === 'manifesto') return <WhelmManifesto key={s.id} />
         if (s.id === 'audience') return <WhelmAudience key={s.id} />
+        if (s.id === 'typologies') return <WhelmTypologies key={s.id} />
+        if (s.id === 'framework') return <WhelmFramework key={s.id} />
+        if (s.id === 'experience') return <WhelmExperience key={s.id} />
+        if (s.id === 'research') return <WhelmResearch key={s.id} />
+        if (s.id === 'next') return <WhelmNextSteps key={s.id} />
         return (
           <section key={s.id} id={s.id} className={styles.editorialSection}>
             <div className={styles.editorialInner}>

@@ -113,12 +113,18 @@ export default function WhelmGap() {
             </span>
           </div>
 
-          <div data-gap-arrow="true" className={styles.gapArrow} aria-hidden="true">
-            <svg viewBox="0 0 20 24" fill="none" aria-hidden="true">
+          <div data-gap-arrow="true" className={styles.gapScrollCue} aria-hidden="true">
+            <span className={styles.gapScrollCueLabel}>Keep scrolling</span>
+            <svg
+              className={styles.gapScrollCueArrow}
+              viewBox="0 0 16 20"
+              fill="none"
+              aria-hidden="true"
+            >
               <path
-                d="M10 2v18M5 14l5 6 5-6"
+                d="M8 2v14M3 12l5 5 5-5"
                 stroke="currentColor"
-                strokeWidth="2"
+                strokeWidth="1.4"
                 strokeLinecap="round"
                 strokeLinejoin="round"
               />
