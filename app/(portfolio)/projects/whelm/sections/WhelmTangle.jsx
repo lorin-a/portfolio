@@ -11,30 +11,32 @@ import styles from '../whelm.module.css'
 
 /* Section 2.4 — The Tangle. "Overwhelm is a tangle."
 
-   Lorin's new hand-drawn tangle (2026-05-13) is a single continuous
-   cream thread with mauve nodules at the crossings and cream word
-   labels scattered along the line. Animation:
+   Lorin's hand-drawn tangle (NewTangle-5-13.svg) is a single continuous
+   white-filled thread that loops between two poles: "Needs" on the left,
+   "Expectations" on the right. Six mauve dots mark the crossings; six
+   pill labels (Identity / Social Roles, Rest / Productivity, etc.) name
+   what gets tangled together.
 
-     1. Claim wipes in (text first per project convention).
-     2. The thread draws on.
-     3. As the drawing tip reaches each marker, dots and labels fade
-        in spatially-timed — so each item appears as if the pencil
-        reached it, not on a parallel stagger.
+   Animation sequence (2026-05-14):
 
-   SVG palette (from public/brand/NewTangle-5-13.svg):
-     - fill="#1F0536" — bg rect (stripped)
-     - stroke="#F3EFF7" — the thread (cream)
-     - fill="#BDB7E9" — mauve crossing nodules
-     - fill="#F3EFF7" — cream word labels */
+     1. Claim wipes in.
+     2. "Needs" + "Expectations" frame labels fade in together —
+        establishing the axis before the chaos.
+     3. The thread reveals left-to-right via an SVG clipPath sweep;
+        dots, pills, and inner pill labels pop in spatially-timed by
+        their x position so each appears as the sweep arrives.
+
+   SVG structure (15 paths + 18 circles + 6 rects):
+     - path[fill="white"]: the thread (one big filled shape)
+     - 18 circle: the 6 dots (3 stacked circles each — base, gradient,
+       outline — at 6 unique positions)
+     - 6 rect[fill="#1F0536"]: pill backgrounds for the labeled crossings
+     - 7 path[fill="#F3EFF7"]: cream text — 6 inside pills, 1 standalone
+       ("Needs", leftmost)
+     - 7 path[fill="#BDB7E9"]: mauve elements — 1 standalone label
+       ("Expectations", rightmost), 6 small decorations near the dots */
 
 const TANGLE_SRC = '/brand/NewTangle-5-13.svg'
-
-/* The new NewTangle-5-13.svg has no full-canvas bg rect (page bg comes
-   from CSS). Don't strip anything — the six rect elements that DO exist
-   are pill-shape label backgrounds, not artifacts. The one rect with
-   fill="#1F0536" is the "Self Expression / Self Doubt" pill; the other
-   five are exported without a fill and need one applied at runtime so
-   the thread doesn't show through. */
 
 export default function WhelmTangle() {
   const { hostRef: svgHostRef, markup: svgMarkup } = useInlineSvg(TANGLE_SRC, {
@@ -50,160 +52,139 @@ export default function WhelmTangle() {
       const svgEl = host.querySelector('svg')
       if (!svgEl) return
 
-      const creamStroked = Array.from(
-        svgEl.querySelectorAll('path[stroke="#F3EFF7"]'),
-      )
-      const creamFills = Array.from(
-        svgEl.querySelectorAll('path[fill="#F3EFF7"]'),
-      )
-      const mauveFills = Array.from(
-        svgEl.querySelectorAll('path[fill="#BDB7E9"]'),
-      )
-      /* The six label-background pills. Force-fill them with the bg
-         color so the thread doesn't show through, regardless of what
-         the export gave each rect. */
+      // Collect categorised elements. All <rect> elements in the SVG
+      // are pill backgrounds — most are exported without a fill
+      // attribute and get force-filled below.
+      const thread = svgEl.querySelector('path[fill="white"]')
       const pills = Array.from(svgEl.querySelectorAll('rect'))
-      pills.forEach(r => r.setAttribute('fill', '#1F0536'))
+      const circles = Array.from(svgEl.querySelectorAll('circle'))
+      const creamFills = Array.from(svgEl.querySelectorAll('path[fill="#F3EFF7"]'))
+      const mauveFills = Array.from(svgEl.querySelectorAll('path[fill="#BDB7E9"]'))
 
-      /* The longest stroked path is the thread. Anything else stroked
-         is decor (small tendrils, accents). */
-      const thread = creamStroked.length
-        ? creamStroked.reduce((a, b) =>
-            a.getTotalLength() >= b.getTotalLength() ? a : b,
-          )
-        : null
-      const decor = creamStroked.filter(p => p !== thread)
-
-      /* Stacking order: thread (bottom) → pills → mauve dots →
-         cream label text (top). Reorder via appendChild — last
-         appended renders on top. */
-      const reorder = el => el && svgEl.appendChild(el)
-      pills.forEach(reorder)
-      mauveFills.forEach(reorder)
-      creamFills.forEach(reorder)
-
-      // Initial state — thread invisible (dashoffset = length), all
-      // other elements hidden.
-      if (thread) {
-        const len = thread.getTotalLength()
-        thread.style.strokeDasharray = `${len}`
-        thread.style.strokeDashoffset = `${len}`
-      }
-      gsap.set([...decor, ...creamFills, ...mauveFills, ...pills], { autoAlpha: 0 })
-
-      host.style.visibility = 'visible'
-
-      if (prefersReducedMotion()) {
-        if (thread) thread.style.strokeDashoffset = '0'
-        gsap.set([...decor, ...creamFills, ...mauveFills, ...pills], { autoAlpha: 1 })
-        snapClaim(root)
-        return
-      }
-
-      /* Sample the thread at N points so we can time each marker's
-         fade-in by its closest point along the path's progress. */
-      const sampleThread = (path, samples = 240) => {
-        if (!path) return []
-        const total = path.getTotalLength()
-        const pts = []
-        for (let i = 0; i <= samples; i++) {
-          const p = path.getPointAtLength((i / samples) * total)
-          pts.push({ x: p.x, y: p.y, t: i / samples })
-        }
-        return pts
-      }
-      const closestT = (samples, cx, cy) => {
-        let bestT = 0
-        let bestD = Infinity
-        for (const p of samples) {
-          const d = (p.x - cx) ** 2 + (p.y - cy) ** 2
-          if (d < bestD) {
-            bestD = d
-            bestT = p.t
-          }
-        }
-        return bestT
-      }
+      // A label is "framing" (Needs / Expectations) if its centre sits
+      // outside every pill rect. Inside-a-pill = inner pill label.
+      // The mauve paths inside pills are the second half of each label
+      // (e.g. "/ Social Roles") — animated together with the cream
+      // first-word so the full phrase reads as one unit.
       const centerOf = el => {
         const b = el.getBBox()
         return { cx: b.x + b.width / 2, cy: b.y + b.height / 2 }
       }
-
-      const samples = sampleThread(thread)
-
-      // Detect if the path's natural direction reads right-to-left so
-      // the visual draw motion (and label timing) reverses to match.
-      const reversed =
-        samples.length > 0 &&
-        samples[0].x > samples[samples.length - 1].x
-
-      if (thread && reversed) {
-        const len = thread.getTotalLength()
-        thread.style.strokeDashoffset = `-${len}`
-      }
-
-      const drawDuration = 4.4 // one continuous pass over the whole thread
-      const claimEnd = revealClaim(tl, root)
-      const drawStart = claimEnd + 0.4
-
-      // Thread draws on.
-      if (thread) {
-        const len = thread.getTotalLength()
-        tl.fromTo(
-          thread,
-          { strokeDashoffset: reversed ? -len : len },
-          { strokeDashoffset: 0, duration: drawDuration, ease: 'power1.inOut' },
-          drawStart,
+      const pillBoxes = pills.map(p => p.getBBox())
+      const isInsideAnyPill = el => {
+        const { cx, cy } = centerOf(el)
+        return pillBoxes.some(
+          b => cx >= b.x && cx <= b.x + b.width && cy >= b.y && cy <= b.y + b.height,
         )
       }
 
-      // Helper — fade a node in at its position along the draw timeline.
-      const timeAtPoint = t =>
-        drawStart + (reversed ? 1 - t : t) * drawDuration
+      const allLabels = [...creamFills, ...mauveFills]
+      const frameLabels = allLabels.filter(el => !isInsideAnyPill(el))
+      const innerLabels = allLabels.filter(isInsideAnyPill)
 
-      // Decor tendrils — small accents, fade as the tip reaches them.
-      decor.forEach(el => {
-        const { cx, cy } = centerOf(el)
-        const t = closestT(samples, cx, cy)
+      // Force-fill the pill rects so the thread doesn't show through.
+      pills.forEach(r => r.setAttribute('fill', '#1F0536'))
+
+      // Restacking — thread (bottom) → pills → circles (dots) →
+      // inner labels → frame labels (top). Last appended renders on
+      // top in SVG.
+      const append = el => el && svgEl.appendChild(el)
+      append(thread)
+      pills.forEach(append)
+      circles.forEach(append)
+      innerLabels.forEach(append)
+      frameLabels.forEach(append)
+
+      // Spatial timing extent — left edge to right edge of all dots
+      // and pills, so the sequential reveal traces left → right.
+      const xs = [...circles.map(c => parseFloat(c.getAttribute('cx'))),
+                  ...pills.map(p => centerOf(p).cx)]
+      const minX = Math.min(...xs)
+      const maxX = Math.max(...xs)
+      const xRange = Math.max(1, maxX - minX)
+
+      // Reveal/hide initial state — claim & frame labels handled
+      // explicitly; everything else hidden until Beat 3.
+      gsap.set(frameLabels, { autoAlpha: 0, y: 8 })
+      gsap.set(thread, { autoAlpha: 0 })
+      gsap.set([...circles, ...pills, ...innerLabels], { autoAlpha: 0, y: 8 })
+
+      host.style.visibility = 'visible'
+
+      if (prefersReducedMotion()) {
+        gsap.set(
+          [...frameLabels, thread, ...circles, ...pills, ...innerLabels],
+          { autoAlpha: 1, y: 0 },
+        )
+        snapClaim(root)
+        return
+      }
+
+      // Build the timeline against an internal "tangle" label so the
+      // claim sub-timeline (which uses absolute positions starting at
+      // 0) doesn't collide with our beat positioning.
+      revealClaim(tl, root, { start: 0 })
+
+      // Anchor everything after claim with a label, then chain via
+      // relative "+=" offsets — empirically more reliable than passing
+      // absolute numeric positions when multiple tweens target nested
+      // SVG elements.
+      tl.addLabel('framesIn', '+=0.3')
+
+      // Beat 2 — Needs + Expectations frame labels reveal together.
+      tl.to(
+        frameLabels,
+        { autoAlpha: 1, y: 0, duration: 0.7, ease: 'power2.out' },
+        'framesIn',
+      )
+
+      tl.addLabel('sweep', 'framesIn+=1.0')
+
+      // Beat 3 — thread fades in across the full sweep window; dots,
+      // pills, and inner labels appear in left-to-right order via
+      // per-element labels offset from `sweep`.
+      const sweepDuration = 3.0
+      const offsetAt = x => `sweep+=${(((x - minX) / xRange) * sweepDuration).toFixed(3)}`
+
+      tl.to(
+        thread,
+        { autoAlpha: 1, duration: sweepDuration, ease: 'power1.inOut' },
+        'sweep',
+      )
+
+      // Group circles by (cx, cy) — 3 stacked circles per dot.
+      const circleByPos = new Map()
+      circles.forEach(c => {
+        const key = `${c.getAttribute('cx')},${c.getAttribute('cy')}`
+        if (!circleByPos.has(key)) circleByPos.set(key, [])
+        circleByPos.get(key).push(c)
+      })
+      circleByPos.forEach(group => {
+        const cx = parseFloat(group[0].getAttribute('cx'))
         tl.to(
-          el,
-          { autoAlpha: 1, duration: 0.5, ease: 'power2.out' },
-          timeAtPoint(t),
+          group,
+          { autoAlpha: 1, y: 0, duration: 0.5, ease: 'back.out(1.6)' },
+          offsetAt(cx),
         )
       })
 
-      // Mauve nodules — back.out so each pops into place lightly.
-      mauveFills.forEach(el => {
-        const { cx, cy } = centerOf(el)
-        const t = closestT(samples, cx, cy)
-        tl.to(
-          el,
-          { autoAlpha: 1, duration: 0.45, ease: 'back.out(1.6)' },
-          timeAtPoint(t),
-        )
-      })
-
-      // Pills + their cream word labels — fade together, spatially-
-      // timed by the pill's center along the thread. The pill arrives
-      // a hair before its label so the badge "lands" then the word
-      // settles inside it.
+      // Pills + their inner labels — pill lands a hair before its
+      // label so the badge "arrives" then the word settles inside.
       pills.forEach(pill => {
-        const { cx, cy } = centerOf(pill)
-        const t = closestT(samples, cx, cy)
+        const { cx } = centerOf(pill)
         tl.to(
           pill,
-          { autoAlpha: 1, duration: 0.55, ease: 'power2.out' },
-          timeAtPoint(t),
+          { autoAlpha: 1, y: 0, duration: 0.5, ease: 'power2.out' },
+          offsetAt(cx),
         )
       })
-
-      creamFills.forEach(el => {
-        const { cx, cy } = centerOf(el)
-        const t = closestT(samples, cx, cy)
+      innerLabels.forEach(el => {
+        const { cx } = centerOf(el)
+        const offset = ((cx - minX) / xRange) * sweepDuration + 0.12
         tl.to(
           el,
-          { autoAlpha: 1, duration: 0.55, ease: 'power2.out' },
-          timeAtPoint(t) + 0.12,
+          { autoAlpha: 1, y: 0, duration: 0.55, ease: 'power2.out' },
+          `sweep+=${offset.toFixed(3)}`,
         )
       })
     },

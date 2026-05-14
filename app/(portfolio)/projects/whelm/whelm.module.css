@@ -710,7 +710,7 @@
     1fr
     minmax(0, 460px)
     clamp(40px, 5vw, 96px)
-    minmax(0, 460px)
+    minmax(0, 560px)
     1fr;
   grid-template-rows: 1fr;
   align-items: center;
@@ -1290,6 +1290,53 @@
   white-space: nowrap;
   transform: translate(-50%, -50%);
   pointer-events: none;
+}
+
+/* Signal rings diagram (2026-05-14 rebuild). Words sit on circular
+   arcs via SVG textPath. Font sizes are in viewBox user units (800-
+   unit canvas). Body font, regular weight, not italic. */
+/* Every word in the signal diagram uses the same size and weight, so
+   the inventory reads as one even category — no implied hierarchy
+   between top/bottom or outer/inner words. */
+.signalOuterWord,
+.signalOuterWordSmall,
+.signalInnerWord,
+.signalInnerWordSmall {
+  font-family: var(--whelm-body-font);
+  font-size: 26px;
+  font-style: normal;
+  font-weight: 400;
+  letter-spacing: 0.005em;
+  fill: var(--whelm-cream);
+}
+
+/* Portal stair labels — body font, mid-size. Fill is overridden per
+   step inline so each step uses an appropriate light/dark colour
+   against its background. */
+.portalStepText {
+  font-family: var(--whelm-body-font);
+  font-size: 24px;
+  font-weight: 400;
+  letter-spacing: 0.005em;
+}
+
+/* "Self" inside the portal doorway — larger, the destination label. */
+.portalSelfText {
+  font-family: var(--whelm-editorial-font);
+  font-size: 56px;
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -0.005em;
+  fill: var(--whelm-cream);
+}
+
+.signalCoreWord {
+  font-family: var(--whelm-body-font);
+  font-size: 28px;
+  font-style: normal;
+  font-weight: 500;
+  letter-spacing: 0em;
+  fill: var(--whelm-bg);
 }
 
 /* Narrow viewports — collapse to stacked column inside .lensSplit.
@@ -2468,6 +2515,368 @@
     transform: none !important;
   }
   .fwPhaseBar { transform: none !important; }
+}
+
+/* =====================================================================
+   THE FRAMEWORK V2 — cinematic rebuild (2026-05-14)
+   Cream stage shared by all framework sub-sections. Each sub-section
+   composes its own inner layout; the sticky frame is uniform so the
+   reader perceives a single continuous spread across 7 frames.
+   ===================================================================== */
+
+.fwV2Sticky {
+  background: var(--whelm-bg-cream);
+  display: block !important;
+  padding: 0 !important;
+  color: var(--whelm-bg);
+}
+
+/* Shared inner padding for all framework sub-sections. */
+.fwV2ClaimInner,
+.fwV2PhaseInner,
+.fwV2ResolvedInner {
+  width: 100%;
+  height: 100%;
+  padding: clamp(48px, 6vh, 96px) clamp(40px, 5vw, 120px);
+  max-width: 1640px;
+  margin-inline: auto;
+  box-sizing: border-box;
+}
+
+/* ── Claim (opening + closing share the typographic system) ─────── */
+
+.fwV2ClaimInner,
+.fwV2ResolvedInner {
+  display: grid;
+  align-content: center;
+  justify-items: start;
+  gap: clamp(24px, 4vh, 56px);
+}
+
+.fwV2Eyebrow {
+  font-family: var(--whelm-body-font);
+  font-size: var(--t-eyebrow);
+  font-weight: 600;
+  line-height: var(--lh-tight);
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--whelm-bg);
+  margin: 0;
+}
+
+/* LensClaim overrides for the framework's cream stage — the default
+   claim styles are tuned for the dark purple bg. The wrapper is full
+   width so the body can breathe; only the heading is width-constrained. */
+.fwV2Claim,
+.fwV2PhaseClaim {
+  width: 100%;
+}
+
+.fwV2Claim h2,
+.fwV2PhaseClaim h2 {
+  color: var(--whelm-bg);
+  max-width: 22ch;
+}
+
+.fwV2Claim p[data-claim-body],
+.fwV2PhaseClaim p[data-claim-body] {
+  color: var(--whelm-bg);
+  max-width: 56ch;
+}
+
+.fwV2Claim em,
+.fwV2PhaseClaim em {
+  color: var(--whelm-orchid);
+}
+
+/* Centre-stage phase claim — heading + body re-anchor to the centre
+   so the editorial moment matches the pill above it. */
+.fwV2PhaseClaim h2,
+.fwV2PhaseClaim p[data-claim-body] {
+  margin-inline: auto;
+  text-align: center;
+}
+
+.fwV2PhaseClaim h2 {
+  font-size: clamp(28px, 3vw, 52px);
+  margin-bottom: clamp(16px, 2vh, 28px);
+}
+
+/* ── Phase frame (5 of these, one per phase) ────────────────────── */
+
+.fwV2PhaseInner {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  gap: clamp(20px, 3vh, 36px);
+}
+
+.fwV2PhaseHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.fwV2PhaseIndex {
+  font-family: var(--whelm-body-font);
+  font-size: var(--t-eyebrow);
+  font-weight: 600;
+  line-height: var(--lh-tight);
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--whelm-plum);
+}
+
+.fwV2PhaseStage {
+  display: grid;
+  grid-template-rows: auto auto auto 1fr auto;
+  gap: clamp(14px, 2vh, 24px);
+  align-content: start;
+  max-width: 980px;
+  margin-inline: auto;
+  width: 100%;
+  text-align: center;
+}
+
+.fwV2PillCenter {
+  justify-self: center;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(14px, 1.8vh, 22px) clamp(36px, 4vw, 72px);
+  border-radius: 999px;
+  border: 2px solid currentColor;
+  font-family: var(--whelm-display-font);
+  font-size: clamp(36px, 4.2vw, 64px);
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -0.018em;
+  /* bg + color set inline per-step */
+}
+
+.fwV2Title {
+  font-family: var(--whelm-display-font);
+  font-size: clamp(32px, 3.4vw, 56px);
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: -0.018em;
+  color: var(--whelm-bg);
+  margin: 0;
+}
+
+.fwV2Rubric {
+  font-family: var(--whelm-editorial-font);
+  font-size: clamp(18px, 1.5vw, 26px);
+  font-style: italic;
+  line-height: 1.35;
+  color: var(--whelm-plum);
+  margin: 0;
+  text-wrap: pretty;
+}
+
+/* Body slot — purpose and activity occupy the same grid cell so they
+   can crossfade in place. Min-height keeps the slot from collapsing
+   when both are mid-transition. Nested inside the LensClaim body
+   <p>, so all the elements here are inline (<span>) by tag but
+   forced to block-level via display rules. */
+.fwV2BodySlot {
+  display: grid;
+  position: relative;
+  min-height: clamp(120px, 18vh, 200px);
+  align-items: start;
+  justify-items: center;
+  width: 100%;
+  margin-inline: auto;
+}
+
+.fwV2Purpose,
+.fwV2Activity {
+  display: block;
+  grid-row: 1;
+  grid-column: 1;
+  max-width: 56ch;
+  margin: 0 auto;
+  font-family: var(--whelm-body-font);
+  font-size: clamp(17px, 1.3vw, 22px);
+  line-height: 1.5;
+  color: var(--whelm-bg);
+  text-wrap: pretty;
+  text-align: center;
+}
+
+.fwV2Outcome {
+  max-width: 56ch;
+  margin: 0 auto;
+  font-family: var(--whelm-body-font);
+  font-size: clamp(15px, 1.1vw, 19px);
+  line-height: 1.45;
+  color: var(--whelm-plum);
+  text-wrap: pretty;
+}
+
+.fwV2Label {
+  font-family: var(--whelm-body-font);
+  font-weight: 700;
+  font-variation-settings: 'CTGR' 100, 'wdth' 100;
+  color: var(--whelm-bg);
+  letter-spacing: 0.02em;
+}
+
+/* ── Persistent row foot (every phase + resolved) ───────────────── */
+
+.fwV2RowFoot {
+  width: 100%;
+  max-width: 1280px;
+  margin-inline: auto;
+}
+
+.fwV2Row {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: clamp(8px, 1vw, 14px);
+  align-items: center;
+}
+
+.fwV2RowCell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: clamp(40px, 4vh, 52px);
+  border-radius: 999px;
+  border: 1.5px solid var(--whelm-plum);
+  font-family: var(--whelm-display-font);
+  font-size: clamp(14px, 1.1vw, 18px);
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -0.012em;
+  color: var(--whelm-bg);
+  background: transparent;
+  transition: background 240ms ease, color 240ms ease, border-color 240ms ease;
+}
+
+.fwV2RowCell[data-state='active'] {
+  border-color: var(--whelm-bg);
+  border-width: 2px;
+  background: rgba(31, 5, 54, 0.04);
+}
+
+.fwV2RowCell[data-state='future'] {
+  border-color: rgba(73, 50, 93, 0.35);
+}
+
+.fwV2RowDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--whelm-plum);
+  opacity: 0.4;
+}
+
+/* ── Resolved frame (phase bar) ─────────────────────────────────── */
+
+.fwV2BarWrap {
+  width: 100%;
+  max-width: 1280px;
+  margin-top: clamp(8px, 1.2vh, 16px);
+}
+
+.fwV2Bar {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: clamp(2px, 0.3vw, 6px);
+  border: 1px solid var(--whelm-bg);
+  border-radius: 2px;
+  overflow: hidden;
+  transform-origin: 0% 50%;
+}
+
+.fwV2BarCell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: clamp(46px, 4.8vh, 68px);
+  font-family: var(--whelm-display-font);
+  font-size: clamp(18px, 1.7vw, 32px);
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -0.018em;
+  text-align: center;
+}
+
+/* Narrow viewports. The agenda nav wraps to multiple rows here,
+   eating extra space at the top — tighten everything inside the
+   sticky frame so it still composes within the visible region. */
+@media (max-width: 900px) {
+  /* WhelmAgendaNav wraps to up to 5 rows on narrow viewports
+     (~246px tall). The sticky stage sits behind it, so the inner
+     content needs top padding that clears the wrapped nav. */
+  .fwV2ClaimInner,
+  .fwV2PhaseInner,
+  .fwV2ResolvedInner {
+    padding: clamp(260px, 32vh, 300px) clamp(20px, 5vw, 40px)
+      clamp(20px, 3vh, 36px);
+  }
+  .fwV2PhaseInner {
+    gap: clamp(10px, 1.6vh, 18px);
+  }
+  .fwV2PhaseStage {
+    text-align: left;
+    gap: clamp(10px, 1.5vh, 18px);
+  }
+  .fwV2PillCenter {
+    justify-self: start;
+    font-size: clamp(26px, 7vw, 38px);
+    padding: clamp(8px, 1vh, 12px) clamp(22px, 5vw, 32px);
+  }
+  .fwV2PhaseClaim h2,
+  .fwV2PhaseClaim p[data-claim-body] {
+    text-align: left;
+    margin-inline: 0;
+  }
+  .fwV2PhaseClaim h2 {
+    font-size: clamp(22px, 5.5vw, 32px);
+    margin-bottom: clamp(8px, 1.4vh, 14px);
+  }
+  .fwV2BodySlot {
+    min-height: clamp(80px, 14vh, 140px);
+    justify-items: start;
+  }
+  .fwV2Purpose,
+  .fwV2Activity {
+    font-size: clamp(14px, 3.6vw, 17px);
+    line-height: 1.42;
+    text-align: left;
+    margin: 0;
+  }
+  .fwV2Outcome {
+    text-align: left;
+    margin: 0;
+    font-size: clamp(13px, 3.2vw, 15px);
+  }
+  .fwV2Row {
+    gap: 6px;
+  }
+  .fwV2RowCell {
+    font-size: 12px;
+    letter-spacing: 0.01em;
+    height: 36px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fwV2PillCenter,
+  .fwV2Title,
+  .fwV2Rubric,
+  .fwV2Purpose,
+  .fwV2Activity,
+  .fwV2Outcome,
+  .fwV2Bar {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  /* Purpose still hidden in reduced motion so Activity reads as the
+     "current" body (since both occupy the same grid slot). */
+  .fwV2Purpose { opacity: 0 !important; }
 }
 
 /* =====================================================================

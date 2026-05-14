@@ -6,6 +6,6 @@
 
 export const COPY = {
   hero: [
-    { position: 'below_center', kind: 'sub', html: '<em>Find Your Way to Feeling</em>' },
+    { position: 'below_center', kind: 'sub', html: '<em>A Ritual for Returning to Yourself</em>' },
   ],
 }
