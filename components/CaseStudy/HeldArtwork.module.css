@@ -1,65 +1,90 @@
-.held {
-  display: grid;
-  grid-template-columns: auto 1fr;
-  gap: var(--space-content-gap);
-  align-items: center;
-  margin: 0;
-  padding: var(--space-md);
-  border: 1px solid;
-  border-radius: var(--radius-lg);
-}
-
-.frame {
-  display: grid;
-  place-content: center;
-  width: clamp(72px, 9vw, 104px);
-  aspect-ratio: 3 / 4;
-  border: 1px dashed;
-  border-radius: var(--radius-sm);
-}
-
-.mark { font-size: 1.5rem; opacity: 0.5; }
-
-.caption { display: flex; flex-direction: column; gap: var(--space-xs); }
-
+/* Gallery wall-label — a cream "paper" plate that credits artwork shown
+   elsewhere. Reads as curatorial respect, not an empty placeholder. */
 .label {
   margin: 0;
+  max-width: 30rem;
+  padding: clamp(1.5rem, 3vw, 2.25rem);
+  border-radius: var(--radius-sm);
+  background: var(--color-cream, #fbf9f6);
+  color: #2c2c28;
+  border: 1px solid rgba(116, 98, 112, 0.18);
+  border-left: 3px solid var(--color-plum, #746270);
+  box-shadow: 0 18px 50px -28px rgba(44, 38, 44, 0.45);
+}
+
+.kicker {
+  display: flex;
+  align-items: center;
+  gap: 0.55em;
+  margin: 0 0 var(--space-sm);
+  font-family: var(--font-sans);
   font-size: var(--text-label);
   text-transform: uppercase;
-  letter-spacing: 0.1em;
-  opacity: 0.65;
-  font-variation-settings: var(--font-soft);
+  letter-spacing: 0.16em;
+  color: var(--color-plum, #746270);
 }
 
-.body {
+.mark { font-size: 0.9em; line-height: 1; }
+
+.title {
   margin: 0;
+  font-family: var(--font-serif);
+  font-size: clamp(1.75rem, 3.4vw, 2.5rem);
+  line-height: 1.05;
+}
+.title em { font-style: italic; }
+
+.artist {
+  margin: 0.35em 0 0;
+  font-family: var(--font-sans);
+  font-size: var(--text-body-large);
+  font-weight: 600;
+  color: #2c2c28;
+}
+
+.rule {
+  border: 0;
+  border-top: 1px solid rgba(116, 98, 112, 0.22);
+  margin: clamp(1rem, 2vw, 1.5rem) 0;
+}
+
+.where {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: var(--text-body-small);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-plum, #746270);
+  opacity: 0.85;
+}
+
+.note {
+  margin: var(--space-xs) 0 0;
+  font-family: var(--font-sans);
   font-size: var(--text-body);
   line-height: 1.6;
-  font-variation-settings: var(--font-soft);
+  color: #4a4a46;
 }
-
-.attribution {
-  margin: var(--space-xxs) 0 0;
-  font-size: var(--text-body-small);
-}
-
-.dot { margin: 0 0.5em; opacity: 0.45; }
 
 .link {
-  color: inherit;
-  text-decoration: underline;
-  text-underline-offset: 0.18em;
-  text-decoration-color: var(--color-plum, currentColor);
-  white-space: nowrap;
+  display: inline-block;
+  margin-top: var(--space-content-gap);
+  font-family: var(--font-sans);
+  font-size: var(--text-body-small);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--color-plum, #746270);
+  text-decoration: none;
+  border-bottom: 1px solid currentColor;
+  padding-bottom: 2px;
+  transition: opacity 200ms var(--ease-out, ease);
 }
-.link:hover { text-decoration-color: currentColor; }
+.link:hover { opacity: 0.65; }
 
-/* Tone */
-.dark { color: rgba(247, 247, 247, 0.9); border-color: rgba(247, 247, 247, 0.22); }
-.dark .frame { border-color: rgba(247, 247, 247, 0.3); }
-.light { color: var(--text-body); border-color: var(--border); }
-.light .frame { border-color: var(--border); }
+/* The cream plate works on both tones; tone only nudges the shadow weight. */
+.onDark { box-shadow: 0 22px 60px -26px rgba(0, 0, 0, 0.55); }
+.onLight { box-shadow: 0 16px 44px -30px rgba(44, 38, 44, 0.35); }
 
-@media (max-width: 560px) {
-  .held { grid-template-columns: 1fr; justify-items: start; }
+@media (prefers-reduced-motion: reduce) {
+  .link { transition: none; }
 }

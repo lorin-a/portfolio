@@ -11,6 +11,7 @@ import ScrollVideo from '@/components/ScrollVideo/ScrollVideo'
 import Credit from '@/components/CaseStudy/Credit'
 import RoleLedger from '@/components/CaseStudy/RoleLedger'
 import HeldArtwork from '@/components/CaseStudy/HeldArtwork'
+import CardCopyShowcase from '@/components/CaseStudy/CardCopyShowcase'
 import AnimatedElement from '@/components/AnimatedElement/AnimatedElement'
 import ProgressNav from '@/components/ProgressNav/ProgressNav'
 import AudioPlayer from './parts/AudioPlayer'
@@ -97,6 +98,26 @@ const dashboardClips = [
   { src: gsVid('gs-new-meditations'), label: 'Meditations Data' },
 ]
 
+/** Reflection-card writing (Lorin's copy), shown as type instead of as scans of
+ *  the artwork-bearing card faces. [VERIFY WORDING] — transcribed from deck
+ *  photos; confirm against the originals and add the rest of the deck. */
+const reflectionCardCopy = [
+  {
+    feeling: 'exhausted',
+    validation:
+      'You’re holding space for suffering while doing more work than one person should be expected to do. This exhaustion runs deep—it’s your whole being asking for rest. You deserve to honor that.',
+    cue:
+      'Tense your shoulders. Hold for five seconds. Then release. Feel the tension dissolve, like a leaf set free, floating down a river, out to sea, and beyond your reach.',
+  },
+  {
+    feeling: 'vulnerable',
+    validation:
+      'When your heart feels tender, it’s human to want to hide. Vulnerability is the language of being human, and embracing it gives you strength.',
+    cue:
+      'Cross your arms over your chest. Gently tap shoulder to shoulder. Left, right. Like butterfly wings in flight. Let the rhythm soothe.',
+  },
+]
+
 /** Pod audio resources */
 const audioTracks = [
   {
@@ -171,14 +192,17 @@ export default function GroundswellContent() {
 
       {/* ==================== 1. HERO ==================== */}
       <section id="hero" className={styles.chapterHero}>
-        <div className={styles.heroImageContainer}>
-          <img
-            src={gsImg('gs-hero', 1600)}
-            alt="Groundswell installation at UPMC Magee-Womens Hospital"
-            className={styles.heroImageFull}
-          />
-          <div className={styles.heroOverlay} />
-        </div>
+        {/* Art-free hero: a deep plum field with a soft glow rising from the
+            base — a "groundswell" of light, on-concept (water rising from the
+            earth) without reproducing the artwork. */}
+        <div
+          className={styles.heroImageContainer}
+          aria-hidden="true"
+          style={{
+            background:
+              'radial-gradient(120% 95% at 50% 122%, rgba(154, 142, 152, 0.6) 0%, rgba(116, 98, 112, 0) 56%), linear-gradient(180deg, #3c354a 0%, #4f4760 46%, #6a5d6e 100%)',
+          }}
+        />
         <div className={styles.heroContent}>
           <p className={styles.heroDescriptor}>A Design Ecology for Staff Well-Being</p>
           <h1 className={styles.heroTitleCream}>Groundswell</h1>
@@ -427,27 +451,7 @@ export default function GroundswellContent() {
           {/* Copywriting showcase — the card exercises (Lorin's writing) shown
               as type, in place of scans of the artwork-bearing card faces. */}
           <AnimatedElement>
-            <div
-              style={{
-                display: 'grid',
-                gap: 'var(--space-content-gap)',
-                width: 'min(100%, 760px)',
-                margin: '0 auto',
-                padding: 'var(--space-md)',
-                border: '1px dashed var(--border)',
-                borderRadius: 'var(--radius-lg)',
-                color: 'var(--text-body)',
-              }}
-            >
-              {/* [LORIN TO WRITE] — paste 2–3 of your actual card exercises here,
-                  verbatim (feeling · validation · somatic exercise). Using your
-                  exact card copy keeps this in your words. */}
-              <p style={{ margin: 0, fontStyle: 'italic', opacity: 0.7 }}>
-                [LORIN TO WRITE] — drop in 2–3 of your card exercises, verbatim
-                (feeling · validation · somatic cue), to let the copywriting carry
-                this section.
-              </p>
-            </div>
+            <CardCopyShowcase cards={reflectionCardCopy} />
           </AnimatedElement>
 
           <AnimatedElement>
