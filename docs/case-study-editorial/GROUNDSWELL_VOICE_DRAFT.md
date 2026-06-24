@@ -14,13 +14,16 @@ deleted (one-in, one-out).
 - No em dashes (use colon / period / comma / parentheses).
 - Curly quotes/apostrophes in prose.
 
-**Open factual items (do NOT invent — Lorin must supply):**
-1. **CARES course title** — the full name of Professor Kristin Hughes' co-design
-   course. Placeholder `[course title]` below.
-2. **The meditation/shadow-work teacher's name** — Lorin's #5 references "my
-   meditation and shadow-work teacher" who recorded the study meditations. The
-   meditation credit on the page is **Catherine Liggett**; confirm before naming
-   the teacher inline (do not assume).
+**Factual items — RESOLVED 2026-06-24:**
+1. Course title: **Designing with CARE: Co-Creating Solutions for Complex Care
+   Coordination in Oncology** (Lorin's earlier "CARES" was shorthand).
+2. The meditation/shadow-work teacher is **Catherine Liggett** (confirmed; also
+   the meditation credit on the page).
+
+**STATUS: WIRED into `components/Groundswell/GroundswellContent.js` on
+2026-06-24 (commit d274a02). This staging doc is now redundant with the page and
+can be deleted (one-in, one-out) once Lorin is happy with it in place. Case
+study remains gated (license hold).**
 
 ---
 
@@ -87,7 +90,7 @@ to return to for self-care.
 I led donor outreach and secured those assets and partnerships: the pod itself,
 the woodworking elements added to it, the sensor within it, the ceramic finger
 labyrinths, and the Schlage door locks. It was my meditation and shadow-work
-teacher who volunteered to co-edit, author, and record the meditations used in
+teacher, Catherine Liggett, who volunteered to co-edit, author, and record the meditations used in
 the study, which was a full-circle moment and a deeply generous offering. I
 drafted first-round copy for nearly all of the project, including the internal
 emails announcing it. I co-led the playtesting sessions, helped with the
