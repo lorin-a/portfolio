@@ -1,6 +1,10 @@
 # Allow all crawlers
 User-agent: *
 Allow: /
+# Privacy hold (2026-06-24): Groundswell routes reproduce licensed artwork
+# (Carolyn Gavin, "Blue Garden") and are sealed pending a compliant version.
+Disallow: /groundswell
+Disallow: /projects/groundswell
 
 # Sitemap location
 Sitemap: https://lorin.work/sitemap.xml

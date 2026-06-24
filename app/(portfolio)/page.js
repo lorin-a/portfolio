@@ -53,7 +53,11 @@ export default function Home() {
             { src: cloudImg(GS_IMAGES['gs-ctb-email'], 1200), type: 'image', alt: 'Groundswell care-through-books email in use' },
           ]}
           cardVariant="file"
-          href="/projects/groundswell"
+          // Privacy hold (2026-06-24): the /projects/groundswell case study is
+          // sealed (reproduces licensed "Blue Garden" artwork). Link removed so
+          // the flagship doesn't lead visitors to the auth wall. NOTE: the
+          // thumbnails above (gs-cards, gs-artwall, gs-opener) still reproduce
+          // the artwork — swap to documentary photos in the compliant pass.
         />
 
         <ProjectPreview
