@@ -286,7 +286,6 @@ export default function GroundswellContent() {
       <section style={{ background: 'var(--color-bg)', padding: 'clamp(72px, 12vh, 156px) var(--container-padding)' }}>
         <div style={{ width: 'min(100%, 680px)', margin: '0 auto' }}>
           <AnimatedElement>
-            <p className={styles.componentLabel}>The way in</p>
             <p style={{ fontFamily: 'var(--font-serif)', fontSize: 'clamp(1.3rem, 2.2vw, 1.7rem)', lineHeight: 1.45, color: 'var(--text-heading)', margin: '0 0 var(--space-md)' }}>
               I come from a long line of healers, educators, and innovators: people who carry the weight of the world, an optimism for the future, and the passion to create change that benefits others. That is why I went back to grad school for design, and why I took Professor Kristin Hughes&rsquo; co-design course, <em>Designing with CARE: Co-Creating Solutions for Complex Care Coordination in Oncology</em>. I knew that learning and practicing co-design with a real community would be life-changing, and it was fitting that the course topic and my group&rsquo;s assignment aligned so closely with my journey.
             </p>

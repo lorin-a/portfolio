@@ -69,7 +69,7 @@ export default function GroundswellPreview() {
             />
           )}
         </div>
-        <p className={styles.heroKicker}>Field notes · a design ecology for staff well-being</p>
+        <p className={styles.heroKicker}>A design ecology for staff well-being</p>
         <h1 className={styles.heroTitle}>Groundswell</h1>
         <p className={styles.heroTagline}>Making Space to Restore, Together</p>
         <div className={styles.scrollCue} aria-hidden="true">
@@ -107,7 +107,6 @@ export default function GroundswellPreview() {
       {/* ── THE WAY IN — long-form reading on a paper card (max contrast) ── */}
       <section className={styles.papered}>
         <article className={styles.paper}>
-          <p className={styles.paperKicker}>The way in</p>
           <p className={styles.paperLede}>
             I come from a long line of healers, educators, and innovators: people who carry the weight of the
             world, an optimism for the future, and the passion to create change that benefits others.
