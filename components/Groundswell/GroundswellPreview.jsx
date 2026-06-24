@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 import ShapeMark from '@/components/marks/ShapeMark'
+import { cloudImg, GS_IMAGES } from '@/lib/cloudinary'
 import styles from './GroundswellPreview.module.css'
 
 // The flower's gradient, lifted from the homepage mark: sage → peach → plum.
@@ -42,8 +43,6 @@ function useInViewOnce(threshold = 0.4) {
 
 export default function GroundswellPreview() {
   const [flowerRef, flowerIn] = useInViewOnce(0.45)
-  const [mounted, setMounted] = useState(false)
-  useEffect(() => setMounted(true), [])
 
   return (
     <div className={styles.page}>
@@ -57,21 +56,25 @@ export default function GroundswellPreview() {
         <a className={styles.topbarBack} href="/">All work</a>
       </header>
 
-      {/* ── HERO ── */}
+      {/* ── HERO — cinematic, imagery-led ── */}
       <section className={styles.hero}>
-        <div className={styles.heroFlowerStage}>
-          {mounted && (
-            <ShapeMark
-              animate
-              fillReveal
-              gradientColors={FLOWER_GRADIENT}
-              className={styles.heroFlower}
-            />
-          )}
+        <div className={styles.heroMedia}>
+          <img
+            src={cloudImg(GS_IMAGES['gs-hero'], 2000)}
+            alt="Groundswell installed in a corridor at UPMC Magee-Womens Hospital"
+            className={styles.heroImg}
+          />
+          <div className={styles.heroScrim} aria-hidden="true" />
         </div>
-        <p className={styles.heroKicker}>A design ecology for staff well-being</p>
-        <h1 className={styles.heroTitle}>Groundswell</h1>
-        <p className={styles.heroTagline}>Making Space to Restore, Together</p>
+        <div className={styles.heroContent}>
+          <p className={styles.heroKicker}>Oncology well-being · UPMC Magee-Womens Hospital</p>
+          <h1 className={styles.heroTitle}>Groundswell</h1>
+          <p className={styles.heroTagline}>Making Space to Restore, Together</p>
+          <p className={styles.heroOutcome}>
+            A grant-funded design ecology for the emotional reality of oncology care. Launched as a 12-month pilot.
+          </p>
+        </div>
+        <p className={styles.heroCredit}>Artwork: Carolyn Gavin</p>
         <div className={styles.scrollCue} aria-hidden="true">
           <span>Scroll</span>
           <span className={styles.scrollLine} />
