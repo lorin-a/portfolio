@@ -662,6 +662,9 @@ export default function GroundswellContent() {
                 <div className={styles.synthesisDimensionContext}>institutional constraints beyond individual control</div>
               </div>
             </div>
+            <p className={styles.stickyBodyLight}>
+              These four dimensions became the blueprint for what we built. We chose interventions so that, together, they would answer each one: the Community Art Wall for <strong>Recognition</strong>, the Restorative Pod for <strong>Environment</strong>, the Reflection Cards for <strong>Culture</strong>, and the Ceased to Breathe email for the <strong>systemic</strong>. <em>[LORIN TO CONFIRM these pairings &mdash; this is my read from each component&rsquo;s goal; correct any that map differently.]</em>
+            </p>
           </div>
         </div>
         <div className={styles.parallaxScroll}>
@@ -751,6 +754,9 @@ export default function GroundswellContent() {
             </p>
             <p className={styles.stickyBodyLight}>
               The project required constant adaptation. Early staff feedback shifted our language from &ldquo;grief&rdquo; to &ldquo;restoration,&rdquo; reframing the messaging. Halfway through production, hospital administration required lockable doors on the pod. Our solution provided engagement, privacy, and emotional safety without surveillance&mdash;turning a constraint into an asset.
+            </p>
+            <p className={styles.stickyBodyLight}>
+              The biggest shift happened between concept and production. The emotional outlet began as a digital &ldquo;Garden&rdquo;: an app where staff would speak a feeling and watch it bloom into a flower on a shared screen, with the patterns giving leadership anonymous insight. In production, that digital concept gave way to the physical Community Art Wall, where expression is tactile and human. <em>[LORIN TO WRITE: why physical over digital, the production realities or feedback that drove it, and whether the Garden&rsquo;s &ldquo;anonymous insight&rdquo; idea carried into your data platform or was set aside.]</em>
             </p>
             <div className={styles.makingTimelineGrid}>
               <div className={styles.makingTimelineRow}>
