@@ -7,10 +7,8 @@ import { cloudImg, cloudVideo, cloudAudio, GS_IMAGES, GS_VIDEOS, GS_AUDIO } from
 const gsImg = (key, w) => cloudImg(GS_IMAGES[key], w)
 const gsVid = (key) => cloudVideo(GS_VIDEOS[key])
 const gsAud = (key) => cloudAudio(GS_AUDIO[key])
+import CardCarousel from '@/components/CardCarousel/CardCarousel'
 import ScrollVideo from '@/components/ScrollVideo/ScrollVideo'
-import Credit from '@/components/CaseStudy/Credit'
-import RoleLedger from '@/components/CaseStudy/RoleLedger'
-import HeldArtwork from '@/components/CaseStudy/HeldArtwork'
 import AnimatedElement from '@/components/AnimatedElement/AnimatedElement'
 import ProgressNav from '@/components/ProgressNav/ProgressNav'
 import AudioPlayer from './parts/AudioPlayer'
@@ -92,8 +90,10 @@ const playtestingQuotes = [
 /** Dashboard screen recordings — displayed in Outcomes scroll column.
  * Public-safe alternates, all blurred to obscure unpublished study findings. */
 const dashboardClips = [
+  { src: gsVid('gs-intro-artwall'), label: 'Entry Screen' },
   { src: gsVid('gs-pod-data'), label: 'Pod Usage' },
   { src: gsVid('gs-display-view'), label: 'Display View' },
+  { src: gsVid('gs-overlay'), label: 'About Page' },
   { src: gsVid('gs-new-meditations'), label: 'Meditations Data' },
 ]
 
@@ -115,7 +115,10 @@ const audioTracks = [
 
 
 
-export default function GroundswellContent() {
+// ARCHIVE — full rich case study, preserved for restoration if Carolyn Gavin
+// grants portfolio permission for "Blue Garden." Reproduces the artwork, so it
+// lives behind the privacy gate (middleware.js) and is never linked.
+export default function GroundswellArchive() {
   const [currentSectionId, setCurrentSectionId] = useState('hero')
   const [scrollProgress, setScrollProgress] = useState(0)
   const [isMounted, setIsMounted] = useState(false)
@@ -219,34 +222,17 @@ export default function GroundswellContent() {
             <span className={styles.projectInfoValue}>Kristin Hughes, Elijah Benzon, Kelly McDowell, Robertus Sucahyo, Greg Baltus</span>
           </div>
           <div className={styles.projectInfoItem}>
-            <span className={styles.projectInfoLabel}>Feature</span>
+            <span className={styles.projectInfoLabel}>Live Site</span>
             <a
-              href="https://cfa.cmu.edu/magazine/groundswell-designing-systems-care-those-who-care"
+              href="/groundswell"
               target="_blank"
               rel="noopener noreferrer"
               className={styles.projectInfoLink}
             >
-              Read the CMU feature &rarr;
+              Visit Groundswell &rarr;
             </a>
           </div>
         </div>
-      </section>
-
-      {/* ==================== ROLE LEDGER — named authorship ==================== */}
-      <section
-        className={styles.sectionDark}
-        style={{ paddingTop: 'clamp(48px, 7vh, 72px)', paddingBottom: 'clamp(48px, 7vh, 72px)' }}
-      >
-        <RoleLedger
-          tone="dark"
-          mine={['Research', 'Co-Design', 'Copywriting', 'Project Coordination', 'Donor Outreach']}
-          collaborators={[
-            { who: 'Carolyn Gavin', what: 'Artwork — “Blue Garden,” the visual surface across the installation' },
-            { who: 'Catherine Liggett & Mark Staley', what: 'Guided meditations & poetry' },
-            { who: 'Greg Baltus', what: 'Fabrication & hardware assembly' },
-            { who: 'Elijah Benzon, Kelly McDowell, Robertus Sucahyo', what: 'Design, development & research' },
-          ]}
-        />
       </section>
 
       {/* ==================== 2. THE VISION ==================== */}
@@ -268,11 +254,7 @@ export default function GroundswellContent() {
         </div>
         <div className={styles.parallaxScroll}>
           <AnimatedElement>
-            <img
-              src={gsImg('gs-context-03', 1200)}
-              alt="Co-designing with Gynecologic Oncology staff at UPMC Magee-Womens Hospital"
-              className={styles.scrollImage}
-            />
+            <ScrollVideo src={gsVid('gs-walkthrough-video')} label="Installation Walkthrough" />
           </AnimatedElement>
         </div>
       </section>
@@ -315,14 +297,16 @@ export default function GroundswellContent() {
         </div>
         <div className={styles.parallaxScroll}>
           <AnimatedElement>
-            <HeldArtwork
-              tone="dark"
-              artist="Carolyn Gavin"
-              title="Blue Garden"
-              href="https://cfa.cmu.edu/magazine/groundswell-designing-systems-care-those-who-care"
-            >
-              The wall’s painted surface is Carolyn Gavin’s, licensed for the physical installation. It stays on the hospital floor rather than on this page. What’s documented here is the participation system beneath it.
-            </HeldArtwork>
+            <img src={gsImg('gs-artwall', 1200)} alt="Groundswell Community Art Wall" className={styles.scrollImage} />
+          </AnimatedElement>
+          <AnimatedElement>
+            <img src={gsImg('gs-artwall-detail-01', 1200)} alt="Art wall contributions from staff" className={styles.scrollImage} />
+          </AnimatedElement>
+          <AnimatedElement>
+            <img src={gsImg('gs-artwall-detail-02', 1200)} alt="Art wall community expressions" className={styles.scrollImage} />
+          </AnimatedElement>
+          <AnimatedElement>
+            <img src={gsImg('gs-artwall-detail-03', 1200)} alt="Art wall collective voice" className={styles.scrollImage} />
           </AnimatedElement>
         </div>
       </section>
@@ -331,7 +315,10 @@ export default function GroundswellContent() {
       <section id="pod" className={`${styles.parallaxSection} ${styles.parallaxReverse}`}>
         <div className={styles.parallaxScroll}>
           <AnimatedElement>
-            <img src={gsImg('gs-pod-detail-01', 1200)} alt="Pod interior with soft LED lighting and finger labyrinth" className={styles.scrollImage} />
+            <img src={gsImg('gs-pod', 1200)} alt="Groundswell Restorative Pod" className={styles.scrollImage} />
+          </AnimatedElement>
+          <AnimatedElement>
+            <img src={gsImg('gs-pod-detail-01', 1200)} alt="Pod interior with soft LED lighting" className={styles.scrollImage} />
           </AnimatedElement>
           <AnimatedElement>
             <img src={gsImg('gs-pod-detail-02', 1200)} alt="Pod poem and invitation to set down what you carry" className={styles.scrollImage} />
@@ -374,8 +361,6 @@ export default function GroundswellContent() {
                 <AudioPlayer key={i} track={track} />
               ))}
             </div>
-            <Credit tone="light" work="Pod facade artwork" who="Carolyn Gavin" />
-            <Credit tone="light" work="Meditations & poetry" who="Catherine Liggett & Mark Staley" />
           </div>
         </div>
       </section>
@@ -396,13 +381,13 @@ export default function GroundswellContent() {
         </div>
         <div className={styles.parallaxScroll}>
   <AnimatedElement>
-    <img src={gsImg('gs-ctb-email', 1600)} alt="Redesigned Ceased to Breathe email template, rewritten for compassion" className={styles.scrollImage} />
+    <img src={gsImg('gs-ctb-detail-01', 1600)} alt="CTB email context and development" className={styles.scrollImage} />
   </AnimatedElement>
   <AnimatedElement>
-    <img src={gsImg('gs-ctb-detail-02', 1600)} alt="Email detail showing the compassionate language" className={styles.scrollImage} />
+    <img src={gsImg('gs-ctb-email', 1600)} alt="Redesigned Ceased to Breathe email template" className={styles.scrollImage} />
   </AnimatedElement>
   <AnimatedElement>
-    <Credit tone="dark" work="Floral panel in the template" who="Carolyn Gavin" role="“Blue Garden,” a small element within the sent email" />
+    <img src={gsImg('gs-ctb-detail-02', 1600)} alt="CTB email detail showing compassionate language" className={styles.scrollImage} />
   </AnimatedElement>
 </div>
       </section>
@@ -420,46 +405,10 @@ export default function GroundswellContent() {
               By showing healthcare workers that the full spectrum of grief includes complex and contradictory emotions, the cards help create a more holistic culture of care. The combination of emotional identification, validation, and somatic exercises makes this a powerful tool for connection with self and others. Every staff member received their own deck; one set permanently lives in the pod.
             </p>
             <p className={styles.breakBodySecondary}>
-              Each card pairs Carolyn Gavin’s artwork on the face with a feeling, a brief validation, and a somatic exercise on the back. The artwork is hers; the writing is mine.
+              Click any card to flip and explore the exercises on the back.
             </p>
           </AnimatedElement>
-
-          {/* Copywriting showcase — the card exercises (Lorin's writing) shown
-              as type, in place of scans of the artwork-bearing card faces. */}
-          <AnimatedElement>
-            <div
-              style={{
-                display: 'grid',
-                gap: 'var(--space-content-gap)',
-                width: 'min(100%, 760px)',
-                margin: '0 auto',
-                padding: 'var(--space-md)',
-                border: '1px dashed var(--border)',
-                borderRadius: 'var(--radius-lg)',
-                color: 'var(--text-body)',
-              }}
-            >
-              {/* [LORIN TO WRITE] — paste 2–3 of your actual card exercises here,
-                  verbatim (feeling · validation · somatic exercise). Using your
-                  exact card copy keeps this in your words. */}
-              <p style={{ margin: 0, fontStyle: 'italic', opacity: 0.7 }}>
-                [LORIN TO WRITE] — drop in 2–3 of your card exercises, verbatim
-                (feeling · validation · somatic cue), to let the copywriting carry
-                this section.
-              </p>
-            </div>
-          </AnimatedElement>
-
-          <AnimatedElement>
-            <HeldArtwork
-              tone="light"
-              artist="Carolyn Gavin"
-              title="Blue Garden"
-              href="https://cfa.cmu.edu/magazine/groundswell-designing-systems-care-those-who-care"
-            >
-              Every card face carries Carolyn Gavin’s painting, licensed for the printed deck. The cards live with staff and in the pod; the artwork isn’t reproduced on this page.
-            </HeldArtwork>
-          </AnimatedElement>
+          <CardCarousel />
         </div>
       </section>
 
@@ -526,10 +475,16 @@ export default function GroundswellContent() {
         </div>
         <div className={styles.parallaxScroll}>
           <AnimatedElement>
-            <img src={gsImg('gs-sense-affinity-02', 1200)} alt="Co-design session mapping staff needs" className={styles.scrollImage} />
+            <img src={gsImg('gs-install-upmc', 1200)} alt="Groundswell installation at UPMC" className={styles.scrollImage} />
           </AnimatedElement>
           <AnimatedElement>
-            <img src={gsImg('gs-context-02', 1200)} alt="Listening with healthcare workers at UPMC Magee-Womens Hospital" className={styles.scrollImage} />
+            <img src={gsImg('gs-context-01', 1200)} alt="Research at UPMC Magee-Womens Hospital" className={styles.scrollImage} />
+          </AnimatedElement>
+          <AnimatedElement>
+            <img src={gsImg('gs-context-02', 1200)} alt="Engaging with healthcare workers" className={styles.scrollImage} />
+          </AnimatedElement>
+           <AnimatedElement>
+            <img src={gsImg('gs-context-03', 1200)} alt="Rehearsing Research Activities" className={styles.scrollImage} />
           </AnimatedElement>
         </div>
       </section>
@@ -611,7 +566,10 @@ export default function GroundswellContent() {
             <img src={gsImg('gs-sense-affinity-01', 1200)} alt="Affinity mapping session" className={styles.scrollImage} />
           </AnimatedElement>
           <AnimatedElement>
-            <img src={gsImg('gs-sense-affinity-03', 1200)} alt="Identifying interconnected forces across the data" className={styles.scrollImage} />
+            <img src={gsImg('gs-sense-affinity-02', 1200)} alt="Research synthesis and pattern identification" className={styles.scrollImage} />
+          </AnimatedElement>
+          <AnimatedElement>
+            <img src={gsImg('gs-sense-affinity-03', 1200)} alt="Identifying interconnected forces" className={styles.scrollImage} />
           </AnimatedElement>
         </div>
       </section>
@@ -648,13 +606,34 @@ export default function GroundswellContent() {
       <section id="making" className={`${styles.parallaxSection} ${styles.parallaxReverse} ${styles.parallaxDark}`}>
         <div className={styles.parallaxScroll}>
           <AnimatedElement>
-            <img src={gsImg('gs-making-prototype-01', 1200)} alt="Early lo-fi cardboard prototype exploring the pod’s table and finger labyrinth" className={styles.scrollImage} />
+            <img src={gsImg('gs-making-prototype-01', 1200)} alt="Early lo-fi pod prototype exploring spatial concepts" className={styles.scrollImage} />
           </AnimatedElement>
           <AnimatedElement>
-            <img src={gsImg('gs-making-figma-01', 1600)} alt="Figma design boards with sketches and production planning" className={styles.scrollImage} />
+            <img src={gsImg('gs-making-mockup-01', 1200)} alt="Design mockup and concept visualization" className={styles.scrollImage} />
           </AnimatedElement>
           <AnimatedElement>
-            <Credit tone="dark" work="Pod fabrication & hardware" who="Greg Baltus & Hardware Assembly" />
+            <img src={gsImg('gs-making-figma-01', 1600)} alt="Figma design boards with sketches and planning" className={styles.scrollImage} />
+          </AnimatedElement>
+          <AnimatedElement>
+            <img src={gsImg('gs-making-build-01', 1200)} alt="Greg Baltus beginning pod fabrication" className={styles.scrollImage} />
+          </AnimatedElement>
+          <AnimatedElement>
+            <img src={gsImg('gs-making-build-02', 1200)} alt="Construction process and assembly" className={styles.scrollImage} />
+          </AnimatedElement>
+          <AnimatedElement>
+            <img src={gsImg('gs-making-build-04', 1200)} alt="Pod customization in progress" className={styles.scrollImage} />
+          </AnimatedElement>
+          <AnimatedElement>
+            <img src={gsImg('gs-making-build-05', 1200)} alt="Final fabrication details" className={styles.scrollImage} />
+          </AnimatedElement>
+          <AnimatedElement>
+            <img src={gsImg('gs-making-facade', 1200)} alt="Acrylic facade with LED signaling system installed" className={styles.scrollImage} />
+          </AnimatedElement>
+          <AnimatedElement>
+            <img src={gsImg('gs-making-install-01', 1200)} alt="Installation day at UPMC Magee-Womens Hospital" className={styles.scrollImage} />
+          </AnimatedElement>
+          <AnimatedElement>
+            <img src={gsImg('gs-making-install-02', 1200)} alt="Final installed pod in hospital setting" className={styles.scrollImage} />
           </AnimatedElement>
         </div>
 
@@ -743,6 +722,11 @@ export default function GroundswellContent() {
             <p className={styles.stickyBodyLight}>
               After implementing these changes, participants reported overwhelmingly positive experiences. The space offered emotional transformation, support, and privacy. Play testers ranged from retired nurses, UPMC administrators, design professors, mental health professionals, and designers.
             </p>
+            <img
+              src={gsImg('gs-playtest-03', 1200)}
+              alt="Observing user interactions and gathering feedback"
+              className={styles.stickyPhotoFull}
+            />
           </div>
         </div>
       </section>
@@ -766,8 +750,14 @@ export default function GroundswellContent() {
             </p>
           </AnimatedElement>
 
-          {/* Finale image removed (showed the art-wall mural). Reflection now
-              rests on the writing + press, in keeping with the license hold. */}
+          {/* Finale Image */}
+          <AnimatedElement>
+            <img
+              src={gsImg('gs-finale', 1200)}
+              alt="Groundswell team collaboration and installation"
+              className={styles.reflectionImageBodyWidth}
+            />
+          </AnimatedElement>
 
           {/* Ongoing Work */}
           <AnimatedElement>
@@ -986,13 +976,8 @@ export default function GroundswellContent() {
       >
         <div className={styles.sectionContent}>
           <div className={styles.reachOut}>
-            <a
-              href="https://cfa.cmu.edu/magazine/groundswell-designing-systems-care-those-who-care"
-              target="_blank"
-              rel="noopener noreferrer"
-              className={styles.reachOutButton}
-            >
-              <span className={styles.reachOutButtonLabel}>Read the CMU feature</span>
+            <a href="/groundswell" className={styles.reachOutButton}>
+              <span className={styles.reachOutButtonLabel}>View project site</span>
               <span className={styles.reachOutButtonArrow} aria-hidden="true">&rarr;</span>
             </a>
           </div>

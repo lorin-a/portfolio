@@ -1,0 +1,41 @@
+.credit {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0 var(--space-xs);
+  margin: var(--space-xs) 0 0;
+  font-size: var(--text-caption);
+  letter-spacing: 0.04em;
+  line-height: 1.5;
+  font-variation-settings: var(--font-soft);
+}
+
+.work {
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  opacity: 0.7;
+}
+
+.sep { opacity: 0.4; }
+
+.who { font-weight: 600; }
+
+.role {
+  flex-basis: 100%;
+  font-size: var(--text-caption);
+  font-style: italic;
+  opacity: 0.6;
+}
+
+.link {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+  text-decoration-thickness: 1px;
+  text-decoration-color: var(--color-plum, currentColor);
+}
+.link:hover { text-decoration-color: currentColor; }
+
+/* Tone — adapts to the section background */
+.dark { color: rgba(247, 247, 247, 0.82); }
+.light { color: var(--text-body); }
