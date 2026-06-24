@@ -257,20 +257,20 @@ export default function GroundswellContent() {
       </section>
 
       {/* ==================== ROLE LEDGER — named authorship ==================== */}
-      <section
-        className={styles.sectionDark}
-        style={{ paddingTop: 'clamp(48px, 7vh, 72px)', paddingBottom: 'clamp(48px, 7vh, 72px)' }}
-      >
-        <RoleLedger
-          tone="dark"
-          mine={['Research', 'Co-Design', 'Copywriting', 'Project Coordination', 'Donor Outreach']}
-          collaborators={[
-            { who: 'Carolyn Gavin', what: 'Artwork — “Blue Garden,” the visual surface across the installation' },
-            { who: 'Catherine Liggett & Mark Staley', what: 'Guided meditations & poetry' },
-            { who: 'Greg Baltus', what: 'Fabrication & hardware assembly' },
-            { who: 'Elijah Benzon, Kelly McDowell, Robertus Sucahyo', what: 'Design, development & research' },
-          ]}
-        />
+      <section className={styles.sectionDark}>
+        <div className={styles.sectionContent}>
+          <p className={styles.componentLabelLight} style={{ textAlign: 'center' }}>Roles &amp; contributions</p>
+          <RoleLedger
+            tone="dark"
+            mine={['Research', 'Co-Design', 'Copywriting', 'Project Coordination', 'Donor Outreach']}
+            collaborators={[
+              { who: 'Carolyn Gavin', what: 'Artwork: “Blue Garden,” the visual surface across the installation' },
+              { who: 'Catherine Liggett & Mark Staley', what: 'Guided meditations & poetry' },
+              { who: 'Greg Baltus', what: 'Fabrication & hardware assembly' },
+              { who: 'Elijah Benzon, Kelly McDowell, Robertus Sucahyo', what: 'Design, development & research' },
+            ]}
+          />
+        </div>
       </section>
 
       {/* ==================== 2. THE VISION ==================== */}

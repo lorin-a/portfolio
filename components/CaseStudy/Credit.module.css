@@ -13,10 +13,10 @@
 .work {
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  opacity: 0.7;
+  opacity: 0.9;
 }
 
-.sep { opacity: 0.4; }
+.sep { opacity: 0.5; }
 
 .who { font-weight: 600; }
 
@@ -24,7 +24,7 @@
   flex-basis: 100%;
   font-size: var(--text-caption);
   font-style: italic;
-  opacity: 0.6;
+  opacity: 0.8;
 }
 
 .link {
@@ -37,5 +37,5 @@
 .link:hover { text-decoration-color: currentColor; }
 
 /* Tone — adapts to the section background */
-.dark { color: rgba(247, 247, 247, 0.82); }
+.dark { color: var(--project-accent-light, #e7dfe5); }
 .light { color: var(--text-body); }

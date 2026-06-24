@@ -1,43 +1,29 @@
+/* Mirrors the case study's acknowledgement-card pattern (project.module.css):
+   equal cards, --project-accent-light text on the plum field, no compounded
+   padding. Sits inside a .sectionDark > .sectionContent wrapper. */
 .ledger {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--space-lg);
-  width: min(100%, 1100px);
-  margin-inline: auto;
-  padding: clamp(2rem, 5vw, 4rem) var(--space-md);
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-md);
+  margin: 0;
 }
 
-.col { display: flex; flex-direction: column; gap: var(--space-content-gap); }
+.card {
+  background-color: rgba(255, 255, 255, 0.08);
+  border-left: 3px solid rgba(248, 235, 229, 0.5);
+  border-radius: var(--radius-sm);
+  padding: var(--space-md);
+}
 
 .heading {
-  margin: 0;
-  font-size: var(--text-label);
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  opacity: 0.6;
-  font-variation-settings: var(--font-soft);
-}
-
-.mine {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-xs);
-}
-
-.mineItem {
+  font-family: var(--font-serif);
   font-size: var(--text-body-large);
-  font-weight: 600;
-  line-height: 1.3;
-  padding: var(--space-xxs) var(--space-sm);
-  border: 1px solid;
-  border-radius: var(--radius-pill);
-  font-variation-settings: var(--font-soft);
+  font-weight: var(--weight-title, 600);
+  color: var(--project-accent-light, #e7dfe5);
+  margin: 0 0 var(--space-md);
 }
 
-.team {
+.list {
   list-style: none;
   margin: 0;
   padding: 0;
@@ -46,40 +32,57 @@
   gap: var(--space-sm);
 }
 
+.mineItem {
+  font-family: var(--font-sans);
+  font-size: var(--text-body);
+  font-weight: 600;
+  line-height: var(--leading-relaxed, 1.6);
+  color: var(--project-accent-light, #e7dfe5);
+}
+
 .teamItem {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 1px;
   padding-bottom: var(--space-sm);
-  border-bottom: 1px solid;
+  border-bottom: 1px solid rgba(248, 235, 229, 0.18);
 }
 .teamItem:last-child { border-bottom: none; padding-bottom: 0; }
 
-.teamWho { font-size: var(--text-body-large); font-weight: 600; }
+.teamWho {
+  font-family: var(--font-sans);
+  font-size: var(--text-body);
+  font-weight: 600;
+  color: var(--project-accent-light, #e7dfe5);
+}
 
 .teamWhat {
+  font-family: var(--font-sans);
   font-size: var(--text-body-small);
-  opacity: 0.7;
-  font-variation-settings: var(--font-soft);
+  line-height: var(--leading-relaxed, 1.6);
+  color: var(--project-accent-light, #e7dfe5);
+  opacity: 0.85;
 }
 
 .link {
   color: inherit;
   text-decoration: underline;
   text-underline-offset: 0.18em;
-  text-decoration-color: var(--color-plum, currentColor);
+  text-decoration-thickness: 1px;
 }
-.link:hover { text-decoration-color: currentColor; }
+.link:hover { opacity: 0.8; }
 
-/* Tone */
-.light { color: var(--text-heading); }
-.light .mineItem { border-color: var(--text-heading); background: transparent; }
-.light .teamItem { border-color: var(--border); }
-
-.dark { color: var(--cream); }
-.dark .mineItem { border-color: rgba(247, 247, 247, 0.5); }
-.dark .teamItem { border-color: rgba(247, 247, 247, 0.18); }
+/* Light-section variant (uses the project ink/accent on cream) */
+.light .card {
+  background-color: rgba(116, 98, 112, 0.06);
+  border-left-color: var(--color-plum, #746270);
+}
+.light .heading,
+.light .mineItem,
+.light .teamWho { color: var(--text-heading, #2c2c28); }
+.light .teamWhat { color: var(--text-body, #4a4a46); opacity: 1; }
+.light .teamItem { border-bottom-color: rgba(116, 98, 112, 0.18); }
 
 @media (max-width: 700px) {
-  .ledger { grid-template-columns: 1fr; gap: var(--space-md); }
+  .ledger { grid-template-columns: 1fr; }
 }
