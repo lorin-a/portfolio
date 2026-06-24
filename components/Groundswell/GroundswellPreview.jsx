@@ -98,13 +98,49 @@ const COLLABORATORS = [
   { who: 'Elijah Benzon, Kelly McDowell, Robertus Sucahyo', what: 'Design, development & research' },
 ]
 
-/** Labeled image placeholder — marks where photography goes. */
+/** Labeled image placeholder — marks where photography still needs to go. */
 function Frame({ label, ratio = '4 / 3', credit }) {
   return (
     <figure className={styles.frame} style={{ aspectRatio: ratio }}>
       <span className={styles.frameLabel}>{label}</span>
       {credit && <span className={styles.frameCredit}>Artwork: Carolyn Gavin</span>}
     </figure>
+  )
+}
+
+/** Real documentary photograph (credited where Carolyn's art appears). */
+function Photo({ k, label, ratio = '4 / 3', credit }) {
+  return (
+    <figure className={styles.photo} style={{ aspectRatio: ratio }}>
+      <img src={img(k, 1400)} alt={label} loading="lazy" />
+      {credit && <figcaption className={styles.photoCredit}>Artwork: Carolyn Gavin</figcaption>}
+    </figure>
+  )
+}
+
+// The three acts = Lorin's Sense → Weave → Shape practice, doubling as the
+// project timeline. Each is a cinematic chapter break.
+const ACTS = [
+  { key: 'sense', n: 'I', name: 'Sense', phase: '15 weeks · research', image: 'gs-sense-affinity-01',
+    line: 'Listening with oncology staff to understand the emotional reality of the work.' },
+  { key: 'weave', n: 'II', name: 'Weave', phase: 'design', image: 'gs-making-figma-01',
+    line: 'Translating what we heard into a connected ecosystem of interventions.' },
+  { key: 'shape', n: 'III', name: 'Shape', phase: '10 weeks · production + pilot', image: 'gs-making-install-02',
+    line: 'Building, testing, and installing Groundswell as a living pilot.' },
+]
+
+function ActDivider({ act }) {
+  return (
+    <section className={styles.act} id={`act-${act.key}`}>
+      <img src={img(act.image, 2000)} alt="" aria-hidden="true" className={styles.actImg} />
+      <div className={styles.actScrim} aria-hidden="true" />
+      <div className={styles.actContent}>
+        <p className={styles.actNum}>Act {act.n}</p>
+        <h2 className={styles.actName}>{act.name}</h2>
+        <p className={styles.actPhase}>{act.phase}</p>
+        <p className={styles.actLine}>{act.line}</p>
+      </div>
+    </section>
   )
 }
 
@@ -240,6 +276,8 @@ export default function GroundswellPreview() {
         </div>
       </section>
 
+      <ActDivider act={ACTS[0]} />
+
       {/* ── 5 · CONTEXT (the problem + stats) ── */}
       <section id="context" className={styles.band}>
         <div className={styles.bandNarrow}>
@@ -277,7 +315,7 @@ export default function GroundswellPreview() {
           </div>
         </div>
         <div className={styles.mediaRow}>
-          <Frame label="[ Affinity mapping ]" /><Frame label="[ Shadowing the unit ]" /><Frame label="[ Workshop ]" />
+          <Photo k="gs-sense-affinity-01" label="Affinity mapping session" /><Photo k="gs-sense-affinity-02" label="Research synthesis" /><Photo k="gs-sense-affinity-03" label="Identifying interconnected forces" />
         </div>
       </section>
 
@@ -294,6 +332,8 @@ export default function GroundswellPreview() {
         </div>
       </section>
 
+      <ActDivider act={ACTS[1]} />
+
       {/* ── 9 · THE ECOSYSTEM (4 components) ── */}
       <section id="ecosystem" className={styles.band}>
         <div className={styles.bandNarrow}>
@@ -303,7 +343,7 @@ export default function GroundswellPreview() {
         </div>
         {COMPONENTS.map((c, i) => (
           <div key={c.n} className={`${styles.component} ${i % 2 ? styles.componentFlip : ''}`}>
-            <div className={styles.componentMedia}><Frame label={`[ ${c.name} — in use ]`} ratio="4 / 3" credit={c.credit} /></div>
+            <div className={styles.componentMedia}><Photo k={c.image} label={`${c.name} in use`} ratio="4 / 3" credit={c.credit} /></div>
             <div className={styles.componentText}>
               <p className={styles.componentTag}><span className={styles.componentNum}>{c.n}</span>Answers: {c.dimension}</p>
               <h3 className={styles.h3}>{c.name}</h3>
@@ -333,6 +373,8 @@ export default function GroundswellPreview() {
         </div>
       </section>
 
+      <ActDivider act={ACTS[2]} />
+
       {/* ── 11 · MAKING ── */}
       <section id="making" className={styles.band}>
         <div className={styles.bandInner}>
@@ -352,7 +394,7 @@ export default function GroundswellPreview() {
             </ol>
           </div>
         </div>
-        <div className={styles.mediaRow}><Frame label="[ Fabrication ]" /><Frame label="[ Install day ]" /><Frame label="[ Final pod ]" /></div>
+        <div className={styles.mediaRow}><Photo k="gs-making-build-01" label="Fabrication" /><Photo k="gs-making-install-01" label="Installation day" /><Photo k="gs-finale" label="The team" /></div>
       </section>
 
       {/* ── 12 · PLAY TESTING ── */}
