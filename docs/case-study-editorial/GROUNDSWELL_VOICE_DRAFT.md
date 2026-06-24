@@ -32,8 +32,9 @@ study remains gated (license hold).**
 I come from a long line of healers, educators, and innovators: people who carry
 the weight of the world, an optimism for the future, and the passion to create
 change that benefits others. That is why I went back to grad school for design,
-and why I took Professor Kristin Hughes’ co-design course, **CARES: [course
-title]**. I knew that learning and practicing co-design with a real community
+and why I took Professor Kristin Hughes’ co-design course, *Designing with CARE:
+Co-Creating Solutions for Complex Care Coordination in Oncology*. I knew that
+learning and practicing co-design with a real community
 would be life-changing, and it was fitting that the course topic and my group’s
 assignment aligned so closely with my journey.
 
@@ -126,5 +127,5 @@ trying to emerge.
 | The Making role | The Making sticky copy | Replaces "the team managed donor outreach, copywriting…" |
 | The Reflection belief | Opens The Reflection | Prepends to existing "we learned…" copy |
 
-**Status:** drafted + approved 2026-06-24, pending the two factual items above.
-Not yet wired into the page. Case study remains gated (license hold).
+**Status:** drafted + approved + **wired into the page** 2026-06-24 (commit
+d274a02). Facts resolved (see top). Case study remains gated (license hold).
