@@ -1,26 +1,30 @@
 import styles from './CardCopyShowcase.module.css'
 
 /**
- * CardCopyShowcase — the Reflection Cards rendered as TYPE rather than as scans
- * of the artwork-bearing faces. Each card pairs a feeling, a brief validation,
- * and a somatic cue — all of it Lorin's copywriting. This is the section's
- * showpiece: the writing carries the visual.
+ * CardCopyShowcase — the Reflection Cards' writing (Lorin's copy) rendered as
+ * type: refined specimen cards with an index, the feeling as display type, and
+ * the somatic cue set apart as the exercise. Complements the documentary photos
+ * of the deck; shows the writing the photos can't render legibly.
  *
  * @param {{feeling: string, validation: string, cue: string}[]} cards
  */
 export default function CardCopyShowcase({ cards = [] }) {
   return (
     <ul className={styles.deck} aria-label="Reflection card writing">
-      {cards.map((card) => (
+      {cards.map((card, i) => (
         <li key={card.feeling} className={styles.card}>
-          <p className={styles.kicker}>When you feel</p>
+          <div className={styles.head}>
+            <span className={styles.label}>Reflection card</span>
+            <span className={styles.index}>{String(i + 1).padStart(2, '0')}</span>
+          </div>
+
           <p className={styles.feeling}>{card.feeling}</p>
           <p className={styles.validation}>{card.validation}</p>
-          <hr className={styles.rule} />
-          <p className={styles.cueLabel}>
-            <span className={styles.mark} aria-hidden="true">✦</span> Somatic cue
-          </p>
-          <p className={styles.cue}>{card.cue}</p>
+
+          <div className={styles.cue}>
+            <p className={styles.cueLabel}>Somatic cue</p>
+            <p className={styles.cueText}>{card.cue}</p>
+          </div>
         </li>
       ))}
     </ul>

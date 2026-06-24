@@ -1,88 +1,103 @@
-/* Mirrors the case study's acknowledgement-card pattern (project.module.css):
-   equal cards, --project-accent-light text on the plum field, no compounded
-   padding. Sits inside a .sectionDark > .sectionContent wrapper. */
+/* Editorial masthead: the author's role leads, collaborators credited beneath
+   as a hairline-ruled credits list. Lives on a cream band (off the plum). */
 .ledger {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: var(--space-md);
-  margin: 0;
+  grid-template-columns: 1.05fr 1fr;
+  gap: clamp(2.5rem, 6vw, 6rem);
+  align-items: start;
+  width: min(100%, var(--content-width, 1000px));
+  margin-inline: auto;
 }
 
-.card {
-  background-color: rgba(255, 255, 255, 0.08);
-  border-left: 3px solid rgba(248, 235, 229, 0.5);
-  border-radius: var(--radius-sm);
-  padding: var(--space-md);
+.kicker {
+  margin: 0 0 var(--space-sm);
+  font-family: var(--font-sans);
+  font-size: var(--text-label);
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--color-plum, #746270);
 }
 
-.heading {
+/* ---- the author ---- */
+.name {
+  margin: 0 0 var(--space-content-gap);
   font-family: var(--font-serif);
-  font-size: var(--text-body-large);
-  font-weight: var(--weight-title, 600);
-  color: var(--project-accent-light, #e7dfe5);
-  margin: 0 0 var(--space-md);
+  font-size: clamp(1.875rem, 3.2vw, 2.75rem);
+  line-height: 1.02;
+  color: var(--text-heading, #2c2c28);
 }
 
-.list {
+.mine {
   list-style: none;
   margin: 0;
   padding: 0;
   display: flex;
-  flex-direction: column;
-  gap: var(--space-sm);
+  flex-wrap: wrap;
+  align-items: baseline;
 }
 
 .mineItem {
   font-family: var(--font-sans);
-  font-size: var(--text-body);
+  font-size: var(--text-body-large);
   font-weight: 600;
-  line-height: var(--leading-relaxed, 1.6);
-  color: var(--project-accent-light, #e7dfe5);
+  line-height: 1.5;
+  color: var(--text-heading, #2c2c28);
+}
+.mineItem:not(:last-child)::after {
+  content: '·';
+  margin: 0 0.55em;
+  color: var(--color-plum, #746270);
+  opacity: 0.55;
+  font-weight: 400;
+}
+
+/* ---- collaborators ---- */
+.team {
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
 .teamItem {
   display: flex;
   flex-direction: column;
-  gap: 1px;
-  padding-bottom: var(--space-sm);
-  border-bottom: 1px solid rgba(248, 235, 229, 0.18);
+  gap: 2px;
+  padding: var(--space-sm) 0;
+  border-top: 1px solid var(--border, #ddd8ce);
 }
-.teamItem:last-child { border-bottom: none; padding-bottom: 0; }
+.teamItem:first-child { padding-top: 0; border-top: none; }
+.teamItem:last-child { padding-bottom: 0; }
 
 .teamWho {
   font-family: var(--font-sans);
   font-size: var(--text-body);
   font-weight: 600;
-  color: var(--project-accent-light, #e7dfe5);
+  color: var(--text-heading, #2c2c28);
 }
 
 .teamWhat {
   font-family: var(--font-sans);
   font-size: var(--text-body-small);
-  line-height: var(--leading-relaxed, 1.6);
-  color: var(--project-accent-light, #e7dfe5);
-  opacity: 0.85;
+  line-height: 1.5;
+  color: var(--text-body, #4a4a46);
 }
 
 .link {
   color: inherit;
   text-decoration: underline;
   text-underline-offset: 0.18em;
-  text-decoration-thickness: 1px;
+  text-decoration-color: var(--color-plum, #746270);
 }
-.link:hover { opacity: 0.8; }
+.link:hover { text-decoration-color: currentColor; }
 
-/* Light-section variant (uses the project ink/accent on cream) */
-.light .card {
-  background-color: rgba(116, 98, 112, 0.06);
-  border-left-color: var(--color-plum, #746270);
-}
-.light .heading,
-.light .mineItem,
-.light .teamWho { color: var(--text-heading, #2c2c28); }
-.light .teamWhat { color: var(--text-body, #4a4a46); opacity: 1; }
-.light .teamItem { border-bottom-color: rgba(116, 98, 112, 0.18); }
+/* ---- dark variant (kept for reuse on plum sections) ---- */
+.dark .kicker { color: var(--project-accent-light, #cdbfca); }
+.dark .name,
+.dark .mineItem,
+.dark .teamWho { color: var(--cream, #f7f7f7); }
+.dark .teamWhat { color: var(--project-accent-light, #cdbfca); opacity: 0.85; }
+.dark .teamItem { border-top-color: rgba(248, 235, 229, 0.2); }
 
-@media (max-width: 700px) {
-  .ledger { grid-template-columns: 1fr; }
+@media (max-width: 720px) {
+  .ledger { grid-template-columns: 1fr; gap: var(--space-lg); }
 }

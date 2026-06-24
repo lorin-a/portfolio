@@ -1,83 +1,99 @@
 .deck {
   list-style: none;
-  margin: var(--space-md) auto 0;
+  margin: var(--space-lg) auto 0;
   padding: 0;
-  width: min(100%, 1100px);
+  width: min(100%, 880px);
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: var(--space-content-gap);
+  gap: clamp(1.5rem, 3vw, 2.75rem);
 }
 
 .card {
+  flex: 1 1 320px;
+  max-width: 384px;
   display: flex;
   flex-direction: column;
-  flex: 1 1 300px;
-  max-width: 360px;
-  padding: clamp(1.5rem, 2.4vw, 2rem);
-  border-radius: var(--radius-md);
+  padding: clamp(1.75rem, 3vw, 2.5rem);
   background: var(--color-cream, #fbf9f6);
-  border: 1px solid rgba(116, 98, 112, 0.16);
-  box-shadow: 0 16px 44px -32px rgba(44, 38, 44, 0.4);
+  border: 1px solid rgba(116, 98, 112, 0.14);
+  border-radius: var(--radius-md);
+  box-shadow: 0 34px 64px -42px rgba(44, 38, 44, 0.55);
 }
 
-.kicker {
-  margin: 0;
+.head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: clamp(1.75rem, 3.5vw, 2.5rem);
+  padding-bottom: var(--space-sm);
+  border-bottom: 1px solid rgba(116, 98, 112, 0.16);
+}
+
+.label {
   font-family: var(--font-sans);
   font-size: var(--text-label);
   text-transform: uppercase;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.2em;
   color: var(--color-plum, #746270);
-  opacity: 0.8;
+}
+
+.index {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: var(--text-body-large);
+  color: var(--color-plum, #746270);
+  opacity: 0.5;
 }
 
 .feeling {
-  margin: 0.15em 0 var(--space-sm);
+  margin: 0 0 var(--space-content-gap);
   font-family: var(--font-serif);
   font-style: italic;
-  font-size: clamp(2rem, 3.4vw, 2.75rem);
-  line-height: 1;
-  color: var(--color-plum, #746270);
+  font-size: clamp(2.5rem, 5vw, 3.5rem);
+  line-height: 0.95;
+  letter-spacing: -0.01em;
+  color: #2c2c28;
 }
 
 .validation {
   margin: 0;
   font-family: var(--font-sans);
   font-size: var(--text-body);
-  line-height: 1.6;
+  line-height: 1.65;
   color: #3a3a36;
 }
 
-.rule {
-  border: 0;
-  border-top: 1px solid rgba(116, 98, 112, 0.2);
-  width: 100%;
-  margin: clamp(1.25rem, 2vw, 1.75rem) 0 var(--space-sm);
+.cue {
+  margin-top: auto;
+  padding-top: clamp(1.5rem, 3vw, 2rem);
 }
 
 .cueLabel {
   display: flex;
   align-items: center;
-  gap: 0.45em;
+  gap: 0.5em;
   margin: 0 0 var(--space-xs);
   font-family: var(--font-sans);
   font-size: var(--text-label);
   text-transform: uppercase;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.16em;
   color: var(--color-plum, #746270);
 }
+.cueLabel::before { content: '✦'; font-size: 0.85em; }
 
-.mark { font-size: 0.85em; }
-
-.cue {
+.cueText {
   margin: 0;
+  padding-left: var(--space-md);
+  border-left: 2px solid rgba(116, 98, 112, 0.32);
   font-family: var(--font-serif);
   font-style: italic;
   font-size: var(--text-body-large);
-  line-height: 1.45;
+  line-height: 1.5;
   color: #2c2c28;
 }
 
-@media (max-width: 900px) {
-  .deck { grid-template-columns: 1fr; max-width: 32rem; }
+@media (max-width: 760px) {
+  .deck { flex-direction: column; align-items: center; }
+  .card { max-width: 32rem; width: 100%; }
 }
