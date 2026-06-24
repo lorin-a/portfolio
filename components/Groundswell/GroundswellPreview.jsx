@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import { gsap } from '@/lib/gsap'
 import ShapeMark from '@/components/marks/ShapeMark'
 import { cloudImg, GS_IMAGES } from '@/lib/cloudinary'
 import styles from './GroundswellPreview.module.css'
@@ -182,6 +183,7 @@ function useInViewOnce(threshold = 0.4) {
 export default function GroundswellPreview() {
   const [active, setActive] = useState('glance')
   const [showRail, setShowRail] = useState(false)
+  const heroRef = useRef(null)
 
   useEffect(() => {
     const obs = new IntersectionObserver(
@@ -203,6 +205,22 @@ export default function GroundswellPreview() {
       obs.disconnect()
       window.removeEventListener('scroll', onScroll)
     }
+  }, [])
+
+  // Hero load reveal (the hook): the photo blooms; the research question wipes
+  // up line by line behind a mask. Honors reduced motion.
+  useEffect(() => {
+    const root = heroRef.current
+    if (!root) return
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+    const ctx = gsap.context(() => {
+      const tl = gsap.timeline()
+      tl.from('[data-hero-img]', { scale: 1.12, autoAlpha: 0, duration: 1.8, ease: 'power2.out' }, 0)
+        .from('[data-hero-k]', { y: 16, autoAlpha: 0, duration: 0.7, ease: 'power2.out' }, 0.5)
+        .from('[data-ql]', { yPercent: 116, duration: 0.95, stagger: 0.14, ease: 'power3.out' }, 0.7)
+        .from('[data-hero-cue]', { autoAlpha: 0, duration: 0.6 }, 1.7)
+    }, root)
+    return () => ctx.revert()
   }, [])
 
   return (
@@ -227,22 +245,23 @@ export default function GroundswellPreview() {
         ))}
       </nav>
 
-      {/* ── 1 · HERO ── */}
-      <section className={styles.hero}>
+      {/* ── 1 · HERO — the research question reveals on load (the hook) ── */}
+      <section className={styles.hero} ref={heroRef}>
         <div className={styles.heroMedia}>
-          <img src={img('gs-hero', 2000)} alt="Groundswell installed in a corridor at UPMC Magee-Womens Hospital" className={styles.heroImg} />
+          <img data-hero-img src={img('gs-hero', 2000)} alt="Groundswell installed in a corridor at UPMC Magee-Womens Hospital" className={styles.heroImg} />
           <div className={styles.heroScrim} aria-hidden="true" />
         </div>
         <div className={styles.heroContent}>
-          <p className={styles.heroKicker}>Oncology well-being · UPMC Magee-Womens Hospital</p>
-          <h1 className={styles.heroTitle}>Groundswell</h1>
-          <p className={styles.heroTagline}>Making Space to Restore, Together</p>
-          <p className={styles.heroOutcome}>
-            A grant-funded design ecology for the emotional reality of oncology care. Launched as a 12-month pilot.
-          </p>
+          <p className={styles.heroKicker} data-hero-k>Groundswell · oncology well-being at UPMC Magee-Womens Hospital</p>
+          <h1 className={styles.heroQ}>
+            <span className={styles.qLine}><span data-ql>How might we create</span></span>
+            <span className={styles.qLine}><span data-ql>supportive environments where</span></span>
+            <span className={styles.qLine}><span data-ql>staff feel nurtured, recognized,</span></span>
+            <span className={styles.qLine}><span data-ql>and celebrated?</span></span>
+          </h1>
         </div>
         <p className={styles.heroCredit}>Artwork: Carolyn Gavin</p>
-        <div className={styles.scrollCue} aria-hidden="true"><span>Scroll</span><span className={styles.scrollLine} /></div>
+        <div className={styles.scrollCue} aria-hidden="true" data-hero-cue><span>Scroll</span><span className={styles.scrollLine} /></div>
       </section>
 
       {/* ── 2 · AT A GLANCE ── */}
