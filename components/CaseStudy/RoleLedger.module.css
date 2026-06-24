@@ -5,8 +5,7 @@
   grid-template-columns: 1.05fr 1fr;
   gap: clamp(2.5rem, 6vw, 6rem);
   align-items: start;
-  width: min(100%, var(--content-width, 1000px));
-  margin-inline: auto;
+  width: 100%;
 }
 
 .kicker {

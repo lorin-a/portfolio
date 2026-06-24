@@ -217,60 +217,69 @@ export default function GroundswellContent() {
         </div>
       </section>
 
-      {/* ==================== PROJECT INFO STRIP ==================== */}
-      <section className={styles.projectInfoStrip}>
-        <div className={styles.projectInfoGrid}>
-          <div className={styles.projectInfoItem}>
-            <span className={styles.projectInfoLabel}>Client</span>
-            <span className={styles.projectInfoValue}>UPMC Magee-Womens Hospital</span>
-          </div>
-          <div className={styles.projectInfoItem}>
-            <span className={styles.projectInfoLabel}>Duration</span>
-            <span className={styles.projectInfoValue}>15 wks research + 10 wks production + ongoing pilot</span>
-          </div>
-          <div className={styles.projectInfoItem}>
-            <span className={styles.projectInfoLabel}>Status</span>
-            <span className={styles.projectInfoValue}>12-month Quality Improvement Study</span>
-          </div>
-          <div className={styles.projectInfoItem}>
-            <span className={styles.projectInfoLabel}>Role</span>
-            <span className={styles.projectInfoValue}>Research, Co-Design, Copywriting, Project Coordination, Donor Outreach</span>
-          </div>
-          <div className={styles.projectInfoItem}>
-            <span className={styles.projectInfoLabel}>Team</span>
-            <span className={styles.projectInfoValue}>Kristin Hughes, Elijah Benzon, Kelly McDowell, Robertus Sucahyo, Greg Baltus</span>
-          </div>
-          <div className={styles.projectInfoItem}>
-            <span className={styles.projectInfoLabel}>Feature</span>
-            <a
-              href="https://cfa.cmu.edu/magazine/groundswell-designing-systems-care-those-who-care"
-              target="_blank"
-              rel="noopener noreferrer"
-              className={styles.projectInfoLink}
-            >
-              Read the CMU feature &rarr;
-            </a>
-          </div>
-        </div>
-      </section>
-
-      {/* ==================== ROLE LEDGER — named authorship ==================== */}
+      {/* ==================== PROJECT MASTHEAD — facts + authorship ====================
+          One cohesive colophon: the project facts up top, then the role/credits
+          beneath. Role and Team are NOT repeated as metadata columns — they live
+          in the masthead below. */}
       <section
+        className={styles.projectInfoStrip}
         style={{
-          background: 'var(--color-cream, #fbf9f6)',
-          padding: 'clamp(64px, 9vh, 120px) var(--container-padding)',
+          borderBottom: 'none',
+          paddingTop: 'clamp(40px, 6vh, 72px)',
+          paddingBottom: 'clamp(64px, 9vh, 112px)',
         }}
       >
-        <RoleLedger
-          tone="light"
-          mine={['Research', 'Co-Design', 'Copywriting', 'Project Coordination', 'Donor Outreach']}
-          collaborators={[
-            { who: 'Carolyn Gavin', what: 'Artwork: “Blue Garden,” the visual surface across the installation' },
-            { who: 'Catherine Liggett & Mark Staley', what: 'Guided meditations & poetry' },
-            { who: 'Greg Baltus', what: 'Fabrication & hardware assembly' },
-            { who: 'Elijah Benzon, Kelly McDowell, Robertus Sucahyo', what: 'Design, development & research' },
-          ]}
-        />
+        <div style={{ width: 'min(100%, 1120px)', margin: '0 auto' }}>
+          {/* Project facts */}
+          <div
+            className={styles.projectInfoGrid}
+            style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', maxWidth: 'none', margin: 0 }}
+          >
+            <div className={styles.projectInfoItem}>
+              <span className={styles.projectInfoLabel}>Client</span>
+              <span className={styles.projectInfoValue}>UPMC Magee-Womens Hospital</span>
+            </div>
+            <div className={styles.projectInfoItem}>
+              <span className={styles.projectInfoLabel}>Duration</span>
+              <span className={styles.projectInfoValue}>15 wks research + 10 wks production + ongoing pilot</span>
+            </div>
+            <div className={styles.projectInfoItem}>
+              <span className={styles.projectInfoLabel}>Status</span>
+              <span className={styles.projectInfoValue}>12-month Quality Improvement Study</span>
+            </div>
+            <div className={styles.projectInfoItem}>
+              <span className={styles.projectInfoLabel}>Feature</span>
+              <a
+                href="https://cfa.cmu.edu/magazine/groundswell-designing-systems-care-those-who-care"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.projectInfoLink}
+              >
+                Read the CMU feature &rarr;
+              </a>
+            </div>
+          </div>
+
+          <hr
+            style={{
+              border: 0,
+              borderTop: '1px solid var(--color-border)',
+              margin: 'clamp(2.5rem, 5vw, 4rem) 0',
+            }}
+          />
+
+          {/* Role + collaboration */}
+          <RoleLedger
+            tone="light"
+            mine={['Research', 'Co-Design', 'Copywriting', 'Project Coordination', 'Donor Outreach']}
+            collaborators={[
+              { who: 'Carolyn Gavin', what: 'Artwork: “Blue Garden,” the visual surface across the installation' },
+              { who: 'Catherine Liggett & Mark Staley', what: 'Guided meditations & poetry' },
+              { who: 'Greg Baltus', what: 'Fabrication & hardware assembly' },
+              { who: 'Elijah Benzon, Kelly McDowell, Robertus Sucahyo', what: 'Design, development & research' },
+            ]}
+          />
+        </div>
       </section>
 
       {/* ==================== 2. THE VISION ==================== */}
