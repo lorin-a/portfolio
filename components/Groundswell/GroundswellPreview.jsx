@@ -148,6 +148,16 @@ function ActDivider({ act }) {
   )
 }
 
+/** A full-screen scrollytelling beat — one focal point, reveals on enter. */
+function Beat({ children, className = '' }) {
+  const [ref, inView] = useInViewOnce(0.5)
+  return (
+    <div ref={ref} className={`${styles.beat} ${inView ? styles.beatIn : ''} ${className}`}>
+      {children}
+    </div>
+  )
+}
+
 function useInViewOnce(threshold = 0.4) {
   const ref = useRef(null)
   const [inView, setInView] = useState(false)
@@ -282,22 +292,31 @@ export default function GroundswellPreview() {
 
       <ActDivider act={ACTS[0]} />
 
-      {/* ── 5 · CONTEXT (the problem + stats) ── */}
-      <section id="context" className={styles.band}>
-        <div className={styles.bandNarrow}>
+      {/* ── 5 · CONTEXT — scrollytelling: one focal point per screen ── */}
+      <section id="context" className={styles.scrolly}>
+        <Beat>
           <p className={styles.num}>02</p>
           <p className={styles.label}>The context</p>
-          <h2 className={styles.h2}>Healthcare workers carry a dual burden.</h2>
-          <p className={styles.body}>
-            The inherently compassionate nature of the work — constant exposure to grief, loss, and trauma — combined with excessive administrative tasks that disconnect staff from the patient care that drew them to the profession.
+          <h2 className={styles.beatH}>Healthcare workers carry a dual burden.</h2>
+          <p className={styles.beatSub}>
+            The compassionate nature of the work means constant exposure to grief, loss, and trauma, set alongside administrative tasks that disconnect staff from the patient care that drew them in.
           </p>
-          <div className={styles.stats}>
-            <div className={styles.stat}><span className={styles.statNum}>1 in 5</span><span className={styles.statCap}>U.S. healthcare workers have experienced PTSD</span></div>
-            <div className={styles.stat}><span className={styles.statNum}>73%</span><span className={styles.statCap}>of emergency physicians report stigma around mental-health treatment</span></div>
-            <div className={styles.stat}><span className={styles.statNum}>27%</span><span className={styles.statCap}>avoid treatment entirely, fearing professional consequences</span></div>
-          </div>
-          <p className={styles.statement}>This is not an individual failure.<br />It is a systemic one.</p>
-        </div>
+        </Beat>
+        <Beat className={styles.beatStat}>
+          <span className={styles.bigStat}>1 in 5</span>
+          <span className={styles.bigCap}>U.S. healthcare workers have experienced PTSD.</span>
+        </Beat>
+        <Beat className={styles.beatStat}>
+          <span className={styles.bigStat}>73%</span>
+          <span className={styles.bigCap}>of emergency physicians report stigma around mental-health treatment.</span>
+        </Beat>
+        <Beat className={styles.beatStat}>
+          <span className={styles.bigStat}>27%</span>
+          <span className={styles.bigCap}>avoid treatment entirely, fearing professional consequences.</span>
+        </Beat>
+        <Beat>
+          <p className={styles.bigStatement}>This is not an individual failure.<br />It is a systemic one.</p>
+        </Beat>
       </section>
 
       {/* ── 6 · RESEARCH ── */}
@@ -344,17 +363,24 @@ export default function GroundswellPreview() {
           <p className={styles.num}>05</p>
           <p className={styles.label}>The ecosystem</p>
           <h2 className={styles.h2}>Four interventions, each answering a dimension.</h2>
+          <p className={styles.scrollHint} aria-hidden="true">Drag to explore the deck →</p>
         </div>
-        {COMPONENTS.map((c, i) => (
-          <div key={c.n} className={`${styles.component} ${i % 2 ? styles.componentFlip : ''}`}>
-            <div className={styles.componentMedia}><Photo k={c.image} label={`${c.name} in use`} ratio="4 / 3" credit={c.credit} /></div>
-            <div className={styles.componentText}>
-              <p className={styles.componentTag}><span className={styles.componentNum}>{c.n}</span>Answers: {c.dimension}</p>
-              <h3 className={styles.h3}>{c.name}</h3>
-              <p className={styles.body}>{c.body}</p>
-            </div>
-          </div>
-        ))}
+        <div className={styles.gallery}>
+          {COMPONENTS.map((c) => (
+            <article key={c.n} className={styles.gCard}>
+              <div className={styles.gMedia}>
+                <img src={img(c.image, 1600)} alt={`${c.name} in use`} />
+                {c.credit && <span className={styles.photoCredit}>Artwork: Carolyn Gavin</span>}
+                <span className={styles.gNum}>{c.n}</span>
+              </div>
+              <div className={styles.gText}>
+                <p className={styles.gDim}><span className={styles.gAnswers}>Answers</span> {c.dimension}</p>
+                <h3 className={styles.gName}>{c.name}</h3>
+                <p className={styles.gBody}>{c.body}</p>
+              </div>
+            </article>
+          ))}
+        </div>
       </section>
 
       {/* ── 10 · CONCEPT → PRODUCTION (the seam) ── */}
