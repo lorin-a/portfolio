@@ -108,12 +108,16 @@ function Frame({ label, ratio = '4 / 3', credit }) {
   )
 }
 
-/** Real documentary photograph (credited where Carolyn's art appears). */
-function Photo({ k, label, ratio = '4 / 3', credit }) {
+/** Real documentary photograph with an evidentiary caption (credited where
+ *  Carolyn's art appears). The caption ties the image to the claim it proves. */
+function Photo({ k, label, cap, ratio = '4 / 3', credit }) {
   return (
-    <figure className={styles.photo} style={{ aspectRatio: ratio }}>
-      <img src={img(k, 1400)} alt={label} loading="lazy" />
-      {credit && <figcaption className={styles.photoCredit}>Artwork: Carolyn Gavin</figcaption>}
+    <figure className={styles.photo}>
+      <div className={styles.photoFrame} style={{ aspectRatio: ratio }}>
+        <img src={img(k, 1400)} alt={cap || label} loading="lazy" />
+        {credit && <span className={styles.photoCredit}>Artwork: Carolyn Gavin</span>}
+      </div>
+      {(cap || label) && <figcaption className={styles.caption}>{cap || label}</figcaption>}
     </figure>
   )
 }
@@ -315,7 +319,7 @@ export default function GroundswellPreview() {
           </div>
         </div>
         <div className={styles.mediaRow}>
-          <Photo k="gs-sense-affinity-01" label="Affinity mapping session" /><Photo k="gs-sense-affinity-02" label="Research synthesis" /><Photo k="gs-sense-affinity-03" label="Identifying interconnected forces" />
+          <Photo k="gs-sense-affinity-01" cap="Affinity-mapping the fieldwork into themes" /><Photo k="gs-sense-affinity-02" cap="Clustering observations into patterns" /><Photo k="gs-sense-affinity-03" cap="Naming the interconnected forces" />
         </div>
       </section>
 
@@ -358,7 +362,7 @@ export default function GroundswellPreview() {
         <div className={styles.bandInner}>
           <div className={styles.colText}>
             <p className={styles.label}>Concept to production</p>
-            <h2 className={styles.h2}>One idea became two.</h2>
+            <h2 className={styles.h2}>From a digital garden to a physical wall.</h2>
             <p className={styles.body}>
               The emotional outlet began as a digital “Garden” — an app where staff would speak a feeling and watch it bloom on a shared screen, with the patterns giving leadership anonymous insight. In production, that concept gave way to the physical Community Art Wall, where expression is tactile and human.
             </p>
@@ -381,7 +385,7 @@ export default function GroundswellPreview() {
           <div className={styles.colText}>
             <p className={styles.num}>06</p>
             <p className={styles.label}>The making</p>
-            <h2 className={styles.h2}>Securing it into existence.</h2>
+            <h2 className={styles.h2}>Concept to installation in ten weeks.</h2>
             <p className={styles.body}>
               Over a 10-week production sprint, we turned concept into installation, backed by roughly $30,000 in donated materials and services. I led donor outreach and secured the pod, woodworking, the sensor, the ceramic finger labyrinths, and the door locks. It was my meditation teacher, Catherine Liggett, who volunteered to author and record the meditations. Working remotely, I focused on coordination, documentation, and strategy.
             </p>
@@ -394,7 +398,7 @@ export default function GroundswellPreview() {
             </ol>
           </div>
         </div>
-        <div className={styles.mediaRow}><Photo k="gs-making-build-01" label="Fabrication" /><Photo k="gs-making-install-01" label="Installation day" /><Photo k="gs-finale" label="The team" /></div>
+        <div className={styles.mediaRow}><Photo k="gs-making-build-01" cap="Fabricating the pod" /><Photo k="gs-making-install-01" cap="Installation day at UPMC Magee" /><Photo k="gs-finale" cap="The team at completion" /></div>
       </section>
 
       {/* ── 12 · PLAY TESTING ── */}
@@ -414,7 +418,7 @@ export default function GroundswellPreview() {
           <div className={styles.colText}>
             <p className={styles.num}>07</p>
             <p className={styles.label}>The outcomes</p>
-            <h2 className={styles.h2}>It’s real.</h2>
+            <h2 className={styles.h2}>Installed and launched as a 12-month pilot.</h2>
             <p className={styles.body}>
               Groundswell is installed at UPMC Magee-Womens Hospital, launching a 12-month quality-improvement study for Cancer Services staff. We built a data-visualization platform to track and communicate findings, integrating survey data with documentation. Data is blurred to protect unpublished results.
             </p>
