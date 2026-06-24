@@ -54,10 +54,13 @@ export default function Home() {
           ]}
           cardVariant="file"
           // Privacy hold (2026-06-24): the /projects/groundswell case study is
-          // sealed (reproduces licensed "Blue Garden" artwork). Link removed so
-          // the flagship doesn't lead visitors to the auth wall. NOTE: the
+          // sealed (reproduces licensed "Blue Garden" artwork). CTA points to
+          // CMU's editorial feature instead of the gated case study. NOTE: the
           // thumbnails above (gs-cards, gs-artwall, gs-opener) still reproduce
-          // the artwork — swap to documentary photos in the compliant pass.
+          // the artwork — swap pending in the compliant pass.
+          href="https://cfa.cmu.edu/magazine/groundswell-designing-systems-care-those-who-care"
+          external
+          ctaLabel="Read the feature"
         />
 
         <ProjectPreview
