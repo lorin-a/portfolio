@@ -282,6 +282,24 @@ export default function GroundswellContent() {
         </div>
       </section>
 
+      {/* ==================== OPENING — personal way-in (Lorin's voice) ==================== */}
+      <section style={{ background: 'var(--color-bg)', padding: 'clamp(72px, 12vh, 156px) var(--container-padding)' }}>
+        <div style={{ width: 'min(100%, 680px)', margin: '0 auto' }}>
+          <AnimatedElement>
+            <p className={styles.componentLabel}>The way in</p>
+            <p style={{ fontFamily: 'var(--font-serif)', fontSize: 'clamp(1.3rem, 2.2vw, 1.7rem)', lineHeight: 1.45, color: 'var(--text-heading)', margin: '0 0 var(--space-md)' }}>
+              I come from a long line of healers, educators, and innovators: people who carry the weight of the world, an optimism for the future, and the passion to create change that benefits others. That is why I went back to grad school for design, and why I took Professor Kristin Hughes&rsquo; co-design course, <em>Designing with CARE: Co-Creating Solutions for Complex Care Coordination in Oncology</em>. I knew that learning and practicing co-design with a real community would be life-changing, and it was fitting that the course topic and my group&rsquo;s assignment aligned so closely with my journey.
+            </p>
+            <p style={{ fontFamily: 'var(--font-sans)', fontSize: 'var(--text-body-large)', lineHeight: 1.7, color: 'var(--text-body)', margin: '0 0 var(--space-md)' }}>
+              Stepping into the oncology department healed something in me. I have had a fear of death since I was ten, and I have always been drawn to the depths of the human experience and the taboo. My group was assigned to create a more supportive work environment for oncology staff, and within minutes of speaking to them, I knew we were cut from the same cloth: givers, healers, lovers, builders, dreamers. Supporting them turned out to be a lesson in supporting myself, and others who carry more than their capacity can hold.
+            </p>
+            <p style={{ fontFamily: 'var(--font-sans)', fontSize: 'var(--text-body-large)', lineHeight: 1.7, color: 'var(--text-body)', margin: 0 }}>
+              It started as a class project, one that would only amount to a final pitch to the hospital. But I felt strongly that my marketing skills could at least get this department a donated pod, a temporary solution to give them hope and respite even if nothing else came of it. I did not anticipate that securing that donation would align with a perfectly timed grant opportunity within the hospital for improving the workforce, or that the project would leave the classroom and become real.
+            </p>
+          </AnimatedElement>
+        </div>
+      </section>
+
       {/* ==================== 2. THE VISION ==================== */}
       <section id="vision" className={`${styles.parallaxSection} ${styles.parallaxDark}`}>
         <div className={styles.parallaxSticky}>
@@ -448,10 +466,13 @@ export default function GroundswellContent() {
              <p className={styles.componentLabelCenter}>Component 04</p>
       <h3 className={styles.breakTitle}>Reflection Cards</h3>
       <p className={styles.breakBodyBold}>
-              Guided reflection cards that help staff build a self-care practice through emotional validation and introductory exercises for emotional regulation.
+              My own healing journey led me to somatics and nervous-system approaches to wellbeing, and I wanted to channel that into the content. Research revealed how much validation and acknowledgment matter, so each card starts with that sentiment first and follows with an invitation to try an exercise.
             </p>
             <p className={styles.breakBody}>
-              By showing healthcare workers that the full spectrum of grief includes complex and contradictory emotions, the cards help create a more holistic culture of care. The combination of emotional identification, validation, and somatic exercises makes this a powerful tool for connection with self and others. Every staff member received their own deck; one set permanently lives in the pod.
+              I kept the language approachable and simple so that any audience and experience level could engage with it. The exercise descriptions come from known somatic methods, offering an entry point for building a relationship with the body and a ritual to return to for self-care.
+            </p>
+            <p className={styles.breakBody}>
+              By showing healthcare workers that the full spectrum of grief includes complex and contradictory emotions, the cards help create a more holistic culture of care. Every staff member received their own deck; one set permanently lives in the pod.
             </p>
           </AnimatedElement>
 
@@ -578,9 +599,15 @@ export default function GroundswellContent() {
         <div className={styles.parallaxSticky}>
           <div className={styles.stickyContentLight}>
             <h2 className={styles.stickyTitleLight}>What We Heard</h2>
-        <p className={styles.stickyBodyLightBold}>
-            Over 15 weeks embedded with oncology staff, we listened&mdash;in hallways, at nursing stations, and in quiet moments between shifts.
-        </p>
+            <p className={styles.stickyBodyLightBold}>
+              Part of what healed me in working with oncology staff was feeling connected to others who carry contradicting, complex emotional experiences with grace, who find their way back to gratitude even when they are also devastated.
+            </p>
+            <p className={styles.stickyBodyLight}>
+              As someone already aware of burnout in healthcare, it was not so much shocking as activating to hear, again and again, how under-resourced and unprepared staff are to carry the emotional toll of the work. When a former employee who had left because of the stress said, &ldquo;A special person can do this work forever, a good person can do it for a little while, most people couldn&rsquo;t do it for a day,&rdquo; it rang true as a perfect example of why this work is needed.
+            </p>
+            <p className={styles.stickyBodyLight}>
+              Over 15 weeks embedded with oncology staff, we listened, in hallways, at nursing stations, and in quiet moments between shifts.
+            </p>
         <p className={styles.stickyBodyLight}>
   We conducted contextual interviews while shadowing nurses across multiple occasions, observing the windowless environment, the cramped desks, the constant interruptions. We also held an in-depth interview with a former employee who could speak freely about the culture without fear of professional consequences.
         </p>
@@ -717,7 +744,10 @@ export default function GroundswellContent() {
           <div className={styles.stickyContentLight}>
             <h2 className={styles.stickyTitleLight}>The Making</h2>
             <p className={styles.stickyBodyLightBold}>
-              Over a 10-week production sprint, we turned concept into installation. Working hybrid between remote coordination and on-site collaboration, the team managed donor outreach, copywriting, and strategic partnerships that secured approximately $30,000 worth of donated materials and services.
+              Over a 10-week production sprint, we turned concept into installation, backed by roughly $30,000 in donated materials and services.
+            </p>
+            <p className={styles.stickyBodyLight}>
+              I led donor outreach and secured those assets and partnerships: the pod itself, the woodworking elements added to it, the sensor within it, the ceramic finger labyrinths, and the Schlage door locks. It was my meditation and shadow-work teacher, Catherine Liggett, who volunteered to co-edit, author, and record the meditations used in the study, which was a full-circle moment and a deeply generous offering. I drafted first-round copy for nearly all of the project, including the internal emails announcing it. I co-led the playtesting sessions, helped with the physical build and installation, and brainstormed and drafted iterations and concepts. Working remotely, outside of the two weeks of in-person install, I was mostly focused on project coordination, documentation, and strategy.
             </p>
             <p className={styles.stickyBodyLight}>
               The project required constant adaptation. Early staff feedback shifted our language from &ldquo;grief&rdquo; to &ldquo;restoration,&rdquo; reframing the messaging. Halfway through production, hospital administration required lockable doors on the pod. Our solution provided engagement, privacy, and emotional safety without surveillance&mdash;turning a constraint into an asset.
@@ -821,6 +851,9 @@ export default function GroundswellContent() {
 
           {/* Personal Reflection */}
           <AnimatedElement>
+            <p className={styles.breakBodyBold}>
+              What Groundswell changed for me is a strong belief in, and foundation for, co-design and generative design methodology: the inspiration, ideas, and power that come from relational design practices, and the role of the designer as a facilitator of existing wisdom, a connector across scales, and a translator between stakeholders.
+            </p>
             <p className={styles.breakBody}>
               Through Groundswell, we discovered what it means to practice healthcare design rooted in participatory research. We learned how to navigate transdisciplinary collaboration, coordinating physicians, nurses, fabricators, donors, meditation teachers, and hospital administrators toward a shared vision. More importantly, we learned to attune our design process to amplify rather than impose, to honor existing community innovations, and to build trust through sustained presence. This project fundamentally shaped how we approach design: not as outsiders with solutions, but as collaborators creating conditions for what&rsquo;s already trying to emerge.
             </p>
