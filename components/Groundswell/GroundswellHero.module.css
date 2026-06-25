@@ -12,7 +12,7 @@
   --on-dark-soft: rgba(251, 249, 246, 0.82);
   --on-dark-faint: rgba(251, 249, 246, 0.68);
   --hair: rgba(251, 249, 246, 0.16);
-  --accent: #B7C0AC;            /* sage-soft, readable on dark */
+  --accent: #C5CFA6;            /* homepage dark-gradient green */
 
   display: grid;
   grid-template-rows: auto 1fr;
@@ -98,17 +98,17 @@
   color: var(--on-dark);
   font-family: var(--font-heading);
   font-variation-settings: 'SOFT' 100, 'WONK' 1;   /* homepage header axis */
-  font-weight: 300;
+  font-weight: 200;
   font-size: clamp(2.2rem, 1.1rem + 4vw, 4.2rem);
-  line-height: 1.16;
+  line-height: 1.26;
   letter-spacing: -0.004em;
   text-wrap: balance;
   padding-bottom: 0.08em;          /* descender room for italic g/p */
 }
 .q em {
   font-style: italic;
-  font-weight: 300;
-  /* emphasis through form, not color — matches the homepage register */
+  font-weight: 340;
+  color: var(--accent);   /* green accent emphasis, a touch heavier than the light question */
 }
 
 /* ── metadata: a structured spec strip on a hairline ── */
@@ -117,15 +117,16 @@
   flex-wrap: wrap;
   justify-content: center;
   align-items: baseline;
-  max-width: min(66rem, 96vw);
+  max-width: min(82rem, 96vw);
   margin: var(--space-xl) auto 0;
-  padding-top: var(--space-md);
   border-top: 1px solid var(--hair);
+  border-bottom: 1px solid var(--hair);
 }
 .metaItem {
   display: grid;
-  gap: 0.55em;
-  padding: 0.1rem clamp(var(--space-sm), 2vw, var(--space-md));
+  justify-items: center;
+  gap: 0.5em;
+  padding: var(--space-md) clamp(var(--space-sm), 1.8vw, var(--space-md));
   text-align: center;
 }
 .metaItem + .metaItem {
@@ -139,10 +140,11 @@
 }
 .metaItem dd {
   margin: 0;
-  font-family: var(--font-body);
-  font-weight: 400;
-  font-size: 1rem;
-  line-height: 1.4;
+  font-family: var(--font-heading);
+  font-variation-settings: 'SOFT' 100, 'WONK' 1;
+  font-weight: 340;
+  font-size: clamp(1rem, 0.9rem + 0.5vw, 1.25rem);
+  line-height: 1.18;
   color: var(--on-dark);
 }
 

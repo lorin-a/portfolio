@@ -76,7 +76,7 @@ export default function GroundswellHero() {
       <section className={styles.hero}>
         <div className={styles.body}>
           <h1 className={styles.q} ref={qRef}>
-            Who better to design care than those who <em>give it</em>?
+            Who better to design care than those who <em>give it?</em>
           </h1>
           <dl className={styles.meta} ref={metaRef}>
             {META.map(([k, v]) => (

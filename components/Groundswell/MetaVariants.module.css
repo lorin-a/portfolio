@@ -41,6 +41,48 @@
   color: var(--accent);
 }
 
+/* Refined A/B — framed strip, serif values */
+.framed {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  max-width: min(82rem, 96vw);
+  margin: 0 auto;
+  border-top: 1px solid var(--hair);
+  border-bottom: 1px solid var(--hair);
+}
+.framedItem {
+  display: grid;
+  justify-items: center;
+  gap: 0.45em;
+  padding: var(--space-md) clamp(var(--space-sm), 1.8vw, var(--space-md));
+  text-align: center;
+}
+.framedItem + .framedItem { border-left: 1px solid var(--hair); }
+.idx {
+  font-family: var(--font-heading);
+  font-variation-settings: 'SOFT' 100, 'WONK' 1;
+  font-style: italic;
+  font-weight: 340;
+  font-size: 0.85rem;
+  color: rgba(183, 192, 172, 0.7);
+}
+.framedItem dt {
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.framedItem dd {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-variation-settings: 'SOFT' 100, 'WONK' 1;
+  font-weight: 340;
+  font-size: clamp(1rem, 0.9rem + 0.5vw, 1.25rem);
+  line-height: 1.18;
+  color: var(--on-dark);
+}
+
 /* Option 1 — inline */
 .inline {
   margin: 0;
