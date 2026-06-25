@@ -63,7 +63,7 @@ export default function GroundswellHero({ connectorsSvg }) {
   const introRef = useRef(null)
   const nodeEls = useRef([])
   const discRefs = useRef([])
-  const artClipRef = useRef(null)
+  const clipRefs = useRef([])
   const pillRefs = useRef([])
   const connRef = useRef(null)
   const diveRef = useRef(null)
@@ -91,8 +91,13 @@ export default function GroundswellHero({ connectorsSvg }) {
       const cx = (i) => mL() + CX[i] * mw()
       const cy = () => mT() + CY * mh()
       const d = () => RAD * 2 * mw()           // final circle diameter
-      const dL = () => d() * 1.34              // "large" diameter
       const bandH = () => sh() * 0.40
+      // half-stop: 4 big rectangles, evenly across, centred vertically
+      const RX = [0.155, 0.385, 0.615, 0.845]
+      const lx = (i) => sw() * RX[i]
+      const ly = () => sh() * 0.50
+      const rw = () => sw() * 0.21
+      const rh = () => sh() * 0.40
 
       const photos = nodeEls.current.filter(Boolean)
       const discs = discRefs.current.filter(Boolean)
@@ -119,10 +124,10 @@ export default function GroundswellHero({ connectorsSvg }) {
 
       // photos: art-wall starts as the band; others start as LARGE circles (hidden)
       gsap.set(art, { top: () => sh() - bandH(), left: 0, width: sw, height: bandH })
-      gsap.set(artClipRef.current, { borderRadius: 0 })
+      gsap.set(clipRefs.current.filter(Boolean), { borderRadius: 0 })
       others.forEach((o) => gsap.set(o.p, {
-        top: () => cy() - dL() / 2, left: () => cx(o.circle) - dL() / 2,
-        width: dL, height: dL, autoAlpha: 0,
+        top: () => ly() - rh() / 2, left: () => lx(o.circle) - rw() / 2,
+        width: rw, height: rh, autoAlpha: 0, scale: 0.85, transformOrigin: '50% 50%',
       }))
 
       gsap.set([introRef.current, diveRef.current], { autoAlpha: 0 })
@@ -137,35 +142,33 @@ export default function GroundswellHero({ connectorsSvg }) {
       tl.to(art, { top: 0, left: 0, width: sw, height: sh, duration: 1.4, ease: 'power2.inOut' }, 0)
       // 2 · HOLD full-bleed 1.4 → 2.6
 
-      // 3 · resolve into 4 LARGE photos + intro
+      // 3 · resolve into 4 LARGE rectangles + intro (the half-stop)
       tl.to(art, {
-        top: () => cy() - dL() / 2, left: () => cx(2) - dL() / 2, width: dL, height: dL,
-        duration: 1, ease: 'power2.inOut',
+        top: () => ly() - rh() / 2, left: () => lx(2) - rw() / 2, width: rw, height: rh,
+        duration: 1.1, ease: 'power2.inOut',
       }, 2.6)
-      tl.to(artClipRef.current, { borderRadius: '50%', duration: 1 }, 2.6)
-      others.forEach((o, i) => tl.to(o.p, { autoAlpha: 1, duration: 0.6 }, 2.8 + i * 0.12))
-      tl.to(introRef.current, { autoAlpha: 1, duration: 0.7 }, 3.1)
-      // 4 · HOLD large 3.7 → 4.5
+      others.forEach((o) => tl.to(o.p, { autoAlpha: 1, scale: 1, duration: 0.7, ease: 'power2.out' }, 2.85))
+      tl.to(introRef.current, { autoAlpha: 1, duration: 0.7 }, 3.2)
+      // 4 · HOLD large rectangles 3.7 → 4.7
 
-      // 5 · shrink to map scale
-      photos.forEach((p) => tl.to(p, {
-        top: () => cy() - d() / 2, width: d, height: d,
-        // left recomputed per node below
-        duration: 1, ease: 'power2.inOut',
-      }, 4.5))
-      photos.forEach((p, i) => tl.to(p, { left: () => cx(NODES[i].circle) - d() / 2, duration: 1, ease: 'power2.inOut' }, 4.5))
+      // 5 · rectangles → circles (shrink, move, round) into final map positions
+      photos.forEach((p, i) => tl.to(p, {
+        top: () => cy() - d() / 2, left: () => cx(i) - d() / 2, width: d, height: d,
+        duration: 1.2, ease: 'power3.inOut',
+      }, 4.7))
+      tl.to(clipRefs.current.filter(Boolean), { borderRadius: '50%', duration: 1.2, ease: 'power3.inOut' }, 4.7)
 
       // 6 · cross-fade photos → labelled circles
-      tl.to(discs, { autoAlpha: 1, duration: 0.6 }, 5.6)
-      tl.to(photos, { autoAlpha: 0, duration: 0.6 }, 5.7)
+      tl.to(discs, { autoAlpha: 1, duration: 0.6 }, 6.0)
+      tl.to(photos, { autoAlpha: 0, duration: 0.6 }, 6.1)
 
       // 7 · pills appear, then the lines draw on
-      tl.to(pillRefs.current.filter(Boolean), { autoAlpha: 1, duration: 0.5, stagger: 0.05 }, 5.9)
-      tl.to(connRef.current, { autoAlpha: 1, duration: 0.2 }, 6.2)
-      tl.to(connRef.current, { clipPath: 'inset(0 0% 0 0)', duration: 1.2, ease: 'power1.inOut' }, 6.2)
+      tl.to(pillRefs.current.filter(Boolean), { autoAlpha: 1, duration: 0.5, stagger: 0.05 }, 6.3)
+      tl.to(connRef.current, { autoAlpha: 1, duration: 0.2 }, 6.6)
+      tl.to(connRef.current, { clipPath: 'inset(0 0% 0 0)', duration: 1.3, ease: 'power1.inOut' }, 6.6)
 
       // 8 · dive
-      tl.to(diveRef.current, { autoAlpha: 1, duration: 0.5 }, 7.6)
+      tl.to(diveRef.current, { autoAlpha: 1, duration: 0.5 }, 8.1)
 
       // photo returns on hover of its labelled circle
       discs.forEach((disc, i) => {
@@ -230,7 +233,7 @@ export default function GroundswellHero({ connectorsSvg }) {
             ref={(el) => (nodeEls.current[i] = el)}
             className={`${styles.photo} ${n.hero ? styles.art : ''}`}
           >
-            <span className={styles.clip} ref={n.hero ? artClipRef : null}>
+            <span className={styles.clip} ref={(el) => (clipRefs.current[i] = el)}>
               <img src={img(n.key)} alt={n.label} />
             </span>
           </figure>
