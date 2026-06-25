@@ -7,17 +7,17 @@ import { cloudImg, GS_IMAGES } from '@/lib/cloudinary'
 import styles from './GroundswellHero.module.css'
 
 /* ============================================================================
-   Groundswell — case-study OPENING (hero + ecosystem map in one).
-   DARK throughout. The hero's art-wall image is the SAME element that grows to
-   full-bleed (held a good while), then contracts into its circle on Lorin's
-   ecosystem-map SVG (used verbatim as the backdrop; its pale marks read on the
-   dark field). Photos fill the circles. Reduced-motion: static hero only.
+   Groundswell — case-study OPENING (mega-hero). DARK throughout.
+   Hero question → the art-wall image goes full-bleed → resolves into 4 LARGE
+   photos + intro → they shrink → cross-fade into labelled circles (photo on
+   hover) → Lorin's connector lines draw on → the ecosystem (with moment-pills)
+   resolves. "Dive into the process ↓" is the threshold to the light process.
+   Geometry + lines come verbatim from her Figma export (1736×1080).
    ============================================================================ */
 
 gsap.registerPlugin(ScrollTrigger)
 
-const img = (key, w = 2000) => cloudImg(GS_IMAGES[key], w)
-const MAP_SRC = '/images/groundswell/gs-ecosystem-diagram.svg'
+const img = (key, w = 1800) => cloudImg(GS_IMAGES[key], w)
 
 const META = [
   ['Role', 'Design research, co-design'],
@@ -26,7 +26,7 @@ const META = [
   ['Outcome', 'Live 12-month pilot'],   // placeholder to verify
 ]
 
-// her map, left→right. `hero` = the morphing art-wall (circle index 2).
+// circles, her left→right order; node 2 (art-wall) is the morphing hero image.
 const NODES = [
   { key: 'gs-ctb-email', label: 'CTB Email', circle: 0 },
   { key: 'gs-pod', label: 'Pod', circle: 1 },
@@ -34,108 +34,156 @@ const NODES = [
   { key: 'gs-cards', label: 'Reflection Cards', circle: 3 },
 ]
 
-// from gs-ecosystem-diagram.svg (viewBox 1736×1080): clip squares 293.441².
-const CX = [0.1230, 0.3745, 0.6261, 0.8777]
-const CY = 0.4703
-const RAD = 0.0845                       // circle radius as fraction of map width
+// moment-pills, from her SVG (dashed rects). col 0–2, row top/bottom.
+const PILLS = [
+  { label: 'Arrive at Work', col: 0, row: 't' },
+  { label: 'Take a Break', col: 1, row: 't' },
+  { label: 'Leave Work', col: 2, row: 't' },
+  { label: 'Patient Loss', col: 0, row: 'b' },
+  { label: 'Hard Moment', col: 1, row: 'b' },
+  { label: '1:1 Meeting', col: 2, row: 'b' },
+]
+
+// fractions of the 1736×1080 map frame
+const CX = [0.1230, 0.3745, 0.6261, 0.8777]   // circle centres x
+const CY = 0.4703                              // circle centres y
+const RAD = 0.0845                             // circle radius (frac of map width)
+const PX = [0.1220, 0.5000, 0.8770]            // pill centres x
+const PY = { t: 0.0598, b: 0.9402 }            // pill centres y
+const PW = 0.2409                              // pill width (frac of map width)
+const PH = 0.1145                              // pill height (frac of map height)
 const MAP_AR = 1736 / 1080
 
-export default function GroundswellHero() {
+export default function GroundswellHero({ connectorsSvg }) {
   const wrapRef = useRef(null)
   const stageRef = useRef(null)
   const heroTextRef = useRef(null)
   const qRef = useRef(null)
   const metaRef = useRef(null)
-  const mapRef = useRef(null)
+  const introRef = useRef(null)
   const nodeEls = useRef([])
+  const discRefs = useRef([])
   const artClipRef = useRef(null)
-  const capRefs = useRef([])
-  const thesisRef = useRef(null)
+  const pillRefs = useRef([])
+  const connRef = useRef(null)
   const diveRef = useRef(null)
 
   useEffect(() => {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
 
+    const hoverCleanups = []
     const ctx = gsap.context(() => {
-      // ── on-load hero reveal ──
+      // on-load hero reveal
       gsap.set(metaRef.current, { autoAlpha: 0, y: 16 })
       gsap.set(qRef.current, { clipPath: 'inset(100% 0 0 0)', y: 22 })
       gsap.timeline({ defaults: { ease: 'power3.out' } })
-        .to(qRef.current, {
-          clipPath: 'inset(0% 0 0 0)', y: 0, duration: 1.05,
-          onComplete: () => gsap.set(qRef.current, { clipPath: 'none' }),
-        }, 0.2)
+        .to(qRef.current, { clipPath: 'inset(0% 0 0 0)', y: 0, duration: 1.05, onComplete: () => gsap.set(qRef.current, { clipPath: 'none' }) }, 0.2)
         .to(metaRef.current, { autoAlpha: 1, y: 0, duration: 0.7 }, 0.75)
 
-      // ── map geometry: her layout, fit into a band BELOW the thesis ──
+      // ── map geometry: her layout, fit into a band below the thesis ──
       const sw = () => stageRef.current.getBoundingClientRect().width
       const sh = () => stageRef.current.getBoundingClientRect().height
-      const fitH = () => sh() * 0.54
-      const mw = () => Math.min(sw() * 0.9, fitH() * MAP_AR)
+      const fitH = () => sh() * 0.6
+      const mw = () => Math.min(sw() * 0.92, fitH() * MAP_AR)
       const mh = () => mw() / MAP_AR
       const mL = () => (sw() - mw()) / 2
-      const mT = () => sh() * 0.32 + (fitH() - mh()) / 2
+      const mT = () => sh() * 0.30 + (fitH() - mh()) / 2
       const cx = (i) => mL() + CX[i] * mw()
       const cy = () => mT() + CY * mh()
-      const d = () => RAD * 2 * mw()
+      const d = () => RAD * 2 * mw()           // final circle diameter
+      const dL = () => d() * 1.34              // "large" diameter
       const bandH = () => sh() * 0.40
 
+      const photos = nodeEls.current.filter(Boolean)
+      const discs = discRefs.current.filter(Boolean)
       const art = nodeEls.current[2]
-      const others = NODES
-        .map((n, i) => ({ el: nodeEls.current[i], circle: n.circle, hero: n.hero }))
-        .filter((o) => !o.hero)
+      const others = NODES.map((n, i) => ({ p: nodeEls.current[i], circle: n.circle, hero: n.hero })).filter((o) => !o.hero)
 
-      // initial states
+      // position the connector layer + pills over the same map box
+      gsap.set(connRef.current, { top: mT, left: mL, width: mw, height: mh, autoAlpha: 0 })
+      gsap.set(connRef.current, { clipPath: 'inset(0 100% 0 0)' })   // hidden, will sweep open L→R
+      pillRefs.current.filter(Boolean).forEach((el, i) => {
+        const P = PILLS[i]
+        gsap.set(el, {
+          left: () => mL() + PX[P.col] * mw() - (PW * mw()) / 2,
+          top: () => mT() + PY[P.row] * mh() - (PH * mh()) / 2,
+          width: () => PW * mw(), height: () => PH * mh(), autoAlpha: 0,
+        })
+      })
+
+      // discs (labelled circles) sit at final positions, hidden until reveal
+      discs.forEach((el, i) => gsap.set(el, {
+        top: () => cy() - d() / 2, left: () => cx(NODES[i].circle) - d() / 2,
+        width: d, height: d, autoAlpha: 0,
+      }))
+
+      // photos: art-wall starts as the band; others start as LARGE circles (hidden)
       gsap.set(art, { top: () => sh() - bandH(), left: 0, width: sw, height: bandH })
       gsap.set(artClipRef.current, { borderRadius: 0 })
-      others.forEach((o) => gsap.set(o.el, {
-        top: () => cy() - d() / 2, left: () => cx(o.circle) - d() / 2,
-        width: d, height: d, autoAlpha: 0, scale: 0.8, transformOrigin: '50% 50%',
+      others.forEach((o) => gsap.set(o.p, {
+        top: () => cy() - dL() / 2, left: () => cx(o.circle) - dL() / 2,
+        width: dL, height: dL, autoAlpha: 0,
       }))
-      gsap.set(mapRef.current, { top: mT, left: mL, width: mw, height: mh, autoAlpha: 0 })
-      gsap.set([thesisRef.current, diveRef.current], { autoAlpha: 0 })
 
-      // ── scrubbed transformation (slow; long dwell on the full image) ──
+      gsap.set([introRef.current, diveRef.current], { autoAlpha: 0 })
+
       const tl = gsap.timeline({
         defaults: { ease: 'none' },
         scrollTrigger: { trigger: wrapRef.current, start: 'top top', end: 'bottom bottom', scrub: 0.5, invalidateOnRefresh: true },
       })
 
-      // 1 · hero leaves; the band image slowly grows to full-bleed
+      // 1 · hero leaves; band image grows to full-bleed
       tl.to(heroTextRef.current, { autoAlpha: 0, y: -48, duration: 0.6, ease: 'power2.in' }, 0)
-      tl.to(art, { top: 0, left: 0, width: sw, height: sh, duration: 1.6, ease: 'power2.inOut' }, 0)
+      tl.to(art, { top: 0, left: 0, width: sw, height: sh, duration: 1.4, ease: 'power2.inOut' }, 0)
+      // 2 · HOLD full-bleed 1.4 → 2.6
 
-      // 2 · HOLD full-bleed (dwell on the image) — 1.6 → 2.9
-
-      // 3 · image contracts into its circle; the LABELLED map fades in
+      // 3 · resolve into 4 LARGE photos + intro
       tl.to(art, {
-        top: () => cy() - d() / 2, left: () => cx(2) - d() / 2,
-        width: d, height: d, duration: 1, ease: 'power2.inOut',
-      }, 2.9)
-      tl.to(artClipRef.current, { borderRadius: '50%', duration: 1 }, 2.9)
-      tl.to(mapRef.current, { autoAlpha: 1, duration: 0.9 }, 3.1)
-      tl.to(thesisRef.current, { autoAlpha: 1, duration: 0.7 }, 3.6)
+        top: () => cy() - dL() / 2, left: () => cx(2) - dL() / 2, width: dL, height: dL,
+        duration: 1, ease: 'power2.inOut',
+      }, 2.6)
+      tl.to(artClipRef.current, { borderRadius: '50%', duration: 1 }, 2.6)
+      others.forEach((o, i) => tl.to(o.p, { autoAlpha: 1, duration: 0.6 }, 2.8 + i * 0.12))
+      tl.to(introRef.current, { autoAlpha: 1, duration: 0.7 }, 3.1)
+      // 4 · HOLD large 3.7 → 4.5
 
-      // 4 · HOLD to take in the labelled map — 4.0 → 4.9
+      // 5 · shrink to map scale
+      photos.forEach((p) => tl.to(p, {
+        top: () => cy() - d() / 2, width: d, height: d,
+        // left recomputed per node below
+        duration: 1, ease: 'power2.inOut',
+      }, 4.5))
+      photos.forEach((p, i) => tl.to(p, { left: () => cx(NODES[i].circle) - d() / 2, duration: 1, ease: 'power2.inOut' }, 4.5))
 
-      // 5 · the circles turn into images, one at a time (room to notice each)
-      others.forEach((o, i) => {
-        tl.to(o.el, { autoAlpha: 1, scale: 1, duration: 0.7, ease: 'back.out(1.3)' }, 4.9 + i * 0.5)
+      // 6 · cross-fade photos → labelled circles
+      tl.to(discs, { autoAlpha: 1, duration: 0.6 }, 5.6)
+      tl.to(photos, { autoAlpha: 0, duration: 0.6 }, 5.7)
+
+      // 7 · pills appear, then the lines draw on
+      tl.to(pillRefs.current.filter(Boolean), { autoAlpha: 1, duration: 0.5, stagger: 0.05 }, 5.9)
+      tl.to(connRef.current, { autoAlpha: 1, duration: 0.2 }, 6.2)
+      tl.to(connRef.current, { clipPath: 'inset(0 0% 0 0)', duration: 1.2, ease: 'power1.inOut' }, 6.2)
+
+      // 8 · dive
+      tl.to(diveRef.current, { autoAlpha: 1, duration: 0.5 }, 7.6)
+
+      // photo returns on hover of its labelled circle
+      discs.forEach((disc, i) => {
+        const photo = nodeEls.current[i]
+        const enter = () => gsap.to(photo, { autoAlpha: 1, duration: 0.3, overwrite: 'auto' })
+        const leave = () => gsap.to(photo, { autoAlpha: 0, duration: 0.3, overwrite: 'auto' })
+        disc.addEventListener('mouseenter', enter)
+        disc.addEventListener('mouseleave', leave)
+        hoverCleanups.push(() => { disc.removeEventListener('mouseenter', enter); disc.removeEventListener('mouseleave', leave) })
       })
-
-      // 6 · invitation into process
-      tl.to(diveRef.current, { autoAlpha: 1, duration: 0.5 }, 6.6)
     }, wrapRef)
 
-    return () => ctx.revert()
+    return () => { hoverCleanups.forEach((fn) => fn()); ctx.revert() }
   }, [])
 
   return (
     <div className={styles.wrap} ref={wrapRef}>
       <div className={styles.stage} ref={stageRef}>
-        {/* Lorin's ecosystem map, used verbatim as the backdrop (pale on dark) */}
-        <img className={styles.map} ref={mapRef} src={MAP_SRC} alt="" aria-hidden="true" />
-
         <header className={styles.nav}>
           <span className={styles.navMark}>Groundswell</span>
           <span className={styles.navLabel}>Case study</span>
@@ -149,35 +197,44 @@ export default function GroundswellHero() {
             </h1>
             <dl className={styles.meta} ref={metaRef}>
               {META.map(([k, v]) => (
-                <div key={k} className={styles.metaItem}>
-                  <dt>{k}</dt>
-                  <dd>{v}</dd>
-                </div>
+                <div key={k} className={styles.metaItem}><dt>{k}</dt><dd>{v}</dd></div>
               ))}
             </dl>
           </div>
         </div>
 
-        {/* circles — node 2 (art-wall) is the morphing hero image */}
+        <p className={styles.intro} ref={introRef}>
+          When the people who give care help design it, the outcome is a{' '}
+          <em>connected system of care</em>.
+        </p>
+
+        {/* connector lines (her export), recoloured + revealed */}
+        <div className={styles.connectors} ref={connRef} aria-hidden="true" dangerouslySetInnerHTML={{ __html: connectorsSvg }} />
+
+        {/* moment-pills */}
+        {PILLS.map((p, i) => (
+          <span key={p.label} ref={(el) => (pillRefs.current[i] = el)} className={styles.pill}>{p.label}</span>
+        ))}
+
+        {/* labelled circles (end state) */}
+        {NODES.map((n, i) => (
+          <span key={`disc-${n.key}`} ref={(el) => (discRefs.current[i] = el)} className={styles.disc}>
+            <span className={styles.discLabel}>{n.label}</span>
+          </span>
+        ))}
+
+        {/* photos (node 2 morphs in from the band; all fade to the discs, photo on hover) */}
         {NODES.map((n, i) => (
           <figure
             key={n.key}
             ref={(el) => (nodeEls.current[i] = el)}
-            className={`${styles.node} ${n.hero ? styles.art : ''}`}
+            className={`${styles.photo} ${n.hero ? styles.art : ''}`}
           >
             <span className={styles.clip} ref={n.hero ? artClipRef : null}>
               <img src={img(n.key)} alt={n.label} />
             </span>
-            <figcaption className={styles.cap} ref={(el) => (capRefs.current[i] = el)}>{n.label}</figcaption>
           </figure>
         ))}
-
-        {/* thesis (placeholder copy) */}
-        <p className={styles.thesis} ref={thesisRef}>
-          When the people who give care help design it, the outcome is a{' '}
-          <em>connected system of care</em> — one that centers recognition,
-          environment, and culture.
-        </p>
 
         <p className={styles.dive} ref={diveRef}>
           How did we get there? <span className={styles.diveCta}>Dive into the process ↓</span>

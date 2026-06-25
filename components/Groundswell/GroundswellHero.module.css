@@ -1,9 +1,8 @@
 /* ============================================================================
-   GroundswellHero — case-study OPENING (hero + ecosystem map in one).
-   DARK type-forward hero whose art-wall image is the single element that grows
-   to full-bleed and contracts into its circle on Lorin's ecosystem map. Ground
-   flips DARK → LIGHT on landing; photos fill the circles; her connector curves
-   beneath. Colours tuned to site tokens for cohesion.
+   GroundswellHero — case-study OPENING (mega-hero). DARK throughout.
+   Hero → art-wall full-bleed → 4 large photos + intro → shrink → cross-fade to
+   labelled circles (photo on hover) → her connector lines draw on → ecosystem.
+   Lines/positions come from her Figma export (1736×1080).
    ============================================================================ */
 
 .wrap {
@@ -11,16 +10,14 @@
   --on-dark-soft: rgba(251, 249, 246, 0.82);
   --on-dark-faint: rgba(251, 249, 246, 0.68);
   --hair: rgba(251, 249, 246, 0.16);
-  --accent: #C5CFA6;            /* homepage dark-gradient green (on dark) */
-  --bandH: clamp(28vh, 36svh, 42vh);
+  --accent: #C5CFA6;
 
   position: relative;
-  height: 540vh;
+  height: 600vh;
   background: #252525;
   color: var(--on-dark);
   font-family: var(--font-body);
 }
-
 .stage {
   position: sticky;
   top: 0;
@@ -68,11 +65,11 @@
 .heroText {
   position: absolute;
   top: 0; left: 0; right: 0;
-  bottom: var(--bandH);
+  bottom: 40vh;
   z-index: 4;
   display: grid;
   place-content: center;
-  padding: 5rem var(--space-md) var(--space-lg);   /* clear nav; buffer above band */
+  padding: 5rem var(--space-md) var(--space-lg);
 }
 .body {
   position: relative;
@@ -81,7 +78,6 @@
   justify-items: center;
   text-align: center;
   width: 100%;
-  padding: var(--space-lg) var(--space-md);
 }
 .body::before {
   content: '';
@@ -107,7 +103,6 @@
 }
 .q em { font-style: italic; font-weight: 340; color: var(--accent); }
 
-/* ── metadata strip ── */
 .meta {
   display: flex;
   flex-wrap: wrap;
@@ -142,58 +137,11 @@
   color: var(--on-dark);
 }
 
-/* ── Lorin's ecosystem-map SVG, used verbatim as the backdrop ── */
-.map {
-  position: absolute;
-  z-index: 2;
-  object-fit: fill;     /* box is set in JS to the SVG's aspect ratio */
-  pointer-events: none;
-}
-
-/* ── circle nodes (node .art is the morphing art-wall) ── */
-.node { position: absolute; z-index: 3; }
-.art { left: 0; right: 0; bottom: 0; height: var(--bandH); }
-
-.clip {
-  display: block;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  box-shadow: 0 18px 44px rgba(0, 0, 0, 0.4);
-}
-.node:not(.art) .clip { border-radius: 50%; }
-.clip img { display: block; width: 100%; height: 100%; object-fit: cover; }
-
-.cap {
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-  margin-top: 16px;
-  width: max-content;
-  max-width: 18ch;
-  text-align: center;
-  font-family: var(--font-heading);
-  font-variation-settings: 'SOFT' 100, 'WONK' 1;
-  font-weight: 340;
-  font-size: clamp(0.95rem, 1.4vw, 1.2rem);
-  color: var(--on-dark);
-  opacity: 0;
-  transition: opacity var(--motion-fast) var(--ease-out);
-  pointer-events: none;
-}
-@media (hover: hover) {
-  .node:hover .cap { opacity: 1; }
-}
-@media (hover: none) {
-  .cap { opacity: 1; }
-}
-
-/* ── thesis (on the light landing) ── */
-.thesis {
+/* ── intro (with the large photos) ── */
+.intro {
   position: absolute;
   z-index: 4;
-  top: 10vh;
+  top: 9vh;
   left: 50%;
   transform: translateX(-50%);
   width: min(40rem, 90vw);
@@ -202,17 +150,78 @@
   font-family: var(--font-heading);
   font-variation-settings: 'SOFT' 100, 'WONK' 1;
   font-weight: 240;
-  font-size: clamp(1.2rem, 0.9rem + 1.1vw, 1.7rem);
-  line-height: 1.34;
+  font-size: clamp(1.3rem, 1rem + 1.2vw, 2rem);
+  line-height: 1.3;
   color: var(--on-dark);
 }
-.thesis em { font-style: italic; font-weight: 340; color: var(--accent); }
+.intro em { font-style: italic; font-weight: 340; color: var(--accent); }
+
+/* ── her connector lines (recoloured + revealed) ── */
+.connectors { position: absolute; z-index: 2; pointer-events: none; }
+.connectors svg { display: block; width: 100%; height: 100%; }
+.connectors path { fill: var(--accent); }
+
+/* ── moment-pills ── */
+.pill {
+  position: absolute;
+  z-index: 3;
+  display: grid;
+  place-content: center;
+  text-align: center;
+  padding: 0 1rem;
+  border: 1.5px dashed color-mix(in srgb, var(--on-dark) 30%, transparent);
+  border-radius: 999px;
+  font-family: var(--font-heading);
+  font-variation-settings: 'SOFT' 100, 'WONK' 1;
+  font-weight: 340;
+  font-size: clamp(0.8rem, 1.1vw, 1rem);
+  color: var(--on-dark-soft);
+}
+
+/* ── labelled circles (end state) ── */
+.disc {
+  position: absolute;
+  z-index: 3;
+  display: grid;
+  place-content: center;
+  text-align: center;
+  border-radius: 50%;
+  border: 1.5px solid color-mix(in srgb, var(--accent) 55%, transparent);
+  background: color-mix(in srgb, var(--accent) 6%, transparent);
+}
+.discLabel {
+  padding: 0 0.6em;
+  font-family: var(--font-heading);
+  font-variation-settings: 'SOFT' 100, 'WONK' 1;
+  font-weight: 340;
+  font-size: clamp(0.95rem, 1.3vw, 1.2rem);
+  color: var(--on-dark);
+}
+
+/* ── photos (node .art morphs in from the band; fade to discs, photo on hover) ── */
+.photo {
+  position: absolute;
+  z-index: 4;
+  margin: 0;
+  pointer-events: none;   /* hover handled on the disc */
+}
+.art { left: 0; right: 0; bottom: 0; height: 40vh; }
+.clip {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 50%;
+  box-shadow: 0 18px 44px rgba(0, 0, 0, 0.4);
+}
+.art .clip { border-radius: 0; }
+.clip img { display: block; width: 100%; height: 100%; object-fit: cover; }
 
 /* ── dive cue ── */
 .dive {
   position: absolute;
   z-index: 4;
-  bottom: 7vh;
+  bottom: 6vh;
   left: 50%;
   transform: translateX(-50%);
   margin: 0;
@@ -222,7 +231,7 @@
 }
 .diveCta { color: var(--accent); }
 
-/* ── persistent photo/artwork credit ── */
+/* ── persistent credit ── */
 .credit {
   position: absolute;
   z-index: 5;
@@ -248,5 +257,5 @@
 @media (prefers-reduced-motion: reduce) {
   .wrap { height: auto; }
   .stage { position: relative; height: 100svh; }
-  .map, .thesis, .dive, .cap, .node:not(.art) { display: none; }
+  .connectors, .pill, .disc, .intro, .dive, .photo:not(.art) { display: none; }
 }
