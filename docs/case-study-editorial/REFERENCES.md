@@ -100,3 +100,76 @@ act-dividers — dark claim → light reading + inline evidence → full-bleed p
 proof → dark claim. Sense / Weave / Shape as the three breaths, bookended by the
 question-hero and a quiet close. Palette = the real homepage tokens
 (sage #A8B5A0 / deep #5E6B54, cream #FBF9F6, ink #2C2C28), so it belongs.
+
+---
+
+## E. The balance question — how much information + process to show (added 2026-06-25)
+
+Six references Lorin sent specifically to calibrate *the amount* of info/process —
+between bare-bones and too-full-bleed. Her verdict on each is the calibration
+curve; rendered live (full-scroll) and cross-checked against the Figma
+"Outstanding UX/UI Case Studies (Community)" set (10 curated studies — Leah Lee,
+Aaron Rudyk, et al.). The two LOVEs (Pearl Sequeira/CNN, Michaël Bernard) remain
+the north star for *register*; these six set the *dosage*.
+
+| Site | URL | Lorin's verdict | What it marks |
+|---|---|---|---|
+| Dzierson — Multimodal AI | dzierson.com/project/cc5b34e1… | "minimal but I appreciate it" | **floor.** One gear: stacked screenshots beside one prose essay. No sectioning. |
+| Dzierson — Agentic OS | dzierson.com/project/d8307ba2… | "bare bones, do better" | floor. Same template; product description over process reasoning. |
+| Karolis Kosas — CUJO | karoliskosas.com/cujo-3 | "too full bleed for my taste" | **ceiling.** ~80% polished visuals, full-bleed default; research *asserted*, not shown. Gorgeous illustration, no evidence scaffolding. |
+| Robin Noguier — SnickSnack | robin-noguier.com/project/snicksnack | "overly simple… show craft AND depth" | floor on depth. Beautiful *what*, skips the *why/how* between research and solution. |
+| **Gloria Lo — Rokt** ★ | glorialo.design/work/rokt | "good balance and flow" | **TARGET.** |
+| **Abdus Salam — TV Guide** ★ | abdussalam.pk/project/tv-guide-app | "good balance and flow" | **TARGET.** (Also in the Figma set.) |
+
+**THE BALANCE BAND (what the two targets do that the others don't):**
+1. **Process is a labeled spine, not one essay.** 8–13 named sequential beats whose
+   headings alone tell the story. Dzierson dumps to one prose column; Karolis/Robin
+   let imagery set rhythm with no reasoning spine.
+2. **Research shown as real artifacts, not asserted.** Gloria: a literal sticky-note
+   affinity-map photo. Abdus: a detailed journey map + two-method research breakdown
+   + persona grid. The floor/ceiling sites *say* "we did research" and show finished
+   UI instead. Evidence is what reads as depth.
+3. **~50/50 research-to-craft, sequenced front-to-back.** Half on reasoning
+   (problem → research → synthesis → decisions), half on craft (wireframes → system
+   → final UI → results), results last. Karolis/Robin are ~75–80% craft.
+4. **Images contained to the text column by default; full-bleed rationed.** Gloria
+   keeps every non-hero image at ~58% width in one centered column — that single
+   discipline IS the "balance." Karolis defaults to full-bleed everywhere → the
+   "too full bleed" verdict. The fix isn't fewer images; it's images *inside* the
+   column, full-bleed used only at the hero + 2–3 emphasis beats.
+
+Stated plainly: one centered column · 8–12 labeled sections · research as artifacts
+for ~half the length · craft + results the other half · full-bleed at hero + 2–3
+emphasis beats only · a fast orientation block (premise + role + outcome) near the
+top · a reflective takeaways close.
+
+**STEALABLE MOVES:**
+- **Verb-phrase section spine** — name each beat as an action ("Understanding the
+  problem," "Narrowing the scope," "Validating the designs"); the ToC reads as the
+  process narrative. *(Our wireframe marks are mostly nouns — convert during the
+  content pour.)*
+- **Top orientation block** — premise + Role + Outcome in the first ~1.5 screens.
+  *(We have this: the 90-second overview + StatRow.)*
+- **Show the raw research artifact** — affinity-map photo, journey/synthesis map.
+  Honest artifacts read as more rigorous than over-polished infographics. *(Our
+  contact sheet + system map + synthesis diagram are the analogs — keep them
+  looking like real artifacts, not slick infographics.)*
+- **One ambitious full-width synthesis exhibit** (Abdus's journey map) to prove
+  depth in a single screen. *(Our Sense→intervention diagram is the candidate.)*
+- **Two-column "methods" breakdown** — Method #1 / #2 side by side + pull-quote +
+  data callout, to make research scannable without thinning it.
+- **Contain images to the column by default; ration full-bleed** to hero + 2–3
+  beats. The single rule separating "balanced" from "too full bleed." *(Audit our
+  `wide`/full-bleed usage against this when content lands.)*
+- **HMW or claim hero** — a provocation as question or one-line thesis over a single
+  strong image, not a wall of tags. *(This is our question-hero.)*
+- **Reflective takeaways close** — 3 earned lessons + a measurable result, then
+  prev/next. Ends on judgment, not screenshots. *(This is our Reflection beat.)*
+
+**Bottom line for our base:** the v2 wireframe already sits inside the band — single
+centered column, labeled Sense/Weave/Shape spine, artifact devices, orientation
+block up top, reflective close. The two calibration points the targets surface, to
+apply during the content pour (not as speculative device edits now): (a) convert
+beat marks to **verb-phrase signposts** so the spine skims as a story, and (b)
+**ration full-bleed** to the hero + 2–3 emphasis beats, containing the rest to the
+column. Both are content-led, exactly per Lorin's "let the content dictate."
