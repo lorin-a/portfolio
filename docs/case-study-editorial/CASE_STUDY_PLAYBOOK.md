@@ -37,16 +37,23 @@ Personal hook + methodical detail, one breath. That is the whole trick:
 
 ## 2. The reference set
 
-| Site | URL | What it teaches (architecture) | What it teaches (voice) |
-|---|---|---|---|
-| **Ellen Covey / The Beakery** ⭐ | ellencovey.com/the-beakery | Layered typographic hero (title behind mockups); left metadata column; research rendered as her own illustrated personas w/ Goals(green)/Frustrations(coral); left chapter-tick nav | **The model.** First-person narrative + rigor + warmth; questions as section openers; named methods; concrete specifics; footnotes |
-| **Ellen Covey / home** | ellencovey.com | Per-project **positioning tags** naming each piece's strength; one accent color per project; layered photo-over-name hero; charming microcopy | "Written by a human who likes em dashes" — personality in the colophon |
-| **Sanvi / Explora** | sanvithi.com/explora | At-a-glance overview block w/ big impact stats ($1.2M · 100% · 9→1); named design decisions ("The Split-Workspace Grid"); narrow editorial column | Restrained/strategic; named problem/solution/result ("Digital Chaos"); quantified everything; first-person ownership |
-| **Adam Hickey / SAP** | adamhickey.com/case-study/sap-product-maturity.html | Sticky top chapter nav; **numbered phase spine** (1→4); artifact cards w/ labeled sub-lists (Focus areas / Highlights / Benefits); impact **table** (Dimension \| Outcome) | Consultant-clean; thesis-statement cards; can read corporate — borrow clarity, not tone |
-| **Amy La / Untitled Lyrics** | amylalai.com/untitledlyrics-fromhome | Left sticky section nav (TL;DR · Problem · Research · Solution · Learnings); big serif statement openers; step walkthroughs w/ device mockups | Calm, clear, product-walkthrough voice |
-| **Chaachie / Restore** | chaachiedesigns.framer.website/newrestore | Brand-forward repeated-wordmark hero; dark + green + coral color-blocking; staged conversational sections | **Personality extreme.** Statement-headers the body completes ("Reading sucks." → "At least that's what I thought."). Too flip for Lorin's register; device is borrowable in moderation |
-| **Rachel Chen / OpenAI** | rachelchen.tech/projects/openai | Left sticky chapter nav (thorough list); mono uppercase labels; gradient "cover" card hero; tidy metadata row | Minimal, restrained |
-| **Jesse Warren / DemocracyOS** | jessewarren.com/democracy-os | **Big centered act-dividers** (huge serif "Discovery" / "Design") segmenting the narrative; modular grid hero | Civic-product clarity |
+The full reference inventory — every site Lorin has pointed at, with concrete
+study notes and the two LOVEs (Pearl Sequeira/CNN, Michaël Bernard) — now lives
+in **`REFERENCES.md`** (this folder). Read it for the examples; this section
+keeps only the one-line "why each matters" so the playbook stays self-contained.
+
+- **Pearl Sequeira / CNN** ❤️ & **Michaël Bernard** ❤️ — the LOVEs: research-as-
+  reasoning + problem-first hook (CNN), restraint + emotion-first (Bernard).
+- **Ellen Covey / Beakery ⭐ + Komoot×Garmin** — the fusion model: first-person
+  rigor + warmth, questions as section openers, research as storyboard.
+- **Sanvi / Explora** — at-a-glance impact stats; named design decisions.
+- **Aria Hokas / IKEA** — narrative research, emotional insight, chunked copy.
+- **Adam Hickey / SAP** — numbered phase spine, impact table (borrow clarity).
+- **Amy La, Rachel Chen, Jesse Warren** — left chapter nav, serif statement
+  openers, big act-dividers.
+- **Chaachie / Restore** — personality extreme; too flip for Lorin's register.
+- **Buck / Hex Pens / Studio Simms / Florent Biffi** — layout/motion elegance:
+  full-bleed-as-proof, single-element isolation, white space, restraint.
 
 ---
 

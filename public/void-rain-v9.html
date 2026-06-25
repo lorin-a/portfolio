@@ -1,0 +1,3842 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Void — Rain</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+  :root {
+    --bg: #f5f0eb;
+    --text: #3d3833;
+    --text-soft: #6b6158;
+    --text-faint: #7d756c;
+    --text-ghost: #d4ccc4;
+    --linger: #5c4f6b;
+    --linger-border: rgba(92, 79, 107, 0.3);
+    --linger-bg: rgba(92, 79, 107, 0.04);
+
+    /* ---- Layout grid zones (% of viewport height) ----
+       These prevent components from overlapping across states.
+       Zone A: nav/invite       0% – 12%
+       Zone B: content scroll  12% – 44%
+       Zone C: separator/CTA   44% – 56%
+       Zone D: pill pool       56% – 100%
+    */
+    --zone-a-end: 12%;
+    --zone-b-start: 12%;
+    --zone-b-end: 44%;
+    --zone-c-start: 44%;
+    --zone-c-end: 56%;
+    --zone-d-start: 56%;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    height: 100vh;
+    height: 100dvh;
+    overflow: hidden;
+    -webkit-font-smoothing: antialiased;
+    position: relative;
+  }
+
+  /* ---- Framing ---- */
+  .framing {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    padding: 44px 24px 14px;
+    text-align: center;
+    z-index: 20;
+    pointer-events: none;
+    display: flex;
+    justify-content: center;
+  }
+
+  .framing-inner {
+    background: rgba(92, 79, 107, 0.025);
+    border: 1px solid rgba(92, 79, 107, 0.1);
+    border-radius: 14px;
+    padding: 18px 24px;
+    max-width: 440px;
+    width: 100%;
+  }
+
+  .framing p {
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 1.6;
+    color: var(--text-soft);
+  }
+
+  .framing .instruction {
+    font-size: 20px;
+    font-weight: 500;
+    color: var(--text);
+    margin-bottom: 8px;
+    line-height: 1.4;
+    opacity: 0;
+    animation: fadeIn 2s ease 0.3s forwards;
+    transition: opacity 2s ease;
+  }
+
+  .framing .contract {
+    margin-top: 6px;
+    font-style: italic;
+    color: var(--text-soft);
+    font-size: 15px;
+    opacity: 0;
+    animation: fadeIn 2s ease 1.2s forwards;
+    transition: opacity 2s ease;
+  }
+
+  .framing.dimmed .instruction {
+    animation: none;
+    opacity: 0.35;
+  }
+
+  .framing.dimmed .contract {
+    animation: none;
+    opacity: 0.7;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(4px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ---- Canvas ---- */
+  .void-canvas {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    cursor: text;
+  }
+
+  /* ---- Typing area: centered ---- */
+  .typing-area {
+    position: absolute;
+    top: 35%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 15;
+    width: 90%;
+    max-width: 460px;
+    text-align: center;
+    cursor: text;
+    opacity: 0;
+    animation: typingFadeIn 1.8s ease 2.4s forwards;
+  }
+
+  @keyframes typingFadeIn {
+    from { opacity: 0; transform: translate(-50%, calc(-50% + 4px)); }
+    to { opacity: 1; transform: translate(-50%, -50%); }
+  }
+
+  .typing-display {
+    font-size: 17px;
+    font-weight: 300;
+    line-height: 1.8;
+    color: var(--text);
+    min-height: 30px;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    position: relative;
+    display: inline;
+    border-bottom: 1px solid var(--text-ghost);
+    padding-bottom: 4px;
+    transition: border-color 1.5s ease;
+  }
+
+  .typing-display.has-text {
+    border-color: transparent;
+  }
+
+  .typing-display .char {
+    display: inline;
+    transition: color 0.4s ease, opacity 0.4s ease;
+  }
+
+  .typing-display .char.trail {
+    color: var(--text-ghost);
+    opacity: 0.35;
+    transition: color 0.25s ease, opacity 0.25s ease;
+  }
+
+  /* Charged words in trail: style as pill inline */
+  .typing-display .inline-pill {
+    display: inline-block;
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--linger);
+    background: var(--linger-bg);
+    border: 1px solid var(--linger-border);
+    padding: 2px 10px;
+    border-radius: 14px;
+    letter-spacing: 0.02em;
+    margin: 0 2px;
+    vertical-align: baseline;
+    transition: opacity 0.3s ease;
+    white-space: nowrap;
+  }
+
+  .typing-display .inline-pill.stacking {
+    color: var(--text-faint);
+    background: rgba(61, 56, 51, 0.04);
+    border-color: rgba(61, 56, 51, 0.15);
+    font-weight: 500;
+    padding: 2px 8px;
+    font-size: 14px;
+  }
+
+  .cursor-blink {
+    display: inline-block;
+    width: 1.5px;
+    height: 1.15em;
+    background: var(--text-soft);
+    vertical-align: text-bottom;
+    margin-left: 1px;
+    animation: blink 1.1s ease infinite;
+  }
+
+  @keyframes blink {
+    0%, 45% { opacity: 1; }
+    55%, 100% { opacity: 0; }
+  }
+
+  .placeholder {
+    color: var(--text-faint);
+    font-weight: 300;
+    font-size: 20px;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+    letter-spacing: 0.02em;
+  }
+
+  /* ---- Rain canvas ---- */
+  .rain-canvas {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  /* ---- Done invite ---- */
+  .done-invite {
+    position: fixed;
+    inset: 0;
+    z-index: 22;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.8s ease;
+    background: rgba(245, 240, 235, 0.6);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+  }
+
+  .done-invite.visible {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .done-invite .done-buttons {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+  }
+
+  .done-invite .done-btn {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--linger);
+    background: var(--linger-bg);
+    border: 1px solid var(--linger-border);
+    padding: 10px 28px;
+    border-radius: 24px;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    min-height: 44px;
+    min-width: 44px;
+    letter-spacing: 0.02em;
+  }
+
+  .done-invite .keep-btn {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 16px;
+    font-weight: 300;
+    color: var(--text-soft);
+    background: transparent;
+    border: 1px solid var(--text-ghost);
+    padding: 10px 28px;
+    border-radius: 24px;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    min-height: 44px;
+    min-width: 44px;
+    letter-spacing: 0.02em;
+  }
+
+  /* ---- Passive pills during VOID act ---- */
+  .pill-pool.passive .pill {
+    pointer-events: none;
+    cursor: default;
+  }
+
+  /* ---- Typing area: after intro animation completes ---- */
+  .typing-area.ready {
+    animation: none;
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+
+  /* ---- Typing area dimmed after done ---- */
+  .typing-area.dimmed {
+    animation: none;
+    opacity: 0.2;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    transition: opacity 1.5s ease;
+  }
+
+  /* ---- Witnessing text ---- */
+  .witnessing-text {
+    position: absolute;
+    top: 4%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 15;
+    text-align: center;
+    width: 85%;
+    max-width: 400px;
+    max-height: calc(var(--zone-c-start) - 6%);
+    overflow-y: auto;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 1.8;
+    color: var(--text-soft);
+    opacity: 0;
+    transition: opacity 1.5s ease;
+    pointer-events: none;
+  }
+
+  .witnessing-text.visible {
+    opacity: 1;
+  }
+
+  .witnessing-body {
+    background: rgba(92, 79, 107, 0.035);
+    border: 1px solid rgba(92, 79, 107, 0.1);
+    border-radius: 14px;
+    padding: 18px 22px;
+    margin-bottom: 6px;
+  }
+
+  /* ---- Falling pill ---- */
+  .falling-pill {
+    position: absolute;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 400;
+    color: var(--linger);
+    background: var(--linger-bg);
+    border: 1px solid var(--linger-border);
+    padding: 4px 13px;
+    border-radius: 16px;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+    pointer-events: none;
+    will-change: transform, opacity;
+    z-index: 9;
+    transform: translate(-50%, -50%);
+  }
+
+  /* ---- Pill pile ---- */
+  .pill-pool {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    pointer-events: none;
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    gap: 6px;
+    width: 92%;
+    max-width: 480px;
+    overflow: visible;
+    transition: top 0.8s cubic-bezier(0.25, 0, 0.15, 1),
+                bottom 0.8s cubic-bezier(0.25, 0, 0.15, 1);
+  }
+
+  .pill-pool.ghost-view {
+    bottom: 40px;
+    top: var(--zone-d-start);
+    transform: translateX(-50%);
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .pill-pool.ghost-view .pill-row {
+    transform: none !important;
+  }
+
+  .pill-pool.portrait {
+    bottom: 80px;
+    top: var(--zone-c-start);
+    transform: translateX(-50%);
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .pill-row {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    overflow: visible;
+    position: relative;
+    transition: transform 0.6s cubic-bezier(0.25, 0, 0.15, 1);
+  }
+
+  .pill-pool.portrait .pill-row {
+    transform: none !important;
+  }
+
+  .pill {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 400;
+    color: var(--linger);
+    background: var(--linger-bg);
+    border: 1px solid var(--linger-border);
+    padding: 8px 16px;
+    border-radius: 20px;
+    white-space: nowrap;
+    pointer-events: auto;
+    cursor: default;
+    opacity: 0;
+    will-change: transform, opacity;
+    letter-spacing: 0.025em;
+    position: relative;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    transform: rotate(var(--pill-rotate, 0deg)) translateX(var(--pill-nudge, 0px)) translateY(0);
+    transition: transform 0.5s cubic-bezier(0.25, 0, 0.15, 1),
+                background 0.3s ease,
+                border-color 0.3s ease;
+  }
+
+  .pill-pool.portrait .pill {
+    transform: rotate(0deg) translateX(0px) translateY(0);
+  }
+
+  .pill-pool.portrait .pill.active {
+    transform: rotate(0deg) translateX(0px) translateY(-28px);
+  }
+
+  .pill.stacking-pill {
+    color: var(--text-faint);
+    background: rgba(61, 56, 51, 0.04);
+    border-color: rgba(61, 56, 51, 0.15);
+    font-weight: 500;
+    padding: 8px 12px;
+    font-size: 15px;
+    min-width: 28px;
+    text-align: center;
+  }
+
+  .pill.arriving {
+    animation: pillArrive 0.8s cubic-bezier(0.25, 0, 0.15, 1) forwards;
+    animation-delay: var(--pill-delay, 0s);
+  }
+
+  .pill.tappable {
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+
+  .pill.active {
+    z-index: 30;
+    background: rgba(92, 79, 107, 0.08);
+    border-color: rgba(92, 79, 107, 0.45);
+    transform: rotate(0deg) translateX(0px) translateY(-28px);
+    animation: none;
+  }
+
+  /* Context reveal */
+  .pill-context {
+    position: absolute;
+    bottom: calc(100% + 10px);
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 29;
+    text-align: center;
+    pointer-events: none;
+    opacity: 0;
+    width: max-content;
+    max-width: min(260px, 80vw);
+    max-height: 0;
+    overflow: hidden;
+    transition: opacity 0.45s cubic-bezier(0.25, 0, 0.15, 1),
+                max-height 0.55s cubic-bezier(0.25, 0, 0.15, 1),
+                max-width 0.55s cubic-bezier(0.25, 0, 0.15, 1);
+  }
+
+  .pill-context.visible {
+    opacity: 1;
+    max-height: 160px;
+    pointer-events: auto;
+    cursor: pointer;
+  }
+
+  .pill-context.depth-1 {
+    max-width: min(360px, 85vw);
+    max-height: 220px;
+  }
+
+  .pill-context.depth-2 {
+    max-width: min(420px, 92vw);
+    max-height: 50vh;
+    overflow-y: auto;
+  }
+
+  .pill-context-inner {
+    padding: 12px 18px 14px;
+    background: rgba(245, 240, 235, 0.97);
+    border: 1px solid rgba(92, 79, 107, 0.18);
+    border-radius: 14px;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    animation: contextFadeIn 0.35s ease forwards;
+  }
+
+  @keyframes contextFadeIn {
+    from { opacity: 0.4; }
+    to { opacity: 1; }
+  }
+
+  .pill-context .context-text {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 1.7;
+    color: var(--text-soft);
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+
+  .pill-context .context-text .context-highlight {
+    color: var(--linger);
+    font-weight: 500;
+  }
+
+  .pill-context .tangle-side {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 300;
+    line-height: 1.6;
+    color: var(--text-soft);
+    padding: 4px 0;
+  }
+
+  .pill-context .tangle-divider {
+    font-size: 14px;
+    color: var(--text-faint);
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    padding: 2px 0;
+  }
+
+  .pill-context .depth-more {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+  }
+
+  .pill-context .depth-more-icon {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    border: 1px solid var(--linger-border);
+    color: var(--linger);
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+    text-align: center;
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
+  }
+
+  @keyframes pillArrive {
+    0% { opacity: 0; transform: rotate(var(--pill-rotate, 0deg)) translateX(var(--pill-nudge, 0px)) translateY(-6px) scale(0.95); }
+    100% { opacity: 1; transform: rotate(var(--pill-rotate, 0deg)) translateX(var(--pill-nudge, 0px)) translateY(0) scale(1); }
+  }
+
+  .hidden-input {
+    position: fixed;
+    left: -9999px;
+    top: -9999px;
+    opacity: 0;
+    font-size: 16px;
+  }
+
+  /* ---- Pill hints (below witnessing text) ---- */
+  .pill-hints {
+    margin-top: 14px;
+    opacity: 0;
+    transition: opacity 1s ease;
+    pointer-events: none;
+  }
+
+  .pill-hints.visible {
+    opacity: 1;
+  }
+
+  .pill-hint-primary {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    font-style: italic;
+    color: var(--text-soft);
+    letter-spacing: 0.01em;
+  }
+
+  .pill-hint-secondary {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--text-faint);
+    margin-top: 4px;
+    letter-spacing: 0.01em;
+    transition: opacity 0.6s ease;
+  }
+
+  /* ---- Back arrow (portrait top-left) ---- */
+  .back-btn {
+    position: absolute;
+    top: 44px;
+    left: 16px;
+    z-index: 16;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
+    color: var(--text-soft);
+    font-size: 24px;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.8s ease;
+  }
+
+  .back-btn.visible {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  /* ---- Forward arrow (void top-right, return to portrait) ---- */
+  .forward-btn {
+    position: absolute;
+    top: 44px;
+    right: 16px;
+    z-index: 16;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
+    color: var(--text-soft);
+    font-size: 24px;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.8s ease;
+  }
+
+  .forward-btn.visible {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  /* ---- Clear all button (centered below instructions) ---- */
+  .clear-all-btn {
+    position: absolute;
+    top: 22%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 16;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 300;
+    color: var(--text-faint);
+    background: transparent;
+    border: none;
+    padding: 10px 16px;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    min-height: 44px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.8s ease;
+  }
+
+  .clear-all-btn.visible {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  @media (max-width: 600px) {
+    .framing { padding-top: 32px; }
+    .typing-area { top: 30%; width: 88%; }
+    .pill-pool { bottom: 16px; }
+    .back-btn { top: 32px; left: 8px; }
+    .forward-btn { top: 32px; right: 8px; }
+    .clear-all-btn { top: 18%; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.15s !important;
+    }
+  }
+
+  /* ---- Pill dismiss button ---- */
+  .pill-dismiss {
+    display: none;
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--bg);
+    border: 1px solid var(--linger-border);
+    color: var(--text-faint);
+    font-size: 13px;
+    line-height: 20px;
+    text-align: center;
+    cursor: pointer;
+    z-index: 31;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    padding: 0;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  .pill-pool.editable .pill .pill-dismiss {
+    display: block;
+  }
+
+  /* ---- "+ add your own" button (below pill grid) ---- */
+  .add-own-btn {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 12;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    color: #fff;
+    background: var(--linger);
+    border: 1px solid var(--linger);
+    padding: 10px 28px;
+    border-radius: 24px;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    min-height: 44px;
+    letter-spacing: 0.02em;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.8s ease;
+    white-space: nowrap;
+  }
+
+  .add-own-btn.visible {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  /* ---- Stream overlay ---- */
+  .stream-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 25;
+    background: rgba(245, 240, 235, 0.97);
+    display: flex;
+    flex-direction: column;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s ease;
+  }
+
+  .stream-overlay.visible {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .stream-header {
+    padding: 44px 24px 12px;
+    text-align: center;
+    flex-shrink: 0;
+  }
+
+  .stream-header h2 {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 18px;
+    font-weight: 400;
+    color: var(--text);
+    letter-spacing: 0.02em;
+    margin-bottom: 8px;
+  }
+
+  .stream-header .stream-instruction {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 300;
+    color: var(--text-soft);
+    line-height: 1.6;
+    max-width: 340px;
+    margin: 0 auto;
+  }
+
+  .stream-header .stream-hint {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--text-faint);
+    margin-top: 10px;
+  }
+
+  .stream-close {
+    position: absolute;
+    top: 40px;
+    right: 16px;
+    width: 44px;
+    height: 44px;
+    border: none;
+    background: transparent;
+    color: var(--text-faint);
+    font-size: 22px;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 26;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  .stream-scroll {
+    flex-grow: 1;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 0 24px 120px;
+  }
+
+  .stream-content {
+    max-width: 460px;
+    margin: 0 auto;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 17px;
+    font-weight: 300;
+    line-height: 2;
+    color: var(--text);
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+
+  .stream-word {
+    display: inline;
+    padding: 2px 0;
+    cursor: pointer;
+    border-radius: 3px;
+    transition: background 0.15s ease;
+  }
+
+  .stream-word.system-detected {
+    background: rgba(92, 79, 107, 0.07);
+    border-radius: 3px;
+  }
+
+  .stream-word.selected {
+    background: rgba(92, 79, 107, 0.22);
+    border-radius: 3px;
+    color: var(--linger);
+    font-weight: 400;
+  }
+
+  .stream-word.promoted {
+    color: var(--text-ghost);
+    text-decoration: line-through;
+    text-decoration-color: var(--text-ghost);
+  }
+
+  /* ---- Approve button (floating near selection) ---- */
+  .stream-approve-btn {
+    position: absolute;
+    z-index: 27;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    color: #fff;
+    background: var(--linger);
+    border: 1px solid var(--linger);
+    padding: 8px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    min-height: 40px;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+  }
+
+  .stream-approve-btn.visible {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  @media (max-width: 600px) {
+    .stream-header { padding-top: 32px; }
+    .stream-close { top: 28px; }
+    .stream-scroll { padding: 0 20px 120px; }
+  }
+
+  /* ---- Ghost text recovery layer ---- */
+  .ghost-layer {
+    position: absolute;
+    top: var(--zone-b-start);
+    left: 0;
+    right: 0;
+    bottom: calc(100% - var(--zone-b-end));
+    z-index: 14;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 12px 24px 24px;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .ghost-layer.visible {
+    pointer-events: auto;
+  }
+
+  .ghost-text {
+    max-width: 460px;
+    margin: 0 auto;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 17px;
+    font-weight: 300;
+    line-height: 2.4;
+    color: #7a7270; /* ~4.1:1 contrast on --bg — passes WCAG AA at this size */
+    letter-spacing: 0.01em;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+
+  .ghost-word {
+    display: inline;
+    padding: 3px 2px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: color 0.3s ease, background 0.3s ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .ghost-word:hover,
+  .ghost-word:focus-visible {
+    color: var(--text);
+    background: rgba(92, 79, 107, 0.08);
+  }
+
+  .ghost-word:focus-visible {
+    outline: 2px solid var(--linger-border);
+    outline-offset: 2px;
+  }
+
+  .ghost-word.already-caught {
+    color: var(--linger);
+    font-weight: 500;
+    pointer-events: none;
+  }
+
+  .ghost-word.claimed {
+    color: var(--linger);
+    background: var(--linger-bg);
+    border-radius: 16px;
+    padding: 2px 10px;
+    pointer-events: none;
+  }
+
+  .ghost-word.selected {
+    background: rgba(92, 79, 107, 0.22);
+    border-radius: 3px;
+    color: var(--linger);
+    font-weight: 400;
+  }
+
+
+  .ghost-invite {
+    position: absolute;
+    top: 2%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 15;
+    text-align: center;
+    width: 85%;
+    max-width: 400px;
+    max-height: var(--zone-a-end);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--text-faint);
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .ghost-counter {
+    position: absolute;
+    top: var(--zone-c-start);
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 15;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 300;
+    color: var(--text-faint);
+    opacity: 0;
+    pointer-events: none;
+    letter-spacing: 0.02em;
+    transition: color 0.3s ease;
+  }
+
+  .ghost-counter.at-limit {
+    color: var(--linger);
+    font-weight: 400;
+  }
+
+  .ghost-dismiss {
+    position: absolute;
+    top: calc(var(--zone-c-start) + 4%);
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 15;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 400;
+    color: var(--text-soft);
+    background: rgba(92, 79, 107, 0.06);
+    border: 1px solid rgba(92, 79, 107, 0.15);
+    border-radius: 24px;
+    padding: 10px 24px;
+    min-height: 44px;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .ghost-dismiss:hover {
+    background: rgba(92, 79, 107, 0.1);
+  }
+
+  .ghost-dismiss:focus-visible {
+    outline: 2px solid var(--linger-border);
+    outline-offset: 2px;
+  }
+
+  .ghost-back {
+    position: absolute;
+    top: 44px;
+    left: 16px;
+    z-index: 16;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
+    color: var(--text-soft);
+    font-size: 24px;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .ghost-back:focus-visible {
+    outline: 2px solid var(--linger-border);
+    outline-offset: 2px;
+  }
+
+  @media (max-width: 600px) {
+    .ghost-layer { padding: 8px 20px 20px; }
+    .ghost-invite { font-size: 14px; }
+    .ghost-back { top: 32px; left: 8px; }
+  }
+
+  /* Screen reader only — visually hidden but accessible */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  /* Debug error indicator */
+  .error-flag {
+    position: fixed;
+    top: 8px;
+    right: 8px;
+    font-size: 11px;
+    font-family: monospace;
+    color: #c44;
+    background: rgba(255,240,240,0.9);
+    padding: 4px 8px;
+    border-radius: 6px;
+    z-index: 999;
+    max-width: 280px;
+    word-break: break-word;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  .error-flag.visible { opacity: 1; }
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.7/gsap.min.js"></script>
+</head>
+<body>
+
+<div class="error-flag" id="errorFlag"></div>
+
+<div class="framing" id="framing">
+  <div class="framing-inner">
+    <p class="instruction">Let your thoughts move through you.</p>
+    <p class="contract">Type your stream of consciousness and allow yourself<br>to be unfiltered. Your entry will be saved.</p>
+  </div>
+</div>
+
+<div class="void-canvas" id="voidCanvas">
+  <canvas class="rain-canvas" id="rainCanvas"></canvas>
+  <div class="typing-area" id="typingArea">
+    <div class="typing-display" id="typingDisplay">
+      <span class="placeholder" id="placeholder">tap here and start typing</span>
+      <span class="cursor-blink" id="cursor"></span>
+    </div>
+  </div>
+  <div class="pill-pool passive" id="pillPool"></div>
+  <div class="done-invite" id="doneInvite">
+    <div class="done-buttons">
+      <button class="done-btn" id="doneBtn" type="button">i'm done</button>
+      <button class="keep-btn" id="keepBtn" type="button">keep typing</button>
+    </div>
+  </div>
+  <div class="witnessing-text" id="witnessingText">
+    <div class="witnessing-body">
+      <p>Instead of focusing on what you wrote, take a moment to look at <em>how</em> you wrote it. These words were filtered for descriptive language that might reveal patterns or subconscious beliefs.</p>
+      <p style="margin-top: 12px;">Pause here — what do you observe?</p>
+    </div>
+    <div class="pill-hints" id="pillHints">
+      <p class="pill-hint-primary" id="pillHintPrimary">tap a word to reveal its context</p>
+      <p class="pill-hint-secondary" id="pillHintSecondary">tap + hold to edit</p>
+    </div>
+  </div>
+  <button class="back-btn" id="backBtn" type="button" aria-label="Back to writing">&#8592;</button>
+  <button class="forward-btn" id="forwardBtn" type="button" aria-label="Return to portrait">&#8594;</button>
+  <button class="clear-all-btn" id="clearAllBtn" type="button">clear all</button>
+  <button class="add-own-btn" id="addOwnBtn" type="button">+ add your own</button>
+  <!-- Ghost text recovery layer — dissolved text for claiming missed words -->
+  <div class="ghost-layer" id="ghostLayer" role="region" aria-label="Your dissolved text — tap any word to add it to your portrait">
+    <div class="ghost-text" id="ghostText"></div>
+  </div>
+  <p class="ghost-invite" id="ghostInvite">if something's missing, it's still here — tap a word or drag across a phrase</p>
+  <span class="ghost-counter" id="ghostCounter" aria-live="polite"></span>
+  <button class="ghost-dismiss" id="ghostDismiss" type="button">that's everything</button>
+  <button class="ghost-back" id="ghostBack" type="button" aria-label="Back to writing">&#8592;</button>
+</div>
+
+<div class="stream-overlay" id="streamOverlay">
+  <div class="stream-header">
+    <h2>your words, unfiltered</h2>
+    <p class="stream-instruction">Drag across words or phrases that feel important to you. They'll be added to your portrait.</p>
+    <p class="stream-hint">highlighted words were already detected</p>
+  </div>
+  <button class="stream-close" id="streamCloseBtn" type="button" aria-label="Close">&times;</button>
+  <div class="stream-scroll">
+    <div class="stream-content" id="streamContent"></div>
+  </div>
+  <div class="stream-approve-btn" id="streamApproveBtn">+ add to portrait</div>
+</div>
+
+<textarea class="hidden-input" id="hiddenInput" autocomplete="off" autocorrect="off" autocapitalize="sentences" spellcheck="false"></textarea>
+
+<script>
+(function() {
+
+  // ---- Debug helper ----
+  const errorFlag = document.getElementById('errorFlag');
+  function showError(context, err) {
+    console.error(context, err);
+    errorFlag.textContent = context + ': ' + (err.message || err);
+    errorFlag.classList.add('visible');
+    setTimeout(() => errorFlag.classList.remove('visible'), 8000);
+  }
+
+  // ===========================================================================
+  //  GSAP MOTION TOKENS — aligned with Whelm Animation Philosophy
+  //  Promote to globals.css when migrating to React
+  // ===========================================================================
+
+  const MOTION = {
+    fadeIn:      { duration: 2,    ease: 'power1.inOut' },
+    dissolve:    { duration: 0.8,  ease: 'power1.out' },
+    pillFall:    { duration: 1.3,  ease: 'power2.in' },
+    pillLand:    { duration: 0.8,  ease: 'power2.out' },
+    breath:      { duration: 4,    ease: 'sine.inOut' },
+    transition:  { duration: 0.8,  ease: 'power1.inOut' },
+    contextShow: { duration: 0.35, ease: 'power1.out' },
+    perChar:     0.1,
+    minDuration: 1.0,
+  };
+
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+  /* Returns motion token with duration zeroed if user prefers reduced motion.
+     Ensures content reaches final state instantly rather than being hidden. */
+  function getMotion(token) {
+    if (prefersReduced.matches) return { ...token, duration: 0 };
+    return token;
+  }
+
+  // ===========================================================================
+  //  WORD PARSING ENGINE — Categories from the Perception Engine ruleset
+  // ===========================================================================
+
+  // ---- Cat 1A: Self-judgment adjectives + Cat 6 embodied + Cat 8B echoed ----
+  const ADJECTIVES = new Set([
+    'afraid','angry','anxious','ashamed','awful','bad','bitter','broken',
+    'burned','careless','clingy','cold','confused','controlling','crazy',
+    'cruel','crushed','damaged','defeated','defective','desperate',
+    'devastated','disappointed','disgusted','disgusting','disposable',
+    'dramatic','drained','dumb','embarrassed','empty','evil','exhausted',
+    'flawed','fragile','frightened','frustrated','furious','guilty',
+    'gutted','hateful','heartbroken','heavy','helpless','hollow',
+    'hopeless','horrible','humiliated','hurt','hypersensitive',
+    'inadequate','incompetent','insane','insecure','invisible','irrational',
+    'isolated','jealous','lazy','lonely','lost','mean',
+    'miserable','needy','numb','obsessive','oversensitive',
+    'overwhelmed','panicked','paralyzed','pathetic','petty',
+    'powerless','rejected','replaceable','resentful',
+    'restless','ruined','sad','scared','selfish','shattered',
+    'shocked','sick','small','smothered','spinning','stuck','stupid',
+    'suffocated','terrified','tired','toxic',
+    'trapped','ugly','uncertain','uncomfortable','undeserving','unfair',
+    'ungrateful','unlovable','unloved','unworthy','upset','useless',
+    'vulnerable','weak','weary','worried','worse','worst','worthless',
+    'wounded','wrong',
+    // Cat 8B: echoed / accusation language
+    'sensitive','emotional','intense','difficult','demanding','aggressive',
+    'passive','dependent','detached','distant','guarded','rigid',
+    'naive','gullible','reckless','impulsive','cautious',
+    'critical','judgmental','negative','pessimistic','defensive',
+    'submissive','manipulative','possessive',
+    'irritable','moody','unstable','erratic','unpredictable',
+    'hysterical','overdramatic','thin-skinned',
+    'high-maintenance','picky','annoying','unbearable',
+    'intolerable','mediocre','boring','forgettable',
+    'exhausting','impossible','unreasonable',
+    // Cat 6: metaphorical / embodied
+    'frozen','scattered','unmoored','adrift','buried','raw','exposed',
+    'cracked','foggy','cloudy','dim','dark',
+    'turbulent','flooded','overflowing','electric','buzzing',
+  ]);
+
+  // ---- Cat 1C: Identity nouns / metaphors for self ----
+  const IDENTITY_NOUNS = new Set([
+    'baby','burden','catastrophe','child','coward','disaster','doormat',
+    'embarrassment','failure','fake','fraud','ghost','idiot','impostor',
+    'joke','liar','liability','loser','mess','monster','nobody','nothing',
+    'nuisance','outcast','outsider','people-pleaser','perfectionist',
+    'problem','pushover','quitter','robot','screw-up','screwup','shell',
+    'stranger','victim','villain','waste','wreck',
+    'placeholder','object','machine','shadow',
+    'black-hole','zombie','puppet','punching-bag',
+  ]);
+
+  // ---- Cat 3: Absolutist / scope / permanence + Cat 10 ----
+  const INTENSIFIERS = new Set([
+    'absolutely','always','completely','constantly','definitely','endlessly',
+    'entirely','every','everybody','everyone','everything','everywhere',
+    'forever','fully','impossible','inevitably','must','never','nobody',
+    'none','nothing','only','permanently','should','totally','utterly',
+    'irreversible','permanent','ruined','destroyed','wasted',
+  ]);
+
+  // ---- Cat 1B: Identity verbs + Cat 6 embodied verbs ----
+  const IDENTITY_VERBS = new Set([
+    'abandoned','begging','betrayed','breaking','choking','clenching',
+    'clinging','collapsing','crumbling','crying','destroying','discarded',
+    'dismissed','dissociating','drowning','dying','echoing','escaping',
+    'failing','falling','fighting','fleeing','forgotten','freezing',
+    'hiding','hurting','ignoring','losing','lying','manipulating',
+    'neglected','overreacting','performing','pleading','pretending',
+    'protecting','punishing','pushing','quitting','raging','replacing',
+    'running','ruining','sabotaging','screaming','self-destructing',
+    'shaking','shrinking','silenced','sinking','spiraling','splitting',
+    'struggling','suffering','suffocating','surviving','trembling',
+    'triggering','unraveling','withdrawing',
+    'floating','carrying','crushing',
+    'burning','boiling','flooding',
+  ]);
+
+  // ---- Additional single charged words across categories ----
+  const EXTRA_CHARGED = new Set([
+    // emotional verbs
+    'hate','hating','dread','dreading','resent','regret','regretting',
+    // body states (Cat 6)
+    'nauseous','tight','tense','aching','throbbing',
+    // relational (Cat 13)
+    'used','unwanted','unheard','unseen',
+    // self-blame
+    'deserve','fault','blame',
+    // Cat 8A: clinical / echoed
+    'codependent','narcissistic','triggered','dysregulated',
+    'hypervigilant','avoidant','enmeshed',
+    // Cat 5B: loaded minimizers
+    'fine','whatever','overreacting','ridiculous','silly',
+    // Cat 6: spatial / metaphorical standalone
+    'stuck','trapped','lost','drowning','sinking',
+    'heavy','crushing','suffocating','buried','waves',
+    'fog','darkness','armor','walls','pressure',
+    'underwater','numb','drained','raw','exposed','hollow',
+    // Core emotions
+    'shame','grief','rage','terror','panic','despair','agony',
+    'anguish','envy','contempt','disgust','longing',
+    'yearning','sorrow','remorse','bitterness',
+  ]);
+
+  // Unified check: is this single word in any charged set?
+  function isChargedWord(word) {
+    const c = word.toLowerCase().replace(/[^a-z'-]/g, '');
+    if (c.length < 2) return false;
+    return ADJECTIVES.has(c) || IDENTITY_NOUNS.has(c) ||
+           INTENSIFIERS.has(c) || IDENTITY_VERBS.has(c) ||
+           EXTRA_CHARGED.has(c);
+  }
+
+  // Helper: is this word an emotion-type word? (for compound patterns)
+  function isEmotionWord(w) {
+    return ADJECTIVES.has(w) || EXTRA_CHARGED.has(w) || IDENTITY_VERBS.has(w) || IDENTITY_NOUNS.has(w);
+  }
+
+  // ---- Cat 9: Connectors that signal stacking / conflation ----
+  const STACKING_SINGLE = new Set([
+    'but','yet','except','although','though','however',
+  ]);
+  const STACKING_PHRASES = [
+    'then again','on top of that','not to mention',
+    'but also','but then','let alone','even though','despite',
+  ];
+
+  // ---- Multi-word stacking connector check ----
+  // PERF FIX: accept pre-built remaining string instead of rebuilding it
+  function checkStackingPhrase(remainingStr, rawWords, i) {
+    for (const phrase of STACKING_PHRASES) {
+      if (remainingStr.startsWith(phrase)) {
+        const wordCount = phrase.split(' ').length;
+        if (i + wordCount <= rawWords.length) {
+          return { label: '+', len: wordCount, type: 'stacking' };
+        }
+      }
+    }
+    return null;
+  }
+
+  // ---- Phrase patterns (expanded) ----
+  function checkPhrase(rawWords, i) {
+    const w0 = rawWords[i].clean;
+    const w1 = i + 1 < rawWords.length ? rawWords[i + 1].clean : '';
+    const w2 = i + 2 < rawWords.length ? rawWords[i + 2].clean : '';
+    const w3 = i + 3 < rawWords.length ? rawWords[i + 3].clean : '';
+    const w4 = i + 4 < rawWords.length ? rawWords[i + 4].clean : '';
+    const w5 = i + 5 < rawWords.length ? rawWords[i + 5].clean : '';
+
+    // --- Cat 12B: Meta-anxiety ---
+    // "why can't i just [x]"
+    if (w0 === 'why' && (w1 === "can't" || w1 === 'cant') && w2 === 'i' && w3 === 'just' && w4) {
+      return { label: "why can't i just " + w4, len: 5 };
+    }
+    // "why can't i [x]"
+    if (w0 === 'why' && (w1 === "can't" || w1 === 'cant') && w2 === 'i' && w3) {
+      return { label: "why can't i " + w3, len: 4 };
+    }
+    // "what's wrong with me"
+    if (w0 === "what's" && w1 === 'wrong' && w2 === 'with' && w3 === 'me') {
+      return { label: "what's wrong with me", len: 4 };
+    }
+    if (w0 === 'what' && w1 === 'is' && w2 === 'wrong' && w3 === 'with' && w4 === 'me') {
+      return { label: "what's wrong with me", len: 5 };
+    }
+    // "why am i like this"
+    if (w0 === 'why' && w1 === 'am' && w2 === 'i' && w3 === 'like' && w4 === 'this') {
+      return { label: 'why am i like this', len: 5 };
+    }
+    // "what is my problem"
+    if (w0 === 'what' && w1 === 'is' && w2 === 'my' && w3 === 'problem') {
+      return { label: "what's my problem", len: 4 };
+    }
+    // "why do i always [x]"
+    if (w0 === 'why' && w1 === 'do' && w2 === 'i' && w3 === 'always' && w4) {
+      return { label: 'why do i always ' + w4, len: 5 };
+    }
+
+    // --- Cat 12C: Self-monitoring ---
+    // "should be past this" / "should be over this"
+    if (w0 === 'should' && w1 === 'be' && (w2 === 'past' || w2 === 'over') && w3 === 'this') {
+      return { label: 'should be ' + w2 + ' this', len: 4 };
+    }
+    // "thought i dealt with this"
+    if (w0 === 'thought' && w1 === 'i' && w2 === 'dealt' && w3 === 'with') {
+      return { label: 'thought i dealt with this', len: w4 === 'this' ? 5 : 4 };
+    }
+    // "going backwards"
+    if (w0 === 'going' && w1 === 'backwards') {
+      return { label: 'going backwards', len: 2 };
+    }
+    // "not making progress"
+    if (w0 === 'not' && w1 === 'making' && w2 === 'progress') {
+      return { label: 'not making progress', len: 3 };
+    }
+
+    // --- Cat 2: Intensity ---
+    // "too [charged]"
+    if (w0 === 'too' && w1 && (isEmotionWord(w1) || w1 === 'much' || w1 === 'little' || w1 === 'late')) {
+      return { label: 'too ' + w1, len: 2 };
+    }
+    // "so far behind"
+    if (w0 === 'so' && w1 === 'far' && w2 === 'behind') {
+      return { label: 'so far behind', len: 3 };
+    }
+    // "so [charged]"
+    if (w0 === 'so' && w1 && (isEmotionWord(w1) || w1 === 'behind')) {
+      return { label: 'so ' + w1, len: 2 };
+    }
+    // "really/extremely/incredibly/deeply [charged]"
+    if ((w0 === 'really' || w0 === 'extremely' || w0 === 'incredibly' || w0 === 'deeply') && w1 && isEmotionWord(w1)) {
+      return { label: w0 + ' ' + w1, len: 2 };
+    }
+
+    // --- Cat 7: Not enough ---
+    if (w0 === 'not' && w2 === 'enough') {
+      return { label: 'not ' + w1 + ' enough', len: 3 };
+    }
+    if ((w0 === 'not' || w0 === 'never') && w1 === 'enough') {
+      return { label: w0 + ' enough', len: 2 };
+    }
+
+    // --- Cat 4: Obligation ---
+    // "should/shouldn't [x]"
+    if ((w0 === 'should' || w0 === "shouldn't" || w0 === 'shouldnt') && w1) {
+      if (w2 === 'better' || w2 === 'able' || w2 === 'more' || w2 === 'less') {
+        return { label: w0 + ' ' + w1 + ' ' + w2, len: 3 };
+      }
+      return { label: w0 + ' ' + w1, len: 2 };
+    }
+    // "supposed to [be/feel/have/know/handle]"
+    if (w0 === 'supposed' && w1 === 'to' && w2 && (w2 === 'be' || w2 === 'feel' || w2 === 'have' || w2 === 'know' || w2 === 'handle' || isEmotionWord(w2))) {
+      return { label: 'supposed to ' + w2, len: 3 };
+    }
+    // "have to [keep/stop/be/charged]"
+    if (w0 === 'have' && w1 === 'to' && w2 && (isEmotionWord(w2) || w2 === 'keep' || w2 === 'stop' || w2 === 'be')) {
+      return { label: 'have to ' + w2, len: 3 };
+    }
+    // "need to [stop/be/fix/change/get]"
+    if (w0 === 'need' && w1 === 'to' && (w2 === 'stop' || w2 === 'be' || w2 === 'fix' || w2 === 'change' || w2 === 'get')) {
+      return { label: 'need to ' + w2, len: 3 };
+    }
+    // "ought to [be/x]"
+    if (w0 === 'ought' && w1 === 'to' && w2) {
+      return { label: 'ought to ' + w2, len: 3 };
+    }
+    // "by now" (timeline pressure)
+    if (w0 === 'by' && w1 === 'now') {
+      return { label: 'by now', len: 2 };
+    }
+
+    // --- Cat 11: Agency loss ---
+    // "can't [x]"
+    if ((w0 === "can't" || w0 === 'cant' || w0 === 'cannot') && w1) {
+      return { label: "can't " + w1, len: 2 };
+    }
+    // "out of control"
+    if (w0 === 'out' && w1 === 'of' && w2 === 'control') {
+      return { label: 'out of control', len: 3 };
+    }
+    // "no point/choice/hope/way"
+    if (w0 === 'no' && (w1 === 'point' || w1 === 'choice' || w1 === 'hope' || w1 === 'way')) {
+      return { label: 'no ' + w1, len: 2 };
+    }
+
+    // --- Cat 5: Minimizing ---
+    // "just a [identity noun]"
+    if (w0 === 'just' && w1 === 'a' && w2 && (IDENTITY_NOUNS.has(w2) || EXTRA_CHARGED.has(w2))) {
+      return { label: 'just a ' + w2, len: 3 };
+    }
+    // "not a big deal"
+    if (w0 === 'not' && w1 === 'a' && w2 === 'big' && w3 === 'deal') {
+      return { label: 'not a big deal', len: 4 };
+    }
+    // "i'm fine" (loaded minimizer)
+    if ((w0 === "i'm" || w0 === 'im') && w1 === 'fine') {
+      return { label: "i'm fine", len: 2 };
+    }
+    // "it's nothing"
+    if ((w0 === "it's" || w0 === 'its') && w1 === 'nothing') {
+      return { label: "it's nothing", len: 2 };
+    }
+    // "probably overreacting" / "probably just"
+    if (w0 === 'probably' && (w1 === 'overreacting' || w1 === 'just' || isEmotionWord(w1))) {
+      return { label: 'probably ' + w1, len: 2 };
+    }
+    // "forget it"
+    if (w0 === 'forget' && w1 === 'it') {
+      return { label: 'forget it', len: 2 };
+    }
+    // "i know this is [dismissive]" — Cat 12A
+    if (w0 === 'i' && w1 === 'know' && (w2 === 'this' || w2 === "it's" || w2 === 'its' || w2 === "i'm" || w2 === 'im') && w3 && isEmotionWord(w3)) {
+      return { label: 'i know... ' + w3, len: 4 };
+    }
+
+    // --- Cat 6: Compound metaphors ---
+    // "falling apart"
+    if (w0 === 'falling' && w1 === 'apart') {
+      return { label: 'falling apart', len: 2 };
+    }
+    // "going in circles"
+    if (w0 === 'going' && w1 === 'in' && w2 === 'circles') {
+      return { label: 'going in circles', len: 3 };
+    }
+    // "dead inside"
+    if (w0 === 'dead' && w1 === 'inside') {
+      return { label: 'dead inside', len: 2 };
+    }
+    // "falling behind"
+    if (w0 === 'falling' && w1 === 'behind') {
+      return { label: 'falling behind', len: 2 };
+    }
+    // "weighed down"
+    if (w0 === 'weighed' && w1 === 'down') {
+      return { label: 'weighed down', len: 2 };
+    }
+    // "shut down" / "shutting down"
+    if ((w0 === 'shut' || w0 === 'shutting') && w1 === 'down') {
+      return { label: w0 + ' down', len: 2 };
+    }
+    // "running away"
+    if (w0 === 'running' && w1 === 'away') {
+      return { label: 'running away', len: 2 };
+    }
+    // "pushing away" / "pushing people away"
+    if (w0 === 'pushing' && (w1 === 'away' || (w1 === 'people' && w2 === 'away'))) {
+      if (w1 === 'people') return { label: 'pushing people away', len: 3 };
+      return { label: 'pushing away', len: 2 };
+    }
+
+    // --- Cat 10: Catastrophizing ---
+    // "it's over"
+    if ((w0 === "it's" || w0 === 'its') && w1 === 'over') {
+      return { label: "it's over", len: 2 };
+    }
+    // "it's too late"
+    if ((w0 === "it's" || w0 === 'its') && w1 === 'too' && w2 === 'late') {
+      return { label: "it's too late", len: 3 };
+    }
+    // "never going to"
+    if (w0 === 'never' && w1 === 'going' && w2 === 'to' && w3) {
+      return { label: 'never going to ' + w3, len: 4 };
+    }
+
+    // --- Cat 9E: "or" as confusion between emotions ---
+    // "i don't know if i'm [x] or [y]"
+    if (w0 === "don't" && w1 === 'know' && w2 === 'if') {
+      return { label: "don't know if", len: 3 };
+    }
+
+    // --- Cat 9D: "even though" + self-contradiction ---
+    // (handled as stacking connector — already in STACKING_PHRASES)
+
+    // --- Cat 13: Relational obligation ---
+    // "after everything"
+    if (w0 === 'after' && w1 === 'everything') {
+      return { label: 'after everything', len: 2 };
+    }
+    // "i owe"
+    if (w0 === 'i' && w1 === 'owe') {
+      return { label: 'i owe', len: 2 };
+    }
+
+    // --- Cat 3: Absolutist + verb ---
+    if ((w0 === 'always' || w0 === 'never') && w1 && !STACKING_SINGLE.has(w1) && w1 !== 'and' && w1 !== 'or' && w1 !== 'going') {
+      return { label: w0 + ' ' + w1, len: 2 };
+    }
+    // "every time [x]"
+    if (w0 === 'every' && w1 === 'time') {
+      if (w2) return { label: 'every time ' + w2, len: 3 };
+      return { label: 'every time', len: 2 };
+    }
+
+    // --- Cat 7: Comparison ---
+    if (w0 === 'no' && w1 === 'one' && w2) {
+      return { label: 'no one ' + w2, len: 3 };
+    }
+    if (w0 === 'everyone' && w1 === 'else') {
+      return { label: 'everyone else', len: 2 };
+    }
+    // "normal people"
+    if (w0 === 'normal' && (w1 === 'people' || w1 === 'person')) {
+      return { label: 'normal ' + w1, len: 2 };
+    }
+
+    // --- Cat 9C: "because" as self-blame ---
+    if (w0 === 'because' && (w1 === "i'm" || w1 === 'im') && w2 && isEmotionWord(w2)) {
+      return { label: "because i'm " + w2, len: 3 };
+    }
+    if (w0 === 'because' && w1 === 'i' && w2 && isEmotionWord(w2)) {
+      return { label: 'because i ' + w2, len: 3 };
+    }
+
+    // --- Cat 1: Identity statements ---
+    // "i'm a [noun]"
+    if ((w0 === "i'm" || w0 === 'im') && w1 === 'a' && w2 && (IDENTITY_NOUNS.has(w2) || ADJECTIVES.has(w2))) {
+      return { label: "i'm a " + w2, len: 3 };
+    }
+    // "i am a [noun]"
+    if (w0 === 'i' && w1 === 'am' && w2 === 'a' && w3 && (IDENTITY_NOUNS.has(w3) || ADJECTIVES.has(w3))) {
+      return { label: "i'm a " + w3, len: 4 };
+    }
+    // "i am [adj]"
+    if (w0 === 'i' && w1 === 'am' && w2 && isEmotionWord(w2)) {
+      return { label: "i'm " + w2, len: 3 };
+    }
+    // "i'm [adj]"
+    if ((w0 === "i'm" || w0 === 'im') && w1 && isEmotionWord(w1)) {
+      return { label: "i'm " + w1, len: 2 };
+    }
+    // "i keep [verb]ing"
+    if (w0 === 'i' && w1 === 'keep' && w2 && IDENTITY_VERBS.has(w2)) {
+      return { label: 'i keep ' + w2, len: 3 };
+    }
+    // "i feel like a [noun]"
+    if (w0 === 'i' && w1 === 'feel' && w2 === 'like' && w3 === 'a' && w4 && (IDENTITY_NOUNS.has(w4) || EXTRA_CHARGED.has(w4))) {
+      return { label: 'feel like a ' + w4, len: 5 };
+    }
+    // "i feel [emotion]" (Cat 1 + emotion grounding)
+    if (w0 === 'i' && w1 === 'feel' && w2 && isEmotionWord(w2) && w2 !== 'like') {
+      return { label: 'i feel ' + w2, len: 3 };
+    }
+
+    // --- Cat 8A: clinical self-labels as phrases ---
+    // "i'm being [clinical]"
+    if ((w0 === "i'm" || w0 === 'im') && w1 === 'being' && w2 && isEmotionWord(w2)) {
+      return { label: "i'm being " + w2, len: 3 };
+    }
+    // "that's my [clinical] wound/pattern"
+    if ((w0 === "that's" || w0 === 'thats') && w1 === 'my' && w2 && isEmotionWord(w2)) {
+      return { label: "that's my " + w2, len: 3 };
+    }
+
+    return null;
+  }
+
+
+  // ===========================================================================
+  //  PARSER — Phrase-aware tokenizer
+  // ===========================================================================
+
+  function parseWords(text) {
+    // First pass: extract raw words with positions
+    const rawWords = [];
+    const regex = /(\S+)/g;
+    let m;
+    while ((m = regex.exec(text)) !== null) {
+      rawWords.push({
+        text: m[1],
+        clean: m[1].toLowerCase().replace(/[^a-z'-]/g, ''),
+        startIdx: m.index,
+        endIdx: m.index + m[1].length,
+      });
+    }
+
+    // Pre-build remaining strings for stacking check (PERF FIX: do it once)
+    const remainingStrings = new Array(rawWords.length);
+    for (let k = rawWords.length - 1; k >= 0; k--) {
+      if (k === rawWords.length - 1) {
+        remainingStrings[k] = rawWords[k].clean;
+      } else {
+        remainingStrings[k] = rawWords[k].clean + ' ' + remainingStrings[k + 1];
+      }
+    }
+
+    // Second pass: merge into phrases, detect stacking, mark charged
+    const result = [];
+    let i = 0;
+    while (i < rawWords.length) {
+      // Check multi-word stacking connectors first
+      const stack = checkStackingPhrase(remainingStrings[i], rawWords, i);
+      if (stack) {
+        result.push({
+          text: rawWords.slice(i, i + stack.len).map(w => w.text).join(' '),
+          pillLabel: '+',
+          startIdx: rawWords[i].startIdx,
+          endIdx: rawWords[i + stack.len - 1].endIdx,
+          isCharged: true,
+          isStacking: true,
+        });
+        i += stack.len;
+        continue;
+      }
+
+      // Check single-word stacking connectors
+      if (STACKING_SINGLE.has(rawWords[i].clean)) {
+        result.push({
+          text: rawWords[i].text,
+          pillLabel: '+',
+          startIdx: rawWords[i].startIdx,
+          endIdx: rawWords[i].endIdx,
+          isCharged: true,
+          isStacking: true,
+        });
+        i++;
+        continue;
+      }
+
+      // Check phrase patterns
+      const phrase = checkPhrase(rawWords, i);
+      if (phrase) {
+        const endI = Math.min(i + phrase.len, rawWords.length);
+        result.push({
+          text: rawWords.slice(i, endI).map(w => w.text).join(' '),
+          pillLabel: phrase.label,
+          startIdx: rawWords[i].startIdx,
+          endIdx: rawWords[endI - 1].endIdx,
+          isCharged: true,
+          isStacking: false,
+        });
+        i = endI;
+        continue;
+      }
+
+      // Single charged word
+      const charged = isChargedWord(rawWords[i].text);
+      result.push({
+        text: rawWords[i].text,
+        pillLabel: charged ? rawWords[i].clean : null,
+        startIdx: rawWords[i].startIdx,
+        endIdx: rawWords[i].endIdx,
+        isCharged: charged,
+        isStacking: false,
+      });
+      i++;
+    }
+
+    return result;
+  }
+
+
+  // ===========================================================================
+  //  STATE
+  // ===========================================================================
+
+  let fullText = '';
+  let words = [];
+  let releasedUpTo = 0; // character position in fullText — stable across re-parses
+  let collectedPool = new Set();
+  let hasStarted = false;
+  const TRAIL_DISTANCE = 2;
+
+  // Transcript accumulation — captures full stream across sessions
+  let transcript = '';
+
+  // Act state: 'VOID' → 'PORTRAIT' → 'STREAM' (and back)
+  let currentAct = 'VOID';
+  let firstPillSettled = false;
+  let longPressTimer = null;
+  let isEditMode = false;
+
+  // Transcript store — per-pill context snapshots
+  const pillContextStore = [];
+
+  const MAX_CONTEXT_ENTRIES = 200;
+  function storePillContext(pillLabel, isStacking, sourceText, charStart, charEnd) {
+    if (pillContextStore.length >= MAX_CONTEXT_ENTRIES) {
+      pillContextStore.splice(0, pillContextStore.length - MAX_CONTEXT_ENTRIES + 1);
+    }
+    pillContextStore.push({ pillLabel, isStacking, sourceText, charStart, charEnd });
+  }
+
+  function findContextForPill(pillLabel, isStacking) {
+    for (let i = pillContextStore.length - 1; i >= 0; i--) {
+      const entry = pillContextStore[i];
+      if (entry.pillLabel === pillLabel && entry.isStacking === isStacking) {
+        return entry;
+      }
+    }
+    return null;
+  }
+
+  // Extract progressive context levels
+  function getContextLevels(entry) {
+    const text = entry.sourceText;
+    const start = entry.charStart;
+    const end = entry.charEnd;
+
+    function snapLeft(idx) {
+      let i = idx;
+      while (i > 0 && text[i - 1] !== ' ') i--;
+      return i;
+    }
+    function snapRight(idx) {
+      let i = idx;
+      while (i < text.length && text[i] !== ' ') i++;
+      return i;
+    }
+
+    // Helper: trim slice and compute offset adjustment
+    function trimSlice(str, sliceStart) {
+      const trimmed = str.trim();
+      const leadingSpaces = str.indexOf(trimmed);
+      return { text: trimmed, offset: sliceStart + leadingSpaces };
+    }
+
+    // Level 1: ~5 words each side
+    let l1Start = snapLeft(Math.max(0, start - 45));
+    let l1End = snapRight(Math.min(text.length, end + 45));
+    const l1 = trimSlice(text.slice(l1Start, l1End), l1Start);
+
+    // Level 2: 2-3 sentences
+    let sentStart = start;
+    while (sentStart > 0 && !'.!?\n'.includes(text[sentStart - 1])) sentStart--;
+    let sentEnd = end;
+    while (sentEnd < text.length && !'.!?\n'.includes(text[sentEnd])) sentEnd++;
+    if (sentEnd < text.length && '.!?'.includes(text[sentEnd])) sentEnd++;
+    let extraStart = sentStart;
+    if (extraStart > 0) { extraStart--; while (extraStart > 0 && !'.!?\n'.includes(text[extraStart - 1])) extraStart--; }
+    let extraEnd = sentEnd;
+    if (extraEnd < text.length) { extraEnd++; while (extraEnd < text.length && !'.!?\n'.includes(text[extraEnd])) extraEnd++; if (extraEnd < text.length && '.!?'.includes(text[extraEnd])) extraEnd++; }
+    const l2 = trimSlice(text.slice(extraStart, extraEnd), extraStart);
+
+    // Level 3: full chunk
+    const l3 = trimSlice(text, 0);
+
+    const levels = [];
+    levels.push({
+      text: l1.text,
+      highlightStart: start - l1.offset,
+      highlightEnd: end - l1.offset,
+    });
+
+    if (l2.text.length > l1.text.length) {
+      levels.push({
+        text: l2.text,
+        highlightStart: start - l2.offset,
+        highlightEnd: end - l2.offset,
+      });
+    }
+
+    if (l3.text.length > (levels[levels.length - 1]?.text.length || 0)) {
+      levels.push({
+        text: l3.text,
+        highlightStart: start - l3.offset,
+        highlightEnd: end - l3.offset,
+      });
+    }
+
+    return levels;
+  }
+
+  function getStackingContext(entry) {
+    const text = entry.sourceText;
+    const start = entry.charStart;
+    const end = entry.charEnd;
+
+    let beforeStart = Math.max(0, start - 80);
+    while (beforeStart > 0 && text[beforeStart - 1] !== ' ') beforeStart--;
+    const beforeText = text.slice(beforeStart, start).trim();
+
+    let afterEnd = Math.min(text.length, end + 80);
+    while (afterEnd < text.length && text[afterEnd] !== ' ') afterEnd++;
+    const afterText = text.slice(end, afterEnd).trim();
+
+    return { before: beforeText, after: afterText };
+  }
+
+
+  // ===========================================================================
+  //  DOM REFS
+  // ===========================================================================
+
+  const hiddenInput = document.getElementById('hiddenInput');
+  const typingDisplay = document.getElementById('typingDisplay');
+  const placeholder = document.getElementById('placeholder');
+  const cursorEl = document.getElementById('cursor');
+  const voidCanvas = document.getElementById('voidCanvas');
+  const pillPool = document.getElementById('pillPool');
+  const framing = document.getElementById('framing');
+  const typingArea = document.getElementById('typingArea');
+
+  // Active pill context state
+  let activePill = null;
+  let activePillDepth = 0;
+  let activeContextEl = null;
+
+
+  // ===========================================================================
+  //  INPUT HANDLING — Single handler, RAF-debounced render (FREEZE FIX)
+  // ===========================================================================
+
+  let renderScheduled = false;
+  let releaseScheduled = false;
+  let punctTimer = null;
+  let pauseTimer = null;
+  let isReleasing = false; // guard against re-entrant releases
+
+  function focusInput() { hiddenInput.focus(); }
+
+  voidCanvas.addEventListener('click', focusInput);
+  voidCanvas.addEventListener('touchstart', () => focusInput(), { passive: true });
+  // Delay focus until typing area has faded in (~2.4s delay + 1.8s animation)
+  setTimeout(focusInput, 3000);
+  setTimeout(focusInput, 4500);
+
+  // Mark typing area as ready once intro animation completes (so transitions work)
+  typingArea.addEventListener('animationend', () => {
+    typingArea.classList.add('ready');
+  });
+
+  // SINGLE input handler — replaces the duplicate listeners
+  hiddenInput.addEventListener('input', onInput);
+
+  function onInput() {
+    if (currentAct !== 'VOID') return; // ignore input after done
+    try {
+      fullText = hiddenInput.value;
+      words = parseWords(fullText);
+
+      if (!hasStarted && fullText.length > 0) {
+        hasStarted = true;
+        framing.classList.add('dimmed');
+      }
+
+      // Dismiss any open pill context when typing resumes
+      if (activePill) dismissContext();
+
+      // Hide done invite on keystroke, reset timer
+      if (doneInviteTimer) clearTimeout(doneInviteTimer);
+      hideDoneInvite();
+      if (firstPillSettled) {
+        doneInviteTimer = setTimeout(() => {
+          try { showDoneInvite(); }
+          catch (err) { showError('doneInviteTimer', err); }
+        }, 3000);
+      }
+
+      // Schedule render on next animation frame (debounce)
+      scheduleRender();
+
+      // Schedule release check (separate frame to avoid layout thrash)
+      scheduleRelease();
+
+      // Timer logic — auto-release on punctuation or pause
+      if (punctTimer) clearTimeout(punctTimer);
+      if (pauseTimer) clearTimeout(pauseTimer);
+      const val = fullText.trim();
+
+      if (val.length > 1 && '.!?'.includes(val.slice(-1))) {
+        punctTimer = setTimeout(() => {
+          try { if (hiddenInput.value.trim() === val) forceReleaseAll(); }
+          catch (err) { showError('punctTimer', err); }
+        }, 1000);
+      }
+
+      if (val.length > 5) {
+        pauseTimer = setTimeout(() => {
+          try { if (hiddenInput.value.trim().length > 5) forceReleaseAll(); }
+          catch (err) { showError('pauseTimer', err); }
+        }, 3500);
+      }
+    } catch (err) {
+      showError('input', err);
+      scheduleRender();
+    }
+  }
+
+  function scheduleRender() {
+    if (renderScheduled) return;
+    renderScheduled = true;
+    requestAnimationFrame(() => {
+      renderScheduled = false;
+      try { renderTypingLine(); }
+      catch (err) { showError('render', err); }
+    });
+  }
+
+  function scheduleRelease() {
+    if (releaseScheduled) return;
+    releaseScheduled = true;
+    // Use double-RAF: render first, THEN measure + release
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        releaseScheduled = false;
+        try { releaseTrailing(); }
+        catch (err) { showError('release', err); }
+      });
+    });
+  }
+
+  hiddenInput.addEventListener('focus', () => { if (hasStarted) placeholder.style.opacity = '0'; });
+  hiddenInput.addEventListener('blur', () => {
+    if (!hasStarted) placeholder.style.opacity = '1';
+  });
+
+  hiddenInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' && currentAct === 'VOID') { e.preventDefault(); forceReleaseAll(); }
+  });
+
+
+  // ===========================================================================
+  //  WORD LOOKUP — Binary search for char→word mapping
+  // ===========================================================================
+
+  function findWordAt(idx) {
+    let lo = 0, hi = words.length - 1;
+    while (lo <= hi) {
+      const mid = (lo + hi) >> 1;
+      const w = words[mid];
+      if (idx < w.startIdx) hi = mid - 1;
+      else if (idx >= w.endIdx) lo = mid + 1;
+      else return w;
+    }
+    return null;
+  }
+
+  function getReleasedCharCount() {
+    return releasedUpTo;
+  }
+
+
+  // ===========================================================================
+  //  RENDER TYPING LINE
+  // ===========================================================================
+
+  function renderTypingLine() {
+    try {
+      while (typingDisplay.firstChild && typingDisplay.firstChild !== cursorEl) {
+        typingDisplay.removeChild(typingDisplay.firstChild);
+      }
+
+      if (fullText.length === 0 && !hasStarted) {
+        typingDisplay.insertBefore(placeholder, cursorEl);
+        placeholder.style.opacity = '1';
+        return;
+      }
+
+      placeholder.style.opacity = '0';
+      if (placeholder.parentNode === typingDisplay) typingDisplay.removeChild(placeholder);
+
+      const relCharIdx = getReleasedCharCount();
+      const visText = fullText.slice(relCharIdx);
+
+      // Trail boundary
+      const trailWordIdx = words.length - TRAIL_DISTANCE;
+      let trailCharIdx = 0;
+      if (trailWordIdx >= 0 && trailWordIdx < words.length) {
+        trailCharIdx = words[trailWordIdx].startIdx;
+      }
+
+      const frag = document.createDocumentFragment();
+      let i = 0;
+
+      while (i < visText.length) {
+        const gIdx = relCharIdx + i;
+        const isTrail = gIdx < trailCharIdx;
+        const w = findWordAt(gIdx);
+
+        if (isTrail && w && w.isCharged) {
+          // First visible char of this charged word — render inline pill
+          // Handles both normal case (gIdx === w.startIdx) and partial visibility
+          // (phrase merged across release boundary, so w.startIdx < relCharIdx)
+          const isVisibleStart = gIdx === w.startIdx || (w.startIdx < relCharIdx && gIdx === relCharIdx);
+          if (isVisibleStart) {
+            const pill = document.createElement('span');
+            pill.className = 'inline-pill';
+            if (w.isStacking) pill.classList.add('stacking');
+            pill.textContent = w.pillLabel;
+            pill.dataset.word = w.pillLabel;
+            pill.dataset.startIdx = w.startIdx;
+            frag.appendChild(pill);
+          }
+          // Skip remaining chars in this charged word
+          i += isVisibleStart ? (w.endIdx - gIdx) : 1;
+          continue;
+        }
+
+        // Regular character
+        const span = document.createElement('span');
+        span.className = 'char';
+        span.textContent = visText[i];
+        if (isTrail) span.classList.add('trail');
+        frag.appendChild(span);
+        i++;
+      }
+
+      typingDisplay.insertBefore(frag, cursorEl);
+    } catch (err) {
+      showError('renderTypingLine', err);
+    }
+  }
+
+
+  // ===========================================================================
+  //  RELEASE TRAILING WORDS
+  // ===========================================================================
+
+  function releaseTrailing() {
+    if (isReleasing) return;
+    const trailWordIdx = words.length - TRAIL_DISTANCE;
+    if (trailWordIdx < 0) return;
+
+    // Target char position: start of the first non-trail word
+    const targetCharPos = words[trailWordIdx].startIdx;
+    if (targetCharPos <= releasedUpTo) return; // nothing new to release
+
+    isReleasing = true;
+    try {
+      const canvasRect = voidCanvas.getBoundingClientRect();
+
+      const trailChars = typingDisplay.querySelectorAll('.char.trail');
+      const inlinePills = typingDisplay.querySelectorAll('.inline-pill');
+
+      const charData = [];
+      trailChars.forEach(c => {
+        const r = c.getBoundingClientRect();
+        charData.push({
+          char: c.textContent,
+          x: r.left - canvasRect.left + r.width / 2,
+          y: r.top - canvasRect.top + r.height / 2,
+        });
+      });
+
+      const pillsToFall = [];
+      inlinePills.forEach(p => {
+        const r = p.getBoundingClientRect();
+        pillsToFall.push({
+          word: p.dataset.word,
+          x: r.left - canvasRect.left + r.width / 2,
+          y: r.top - canvasRect.top + r.height / 2,
+          isStacking: p.classList.contains('stacking'),
+        });
+      });
+
+      // Store context for charged words whose end falls within the newly released range
+      const sourceSnapshot = fullText;
+      const oldReleasedUpTo = releasedUpTo;
+      for (let i = 0; i < words.length; i++) {
+        if (words[i].isCharged && words[i].endIdx > oldReleasedUpTo && words[i].endIdx <= targetCharPos) {
+          storePillContext(
+            words[i].pillLabel,
+            words[i].isStacking,
+            sourceSnapshot,
+            words[i].startIdx,
+            words[i].endIdx,
+          );
+        }
+      }
+
+      releasedUpTo = targetCharPos;
+
+      spawnRain(charData);
+
+      pillsToFall.forEach((p, i) => {
+        setTimeout(() => dropPill(p.word, p.x, p.y, p.isStacking), i * 150);
+      });
+
+      renderTypingLine();
+    } finally {
+      isReleasing = false;
+    }
+  }
+
+
+  // ===========================================================================
+  //  FORCE RELEASE ALL
+  // ===========================================================================
+
+  function forceReleaseAll() {
+    if (fullText.trim().length === 0) return;
+    if (isReleasing) return; // guard — must be BEFORE try so finally doesn't clobber
+    isReleasing = true;
+    try {
+
+      // Ensure words are parsed from current text (may not have rendered yet)
+      words = parseWords(fullText);
+
+      // Force a synchronous render so DOM reflects current text before measuring
+      renderTypingLine();
+
+      // Store context for unreleased charged words
+      const sourceText = fullText;
+      for (let i = 0; i < words.length; i++) {
+        if (words[i].isCharged && words[i].endIdx > releasedUpTo) {
+          storePillContext(
+            words[i].pillLabel,
+            words[i].isStacking,
+            sourceText,
+            words[i].startIdx,
+            words[i].endIdx,
+          );
+        }
+      }
+
+      const canvasRect = voidCanvas.getBoundingClientRect();
+      // Get ALL visible chars (trail + non-trail) for rain
+      const allChars = typingDisplay.querySelectorAll('.char');
+      const charData = [];
+
+      allChars.forEach(c => {
+        const r = c.getBoundingClientRect();
+        charData.push({
+          char: c.textContent,
+          x: r.left - canvasRect.left + r.width / 2,
+          y: r.top - canvasRect.top + r.height / 2,
+        });
+      });
+
+      // Find unreleased charged words for pill drop
+      const allPillsInline = [];
+      for (let i = 0; i < words.length; i++) {
+        if (words[i].isCharged && words[i].endIdx > releasedUpTo) {
+          const inlinePill = typingDisplay.querySelector(`.inline-pill[data-start-idx="${words[i].startIdx}"]`);
+          if (inlinePill) {
+            const r = inlinePill.getBoundingClientRect();
+            allPillsInline.push({
+              word: words[i].pillLabel,
+              x: r.left - canvasRect.left + r.width / 2,
+              y: r.top - canvasRect.top + r.height / 2,
+              isStacking: words[i].isStacking,
+            });
+          } else {
+            allPillsInline.push({
+              word: words[i].pillLabel,
+              x: voidCanvas.offsetWidth / 2,
+              y: 140,
+              isStacking: words[i].isStacking,
+            });
+          }
+        }
+      }
+
+      spawnRain(charData);
+
+      allPillsInline.forEach((p, i) => {
+        setTimeout(() => dropPill(p.word, p.x, p.y, p.isStacking), i * 150);
+      });
+
+      // Accumulate transcript before clearing
+      transcript += fullText;
+
+      fullText = '';
+      words = [];
+      releasedUpTo = 0;
+      hiddenInput.value = '';
+      renderTypingLine();
+    } catch (err) {
+      showError('forceReleaseAll', err);
+      transcript += fullText;
+      fullText = '';
+      words = [];
+      releasedUpTo = 0;
+      hiddenInput.value = '';
+      renderTypingLine();
+    } finally {
+      isReleasing = false;
+    }
+  }
+
+
+  // ===========================================================================
+  //  RAIN — Canvas-based particle system
+  // ===========================================================================
+
+  const rainCanvas = document.getElementById('rainCanvas');
+  const rainCtx = rainCanvas.getContext('2d');
+  let rainParticles = [];
+  let rainAlive = 0; // live particle count (avoids scanning array)
+  let rainLoopRunning = false;
+  const rainTextColor = getComputedStyle(document.documentElement).getPropertyValue('--text').trim() || '#3d3833';
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+  function resizeRainCanvas() {
+    const rect = voidCanvas.getBoundingClientRect();
+    const dpr = devicePixelRatio || 1;
+    rainCanvas.width = rect.width * dpr;
+    rainCanvas.height = rect.height * dpr;
+    rainCanvas.style.width = rect.width + 'px';
+    rainCanvas.style.height = rect.height + 'px';
+    rainCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    // Set font once here — survives until next resize resets the transform
+    rainCtx.font = '300 16px "DM Sans", sans-serif';
+    rainCtx.textAlign = 'center';
+    rainCtx.textBaseline = 'middle';
+  }
+  resizeRainCanvas();
+  window.addEventListener('resize', resizeRainCanvas);
+
+  function spawnRain(charData) {
+    // Reduced motion: skip rain entirely — text just disappears (the contract)
+    if (prefersReducedMotion.matches) return;
+
+    const canvasH = voidCanvas.offsetHeight;
+    let delayIdx = 0;
+
+    for (let i = 0; i < charData.length; i++) {
+      const cd = charData[i];
+      if (cd.char.trim() === '') continue;
+
+      const endY = canvasH - 60 - Math.random() * 40;
+      rainParticles.push({
+        char: cd.char,
+        x: cd.x,
+        y: cd.y,
+        totalFall: endY - cd.y,
+        xDrift: -15 + Math.random() * 30,
+        rotation: -10 + Math.random() * 20,
+        delay: delayIdx * 20 + Math.random() * 50,
+        duration: 2000 + Math.random() * 1500,
+        startTime: 0, // 0 = not yet initialized
+        dead: false,
+      });
+      delayIdx++;
+    }
+
+    rainAlive = rainParticles.length;
+    if (!rainLoopRunning && rainAlive > 0) {
+      rainLoopRunning = true;
+      requestAnimationFrame(animateRain);
+    }
+  }
+
+  function animateRain(now) {
+    const dpr = devicePixelRatio || 1;
+    const cw = rainCanvas.width / dpr;
+    const ch = rainCanvas.height / dpr;
+    rainCtx.clearRect(0, 0, cw, ch);
+
+    let alive = 0;
+    for (let i = 0; i < rainParticles.length; i++) {
+      const p = rainParticles[i];
+      if (p.dead) continue;
+
+      if (p.startTime === 0) p.startTime = now + p.delay;
+      if (now < p.startTime) { alive++; continue; }
+
+      const elapsed = now - p.startTime;
+      const t = Math.min(elapsed / p.duration, 1);
+
+      if (t >= 1) { p.dead = true; continue; }
+
+      alive++;
+      const eased = Math.pow(t, 1.6);
+
+      // 3-phase opacity: fade in → slow fade → fade out (no blur — opacity only)
+      let opacity;
+      if (t < 0.06) opacity = t / 0.06 * 0.5;
+      else if (t < 0.6) opacity = 0.5 - t * 0.15;
+      else opacity = 0.35 * (1 - (t - 0.6) / 0.4);
+
+      if (opacity <= 0) continue;
+
+      const cx = p.x + eased * p.xDrift;
+      const cy = p.y + eased * p.totalFall;
+      const rot = eased * p.rotation * Math.PI / 180;
+
+      rainCtx.save();
+      rainCtx.globalAlpha = opacity;
+      rainCtx.translate(cx, cy);
+      rainCtx.rotate(rot);
+      rainCtx.fillStyle = rainTextColor;
+      rainCtx.fillText(p.char, 0, 0);
+      rainCtx.restore();
+    }
+
+    if (alive > 0) {
+      requestAnimationFrame(animateRain);
+    } else {
+      // Compact: clear dead particles
+      rainParticles.length = 0;
+      rainLoopRunning = false;
+    }
+  }
+
+
+  // ===========================================================================
+  //  PILL PILE
+  // ===========================================================================
+
+  let pileRows = [];
+  // Pyramid: wide base rows, narrowing toward top, with organic variation
+  const ROW_PATTERN = [4, 4, 3, 3, 2, 2, 1, 2, 3, 3, 4, 4, 3, 2, 1];
+  let currentRowIdx = 0;
+  let currentRowCount = 0;
+
+  function dropPill(word, fromX, fromY, isStacking) {
+    const clean = isStacking ? '+' : word;
+    if (!isStacking && collectedPool.has(clean)) return;
+    if (!isStacking) collectedPool.add(clean);
+
+    if (pileRows.length === 0 || currentRowCount >= ROW_PATTERN[currentRowIdx % ROW_PATTERN.length]) {
+      const row = document.createElement('div');
+      row.className = 'pill-row';
+      row.style.transform = `translateX(${-8 + Math.random() * 16}px)`;
+      pillPool.appendChild(row);
+      pileRows.push(row);
+      currentRowIdx++;
+      currentRowCount = 0;
+    }
+
+    const rotate = -6 + Math.random() * 12;
+    const nudge = -5 + Math.random() * 10;
+
+    const poolPill = document.createElement('span');
+    poolPill.className = 'pill' + (isStacking ? ' stacking-pill' : '');
+    if (currentAct === 'PORTRAIT' || currentAct === 'STREAM') {
+      poolPill.classList.add('tappable');
+      poolPill.addEventListener('click', (e) => {
+        e.stopPropagation();
+        handlePillTap(e);
+      });
+      attachLongPress(poolPill);
+    }
+    poolPill.textContent = clean;
+    poolPill.style.opacity = '0';
+    poolPill.style.setProperty('--pill-rotate', rotate + 'deg');
+    poolPill.style.setProperty('--pill-nudge', nudge + 'px');
+    poolPill.dataset.pillLabel = word;
+    poolPill.dataset.isStacking = isStacking ? '1' : '0';
+
+    // Dismiss button
+    const dismissBtn = document.createElement('button');
+    dismissBtn.className = 'pill-dismiss';
+    dismissBtn.textContent = '\u00d7';
+    dismissBtn.setAttribute('aria-label', 'Remove');
+    dismissBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      handlePillDismiss(poolPill);
+    });
+    poolPill.appendChild(dismissBtn);
+
+    pileRows[pileRows.length - 1].appendChild(poolPill);
+    currentRowCount++;
+
+    // Measure target position
+    const canvasRect = voidCanvas.getBoundingClientRect();
+    const tgtRect = poolPill.getBoundingClientRect();
+    const targetX = tgtRect.left - canvasRect.left + tgtRect.width / 2;
+    const targetY = tgtRect.top - canvasRect.top + tgtRect.height / 2;
+
+    // Create flying pill
+    const flyPill = document.createElement('span');
+    flyPill.className = 'falling-pill';
+    flyPill.textContent = clean;
+    flyPill.style.left = fromX + 'px';
+    flyPill.style.top = fromY + 'px';
+    flyPill.style.opacity = '1';
+    voidCanvas.appendChild(flyPill);
+
+    const driftX = targetX - fromX;
+    const driftY = targetY - fromY;
+    const m = getMotion(MOTION.pillFall);
+
+    gsap.to(flyPill, {
+      x: driftX,
+      y: driftY,
+      rotation: rotate,
+      duration: m.duration + Math.random() * 0.3,
+      ease: m.ease,
+      onComplete: () => {
+        poolPill.style.opacity = '1';
+        flyPill.remove();
+      }
+    });
+  }
+
+
+  // ===========================================================================
+  //  PILL TAP — Progressive context reveal
+  // ===========================================================================
+
+  function handlePillTap(e) {
+    const pill = e.currentTarget;
+    if (pill === activePill) { dismissContext(); return; }
+    dismissContext();
+    activePill = pill;
+    activePillDepth = 0;
+    pill.classList.add('active');
+    createContextElement(pill);
+
+  }
+
+  function createContextElement(pill) {
+    const pillLabel = pill.dataset.pillLabel;
+    const isStacking = pill.dataset.isStacking === '1';
+    const ctx = findContextForPill(pillLabel, isStacking);
+
+    if (!ctx) { dismissContext(); return; }
+
+    const contextEl = document.createElement('div');
+    contextEl.className = 'pill-context';
+    pill.appendChild(contextEl);
+    activeContextEl = contextEl;
+
+    if (isStacking) {
+      const sides = getStackingContext(ctx);
+      contextEl.innerHTML = `
+        <div class="pill-context-inner">
+          ${sides.before ? `<div class="tangle-side">${escapeHtml(truncateGently(sides.before, 80))}</div>` : ''}
+          <div class="tangle-divider">·  +  ·</div>
+          ${sides.after ? `<div class="tangle-side">${escapeHtml(truncateGently(sides.after, 80))}</div>` : ''}
+        </div>
+      `;
+      contextEl.addEventListener('click', (e) => {
+        e.stopPropagation();
+        dismissContext();
+      });
+    } else {
+      const levels = getContextLevels(ctx);
+      if (levels.length === 0) { dismissContext(); return; }
+      contextEl._levels = levels;
+      renderContextDepth(contextEl, 0);
+      contextEl.addEventListener('click', (e) => {
+        e.stopPropagation();
+        activePillDepth++;
+        if (activePillDepth >= contextEl._levels.length) {
+          dismissContext();
+          return;
+        }
+        renderContextDepth(contextEl, activePillDepth);
+      });
+    }
+
+    contextJustOpened = true;
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        contextEl.classList.add('visible');
+      });
+    });
+  }
+
+  function renderContextDepth(contextEl, depth) {
+    const levels = contextEl._levels;
+    const level = levels[Math.min(depth, levels.length - 1)];
+    const highlighted = buildHighlightedText(level);
+
+    // Show circled + when more depth levels remain
+    let moreHtml = '';
+    if (levels.length > 1 && depth < levels.length - 1) {
+      moreHtml = '<div class="depth-more"><span class="depth-more-icon">+</span></div>';
+    }
+
+    contextEl.innerHTML = `
+      <div class="pill-context-inner">
+        <div class="context-text">${highlighted}</div>
+        ${moreHtml}
+      </div>
+    `;
+
+    contextEl.classList.remove('depth-1', 'depth-2');
+    if (depth === 1) contextEl.classList.add('depth-1');
+    else if (depth >= 2) contextEl.classList.add('depth-2');
+  }
+
+  function buildHighlightedText(level) {
+    const text = level.text;
+    const hStart = Math.max(0, level.highlightStart);
+    const hEnd = Math.min(text.length, level.highlightEnd);
+
+    if (hStart >= hEnd || hStart >= text.length) {
+      return escapeHtml(text);
+    }
+
+    const before = text.slice(0, hStart);
+    const highlight = text.slice(hStart, hEnd);
+    const after = text.slice(hEnd);
+
+    return escapeHtml(before) +
+      '<span class="context-highlight">' + escapeHtml(highlight) + '</span>' +
+      escapeHtml(after);
+  }
+
+  function dismissContext() {
+    if (activeContextEl) {
+      activeContextEl.classList.remove('visible');
+      const el = activeContextEl;
+      setTimeout(() => el.remove(), 600);
+      activeContextEl = null;
+    }
+    if (activePill) {
+      activePill.classList.remove('active');
+      activePill = null;
+    }
+    activePillDepth = 0;
+  }
+
+  const _escDiv = document.createElement('div');
+  function escapeHtml(str) {
+    _escDiv.textContent = str;
+    return _escDiv.innerHTML;
+  }
+
+  function truncateGently(str, maxLen) {
+    if (str.length <= maxLen) return str;
+    const cut = str.lastIndexOf(' ', maxLen);
+    return str.slice(0, cut > 0 ? cut : maxLen) + '…';
+  }
+
+  // Dismiss context on tap elsewhere (with guard to prevent immediate dismissal)
+  let contextJustOpened = false;
+  document.addEventListener('click', (e) => {
+    if (contextJustOpened) { contextJustOpened = false; return; }
+    if (activePill && !activePill.contains(e.target)) {
+      dismissContext();
+    }
+  });
+
+
+  // ===========================================================================
+  //  TYPING DISPLAY UNDERLINE — fades after first character
+  // ===========================================================================
+
+  const typingDisplayEl = document.getElementById('typingDisplay');
+  let underlineRemoved = false;
+
+  function checkUnderline() {
+    if (!underlineRemoved && fullText.length > 0) {
+      underlineRemoved = true;
+      typingDisplayEl.classList.add('has-text');
+    }
+  }
+
+  // Hook into input handler
+  const _origOnInput = onInput;
+  onInput = function() {
+    _origOnInput();
+    checkUnderline();
+  };
+  hiddenInput.removeEventListener('input', _origOnInput);
+  hiddenInput.addEventListener('input', onInput);
+
+
+  // ===========================================================================
+  //  FIRST-PILL + DONE INVITE — pause-triggered centered invite
+  // ===========================================================================
+
+  const pillHints = document.getElementById('pillHints');
+  const pillHintPrimary = document.getElementById('pillHintPrimary');
+  const pillHintSecondary = document.getElementById('pillHintSecondary');
+  const addOwnBtn = document.getElementById('addOwnBtn');
+  const doneInvite = document.getElementById('doneInvite');
+  const doneBtn = document.getElementById('doneBtn');
+  let hintShown = false;
+  let doneInviteTimer = null;
+
+  function showDoneInvite() {
+    if (currentAct !== 'VOID' || !firstPillSettled) return;
+    doneInvite.classList.add('visible');
+  }
+
+  function hideDoneInvite() {
+    doneInvite.classList.remove('visible');
+  }
+
+  // Patch dropPill to set firstPillSettled on first pill settle
+  const _origDropPill = dropPill;
+  dropPill = function(word, fromX, fromY, isStacking) {
+    _origDropPill(word, fromX, fromY, isStacking);
+    if (!hintShown && currentAct === 'VOID') {
+      hintShown = true;
+      // Mark eligible after pill settles (~1.6s fall duration), then start invite timer
+      setTimeout(() => {
+        if (currentAct === 'VOID') {
+          firstPillSettled = true;
+          clearAllBtn.classList.add('visible');
+          // Start invite timer if user is idle (no pending timer from onInput)
+          if (!doneInviteTimer) {
+            doneInviteTimer = setTimeout(() => {
+              try { showDoneInvite(); }
+              catch (err) { showError('doneInviteTimer', err); }
+            }, 3000);
+          }
+        }
+      }, 1600);
+    }
+  };
+
+
+  // ===========================================================================
+  //  DONE HANDLER — Transition from VOID to PORTRAIT
+  // ===========================================================================
+
+  const witnessingText = document.getElementById('witnessingText');
+
+  function handleDonePressed() {
+    if (currentAct !== 'VOID') return;
+
+    // Force-release any remaining text
+    if (fullText.trim().length > 0) {
+      forceReleaseAll();
+    }
+
+    // If there's transcript text and pills exist, show ghost layer first
+    if (transcript.trim().length > 0 && collectedPool.size > 0) {
+      transitionToGhost();
+    } else {
+      transitionToPortrait();
+    }
+  }
+
+  // ===========================================================================
+  //  EDIT MODE — Long-press to reveal dismiss badges + "add your own"
+  // ===========================================================================
+
+  function attachLongPress(pill) {
+    let pressTimer = null;
+    let startX = 0, startY = 0;
+
+    function startPress(x, y) {
+      startX = x;
+      startY = y;
+      pressTimer = setTimeout(() => {
+        pressTimer = null;
+        enterEditMode();
+      }, 500);
+    }
+
+    function cancelPress() {
+      if (pressTimer) { clearTimeout(pressTimer); pressTimer = null; }
+    }
+
+    function moveCheck(x, y) {
+      if (pressTimer && (Math.abs(x - startX) > 10 || Math.abs(y - startY) > 10)) {
+        cancelPress();
+      }
+    }
+
+    pill.addEventListener('touchstart', (e) => {
+      const t = e.touches[0];
+      startPress(t.clientX, t.clientY);
+    }, { passive: true });
+    pill.addEventListener('touchmove', (e) => {
+      const t = e.touches[0];
+      moveCheck(t.clientX, t.clientY);
+    }, { passive: true });
+    pill.addEventListener('touchend', cancelPress);
+    pill.addEventListener('touchcancel', cancelPress);
+    pill.addEventListener('mousedown', (e) => { startPress(e.clientX, e.clientY); });
+    pill.addEventListener('mousemove', (e) => { moveCheck(e.clientX, e.clientY); });
+    pill.addEventListener('mouseup', cancelPress);
+    pill.addEventListener('mouseleave', cancelPress);
+  }
+
+  function positionAddOwnBtn() {
+    // Place button just below the pill grid
+    requestAnimationFrame(() => {
+      const poolRect = pillPool.getBoundingClientRect();
+      const canvasRect = voidCanvas.getBoundingClientRect();
+      const poolBottom = poolRect.bottom - canvasRect.top;
+      addOwnBtn.style.top = (poolBottom + 16) + 'px';
+    });
+  }
+
+  function enterEditMode() {
+    if (isEditMode) return;
+    isEditMode = true;
+    pillPool.classList.add('editable');
+    pillHintPrimary.textContent = 'tap \u00d7 to remove';
+    pillHintSecondary.style.opacity = '0';
+    dismissContext();
+  }
+
+  function exitEditMode() {
+    isEditMode = false;
+    pillPool.classList.remove('editable');
+    pillHintPrimary.textContent = 'tap a word to reveal its context';
+    pillHintSecondary.textContent = 'tap + hold to edit';
+    pillHintSecondary.style.opacity = '';
+  }
+
+
+  // ===========================================================================
+  //  GHOST TEXT RECOVERY — ambient dissolved text for claiming missed words
+  // ===========================================================================
+
+  const ghostLayer = document.getElementById('ghostLayer');
+  const ghostText = document.getElementById('ghostText');
+  const ghostInvite = document.getElementById('ghostInvite');
+  const ghostDismiss = document.getElementById('ghostDismiss');
+  const ghostBack = document.getElementById('ghostBack');
+  let ghostAutoDismissTimer = null;
+  let ghostWordSpans = [];
+
+  function transitionToGhost() {
+    currentAct = 'GHOST';
+
+    // Hide done invite
+    if (doneInviteTimer) clearTimeout(doneInviteTimer);
+    hideDoneInvite();
+
+    // Dim typing area and hide cursor
+    typingArea.classList.add('dimmed');
+    cursorEl.style.display = 'none';
+    hiddenInput.blur();
+
+    // Clear timers
+    if (punctTimer) clearTimeout(punctTimer);
+    if (pauseTimer) clearTimeout(pauseTimer);
+
+    // Hide void-only buttons
+    clearAllBtn.classList.remove('visible');
+    forwardBtn.classList.remove('visible');
+
+    // Position pills in bottom half for ghost view, make dismissable
+    pillPool.classList.remove('passive');
+    pillPool.classList.add('ghost-view');
+    pillPool.classList.add('editable');
+    const allPills = pillPool.querySelectorAll('.pill');
+    allPills.forEach(pill => {
+      pill.classList.add('tappable');
+    });
+
+    // Render the ghost text and initialize counter
+    renderGhostText();
+    updateGhostCounter();
+
+    // GSAP sequenced entrance
+    const m = getMotion(MOTION.transition);
+    const tl = gsap.timeline();
+
+    tl.to(framing, { opacity: 0, duration: m.duration, ease: m.ease })
+      .call(() => ghostLayer.classList.add('visible'))
+      .to(ghostLayer, { opacity: 1, duration: 1.5, ease: 'power1.inOut' }, '<')
+      .to(ghostInvite, { opacity: 1, duration: 1.2, ease: 'power1.inOut' }, '-=0.8')
+      .to(document.getElementById('ghostCounter'), { opacity: 1, duration: 0.6, ease: 'power1.inOut' }, '-=0.6')
+      .to(ghostDismiss, {
+        opacity: 1,
+        duration: 0.8,
+        ease: 'power1.inOut',
+        onComplete: () => { ghostDismiss.style.pointerEvents = 'auto'; }
+      }, '-=0.4')
+      .to(ghostBack, {
+        opacity: 1,
+        duration: 0.6,
+        ease: 'power1.inOut',
+        onComplete: () => { ghostBack.style.pointerEvents = 'auto'; }
+      }, '-=0.6');
+
+  }
+
+  function renderGhostText() {
+    ghostText.innerHTML = '';
+    ghostWordSpans = [];
+
+    if (!transcript || transcript.trim().length === 0) return;
+
+    // Parse transcript to know which words were already caught
+    const parsedWords = parseWords(transcript);
+    const chargedRanges = [];
+    for (const w of parsedWords) {
+      if (w.isCharged) {
+        chargedRanges.push({ start: w.startIdx, end: w.endIdx });
+      }
+    }
+
+    function isAlreadyCaught(charIdx) {
+      for (const r of chargedRanges) {
+        if (charIdx >= r.start && charIdx < r.end) return true;
+      }
+      return false;
+    }
+
+    // Tokenize into words and whitespace
+    const tokenRegex = /(\S+|\s+)/g;
+    let match;
+    let spanIdx = 0;
+
+    while ((match = tokenRegex.exec(transcript)) !== null) {
+      const token = match[1];
+      const tokenStart = match.index;
+
+      if (/^\s+$/.test(token)) {
+        ghostText.appendChild(document.createTextNode(token));
+      } else {
+        const span = document.createElement('span');
+        span.className = 'ghost-word';
+        span.textContent = token;
+        span.dataset.idx = spanIdx;
+        span.setAttribute('role', 'button');
+        span.setAttribute('tabindex', '0');
+        span.setAttribute('aria-label', 'Add "' + token + '" to portrait');
+
+        if (isAlreadyCaught(tokenStart)) {
+          span.classList.add('already-caught');
+          span.removeAttribute('role');
+          span.removeAttribute('tabindex');
+          span.setAttribute('aria-hidden', 'true');
+        }
+
+        ghostText.appendChild(span);
+        ghostWordSpans.push(span);
+        spanIdx++;
+      }
+    }
+
+    // Attach keyboard listeners (tap/drag handled at ghost layer level)
+    ghostWordSpans.forEach(span => {
+      if (span.classList.contains('already-caught')) return;
+
+      span.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          claimGhostWord(span);
+        }
+      });
+    });
+  }
+
+  const PORTRAIT_MAX_PILLS = 10;
+  const GHOST_PHRASE_MAX_WORDS = 5;
+
+  // Ghost drag-select state
+  let ghostSelection = null; // { anchorIdx, currentIdx }
+  let ghostDragActive = false;
+  let ghostDragLocked = null; // null | 'horizontal' | 'vertical'
+  let ghostDragOrigin = null; // { x, y }
+  const DRAG_LOCK_THRESHOLD = 8; // px before direction locks
+
+  function getGhostWordFromPoint(x, y) {
+    const el = document.elementFromPoint(x, y);
+    if (!el) return null;
+    if (el.classList && el.classList.contains('ghost-word')) return el;
+    if (el.parentElement && el.parentElement.classList && el.parentElement.classList.contains('ghost-word')) return el.parentElement;
+    return null;
+  }
+
+  function clearGhostSelection() {
+    ghostWordSpans.forEach(s => s.classList.remove('selected'));
+    ghostSelection = null;
+    ghostDragActive = false;
+    ghostDragLocked = null;
+    ghostDragOrigin = null;
+  }
+
+  function ghostHighlightRange(fromIdx, toIdx) {
+    const lo = Math.min(fromIdx, toIdx);
+    // Enforce 5-word max
+    const hi = Math.min(Math.max(fromIdx, toIdx), lo + GHOST_PHRASE_MAX_WORDS - 1);
+    ghostWordSpans.forEach((s, i) => {
+      if (i >= lo && i <= hi) s.classList.add('selected');
+      else s.classList.remove('selected');
+    });
+    // Clamp currentIdx to enforced range
+    if (ghostSelection) {
+      if (ghostSelection.currentIdx > ghostSelection.anchorIdx) {
+        ghostSelection.currentIdx = Math.min(ghostSelection.currentIdx, ghostSelection.anchorIdx + GHOST_PHRASE_MAX_WORDS - 1);
+      } else {
+        ghostSelection.currentIdx = Math.max(ghostSelection.currentIdx, ghostSelection.anchorIdx - GHOST_PHRASE_MAX_WORDS + 1);
+      }
+    }
+  }
+
+  function handleGhostApprove() {
+    if (!ghostSelection) return;
+    if (getActivePillCount() >= PORTRAIT_MAX_PILLS) { clearGhostSelection(); return; }
+
+    const lo = Math.min(ghostSelection.anchorIdx, ghostSelection.currentIdx);
+    const hi = Math.max(ghostSelection.anchorIdx, ghostSelection.currentIdx);
+
+    // Build phrase label
+    const words = [];
+    for (let i = lo; i <= hi; i++) {
+      words.push(ghostWordSpans[i].textContent);
+    }
+    const label = words.join(' ').toLowerCase().trim();
+    if (!label) { clearGhostSelection(); return; }
+
+    // Mark as claimed
+    for (let i = lo; i <= hi; i++) {
+      ghostWordSpans[i].classList.add('claimed');
+      ghostWordSpans[i].classList.remove('selected');
+      ghostWordSpans[i].removeAttribute('tabindex');
+    }
+
+    // Get position for pill drop
+    const canvasRect = voidCanvas.getBoundingClientRect();
+    const lastRect = ghostWordSpans[hi].getBoundingClientRect();
+    const fromX = lastRect.left - canvasRect.left + lastRect.width / 2;
+    const fromY = lastRect.top - canvasRect.top + lastRect.height / 2;
+
+    dropPill(label, fromX, fromY, false);
+
+    setTimeout(() => updateGhostCounter(), 100);
+    clearGhostSelection();
+  }
+
+  // Ghost layer touch events — direction-locked drag
+  ghostText.addEventListener('touchstart', (e) => {
+    const touch = e.touches[0];
+    const span = getGhostWordFromPoint(touch.clientX, touch.clientY);
+    if (!span || span.classList.contains('claimed') || span.classList.contains('already-caught')) return;
+
+    clearGhostSelection();
+    const idx = parseInt(span.dataset.idx);
+    ghostSelection = { anchorIdx: idx, currentIdx: idx };
+    ghostDragOrigin = { x: touch.clientX, y: touch.clientY };
+    ghostDragLocked = null;
+    ghostDragActive = true;
+    ghostHighlightRange(idx, idx);
+  }, { passive: true });
+
+  ghostText.addEventListener('touchmove', (e) => {
+    if (!ghostDragActive || !ghostSelection || !ghostDragOrigin) return;
+    const touch = e.touches[0];
+
+    // Direction lock: decide on first significant move
+    if (!ghostDragLocked) {
+      const dx = Math.abs(touch.clientX - ghostDragOrigin.x);
+      const dy = Math.abs(touch.clientY - ghostDragOrigin.y);
+      if (dx < DRAG_LOCK_THRESHOLD && dy < DRAG_LOCK_THRESHOLD) return;
+      ghostDragLocked = (dx >= dy) ? 'horizontal' : 'vertical';
+    }
+
+    if (ghostDragLocked === 'vertical') {
+      // Let scroll happen naturally, cancel selection
+      clearGhostSelection();
+      return;
+    }
+
+    // Horizontal — select words
+    e.preventDefault();
+    const span = getGhostWordFromPoint(touch.clientX, touch.clientY);
+    if (!span || span.classList.contains('claimed') || span.classList.contains('already-caught')) return;
+    const idx = parseInt(span.dataset.idx);
+    ghostSelection.currentIdx = idx;
+    ghostHighlightRange(ghostSelection.anchorIdx, idx);
+  }, { passive: false });
+
+  ghostText.addEventListener('touchend', (e) => {
+    if (!ghostDragActive || !ghostSelection) return;
+    ghostDragActive = false;
+
+    // Single tap — claim one word
+    if (ghostSelection.anchorIdx === ghostSelection.currentIdx) {
+      const span = ghostWordSpans[ghostSelection.anchorIdx];
+      if (span && !span.classList.contains('claimed') && !span.classList.contains('already-caught')) {
+        claimGhostWord(span);
+      }
+      clearGhostSelection();
+      return;
+    }
+
+    // Multi-word drag — auto-claim the phrase
+    handleGhostApprove();
+  });
+
+  // Ghost layer mouse events (desktop)
+  ghostText.addEventListener('mousedown', (e) => {
+    const span = getGhostWordFromPoint(e.clientX, e.clientY);
+    if (!span || span.classList.contains('claimed') || span.classList.contains('already-caught')) return;
+    e.preventDefault();
+    clearGhostSelection();
+    const idx = parseInt(span.dataset.idx);
+    ghostSelection = { anchorIdx: idx, currentIdx: idx };
+    ghostDragActive = true;
+    ghostHighlightRange(idx, idx);
+  });
+
+  ghostText.addEventListener('mousemove', (e) => {
+    if (!ghostDragActive || !ghostSelection) return;
+    const span = getGhostWordFromPoint(e.clientX, e.clientY);
+    if (!span || span.classList.contains('claimed') || span.classList.contains('already-caught')) return;
+    const idx = parseInt(span.dataset.idx);
+    ghostSelection.currentIdx = idx;
+    ghostHighlightRange(ghostSelection.anchorIdx, idx);
+  });
+
+  document.addEventListener('mouseup', (e) => {
+    if (!ghostDragActive || !ghostSelection) return;
+    ghostDragActive = false;
+
+    if (ghostSelection.anchorIdx === ghostSelection.currentIdx) {
+      const span = ghostWordSpans[ghostSelection.anchorIdx];
+      if (span && !span.classList.contains('claimed') && !span.classList.contains('already-caught')) {
+        claimGhostWord(span);
+      }
+      clearGhostSelection();
+      return;
+    }
+
+    // Multi-word drag — auto-claim the phrase
+    handleGhostApprove();
+  });
+
+  // Tap on ghost layer background dismisses selection
+  ghostLayer.addEventListener('click', (e) => {
+    if (e.target === ghostLayer || e.target === ghostText) {
+      if (ghostSelection && !ghostDragActive) {
+        clearGhostSelection();
+      }
+    }
+  });
+
+  function getActivePillCount() {
+    return pillPool.querySelectorAll('.pill').length;
+  }
+
+  function updateGhostCounter() {
+    const count = getActivePillCount();
+    const counter = document.getElementById('ghostCounter');
+    if (counter) {
+      counter.textContent = count + ' / ' + PORTRAIT_MAX_PILLS;
+      if (count >= PORTRAIT_MAX_PILLS) {
+        counter.classList.add('at-limit');
+      } else {
+        counter.classList.remove('at-limit');
+      }
+    }
+  }
+
+  function claimGhostWord(span) {
+    if (span.classList.contains('claimed') || span.classList.contains('already-caught')) return;
+
+    // Limit total pills in portrait
+    if (getActivePillCount() >= PORTRAIT_MAX_PILLS) return;
+
+    const word = span.textContent.toLowerCase().trim();
+    span.classList.add('claimed');
+    span.removeAttribute('tabindex');
+    span.setAttribute('aria-label', word + ' added to portrait');
+
+    // Animate the claim — word brightens, then a pill drops
+    const m = getMotion(MOTION.pillLand);
+    gsap.fromTo(span,
+      { scale: 1 },
+      { scale: 1.05, duration: 0.2, ease: 'power1.out',
+        onComplete: () => gsap.to(span, { scale: 1, duration: 0.3, ease: 'power1.inOut' })
+      }
+    );
+
+    // Get position relative to canvas for pill drop
+    const canvasRect = voidCanvas.getBoundingClientRect();
+    const spanRect = span.getBoundingClientRect();
+    const fromX = spanRect.left - canvasRect.left + spanRect.width / 2;
+    const fromY = spanRect.top - canvasRect.top + spanRect.height / 2;
+
+    // Drop as new pill
+    dropPill(word, fromX, fromY, false);
+
+    // Update counter after pill settles
+    setTimeout(() => updateGhostCounter(), 100);
+
+    // Announce for screen readers
+    const announcement = document.createElement('div');
+    announcement.setAttribute('role', 'status');
+    announcement.setAttribute('aria-live', 'polite');
+    announcement.className = 'sr-only';
+    announcement.textContent = word + ' added to your portrait — ' + (getActivePillCount()) + ' of ' + PORTRAIT_MAX_PILLS;
+    document.body.appendChild(announcement);
+    setTimeout(() => announcement.remove(), 2000);
+  }
+
+  function dismissGhostLayer() {
+    if (ghostAutoDismissTimer) {
+      clearTimeout(ghostAutoDismissTimer);
+      ghostAutoDismissTimer = null;
+    }
+
+    const m = getMotion(MOTION.dissolve);
+    const tl = gsap.timeline({
+      onComplete: () => {
+        cleanupGhostState();
+        transitionToPortrait();
+      }
+    });
+
+    tl.to(ghostInvite, { opacity: 0, duration: 0.4, ease: m.ease })
+      .to(ghostBack, { opacity: 0, duration: 0.4, ease: m.ease }, '<')
+      .to(ghostDismiss, { opacity: 0, duration: 0.4, ease: m.ease }, '<')
+      .to(document.getElementById('ghostCounter'), { opacity: 0, duration: 0.4, ease: m.ease }, '<')
+      .to(ghostLayer, { opacity: 0, duration: m.duration, ease: m.ease }, '-=0.2');
+  }
+
+  function cleanupGhostState() {
+    if (ghostAutoDismissTimer) {
+      clearTimeout(ghostAutoDismissTimer);
+      ghostAutoDismissTimer = null;
+    }
+    ghostLayer.classList.remove('visible');
+    pillPool.classList.remove('ghost-view');
+    pillPool.classList.remove('editable');
+    ghostDismiss.style.pointerEvents = 'none';
+    ghostBack.style.pointerEvents = 'none';
+    gsap.set([ghostLayer, ghostInvite, ghostDismiss, ghostBack, document.getElementById('ghostCounter')], { opacity: 0 });
+    clearGhostSelection();
+    ghostText.innerHTML = '';
+    ghostWordSpans = [];
+  }
+
+  function ghostBackToVoid() {
+    const m = getMotion(MOTION.dissolve);
+    const tl = gsap.timeline({
+      onComplete: () => {
+        cleanupGhostState();
+        // Restore void state
+        currentAct = 'VOID';
+        pillPool.classList.add('passive');
+        typingArea.classList.remove('dimmed');
+        cursorEl.style.display = '';
+        framing.style.opacity = '';
+        framing.style.transition = '';
+        framing.classList.add('dimmed');
+        // Show void buttons if pills exist
+        if (pillPool.querySelectorAll('.pill').length > 0) {
+          clearAllBtn.classList.add('visible');
+          forwardBtn.classList.add('visible');
+        }
+        hiddenInput.focus();
+      }
+    });
+
+    tl.to(ghostInvite, { opacity: 0, duration: 0.4, ease: m.ease })
+      .to(ghostBack, { opacity: 0, duration: 0.4, ease: m.ease }, '<')
+      .to(ghostDismiss, { opacity: 0, duration: 0.4, ease: m.ease }, '<')
+      .to(ghostLayer, { opacity: 0, duration: m.duration, ease: m.ease }, '-=0.2')
+      .to(framing, { opacity: 1, duration: 0.6, ease: 'power1.inOut' }, '-=0.4');
+  }
+
+  ghostDismiss.addEventListener('click', (e) => {
+    e.stopPropagation();
+    dismissGhostLayer();
+  });
+
+  ghostBack.addEventListener('click', (e) => {
+    e.stopPropagation();
+    ghostBackToVoid();
+  });
+
+
+  function transitionToPortrait() {
+    const comingFromGhost = currentAct === 'GHOST';
+    currentAct = 'PORTRAIT';
+
+    // These may already be done if coming from ghost layer
+    if (!comingFromGhost) {
+      if (doneInviteTimer) clearTimeout(doneInviteTimer);
+      hideDoneInvite();
+      typingArea.classList.add('dimmed');
+      cursorEl.style.display = 'none';
+      hiddenInput.blur();
+      if (punctTimer) clearTimeout(punctTimer);
+      if (pauseTimer) clearTimeout(pauseTimer);
+    }
+
+    // Activate pills — remove passive, center the pool, straighten pills
+    pillPool.classList.remove('passive');
+    pillPool.classList.add('portrait');
+    const allPills = pillPool.querySelectorAll('.pill');
+    allPills.forEach(pill => {
+      pill.classList.add('tappable');
+      pill.addEventListener('click', (e) => {
+        e.stopPropagation();
+        handlePillTap(e);
+      });
+      attachLongPress(pill);
+    });
+
+    // Reset hints and hide void-only buttons
+    pillHintPrimary.textContent = 'tap a word to reveal its context';
+    pillHintSecondary.textContent = 'tap + hold to edit';
+    pillHintSecondary.style.opacity = '';
+    clearAllBtn.classList.remove('visible');
+    forwardBtn.classList.remove('visible');
+
+    // Sequenced transition
+    const m = getMotion(MOTION.transition);
+    const tl = gsap.timeline();
+
+    if (comingFromGhost) {
+      // Framing already hidden — go straight to witnessing
+      tl.call(() => witnessingText.classList.add('visible'))
+        .call(() => {
+          pillHints.classList.add('visible');
+          backBtn.classList.add('visible');
+          addOwnBtn.classList.add('visible');
+          positionAddOwnBtn();
+        }, null, '+=0.7');
+    } else {
+      tl.to(framing, { opacity: 0, duration: m.duration, ease: m.ease })
+        .call(() => witnessingText.classList.add('visible'))
+        .call(() => {
+          pillHints.classList.add('visible');
+          backBtn.classList.add('visible');
+          addOwnBtn.classList.add('visible');
+          positionAddOwnBtn();
+        }, null, '+=0.7');
+    }
+  }
+
+  const keepBtn = document.getElementById('keepBtn');
+  const backBtn = document.getElementById('backBtn');
+  const forwardBtn = document.getElementById('forwardBtn');
+  const clearAllBtn = document.getElementById('clearAllBtn');
+
+  doneBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    handleDonePressed();
+  });
+
+  keepBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    hideDoneInvite();
+    // Show forward arrow so user can proceed without adding more
+    if (pillPool.querySelectorAll('.pill').length > 0) {
+      forwardBtn.classList.add('visible');
+      clearAllBtn.classList.add('visible');
+    }
+    hiddenInput.focus();
+  });
+
+  backBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    returnToVoid();
+  });
+
+  forwardBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    transitionToPortrait();
+  });
+
+  clearAllBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    clearAll();
+  });
+
+
+  // ===========================================================================
+  //  RETURN TO VOID — Go back to typing, preserve all pill state
+  // ===========================================================================
+
+  function returnToVoid() {
+    // Close stream overlay if open
+    if (currentAct === 'STREAM') closeStream();
+
+    // Clean up ghost layer if it's still showing
+    cleanupGhostState();
+
+    currentAct = 'VOID';
+
+    // Exit edit mode
+    exitEditMode();
+
+    // Hide portrait UI
+    witnessingText.classList.remove('visible');
+    pillHints.classList.remove('visible');
+    backBtn.classList.remove('visible');
+    addOwnBtn.classList.remove('visible');
+    addOwnBtn.style.top = '';
+
+    // Show clear-all and forward arrow on void if pills exist
+    if (pillPool.querySelectorAll('.pill').length > 0) {
+      clearAllBtn.classList.add('visible');
+      forwardBtn.classList.add('visible');
+    }
+
+    // Un-dim typing area, restore cursor
+    typingArea.classList.remove('dimmed');
+    cursorEl.style.display = '';
+
+    // Restore framing (dimmed since hasStarted is true)
+    framing.style.opacity = '';
+    framing.style.transition = '';
+    framing.classList.add('dimmed');
+
+    // Make pills passive again, restore wabi-sabi layout
+    pillPool.classList.add('passive');
+    pillPool.classList.remove('portrait');
+    const allPills = pillPool.querySelectorAll('.pill');
+    allPills.forEach(pill => {
+      pill.classList.remove('tappable');
+    });
+
+    // Dismiss any open pill context
+    dismissContext();
+
+    // Re-focus input
+    hiddenInput.focus();
+  }
+
+
+  // ===========================================================================
+  //  CLEAR ALL — Reset everything to initial state
+  // ===========================================================================
+
+  function clearAll() {
+    if (!confirm('Start fresh? Your words will be cleared.')) return;
+
+    // Close stream if open
+    if (currentAct === 'STREAM') closeStream();
+
+    // Clean up ghost layer
+    cleanupGhostState();
+
+    // Reset act
+    currentAct = 'VOID';
+
+    // Reset text state
+    fullText = '';
+    words = [];
+    releasedUpTo = 0;
+    hiddenInput.value = '';
+    transcript = '';
+
+    // Reset collection state
+    collectedPool = new Set();
+    firstPillSettled = false;
+    hintShown = false;
+    underlineRemoved = false;
+    hasStarted = false;
+
+    // Reset pill context
+    pillContextStore.length = 0;
+    activePill = null;
+    activePillDepth = 0;
+    if (activeContextEl) { activeContextEl.remove(); activeContextEl = null; }
+
+    // Reset pile layout
+    pileRows = [];
+    currentRowIdx = 0;
+    currentRowCount = 0;
+
+    // Clear timers
+    if (punctTimer) clearTimeout(punctTimer);
+    if (pauseTimer) clearTimeout(pauseTimer);
+    if (doneInviteTimer) clearTimeout(doneInviteTimer);
+    punctTimer = null;
+    pauseTimer = null;
+    doneInviteTimer = null;
+
+    // Exit edit mode
+    exitEditMode();
+
+    // Reset DOM — pill pool
+    pillPool.innerHTML = '';
+    pillPool.classList.add('passive');
+    pillPool.classList.remove('portrait');
+
+    // Reset DOM — portrait UI
+    witnessingText.classList.remove('visible');
+    pillHintPrimary.textContent = 'tap a word to reveal its context';
+    pillHintSecondary.textContent = 'tap + hold to edit';
+    pillHintSecondary.style.opacity = '';
+    pillHints.classList.remove('visible');
+    backBtn.classList.remove('visible');
+    forwardBtn.classList.remove('visible');
+    clearAllBtn.classList.remove('visible');
+    addOwnBtn.classList.remove('visible');
+    addOwnBtn.style.top = '';
+    hideDoneInvite();
+
+    // Reset DOM — typing area (replay intro animation)
+    typingArea.classList.remove('dimmed', 'ready');
+    cursorEl.style.display = '';
+    typingDisplayEl.classList.remove('has-text');
+
+    // Reset framing to initial state — replay staggered fade-in
+    framing.style.opacity = '';
+    framing.style.transition = '';
+    framing.classList.remove('dimmed');
+    const instrEl = framing.querySelector('.instruction');
+    const contractEl = framing.querySelector('.contract');
+    instrEl.style.animation = 'none';
+    contractEl.style.animation = 'none';
+    instrEl.style.opacity = '';
+    contractEl.style.opacity = '';
+    // Force reflow to restart animations
+    void instrEl.offsetWidth;
+    instrEl.style.animation = '';
+    contractEl.style.animation = '';
+
+    // Reset typing area animation
+    typingArea.style.animation = 'none';
+    void typingArea.offsetWidth;
+    typingArea.style.animation = '';
+
+    // Clear rain
+    rainParticles.length = 0;
+
+    // Re-render and delay focus to match intro timing
+    renderTypingLine();
+    setTimeout(() => hiddenInput.focus(), 3000);
+  }
+
+
+  // ===========================================================================
+  //  PILL DISMISS — Remove a pill from the cairn
+  // ===========================================================================
+
+  function handlePillDismiss(pill) {
+    const label = pill.dataset.pillLabel;
+    const isStacking = pill.dataset.isStacking === '1';
+
+    // Remove from collectedPool (stacking pills aren't tracked there)
+    if (!isStacking) collectedPool.delete(label);
+
+    // Animate out
+    const m = getMotion(MOTION.dissolve);
+    gsap.to(pill, {
+      opacity: 0, scale: 0.8,
+      duration: 0.3, ease: m.ease,
+      onComplete: () => {
+        pill.remove();
+        if (currentAct === 'GHOST') updateGhostCounter();
+      }
+    });
+  }
+
+
+  // ===========================================================================
+  //  STREAM OVERLAY — See everything, tap-drag-approve selection
+  // ===========================================================================
+
+  const streamOverlay = document.getElementById('streamOverlay');
+  const streamContent = document.getElementById('streamContent');
+  const streamCloseBtn = document.getElementById('streamCloseBtn');
+  const streamApproveBtn = document.getElementById('streamApproveBtn');
+
+  // Stream selection state
+  let streamWordSpans = [];
+  let streamSelection = null; // { anchorIdx, currentIdx }
+  let isDragging = false;
+
+  function openStream() {
+    currentAct = 'STREAM';
+    dismissContext();
+    renderStreamContent();
+    streamOverlay.classList.add('visible');
+  }
+
+  function closeStream() {
+    streamOverlay.classList.remove('visible');
+    clearStreamSelection();
+    streamApproveBtn.classList.remove('visible');
+    if (currentAct === 'STREAM') currentAct = 'PORTRAIT';
+  }
+
+  function renderStreamContent() {
+    streamContent.innerHTML = '';
+    streamWordSpans = [];
+
+    if (!transcript || transcript.trim().length === 0) {
+      streamContent.textContent = 'Nothing here yet.';
+      return;
+    }
+
+    // Parse transcript to identify system-detected words
+    const parsedWords = parseWords(transcript);
+    const chargedRanges = [];
+    for (const w of parsedWords) {
+      if (w.isCharged) {
+        chargedRanges.push({ start: w.startIdx, end: w.endIdx });
+      }
+    }
+
+    function isInChargedRange(charIdx) {
+      for (const r of chargedRanges) {
+        if (charIdx >= r.start && charIdx < r.end) return true;
+      }
+      return false;
+    }
+
+    // Split transcript into tokens (words + whitespace)
+    const tokenRegex = /(\S+|\s+)/g;
+    let match;
+    let charOffset = 0;
+    let spanIdx = 0;
+
+    while ((match = tokenRegex.exec(transcript)) !== null) {
+      const token = match[1];
+      const tokenStart = match.index;
+
+      if (/^\s+$/.test(token)) {
+        // Whitespace — render as text node
+        streamContent.appendChild(document.createTextNode(token));
+      } else {
+        // Word token — wrap in a span
+        const span = document.createElement('span');
+        span.className = 'stream-word';
+        span.textContent = token;
+        span.dataset.idx = spanIdx;
+        span.dataset.charStart = tokenStart;
+        span.dataset.charEnd = tokenStart + token.length;
+
+        // Check if any character in this token is within a charged range
+        if (isInChargedRange(tokenStart)) {
+          span.classList.add('system-detected');
+        }
+
+        streamContent.appendChild(span);
+        streamWordSpans.push(span);
+        spanIdx++;
+      }
+    }
+  }
+
+  // Tap-drag selection
+  function getWordSpanFromPoint(x, y) {
+    const el = document.elementFromPoint(x, y);
+    if (!el) return null;
+    if (el.classList && el.classList.contains('stream-word')) return el;
+    if (el.parentElement && el.parentElement.classList && el.parentElement.classList.contains('stream-word')) return el.parentElement;
+    return null;
+  }
+
+  function clearStreamSelection() {
+    streamWordSpans.forEach(s => s.classList.remove('selected'));
+    streamSelection = null;
+    isDragging = false;
+  }
+
+  function highlightRange(fromIdx, toIdx) {
+    const lo = Math.min(fromIdx, toIdx);
+    const hi = Math.max(fromIdx, toIdx);
+    streamWordSpans.forEach((s, i) => {
+      if (i >= lo && i <= hi) s.classList.add('selected');
+      else s.classList.remove('selected');
+    });
+  }
+
+  function showApproveButton() {
+    if (!streamSelection) return;
+    const lo = Math.min(streamSelection.anchorIdx, streamSelection.currentIdx);
+    const hi = Math.max(streamSelection.anchorIdx, streamSelection.currentIdx);
+    const lastSpan = streamWordSpans[hi];
+    if (!lastSpan) return;
+
+    const rect = lastSpan.getBoundingClientRect();
+    const overlayRect = streamOverlay.getBoundingClientRect();
+    streamApproveBtn.style.left = Math.min(rect.right - overlayRect.left + 8, overlayRect.width - 70) + 'px';
+    streamApproveBtn.style.top = (rect.top - overlayRect.top - 4) + 'px';
+    streamApproveBtn.classList.add('visible');
+  }
+
+  function handleStreamApprove() {
+    if (!streamSelection) return;
+    const lo = Math.min(streamSelection.anchorIdx, streamSelection.currentIdx);
+    const hi = Math.max(streamSelection.anchorIdx, streamSelection.currentIdx);
+
+    // Build label from selected words
+    const selectedWords = [];
+    for (let i = lo; i <= hi; i++) {
+      selectedWords.push(streamWordSpans[i].textContent);
+    }
+    const label = selectedWords.join(' ').toLowerCase().trim();
+    if (!label) { clearStreamSelection(); streamApproveBtn.classList.remove('visible'); return; }
+
+    // Get position of the last selected word for pill origin
+    const lastSpan = streamWordSpans[hi];
+    const canvasRect = voidCanvas.getBoundingClientRect();
+    const spanRect = lastSpan.getBoundingClientRect();
+    const fromX = spanRect.left - canvasRect.left + spanRect.width / 2;
+    const fromY = spanRect.bottom - canvasRect.top;
+
+    // Drop as new pill
+    dropPill(label, fromX, fromY, false);
+
+    // Mark as promoted
+    for (let i = lo; i <= hi; i++) {
+      streamWordSpans[i].classList.add('promoted');
+      streamWordSpans[i].classList.remove('selected');
+    }
+
+    streamApproveBtn.classList.remove('visible');
+    streamSelection = null;
+    isDragging = false;
+  }
+
+  // Event listeners for stream interaction
+  streamCloseBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    closeStream();
+  });
+
+  addOwnBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    openStream();
+  });
+
+  streamApproveBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    handleStreamApprove();
+  });
+
+  // Touch/mouse selection on stream content
+  streamContent.addEventListener('mousedown', (e) => {
+    const span = getWordSpanFromPoint(e.clientX, e.clientY);
+    if (!span || span.classList.contains('promoted')) return;
+    e.preventDefault();
+    clearStreamSelection();
+    streamApproveBtn.classList.remove('visible');
+    const idx = parseInt(span.dataset.idx);
+    streamSelection = { anchorIdx: idx, currentIdx: idx };
+    isDragging = true;
+    highlightRange(idx, idx);
+  });
+
+  streamContent.addEventListener('mousemove', (e) => {
+    if (!isDragging || !streamSelection) return;
+    const span = getWordSpanFromPoint(e.clientX, e.clientY);
+    if (!span) return;
+    const idx = parseInt(span.dataset.idx);
+    streamSelection.currentIdx = idx;
+    highlightRange(streamSelection.anchorIdx, idx);
+  });
+
+  document.addEventListener('mouseup', (e) => {
+    if (!isDragging || !streamSelection) return;
+    isDragging = false;
+    showApproveButton();
+  });
+
+  streamContent.addEventListener('touchstart', (e) => {
+    const touch = e.touches[0];
+    const span = getWordSpanFromPoint(touch.clientX, touch.clientY);
+    if (!span || span.classList.contains('promoted')) return;
+    clearStreamSelection();
+    streamApproveBtn.classList.remove('visible');
+    const idx = parseInt(span.dataset.idx);
+    streamSelection = { anchorIdx: idx, currentIdx: idx };
+    isDragging = true;
+    highlightRange(idx, idx);
+  }, { passive: true });
+
+  streamContent.addEventListener('touchmove', (e) => {
+    if (!isDragging || !streamSelection) return;
+    const touch = e.touches[0];
+    const span = getWordSpanFromPoint(touch.clientX, touch.clientY);
+    if (!span) return;
+    const idx = parseInt(span.dataset.idx);
+    streamSelection.currentIdx = idx;
+    highlightRange(streamSelection.anchorIdx, idx);
+    e.preventDefault();
+  }, { passive: false });
+
+  streamContent.addEventListener('touchend', (e) => {
+    if (!isDragging || !streamSelection) return;
+    isDragging = false;
+    showApproveButton();
+  });
+
+  // Tap elsewhere in stream overlay dismisses selection
+  streamOverlay.addEventListener('click', (e) => {
+    if (e.target === streamOverlay || e.target.classList.contains('stream-scroll') || e.target.classList.contains('stream-content')) {
+      if (streamSelection && !isDragging) {
+        clearStreamSelection();
+        streamApproveBtn.classList.remove('visible');
+      }
+    }
+  });
+
+
+  // ===========================================================================
+  //  MOBILE KEYBOARD HANDLING — visualViewport API
+  // ===========================================================================
+
+  if (window.visualViewport) {
+    let keyboardRAF = null;
+    const originalPillPoolBottom = getComputedStyle(pillPool).bottom;
+
+    function handleViewportResize() {
+      if (keyboardRAF) return;
+      keyboardRAF = requestAnimationFrame(() => {
+        keyboardRAF = null;
+        const keyboardHeight = window.innerHeight - window.visualViewport.height;
+        if (keyboardHeight > 100) {
+          // Keyboard is open — shift pill pool up
+          pillPool.style.bottom = (parseInt(originalPillPoolBottom) + keyboardHeight) + 'px';
+          framing.style.opacity = '0';
+          framing.style.pointerEvents = 'none';
+        } else {
+          // Keyboard closed — restore
+          pillPool.style.bottom = '';
+          framing.style.opacity = '';
+          framing.style.pointerEvents = '';
+        }
+      });
+    }
+
+    window.visualViewport.addEventListener('resize', handleViewportResize);
+  }
+
+})();
+</script>
+</body>
+</html>
