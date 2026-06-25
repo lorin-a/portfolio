@@ -243,18 +243,91 @@
 .signoff { width: 38px; height: 38px; margin: clamp(2.5rem, 5vh, 4rem) auto 0; opacity: 0.8; }
 
 /* ════════════════════════════════════════════════════════
+   PROCESS MODULES — research visible, iteration, device, deck, diagrams
+   ════════════════════════════════════════════════════════ */
+
+/* ── contact sheet (research breadth) ── */
+.evidence { padding: clamp(1rem, 3vh, 2.5rem) clamp(1.5rem, 5vw, 3rem) clamp(3.5rem, 9vh, 6rem); }
+.evidenceLabel { margin: 0 0 1.5rem; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.2em; color: var(--ink-muted); }
+.sheet { width: min(100%, 1100px); margin: 0 auto; display: grid; grid-template-columns: repeat(2, 1fr); gap: clamp(1rem, 2.5vw, 1.75rem); }
+.sheetItem { margin: 0; }
+.sheetMedia { position: relative; aspect-ratio: 4 / 3; overflow: hidden; border-radius: 4px; background: var(--paper-warm); }
+.sheetMedia img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.sheetCap { margin: 0.6rem 0 0; font-size: 0.82rem; line-height: 1.45; color: var(--ink-muted); text-wrap: pretty; }
+
+/* ── diagram surfaces (synthesis, system map) ── */
+.diagram { padding: clamp(2.5rem, 7vh, 5rem) clamp(1.5rem, 5vw, 3rem); background: var(--paper-warm); }
+.diagramFig { width: min(100%, 920px); margin: 0 auto; }
+.diagramFig img { width: 100%; height: auto; display: block; border-radius: 6px; }
+.diagramSvg { background: transparent; }
+.diagramCap { display: flex; align-items: baseline; gap: 0.7rem; margin: 1rem 0 0; font-size: 0.86rem; line-height: 1.5; color: var(--ink-muted); text-wrap: pretty; }
+
+/* ── split (text + media side by side) ── */
+.split { width: min(100%, 1100px); margin: 0 auto; padding: clamp(3rem, 8vh, 6rem) clamp(1.5rem, 5vw, 3rem); display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2rem, 5vw, 4.5rem); align-items: center; }
+.splitText { min-width: 0; }
+.splitText .h3 { margin-top: 0.4rem; }
+.splitMedia { min-width: 0; display: flex; justify-content: center; }
+.splitImg { width: 100%; border-radius: 6px; overflow: hidden; background: var(--paper-warm); }
+.splitImg img { width: 100%; height: auto; display: block; }
+
+/* ── iPhone device frame ── */
+.device { display: flex; flex-direction: column; align-items: center; gap: 1rem; }
+.deviceBody { position: relative; width: min(260px, 64vw); aspect-ratio: 9 / 19.5; background: #0e0d0c; border-radius: 2.4rem; padding: 0.5rem; box-shadow: 0 30px 60px -30px rgba(0,0,0,0.5), inset 0 0 0 2px rgba(255,255,255,0.06); }
+.deviceNotch { position: absolute; top: 0.5rem; left: 50%; transform: translateX(-50%); width: 36%; height: 1.1rem; background: #0e0d0c; border-radius: 0 0 0.8rem 0.8rem; z-index: 2; }
+.deviceVideo { width: 100%; height: 100%; object-fit: cover; border-radius: 2rem; display: block; background: #1a1a1a; }
+.deviceLabel { margin: 0; font-size: 0.82rem; color: var(--ink-muted); }
+
+/* ── iteration horizontal scroll-through (Komoot) ── */
+.iter { position: relative; height: 100vh; overflow: hidden; background: var(--noir); display: flex; align-items: center; }
+.iterTrack { display: flex; align-items: center; gap: clamp(1.5rem, 4vw, 3rem); height: 100%; padding: 0 clamp(1.5rem, 5vw, 4rem); will-change: transform; }
+.iterIntro { flex: none; width: min(80vw, 420px); padding-right: clamp(1rem, 3vw, 2rem); }
+.iterIntro .kicker { margin-bottom: 1.2rem; }
+.iterIntro .kickerLabel { color: var(--cream-body); }
+.iterIntro .kickerNum { color: var(--sage-light); }
+.iterTitle { margin: 0 0 1rem; font-family: var(--font-serif); font-weight: 360; font-size: clamp(1.8rem, 3.6vw, 2.8rem); line-height: 1.1; color: var(--cream); }
+.iterLede { margin: 0; font-size: 0.9rem; letter-spacing: 0.04em; color: var(--sage-light); }
+.iterFrame { flex: none; width: min(72vw, 860px); margin: 0; }
+.iterMedia { position: relative; aspect-ratio: 4 / 3; overflow: hidden; border-radius: 6px; background: var(--noir-2); }
+.iterMedia img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.iterNum { position: absolute; left: 1rem; top: 0.85rem; z-index: 2; font-family: var(--font-serif); font-size: 1.1rem; color: #fff; text-shadow: 0 1px 10px rgba(0,0,0,0.6); }
+.iterCap { margin: 0.9rem 0 0; font-size: 0.9rem; line-height: 1.5; color: var(--cream-body); text-wrap: pretty; }
+
+/* static fallback (reduced motion / small screens): native horizontal scroll */
+.iterStatic { height: auto; padding: clamp(3rem, 8vh, 5rem) 0; }
+.iterStatic .iterTrack { transform: none !important; overflow-x: auto; scroll-snap-type: x mandatory; height: auto; padding-bottom: 1rem; }
+.iterStatic .iterFrame { scroll-snap-align: center; width: min(82vw, 560px); }
+.iterStatic .iterIntro { width: min(82vw, 420px); }
+
+/* ── reflection-card deck (the writing, horizontal) ── */
+.deckWrap { padding: clamp(1rem, 3vh, 2rem) 0 clamp(3.5rem, 9vh, 6rem); }
+.deckHint { width: min(100%, var(--measure)); margin: 0 auto 1.25rem; padding: 0 clamp(1.5rem, 5vw, 3rem); font-size: 0.8rem; letter-spacing: 0.04em; color: var(--sage); }
+.deck { list-style: none; margin: 0; padding: 0 max(clamp(1.5rem, 5vw, 3rem), calc((100vw - 1100px) / 2)) 1rem; display: grid; grid-auto-flow: column; grid-auto-columns: min(60vw, 300px); gap: clamp(1rem, 2.5vw, 1.75rem); overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: thin; }
+.deckCard { position: relative; scroll-snap-align: center; aspect-ratio: 3 / 4; border-radius: 8px; overflow: hidden; background: var(--paper-warm); box-shadow: 0 20px 40px -28px rgba(0,0,0,0.5); }
+.deckCard img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.deckIndex { position: absolute; right: 0.6rem; bottom: 0.5rem; font-family: var(--font-serif); font-size: 0.8rem; color: var(--ink-muted); background: rgba(251,249,246,0.85); padding: 0.1rem 0.45rem; border-radius: 3px; }
+
+/* timeline gets a proportional bar (width = phase weeks / 12) */
+.timeRow { grid-template-areas: 'bar bar' 'title dur' 'ctx ctx'; }
+.timeBar { grid-area: bar; height: 4px; border-radius: 2px; background: var(--sage); opacity: 0.45; margin-bottom: 0.55rem; width: calc(var(--span, 1) / 12 * 100%); min-width: 12%; transform-origin: left; }
+
+/* ════════════════════════════════════════════════════════
    RESPONSIVE
    ════════════════════════════════════════════════════════ */
+@media (max-width: 900px) {
+  .split { grid-template-columns: 1fr; gap: clamp(1.5rem, 5vw, 2.5rem); }
+  .split .splitMedia { order: -1; }
+}
 @media (max-width: 720px) {
   .statRow { grid-template-columns: 1fr; gap: 1.25rem; }
   .creditsInner { grid-template-columns: 1fr; gap: 2rem; }
   .dimRow { grid-template-columns: auto 1fr; grid-template-areas: 'num name' '. need' '. answer'; }
+  .sheet { grid-template-columns: 1fr; }
   .rail { display: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .rise, .cinematic .cinematicCap { opacity: 1; transform: none; transition: none; }
-  .cinematicMedia img, .actImg { transform: none; transition: none; }
+  .cinematicMedia img, .actImg, .iterMedia img { transform: none; transition: none; }
   .actNameInner { transform: none; transition: none; }
   .actPhase, .actLine { opacity: 1; transform: none; transition: none; }
   .heroImg { animation: none; transform: none; }

@@ -1,29 +1,26 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import { gsap } from '@/lib/gsap'
+import { gsap, ScrollTrigger } from '@/lib/gsap'
 import ShapeMark from '@/components/marks/ShapeMark'
-import { cloudImg, GS_IMAGES } from '@/lib/cloudinary'
+import { cloudImg, cloudVideo, GS_IMAGES, GS_CARDS, GS_VIDEOS } from '@/lib/cloudinary'
 import styles from './GroundswellPreview.module.css'
 
 /* ============================================================================
-   Groundswell — case-study template, rebuilt as ONE editorial form.
+   Groundswell — case-study template. ONE editorial form, now built to SHOW
+   the process, not just narrate it.
 
-   The corpus (docs/case-study-editorial/REFERENCES.md) converges on a single
-   shape: a long-form feature that falls down a single reading column, punctuated
-   by full-bleed cinematic act-dividers. The rhythm is a heartbeat —
-     dark claim  →  light reading + inline evidence  →  full-bleed photo proof.
-   Sense / Weave / Shape are the three breaths, bookended by the question-hero
-   (the hook Lorin loved) and a quiet close.
+   Spine: a single reading column punctuated by full-bleed cinematic
+   act-dividers. Heartbeat: dark claim → light reading + inline evidence →
+   PROCESS MADE VISIBLE → dark claim. The "evidence" beat now varies — a
+   research contact-sheet, a synthesis diagram, an iPhone of the live product,
+   a horizontal scroll through the build iterations (the Komoot move Lorin
+   loved), the reflection-card writing as a horizontal deck. Imagery teaches
+   how she works; one focal point at a time so the eye never bounces.
 
-   Principles pulled straight from the two LOVEs and the rest of the set:
-   · research as reasoning, not decoration (CNN, Buck, ByHeart-as-caution)
-   · one focal point at a time — no carousels, no competing rails (Hex Pens, Buck)
-   · problem-first hook with stakes kept visible (CNN)
-   · first-person ownership + concrete specifics (Beakery, Explora)
-   · restraint and breath; type and space over decorative color (Bernard, Simms)
-   · palette = the real homepage tokens, so it belongs to the site.
-   Copy is Lorin's own words, untouched. Connective framing stays plain and true.
+   Copy is Lorin's own words. Connective framing stays plain and true; no
+   introduced em dashes. Reflection-card BACKS (her somatic copy) are shown,
+   never Carolyn's front artwork.
    ============================================================================ */
 
 const FLOWER_GRADIENT = ['#9FB07E', '#E4B6A4', '#B79BC4']
@@ -32,6 +29,8 @@ const MEDIUM =
   'https://medium.com/@lorinanderberg/design-with-care-for-oncology-exploring-supportive-environments-for-health-care-workers-cd0d6800ddd9'
 
 const img = (key, w = 1600) => cloudImg(GS_IMAGES[key], w)
+const cardBack = (name, w = 900) => cloudImg(GS_CARDS[`${name}-back`], w)
+const vid = (key) => cloudVideo(GS_VIDEOS[key], 900)
 
 // Quiet left spine — five ticks, the three acts bookended by overview + outcome.
 const RAIL = [
@@ -42,8 +41,7 @@ const RAIL = [
   { id: 'outcome', label: 'Outcome' },
 ]
 
-// Sense → Weave → Shape: Lorin's practice, doubling as the project arc. Each is
-// a cinematic dark chapter break. Lines are her own.
+// Sense → Weave → Shape: Lorin's practice, doubling as the project arc.
 const ACTS = [
   {
     key: 'sense', n: 'I', name: 'Sense', phase: '15 weeks · research', image: 'gs-context-02',
@@ -65,6 +63,15 @@ const STAFF_QUOTES = [
   'I can’t turn it off. Even on my days off, I keep checking Teams. I am so exhausted.',
 ]
 
+// Research process — a contact sheet of the generative work, so the reader sees
+// HOW the listening happened (not one hero photo).
+const RESEARCH_FRAMES = [
+  { k: 'gs-workshop-grief-01', cap: 'A generative workshop: mapping where grief lives in the workday.' },
+  { k: 'gs-workshop-flower-01', cap: 'A making exercise, surfacing what staff carry.' },
+  { k: 'gs-context-01', cap: 'Shadowing across the oncology unit.' },
+  { k: 'gs-sense-affinity-02', cap: 'Clustering hundreds of observations into themes.' },
+]
+
 const DIMENSIONS = [
   { name: 'Recognition', need: 'feeling seen and appreciated', answer: 'Community Art Wall' },
   { name: 'Environment', need: 'workspace quality and resources', answer: 'Restorative Pod' },
@@ -72,36 +79,28 @@ const DIMENSIONS = [
   { name: 'Systemic', need: 'constraints beyond the individual', answer: 'Ceased to Breathe email' },
 ]
 
-// Components ordered to match the four dimensions above (Buck: one concept,
-// isolated, per vertical beat — no deck, no carousel).
-const COMPONENTS = [
-  {
-    n: '01', name: 'Community Art Wall', dimension: 'Recognition', image: 'gs-artwall', credit: true,
-    body:
-      'A community art wall that invites participation through anonymous shared emotional expression across the full spectrum of oncology experiences. We built it as a safe, anonymous place to share and understand what others are feeling, giving public, collective voice to the cancer care community.',
-  },
-  {
-    n: '02', name: 'Restorative Pod', dimension: 'Environment', image: 'gs-pod-detail-01',
-    body:
-      'A dedicated space for emotional decompression through mindfulness activities like guided meditation. Staff save their tears for the car ride home or the bathroom stall; nestled where telephone booths once were, the pod reinforces that emotional labor is real work deserving of real space.',
-  },
-  {
-    n: '03', name: 'Reflection Cards', dimension: 'Culture', image: 'gs-cards', credit: true,
-    body:
-      'My own healing journey led me to somatics and nervous-system approaches to well-being, and I wanted to channel that into the content. Each card starts with validation, then offers an invitation to try a somatic exercise — an entry point for building a relationship with the body and a ritual to return to for self-care.',
-  },
-  {
-    n: '04', name: 'Ceased to Breathe Email', dimension: 'Systemic', image: 'gs-ctb-email', credit: true,
-    body:
-      'A redesigned patient-death notification email with compassionate visuals and language that acknowledges the impact of loss. By naming not just the patient but everyone who cared for them, it creates a moment of collective acknowledgment, infused into the workflow without adding administrative burden.',
-  },
+// The build, iterated — the horizontal scroll-through (Komoot move).
+const ITERATION = [
+  { k: 'gs-making-prototype-01', n: '01', cap: 'Early prototyping: testing the pod’s footprint and feel.' },
+  { k: 'gs-making-mockup-01', n: '02', cap: 'Mockups: finding the visual language for the space.' },
+  { k: 'gs-making-figma-01', n: '03', cap: 'Designing the components in Figma.' },
+  { k: 'gs-making-build-02', n: '04', cap: 'Fabrication, backed by donated materials and labor.' },
+  { k: 'gs-making-facade', n: '05', cap: 'The pod facade comes together.' },
+  { k: 'gs-making-install-02', n: '06', cap: 'Installation day at UPMC Magee-Womens Hospital.' },
 ]
 
+// Designed timeline — proportional to weeks (2 / 2 / 4 / 4 of a 12-week build).
 const TIMELINE = [
-  { t: 'Pre-Production', d: '2 weeks', c: 'Concept revision, timeline, early sketches' },
-  { t: 'Concept Revisions', d: '2 weeks', c: 'Content feedback, donation outreach, presentation' },
-  { t: 'Design', d: '4 weeks', c: 'Graphic design, vendor coordination, prototypes' },
-  { t: 'Fabrication', d: '4 weeks', c: 'Pod assembly, play testing, install' },
+  { t: 'Pre-Production', d: '2 wks', span: 2, c: 'Concept revision, timeline, early sketches' },
+  { t: 'Concept Revisions', d: '2 wks', span: 2, c: 'Content feedback, donation outreach, presentation' },
+  { t: 'Design', d: '4 wks', span: 4, c: 'Graphic design, vendor coordination, prototypes' },
+  { t: 'Fabrication', d: '4 wks', span: 4, c: 'Pod assembly, play testing, install' },
+]
+
+// Reflection-card writing — the BACKS only (her somatic copy as type).
+const CARD_BACKS = [
+  'welcome', 'embrace', 'numb', 'present', 'angry', 'grateful', 'exhausted', 'joyful',
+  'invisible', 'valued', 'heartbroken', 'connected', 'vulnerable', 'hopeful', 'thankyou',
 ]
 
 const PLAYTEST_QUOTES = [
@@ -126,12 +125,7 @@ function useInViewOnce(threshold = 0.32) {
     const el = ref.current
     if (!el) return
     const obs = new IntersectionObserver(
-      ([e]) => {
-        if (e.isIntersecting) {
-          setInView(true)
-          obs.disconnect()
-        }
-      },
+      ([e]) => { if (e.isIntersecting) { setInView(true); obs.disconnect() } },
       { threshold }
     )
     obs.observe(el)
@@ -140,22 +134,19 @@ function useInViewOnce(threshold = 0.32) {
   return [ref, inView]
 }
 
-/** Generic on-enter reveal wrapper. */
-function Reveal({ children, className = '', as = 'div', delay = 0, threshold }) {
+function Reveal({ children, className = '', as = 'div', delay = 0, threshold, style }) {
   const [ref, inView] = useInViewOnce(threshold)
   const Tag = as
+  const merged = { ...(style || {}), ...(delay ? { transitionDelay: `${delay}s` } : {}) }
   return (
-    <Tag
-      ref={ref}
-      className={`${styles.rise} ${inView ? styles.in : ''} ${className}`}
-      style={delay ? { transitionDelay: `${delay}s` } : undefined}
-    >
+    <Tag ref={ref} className={`${styles.rise} ${inView ? styles.in : ''} ${className}`}
+      style={Object.keys(merged).length ? merged : undefined}>
       {children}
     </Tag>
   )
 }
 
-/** A light reading section — the single column. One idea, breathing. */
+/** Light reading section — the single column. One idea, breathing. */
 function Read({ id, n, label, children }) {
   return (
     <section id={id} className={styles.read}>
@@ -172,7 +163,7 @@ function Read({ id, n, label, children }) {
   )
 }
 
-/** Full-bleed cinematic evidence — captioned proof, never a carousel (Buck). */
+/** Full-bleed cinematic evidence — captioned proof. Used sparingly now. */
 function Cinematic({ k, cap, credit, ratio }) {
   const [ref, inView] = useInViewOnce(0.2)
   return (
@@ -181,13 +172,26 @@ function Cinematic({ k, cap, credit, ratio }) {
         <img src={img(k, 2200)} alt={cap} loading="lazy" />
         {credit && <span className={styles.cinematicCredit}>Artwork: Carolyn Gavin</span>}
       </div>
-      {cap && (
-        <figcaption className={styles.cinematicCap}>
-          <span className={styles.capTick} aria-hidden="true" />
-          {cap}
-        </figcaption>
-      )}
+      {cap && <figcaption className={styles.cinematicCap}><span className={styles.capTick} aria-hidden="true" />{cap}</figcaption>}
     </figure>
+  )
+}
+
+/** Contact-sheet gallery — several smaller captioned process images, revealing
+ *  in sequence. Shows breadth of the work without one photo dominating. */
+function ContactSheet({ frames, credit }) {
+  return (
+    <div className={styles.sheet}>
+      {frames.map((f, i) => (
+        <Reveal as="figure" key={f.k} className={styles.sheetItem} delay={(i % 2) * 0.08} threshold={0.2}>
+          <div className={styles.sheetMedia}>
+            <img src={img(f.k, 1200)} alt={f.cap} loading="lazy" />
+            {credit && <span className={styles.cinematicCredit}>Artwork: Carolyn Gavin</span>}
+          </div>
+          <figcaption className={styles.sheetCap}>{f.cap}</figcaption>
+        </Reveal>
+      ))}
+    </div>
   )
 }
 
@@ -200,13 +204,103 @@ function ActDivider({ act }) {
       <div className={styles.actScrim} aria-hidden="true" />
       <div className={styles.actInner}>
         <p className={styles.actNum}>Act {act.n}</p>
-        <h2 className={styles.actName}>
-          <span className={styles.actMask}><span className={styles.actNameInner}>{act.name}</span></span>
-        </h2>
+        <h2 className={styles.actName}><span className={styles.actMask}><span className={styles.actNameInner}>{act.name}</span></span></h2>
         <p className={styles.actPhase}>{act.phase}</p>
         <p className={styles.actLine}>{act.line}</p>
       </div>
     </section>
+  )
+}
+
+/** iPhone frame holding an autoplaying product recording. */
+function DeviceFrame({ src, label }) {
+  return (
+    <div className={styles.device}>
+      <div className={styles.deviceBody}>
+        <div className={styles.deviceNotch} aria-hidden="true" />
+        <video className={styles.deviceVideo} src={src} autoPlay muted loop playsInline />
+      </div>
+      {label && <p className={styles.deviceLabel}>{label}</p>}
+    </div>
+  )
+}
+
+/** Horizontal scroll-through — vertical scroll drives a horizontal track of
+ *  iteration frames (the Komoot move). Pinned + scrubbed via ScrollTrigger.
+ *  Falls back to a native horizontal scroll when motion is reduced or on small
+ *  screens. */
+function IterationScroll({ items }) {
+  const sectionRef = useRef(null)
+  const trackRef = useRef(null)
+  const [statik, setStatik] = useState(false)
+
+  useEffect(() => {
+    const section = sectionRef.current
+    const track = trackRef.current
+    if (!section || !track) return
+
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    const small = window.matchMedia('(max-width: 720px)').matches
+    if (reduce || small) { setStatik(true); return }
+
+    const ctx = gsap.context(() => {
+      const distance = () => track.scrollWidth - window.innerWidth
+      gsap.to(track, {
+        x: () => -distance(),
+        ease: 'none',
+        scrollTrigger: {
+          trigger: section,
+          start: 'top top',
+          end: () => `+=${distance()}`,
+          pin: true,
+          scrub: 0.8,
+          invalidateOnRefresh: true,
+        },
+      })
+    }, section)
+
+    const refresh = () => ScrollTrigger.refresh()
+    window.addEventListener('load', refresh)
+    const t = setTimeout(refresh, 600)
+    return () => { clearTimeout(t); window.removeEventListener('load', refresh); ctx.revert() }
+  }, [])
+
+  return (
+    <section ref={sectionRef} className={`${styles.iter} ${statik ? styles.iterStatic : ''}`} aria-label="Build iterations">
+      <div ref={trackRef} className={styles.iterTrack}>
+        <div className={styles.iterIntro}>
+          <p className={styles.kicker}><span className={styles.kickerNum}>06</span><span className={styles.kickerLabel}>The making</span></p>
+          <h2 className={styles.iterTitle}>Concept to installation, in ten weeks.</h2>
+          <p className={styles.iterLede}>Scroll through the build.</p>
+        </div>
+        {items.map((it) => (
+          <figure key={it.k} className={styles.iterFrame}>
+            <div className={styles.iterMedia}>
+              <span className={styles.iterNum}>{it.n}</span>
+              <img src={img(it.k, 1600)} alt={it.cap} loading="lazy" />
+            </div>
+            <figcaption className={styles.iterCap}>{it.cap}</figcaption>
+          </figure>
+        ))}
+      </div>
+    </section>
+  )
+}
+
+/** Reflection-card writing as a horizontal deck (the BACKS). */
+function CardDeck({ names }) {
+  return (
+    <div className={styles.deckWrap}>
+      <p className={styles.deckHint} aria-hidden="true">Drag to read the deck →</p>
+      <ul className={styles.deck} aria-label="Reflection card writing">
+        {names.map((name, i) => (
+          <li key={name} className={styles.deckCard}>
+            <img src={cardBack(name)} alt={`Reflection card: ${name}. The back carries a validation and a somatic exercise.`} loading="lazy" />
+            <span className={styles.deckIndex}>{String(i + 1).padStart(2, '0')}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
   )
 }
 
@@ -215,24 +309,18 @@ export default function GroundswellPreview() {
   const [showRail, setShowRail] = useState(false)
   const heroRef = useRef(null)
 
-  // Rail wayfinding + reveal-after-hero.
   useEffect(() => {
     const obs = new IntersectionObserver(
       (entries) => entries.forEach((e) => { if (e.isIntersecting) setActive(e.target.id) }),
       { rootMargin: '-45% 0px -45% 0px' }
     )
-    RAIL.forEach((c) => {
-      const el = document.getElementById(c.id)
-      if (el) obs.observe(el)
-    })
+    RAIL.forEach((c) => { const el = document.getElementById(c.id); if (el) obs.observe(el) })
     const onScroll = () => setShowRail(window.scrollY > window.innerHeight * 0.85)
     window.addEventListener('scroll', onScroll, { passive: true })
     onScroll()
     return () => { obs.disconnect(); window.removeEventListener('scroll', onScroll) }
   }, [])
 
-  // The hook: on load the photo blooms and the research question wipes up line by
-  // line behind a mask. Honors reduced motion.
   useEffect(() => {
     const root = heroRef.current
     if (!root) return
@@ -249,7 +337,6 @@ export default function GroundswellPreview() {
 
   return (
     <div className={styles.page}>
-      {/* ── header ── */}
       <header className={styles.topbar}>
         <span className={styles.topbarName}>Lorin Anderberg</span>
         <span className={styles.topbarCenter}>
@@ -259,17 +346,15 @@ export default function GroundswellPreview() {
         <a className={styles.topbarBack} href="/">All work</a>
       </header>
 
-      {/* ── quiet left spine ── */}
       <nav className={`${styles.rail} ${showRail ? styles.railOn : ''}`} aria-label="Sections">
         {RAIL.map((c) => (
           <a key={c.id} href={`#${c.id}`} className={`${styles.railItem} ${active === c.id ? styles.railActive : ''}`}>
-            <span className={styles.railTick} />
-            <span className={styles.railLabel}>{c.label}</span>
+            <span className={styles.railTick} /><span className={styles.railLabel}>{c.label}</span>
           </a>
         ))}
       </nav>
 
-      {/* ── HERO · the question reveals on load ── */}
+      {/* ── HERO ── */}
       <section className={styles.hero} ref={heroRef}>
         <div className={styles.heroMedia}>
           <img data-hero-img src={img('gs-hero', 2200)} alt="Groundswell installed in a corridor at UPMC Magee-Womens Hospital" className={styles.heroImg} />
@@ -285,12 +370,10 @@ export default function GroundswellPreview() {
           </h1>
         </div>
         <p className={styles.heroCredit}>Artwork: Carolyn Gavin</p>
-        <div className={styles.scrollCue} aria-hidden="true" data-hero-cue>
-          <span>Scroll</span><span className={styles.scrollLine} />
-        </div>
+        <div className={styles.scrollCue} aria-hidden="true" data-hero-cue><span>Scroll</span><span className={styles.scrollLine} /></div>
       </section>
 
-      {/* ── STANDFIRST · the 90-second orientation (manager can stop here) ── */}
+      {/* ── STANDFIRST ── */}
       <section id="standfirst" className={styles.standfirst}>
         <div className={styles.column}>
           <Reveal>
@@ -298,18 +381,15 @@ export default function GroundswellPreview() {
               <span className={styles.dropcap}>G</span>roundswell is a grant-funded ecosystem of emotional support, developed with the Gynecologic Oncology staff at UPMC Magee-Womens Hospital. Through communication, creativity, and connection, it fosters a culture where the emotional complexities of oncology care are acknowledged, isolation transforms into belonging, and self-care is honored.
             </p>
           </Reveal>
-
           <Reveal className={styles.metaRow}>
             <div className={styles.metaItem}><span className={styles.metaLabel}>My role</span><span className={styles.metaValue}>{ROLE.join(' · ')}</span></div>
             <div className={styles.metaItem}><span className={styles.metaLabel}>Context</span><span className={styles.metaValue}>Carnegie Mellon × UPMC · 2023–24</span></div>
           </Reveal>
-
           <Reveal className={styles.statRow}>
             <div className={styles.statCell}><span className={styles.statNum}>15 wks</span><span className={styles.statCap}>embedded in the oncology unit</span></div>
             <div className={styles.statCell}><span className={styles.statNum}>~$30K</span><span className={styles.statCap}>in donated materials &amp; services</span></div>
             <div className={styles.statCell}><span className={styles.statNum}>12 mo</span><span className={styles.statCap}>live quality-improvement pilot</span></div>
           </Reveal>
-
           <Reveal className={styles.wayInWrap}>
             <p className={styles.wayIn}>
               I come from a long line of healers, educators, and innovators: people who carry the weight of the world, an optimism for the future, and the passion to create change that benefits others. Stepping into the oncology department healed something in me. Within minutes of speaking to the staff, I knew we were cut from the same cloth: givers, healers, lovers, builders, dreamers. It started as a class project. I did not anticipate that it would leave the classroom and become real.
@@ -318,7 +398,6 @@ export default function GroundswellPreview() {
         </div>
       </section>
 
-      {/* first cinematic breath — the installed work */}
       <Cinematic k="gs-install-upmc" cap="Groundswell, installed in a Cancer Services corridor at UPMC Magee-Womens Hospital." credit ratio="16 / 9" />
 
       {/* ════════ ACT I · SENSE ════════ */}
@@ -329,9 +408,7 @@ export default function GroundswellPreview() {
         <Reveal as="p" className={styles.body}>
           The compassionate nature of the work means constant exposure to grief, loss, and trauma, set alongside administrative tasks that disconnect staff from the patient care that drew them in. The numbers are not edge cases. <b className={styles.inlineStat}>1 in 5</b> U.S. healthcare workers have experienced PTSD. <b className={styles.inlineStat}>73%</b> of emergency physicians report stigma around mental-health treatment, and <b className={styles.inlineStat}>27%</b> avoid treatment entirely, fearing professional consequences.
         </Reveal>
-        <Reveal as="p" className={styles.statement}>
-          This is not an individual failure. It is a systemic one.
-        </Reveal>
+        <Reveal as="p" className={styles.statement}>This is not an individual failure. It is a systemic one.</Reveal>
       </Read>
 
       <Read n="02" label="What we heard">
@@ -339,24 +416,26 @@ export default function GroundswellPreview() {
         <Reveal as="p" className={styles.body}>
           Part of what healed me was feeling connected to others who carry contradicting, complex emotional experiences with grace, who find their way back to gratitude even when devastated. As someone already aware of burnout in healthcare, it was not so much shocking as activating to hear, again and again, how under-resourced staff are to carry the emotional toll.
         </Reveal>
-        <Reveal as="p" className={styles.method}>
-          Shadowing across the unit · 8 contextual interviews · 2 generative research workshops.
-        </Reveal>
+        <Reveal as="p" className={styles.method}>Shadowing across the unit · 8 contextual interviews · 2 generative research workshops.</Reveal>
         <div className={styles.quoteRun}>
           {STAFF_QUOTES.map((q, i) => (
-            <Reveal as="blockquote" key={i} className={styles.pullQuote} delay={i * 0.05}>
-              {q}
-            </Reveal>
+            <Reveal as="blockquote" key={i} className={styles.pullQuote} delay={i * 0.05}>{q}</Reveal>
           ))}
         </div>
       </Read>
 
-      <Cinematic k="gs-workshop-grief-01" cap="A generative workshop with staff: mapping where grief lives in the workday." ratio="16 / 9" />
+      {/* research made visible — a contact sheet of the generative work */}
+      <section className={styles.evidence}>
+        <div className={styles.column}>
+          <Reveal as="p" className={styles.evidenceLabel}>Inside the research</Reveal>
+        </div>
+        <ContactSheet frames={RESEARCH_FRAMES} />
+      </section>
 
       <Read id="synthesis" n="03" label="From insight to intervention">
         <Reveal as="h2" className={styles.h2}>The research resolved into four dimensions of well-being.</Reveal>
         <Reveal as="p" className={styles.body}>
-          Each is a need staff named. We chose interventions so that, together, they would answer every one.
+          Each is a need staff named. I mapped hundreds of observations until the pattern held, then chose interventions so that, together, they would answer every one.
         </Reveal>
         <ol className={styles.dimList}>
           {DIMENSIONS.map((d, i) => (
@@ -370,31 +449,80 @@ export default function GroundswellPreview() {
         </ol>
       </Read>
 
+      {/* the synthesis, as a diagram — the four dimensions around The Void */}
+      <section className={styles.diagram}>
+        <Reveal as="figure" className={styles.diagramFig} threshold={0.2}>
+          <img src="/images/groundswell/Synthesis-diagram.jpg" alt="Synthesis diagram: Recognition, Environment, Culture, and Systemic Issues arranged around The Void at the center." loading="lazy" />
+          <figcaption className={styles.diagramCap}><span className={styles.capTick} aria-hidden="true" />The synthesis: four dimensions around the void that patient-centered care leaves behind.</figcaption>
+        </Reveal>
+      </section>
+
       {/* ════════ ACT II · WEAVE ════════ */}
       <ActDivider act={ACTS[1]} />
 
       <Read id="ecosystem" n="04" label="The ecosystem">
         <Reveal as="h2" className={styles.h2}>Four interventions, each answering a dimension.</Reveal>
         <Reveal as="p" className={styles.body}>
-          Not four products. One connected ecosystem, where recognition, environment, culture, and the systemic forces around the work each have a place to live.
+          Not four products. One connected ecosystem, where recognition, environment, culture, and the systemic forces around the work each have a place to live, threaded into the rhythm of the day.
         </Reveal>
       </Read>
 
-      {/* component specimens — one focal point each, full-bleed proof */}
-      {COMPONENTS.map((c) => (
-        <section key={c.n} className={styles.specimen}>
-          <Cinematic k={c.image} cap={`${c.name}, in use.`} credit={c.credit} ratio="16 / 10" />
-          <div className={styles.column}>
-            <Reveal className={styles.specimenHead}>
-              <span className={styles.specimenNum}>{c.n}</span>
-              <span className={styles.specimenDim}>Answers {c.dimension}</span>
-            </Reveal>
-            <Reveal as="h3" className={styles.h3}>{c.name}</Reveal>
-            <Reveal as="p" className={styles.body}>{c.body}</Reveal>
-          </div>
-        </section>
-      ))}
+      {/* system map — how the parts connect (shown, not told) */}
+      <section className={styles.diagram}>
+        <Reveal as="figure" className={styles.diagramFig} threshold={0.2}>
+          <img src="/images/groundswell/gs-ecosystem-diagram.svg" alt="System map showing how the Ceased to Breathe email, Restorative Pod, Community Art Wall, and Reflection Cards connect to moments in the workday." loading="lazy" className={styles.diagramSvg} />
+          <figcaption className={styles.diagramCap}><span className={styles.capTick} aria-hidden="true" />Each intervention meets a different moment: arriving, breaking, grieving, connecting.</figcaption>
+        </Reveal>
+      </section>
 
+      {/* 01 — Community Art Wall (the physical centerpiece) */}
+      <Read n="01 · Recognition" label="Community Art Wall">
+        <Reveal as="h3" className={styles.h3}>A wall that gives the community a voice.</Reveal>
+        <Reveal as="p" className={styles.body}>
+          A community art wall that invites participation through anonymous shared emotional expression across the full spectrum of oncology experiences. We built it as a safe, anonymous place to share and understand what others are feeling, giving public, collective voice to the cancer care community.
+        </Reveal>
+      </Read>
+      <Cinematic k="gs-artwall" cap="The Community Art Wall, in use." credit ratio="16 / 10" />
+
+      {/* 02 — Restorative Pod (with the live meditation on an iPhone) */}
+      <section className={styles.split}>
+        <div className={styles.splitText}>
+          <Reveal className={styles.kicker}><span className={styles.kickerNum}>02 · Environment</span></Reveal>
+          <Reveal as="h3" className={styles.h3}>A room to decompress, mid-shift.</Reveal>
+          <Reveal as="p" className={styles.body}>
+            A dedicated space for emotional decompression through mindfulness activities like guided meditation. Staff save their tears for the car ride home or the bathroom stall; nestled where telephone booths once were, the pod reinforces that emotional labor is real work deserving of real space.
+          </Reveal>
+          <Reveal as="p" className={styles.method}>Guided meditations authored and recorded by Catherine Liggett.</Reveal>
+        </div>
+        <Reveal className={styles.splitMedia} threshold={0.2}>
+          <DeviceFrame src={vid('gs-new-meditations')} label="The in-pod meditation library." />
+        </Reveal>
+      </section>
+
+      {/* 03 — Reflection Cards (the writing, as a horizontal deck) */}
+      <Read n="03 · Culture" label="Reflection Cards">
+        <Reveal as="h3" className={styles.h3}>Writing that meets the body where it is.</Reveal>
+        <Reveal as="p" className={styles.body}>
+          My own healing journey led me to somatics and nervous-system approaches to well-being, and I wanted to channel that into the content. Each card starts with validation, then offers an invitation to try a somatic exercise: an entry point for building a relationship with the body, and a ritual to return to for self-care.
+        </Reveal>
+      </Read>
+      <CardDeck names={CARD_BACKS} />
+
+      {/* 04 — Ceased to Breathe Email */}
+      <section className={styles.split}>
+        <Reveal className={styles.splitMedia} threshold={0.2}>
+          <div className={styles.splitImg}><img src={img('gs-ctb-email', 1400)} alt="The redesigned Ceased to Breathe notification email." loading="lazy" /></div>
+        </Reveal>
+        <div className={styles.splitText}>
+          <Reveal className={styles.kicker}><span className={styles.kickerNum}>04 · Systemic</span></Reveal>
+          <Reveal as="h3" className={styles.h3}>Dignity, infused into the workflow.</Reveal>
+          <Reveal as="p" className={styles.body}>
+            A redesigned patient-death notification email with compassionate visuals and language that acknowledges the impact of loss. By naming not just the patient but everyone who cared for them, it creates a moment of collective acknowledgment, infused into the workflow without adding administrative burden.
+          </Reveal>
+        </div>
+      </section>
+
+      {/* the seam — concept to production */}
       <Read n="05" label="Concept to production">
         <Reveal as="h2" className={styles.h2}>From a digital garden to a physical wall.</Reveal>
         <Reveal as="p" className={styles.body}>
@@ -405,14 +533,18 @@ export default function GroundswellPreview() {
       {/* ════════ ACT III · SHAPE ════════ */}
       <ActDivider act={ACTS[2]} />
 
-      <Read id="making" n="06" label="The making">
-        <Reveal as="h2" className={styles.h2}>Concept to installation in ten weeks.</Reveal>
+      {/* the build, iterated — horizontal scroll-through */}
+      <IterationScroll items={ITERATION} />
+
+      {/* designed timeline */}
+      <Read label="Ten weeks, four phases">
         <Reveal as="p" className={styles.body}>
-          Over a 10-week production sprint, we turned concept into installation, backed by roughly $30,000 in donated materials and services. I led donor outreach and secured the pod, woodworking, the sensor, the ceramic finger labyrinths, and the door locks. It was my meditation teacher, Catherine Liggett, who volunteered to author and record the meditations. Working remotely, I focused on coordination, documentation, and strategy.
+          Over a 10-week production sprint, we turned concept into installation, backed by roughly $30,000 in donated materials and services. I led donor outreach and secured the pod, woodworking, the sensor, the ceramic finger labyrinths, and the door locks. Working remotely, I focused on coordination, documentation, and strategy.
         </Reveal>
         <ol className={styles.timeline}>
           {TIMELINE.map((t, i) => (
-            <Reveal as="li" key={t.t} className={styles.timeRow} delay={i * 0.05}>
+            <Reveal as="li" key={t.t} className={styles.timeRow} delay={i * 0.06} style={{ '--span': t.span }}>
+              <span className={styles.timeBar} aria-hidden="true" />
               <span className={styles.timeT}>{t.t}</span>
               <span className={styles.timeD}>{t.d}</span>
               <span className={styles.timeC}>{t.c}</span>
@@ -420,8 +552,6 @@ export default function GroundswellPreview() {
           ))}
         </ol>
       </Read>
-
-      <Cinematic k="gs-making-install-01" cap="Installation day at UPMC Magee-Womens Hospital." ratio="16 / 9" />
 
       <Read n="07" label="Play testing">
         <Reveal as="h2" className={styles.h2}>Thirty testers. Three critical changes.</Reveal>
@@ -449,7 +579,7 @@ export default function GroundswellPreview() {
 
       <Cinematic k="gs-finale" cap="The team at completion, in front of the installed Community Art Wall." credit ratio="16 / 9" />
 
-      {/* ── REFLECTION · the close ── */}
+      {/* ── REFLECTION ── */}
       <section id="reflection" className={styles.reflection}>
         <div className={styles.column}>
           <Reveal as="p" className={styles.reflectLede}>
@@ -474,10 +604,7 @@ export default function GroundswellPreview() {
             <p className={styles.kickerLabel}>In collaboration with</p>
             <ul className={styles.collabList}>
               {COLLABORATORS.map((c) => (
-                <li key={c.who} className={styles.collabItem}>
-                  <span className={styles.collabWho}>{c.who}</span>
-                  <span className={styles.collabWhat}>{c.what}</span>
-                </li>
+                <li key={c.who} className={styles.collabItem}><span className={styles.collabWho}>{c.who}</span><span className={styles.collabWhat}>{c.what}</span></li>
               ))}
             </ul>
           </Reveal>
