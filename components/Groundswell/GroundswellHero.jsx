@@ -17,17 +17,16 @@ gsap.registerPlugin(ScrollTrigger)
 
 const img = (key, w = 2400) => cloudImg(GS_IMAGES[key], w)
 
-// NOTE: meta values are placeholders to verify with Lorin (esp. Co-design scale).
+// NOTE: Outcome value is a placeholder to verify with Lorin.
 const META = [
   ['Role', 'Design research, co-design'],
-  ['Timeline', '15 weeks · 2023–24'],
-  ['Co-design', 'With oncology staff'],
+  ['Timeline', '15-week course + 10-week production'],
+  ['Year', '2025–26'],
   ['Outcome', 'Live 12-month pilot'],
 ]
 
 export default function GroundswellHero() {
   const rootRef = useRef(null)
-  const kickerRef = useRef(null)
   const qRef = useRef(null)
   const metaRef = useRef(null)
   const bandImgRef = useRef(null)
@@ -37,13 +36,15 @@ export default function GroundswellHero() {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
     const ctx = gsap.context(() => {
       // ── on-load reveal: kicker → masked heading rise → meta settle ──
-      gsap.set([kickerRef.current, metaRef.current], { autoAlpha: 0, y: 16 })
+      gsap.set(metaRef.current, { autoAlpha: 0, y: 16 })
       gsap.set(qRef.current, { clipPath: 'inset(100% 0 0 0)', y: 22 })
 
       gsap.timeline({ defaults: { ease: 'power3.out' } })
-        .to(kickerRef.current, { autoAlpha: 1, y: 0, duration: 0.6 }, 0.15)
-        .to(qRef.current, { clipPath: 'inset(0% 0 0 0)', y: 0, duration: 1.05 }, 0.3)
-        .to(metaRef.current, { autoAlpha: 1, y: 0, duration: 0.7 }, 0.85)
+        .to(qRef.current, {
+          clipPath: 'inset(0% 0 0 0)', y: 0, duration: 1.05,
+          onComplete: () => gsap.set(qRef.current, { clipPath: 'none' }),
+        }, 0.2)
+        .to(metaRef.current, { autoAlpha: 1, y: 0, duration: 0.7 }, 0.75)
 
       // ── scroll interaction: the band image drifts within its frame ──
       gsap.fromTo(
@@ -74,7 +75,6 @@ export default function GroundswellHero() {
 
       <section className={styles.hero}>
         <div className={styles.body}>
-          <p className={styles.kicker} ref={kickerRef}>The question</p>
           <h1 className={styles.q} ref={qRef}>
             Who better to design care than those who <em>give it</em>?
           </h1>

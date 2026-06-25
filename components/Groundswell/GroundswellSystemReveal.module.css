@@ -1,0 +1,139 @@
+/* ============================================================================
+   GroundswellSystemReveal — the art-wall image morphs into one of four circles
+   that settle into the connected ecosystem. Dark → light across the morph.
+   Heading uses the homepage project-header system (Fraunces SOFT 100 / WONK 1,
+   light weight + italic). Static (reduced-motion) state = composed constellation.
+   ============================================================================ */
+
+.wrap {
+  position: relative;
+  height: 320vh;
+  background: #252525;            /* hero charcoal — shows during the morph */
+}
+.stage {
+  --d: clamp(120px, 18vh, 200px); /* node diameter, shared by nodes + labels */
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* light ground fades in as the image contracts */
+.overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: var(--color-cream);
+}
+
+/* connectors */
+.links {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+}
+.links line {
+  stroke: color-mix(in srgb, var(--color-ink) 18%, transparent);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+/* nodes */
+.node {
+  position: absolute;
+  z-index: 3;
+  width: var(--d);
+  height: var(--d);
+  border-radius: 50%;
+  overflow: hidden;
+  box-shadow: 0 14px 36px rgba(37, 35, 32, 0.14);
+}
+.node img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.tl { left: calc(33% - var(--d) / 2); top: calc(40% - var(--d) / 2); }
+.tr { left: calc(67% - var(--d) / 2); top: calc(40% - var(--d) / 2); }
+.bl { left: calc(33% - var(--d) / 2); top: calc(68% - var(--d) / 2); }
+.br { left: calc(67% - var(--d) / 2); top: calc(68% - var(--d) / 2); }
+
+/* heading — homepage project-header system */
+.heading {
+  position: absolute;
+  z-index: 4;
+  top: 7vh;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(42rem, 90vw);
+  margin: 0;
+  text-align: center;
+}
+.kicker {
+  display: block;
+  font-family: var(--font-heading);
+  font-variation-settings: 'SOFT' 100, 'WONK' 1;
+  font-weight: 340;
+  font-size: clamp(14px, 1.5vw, 20px);
+  color: var(--color-ink-faint);
+  margin-bottom: var(--space-xs);
+}
+.title {
+  display: block;
+  font-family: var(--font-heading);
+  font-variation-settings: 'SOFT' 100, 'WONK' 1;
+  font-weight: 200;
+  font-size: clamp(28px, 4vw, 52px);
+  line-height: 1.05;
+  color: var(--color-ink);
+}
+.title em {
+  font-style: italic;
+  font-weight: 300;
+}
+
+/* labels under each node */
+.label {
+  position: absolute;
+  z-index: 4;
+  transform: translateX(-50%);
+  margin: 0;
+  width: max-content;
+  max-width: 22ch;
+  text-align: center;
+}
+.label.tl { left: 33%; top: calc(40% + var(--d) / 2 + 14px); }
+.label.tr { left: 67%; top: calc(40% + var(--d) / 2 + 14px); }
+.label.bl { left: 33%; top: calc(68% + var(--d) / 2 + 14px); }
+.label.br { left: 67%; top: calc(68% + var(--d) / 2 + 14px); }
+.labelName {
+  display: block;
+  font-family: var(--font-heading);
+  font-variation-settings: 'SOFT' 100, 'WONK' 1;
+  font-weight: 360;
+  font-size: clamp(16px, 1.6vw, 21px);
+  color: var(--color-ink);
+}
+.labelSub {
+  display: block;
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  letter-spacing: 0.02em;
+  color: var(--color-sage);
+  margin-top: 3px;
+}
+
+/* ── responsive ── */
+@media (max-width: 700px) {
+  .stage { --d: clamp(96px, 22vw, 150px); }
+  .labelSub { display: none; }
+}
+
+/* ── reduced motion: show the composed constellation, no morph ── */
+@media (prefers-reduced-motion: reduce) {
+  .wrap { height: auto; }
+  .stage { position: relative; height: 100svh; }
+}

@@ -85,10 +85,11 @@
 
 .kicker {
   margin: 0 0 var(--space-md);
-  font-size: 0.75rem;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: var(--on-dark-soft);
+  font-family: var(--font-heading);
+  font-variation-settings: 'SOFT' 100, 'WONK' 1;   /* homepage 'num' eyebrow */
+  font-weight: 340;
+  font-size: clamp(14px, 1.5vw, 20px);
+  color: var(--on-dark-faint);
 }
 
 .q {
@@ -96,16 +97,17 @@
   max-width: min(40rem, 92vw);
   color: var(--on-dark);
   font-family: var(--font-heading);
-  font-variation-settings: var(--font-wonky);
-  font-weight: 360;
-  font-size: clamp(2rem, 1.05rem + 3.3vw, 3.55rem);
-  line-height: 1.24;
+  font-variation-settings: 'SOFT' 100, 'WONK' 1;   /* homepage header axis */
+  font-weight: 300;
+  font-size: clamp(2.2rem, 1.1rem + 4vw, 4.2rem);
+  line-height: 1.16;
   letter-spacing: -0.004em;
   text-wrap: balance;
+  padding-bottom: 0.08em;          /* descender room for italic g/p */
 }
 .q em {
   font-style: italic;
-  font-weight: 360;
+  font-weight: 300;
   /* emphasis through form, not color — matches the homepage register */
 }
 
