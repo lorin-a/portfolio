@@ -94,7 +94,6 @@ export default function GroundswellHero() {
       }))
       gsap.set(mapRef.current, { top: mT, left: mL, width: mw, height: mh, autoAlpha: 0 })
       gsap.set([thesisRef.current, diveRef.current], { autoAlpha: 0 })
-      gsap.set(capRefs.current.filter(Boolean), { autoAlpha: 0 })
 
       // ── scrubbed transformation (slow; long dwell on the full image) ──
       const tl = gsap.timeline({
@@ -106,23 +105,26 @@ export default function GroundswellHero() {
       tl.to(heroTextRef.current, { autoAlpha: 0, y: -48, duration: 0.6, ease: 'power2.in' }, 0)
       tl.to(art, { top: 0, left: 0, width: sw, height: sh, duration: 1.6, ease: 'power2.inOut' }, 0)
 
-      // 2 · HOLD full-bleed (see most of the image) — 1.6 → 2.7
+      // 2 · HOLD full-bleed (dwell on the image) — 1.6 → 2.9
 
-      // 3 · image contracts into its circle on her map (map fades in)
-      tl.to(mapRef.current, { autoAlpha: 1, duration: 0.6 }, 2.85)
+      // 3 · image contracts into its circle; the LABELLED map fades in
       tl.to(art, {
         top: () => cy() - d() / 2, left: () => cx(2) - d() / 2,
         width: d, height: d, duration: 1, ease: 'power2.inOut',
-      }, 2.7)
-      tl.to(artClipRef.current, { borderRadius: '50%', duration: 1 }, 2.7)
+      }, 2.9)
+      tl.to(artClipRef.current, { borderRadius: '50%', duration: 1 }, 2.9)
+      tl.to(mapRef.current, { autoAlpha: 1, duration: 0.9 }, 3.1)
+      tl.to(thesisRef.current, { autoAlpha: 1, duration: 0.7 }, 3.6)
 
-      // 4 · thesis answers; other photos fill their circles; labels
-      tl.to(thesisRef.current, { autoAlpha: 1, duration: 0.6 }, 3.25)
+      // 4 · HOLD to take in the labelled map — 4.0 → 4.9
+
+      // 5 · the circles turn into images, one at a time (room to notice each)
       others.forEach((o, i) => {
-        tl.to(o.el, { autoAlpha: 1, scale: 1, duration: 0.6, ease: 'back.out(1.4)' }, 3.4 + i * 0.12)
+        tl.to(o.el, { autoAlpha: 1, scale: 1, duration: 0.7, ease: 'back.out(1.3)' }, 4.9 + i * 0.5)
       })
-      tl.to(capRefs.current.filter(Boolean), { autoAlpha: 1, duration: 0.5, stagger: 0.05 }, 3.85)
-      tl.to(diveRef.current, { autoAlpha: 1, duration: 0.5 }, 4.15)
+
+      // 6 · invitation into process
+      tl.to(diveRef.current, { autoAlpha: 1, duration: 0.5 }, 6.6)
     }, wrapRef)
 
     return () => ctx.revert()
@@ -179,6 +181,10 @@ export default function GroundswellHero() {
 
         <p className={styles.dive} ref={diveRef}>
           How did we get there? <span className={styles.diveCta}>Dive into the process ↓</span>
+        </p>
+
+        <p className={styles.credit}>
+          Photography <b>Kevin Lorenzi</b> · Artwork <b>Carolyn Gavin</b>
         </p>
       </div>
     </div>
