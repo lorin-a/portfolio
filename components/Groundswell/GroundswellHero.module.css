@@ -12,9 +12,10 @@
   --on-dark-faint: rgba(251, 249, 246, 0.68);
   --hair: rgba(251, 249, 246, 0.16);
   --accent: #C5CFA6;            /* homepage dark-gradient green (on dark) */
+  --bandH: clamp(34vh, 42svh, 48vh);
 
   position: relative;
-  height: 360vh;
+  height: 460vh;
   background: #252525;
   color: var(--on-dark);
   font-family: var(--font-body);
@@ -75,10 +76,11 @@
 .heroText {
   position: absolute;
   top: 0; left: 0; right: 0;
-  bottom: clamp(40vh, 48svh, 58vh);
+  bottom: var(--bandH);
   z-index: 4;
   display: grid;
   place-content: center;
+  padding-top: 5.5rem;          /* clear the nav */
 }
 .body {
   position: relative;
@@ -148,24 +150,17 @@
   color: var(--on-dark);
 }
 
-/* ── connector curves (her map, recoloured sage on the light ground) ── */
-.links {
+/* ── Lorin's ecosystem-map SVG, used verbatim as the backdrop ── */
+.map {
   position: absolute;
-  inset: 0;
   z-index: 2;
-  width: 100%;
-  height: 100%;
-}
-.links path {
-  fill: none;
-  stroke: color-mix(in srgb, var(--color-sage) 42%, transparent);
-  stroke-width: 1.5;
-  vector-effect: non-scaling-stroke;
+  object-fit: fill;     /* box is set in JS to the SVG's aspect ratio */
+  pointer-events: none;
 }
 
 /* ── circle nodes (node .art is the morphing art-wall) ── */
 .node { position: absolute; z-index: 3; }
-.art { left: 0; right: 0; bottom: 0; height: clamp(40vh, 48svh, 58vh); }
+.art { left: 0; right: 0; bottom: 0; height: var(--bandH); }
 
 .clip {
   display: block;
@@ -239,5 +234,5 @@
 @media (prefers-reduced-motion: reduce) {
   .wrap { height: auto; }
   .stage { position: relative; height: 100svh; }
-  .light, .links, .thesis, .dive, .cap, .node:not(.art) { display: none; }
+  .light, .map, .thesis, .dive, .cap, .node:not(.art) { display: none; }
 }
