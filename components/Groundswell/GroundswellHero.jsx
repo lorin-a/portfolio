@@ -8,10 +8,10 @@ import styles from './GroundswellHero.module.css'
 
 /* ============================================================================
    Groundswell — case-study OPENING (hero + ecosystem map in one).
-   The hero's art-wall image is the SAME element that grows to full-bleed
-   (held a good while), then contracts into its circle on Lorin's actual
-   ecosystem-map SVG (used verbatim as the backdrop). Photos fill the circles;
-   ground flips dark→light on landing. Reduced-motion: static hero only.
+   DARK throughout. The hero's art-wall image is the SAME element that grows to
+   full-bleed (held a good while), then contracts into its circle on Lorin's
+   ecosystem-map SVG (used verbatim as the backdrop; its pale marks read on the
+   dark field). Photos fill the circles. Reduced-motion: static hero only.
    ============================================================================ */
 
 gsap.registerPlugin(ScrollTrigger)
@@ -43,11 +43,9 @@ const MAP_AR = 1736 / 1080
 export default function GroundswellHero() {
   const wrapRef = useRef(null)
   const stageRef = useRef(null)
-  const navRef = useRef(null)
   const heroTextRef = useRef(null)
   const qRef = useRef(null)
   const metaRef = useRef(null)
-  const lightRef = useRef(null)
   const mapRef = useRef(null)
   const nodeEls = useRef([])
   const artClipRef = useRef(null)
@@ -69,17 +67,18 @@ export default function GroundswellHero() {
         }, 0.2)
         .to(metaRef.current, { autoAlpha: 1, y: 0, duration: 0.7 }, 0.75)
 
-      // ── map geometry (her layout, centred + fit in the stage) ──
+      // ── map geometry: her layout, fit into a band BELOW the thesis ──
       const sw = () => stageRef.current.getBoundingClientRect().width
       const sh = () => stageRef.current.getBoundingClientRect().height
-      const mw = () => Math.min(sw() * 0.94, sh() * 0.82 * MAP_AR)
+      const fitH = () => sh() * 0.54
+      const mw = () => Math.min(sw() * 0.9, fitH() * MAP_AR)
       const mh = () => mw() / MAP_AR
       const mL = () => (sw() - mw()) / 2
-      const mT = () => (sh() - mh()) / 2
+      const mT = () => sh() * 0.32 + (fitH() - mh()) / 2
       const cx = (i) => mL() + CX[i] * mw()
       const cy = () => mT() + CY * mh()
       const d = () => RAD * 2 * mw()
-      const bandH = () => sh() * 0.42
+      const bandH = () => sh() * 0.40
 
       const art = nodeEls.current[2]
       const others = NODES
@@ -94,7 +93,6 @@ export default function GroundswellHero() {
         width: d, height: d, autoAlpha: 0, scale: 0.8, transformOrigin: '50% 50%',
       }))
       gsap.set(mapRef.current, { top: mT, left: mL, width: mw, height: mh, autoAlpha: 0 })
-      gsap.set(lightRef.current, { autoAlpha: 0 })
       gsap.set([thesisRef.current, diveRef.current], { autoAlpha: 0 })
       gsap.set(capRefs.current.filter(Boolean), { autoAlpha: 0 })
 
@@ -110,9 +108,7 @@ export default function GroundswellHero() {
 
       // 2 · HOLD full-bleed (see most of the image) — 1.6 → 2.7
 
-      // 3 · ground flips; image contracts into its circle on her map
-      tl.to(navRef.current, { autoAlpha: 0, duration: 0.4 }, 2.5)
-      tl.to(lightRef.current, { autoAlpha: 1, duration: 0.5 }, 2.7)
+      // 3 · image contracts into its circle on her map (map fades in)
       tl.to(mapRef.current, { autoAlpha: 1, duration: 0.6 }, 2.85)
       tl.to(art, {
         top: () => cy() - d() / 2, left: () => cx(2) - d() / 2,
@@ -135,12 +131,10 @@ export default function GroundswellHero() {
   return (
     <div className={styles.wrap} ref={wrapRef}>
       <div className={styles.stage} ref={stageRef}>
-        <div className={styles.light} ref={lightRef} aria-hidden="true" />
-
-        {/* Lorin's ecosystem map, used verbatim as the backdrop */}
+        {/* Lorin's ecosystem map, used verbatim as the backdrop (pale on dark) */}
         <img className={styles.map} ref={mapRef} src={MAP_SRC} alt="" aria-hidden="true" />
 
-        <header className={styles.nav} ref={navRef}>
+        <header className={styles.nav}>
           <span className={styles.navMark}>Groundswell</span>
           <span className={styles.navLabel}>Case study</span>
           <span className={styles.navCtx}>Oncology well-being · UPMC Magee-Womens Hospital</span>
