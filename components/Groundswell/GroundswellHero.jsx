@@ -151,21 +151,21 @@ export default function GroundswellHero({ connectorsSvg }) {
       tl.to(introRef.current, { autoAlpha: 1, duration: 0.7 }, 3.2)
       // 4 · HOLD large rectangles 3.7 → 4.7
 
-      // 5 · rectangles shrink + move to the circle POSITIONS (stay as rounded rects)
+      // 5 · rectangles shrink + move into the map AND round into circles (arrive as circles)
       photos.forEach((p, i) => tl.to(p, {
         top: () => cy() - d() / 2, left: () => cx(i) - d() / 2, width: d, height: d,
         duration: 1.2, ease: 'power3.inOut',
       }, 4.7))
+      tl.to(clipRefs.current.filter(Boolean), { borderRadius: '50%', duration: 1.2, ease: 'power3.inOut' }, 4.7)
 
-      // 6 · pills + lines draw in around the images (images still present)
+      // 6 · pills + lines draw in around the image-circles (images still present)
       tl.to(pillRefs.current.filter(Boolean), { autoAlpha: 1, duration: 0.5, stagger: 0.05 }, 6.1)
       tl.to(connRef.current, { autoAlpha: 1, duration: 0.2 }, 6.4)
       tl.to(connRef.current, { clipPath: 'inset(0 0% 0 0)', duration: 1.4, ease: 'power1.inOut' }, 6.4)
 
-      // 7 · LAST: images round to circles + cross-fade to the labelled discs
-      tl.to(clipRefs.current.filter(Boolean), { borderRadius: '50%', duration: 0.9, ease: 'power2.inOut' }, 8.1)
-      tl.to(discs, { autoAlpha: 1, duration: 0.6 }, 8.3)
-      tl.to(photos, { autoAlpha: 0, duration: 0.6 }, 8.4)
+      // 7 · LAST: cross-fade the image-circles to the labelled discs
+      tl.to(discs, { autoAlpha: 1, duration: 0.6 }, 8.1)
+      tl.to(photos, { autoAlpha: 0, duration: 0.6 }, 8.2)
 
       // 8 · dive
       tl.to(diveRef.current, { autoAlpha: 1, duration: 0.5 }, 9.1)
