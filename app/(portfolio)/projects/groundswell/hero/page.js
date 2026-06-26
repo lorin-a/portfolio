@@ -1,25 +1,20 @@
 import fs from 'fs'
 import path from 'path'
-import GroundswellHero from '@/components/Groundswell/GroundswellHero'
-import GroundswellProcess from '@/components/Groundswell/GroundswellProcess'
+import GroundswellSpine from '@/components/Groundswell/GroundswellSpine'
 
-// Gated under /projects/groundswell/* (privacy middleware covers it). The locked
-// case-study opening (mega-hero). Connector SVG is read server-side and passed in
-// (no client fetch — works behind the basic-auth preview). Not indexed.
+// Gated under /projects/groundswell/* (privacy middleware). The consolidated
+// case study: the approved spine (structure + her copy + interactions) with the
+// dark cinematic hook running her real connector map (connectors.svg), art-free.
+// Connector SVG is read server-side and passed in (works behind the basic-auth gate).
 export const metadata = {
-  title: 'Groundswell — Opening',
+  title: 'Groundswell — Case Study',
   robots: { index: false, follow: false, nocache: true },
 }
 
-export default function GroundswellHeroPage() {
+export default function GroundswellCaseStudyPage() {
   const connectorsSvg = fs.readFileSync(
     path.join(process.cwd(), 'public/images/groundswell/connectors.svg'),
     'utf8'
   )
-  return (
-    <>
-      <GroundswellHero connectorsSvg={connectorsSvg} />
-      <GroundswellProcess />
-    </>
-  )
+  return <GroundswellSpine connectorsSvg={connectorsSvg} />
 }
