@@ -1,0 +1,95 @@
+/* ============================================================================
+   GroundswellLook — three hero look directions, stacked full-screen.
+   Each variant sets its own palette via CSS vars; the hero + diagram read off them.
+   ============================================================================ */
+
+.page { font-family: var(--font-body); }
+
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: grid;
+  place-content: center;
+  padding: clamp(3rem, 8vh, 6rem) clamp(1.5rem, 5vw, 4rem);
+  background: var(--g);
+  color: var(--ink);
+  border-bottom: 1px solid color-mix(in srgb, var(--ink) 14%, transparent);
+}
+.tag {
+  position: absolute;
+  top: clamp(1rem, 3vh, 1.5rem);
+  left: clamp(1.5rem, 5vw, 4rem);
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  color: color-mix(in srgb, var(--ink) 55%, transparent);
+}
+.tag b { font-weight: 600; color: var(--ink); }
+
+.inner { max-width: 54rem; margin: 0 auto; text-align: center; }
+.kicker {
+  margin: 0 0 1.4rem;
+  font-size: 0.74rem; letter-spacing: 0.24em; text-transform: uppercase;
+  color: color-mix(in srgb, var(--ink) 55%, transparent);
+}
+.q {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-variation-settings: 'SOFT' 100, 'WONK' 1;
+  font-weight: 200;
+  font-size: clamp(2rem, 1.2rem + 3.6vw, 4rem);
+  line-height: 1.16;
+  letter-spacing: -0.005em;
+  text-wrap: balance;
+  color: var(--ink);
+}
+.q em { font-style: italic; font-weight: 340; color: var(--acc); }
+
+.dive { margin: 2rem 0 0; font-size: 0.9rem; color: color-mix(in srgb, var(--ink) 60%, transparent); }
+
+/* ── system diagram ── */
+.diagram { position: relative; width: 100%; max-width: 40rem; margin: clamp(2rem, 5vh, 3.5rem) auto 0; aspect-ratio: 100 / 56; }
+.dsvg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.dline { stroke: var(--ln); stroke-width: 0.3; fill: none; }
+.dmoment { fill: color-mix(in srgb, var(--ink) 35%, transparent); }
+.ddot { fill: var(--g); stroke: var(--node); stroke-width: 0.5; }
+.dnode {
+  position: absolute; transform: translate(-50%, -50%);
+  padding: 0.35em 0.8em; border-radius: 999px;
+  border: 1.5px solid var(--node);
+  background: var(--g);
+  font-family: var(--font-body); font-size: clamp(0.62rem, 1vw, 0.82rem);
+  line-height: 1; white-space: nowrap; color: var(--ink);
+}
+
+/* ── A · dark cinematic ── */
+.va {
+  --g: #1f1d1e;
+  --ink: #FBF9F6;
+  --acc: #C5CFA6;
+  --ln: rgba(197, 207, 166, 0.4);
+  --node: rgba(251, 249, 246, 0.85);
+}
+.va { background: radial-gradient(60% 55% at 50% 42%, #2a2729, #1a1819 78%); }
+.va .ddot { filter: drop-shadow(0 0 1.5px rgba(197, 207, 166, 0.5)); }
+
+/* ── B · cream calm ── */
+.vb {
+  --g: #FBF9F6;
+  --ink: #2C2C2C;
+  --acc: #A0644E;
+  --ln: rgba(44, 44, 44, 0.28);
+  --node: #2C2C2C;
+}
+
+/* ── C · warm, system-forward (diagram leads, question smaller above) ── */
+.vc {
+  --g: #F3ECDD;
+  --ink: #2C2C2C;
+  --acc: #746270;
+  --ln: rgba(116, 98, 112, 0.55);
+  --node: #5E4F5A;
+}
+.vc .q { font-size: clamp(1.4rem, 1rem + 1.8vw, 2.2rem); font-weight: 240; }
+.vc .diagram { max-width: 62rem; margin-top: clamp(2.5rem, 6vh, 4rem); }
+.vc .dline { stroke-width: 0.4; }
+.vc .dnode { border-width: 1.5px; font-weight: 500; }
