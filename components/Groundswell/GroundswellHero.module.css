@@ -13,7 +13,7 @@
   --accent: #C5CFA6;
 
   position: relative;
-  height: 660vh;
+  height: 560vh;
   background: #252525;
   color: var(--on-dark);
   font-family: var(--font-body);

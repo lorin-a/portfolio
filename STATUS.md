@@ -1,7 +1,23 @@
 # Project Status
-### Last updated: 2026-04-24
+### Last updated: 2026-06-26
 
-This is the living status doc for the lorin.work portfolio redesign. Updated at the end of every working session.
+This is the living status doc for the lorin.work portfolio redesign. Updated at the end of every working session. Detailed in-flight state lives in memory `PROGRESS.md`.
+
+---
+
+## Right now — Groundswell license-safe rebuild
+
+The Groundswell case study + standalone site are **gated offline** because they reproduce Carolyn Gavin's "Blue Garden" artwork, which her contract (Schedule A) licenses for **physical Groundswell uses only.** Re-read of the contract on 2026-06-26 confirmed even *documentary photos* of the art are out of scope without her written permission — this supersedes the earlier "documenting the physical work is fair" approach the gated build rests on.
+
+**Decision:** build a **safe version** that never reproduces or alters Blue Garden (ships with no permission needed), architected so documentary photos can drop in later if Carolyn grants permission. In parallel, pursue that permission.
+
+**In-flight (uncommitted, gated dev routes):** new mega-hero `GroundswellHero.jsx` still reproduces the mural (`gs-artwall`/`gs-cards`) — the core unsafe piece. New `GroundswellProcess.jsx` is already art-free (good foundation; one Shape evidence note still references the art).
+
+**Next move:** decide the safe hero device — **system-diagram-as-hero** (recommended: Lorin's own connector map becomes the centerpiece; the two art-linked nodes get a credit-card treatment, not a reproduction) vs photo-led carried by the two cleared photos (Pod, CTB Email). Then build the safe hero, fix the Process Shape note, and sweep any remaining Blue Garden touchpoint.
+
+**Then:** draft the permission note to Carolyn (two asks: documentary project-site use + portfolio use).
+
+See memory `PROGRESS.md` → "Groundswell artwork-license hold" for full detail.
 
 ---
 

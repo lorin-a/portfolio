@@ -137,38 +137,40 @@ export default function GroundswellHero({ connectorsSvg }) {
         scrollTrigger: { trigger: wrapRef.current, start: 'top top', end: 'bottom bottom', scrub: 0.5, invalidateOnRefresh: true },
       })
 
-      // 1 · hero leaves; band image grows to full-bleed
-      tl.to(heroTextRef.current, { autoAlpha: 0, y: -48, duration: 0.6, ease: 'power2.in' }, 0)
-      tl.to(art, { top: 0, left: 0, width: sw, height: sh, duration: 1.4, ease: 'power2.inOut' }, 0)
-      // 2 · HOLD full-bleed 1.4 → 2.6
+      // 1 · hero leaves; band image grows to full-bleed (the emotional peak)
+      tl.to(heroTextRef.current, { autoAlpha: 0, y: -48, duration: 0.55, ease: 'power2.in' }, 0)
+      tl.to(art, { top: 0, left: 0, width: sw, height: sh, duration: 1.3, ease: 'power2.inOut' }, 0)
+      // 2 · breath on the full-bleed mural — 1.3 → 1.85 (a beat, not a stall)
 
       // 3 · resolve into 4 LARGE rectangles + intro (the half-stop)
       tl.to(art, {
         top: () => ly() - rh() / 2, left: () => lx(2) - rw() / 2, width: rw, height: rh,
-        duration: 1.1, ease: 'power2.inOut',
-      }, 2.6)
-      others.forEach((o) => tl.to(o.p, { autoAlpha: 1, scale: 1, duration: 0.7, ease: 'power2.out' }, 2.85))
-      tl.to(introRef.current, { autoAlpha: 1, duration: 0.7 }, 3.2)
-      // 4 · HOLD large rectangles 3.7 → 4.7
+        duration: 1.0, ease: 'power2.inOut',
+      }, 1.85)
+      others.forEach((o) => tl.to(o.p, { autoAlpha: 1, scale: 1, duration: 0.6, ease: 'power2.out' }, 2.05))
+      tl.to(introRef.current, { autoAlpha: 1, duration: 0.6 }, 2.25)   // intro persists through the rest
+      // 4 · short breath on the four facets — 2.85 → 3.45 (intro keeps reading into next beats)
 
       // 5 · rectangles shrink + move into the map AND round into circles (arrive as circles)
       photos.forEach((p, i) => tl.to(p, {
         top: () => cy() - d() / 2, left: () => cx(i) - d() / 2, width: d, height: d,
-        duration: 1.2, ease: 'power3.inOut',
-      }, 4.7))
-      tl.to(clipRefs.current.filter(Boolean), { borderRadius: '50%', duration: 1.2, ease: 'power3.inOut' }, 4.7)
+        duration: 1.25, ease: 'power3.inOut',
+      }, 3.45))
+      tl.to(clipRefs.current.filter(Boolean), { borderRadius: '50%', duration: 1.25, ease: 'power3.inOut' }, 3.45)
 
-      // 6 · pills + lines draw in around the image-circles (images still present)
-      tl.to(pillRefs.current.filter(Boolean), { autoAlpha: 1, duration: 0.5, stagger: 0.05 }, 6.1)
-      tl.to(connRef.current, { autoAlpha: 1, duration: 0.2 }, 6.4)
-      tl.to(connRef.current, { clipPath: 'inset(0 0% 0 0)', duration: 1.4, ease: 'power1.inOut' }, 6.4)
+      // 6 · pills + her connector lines draw in around the image-circles (the signature payoff)
+      tl.to(pillRefs.current.filter(Boolean), { autoAlpha: 1, duration: 0.5, stagger: 0.05 }, 4.85)
+      tl.to(connRef.current, { autoAlpha: 1, duration: 0.2 }, 5.1)
+      tl.to(connRef.current, { clipPath: 'inset(0 0% 0 0)', duration: 1.35, ease: 'power1.inOut' }, 5.1)
+      // breath — the full ecosystem lands — 6.45 → 6.85
 
       // 7 · LAST: cross-fade the image-circles to the labelled discs
-      tl.to(discs, { autoAlpha: 1, duration: 0.6 }, 8.1)
-      tl.to(photos, { autoAlpha: 0, duration: 0.6 }, 8.2)
+      tl.to(discs, { autoAlpha: 1, duration: 0.6 }, 6.85)
+      tl.to(photos, { autoAlpha: 0, duration: 0.6 }, 6.95)
+      // land — the abstract system settles — 7.55 → 7.95
 
       // 8 · dive
-      tl.to(diveRef.current, { autoAlpha: 1, duration: 0.5 }, 9.1)
+      tl.to(diveRef.current, { autoAlpha: 1, duration: 0.5 }, 7.95)
 
       // photo returns on hover of its labelled circle
       discs.forEach((disc, i) => {

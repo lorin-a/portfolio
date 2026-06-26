@@ -1,6 +1,7 @@
 import fs from 'fs'
 import path from 'path'
 import GroundswellHero from '@/components/Groundswell/GroundswellHero'
+import GroundswellProcess from '@/components/Groundswell/GroundswellProcess'
 
 // Gated under /projects/groundswell/* (privacy middleware covers it). The locked
 // case-study opening (mega-hero). Connector SVG is read server-side and passed in
@@ -15,5 +16,10 @@ export default function GroundswellHeroPage() {
     path.join(process.cwd(), 'public/images/groundswell/connectors.svg'),
     'utf8'
   )
-  return <GroundswellHero connectorsSvg={connectorsSvg} />
+  return (
+    <>
+      <GroundswellHero connectorsSvg={connectorsSvg} />
+      <GroundswellProcess />
+    </>
+  )
 }
