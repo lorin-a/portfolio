@@ -130,6 +130,47 @@ function Figure({ img, alt, caption, credit, ratio = '16 / 10' }) {
   )
 }
 
+/* slideshow — visible content with obvious controls (replaces dropdowns). */
+function Slideshow({ slides, credit = 'Photography Kevin Lorenzi' }) {
+  const [i, setI] = useState(0)
+  const n = slides.length
+  const go = (d) => setI((p) => (p + d + n) % n)
+  const s = slides[i]
+  return (
+    <Reveal className={styles.show}>
+      <div className={styles.showFrame}>
+        <img src={photo(s.img)} alt={s.alt} loading="lazy" />
+      </div>
+      <div className={styles.showBar}>
+        <div className={styles.showText}>
+          <p className={styles.showName}>{s.name}</p>
+          <p className={styles.showBody}>{s.body}</p>
+        </div>
+        <div className={styles.showNav}>
+          <div className={styles.showDots}>
+            {slides.map((sl, d) => (
+              <button key={sl.name} className={`${styles.showDot} ${d === i ? styles.showDotOn : ''}`} onClick={() => setI(d)} aria-label={sl.name} aria-current={d === i} />
+            ))}
+          </div>
+          <div className={styles.showArrows}>
+            <span className={styles.showCount}>{i + 1} / {n}</span>
+            <button className={styles.showArrow} onClick={() => go(-1)} aria-label="Previous method">←</button>
+            <button className={styles.showArrow} onClick={() => go(1)} aria-label="Next method">→</button>
+          </div>
+        </div>
+      </div>
+      <p className={styles.showCredit}>{s.credit || credit}</p>
+    </Reveal>
+  )
+}
+
+const METHODS = [
+  { name: 'Shadowing & interviews', img: 'gs-context-01', alt: 'The oncology unit where staff work, with the community art wall', body: 'Eight staff across roles. I observed the environment and sat with people in quiet moments, hearing how grief management varies from person to person.', credit: 'Artwork Carolyn Gavin · Photography Kevin Lorenzi' },
+  { name: 'Women in White Coats', img: 'gs-workshop-coats-01', alt: 'The Women in White Coats session', body: 'With CancerBridges, generative research with female oncology leaders, who added their thoughts to an orchid poster on balancing compassion and self-care.' },
+  { name: 'Nourishing the Flower', img: 'gs-workshop-flower-01', alt: 'The Nourishing the Flower workshop', body: 'Staff used nature metaphors to name the “nutrients” and “root causes” of a nourished workplace. Recognition, environment, and team culture kept surfacing.' },
+  { name: 'Grief Workshop', img: 'gs-workshop-grief-01', alt: 'The Grief Workshop, a trauma-responsive group session', body: 'A trauma-responsive container: a grounding exercise, a soft object to hold, and scenario-based discussion of how to support a struggling teammate.' },
+]
+
 function Device({ kind, beh, ratio = '16 / 9', note }) {
   return (
     <Reveal className={styles.device} style={{ aspectRatio: ratio }}>
@@ -292,13 +333,7 @@ export default function GroundswellSpine() {
             <Step label="What I walked into" say="A windowless unit, cramped desks, constant interruption. Staff skipping meals, saving their tears for the car ride home, attending funerals alone. Over one in five healthcare workers has experienced PTSD, and most carry it with nowhere to put it." />
 
             <Step label="How I worked" say="Over fifteen weeks I embedded with the gynecologic oncology staff: shadowing shifts, interviewing across roles, and facilitating participatory workshops designed to surface what people often couldn’t say out loud.">
-              <div className={styles.chips}>
-                <Expand summary="1. Shadowing & interviews">Eight staff across roles. I observed the environment and sat with people in quiet moments, hearing how grief management varies from person to person.</Expand>
-                <Expand summary="2. Women in White Coats">With CancerBridges, generative research with female oncology leaders, who added their thoughts to an orchid poster on balancing compassion and self-care.</Expand>
-                <Expand summary="3. Nourishing the Flower">Staff used nature metaphors to name the “nutrients” and “root causes” of a nourished workplace. Recognition, environment, and team culture kept surfacing.</Expand>
-                <Expand summary="4. Grief Workshop">A container for vulnerability: a trauma-responsive grounding exercise, a soft object to hold, and scenario-based discussion of how to support a struggling teammate.</Expand>
-              </div>
-              <Figure img="gs-workshop-grief-01" alt="Staff gathered in the Grief Workshop, a trauma-responsive group session" caption="Signature method: the Grief Workshop, a trauma-responsive container" credit="Photography Kevin Lorenzi" ratio="2.6 / 1" />
+              <Slideshow slides={METHODS} />
             </Step>
 
             <Step label="What I heard" say="Part of what healed me in working with oncology staff was feeling connected to others who carry contradicting, complex emotional experiences with grace, who find their way back to gratitude even when they are also devastated.">
