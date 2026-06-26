@@ -196,6 +196,30 @@
 .bang, .star { flex: none; filter: grayscale(1); opacity: 0.85; }
 .pair .expand { margin-top: 0.4rem; background: var(--fill-soft); }
 
+/* ── interactive system map ── */
+.smapWrap { margin: 1.2rem 0 0; }
+.smap { position: relative; width: 100%; max-width: 56rem; aspect-ratio: 100 / 56; margin: 0.6rem 0 0; }
+.smapSvg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.smapLine { stroke: var(--ink-faint); stroke-width: 0.3; opacity: 0.3; transition: stroke 0.2s ease, opacity 0.2s ease, stroke-width 0.2s ease; }
+.smapLineLit { stroke: var(--ink); stroke-width: 0.6; opacity: 0.95; }
+.smapNode, .smapPill {
+  position: absolute; transform: translate(-50%, -50%);
+  padding: 0.4em 0.85em; border-radius: 999px;
+  font-family: var(--font-body); font-size: clamp(0.72rem, 1.1vw, 0.92rem);
+  line-height: 1; white-space: nowrap; cursor: pointer; background: var(--bg);
+  transition: opacity 0.2s ease, border-color 0.2s ease, background 0.2s ease, transform 0.15s ease;
+}
+.smapNode { border: 1.5px solid var(--ink-mute); color: var(--ink); font-weight: 500; }
+.smapPill { border: 1.5px dashed var(--ink-faint); color: var(--ink-mute); }
+.smapDim { opacity: 0.3; }
+.smapOn { border-color: var(--ink); color: var(--ink); background: var(--fill-soft); transform: translate(-50%, -50%) scale(1.06); }
+.smapNode.smapOn { box-shadow: 0 2px 12px rgba(0, 0, 0, 0.12); }
+.smapCaption { margin: 1.1rem 0 0; min-height: 3em; max-width: 44rem; font-size: 0.95rem; line-height: 1.5; color: var(--ink-mute); }
+.smapCaption b { color: var(--ink); }
+@media (max-width: 560px) {
+  .smap { aspect-ratio: 100 / 78; }
+}
+
 /* ── device placeholder ── */
 .device {
   position: relative; display: grid; place-content: center; gap: 0.4rem;

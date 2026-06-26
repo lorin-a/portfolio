@@ -120,6 +120,80 @@ function Device({ kind, beh, ratio = '16 / 9', note }) {
   )
 }
 
+/* interactive system map — demonstrates systems thinking + information architecture.
+   Hover/focus a moment → the interventions that answer it light up; hover an
+   intervention → its moments + its ❗→⭐ surface. (Connections illustrative until
+   wired to her real Figma connector map.) */
+const SM_MOMENTS = [
+  { id: 'arrive', label: 'Arrive', full: 'arrive at work', x: 18, y: 8 },
+  { id: 'break', label: 'Break', full: 'take a break', x: 50, y: 8 },
+  { id: 'leave', label: 'Leave', full: 'leave work', x: 82, y: 8 },
+  { id: 'loss', label: 'Patient loss', full: 'a patient loss', x: 18, y: 48 },
+  { id: 'hard', label: 'Hard day', full: 'a hard day', x: 50, y: 48 },
+  { id: 'meeting', label: '1:1', full: 'a one-on-one', x: 82, y: 48 },
+]
+const SM_NODES = [
+  { id: 'ctb', label: 'CTB', full: 'CTB Email', x: 15, y: 28, insight: 'a nurse had already built a compassionate death-notice', move: 'honor and amplify, don’t replace' },
+  { id: 'pod', label: 'Pod', full: 'Restorative Pod', x: 38, y: 28, insight: '“they save their tears for the car ride home”', move: 'a real space to decompress' },
+  { id: 'wall', label: 'Wall', full: 'Art Wall', x: 62, y: 28, insight: 'staff feared retaliation for showing feelings', move: 'anonymous, collective voice' },
+  { id: 'cards', label: 'Cards', full: 'Reflection Cards', x: 85, y: 28, insight: 'grief includes contradictory emotions', move: 'validation + a somatic exercise' },
+]
+const SM_LINKS = [
+  ['arrive', 'pod'], ['arrive', 'wall'],
+  ['break', 'pod'], ['break', 'cards'],
+  ['leave', 'pod'], ['leave', 'cards'],
+  ['loss', 'ctb'], ['loss', 'pod'], ['loss', 'wall'],
+  ['hard', 'pod'], ['hard', 'cards'], ['hard', 'wall'],
+  ['meeting', 'cards'], ['meeting', 'wall'],
+]
+
+function SystemMap() {
+  const [sel, setSel] = useState(null)
+  const [locked, setLocked] = useState(false)
+  const neigh = (id) => SM_LINKS.filter((l) => l.includes(id)).map((l) => (l[0] === id ? l[1] : l[0]))
+  const litSet = sel ? new Set([sel, ...neigh(sel)]) : null
+  const dim = (id) => (litSet && !litSet.has(id) ? styles.smapDim : '')
+  const enter = (id) => { if (!locked) setSel(id) }
+  const leave = () => { if (!locked) setSel(null) }
+  const click = (id) => { if (locked && sel === id) { setLocked(false); setSel(null) } else { setLocked(true); setSel(id) } }
+
+  const node = SM_NODES.find((n) => n.id === sel)
+  const mom = SM_MOMENTS.find((m) => m.id === sel)
+  const caption = node
+    ? <><b>{node.full}.</b> ❗ {node.insight} → ⭐ {node.move}</>
+    : mom
+      ? <><b>When {mom.full},</b> staff can reach: {neigh(mom.id).map((id) => SM_NODES.find((n) => n.id === id).full).join(' · ')}.</>
+      : 'Hover a moment or an intervention to trace the connections.'
+
+  const btnProps = (id) => ({
+    onMouseEnter: () => enter(id), onMouseLeave: leave,
+    onFocus: () => enter(id), onBlur: leave, onClick: () => click(id),
+    'aria-pressed': sel === id,
+  })
+
+  return (
+    <Reveal className={styles.smapWrap}>
+      <Note>INTERACTIVE SYSTEM MAP · hover a moment or an intervention</Note>
+      <div className={styles.smap}>
+        <svg className={styles.smapSvg} viewBox="0 0 100 56" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+          {SM_LINKS.map((l, i) => {
+            const m = SM_MOMENTS.find((x) => x.id === l[0])
+            const n = SM_NODES.find((x) => x.id === l[1])
+            return <line key={i} x1={m.x} y1={m.y} x2={n.x} y2={n.y} className={`${styles.smapLine} ${sel && l.includes(sel) ? styles.smapLineLit : ''}`} />
+          })}
+        </svg>
+        {SM_MOMENTS.map((m) => (
+          <button key={m.id} className={`${styles.smapPill} ${dim(m.id)} ${sel === m.id ? styles.smapOn : ''}`} style={{ left: `${m.x}%`, top: `${(m.y / 56) * 100}%` }} {...btnProps(m.id)}>{m.label}</button>
+        ))}
+        {SM_NODES.map((n) => (
+          <button key={n.id} className={`${styles.smapNode} ${dim(n.id)} ${sel === n.id ? styles.smapOn : ''}`} style={{ left: `${n.x}%`, top: `${(n.y / 56) * 100}%` }} {...btnProps(n.id)}>{n.label}</button>
+        ))}
+      </div>
+      <p className={styles.smapCaption}>{caption}</p>
+    </Reveal>
+  )
+}
+
 export default function GroundswellSpine() {
   const [active, setActive] = useState('overview')
   const secs = useRef({})
@@ -244,7 +318,7 @@ export default function GroundswellSpine() {
             <Statement>I shaped what we heard into <em>four interventions that work as one system</em>.</Statement>
 
             <Step label="The system" say="Everything pointed to the moments where support could land: arriving at work, taking a break, a patient loss, a hard day, a one-on-one. I helped translate the patterns into four connected interventions, each meeting staff in one of those moments rather than a single fix.">
-              <Device kind="SYSTEM MAP" beh="interventions × staff moments · tap a node to expand" note="the asset interactions — the hook’s handoff (art-free)" ratio="2.2 / 1" />
+              <SystemMap />
             </Step>
 
             <Reveal as="p" className={styles.bandLabel}>What I heard → what we made</Reveal>
