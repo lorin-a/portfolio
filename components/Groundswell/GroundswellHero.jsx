@@ -247,11 +247,12 @@ export default function GroundswellHero({ connectorsSvg }) {
         ))}
 
         <p className={styles.dive} ref={diveRef}>
-          How did we get there? <span className={styles.diveCta}>Dive into the process ↓</span>
+          <span className={styles.diveCta}>Process</span>
+          <span className={styles.diveArrow} aria-hidden="true">↓</span>
         </p>
 
         <p className={styles.credit} ref={creditRef}>
-          Community Art Wall · Artwork <b>Carolyn Gavin</b> · Photography <b>Kevin Lorenzi</b>
+          Artwork <b>Carolyn Gavin</b> · Photography <b>Kevin Lorenzi</b>
         </p>
       </div>
     </div>

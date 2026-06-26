@@ -228,15 +228,30 @@
   font-size: 0.95rem;
   color: var(--on-dark-faint);
 }
-.diveCta { color: var(--accent); }
+.diveCta { color: var(--accent); letter-spacing: 0.06em; }
+.diveArrow {
+  display: inline-block;
+  margin-left: 0.45em;
+  color: var(--accent);
+  animation: diveBob 1.6s ease-in-out infinite;
+}
+@keyframes diveBob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(5px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .diveArrow { animation: none; }
+}
 
 /* ── persistent credit ── */
 .credit {
   position: absolute;
   z-index: 5;
-  left: clamp(var(--space-md), 5vw, var(--space-xl));
+  left: 50%;
+  transform: translateX(-50%);
   bottom: var(--space-md);
   margin: 0;
+  text-align: center;
   font-size: 0.72rem;
   letter-spacing: 0.06em;
   color: var(--on-dark-faint);
