@@ -88,7 +88,7 @@ function Timeline() {
   const [i, setI] = useState(0)
   return (
     <Reveal className={styles.tl}>
-      <Note>INTERACTIVE TIMELINE · click a phase</Note>
+      <Note>Click a phase</Note>
       <div className={styles.tlTrack} role="tablist" aria-label="Production timeline">
         {PHASES.map((p, idx) => (
           <button
@@ -193,7 +193,7 @@ function SystemMap() {
 
   return (
     <Reveal className={styles.smapWrap}>
-      <Note>INTERACTIVE SYSTEM MAP · hover a moment or an intervention</Note>
+      <Note>Hover a moment or an intervention</Note>
       <div className={styles.smap}>
         <svg className={styles.smapSvg} viewBox="0 0 100 56" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
           {SM_LINKS.map((l, i) => {
@@ -281,7 +281,6 @@ export default function GroundswellSpine() {
                   <div key={c} className={styles.stat}><span className={styles.statNum}>{n}</span><span className={styles.statCap}>{c}</span></div>
                 ))}
               </div>
-              <Note>SKIM LAYER · what it is, my role, the result</Note>
             </Reveal>
           </section>
 
@@ -378,7 +377,6 @@ export default function GroundswellSpine() {
             <Reveal as="p" className={styles.next}>Next: a research paper on “resonance” in review · the study completes July 2026 · pursuing funding to expand to other hospital settings.</Reveal>
 
             <Reveal className={styles.credits}>
-              <Note>CREDITS · named authorship + inline attribution</Note>
               <p>Role ledger (me + team, named) · Artwork Carolyn Gavin · Photography Kevin Lorenzi · → Read the full documentation · → Read the CMU feature</p>
             </Reveal>
           </section>
