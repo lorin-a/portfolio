@@ -1,7 +1,10 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import { cloudImg, GS_IMAGES } from '@/lib/cloudinary'
 import styles from './GroundswellSpine.module.css'
+
+const photo = (key, w = 1400) => cloudImg(GS_IMAGES[key], w)
 
 /* ============================================================================
    Groundswell — SPINE WIREFRAME (greyscale, art-free, flow-first).
@@ -106,6 +109,23 @@ function Timeline() {
         <p className={styles.tlPanelHead}>{PHASES[i].wk} · {PHASES[i].name}</p>
         <p className={styles.tlPanelBody}>{PHASES[i].body}</p>
       </div>
+    </Reveal>
+  )
+}
+
+/* real documentary photo — image + optional caption/credit. Art credited inline
+   only where the artwork appears in context (per Lorin's stance). */
+function Figure({ img, alt, caption, credit, ratio = '16 / 10' }) {
+  return (
+    <Reveal as="figure" className={styles.figure}>
+      <span className={styles.figFrame} style={{ aspectRatio: ratio }}>
+        <img src={photo(img)} alt={alt} loading="lazy" />
+      </span>
+      {(caption || credit) && (
+        <figcaption className={styles.figCap}>
+          {caption}{credit && <span className={styles.figCredit}> · {credit}</span>}
+        </figcaption>
+      )}
     </Reveal>
   )
 }
@@ -279,7 +299,7 @@ export default function GroundswellSpine() {
                 <Expand summary="3. Nourishing the Flower">Staff used nature metaphors to name the “nutrients” and “root causes” of a nourished workplace. Recognition, environment, and team culture kept surfacing.</Expand>
                 <Expand summary="4. Grief Workshop">A container for vulnerability: a trauma-responsive grounding exercise, a soft object to hold, and scenario-based discussion of how to support a struggling teammate.</Expand>
               </div>
-              <Device kind="SIGNATURE METHOD: Grief Workshop" beh="one method shown in depth" note="trauma-responsive container · scenario discussion" ratio="2.6 / 1" />
+              <Figure img="gs-workshop-grief-01" alt="Staff gathered in the Grief Workshop, a trauma-responsive group session" caption="Signature method: the Grief Workshop, a trauma-responsive container" credit="Photography Kevin Lorenzi" ratio="2.6 / 1" />
             </Step>
 
             <Step label="What I heard" say="Part of what healed me in working with oncology staff was feeling connected to others who carry contradicting, complex emotional experiences with grace, who find their way back to gratitude even when they are also devastated.">
