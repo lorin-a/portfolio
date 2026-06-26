@@ -133,7 +133,7 @@ const SM_MOMENTS = [
   { id: 'meeting', label: '1:1', full: 'a one-on-one', x: 82, y: 48 },
 ]
 const SM_NODES = [
-  { id: 'ctb', label: 'CTB', full: 'CTB Email', x: 15, y: 28, insight: 'a nurse had already built a compassionate death-notice', move: 'honor and amplify, don’t replace' },
+  { id: 'ctb', label: 'CTB', full: 'CTB Email', x: 15, y: 28, insight: 'a nurse had already built a compassionate death-notice', move: 'honor and amplify what was already there' },
   { id: 'pod', label: 'Pod', full: 'Restorative Pod', x: 38, y: 28, insight: '“they save their tears for the car ride home”', move: 'a real space to decompress' },
   { id: 'wall', label: 'Wall', full: 'Art Wall', x: 62, y: 28, insight: 'staff feared retaliation for showing feelings', move: 'anonymous, collective voice' },
   { id: 'cards', label: 'Cards', full: 'Reflection Cards', x: 85, y: 28, insight: 'grief includes contradictory emotions', move: 'validation + a somatic exercise' },
@@ -284,7 +284,7 @@ export default function GroundswellSpine() {
           {/* ── SENSE · 01 — The Void (margin-label walkthrough) ── */}
           <section id="sense" ref={set('sense')} className={styles.beat}>
             <Reveal as="p" className={styles.beatKicker}>Sense · 01</Reveal>
-            <Statement>Burnout on the floor wasn’t a personal failure. It was <em>systemic</em>.</Statement>
+            <Statement>Burnout on the floor wasn’t an individual failure. It was <em>systemic</em>.</Statement>
 
             <Step label="What I walked into" say="A windowless unit, cramped desks, constant interruption. Staff skipping meals, saving their tears for the car ride home, attending funerals alone. Over one in five healthcare workers has experienced PTSD, and most carry it with nowhere to put it." />
 
@@ -295,7 +295,7 @@ export default function GroundswellSpine() {
                 <Expand summary="3. Nourishing the Flower">Staff used nature metaphors to name the “nutrients” and “root causes” of a nourished workplace. Recognition, environment, and team culture kept surfacing.</Expand>
                 <Expand summary="4. Grief Workshop">A container for vulnerability: a trauma-responsive grounding exercise, a soft object to hold, and scenario-based discussion of how to support a struggling teammate.</Expand>
               </div>
-              <Device kind="SIGNATURE METHOD — Grief Workshop" beh="one method shown in depth" note="trauma-responsive container · scenario discussion" ratio="2.6 / 1" />
+              <Device kind="SIGNATURE METHOD: Grief Workshop" beh="one method shown in depth" note="trauma-responsive container · scenario discussion" ratio="2.6 / 1" />
             </Step>
 
             <Step label="What I heard" say="Part of what healed me in working with oncology staff was feeling connected to others who carry contradicting, complex emotional experiences with grace, who find their way back to gratitude even when they are also devastated.">
@@ -304,9 +304,9 @@ export default function GroundswellSpine() {
 
             <Step label="What it told me" say="Three patterns held across everything I heard:">
               <ol className={styles.insights}>
-                <li><b>Recognition</b> — feeling appreciated and acknowledged</li>
-                <li><b>Environment</b> — space and resources to restore</li>
-                <li><b>Culture</b> — shared purpose and team care</li>
+                <li><b>Recognition</b>: feeling appreciated and acknowledged</li>
+                <li><b>Environment</b>: space and resources to restore</li>
+                <li><b>Culture</b>: shared purpose and team care</li>
               </ol>
               <p className={styles.reframe}>They pointed to what we came to call <em>The Void</em>: the unspoken weight staff carry when patient-centered systems neglect the people giving the care. So the thesis became simple. Don’t add more. Make space for what was already trying to surface.</p>
             </Step>
@@ -323,10 +323,10 @@ export default function GroundswellSpine() {
 
             <Reveal as="p" className={styles.bandLabel}>What I heard → what we made</Reveal>
             <div className={styles.pairs}>
-              <Pair insight="Staff feared retaliation for showing feelings" move="Art Wall — anonymous, collective voice" expand="A community wall for anonymous shared expression across the full spectrum of oncology experience, giving public, collective voice to the care community." />
-              <Pair insight="“They save their tears for the car ride home”" move="Restorative Pod — real space to decompress" expand="A dedicated space for emotional decompression, nestled in a former phone-booth nook. The message: emotional labor is real work deserving of real space." />
-              <Pair insight="Grief includes contradictory, complex emotions" move="Reflection Cards — validation + a somatic exercise" expand="My own healing journey led me to somatics and nervous-system approaches, and I wanted to channel that into the content. Each card starts with validation, then invites a simple exercise. I kept the language approachable so any experience level could engage." />
-              <Pair insight="A nurse had already built a compassionate death-notice" move="CTB email — honor and amplify, don’t replace" expand="What looked like a cold clinical protocol was a staff-created act of compassion. That shifted our whole approach: from “the system failed you” to “you already built a culture of care.”" />
+              <Pair insight="Staff feared retaliation for showing feelings" move="Art Wall: anonymous, collective voice" expand="A community wall for anonymous shared expression across the full spectrum of oncology experience, giving public, collective voice to the care community." />
+              <Pair insight="“They save their tears for the car ride home”" move="Restorative Pod: real space to decompress" expand="A dedicated space for emotional decompression, nestled in a former phone-booth nook. The message: emotional labor is real work deserving of real space." />
+              <Pair insight="Grief includes contradictory, complex emotions" move="Reflection Cards: validation and a somatic exercise" expand="My own healing journey led me to somatics and nervous-system approaches, and I wanted to channel that into the content. Each card starts with validation, then invites a simple exercise. I kept the language approachable so any experience level could engage." />
+              <Pair insight="A nurse had already built a compassionate death-notice" move="CTB email: honor and amplify what was already there" expand="What looked like a cold clinical protocol was a staff-created act of compassion. That shifted our whole approach: from “the system has let you down” to “you have already created a beautiful culture of care.”" />
             </div>
           </section>
 
@@ -340,8 +340,8 @@ export default function GroundswellSpine() {
 
             <Reveal as="p" className={styles.bandLabel}>The calls that mattered</Reveal>
             <div className={styles.pairs}>
-              <Pair insight="“Grief” narrowed it — staff named hope, joy, resilience too" move="Shifted the whole project to “restoration”" expand="Our tagline evolved from “Making Space for Grief, Together” to “Making Space to Restore, Together.” The shift permeated every component. Attunement to staff wisdom over our first instinct." />
-              <Pair insight="Admin wanted a key-card system to monitor pod access" move="A permeable acrylic facade — “trust, not surveillance”" expand="Care must include the freedom to pause without guilt. The final design signals use with subtle LED light instead of monitoring it. A constraint turned into a values stance." />
+              <Pair insight="“Grief” narrowed it: staff named hope, joy, resilience too" move="Shifted the whole project to “restoration”" expand="Our tagline evolved from “Making Space for Grief, Together” to “Making Space to Restore, Together.” The shift permeated every component. Attunement to staff wisdom over our first instinct." />
+              <Pair insight="Admin wanted a key-card system to monitor pod access" move="A permeable acrylic facade: “trust, not surveillance”" expand="Care must include the freedom to pause without guilt. The final design signals use with subtle LED light instead of monitoring it. A constraint turned into a values stance." />
             </div>
 
             <Step label="What I brought" say="I led donor outreach and secured the assets and partnerships: the pod itself, the woodworking added to it, the sensor within it, the ceramic finger labyrinths, and the Schlage door locks. It was my meditation and shadow-work teacher, Catherine Liggett, who volunteered to co-edit, author, and record the meditations used in the study. I drafted first-round copy for nearly all of the project, co-led playtesting, helped with build and installation, and (working mostly remote) ran project coordination, documentation, and strategy." />
