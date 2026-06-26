@@ -194,6 +194,28 @@ function SystemMap() {
   )
 }
 
+/* static dark connector diagram for the hook (Direction A) — her own system map,
+   art-free. The cinematic assemble-on-scroll motion comes next. */
+const HOOK_LABELS = ['CTB Email', 'Pod', 'Art Wall', 'Cards']
+function HookMap() {
+  return (
+    <div className={styles.hmap} aria-hidden="true">
+      <svg viewBox="0 0 100 56" preserveAspectRatio="xMidYMid meet" className={styles.hsvg}>
+        {SM_LINKS.map(([m, n], i) => {
+          const M = SM_MOMENTS.find((x) => x.id === m)
+          const N = SM_NODES.find((x) => x.id === n)
+          return <line key={i} x1={M.x} y1={M.y} x2={N.x} y2={N.y} className={styles.hline} />
+        })}
+        {SM_MOMENTS.map((m) => <circle key={m.id} cx={m.x} cy={m.y} r="1" className={styles.hmoment} />)}
+        {SM_NODES.map((n) => <circle key={n.id} cx={n.x} cy={n.y} r="1.8" className={styles.hdot} />)}
+      </svg>
+      {SM_NODES.map((n, i) => (
+        <span key={n.id} className={styles.hnode} style={{ left: `${n.x}%`, top: `${(n.y / 56) * 100}%` }}>{HOOK_LABELS[i]}</span>
+      ))}
+    </div>
+  )
+}
+
 export default function GroundswellSpine() {
   const [active, setActive] = useState('overview')
   const secs = useRef({})
@@ -226,7 +248,7 @@ export default function GroundswellSpine() {
         <Reveal className={styles.hookInner}>
           <p className={styles.kicker}>Groundswell · case study</p>
           <h1 className={styles.hookQ}>Who better to design care than those who <em>give it?</em></h1>
-          <Device kind="SYSTEM DIAGRAM" beh="4 interventions × staff moments · assembles on scroll" note="art-free — my own connector map, not the mural" ratio="2.6 / 1" />
+          <HookMap />
           <p className={styles.dive}>dive into the process ↓</p>
           <Note>IMMERSION LAYER · the single hook</Note>
         </Reveal>
