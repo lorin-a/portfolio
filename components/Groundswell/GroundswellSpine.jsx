@@ -257,7 +257,7 @@ export default function GroundswellSpine() {
                 <div><dt>Outcome</dt><dd>12-month pilot, launched Oct 2025</dd></div>
               </dl>
               <div className={styles.metaStats}>
-                {[['256', 'pod visits'], ['570', 'engagement points'], ['$30k+', 'donated']].map(([n, c]) => (
+                {[['$30k+', 'in donations'], ['30', 'playtesters'], ['Live', '12-mo QI study']].map(([n, c]) => (
                   <div key={c} className={styles.stat}><span className={styles.statNum}>{n}</span><span className={styles.statCap}>{c}</span></div>
                 ))}
               </div>
@@ -266,7 +266,7 @@ export default function GroundswellSpine() {
           </section>
 
           {/* ── SENSE · 01 — The Void (margin-label walkthrough) ── */}
-          <section id="sense" ref={set('sense')} className={styles.beat} style={{ '--accent': 'var(--color-sage)' }}>
+          <section id="sense" ref={set('sense')} className={styles.beat} style={{ '--accent': '#5C7A41' }}>
             <Reveal as="p" className={styles.beatKicker}>Sense · 01</Reveal>
             <Statement>Burnout on the floor wasn’t an individual failure. It was <em>systemic</em>.</Statement>
 
@@ -297,7 +297,7 @@ export default function GroundswellSpine() {
           </section>
 
           {/* ── WEAVE · 02 — the system map (asset interactions) ── */}
-          <section id="weave" ref={set('weave')} className={styles.beat} style={{ '--accent': 'var(--color-plum)' }}>
+          <section id="weave" ref={set('weave')} className={styles.beat} style={{ '--accent': '#8A5580' }}>
             <Reveal as="p" className={styles.beatKicker}>Weave · 02</Reveal>
             <Statement>I shaped what we heard into <em>four interventions that work as one system</em>.</Statement>
 
@@ -315,7 +315,7 @@ export default function GroundswellSpine() {
           </section>
 
           {/* ── SHAPE · 03 — making it real ── */}
-          <section id="shape" ref={set('shape')} className={styles.beat} style={{ '--accent': 'var(--color-terracotta)' }}>
+          <section id="shape" ref={set('shape')} className={styles.beat} style={{ '--accent': '#A85A3C' }}>
             <Reveal as="p" className={styles.beatKicker}>Shape · 03</Reveal>
             <Statement>From concept to an <em>installed pilot</em> in ten weeks.</Statement>
 
@@ -334,13 +334,13 @@ export default function GroundswellSpine() {
           {/* ── CLOSE — outcome, validation, reflection, next ── */}
           <section id="close" ref={set('close')} className={styles.beat}>
             <Reveal as="p" className={styles.beatKicker}>Outcome</Reveal>
-            <Statement>Installed, and live as a <em>12-month study</em>.</Statement>
+            <Statement>Installed, and live as a <em>grant-funded</em> 12-month study.</Statement>
             <Reveal className={styles.statBand}>
-              {[['570', 'engagement points'], ['207', 'emotion responses'], ['256', 'pod visits'], ['107', 'meditation views']].map(([n, c]) => (
+              {[['$30k+', 'in donations secured'], ['Oct 2025', 'launched at UPMC Magee']].map(([n, c]) => (
                 <div key={c} className={styles.statBig}><span className={styles.statBigNum}>{n}</span><span className={styles.statBigCap}>{c}</span></div>
               ))}
             </Reveal>
-            <Reveal as="p" className={styles.lead}>Minimum baselines from the first four months; our methods are designed to undercount rather than overcount. The qualitative richness, alongside consistent pod usage, suggests meaningful adoption.</Reveal>
+            <Reveal as="p" className={styles.lead}>Built with a team of three and installed on the floor where the care happens.</Reveal>
 
             <blockquote className={styles.quoteWide}>“Caring for people means seeing them as whole, complex, and beautiful human beings, not just as patients in need of medicine or surgery. Healing begins with caring for the caregivers.”<span className={styles.quoteAttr}>— Dr. Sarah Taylor, Gynecologic Oncology, UPMC</span></blockquote>
 
