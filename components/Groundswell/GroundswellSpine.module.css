@@ -21,7 +21,7 @@
   font-family: var(--font-body);
 }
 
-.processWrap { display: grid; grid-template-columns: 16rem minmax(0, 1fr); }
+.processWrap { display: grid; grid-template-columns: 16rem minmax(0, 1fr); max-width: 84rem; margin: 0 auto; }
 
 /* ── top bar ── */
 .bar {
@@ -44,25 +44,27 @@
 /* ── sticky spine rail ── */
 .rail {
   position: sticky;
-  top: 3.2rem;
+  top: 2rem;
   align-self: start;
   min-width: 0;
-  height: calc(100vh - 3.2rem);
-  padding: 2.5rem 1.25rem;
-  border-right: 1px solid var(--line);
+  height: calc(100vh - 2rem);
+  padding: 2rem 1.5rem 2rem 0.4rem;
+  display: flex; flex-direction: column;
 }
 .rail ol {
   list-style: none; margin: 0; padding: 0;
   position: relative;
+  flex: 1 1 auto;                    /* fill the rail height */
   display: flex; flex-direction: column;
-  gap: clamp(1.5rem, 5vh, 3.4rem);   /* spread the stops like a timeline */
+  justify-content: space-between;    /* spread stops across the full height */
+  gap: 0.5rem;
 }
 /* connecting line through the tick column */
 .rail ol::before {
   content: '';
   position: absolute;
-  left: 4.5px; top: 0.5rem; bottom: 0.5rem;
-  width: 2px; background: #cdcdcd;
+  left: 5.5px; top: 0.55rem; bottom: 0.55rem;
+  width: 2px; background: #c2c2c2;
   transform: translateX(-50%);
 }
 .railItem {
@@ -74,9 +76,9 @@
 }
 .railTick {
   position: relative; z-index: 1;
-  width: 9px; height: 9px; border-radius: 50%;
+  width: 11px; height: 11px; border-radius: 50%;
   border: 1.5px solid var(--ink-faint); background: var(--bg); flex: none;
-  box-shadow: 0 0 0 4px var(--bg);   /* mask the line behind each stop */
+  box-shadow: 0 0 0 5px var(--bg);   /* mask the line behind each stop */
   transition: all 0.2s ease;
 }
 .railText { display: grid; line-height: 1.2; }
