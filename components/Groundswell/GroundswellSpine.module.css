@@ -139,7 +139,7 @@
 }
 
 /* ── shared text ── */
-.beatKicker { margin: 0 0 1rem; font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-faint); }
+.beatKicker { margin: 0 0 1rem; font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent, var(--ink-faint)); }
 .statement {
   margin: 0; max-width: 44rem;
   font-family: var(--font-heading); font-variation-settings: 'SOFT' 100, 'WONK' 1;

@@ -266,7 +266,7 @@ export default function GroundswellSpine() {
           </section>
 
           {/* ── SENSE · 01 — The Void (margin-label walkthrough) ── */}
-          <section id="sense" ref={set('sense')} className={styles.beat}>
+          <section id="sense" ref={set('sense')} className={styles.beat} style={{ '--accent': 'var(--color-sage)' }}>
             <Reveal as="p" className={styles.beatKicker}>Sense · 01</Reveal>
             <Statement>Burnout on the floor wasn’t an individual failure. It was <em>systemic</em>.</Statement>
 
@@ -297,7 +297,7 @@ export default function GroundswellSpine() {
           </section>
 
           {/* ── WEAVE · 02 — the system map (asset interactions) ── */}
-          <section id="weave" ref={set('weave')} className={styles.beat}>
+          <section id="weave" ref={set('weave')} className={styles.beat} style={{ '--accent': 'var(--color-plum)' }}>
             <Reveal as="p" className={styles.beatKicker}>Weave · 02</Reveal>
             <Statement>I shaped what we heard into <em>four interventions that work as one system</em>.</Statement>
 
@@ -315,7 +315,7 @@ export default function GroundswellSpine() {
           </section>
 
           {/* ── SHAPE · 03 — making it real ── */}
-          <section id="shape" ref={set('shape')} className={styles.beat}>
+          <section id="shape" ref={set('shape')} className={styles.beat} style={{ '--accent': 'var(--color-terracotta)' }}>
             <Reveal as="p" className={styles.beatKicker}>Shape · 03</Reveal>
             <Statement>From concept to an <em>installed pilot</em> in ten weeks.</Statement>
 
