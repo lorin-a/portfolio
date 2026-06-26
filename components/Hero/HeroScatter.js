@@ -435,87 +435,77 @@ export default function HeroScatter() {
         ease: 'sine.inOut',
       }, 0.06)
 
-      /* ── 0–25%: DRAG IN — letters travel from offscreen to scatter positions.
-           Flower shrinks simultaneously. Same scroll range = same gesture. ── */
+      /* ── 0–68%: ONE CONTINUOUS SWEEP — offscreen → through the scatter
+           cluster → into the kerned sentence, as a single gesture.
 
-      /* Flower shrinks to mark size, stays center */
+           Each element runs ONE keyframed tween (not a drag-in tween that
+           settles, then a separate gather tween that re-eases in). The
+           scatter position is a *pass-through* waypoint, never a rest:
+             • phase 1 `power2.in`  — accelerates INTO the cluster, so the
+               letters are at peak velocity exactly as they reach it;
+             • phase 2 `power2.out` — leaves immediately and decelerates
+               only as it settles into the final position.
+           Peak speed sits at the junction, so there is no velocity-zero at
+           the midpoint — the cluster reads as the fastest moment, not a
+           landing the user has to re-initiate scroll to escape. One tween
+           per property also means the two phases can't fight mid-scrub
+           (the old overlapping drag-in/gather pair did, which is why timing
+           tweaks alone never removed the felt stop). "Keep Scrolling" now
+           cues a single continuous build. ── */
+      const SWEEP_IN = 0.30   /* offscreen → cluster */
+      const SWEEP_OUT = 0.34  /* cluster → sentence */
+
+      /* Flower is the centre anchor: it shrinks in place through phase 1,
+         then darts to its mark slot in phase 2. Same easing handoff so the
+         shrink flows straight into the move with no settle between. */
       tl.to(flower, {
-        width: 70, height: 70,
-        duration: 0.22, ease: 'power1.inOut',
+        keyframes: [
+          { width: 70, height: 70, duration: SWEEP_IN, ease: 'power2.in' },
+          mFinals[2]
+            ? {
+                left: mFinals[2].left + '%', top: mFinals[2].top + '%',
+                width: mFinals[2].w, height: mFinals[2].h,
+                duration: SWEEP_OUT, ease: 'power2.out',
+              }
+            : { duration: SWEEP_OUT },
+        ],
       }, 0)
 
-      /* Each Designing char drags from offscreen to scatter position.
-         power2.out = pure deceleration, no bounce or direction change at end */
-      dChars.forEach((el, i) => {
-        tl.to(el, {
-          left: D_SCATTER[i][0] + '%', top: D_SCATTER[i][1] + '%',
-          duration: 0.24, ease: 'power2.out',
-        }, i * 0.004)
-      })
-
-      /* Each Connection char */
-      cChars.forEach((el, i) => {
-        tl.to(el, {
-          left: C_SCATTER[i][0] + '%', top: C_SCATTER[i][1] + '%',
-          duration: 0.24, ease: 'power2.out',
-        }, 0.015 + i * 0.004)
-      })
-
-      /* Marks drag in */
-      if (senseRef.current) {
-        tl.to(senseRef.current, {
-          left: MARK_SCATTER.sense[0] + '%', top: MARK_SCATTER.sense[1] + '%',
-          duration: 0.22, ease: 'power2.out',
-        }, 0.02)
-      }
-      if (weaveRef.current) {
-        tl.to(weaveRef.current, {
-          left: MARK_SCATTER.weave[0] + '%', top: MARK_SCATTER.weave[1] + '%',
-          duration: 0.22, ease: 'power2.out',
-        }, 0.03)
-      }
-
-      /* ── 22–68%: GATHER — every element to its kerned final position.
-           No scatter hold: drag-in flows directly into gather so the user
-           never feels stopped at the mid-point. ── */
       dChars.forEach((el, i) => {
         if (!dFinals[i]) return
         tl.to(el, {
-          left: dFinals[i].left + '%', top: dFinals[i].top + '%',
-          duration: 0.38, ease: 'power2.inOut',
-        }, 0.22 + i * 0.01)
+          keyframes: [
+            { left: D_SCATTER[i][0] + '%', top: D_SCATTER[i][1] + '%', duration: SWEEP_IN, ease: 'power2.in' },
+            { left: dFinals[i].left + '%', top: dFinals[i].top + '%', duration: SWEEP_OUT, ease: 'power2.out' },
+          ],
+        }, i * 0.005)
       })
 
       cChars.forEach((el, i) => {
         if (!cFinals[i]) return
         tl.to(el, {
-          left: cFinals[i].left + '%', top: cFinals[i].top + '%',
-          duration: 0.38, ease: 'power2.inOut',
-        }, 0.24 + i * 0.01)
+          keyframes: [
+            { left: C_SCATTER[i][0] + '%', top: C_SCATTER[i][1] + '%', duration: SWEEP_IN, ease: 'power2.in' },
+            { left: cFinals[i].left + '%', top: cFinals[i].top + '%', duration: SWEEP_OUT, ease: 'power2.out' },
+          ],
+        }, 0.02 + i * 0.005)
       })
 
       if (senseRef.current && mFinals[0]) {
         tl.to(senseRef.current, {
-          left: mFinals[0].left + '%', top: mFinals[0].top + '%',
-          width: mFinals[0].w, height: mFinals[0].h,
-          duration: 0.34, ease: 'power2.inOut',
-        }, 0.26)
+          keyframes: [
+            { left: MARK_SCATTER.sense[0] + '%', top: MARK_SCATTER.sense[1] + '%', duration: SWEEP_IN, ease: 'power2.in' },
+            { left: mFinals[0].left + '%', top: mFinals[0].top + '%', width: mFinals[0].w, height: mFinals[0].h, duration: SWEEP_OUT, ease: 'power2.out' },
+          ],
+        }, 0.02)
       }
       if (weaveRef.current && mFinals[1]) {
         tl.to(weaveRef.current, {
-          left: mFinals[1].left + '%', top: mFinals[1].top + '%',
-          width: mFinals[1].w, height: mFinals[1].h,
-          duration: 0.34, ease: 'power2.inOut',
-        }, 0.26)
-      }
-      if (mFinals[2]) {
-        /* Flower uses xPercent/yPercent for centering, which is already applied.
-           The measurement gives us center coordinates, so left/top targets are correct. */
-        tl.to(flower, {
-          left: mFinals[2].left + '%', top: mFinals[2].top + '%',
-          width: mFinals[2].w, height: mFinals[2].h,
-          duration: 0.34, ease: 'power2.inOut',
-        }, 0.26)
+          keyframes: [
+            { left: MARK_SCATTER.weave[0] + '%', top: MARK_SCATTER.weave[1] + '%', duration: SWEEP_IN, ease: 'power2.in' },
+            { left: mFinals[1].left + '%', top: mFinals[1].top + '%', width: mFinals[1].w, height: mFinals[1].h, duration: SWEEP_OUT, ease: 'power2.out' },
+          ],
+        }, 0.03)
       }
 
       /* ── 60–70%: Subtitle fades in (just after gather completes ~0.68) ── */

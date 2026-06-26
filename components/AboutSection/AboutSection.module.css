@@ -363,7 +363,10 @@
 .practiceFan {
   position: relative;
   display: flex;
-  align-items: center;
+  /* stretch (not center) so all three cards match the tallest — body copy
+     length differs (Sense wraps shorter), and centered alignment let each
+     card size to its own content, leaving Sense visibly short. */
+  align-items: stretch;
   justify-content: center;
   gap: var(--space-sm);
   width: 100%;
