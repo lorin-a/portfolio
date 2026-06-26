@@ -194,47 +194,7 @@ function SystemMap() {
   )
 }
 
-/* dark cinematic hook — her REAL connector map (connectors.svg, 1736×1080 frame)
-   with the labelled discs + moment pills overlaid at her Figma coords, art-free.
-   Her lines draw in (clip-path sweep), then discs + pills settle. Geometry +
-   motion reused from the retired mega-hero. */
-const HCX = [0.1230, 0.3745, 0.6261, 0.8777]   // disc centres x (frac of frame)
-const HCY = 0.4703                              // disc centres y
-const HRAD = 0.0845                             // disc radius (frac of frame width)
-const HPX = [0.1220, 0.5000, 0.8770]           // pill centres x
-const HPY = { t: 0.0598, b: 0.9402 }           // pill centres y
-const HPW = 0.2409, HPH = 0.1145               // pill w/h
-const HNODES = ['CTB Email', 'Pod', 'Garden / Art Wall', 'Reflection Cards']
-const HPILLS = [
-  { label: 'Arrive at work', col: 0, row: 't' }, { label: 'Take a break', col: 1, row: 't' }, { label: 'Leave work', col: 2, row: 't' },
-  { label: 'Patient loss', col: 0, row: 'b' }, { label: 'Hard day', col: 1, row: 'b' }, { label: '1:1 meeting', col: 2, row: 'b' },
-]
-
-function RealHookMap({ svg }) {
-  const [ref, seen] = useSeen()
-  if (!svg) return null
-  return (
-    <div ref={ref} className={`${styles.rmap} ${seen ? styles.rdrawn : ''}`}>
-      <div className={styles.rbox}>
-        <div className={styles.rconn} aria-hidden="true" dangerouslySetInnerHTML={{ __html: svg }} />
-        {HPILLS.map((p, i) => (
-          <span key={p.label} className={styles.rpill}
-            style={{ left: `${HPX[p.col] * 100}%`, top: `${HPY[p.row] * 100}%`, width: `${HPW * 100}%`, height: `${HPH * 100}%`, transitionDelay: `${0.55 + i * 0.04}s` }}>
-            {p.label}
-          </span>
-        ))}
-        {HNODES.map((label, i) => (
-          <span key={label} className={styles.rdisc}
-            style={{ left: `${HCX[i] * 100}%`, top: `${HCY * 100}%`, width: `${HRAD * 2 * 100}%`, transitionDelay: `${0.7 + i * 0.06}s` }}>
-            {label}
-          </span>
-        ))}
-      </div>
-    </div>
-  )
-}
-
-export default function GroundswellSpine({ connectorsSvg }) {
+export default function GroundswellSpine() {
   const [active, setActive] = useState('overview')
   const secs = useRef({})
 
@@ -256,23 +216,7 @@ export default function GroundswellSpine({ connectorsSvg }) {
 
   return (
     <div className={styles.page}>
-      <header className={styles.bar}>
-        <span>Groundswell — spine wireframe</span>
-        <span className={styles.barMeta}>greyscale · art-free · first copy take (her words)</span>
-      </header>
-
-      {/* ── HOOK — cinematic, full-width, NO rail (the one immersive moment) ── */}
-      <section className={styles.hook}>
-        <Reveal className={styles.hookInner}>
-          <p className={styles.kicker}>Groundswell · case study</p>
-          <h1 className={styles.hookQ}>Who better to design care than those who <em>give it?</em></h1>
-          <RealHookMap svg={connectorsSvg} />
-          <p className={styles.dive}>dive into the process ↓</p>
-          <Note>IMMERSION LAYER · the single hook</Note>
-        </Reveal>
-      </section>
-
-      {/* ── PROCESS — the rail appears HERE and sticks ── */}
+      {/* ── PROCESS — rail + content. The cinematic hook is GroundswellHero, above. ── */}
       <div className={styles.processWrap}>
         <nav className={styles.rail} aria-label="Case study sections">
           <ol>

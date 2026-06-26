@@ -1,0 +1,260 @@
+/* ============================================================================
+   GroundswellHero — case-study OPENING (mega-hero). DARK throughout.
+   Hero → art-wall full-bleed → 4 large photos + intro → shrink → cross-fade to
+   labelled circles (photo on hover) → her connector lines draw on → ecosystem.
+   Lines/positions come from her Figma export (1736×1080).
+   ============================================================================ */
+
+.wrap {
+  --on-dark: #FBF9F6;
+  --on-dark-soft: rgba(251, 249, 246, 0.82);
+  --on-dark-faint: rgba(251, 249, 246, 0.68);
+  --hair: rgba(251, 249, 246, 0.16);
+  --accent: #C5CFA6;
+
+  position: relative;
+  height: 560vh;
+  background: #252525;
+  color: var(--on-dark);
+  font-family: var(--font-body);
+}
+.stage {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  overflow: hidden;
+}
+
+/* ── nav ── */
+.nav {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  z-index: 5;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: baseline;
+  gap: var(--space-sm);
+  padding: var(--space-md) clamp(var(--space-md), 5vw, var(--space-xl)) var(--space-sm);
+  border-bottom: 1px solid var(--hair);
+}
+.navMark {
+  justify-self: start;
+  font-family: var(--font-heading);
+  font-style: italic;
+  font-weight: 420;
+  font-size: 1.12rem;
+  color: var(--on-dark);
+}
+.navLabel {
+  justify-self: center;
+  font-size: 0.75rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.navCtx {
+  justify-self: end;
+  text-align: right;
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--on-dark-faint);
+}
+
+/* ── hero text (above the band; fades out on scroll) ── */
+.heroText {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  bottom: 34vh;
+  z-index: 4;
+  display: grid;
+  place-content: center;
+  padding: 7.5rem var(--space-md) var(--space-lg);
+}
+.body {
+  position: relative;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  text-align: center;
+  width: 100%;
+}
+.body::before {
+  content: '';
+  position: absolute;
+  inset: -20% -10%;
+  background: radial-gradient(48% 42% at 50% 44%, rgba(196, 122, 98, 0.10), transparent 72%);
+  pointer-events: none;
+}
+.body > * { position: relative; }
+
+.q {
+  margin: 0;
+  max-width: min(40rem, 92vw);
+  color: var(--on-dark);
+  font-family: var(--font-heading);
+  font-variation-settings: 'SOFT' 100, 'WONK' 1;
+  font-weight: 200;
+  font-size: clamp(2.2rem, 1.1rem + 4vw, 4.2rem);
+  line-height: 1.2;
+  letter-spacing: -0.004em;
+  text-wrap: balance;
+  padding-bottom: 0.08em;
+}
+.q em { font-style: italic; font-weight: 340; color: var(--accent); }
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: baseline;
+  max-width: min(82rem, 96vw);
+  margin: var(--space-lg) auto 0;
+  border-top: 1px solid var(--hair);
+  border-bottom: 1px solid var(--hair);
+}
+.metaItem {
+  display: grid;
+  justify-items: center;
+  gap: 0.5em;
+  padding: var(--space-md) clamp(var(--space-sm), 1.8vw, var(--space-md));
+  text-align: center;
+}
+.metaItem + .metaItem { border-left: 1px solid var(--hair); }
+.metaItem dt {
+  font-size: 0.75rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.metaItem dd {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-variation-settings: 'SOFT' 100, 'WONK' 1;
+  font-weight: 340;
+  font-size: clamp(1rem, 0.9rem + 0.5vw, 1.25rem);
+  line-height: 1.18;
+  color: var(--on-dark);
+}
+
+/* ── intro (with the large photos) ── */
+.intro {
+  position: absolute;
+  z-index: 4;
+  top: 14vh;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(40rem, 90vw);
+  margin: 0;
+  text-align: center;
+  font-family: var(--font-heading);
+  font-variation-settings: 'SOFT' 100, 'WONK' 1;
+  font-weight: 240;
+  font-size: clamp(1.3rem, 1rem + 1.2vw, 2rem);
+  line-height: 1.3;
+  color: var(--on-dark);
+}
+.intro em { font-style: italic; font-weight: 340; color: var(--accent); }
+
+/* ── her connector lines (recoloured + revealed) ── */
+.connectors { position: absolute; z-index: 2; pointer-events: none; }
+.connectors svg { display: block; width: 100%; height: 100%; }
+.connectors path { fill: var(--accent); }
+
+/* ── moment-pills ── */
+.pill {
+  position: absolute;
+  z-index: 3;
+  display: grid;
+  place-content: center;
+  text-align: center;
+  padding: 0 1rem;
+  border: 1.5px dashed color-mix(in srgb, var(--on-dark) 30%, transparent);
+  border-radius: 999px;
+  font-family: var(--font-heading);
+  font-variation-settings: 'SOFT' 100, 'WONK' 1;
+  font-weight: 340;
+  font-size: clamp(0.8rem, 1.1vw, 1rem);
+  color: var(--on-dark-soft);
+}
+
+/* ── labelled circles (end state) ── */
+.disc {
+  position: absolute;
+  z-index: 3;
+  display: grid;
+  place-content: center;
+  text-align: center;
+  border-radius: 50%;
+  border: 1.5px solid color-mix(in srgb, var(--accent) 55%, transparent);
+  background: color-mix(in srgb, var(--accent) 6%, transparent);
+}
+.discLabel {
+  padding: 0 0.6em;
+  font-family: var(--font-heading);
+  font-variation-settings: 'SOFT' 100, 'WONK' 1;
+  font-weight: 340;
+  font-size: clamp(0.95rem, 1.3vw, 1.2rem);
+  color: var(--on-dark);
+}
+
+/* ── photos (node .art morphs in from the band; fade to discs, photo on hover) ── */
+.photo {
+  position: absolute;
+  z-index: 4;
+  margin: 0;
+  pointer-events: none;   /* hover handled on the disc */
+}
+.art { left: 0; right: 0; bottom: 0; height: 34vh; }
+.clip {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 10px;       /* tasteful soft corners; JS rounds to circles last */
+  box-shadow: 0 18px 44px rgba(0, 0, 0, 0.4);
+}
+.clip img { display: block; width: 100%; height: 100%; object-fit: cover; }
+
+/* ── dive cue ── */
+.dive {
+  position: absolute;
+  z-index: 4;
+  bottom: 6vh;
+  left: 50%;
+  transform: translateX(-50%);
+  margin: 0;
+  text-align: center;
+  font-size: 0.95rem;
+  color: var(--on-dark-faint);
+}
+.diveCta { color: var(--accent); }
+
+/* ── persistent credit ── */
+.credit {
+  position: absolute;
+  z-index: 5;
+  left: clamp(var(--space-md), 5vw, var(--space-xl));
+  bottom: var(--space-md);
+  margin: 0;
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  color: var(--on-dark-faint);
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.55);
+}
+.credit b { font-weight: 400; color: var(--on-dark-soft); }
+
+/* ── responsive ── */
+@media (max-width: 700px) {
+  .nav { grid-template-columns: 1fr auto; }
+  .navLabel { display: none; }
+  .metaItem + .metaItem { border-left: 0; }
+  .meta { gap: var(--space-sm); }
+}
+
+/* ── reduced motion: static hero only ── */
+@media (prefers-reduced-motion: reduce) {
+  .wrap { height: auto; }
+  .stage { position: relative; height: 100svh; }
+  .connectors, .pill, .disc, .intro, .dive, .photo:not(.art) { display: none; }
+}
