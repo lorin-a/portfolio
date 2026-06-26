@@ -5,11 +5,159 @@ study below is not stuck in one chat. Covers two things Lorin weighs equally:
 **architecture** (structure, sections, layout) and **voice** (copy, narrative,
 register). Distilled from a study of seven case-study sites on 2026-06-24.
 
-**How to use:** Read this before any case-study build or rewrite. The build
-approach (Section 7) gives the working order. Groundswell is instance #1.
+**How to use:** Read **THE SPEC** (below) first — it is the agreed model. The
+rest is the supporting toolkit and the evidence behind it. Groundswell is instance #1.
 
-**Status:** Reference drafted 2026-06-24. Groundswell architecture is in good
-shape; copy is the open work (still institutional "we"). Copy scaffold pending.
+**Status:** Drafted 2026-06-24 (7 pro sites). **Expanded + the model AGREED
+2026-06-26** after studying four coursemate case studies (Elijah Benzon ×2 incl.
+the *same Groundswell project*, Zoe So, Katherine Niu — all the "Design with CARE"
+cohort) for flow + verbatim copy. THE SPEC section captures what we agreed.
+
+---
+
+## ★ THE SPEC — Lorin's case-study model (agreed 2026-06-26)
+
+**One line:** a case study that is **fully legible in 90 seconds and rewards ten
+minutes** — a calm, first-person, serif editorial spine a hiring manager can skim,
+with cinematic immersion reserved for the few moments that *explain the system*.
+
+### A · STRUCTURE
+
+**Two layers, one page** (this is the whole reconciliation):
+- **Skim layer (the contract a hiring manager reads in 90s):** a persistent
+  **sticky chapter rail** + an at-a-glance orientation block (role · timeline ·
+  outcome + 3 impact stats) + **every section opens with a declarative statement
+  heading that carries the point.** Read only the rail + headings + stats and you
+  get the entire story. (Proven by Katherine & Elijah — read just their H2s.)
+- **Immersion layer (the reward for going deeper):** the cinematic hook, the
+  system/connector map, and restrained scroll reveals — sitting *beneath* the
+  skim layer, never replacing it.
+
+**The arc** (process-first; the product is shown ONCE, as the hook):
+1. **Hook** — cinematic, ~1 screen: the question + the connected-system diagram
+   assembling (Lorin's own map, **art-free** per the license hold — NOT the
+   mural). The "what" at a glance. → *dive into the process ↓*
+2. **Frame** — first-person **way-in** (her origin story) + orientation block
+   (role · timeline · outcome). Don't make the reader earn the basics.
+3. **Sense** — problem (stat) → how I worked (**method strip; each method expands
+   to a documented card** — *research as reasoning*, Pearl Sequeira; give the Grief
+   Workshop one visible moment) → what we heard (staff voice) → synthesis: **name
+   the three insights** (recognition · environment · culture) + "The Void" reframe.
+4. **Weave** — the ecosystem (the **system map = the asset interactions**) → the
+   four interventions, each shown as **❗insight → ⭐intervention**.
+5. **Shape** — concept→production (iteration + timeline) → the senior pivots
+   (language shift; "trust, not surveillance") → playtest.
+6. **Close** — outcome stats → **one stakeholder quote** (validation) → reflection
+   in **two moves: what I learned** (resonance: Presence · Attunement ·
+   Harmonization) **+ what I'd do differently** (candid growth, 1–2 lines) →
+   **next steps** (1 line: paper in review · study completes July 2026 · expansion)
+   → named credits.
+
+**Persistent spine = sticky side rail** tracking the three acts (Sense · Weave ·
+Shape) + numbered beats; current highlighted. None of the coursemates have
+wayfinding — this is a Lorin differentiator.
+
+**The connective logic = ❗→⭐.** Every intervention and key decision is visibly
+traced to a research insight (Katherine's pattern). This is the clarity engine
+*and* the seniority signal — nothing appears without a reason.
+
+### B · VOICE
+
+- **The fusion model** (Beakery): narrate rigorous process in a personal,
+  first-person voice — vision and rigor in the *same sentence*, not separate
+  sections. See Section 1.
+- **"I" for her craft + experience; "we" for the collective vision/team; name
+  individuals** for specific contributions.
+- **Declarative statement headings** that carry the argument (read-the-headings =
+  read-the-story). The single most stealable coursemate device.
+- **Concrete specifics** (15 weeks, 30 testers, $30k, the numbers, named people).
+- **Questions as openers** where they propel reasoning; **name concepts** (The
+  Void, the four dimensions); **show the reasoning, not just the decision**.
+- **A sincere personal way-in** — oncology grief; never cute or flip.
+- **Claim her owned territory** that teammates literally cannot: co-design /
+  participatory research, the Reflection-Card writing, and securing the entire
+  material reality (the $13k pod, locks, labyrinths, the meditations via her own
+  teacher). This is how she differentiates from Elijah's same-project page, which
+  is product-framed, pod-centric, and collective-"we".
+- Guardrails: no introduced em dashes; curly quotes in prose; never paraphrase
+  her writing (`[LORIN TO WRITE]`); match register to subject; `voice-audit`
+  before ship.
+
+### C · THE BALANCE (the three tensions, resolved)
+
+- **Restraint ↔ immersion** → *Restraint is the default; immersion is earned and
+  rare.* Calm, serif, white-space-rich (her taste; Bernard restraint). Immersion
+  appears at ~two moments only — the hook and the system map — and only because
+  they **explain**. Rule: **immersion must explain, not just impress.**
+- **Story ↔ structure** → *Structure is the skim layer; story is the immersion
+  layer; one page holds both.* The rail + statement headings guarantee legibility
+  no matter what; the first-person narrative + cinematic beats supply the story
+  for those who go deeper. Enforce with the **2-second skim test**: scroll past
+  any beat fast — heading + one line must still deliver the point.
+- **Process / flow** → *Process-first, product as the hook.* The hook shows the
+  product once (skim reader gets the "what"); everything after is her process in
+  Sense → Weave → Shape, with ❗→⭐ tying every output to an insight. Flow = each
+  beat self-contained (play-once reveal, never reverses); the rail gives constant
+  "where am I."
+
+### D · EDITORIAL DISCIPLINE (the anti-oversharing governor)
+
+Lorin's named growth edge: she **overshares and struggles to cut to the few most
+important pieces.** So the *structure* must do the constraining, not willpower. And
+the payoff: **the restraint is itself the portfolio piece** — a hiring manager who
+sees 90% cut to the essential 10% reads strategic judgment that no volume of
+documentation can show. **Brevity is the proof of strategy.**
+
+**Hard budgets (enforce, don't negotiate):**
+- Statement heading ≤ ~12 words. Body per beat ≤ 2–3 sentences (~50 words) — the
+  coursemates never exceed this. ❗ and ⭐ one line each.
+- **One hero artifact per beat** (the single strongest image/diagram/video), never a
+  gallery. Supporting images → a rationed contact-sheet or behind an expand.
+- One pull-quote per research beat; one stat given its own moment, not a wall.
+- Whole-page target **~1,200–1,500 words**; skim layer reads in 90s.
+
+**Progressive disclosure = the relief valve for the oversharer.** Keep the depth
+she's tempted to include, but put it behind a fold — "read more", an expandable, or
+a link to the full record (she already has the **79-min Medium doc** + the **CMU
+feature** as the "go deeper" destinations). Main flow stays lean; depth is one click
+away for the rare reader who wants it.
+
+**The cut test (every element):** does this change what a hiring manager *believes
+about Lorin*? If it only adds completeness, it moves to the deep layer or is cut.
+Completeness is not a virtue; selection is.
+
+**Irreducible core for Groundswell (the 90-second set — protect these, ration the
+rest):** (1) personal way-in, 1 line; (2) the reframe / "The Void" thesis;
+(3) the four interventions as ❗→⭐ via the system map (expand per intervention);
+(4) her owned contributions (co-design, card writing, securing the $13k pod +
+partnerships); (5) real impact (570 · 207 · 256 · $30k · live pilot); (6) the
+relational reflection (resonance).
+
+**How the four goals get demonstrated:**
+- **Strategic** → the ❗→⭐ logic + "decisions, not deliverables"; the visible reframes.
+- **Brevity with impact** → statement headings + ~50-word bodies + space around few words.
+- **Interaction / visual expertise** → spend it on **2–3 earned moments** (cinematic
+  hook, system map, iteration scroll / device video) — polish of the few, not quantity.
+- **Unique** → first-person way-in + relational/co-design framing + the system-diagram
+  hero no coursemate has. The fusion of **emotional depth + systems thinking + real
+  shipped impact** is the through-line.
+
+**Required components — audited (2026-06-26).** Every standard case-study component
+is present, but **folded into the four beats, not bolted on as new sections**:
+methods → expandable cards in Sense (research is her specialty — document it, don't
+bury it); key insights → named in Sense, then the ❗ side of the map; **what I'd do
+differently → the second half of the Close reflection** (the one true gap we added);
+next steps + a stakeholder quote → one line / one quote in Close. The test for any
+"shouldn't every portfolio have X?" addition: fold it into an existing beat or its
+deep layer; it earns a *new* beat only if it changes what a hiring manager believes.
+
+**Working ritual — the "keep 5" pass.** After scaffolding, rank beats by impact; if
+only 5 could stay, which 5? The rest become optional / deep-layer. Claude proposes
+the cut, Lorin approves. Run it every build, every project.
+
+**Anti-patterns:** cinematic-for-its-own-sake; collective "we" that flattens her
+role (Elijah's gap); **gallery dumps / completeness-for-its-own-sake**; dense dossier
+grids; oversized type; full-bleed everything; reproducing Blue Garden (license).
 
 ---
 

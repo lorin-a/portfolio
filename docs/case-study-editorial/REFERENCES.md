@@ -173,3 +173,28 @@ apply during the content pour (not as speculative device edits now): (a) convert
 beat marks to **verb-phrase signposts** so the spine skims as a story, and (b)
 **ration full-bleed** to the hero + 2–3 emphasis beats, containing the rest to the
 column. Both are content-led, exactly per Lorin's "let the content dictate."
+
+---
+
+## D. The "Design with CARE" cohort (coursemates, studied 2026-06-26)
+
+Lorin's own classmates' versions of the same course (Elijah is the *same Groundswell
+project*). Studied for **flow + verbatim copy**, not just layout. The cohort is
+clearer than the pros at one specific thing — **statement headings** — and weaker at
+two things Lorin can own: **wayfinding** and **first-person role**.
+
+| Site | URL | How it tells the story (flow + copy) |
+|---|---|---|
+| **Katherine Niu / UPMC Symptom Screening** ⭐ clarity model | katherineniu.framer.website/designwcare-case-study | The cleanest **statement-heading** spine: every H2 is a full sentence, so the headings alone read as the whole argument (*"Patients are routinely asked to complete symptom screening forms, but this information isn't reaching their doctor."* → *"A smarter symptom screening experience that prioritizes the symptoms that matter most."*). Arc: Problem(+stat) → Solution(named features) → Research(with verbatim patient voice: *"Why am I being asked this again?"*) → Reframe (HMW) → Process as **❗→⭐ pairs** (pain → move) → Testing (before/after) → "Potential Impact" bullets. Plain declarative copy, one rhetorical question for rhythm. Qual impact only. |
+| **Elijah Benzon / Groundswell** (SAME project) | elijahbenzon.com/groundswell | **Product-framed, pod-centric, collective "we"** ("I" appears twice). Opens with the *project's* institutional evolution, not himself. Spine = the **4 constraints** (constraint-as-narrative), framing the pivots as budget/deadline (guidebook→cards, garden→wall). Statement headings throughout. Clear and honest but **emotionally flat** — no personal stake, no staff quotes. Claims Experience/Content/Coordinator (overlaps Lorin → she must claim *different* territory truthfully). The contrast that defines Lorin's edge: same facts, but she has the first-person doorway, the co-design framing, the card *writing*, securing the material reality, and the hard numbers he doesn't surface. |
+| **Elijah Benzon / Birth Story** (Lorin's "ideal clear") | elijahbenzon.com/birth-story | ~600 words, statement-heading arc: Problem → "We asked: How might we…?" → Solution(named features) → Process → "Testing revealed…" → 3 numbered iterations. Honest scoping line (*"the work was not done professionally with Dezudio"*). Clear because **short + labeled**, not because plain — Lorin's note: "we can do better, show craft AND depth." |
+| **Zoe So / Season** | zoe-so.com/project/season | Dual-layer done airily: H1 states the domain, 3-sentence context, **Problem/Solution as HMW + one-line thesis**, metadata block, Research with an **Insight callout** (first-person: *"I discovered a clear gap…"*), named features (Discover · Share · Talk) each with "Key Design Decisions," qual "Reflections & Impact." **Immersion via warmth** (illustration, naming "Season = cycles of change"), explicitly *not* via scale/motion — contained images. |
+
+**Transferable moves (now in THE SPEC, playbook):** (1) **statement headings** that
+carry the argument; (2) **❗insight → ⭐intervention** pairing for every decision;
+(3) **verbatim user voice** as evidence; (4) **named features**; (5) **honest
+scoping**; (6) one tight **role line**. **What none of them do, and Lorin will:** a
+persistent **sticky rail**, a **first-person way-in**, **real numbers** (570 · 207 ·
+256 · $30k · live pilot), and **one earned cinematic moment**. Same-project takeaway:
+where Elijah is product-framed and "we", Lorin is process-/person-framed and "I" on
+the ground she genuinely owns.

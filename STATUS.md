@@ -1,23 +1,43 @@
 # Project Status
-### Last updated: 2026-06-26
+### Last updated: 2026-06-26 (case-study spine session)
 
 This is the living status doc for the lorin.work portfolio redesign. Updated at the end of every working session. Detailed in-flight state lives in memory `PROGRESS.md`.
 
 ---
 
-## Right now — Groundswell license-safe rebuild
+## Right now — Groundswell case-study spine
 
-The Groundswell case study + standalone site are **gated offline** because they reproduce Carolyn Gavin's "Blue Garden" artwork, which her contract (Schedule A) licenses for **physical Groundswell uses only.** Re-read of the contract on 2026-06-26 confirmed even *documentary photos* of the art are out of scope without her written permission — this supersedes the earlier "documenting the physical work is fair" approach the gated build rests on.
+The case-study **model is agreed and documented** in `docs/case-study-editorial/CASE_STUDY_PLAYBOOK.md` → **THE SPEC** (structure · voice · the three balances · editorial discipline). Built from a study of four coursemate case studies (Elijah Benzon ×2 incl. the same Groundswell project, Zoe So, Katherine Niu) — notes in `REFERENCES.md` § D.
 
-**Decision:** build a **safe version** that never reproduces or alters Blue Garden (ships with no permission needed), architected so documentary photos can drop in later if Carolyn grants permission. In parallel, pursue that permission.
+**Current artifact = a greyscale SPINE WIREFRAME**, gated at **`/projects/groundswell/spine`** (`components/Groundswell/GroundswellSpine.jsx`). Art-free by design, so it sidesteps the license. The 15-beat outline was cut to **4 content beats** (Hook → Frame → Sense → Weave → Shape → Close) with depth behind expands. Live in it: rail present **only in the process, not the hero**; statement-heading skim layer (read just the rail + headings = the 90-second story); ❗insight→⭐intervention logic; and the **first interactive timeline** (Shape, clickable phases) as proof of "presenting, not pitching."
 
-**In-flight (uncommitted, gated dev routes):** new mega-hero `GroundswellHero.jsx` still reproduces the mural (`gs-artwall`/`gs-cards`) — the core unsafe piece. New `GroundswellProcess.jsx` is already art-free (good foundation; one Shape evidence note still references the art).
+**Principle locked — "medium is the message":** the case study must itself demonstrate breaking-down-complex-info. One signature interaction per act (Sense = synthesis-that-builds · Weave = interactive system map · Shape = timeline ✅), never decoration.
 
-**Next move:** decide the safe hero device — **system-diagram-as-hero** (recommended: Lorin's own connector map becomes the centerpiece; the two art-linked nodes get a credit-card treatment, not a reproduction) vs photo-led carried by the two cleared photos (Pod, CTB Email). Then build the safe hero, fix the Process Shape note, and sweep any remaining Blue Garden touchpoint.
+**Next move:** build the **Weave interactive system map** (the centerpiece — staff-moments × interventions, hover/click ❗→⭐). Then pour real content beat-by-beat (her origin story is already written in `GROUNDSWELL_VOICE_DRAFT.md`) and run the "keep-5" cut as it lands.
 
-**Then:** draft the permission note to Carolyn (two asks: documentary project-site use + portfolio use).
+**License note (still binding):** the existing `GroundswellContent.js` build + the mega-hero (`GroundswellHero.jsx`) reproduce Blue Garden and stay **gated** until Carolyn grants written permission. The spine wireframe's art-free, system-diagram hook IS the license-safe direction. See memory `PROGRESS.md` → "Groundswell artwork-license hold" + "Case-study MODEL agreed + SPINE WIREFRAME built."
 
-See memory `PROGRESS.md` → "Groundswell artwork-license hold" for full detail.
+---
+
+## Homepage — Lorin feedback (logged + actioned 2026-06-26)
+
+### 1. Sense / Weave / Shape practice cards — equal height ✅ DONE
+
+The **Sense** card rendered shorter than Weave/Shape in the practice fan (`components/AboutSection/`). **Not an illusion — real.** Cause: `.practiceFan` used `align-items: center`, so each card sized to its own content (`min-height: 340px` is only a floor; Sense's body wraps to fewer lines).
+
+**Fix shipped:** `.practiceFan` → `align-items: stretch`, so all three match the tallest. The GSAP fan-out only animates `x`/`rotation`/`autoAlpha` (never height), so it's unaffected; the ≤800px mobile block already overrode this (column stack, full-width cards), so no mobile side effect. Verified statically across breakpoints; not yet eyes-on in browser.
+
+### 2. Intro opener — kill the false midpoint, keep the instruction ✅ IMPLEMENTED (needs eyes-on)
+
+**Refined diagnosis (Lorin's, sharper than the first read):** the "Keep Scrolling" instruction is *good and stays*. The real fault was the letter **architecture** — letters animated in two phases with the scatter cluster as a *resting waypoint*: drag-in eased `power2.out` (decelerates to a stop at the cluster), then gather eased `power2.inOut` (eases in from a stop). The velocity-zero at the cluster made it read as a finished composition, so the user stopped and had to re-initiate scroll to morph cluster → sentence. The old timing-overlap fix never worked because the *easing* reintroduced the stop, not the timing.
+
+**Fix shipped** (`components/Hero/HeroScatter.js`, `buildScrollTimeline`): merged the two per-element position tweens into **one keyframed tween** where the scatter cluster is a *pass-through* waypoint. Phase 1 `power2.in` accelerates into the cluster (peak velocity at arrival); phase 2 `power2.out` leaves immediately and settles into the kerned sentence. No velocity-zero at the midpoint → no false destination. Single tween per property also prevents the old drag-in/gather pair from fighting mid-scrub. Applied to all letters + Sense/Weave marks + the centre flower (`SWEEP_IN 0.30` / `SWEEP_OUT 0.34`). "Keep Scrolling" swap/dissolve left as-is — it now cues one continuous build and fades (~0.30) right as the letters cross the cluster.
+
+**Open:** needs a real scroll to confirm the *feel* (the whole point). Couldn't run automated eyes-on this session — Playwright browser profile was locked by an open Chrome. Dev server is live on :3000. Open call when reviewed: pass-through vs. the more radical one-path (single tween straight offscreen → sentence, no scatter waypoint) if the constellation moment isn't earning its keep.
+
+### 3. Photo iris reveal — fire in the gaze ✅ IMPLEMENTED (needs eyes-on)
+
+`AboutSection.js` photo iris was on a ScrollTrigger (`top 85%`) that fired while the photo was still near the viewport bottom, so the open finished before it reached the reading zone. Switched to **IntersectionObserver play-once** (the pattern the rest of the section uses; pin-shifted ScrollTrigger starts are unreliable here), snappier ease, so the open is witnessed whole. Committed separately this session.
 
 ---
 
