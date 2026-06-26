@@ -91,7 +91,7 @@ export default function GroundswellHero({ connectorsSvg }) {
       const cx = (i) => mL() + CX[i] * mw()
       const cy = () => mT() + CY * mh()
       const d = () => RAD * 2 * mw()           // final circle diameter
-      const bandH = () => sh() * 0.40
+      const bandH = () => sh() * 0.34
       // half-stop: 4 big rectangles, evenly across, centred vertically
       const RX = [0.155, 0.385, 0.615, 0.845]
       const lx = (i) => sw() * RX[i]
@@ -124,7 +124,7 @@ export default function GroundswellHero({ connectorsSvg }) {
 
       // photos: art-wall starts as the band; others start as LARGE circles (hidden)
       gsap.set(art, { top: () => sh() - bandH(), left: 0, width: sw, height: bandH })
-      gsap.set(clipRefs.current.filter(Boolean), { borderRadius: 0 })
+      gsap.set(clipRefs.current.filter(Boolean), { borderRadius: 10 })
       others.forEach((o) => gsap.set(o.p, {
         top: () => ly() - rh() / 2, left: () => lx(o.circle) - rw() / 2,
         width: rw, height: rh, autoAlpha: 0, scale: 0.85, transformOrigin: '50% 50%',
@@ -151,24 +151,24 @@ export default function GroundswellHero({ connectorsSvg }) {
       tl.to(introRef.current, { autoAlpha: 1, duration: 0.7 }, 3.2)
       // 4 · HOLD large rectangles 3.7 → 4.7
 
-      // 5 · rectangles → circles (shrink, move, round) into final map positions
+      // 5 · rectangles shrink + move to the circle POSITIONS (stay as rounded rects)
       photos.forEach((p, i) => tl.to(p, {
         top: () => cy() - d() / 2, left: () => cx(i) - d() / 2, width: d, height: d,
         duration: 1.2, ease: 'power3.inOut',
       }, 4.7))
-      tl.to(clipRefs.current.filter(Boolean), { borderRadius: '50%', duration: 1.2, ease: 'power3.inOut' }, 4.7)
 
-      // 6 · cross-fade photos → labelled circles
-      tl.to(discs, { autoAlpha: 1, duration: 0.6 }, 6.0)
-      tl.to(photos, { autoAlpha: 0, duration: 0.6 }, 6.1)
+      // 6 · pills + lines draw in around the images (images still present)
+      tl.to(pillRefs.current.filter(Boolean), { autoAlpha: 1, duration: 0.5, stagger: 0.05 }, 6.1)
+      tl.to(connRef.current, { autoAlpha: 1, duration: 0.2 }, 6.4)
+      tl.to(connRef.current, { clipPath: 'inset(0 0% 0 0)', duration: 1.4, ease: 'power1.inOut' }, 6.4)
 
-      // 7 · pills appear, then the lines draw on
-      tl.to(pillRefs.current.filter(Boolean), { autoAlpha: 1, duration: 0.5, stagger: 0.05 }, 6.3)
-      tl.to(connRef.current, { autoAlpha: 1, duration: 0.2 }, 6.6)
-      tl.to(connRef.current, { clipPath: 'inset(0 0% 0 0)', duration: 1.3, ease: 'power1.inOut' }, 6.6)
+      // 7 · LAST: images round to circles + cross-fade to the labelled discs
+      tl.to(clipRefs.current.filter(Boolean), { borderRadius: '50%', duration: 0.9, ease: 'power2.inOut' }, 8.1)
+      tl.to(discs, { autoAlpha: 1, duration: 0.6 }, 8.3)
+      tl.to(photos, { autoAlpha: 0, duration: 0.6 }, 8.4)
 
       // 8 · dive
-      tl.to(diveRef.current, { autoAlpha: 1, duration: 0.5 }, 8.1)
+      tl.to(diveRef.current, { autoAlpha: 1, duration: 0.5 }, 9.1)
 
       // photo returns on hover of its labelled circle
       discs.forEach((disc, i) => {
