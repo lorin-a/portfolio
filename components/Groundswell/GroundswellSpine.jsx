@@ -5,15 +5,10 @@ import styles from './GroundswellSpine.module.css'
 
 /* ============================================================================
    Groundswell — SPINE WIREFRAME (greyscale, art-free, flow-first).
-   Implements CASE_STUDY_PLAYBOOK.md → THE SPEC:
-   - Two layers: a SKIM layer (sticky rail + statement headings + stats, reads in
-     90s) and an IMMERSION layer (hook + system map + iteration — placeholder here).
-   - Arc: Hook → Frame → Sense/The Void → Weave/system map → Shape/making real → Close.
-   - Connective logic = ❗insight → ⭐intervention on every decision.
-   - Editorial discipline: one statement per beat, one hero artifact, depth behind
-     EXPAND (progressive disclosure). 15 beats collapsed to 4 content beats.
-   No real images, no Blue Garden. Statement headings are [PLACEHOLDER] at real
-   length so the skim layer reads true; voice slots are Lorin's to write.
+   Copy = her own words (GROUNDSWELL_VOICE_DRAFT.md + groundswell.md). "I" for
+   craft, "we" for collective. Layout uses the full width: a two-column masthead,
+   margin-label process steps, wide stat bands, and side-by-side ❗→⭐ pairs.
+   Hero = centered/cinematic (the system); process = left, structured (her, telling it).
    ============================================================================ */
 
 const RAIL = [
@@ -30,7 +25,7 @@ function useSeen() {
   useEffect(() => {
     const el = ref.current
     if (!el || window.matchMedia('(prefers-reduced-motion: reduce)').matches) { setSeen(true); return }
-    const o = new IntersectionObserver(([e]) => { if (e.isIntersecting) { setSeen(true); o.disconnect() } }, { threshold: 0.18 })
+    const o = new IntersectionObserver(([e]) => { if (e.isIntersecting) { setSeen(true); o.disconnect() } }, { threshold: 0.15 })
     o.observe(el)
     return () => o.disconnect()
   }, [])
@@ -43,11 +38,30 @@ function Reveal({ children, className = '', as = 'div' }) {
   return <Tag ref={ref} className={`${styles.rise} ${seen ? styles.in : ''} ${className}`}>{children}</Tag>
 }
 
-/* wireframe annotation — names the layer/device (scaffolding, not shipped UI) */
 function Note({ children }) { return <span className={styles.note}>{children}</span> }
-
-/* the skim-layer statement heading (placeholder at real length) */
 function Statement({ children }) { return <h2 className={styles.statement}>{children}</h2> }
+
+/* explanatory step — a margin label + a wide content column (narration + evidence) */
+function Step({ label, say, children }) {
+  return (
+    <Reveal className={styles.step}>
+      <p className={styles.stepLabel}>{label}</p>
+      <div className={styles.stepBody}>
+        {say && <p className={styles.say}>{say}</p>}
+        {children}
+      </div>
+    </Reveal>
+  )
+}
+
+function Expand({ summary, children }) {
+  return (
+    <details className={styles.expand}>
+      <summary>{summary}</summary>
+      <div className={styles.expandBody}>{children}</div>
+    </details>
+  )
+}
 
 /* ❗insight → ⭐intervention — the connective logic */
 function Pair({ insight, move, expand }) {
@@ -60,23 +74,13 @@ function Pair({ insight, move, expand }) {
   )
 }
 
-/* progressive disclosure — the oversharer's relief valve */
-function Expand({ summary, children }) {
-  return (
-    <details className={styles.expand}>
-      <summary>{summary}</summary>
-      <div className={styles.expandBody}>{children}</div>
-    </details>
-  )
-}
-
 /* interactive timeline — demonstrates "I make complex process legible" */
 function Timeline() {
   const PHASES = [
-    { wk: 'Weeks 1–2', name: 'Prototype', span: 2, body: '[What happened in prototyping · the decision I made · my role.]' },
-    { wk: 'Weeks 3–4', name: 'Mockup & Figma', span: 2, body: '[Hi-fi concept · stakeholder review · my role.]' },
-    { wk: 'Weeks 5–7', name: 'Fabrication', span: 3, body: '[Build with Greg Baltus · the door-lock pivot · my coordination role.]' },
-    { wk: 'Weeks 8–10', name: 'Install & playtest', span: 3, body: '[On-site install · 30 testers · the 3 changes that shipped.]' },
+    { wk: 'Weeks 1–2', name: 'Prototype', span: 2, body: 'Turned the high-fidelity concept into a functional prototype: brand, ecosystem flow, the service design of the program. As a team of three, I brainstormed and drafted iterations.' },
+    { wk: 'Weeks 3–4', name: 'Mockup & Figma', span: 2, body: 'Pod interior, mindfulness resources, and the communications plan for hospital administration. I drafted first-round copy across nearly all of it.' },
+    { wk: 'Weeks 5–7', name: 'Fabrication', span: 3, body: 'Greg Baltus transformed spatial limits into design assets. I coordinated remotely and ran donor outreach: the pod, woodworking, the sensor, the labyrinths, the Schlage locks.' },
+    { wk: 'Weeks 8–10', name: 'Install & playtest', span: 3, body: 'On-site install at Magee. I co-led playtesting with 30 staff before launch; three critical changes shipped from what we learned.' },
   ]
   const [i, setI] = useState(0)
   return (
@@ -106,7 +110,6 @@ function Timeline() {
   )
 }
 
-/* greyscale device placeholder */
 function Device({ kind, beh, ratio = '16 / 9', note }) {
   return (
     <Reveal className={styles.device} style={{ aspectRatio: ratio }}>
@@ -141,7 +144,7 @@ export default function GroundswellSpine() {
     <div className={styles.page}>
       <header className={styles.bar}>
         <span>Groundswell — spine wireframe</span>
-        <span className={styles.barMeta}>greyscale · art-free · statement-heading skim layer + ❗→⭐ + expand-to-depth</span>
+        <span className={styles.barMeta}>greyscale · art-free · first copy take (her words)</span>
       </header>
 
       {/* ── HOOK — cinematic, full-width, NO rail (the one immersive moment) ── */}
@@ -149,13 +152,13 @@ export default function GroundswellSpine() {
         <Reveal className={styles.hookInner}>
           <p className={styles.kicker}>Groundswell · case study</p>
           <h1 className={styles.hookQ}>Who better to design care than those who <em>give it?</em></h1>
-          <Device kind="SYSTEM DIAGRAM" beh="4 interventions × staff moments · assembles on scroll" note="art-free — Lorin's own connector map, NOT the mural" ratio="2.4 / 1" />
+          <Device kind="SYSTEM DIAGRAM" beh="4 interventions × staff moments · assembles on scroll" note="art-free — my own connector map, not the mural" ratio="2.6 / 1" />
           <p className={styles.dive}>dive into the process ↓</p>
           <Note>IMMERSION LAYER · the single hook</Note>
         </Reveal>
       </section>
 
-      {/* ── PROCESS — the rail appears HERE and sticks (the designer presenting) ── */}
+      {/* ── PROCESS — the rail appears HERE and sticks ── */}
       <div className={styles.processWrap}>
         <nav className={styles.rail} aria-label="Case study sections">
           <ol>
@@ -175,124 +178,134 @@ export default function GroundswellSpine() {
         </nav>
 
         <main className={styles.main}>
-        {/* ── FRAME — first-person way-in + orientation (fast facts) ── */}
-        <section id="overview" ref={set('overview')} className={styles.beat}>
-          <Reveal as="p" className={styles.beatKicker}>The process</Reveal>
-          <Statement>[Your way-in — one first-person line. From your drafted story: “I come from a long line of healers…”]</Statement>
-          <Reveal as="p" className={styles.lead}>[Standfirst — your role + the throughline, 1–2 sentences, first person.]</Reveal>
-          <Reveal className={styles.orient}>
-            <div><span className={styles.oK}>Role</span><span className={styles.oV}>Participatory research · Co-design · Copywriting · Coordination · Donor outreach</span></div>
-            <div><span className={styles.oK}>Timeline</span><span className={styles.oV}>15-wk research + 10-wk production · live pilot</span></div>
-            <div><span className={styles.oK}>Outcome</span><span className={styles.oV}>12-month pilot, launched Oct 2025</span></div>
-          </Reveal>
-          <Reveal className={styles.statRow}>
-            {[['256', 'pod visits'], ['570', 'engagement points'], ['$30k+', 'donated']].map(([n, c]) => (
-              <div key={c} className={styles.stat}><span className={styles.statNum}>{n}</span><span className={styles.statCap}>{c}</span></div>
-            ))}
-          </Reveal>
-          <Note>SKIM LAYER · orientation in 25 seconds</Note>
-        </section>
+          {/* ── FRAME — two-column masthead: personal statement + way-in | meta panel ── */}
+          <section id="overview" ref={set('overview')} className={`${styles.beat} ${styles.mast}`}>
+            <div className={styles.mastMain}>
+              <Reveal as="p" className={styles.beatKicker}>The process</Reveal>
+              <Statement>I helped design Groundswell <em>with</em> the people it serves: a connected system of emotional support for oncology staff.</Statement>
+              <Reveal as="p" className={styles.lead}>
+                I come from a long line of healers, educators, and innovators. That is why I went back to grad school for design, and why I took Professor Kristin Hughes’ co-design course, <em>Designing with CARE</em>. Within minutes of speaking with the staff, I knew we were cut from the same cloth.
+              </Reveal>
+              <Reveal>
+                <Expand summary="More on how I got here →">
+                  Stepping into the oncology department healed something in me. I have had a fear of death since I was ten, and I have always been drawn to the depths of the human experience. It started as a class project, one that would only amount to a final pitch. But I felt my marketing skills could at least get this department a donated pod, a temporary solution to give them respite. I did not anticipate that securing that donation would meet a perfectly timed grant, and the project would leave the classroom and become real.
+                </Expand>
+              </Reveal>
+            </div>
+            <Reveal as="aside" className={styles.mastAside}>
+              <dl className={styles.meta}>
+                <div><dt>Role</dt><dd>Participatory research · Co-design facilitation · Copywriting · Coordination · Donor outreach</dd></div>
+                <div><dt>Timeline</dt><dd>15-wk research + 10-wk production · ongoing pilot</dd></div>
+                <div><dt>Outcome</dt><dd>12-month pilot, launched Oct 2025</dd></div>
+              </dl>
+              <div className={styles.metaStats}>
+                {[['256', 'pod visits'], ['570', 'engagement points'], ['$30k+', 'donated']].map(([n, c]) => (
+                  <div key={c} className={styles.stat}><span className={styles.statNum}>{n}</span><span className={styles.statCap}>{c}</span></div>
+                ))}
+              </div>
+              <Note>SKIM LAYER · what it is, my role, the result</Note>
+            </Reveal>
+          </section>
 
-        {/* ── SENSE · 01 — The Void ── */}
-        <section id="sense" ref={set('sense')} className={styles.beat}>
-          <Reveal as="p" className={styles.beatKicker}>Sense · 01</Reveal>
-          <Statement>[Statement — the problem in one line: caregiver grief is systemic, not individual]</Statement>
-          <Reveal as="p" className={styles.body}>[2–3 sentences, first person: what you went looking for and the turn that made co-design the answer.]</Reveal>
+          {/* ── SENSE · 01 — The Void (margin-label walkthrough) ── */}
+          <section id="sense" ref={set('sense')} className={styles.beat}>
+            <Reveal as="p" className={styles.beatKicker}>Sense · 01</Reveal>
+            <Statement>Burnout on the floor wasn’t a personal failure. It was <em>systemic</em>.</Statement>
 
-          {/* method strip — research is her specialty; documented, not buried */}
-          <Reveal className={styles.methodStrip}>
-            <Note>METHOD · research as reasoning · expand each</Note>
-            <div className={styles.chips}>
-              {['Shadowing & interviews', 'Women in White Coats', 'Nourishing the Flower', 'Grief Workshop'].map((m, i) => (
-                <Expand key={m} summary={`${i + 1}. ${m}`}>[Method card: what it was · why · what it surfaced.]</Expand>
+            <Step label="What I walked into" say="A windowless unit, cramped desks, constant interruption. Staff skipping meals, saving their tears for the car ride home, attending funerals alone. Over one in five healthcare workers has experienced PTSD, and most carry it with nowhere to put it." />
+
+            <Step label="How I worked" say="Over fifteen weeks I embedded with the gynecologic oncology staff: shadowing shifts, interviewing across roles, and facilitating participatory workshops designed to surface what people often couldn’t say out loud.">
+              <div className={styles.chips}>
+                <Expand summary="1. Shadowing & interviews">Eight staff across roles. I observed the environment and sat with people in quiet moments, hearing how grief management varies from person to person.</Expand>
+                <Expand summary="2. Women in White Coats">With CancerBridges, generative research with female oncology leaders, who added their thoughts to an orchid poster on balancing compassion and self-care.</Expand>
+                <Expand summary="3. Nourishing the Flower">Staff used nature metaphors to name the “nutrients” and “root causes” of a nourished workplace. Recognition, environment, and team culture kept surfacing.</Expand>
+                <Expand summary="4. Grief Workshop">A container for vulnerability: a trauma-responsive grounding exercise, a soft object to hold, and scenario-based discussion of how to support a struggling teammate.</Expand>
+              </div>
+              <Device kind="SIGNATURE METHOD — Grief Workshop" beh="one method shown in depth" note="trauma-responsive container · scenario discussion" ratio="2.6 / 1" />
+            </Step>
+
+            <Step label="What I heard" say="Part of what healed me in working with oncology staff was feeling connected to others who carry contradicting, complex emotional experiences with grace, who find their way back to gratitude even when they are also devastated.">
+              <blockquote className={styles.quote}>“A special person can do this work forever, a good person can do it for a little while, most people couldn’t do it for a day.”<span className={styles.quoteAttr}>— Oncology staff</span></blockquote>
+            </Step>
+
+            <Step label="What it told me" say="Three patterns held across everything I heard:">
+              <ol className={styles.insights}>
+                <li><b>Recognition</b> — feeling appreciated and acknowledged</li>
+                <li><b>Environment</b> — space and resources to restore</li>
+                <li><b>Culture</b> — shared purpose and team care</li>
+              </ol>
+              <p className={styles.reframe}>They pointed to what we came to call <em>The Void</em>: the unspoken weight staff carry when patient-centered systems neglect the people giving the care. So the thesis became simple. Don’t add more. Make space for what was already trying to surface.</p>
+            </Step>
+          </section>
+
+          {/* ── WEAVE · 02 — the system map (asset interactions) ── */}
+          <section id="weave" ref={set('weave')} className={styles.beat}>
+            <Reveal as="p" className={styles.beatKicker}>Weave · 02</Reveal>
+            <Statement>I shaped what we heard into <em>four interventions that work as one system</em>.</Statement>
+
+            <Step label="The system" say="Everything pointed to the moments where support could land: arriving at work, taking a break, a patient loss, a hard day, a one-on-one. I helped translate the patterns into four connected interventions, each meeting staff in one of those moments rather than a single fix.">
+              <Device kind="SYSTEM MAP" beh="interventions × staff moments · tap a node to expand" note="the asset interactions — the hook’s handoff (art-free)" ratio="2.2 / 1" />
+            </Step>
+
+            <Reveal as="p" className={styles.bandLabel}>What I heard → what we made</Reveal>
+            <div className={styles.pairs}>
+              <Pair insight="Staff feared retaliation for showing feelings" move="Art Wall — anonymous, collective voice" expand="A community wall for anonymous shared expression across the full spectrum of oncology experience, giving public, collective voice to the care community." />
+              <Pair insight="“They save their tears for the car ride home”" move="Restorative Pod — real space to decompress" expand="A dedicated space for emotional decompression, nestled in a former phone-booth nook. The message: emotional labor is real work deserving of real space." />
+              <Pair insight="Grief includes contradictory, complex emotions" move="Reflection Cards — validation + a somatic exercise" expand="My own healing journey led me to somatics and nervous-system approaches, and I wanted to channel that into the content. Each card starts with validation, then invites a simple exercise. I kept the language approachable so any experience level could engage." />
+              <Pair insight="A nurse had already built a compassionate death-notice" move="CTB email — honor and amplify, don’t replace" expand="What looked like a cold clinical protocol was a staff-created act of compassion. That shifted our whole approach: from “the system failed you” to “you already built a culture of care.”" />
+            </div>
+          </section>
+
+          {/* ── SHAPE · 03 — making it real ── */}
+          <section id="shape" ref={set('shape')} className={styles.beat}>
+            <Reveal as="p" className={styles.beatKicker}>Shape · 03</Reveal>
+            <Statement>From concept to an <em>installed pilot</em> in ten weeks.</Statement>
+
+            <Reveal as="p" className={styles.lead}>Grant funding and donations in hand, our team of three had ten weeks to turn a high-fidelity concept into something real on the floor.</Reveal>
+            <Timeline />
+
+            <Reveal as="p" className={styles.bandLabel}>The calls that mattered</Reveal>
+            <div className={styles.pairs}>
+              <Pair insight="“Grief” narrowed it — staff named hope, joy, resilience too" move="Shifted the whole project to “restoration”" expand="Our tagline evolved from “Making Space for Grief, Together” to “Making Space to Restore, Together.” The shift permeated every component. Attunement to staff wisdom over our first instinct." />
+              <Pair insight="Admin wanted a key-card system to monitor pod access" move="A permeable acrylic facade — “trust, not surveillance”" expand="Care must include the freedom to pause without guilt. The final design signals use with subtle LED light instead of monitoring it. A constraint turned into a values stance." />
+            </div>
+
+            <Step label="What I brought" say="I led donor outreach and secured the assets and partnerships: the pod itself, the woodworking added to it, the sensor within it, the ceramic finger labyrinths, and the Schlage door locks. It was my meditation and shadow-work teacher, Catherine Liggett, who volunteered to co-edit, author, and record the meditations used in the study. I drafted first-round copy for nearly all of the project, co-led playtesting, helped with build and installation, and (working mostly remote) ran project coordination, documentation, and strategy." />
+          </section>
+
+          {/* ── CLOSE — outcome, validation, reflection, next ── */}
+          <section id="close" ref={set('close')} className={styles.beat}>
+            <Reveal as="p" className={styles.beatKicker}>Outcome</Reveal>
+            <Statement>Installed, and live as a <em>12-month study</em>.</Statement>
+            <Reveal className={styles.statBand}>
+              {[['570', 'engagement points'], ['207', 'emotion responses'], ['256', 'pod visits'], ['107', 'meditation views']].map(([n, c]) => (
+                <div key={c} className={styles.statBig}><span className={styles.statBigNum}>{n}</span><span className={styles.statBigCap}>{c}</span></div>
               ))}
-            </div>
-            <Device kind="SIGNATURE METHOD — Grief Workshop" beh="one method gets a visible moment" note="trauma-responsive container · scenario discussion" ratio="2.2 / 1" />
-          </Reveal>
+            </Reveal>
+            <Reveal as="p" className={styles.lead}>Minimum baselines from the first four months; our methods are designed to undercount rather than overcount. The qualitative richness, alongside consistent pod usage, suggests meaningful adoption.</Reveal>
 
-          <Reveal as="blockquote" className={styles.quote}>“A special person can do this work forever, a good person can do it for a little while, most people couldn’t do it for a day.”<span className={styles.quoteAttr}>— Oncology staff</span></Reveal>
+            <blockquote className={styles.quoteWide}>“Caring for people means seeing them as whole, complex, and beautiful human beings, not just as patients in need of medicine or surgery. Healing begins with caring for the caregivers.”<span className={styles.quoteAttr}>— Dr. Sarah Taylor, Gynecologic Oncology, UPMC</span></blockquote>
 
-          {/* named insights — the ❗ side of the map */}
-          <Reveal className={styles.insightsRow}>
-            <Note>THE THREE INSIGHTS (named, not implied)</Note>
-            <ol className={styles.insights}>
-              <li><b>Recognition</b> — feeling appreciated and acknowledged</li>
-              <li><b>Environment</b> — space and resources to restore</li>
-              <li><b>Culture</b> — shared purpose and team care</li>
-            </ol>
-          </Reveal>
-          <Reveal as="p" className={styles.reframe}>[The reframe — “The Void”: create space for what was already trying to surface, in one line.]</Reveal>
-        </section>
+            <Reveal className={styles.reflect}>
+              <div>
+                <p className={styles.reflectK}>What I learned</p>
+                <p className={styles.reflectV}>Groundswell gave me a strong belief in co-design and generative methodology: the power of relational practice, and the role of the designer as a facilitator of existing wisdom, a connector across scales, and a translator between stakeholders.</p>
+              </div>
+              <div>
+                <p className={styles.reflectK}>What I’d do differently</p>
+                <p className={styles.reflectV}>[LORIN TO WRITE — candid growth, 1–2 honest lines. The one piece every hiring manager looks for.]</p>
+              </div>
+            </Reveal>
 
-        {/* ── WEAVE · 02 — the system map (asset interactions) ── */}
-        <section id="weave" ref={set('weave')} className={styles.beat}>
-          <Reveal as="p" className={styles.beatKicker}>Weave · 02</Reveal>
-          <Statement>[Statement — four interventions, one connected system]</Statement>
-          <Device kind="SYSTEM MAP" beh="interventions × staff moments · tap a node to expand" note="the asset interactions — the hook’s handoff (art-free)" ratio="2 / 1" />
-          <Note>each intervention = ❗insight → ⭐intervention · detail behind expand</Note>
-          <div className={styles.pairs}>
-            <Pair insight="Staff feared retaliation for showing feelings" move="Art Wall — anonymous, collective voice" expand="[Art Wall detail: documentary photo + Carolyn Gavin credit. Art-free in main flow.]" />
-            <Pair insight="“They save their tears for the car ride home”" move="Restorative Pod — real space to decompress" expand="[Pod detail: meditation library (device-frame video), finger labyrinths, the NookPod donation.]" />
-            <Pair insight="Grief includes contradictory, complex emotions" move="Reflection Cards — validation + a somatic exercise" expand="[Card detail: your copywriting as type — feeling · validation · somatic cue. The card faces are art; the WRITING is yours.]" />
-            <Pair insight="A nurse had already built a compassionate death-notice" move="CTB email — honor and amplify, don’t replace" expand="[CTB detail: before/after of the notification; the reframe from ‘the system failed you’ to ‘you built a culture of care’.]" />
-          </div>
-        </section>
+            <Reveal as="p" className={styles.next}>Next: a research paper on “resonance” in review · the study completes July 2026 · pursuing funding to expand to other hospital settings.</Reveal>
 
-        {/* ── SHAPE · 03 — making it real ── */}
-        <section id="shape" ref={set('shape')} className={styles.beat}>
-          <Reveal as="p" className={styles.beatKicker}>Shape · 03</Reveal>
-          <Statement>[Statement — concept to installation in ten weeks]</Statement>
-          <Timeline />
+            <Reveal className={styles.credits}>
+              <Note>CREDITS · named authorship + inline attribution</Note>
+              <p>Role ledger (me + team, named) · Artwork Carolyn Gavin · Photography Kevin Lorenzi · → Read the full documentation · → Read the CMU feature</p>
+            </Reveal>
+          </section>
 
-          <div className={styles.pairs}>
-            <Pair insight="“Grief” narrowed it — staff named hope, joy, resilience too" move="Shifted the whole project to “restoration”" expand="[Language shift: tagline ‘Making Space for Grief’ → ‘Making Space to Restore, Together’. Attunement to staff wisdom.]" />
-            <Pair insight="Admin wanted a key-card system to monitor pod access" move="Permeable acrylic facade — “trust, not surveillance”" expand="[The constraint-turned-asset: LED presence cues, no monitoring. A values stance, your call.]" />
-          </div>
-
-          {/* what I brought — the role signal teammates can't claim */}
-          <Reveal className={styles.role}>
-            <Note>WHAT I BROUGHT · first person, specific</Note>
-            <p>[I led donor outreach and secured the pod itself, the locks, the labyrinths, the sensors; first-round copy across the project; the meditations via my own teacher; co-led playtesting; build, install, and remote coordination.]</p>
-          </Reveal>
-
-          <Reveal className={styles.statRow}>
-            {[['30', 'testers before install'], ['3', 'changes that shipped']].map(([n, c]) => (
-              <div key={c} className={styles.stat}><span className={styles.statNum}>{n}</span><span className={styles.statCap}>{c}</span></div>
-            ))}
-          </Reveal>
-        </section>
-
-        {/* ── CLOSE — outcome, validation, reflection (learned + would differently), next ── */}
-        <section id="close" ref={set('close')} className={styles.beat}>
-          <Reveal as="p" className={styles.beatKicker}>Outcome</Reveal>
-          <Statement>[Statement — installed, and live as a 12-month pilot]</Statement>
-          <Reveal className={styles.statRowBig}>
-            {[['570', 'engagement points'], ['207', 'emotion responses'], ['256', 'pod visits'], ['107', 'meditation views']].map(([n, c]) => (
-              <div key={c} className={styles.statBig}><span className={styles.statBigNum}>{n}</span><span className={styles.statBigCap}>{c}</span></div>
-            ))}
-          </Reveal>
-          <Reveal as="blockquote" className={styles.quote}>[One stakeholder quote — Dr. Sarah Taylor — as external validation.]</Reveal>
-
-          <Reveal className={styles.reflect}>
-            <div>
-              <p className={styles.reflectK}>What I learned</p>
-              <p className={styles.reflectV}>[Resonance: Presence · Attunement · Harmonization — your belief in co-design, in your own words.]</p>
-            </div>
-            <div>
-              <p className={styles.reflectK}>What I’d do differently</p>
-              <p className={styles.reflectV}>[LORIN TO WRITE — candid growth, 1–2 honest lines. The one piece every hiring manager looks for.]</p>
-            </div>
-          </Reveal>
-
-          <Reveal as="p" className={styles.next}>Next: research paper on “resonance” in review · study completes July 2026 · pursuing funding to expand.</Reveal>
-
-          <Reveal className={styles.credits}>
-            <Note>CREDITS · named authorship + inline attribution</Note>
-            <p>Role ledger (you + team, named) · Artwork Carolyn Gavin · Photography Kevin Lorenzi · → Read the full documentation · → Read the CMU feature</p>
-          </Reveal>
-        </section>
-
-        <footer className={styles.end}>end of spine · depth lives behind the expands + the linked full record</footer>
+          <footer className={styles.end}>end of spine · depth lives behind the expands + the linked full record</footer>
         </main>
       </div>
     </div>
