@@ -220,7 +220,7 @@
 .dive {
   position: absolute;
   z-index: 4;
-  bottom: 6vh;
+  bottom: var(--space-md);
   left: 50%;
   transform: translateX(-50%);
   margin: 0;
