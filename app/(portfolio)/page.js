@@ -311,7 +311,7 @@ export default function Home() {
         />
       </div>
 
-      <section className={styles.aboutWrap}>
+      <section id="about" className={styles.aboutWrap}>
         <AboutSection />
       </section>
     </>

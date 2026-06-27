@@ -139,13 +139,81 @@
 }
 
 .location {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xxs);
   font-family: var(--font-body);
   font-size: var(--text-body-small);
   font-weight: var(--weight-label);
   letter-spacing: 0.04em;
   text-transform: uppercase;
   color: var(--color-ink-faint);
-  margin: 0;
+  margin: var(--space-xxs) 0 0;
+}
+
+.locationIcon {
+  width: 13px;
+  height: 13px;
+  flex-shrink: 0;
+  /* Optical: the pin's visual mass sits low — nudge up to sit on the cap line. */
+  margin-top: -1px;
+}
+
+.education {
+  font-family: var(--font-body);
+  font-size: var(--text-body-small);
+  font-weight: var(--weight-body);
+  color: var(--color-ink-light);
+  margin: var(--space-xxs) 0 0;
+}
+
+.bylineLinks {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  margin-top: var(--space-xxs);
+}
+
+.bylineLink {
+  font-family: var(--font-body);
+  font-size: var(--text-body-small);
+  font-weight: var(--weight-label);
+  letter-spacing: 0.02em;
+  color: var(--color-ink);
+  text-decoration: none;
+  padding-bottom: 2px;
+  border-bottom: 1px solid var(--color-ink-faint);
+  transition: border-color var(--motion-fast) var(--ease-out),
+    color var(--motion-fast) var(--ease-out);
+}
+
+@media (hover: hover) {
+  .bylineLink:hover {
+    color: var(--color-ink);
+    border-bottom-color: var(--color-ink);
+  }
+}
+
+.bylineLink:focus-visible {
+  outline: 2px solid var(--color-ink);
+  outline-offset: 3px;
+  border-radius: var(--radius-sm);
+}
+
+.bylineLinkDisabled {
+  font-family: var(--font-body);
+  font-size: var(--text-body-small);
+  font-weight: var(--weight-label);
+  letter-spacing: 0.02em;
+  color: var(--color-ink-light);
+  opacity: 0.4;
+  cursor: default;
+}
+
+.bylineLinkSep {
+  color: var(--color-ink-faint);
+  font-size: var(--text-body-small);
+  line-height: 1;
 }
 
 /* ===========================================
