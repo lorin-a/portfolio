@@ -219,6 +219,10 @@ export default function AboutSection() {
           duration: 1.0,
           ease: 'power2.out',
         })
+        // Boundary-crossing trigger, not an area ratio: threshold 0.55
+        // could go unsatisfied and leave the photo clipped shut. threshold 0
+        // + a negative bottom rootMargin fires the instant the photo rises
+        // past the 80% line — reliable, and still in the gaze.
         const photoObserver = new IntersectionObserver(
           ([entry]) => {
             if (entry.isIntersecting) {
@@ -226,7 +230,7 @@ export default function AboutSection() {
               photoObserver.disconnect()
             }
           },
-          { threshold: 0.55 }
+          { threshold: 0, rootMargin: '0px 0px -20% 0px' }
         )
         photoObserver.observe(photoInnerRef.current)
       }
