@@ -181,23 +181,26 @@ function Device({ kind, beh, ratio = '16 / 9', note }) {
   )
 }
 
-/* interactive system map — demonstrates systems thinking + information architecture.
-   Hover/focus a moment → the interventions that answer it light up; hover an
-   intervention → its moments + its ❗→⭐ surface. (Connections illustrative until
-   wired to her real Figma connector map.) */
+/* interactive system map — the Weave synthesis, on her real Figma connector
+   geometry (1736×1080). Her connector arrows draw on as the resting substrate;
+   hover/focus a moment → the interventions that answer it light up; hover an
+   intervention → its moments + its ❗→⭐ surface. Coordinates are the normalized
+   node/pill centres from her export (matching GroundswellHero's CX/CY, PX/PY). */
+const FRAME_W = 1736
+const FRAME_H = 1080
 const SM_MOMENTS = [
-  { id: 'arrive', label: 'Arrive', full: 'arrive at work', x: 18, y: 8 },
-  { id: 'break', label: 'Break', full: 'take a break', x: 50, y: 8 },
-  { id: 'leave', label: 'Leave', full: 'leave work', x: 82, y: 8 },
-  { id: 'loss', label: 'Patient loss', full: 'a patient loss', x: 18, y: 48 },
-  { id: 'hard', label: 'Hard day', full: 'a hard day', x: 50, y: 48 },
-  { id: 'meeting', label: '1:1', full: 'a one-on-one', x: 82, y: 48 },
+  { id: 'arrive', label: 'Arrive', full: 'arrive at work', x: 12.20, y: 5.98 },
+  { id: 'break', label: 'Break', full: 'take a break', x: 50.00, y: 5.98 },
+  { id: 'leave', label: 'Leave', full: 'leave work', x: 87.70, y: 5.98 },
+  { id: 'loss', label: 'Patient loss', full: 'a patient loss', x: 12.20, y: 94.02 },
+  { id: 'hard', label: 'Hard day', full: 'a hard day', x: 50.00, y: 94.02 },
+  { id: 'meeting', label: '1:1', full: 'a one-on-one', x: 87.70, y: 94.02 },
 ]
 const SM_NODES = [
-  { id: 'ctb', label: 'CTB', full: 'CTB Email', x: 15, y: 28, insight: 'a nurse had already built a compassionate death-notice', move: 'honor and amplify what was already there' },
-  { id: 'pod', label: 'Pod', full: 'Restorative Pod', x: 38, y: 28, insight: '“they save their tears for the car ride home”', move: 'a real space to decompress' },
-  { id: 'wall', label: 'Wall', full: 'Art Wall', x: 62, y: 28, insight: 'staff feared retaliation for showing feelings', move: 'anonymous, collective voice' },
-  { id: 'cards', label: 'Cards', full: 'Reflection Cards', x: 85, y: 28, insight: 'grief includes contradictory emotions', move: 'validation + a somatic exercise' },
+  { id: 'ctb', label: 'CTB', full: 'CTB Email', x: 12.30, y: 47.03, insight: 'a nurse had already built a compassionate death-notice', move: 'honor and amplify what was already there' },
+  { id: 'pod', label: 'Pod', full: 'Restorative Pod', x: 37.45, y: 47.03, insight: '“they save their tears for the car ride home”', move: 'a real space to decompress' },
+  { id: 'wall', label: 'Wall', full: 'Art Wall', x: 62.61, y: 47.03, insight: 'staff feared retaliation for showing feelings', move: 'anonymous, collective voice' },
+  { id: 'cards', label: 'Cards', full: 'Reflection Cards', x: 87.77, y: 47.03, insight: 'grief includes contradictory emotions', move: 'validation + a somatic exercise' },
 ]
 const SM_LINKS = [
   ['arrive', 'pod'], ['arrive', 'wall'],
@@ -207,12 +210,32 @@ const SM_LINKS = [
   ['hard', 'pod'], ['hard', 'cards'], ['hard', 'wall'],
   ['meeting', 'cards'], ['meeting', 'wall'],
 ]
+const SM_PT = (id) => {
+  const m = SM_MOMENTS.find((x) => x.id === id) || SM_NODES.find((x) => x.id === id)
+  return { x: (m.x / 100) * FRAME_W, y: (m.y / 100) * FRAME_H }
+}
 
-function SystemMap() {
+function SystemMap({ connectorsSvg }) {
   const [sel, setSel] = useState(null)
   const [locked, setLocked] = useState(false)
+  const [drawn, setDrawn] = useState(false)
+  const mapRef = useRef(null)
+
+  // her connector arrows draw on once, when the map enters view (play-once)
+  useEffect(() => {
+    const el = mapRef.current
+    if (!el) return
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) { setDrawn(true); return }
+    const obs = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) { setDrawn(true); obs.disconnect() }
+    }, { threshold: 0.35 })
+    obs.observe(el)
+    return () => obs.disconnect()
+  }, [])
+
   const neigh = (id) => SM_LINKS.filter((l) => l.includes(id)).map((l) => (l[0] === id ? l[1] : l[0]))
   const litSet = sel ? new Set([sel, ...neigh(sel)]) : null
+  const litLinks = sel ? SM_LINKS.filter((l) => l.includes(sel)) : []
   const dim = (id) => (litSet && !litSet.has(id) ? styles.smapDim : '')
   const enter = (id) => { if (!locked) setSel(id) }
   const leave = () => { if (!locked) setSel(null) }
@@ -235,19 +258,25 @@ function SystemMap() {
   return (
     <Reveal className={styles.smapWrap}>
       <Note>Hover a moment or an intervention</Note>
-      <div className={styles.smap}>
-        <svg className={styles.smapSvg} viewBox="0 0 100 56" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
-          {SM_LINKS.map((l, i) => {
-            const m = SM_MOMENTS.find((x) => x.id === l[0])
-            const n = SM_NODES.find((x) => x.id === l[1])
-            return <line key={i} x1={m.x} y1={m.y} x2={n.x} y2={n.y} className={`${styles.smapLine} ${sel && l.includes(sel) ? styles.smapLineLit : ''}`} />
+      <div ref={mapRef} className={`${styles.smap} ${sel ? styles.smapActive : ''}`}>
+        {/* her real connector geometry — drawn on, the resting substrate */}
+        <div
+          className={`${styles.smapDrawn} ${drawn ? styles.smapDrawnIn : ''}`}
+          aria-hidden="true"
+          dangerouslySetInnerHTML={{ __html: connectorsSvg }}
+        />
+        {/* lit overlay — the active element's connections, in the act colour */}
+        <svg className={styles.smapLit} viewBox={`0 0 ${FRAME_W} ${FRAME_H}`} preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+          {litLinks.map((l, i) => {
+            const a = SM_PT(l[0]); const b = SM_PT(l[1])
+            return <line key={i} x1={a.x} y1={a.y} x2={b.x} y2={b.y} className={styles.smapLitLine} />
           })}
         </svg>
         {SM_MOMENTS.map((m) => (
-          <button key={m.id} className={`${styles.smapPill} ${dim(m.id)} ${sel === m.id ? styles.smapOn : ''}`} style={{ left: `${m.x}%`, top: `${(m.y / 56) * 100}%` }} {...btnProps(m.id)}>{m.label}</button>
+          <button key={m.id} className={`${styles.smapPill} ${dim(m.id)} ${sel === m.id ? styles.smapOn : ''}`} style={{ left: `${m.x}%`, top: `${m.y}%` }} {...btnProps(m.id)}>{m.label}</button>
         ))}
         {SM_NODES.map((n) => (
-          <button key={n.id} className={`${styles.smapNode} ${dim(n.id)} ${sel === n.id ? styles.smapOn : ''}`} style={{ left: `${n.x}%`, top: `${(n.y / 56) * 100}%` }} {...btnProps(n.id)}>{n.label}</button>
+          <button key={n.id} className={`${styles.smapNode} ${dim(n.id)} ${sel === n.id ? styles.smapOn : ''}`} style={{ left: `${n.x}%`, top: `${n.y}%` }} {...btnProps(n.id)}>{n.label}</button>
         ))}
       </div>
       <p className={styles.smapCaption}>{caption}</p>
@@ -255,7 +284,7 @@ function SystemMap() {
   )
 }
 
-export default function GroundswellSpine() {
+export default function GroundswellSpine({ connectorsSvg }) {
   const [active, setActive] = useState('overview')
   const secs = useRef({})
 
@@ -373,7 +402,6 @@ export default function GroundswellSpine() {
             <Statement>I shaped what we heard into <em>four interventions that work as one system</em>.</Statement>
 
             <Step label="The system" say="Everything pointed to the moments where support could land: arriving at work, taking a break, a patient loss, a hard day, a one-on-one. I helped translate the patterns into four connected interventions, each meeting staff in one of those moments rather than a single fix." />
-            <SystemMap />
 
             <Reveal as="p" className={styles.bandLabel}>What I heard → what we made</Reveal>
             <div className={styles.pairs}>
@@ -382,6 +410,9 @@ export default function GroundswellSpine() {
               <Pair insight="Grief includes contradictory, complex emotions" move="Reflection Cards: validation and a somatic exercise" detail="My own healing journey led me to somatics and nervous-system approaches, and I wanted to channel that into the content. Each card starts with validation, then invites a simple exercise. I kept the language approachable so any experience level could engage." img="gs-cards" alt="A staff member holds a fanned deck of reflection cards, one open to the “vulnerable” card." credit="Artwork Carolyn Gavin · Photography Kevin Lorenzi" />
               <Pair insight="A nurse had already built a compassionate death-notice" move="CTB email: honor and amplify what was already there" detail="What looked like a cold clinical protocol was a staff-created act of compassion. That shifted our whole approach: from “the system has let you down” to “you have already created a beautiful culture of care.”" img="gs-ctb-email" alt="A staff member composes the “Call to the Bedside” sympathy notice on a laptop, the template bordered by the floral art." credit="Artwork Carolyn Gavin · Photography Kevin Lorenzi" />
             </div>
+
+            <Reveal as="p" className={styles.bandLabel}>How they connect</Reveal>
+            <SystemMap connectorsSvg={connectorsSvg} />
           </section>
 
           {/* ── SHAPE · 03 — making it real ── */}
@@ -394,8 +425,8 @@ export default function GroundswellSpine() {
 
             <Reveal as="p" className={styles.bandLabel}>The calls that mattered</Reveal>
             <div className={styles.pairs}>
-              <Pair insight="“Grief” narrowed it: staff named hope, joy, resilience too" move="Shifted the whole project to “restoration”" detail="Our tagline evolved from “Making Space for Grief, Together” to “Making Space to Restore, Together.” The shift permeated every component. Attunement to staff wisdom over our first instinct." />
-              <Pair insight="Admin wanted a key-card system to monitor pod access" move="A permeable acrylic facade: “trust, not surveillance”" detail="Care must include the freedom to pause without guilt. The final design signals use with subtle LED light instead of monitoring it. A constraint turned into a values stance." />
+              <Pair insight="“Grief” narrowed it: staff named hope, joy, resilience too" move="Shifted the whole project to “restoration”" detail="Our tagline evolved from “Making Space for Grief, Together” to “Making Space to Restore, Together.” The shift permeated every component. Attunement to staff wisdom over our first instinct." img="gs-workshop-flower-02" alt="A completed “Nourishing the Flower” worksheet — a hand-colored tulip with roots, where a staff member wrote what makes work restorative: going above and beyond for each patient, positive energy, being part of a great team." />
+              <Pair insight="Admin wanted a key-card system to monitor pod access" move="A permeable acrylic facade: “trust, not surveillance”" detail="Care must include the freedom to pause without guilt. The final design signals use with subtle LED light instead of monitoring it. A constraint turned into a values stance." img="gs-making-facade" alt="The reflection pod taking shape — its permeable acrylic facade wrapped in floral artwork, fronted by a clear door rather than a closed wall, as a team member presses the top panel into place." credit="Artwork Carolyn Gavin · Photography Kevin Lorenzi" />
             </div>
 
             <Step label="What I brought" say="I led donor outreach and secured the assets and partnerships: the pod itself, the woodworking added to it, the sensor within it, the ceramic finger labyrinths, and the Schlage door locks. It was my meditation and shadow-work teacher, Catherine Liggett, who volunteered to co-edit, author, and record the meditations used in the study. I drafted first-round copy for nearly all of the project, co-led playtesting, helped with build and installation, and (working mostly remote) ran project coordination, documentation, and strategy." />

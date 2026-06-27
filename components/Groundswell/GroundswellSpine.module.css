@@ -288,6 +288,7 @@
 }
 .ledeShot { position: relative; overflow: hidden; background: var(--fill); }
 .ledeShot img { width: 100%; height: 100%; object-fit: cover; object-position: center 40%; display: block; }
+.ledeShot:first-child img { object-position: center 56%; }   /* sit lower so the table — cards + synthesis diagrams laid out — reads */
 .ledeStaff img { object-position: center 33%; }   /* keep the staff + sign framed */
 .ledeShot:first-child {            /* cols 1–8, bleed left to rail, flush to the right photo */
   grid-column: 1 / 9;
@@ -380,12 +381,25 @@
 
 /* ── interactive system map ── */
 .smapWrap { margin: 1.2rem 0 0; }
-.smap { position: relative; width: 100%; max-width: 64rem; aspect-ratio: 100 / 50; margin: 0.6rem 0 0; }
-.smapSvg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
-.smapLine { stroke: var(--ink-faint); stroke-width: 0.3; opacity: 0.3; transition: stroke 0.2s ease, opacity 0.2s ease, stroke-width 0.2s ease; }
-.smapLineLit { stroke: var(--ink); stroke-width: 0.6; opacity: 0.95; }
+.smap { position: relative; width: 100%; max-width: 60rem; aspect-ratio: 1736 / 1080; margin: 0.6rem auto 0; }
+
+/* her real connector arrows — drawn on L→R as the resting substrate */
+.smapDrawn {
+  position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path 1.3s var(--ease-out), opacity 0.3s ease;
+}
+.smapDrawnIn { clip-path: inset(0 0 0 0); }
+.smapDrawn svg { display: block; width: 100%; height: 100%; }
+.smapDrawn path { fill: var(--ink-faint); opacity: 0.5; }
+.smapActive .smapDrawn { opacity: 0.32; }
+
+/* lit overlay — the selected element's connections, in the act colour */
+.smapLit { position: absolute; inset: 0; z-index: 1; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+.smapLitLine { stroke: var(--accent); stroke-width: 4; stroke-linecap: round; opacity: 0.9; }
+
 .smapNode, .smapPill {
-  position: absolute; transform: translate(-50%, -50%);
+  position: absolute; z-index: 2; transform: translate(-50%, -50%);
   padding: 0.4em 0.85em; border-radius: 999px;
   font-family: var(--font-body); font-size: clamp(0.72rem, 1.1vw, 0.92rem);
   line-height: 1; white-space: nowrap; cursor: pointer; background: var(--bg);
@@ -394,12 +408,12 @@
 .smapNode { border: 1.5px solid var(--ink-mute); color: var(--ink); font-weight: 500; }
 .smapPill { border: 1.5px dashed var(--ink-faint); color: var(--ink-mute); }
 .smapDim { opacity: 0.3; }
-.smapOn { border-color: var(--ink); color: var(--ink); background: var(--fill-soft); transform: translate(-50%, -50%) scale(1.06); }
+.smapOn { border-color: var(--accent); color: var(--ink); background: var(--fill-soft); transform: translate(-50%, -50%) scale(1.06); }
 .smapNode.smapOn { box-shadow: 0 2px 12px rgba(0, 0, 0, 0.12); }
 .smapCaption { margin: 1.1rem 0 0; min-height: 3em; max-width: 44rem; font-size: 0.95rem; line-height: 1.5; color: var(--ink-mute); }
 .smapCaption b { color: var(--ink); }
-@media (max-width: 560px) {
-  .smap { aspect-ratio: 100 / 78; }
+@media (prefers-reduced-motion: reduce) {
+  .smapDrawn { clip-path: none; transition: none; }
 }
 
 /* ── slideshow (visible content + obvious controls; no dropdowns) ── */
