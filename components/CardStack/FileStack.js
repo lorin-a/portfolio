@@ -5,6 +5,7 @@ import { gsap } from '@/lib/gsap'
 import { useGSAP } from '@gsap/react'
 import styles from './FileStack.module.css'
 import MobileCardStack from './MobileCardStack'
+import GatedOverlay from './GatedOverlay'
 
 gsap.registerPlugin(useGSAP)
 
@@ -156,6 +157,9 @@ export default function FileStack({
       label: contrib.label || `File ${String(i + 1).padStart(2, '0')}`,
       href: contrib.href || href,
       images,
+      gated: !!contrib.gated,
+      gatedLabel: contrib.gatedLabel,
+      gatedNote: contrib.gatedNote,
     }
   })
 
@@ -422,6 +426,10 @@ export default function FileStack({
               {(() => {
                 const galleryIdx = galleryIndices[i] || 0
                 const current = card.images[galleryIdx] || card.images[0]
+                const mediaClass = `${styles.media} ${card.gated ? styles.mediaGated : ''}`
+                /* `fit: 'cover'` crops a slide to fill the 16:9 frame
+                   (default is contain/letterbox). */
+                const fitStyle = current.fit ? { objectFit: current.fit } : undefined
                 return current.type === 'video' ? (
                   <video
                     key={`v-${i}-${galleryIdx}`}
@@ -432,7 +440,8 @@ export default function FileStack({
                     loop
                     playsInline
                     preload={i === 0 ? 'auto' : 'metadata'}
-                    className={styles.media}
+                    className={mediaClass}
+                    style={fitStyle}
                     aria-label={current.alt}
                   />
                 ) : (
@@ -440,11 +449,17 @@ export default function FileStack({
                     key={`i-${i}-${galleryIdx}`}
                     src={current.src}
                     alt={i === 0 ? current.alt : ''}
-                    className={styles.media}
+                    className={mediaClass}
+                    style={fitStyle}
                     loading={i === 0 && galleryIdx === 0 ? 'eager' : 'lazy'}
                   />
                 )
               })()}
+              {/* Gated: blurred media + lock so the work shows but the
+                  content (real data / licensed art) stays protected. */}
+              {card.gated && (
+                <GatedOverlay label={card.gatedLabel} note={card.gatedNote} />
+              )}
               {/* Image as next-button — only when gallery has more than
                   one image. Sits above the media but BELOW the link. */}
               {isActive && card.images.length > 1 && (
@@ -467,8 +482,8 @@ export default function FileStack({
             </div>
 
             {/* Gallery navigator — only shown when this card is active
-                AND has more than one image. Sits in the cardstock
-                frame below the matte. */}
+                AND has more than one image. Sits in the cardstock frame
+                below the matte. */}
             {isActive && card.images.length > 1 && (
               <div className={styles.galleryNav} aria-label={`${card.label} gallery`}>
                 <button

@@ -38,6 +38,13 @@
   display: block;
 }
 
+/* Gated media: light blur so shape/motion read but content stays
+   illegible. The lock scrim (GatedOverlay) sits on top. */
+.mediaGated {
+  transform: scale(1.04);
+  filter: blur(4px) saturate(0.95);
+}
+
 .dots {
   display: flex;
   gap: 6px;

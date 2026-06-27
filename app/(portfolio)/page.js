@@ -17,19 +17,27 @@ export default function Home() {
           description="A multi-scale design ecology built to support the complex emotional reality of oncology care. Co-designed with healthcare workers."
           contributions={[
             {
-              label: 'Data Visualization',
-              gallery: [
-                { src: cloudVideo(GS_VIDEOS['gs-opener'], 1200), type: 'video', alt: 'Groundswell opener' },
-                { src: cloudVideo(GS_VIDEOS['gs-pod-data'], 1200), type: 'video', alt: 'Groundswell pod data view' },
-              ],
-            },
-            {
               label: 'Experience Design',
               gallery: [
+                { src: cloudVideo(GS_VIDEOS['gs-walkthrough-video'], 1200), type: 'video', alt: 'Walkthrough of the Groundswell installation' },
                 { src: cloudImg(GS_IMAGES['gs-hero'], 1200), type: 'image', alt: 'Groundswell installation in hospital corridor' },
                 { src: cloudImg(GS_IMAGES['gs-artwall'], 1200), type: 'image', alt: 'Groundswell art wall' },
                 { src: cloudImg(GS_IMAGES['gs-pod-detail-02'], 1200), type: 'image', alt: 'Groundswell pod detail' },
                 { src: cloudImg(GS_IMAGES['gs-pod-detail-03'], 1200), type: 'image', alt: 'Groundswell pod detail' },
+              ],
+            },
+            {
+              /* Gated: these screen recordings show real care data + licensed
+                 artwork that can't be public. Rendered blurred behind a lock
+                 (FileStack / MobileCardStack) — the work is visibly there,
+                 the content is protected. gatedLabel/gatedNote tune the copy. */
+              label: 'Data Visualization',
+              gated: true,
+              gatedLabel: 'Confidential',
+              gatedNote: 'Available on request',
+              gallery: [
+                { src: cloudVideo(GS_VIDEOS['gs-opener'], 1200), type: 'video', alt: 'Groundswell data platform (protected preview)' },
+                { src: cloudVideo(GS_VIDEOS['gs-pod-data'], 1200), type: 'video', alt: 'Groundswell pod data view (protected preview)' },
               ],
             },
             {
