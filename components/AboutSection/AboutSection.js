@@ -579,7 +579,40 @@ export default function AboutSection() {
             <div ref={bylineTextRef} className={styles.bylineText}>
               <p className={styles.name}>Lorin Anderberg</p>
               <p className={styles.title}>Designer &amp; Researcher</p>
-              <p className={styles.location}>Based in NYC</p>
+              <p className={styles.education}>MA Design, Carnegie Mellon</p>
+              <div className={styles.bylineLinks}>
+                <a
+                  className={styles.bylineLink}
+                  href="https://www.linkedin.com/in/lorinanderberg/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  LinkedIn
+                </a>
+                <span className={styles.bylineLinkSep} aria-hidden="true">·</span>
+                {/* TODO(Lorin): once your résumé is on Drive, swap this span for
+                   an <a href="DRIVE_URL" target="_blank" rel="noopener noreferrer">
+                   className={styles.bylineLink}> — and wire the matching disabled
+                   Resume in components/Footer/Footer.js at the same time. */}
+                <span className={styles.bylineLinkDisabled}>Resume</span>
+              </div>
+              <p className={styles.location}>
+                <svg
+                  className={styles.locationIcon}
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M12 21s-6-5.686-6-10a6 6 0 1 1 12 0c0 4.314-6 10-6 10z"
+                    stroke="currentColor"
+                    strokeWidth="1.6"
+                    strokeLinejoin="round"
+                  />
+                  <circle cx="12" cy="11" r="2" stroke="currentColor" strokeWidth="1.6" />
+                </svg>
+                NYC
+              </p>
             </div>
           </div>
 
