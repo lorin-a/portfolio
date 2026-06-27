@@ -48,7 +48,7 @@ const SHAPE_BRUSH_PATH = "M107.841 8.56629C104.406 10.6962 104.975 14.9687 102.7
  */
 let instanceCount = 0
 
-export default function ShapeMark({ animate = false, delay = 0, replay = 0, className, onDrawComplete, showBrush = false, color, gradientColors, fillReveal = false, withSpin = true }) {
+export default function ShapeMark({ animate = false, complete = false, delay = 0, replay = 0, className, onDrawComplete, showBrush = false, color, gradientColors, fillReveal = false, withSpin = true }) {
   const [instanceId] = useState(() => ++instanceCount)
   const strokeClipId = `shapeStrokeClip-${instanceId}`
   const brushClipId = `shapeBrushClip-${instanceId}`
@@ -58,12 +58,16 @@ export default function ShapeMark({ animate = false, delay = 0, replay = 0, clas
   const svgRef = useRef(null)
   const brushRef = useRef(null)
   const petalMaskRefs = useRef([])
-  const [brushVisible, setBrushVisible] = useState(false)
-  const [strokeReady, setStrokeReady] = useState(fillReveal)
+  // `complete`: render the finished filled flower immediately — no draw-on,
+  // no spin. Initialises to the same end-state the animation lands on, so a
+  // consumer can show the flower at rest (e.g. a cold-start hero) without
+  // the entrance ceremony.
+  const [brushVisible, setBrushVisible] = useState(complete)
+  const [strokeReady, setStrokeReady] = useState(fillReveal || complete)
   // Once the fill animation lands, drop the mask so the brush renders as
   // plain SVG. Avoids depending on GSAP transforms surviving every later
   // re-render, scroll-timeline tween, or hover rotation.
-  const [filled, setFilled] = useState(false)
+  const [filled, setFilled] = useState(complete)
 
   useEffect(() => {
     if (!animate) return
