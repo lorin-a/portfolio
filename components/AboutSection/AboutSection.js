@@ -203,18 +203,37 @@ export default function AboutSection() {
       gsap.set(cardBodies, { autoAlpha: 0 })
       gsap.set(practiceLabelRef.current, { autoAlpha: 0, y: 16 })
 
-      // ─── Photo iris opens once when the section enters view. Plays at
-      // its own pace, no scrub, no reverse on backscroll.
-      gsap.to(photoInnerRef.current, {
-        clipPath: 'circle(75% at 50% 50%)',
-        duration: 1.2,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: 'top 85%',
-          toggleActions: 'play none none none',
-        },
-      })
+      // ─── Photo iris: reveal when the PHOTO itself is in view, not when
+      // the section edge first enters. The old ScrollTrigger ('top 85%')
+      // fired while the photo was still near the bottom of the viewport, so
+      // the reveal finished as the photo scrolled up past the reading zone
+      // — you'd catch the ring draw but never see the image open unless you
+      // scrolled back up. IntersectionObserver play-once (the pattern the
+      // rest of this section uses, since pin-shifted ScrollTrigger starts
+      // are unreliable here) fires it in the gaze, snappier ease so the
+      // open is witnessed whole.
+      if (photoInnerRef.current) {
+        const photoTl = gsap.timeline({ paused: true })
+        photoTl.to(photoInnerRef.current, {
+          clipPath: 'circle(75% at 50% 50%)',
+          duration: 1.0,
+          ease: 'power2.out',
+        })
+        // Boundary-crossing trigger, not an area ratio: threshold 0.55
+        // could go unsatisfied and leave the photo clipped shut. threshold 0
+        // + a negative bottom rootMargin fires the instant the photo rises
+        // past the 80% line — reliable, and still in the gaze.
+        const photoObserver = new IntersectionObserver(
+          ([entry]) => {
+            if (entry.isIntersecting) {
+              photoTl.play()
+              photoObserver.disconnect()
+            }
+          },
+          { threshold: 0, rootMargin: '0px 0px -20% 0px' }
+        )
+        photoObserver.observe(photoInnerRef.current)
+      }
 
       // ─── Bio cascade: paused timeline played by IntersectionObserver
       // when the section enters view. No scrub, no pin — same model as
