@@ -220,11 +220,20 @@
 .media {
   width: 100%;
   height: 100%;
-  /* Letterbox rather than crop — the matte is a 16:9 frame, and
-     non-16:9 source images (like the brand identity board) should
-     show in full inside the frame. */
-  object-fit: contain;
+  /* Cover — fill the 16:9 frame edge-to-edge, matching the other project
+     previews and meeting the gallery-nav button edges below. A slide can
+     opt back into letterboxing with fit:'contain'. */
+  object-fit: cover;
   display: block;
+}
+
+/* Gated media: light blur so motion/colour and shape read but the content
+   stays illegible. cover + scale keeps edges clean under the blur; the lock
+   scrim (GatedOverlay) sits on top. */
+.mediaGated {
+  object-fit: cover;
+  transform: scale(1.04);
+  filter: blur(4px) saturate(0.95);
 }
 
 /* ===========================================

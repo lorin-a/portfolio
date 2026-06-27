@@ -5,6 +5,7 @@ import { flushSync } from 'react-dom'
 import { gsap } from '@/lib/gsap'
 import { useGSAP } from '@gsap/react'
 import styles from './MobileCardStack.module.css'
+import GatedOverlay from './GatedOverlay'
 
 gsap.registerPlugin(useGSAP)
 
@@ -20,7 +21,12 @@ gsap.registerPlugin(useGSAP)
 export default function MobileCardStack({ slides = [], contributions = [], href }) {
   const images = useMemo(() => {
     const pooled = contributions.flatMap(c =>
-      c.gallery && c.gallery.length > 0 ? c.gallery : []
+      (c.gallery && c.gallery.length > 0 ? c.gallery : []).map(img => ({
+        ...img,
+        gated: !!c.gated,
+        gatedLabel: c.gatedLabel,
+        gatedNote: c.gatedNote,
+      }))
     )
     return pooled.length > 0 ? pooled : slides
   }, [contributions, slides])
@@ -116,7 +122,7 @@ export default function MobileCardStack({ slides = [], contributions = [], href 
               muted
               loop
               playsInline
-              className={styles.media}
+              className={`${styles.media} ${current.gated ? styles.mediaGated : ''}`}
               aria-label={current.alt}
             />
           ) : (
@@ -124,8 +130,12 @@ export default function MobileCardStack({ slides = [], contributions = [], href 
               key={`i-${activeIdx}`}
               src={current.src}
               alt={current.alt || ''}
-              className={styles.media}
+              className={`${styles.media} ${current.gated ? styles.mediaGated : ''}`}
             />
+          )}
+          {/* Gated: blurred media + lock — protected data/art stays hidden. */}
+          {current.gated && (
+            <GatedOverlay label={current.gatedLabel} note={current.gatedNote} />
           )}
         </div>
       </div>
