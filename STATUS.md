@@ -1,21 +1,21 @@
 # Project Status
-### Last updated: 2026-06-26 (case-study spine session)
+### Last updated: 2026-06-26 (case-study consolidation + visual pass)
 
 This is the living status doc for the lorin.work portfolio redesign. Updated at the end of every working session. Detailed in-flight state lives in memory `PROGRESS.md`.
 
 ---
 
-## Right now — Groundswell case-study spine
+## Right now — Groundswell case study (one consolidated page)
 
-The case-study **model is agreed and documented** in `docs/case-study-editorial/CASE_STUDY_PLAYBOOK.md` → **THE SPEC** (structure · voice · the three balances · editorial discipline). Built from a study of four coursemate case studies (Elijah Benzon ×2 incl. the same Groundswell project, Zoe So, Katherine Niu) — notes in `REFERENCES.md` § D.
+The case study is now **one gated page: `/projects/groundswell/hero`** = `GroundswellHero` (cinematic dark hook) + `GroundswellSpine` (light process). The model + voice live in `docs/case-study-editorial/CASE_STUDY_PLAYBOOK.md → THE SPEC`; her origin copy is in `GROUNDSWELL_VOICE_DRAFT.md` (do not re-interview). Full detail in memory `PROGRESS.md → "Groundswell case study — CONSOLIDATED build"`.
 
-**Current artifact = a greyscale SPINE WIREFRAME**, gated at **`/projects/groundswell/spine`** (`components/Groundswell/GroundswellSpine.jsx`). Art-free by design, so it sidesteps the license. The 15-beat outline was cut to **4 content beats** (Hook → Frame → Sense → Weave → Shape → Close) with depth behind expands. Live in it: rail present **only in the process, not the hero**; statement-heading skim layer (read just the rail + headings = the 90-second story); ❗insight→⭐intervention logic; and the **first interactive timeline** (Shape, clickable phases) as proof of "presenting, not pitching."
+**Shipped this session:** consolidated the parallel drafts into one page (retired `GroundswellProcess`/`GroundswellLook` + the `/spine`,`/look` routes); restored the cinematic hook (art-wall → shrink-into-circles → her real `connectors.svg` map → discs) with a smart credit that fades with the artwork; the light process on a **real 12-column grid** (media full-width, text in a readable column, a **full-height vertical timeline rail** set apart by a divider + gap); act color-coding (sage/plum/terracotta, saturated); **no dropdowns** — Sense method **slideshow**, Weave **interactive system map**, Shape **interactive timeline**; **claimable-only outcomes** (study data removed — $30k+, live grant-funded QI study, 30 testers); first documentary photos placed; AA contrast.
 
-**Principle locked — "medium is the message":** the case study must itself demonstrate breaking-down-complex-info. One signature interaction per act (Sense = synthesis-that-builds · Weave = interactive system map · Shape = timeline ✅), never decoration.
+**Next move:** clear the last two **dropdowns** — "More on how I got here" (Frame) + "See how I got there" (interventions) → make visible / preview. **Then:** continue imagery into the Weave interventions + Shape (documentary photos, Carolyn credited where art shows). **Open copy (Lorin owns):** bless the assembled statement headings + write the "what I'd do differently" line.
 
-**Next move:** build the **Weave interactive system map** (the centerpiece — staff-moments × interventions, hover/click ❗→⭐). Then pour real content beat-by-beat (her origin story is already written in `GROUNDSWELL_VOICE_DRAFT.md`) and run the "keep-5" cut as it lands.
+**License (binding):** documentary art in approved context is OK with Carolyn credited inline; no NEW uses (card-flip deck, alterations). The legacy `GroundswellContent.js` build stays gated. See `PROGRESS.md → "Groundswell artwork-license hold"`.
 
-**License note (still binding):** the existing `GroundswellContent.js` build + the mega-hero (`GroundswellHero.jsx`) reproduce Blue Garden and stay **gated** until Carolyn grants written permission. The spine wireframe's art-free, system-diagram hook IS the license-safe direction. See memory `PROGRESS.md` → "Groundswell artwork-license hold" + "Case-study MODEL agreed + SPINE WIREFRAME built."
+**Dev gotcha:** Next `.next` desyncs after rapid edits → stale builds; view in **incognito**, and on stale: kill dev, `rm -rf .next`, restart. Never `npm run build` while `npm run dev` runs.
 
 ---
 

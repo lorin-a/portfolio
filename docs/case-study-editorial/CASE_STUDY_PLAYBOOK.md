@@ -159,6 +159,21 @@ the cut, Lorin approves. Run it every build, every project.
 role (Elijah's gap); **gallery dumps / completeness-for-its-own-sake**; dense dossier
 grids; oversized type; full-bleed everything; reproducing Blue Garden (license).
 
+### E · LOCKED RULES (added 2026-06-26, from the Groundswell build)
+
+- **No dropdowns / disclosure widgets.** All info is immediately visible OR shown via an
+  obvious interactive preview (slideshow, hover-map, clickable timeline). Never `<details>`
+  "click to expand" — it hides the content. (Lorin, explicit.)
+- **Outcomes = claimable only.** Never publish data she can't share (e.g. a live study's
+  engagement metrics). Lead with what she can stand behind: donations secured, grant-funded,
+  launched/installed, team size, paper status.
+- **The grid must use the width.** A real multi-column grid (≈12) where elements occupy
+  different ranges — text holds a readable column, **media goes full-width**, the rail/nav is
+  a visually distinct zone (divider + generous gap). Never crunch everything into one centered
+  column, never constrain all content to a single span.
+- **Colour must actually read.** The V2 palette tokens are muted enough to read as grey at
+  label size; use saturated values when an accent needs to be seen.
+
 ---
 
 ## 1. The core principle (read this first)
