@@ -170,6 +170,14 @@
   white-space: nowrap;
 }
 
+/* SplitText (mask:'chars') collapses the space between "Keep" and
+   "Scrolling"; restore the word gap explicitly. .hWord is added globally to
+   each split word by the SplitText config in HeroScatter — scoped under the
+   local .scrollHint so CSS Modules accepts it (selector must be "pure"). */
+.scrollHint :global(.hWord):not(:last-child) {
+  margin-right: 0.3em;
+}
+
 .arrow {
   width: 24px;
   height: 28px;

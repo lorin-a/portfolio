@@ -267,9 +267,10 @@ export default function HeroScatter() {
       type: 'chars', mask: 'chars', charsClass: 'wChar',
     })
     const hintSplit = SplitText.create(scrollHintRef.current, {
-      /* words,chars (not chars alone) so the space between "Keep" and
-         "Scrolling" survives — char-only + mask collapses it into one run. */
-      type: 'words,chars', mask: 'chars', charsClass: 'hChar',
+      /* words,chars so the words are separate elements; mask:'chars' clips
+         each char for the wipe. The space between words still collapses under
+         the mask, so the gap is restored explicitly via .hWord margin in CSS. */
+      type: 'words,chars', mask: 'chars', charsClass: 'hChar', wordsClass: 'hWord',
     })
     /* Welcome chars start in place (visible). Hint chars start lifted out
        of their mask (below the mask box), so they wipe up into view. */
@@ -288,9 +289,6 @@ export default function HeroScatter() {
        the entrance to its composed end so the scrub never inherits a
        half-bloomed flower. */
 
-    /* Flower is spinnable on hover from the first frame. */
-    flowerHoverable.current = true
-
     /* `intro` is read by the scroll timeline's onUpdate (to snap it done on
        a first scroll), so it must exist before the trigger is built. */
     let intro
@@ -302,16 +300,32 @@ export default function HeroScatter() {
       onComplete: () => {
         introDone.current = true
         document.body.classList.remove('hero-loading')
+        /* Arm hover-spin only AFTER the one-time load spin finishes, so the
+           two can never overlap. */
+        flowerHoverable.current = true
       },
     })
     intro
-      /* The flower blooms — gentle overshoot, the welcoming gesture. */
+      /* First the flower grows into place — gentle overshoot, the hello. */
       .fromTo(
         flower,
         { autoAlpha: 0, scale: 0.72 },
-        { autoAlpha: 1, scale: 1, duration: 0.7, ease: 'back.out(1.5)' },
+        { autoAlpha: 1, scale: 1, duration: 0.9, ease: 'back.out(1.3)' },
         0
       )
+      /* …THEN, once it has settled, a single slow spin (starts as the grow
+         finishes). After the entrance the flower spins solely on hover
+         (gated by flowerHoverable above). */
+      .fromTo(
+        flower,
+        { rotation: 0 },
+        { rotation: 360, duration: 1.2, ease: 'power2.inOut' },
+        0.85
+      )
+      /* …and a little bounce to land — the invitational pulse, just as the
+         spin settles (spin ends ~2.05s). */
+      .to(flower, { scale: 1.15, duration: 0.22, ease: 'power2.out' }, 2.0)
+      .to(flower, { scale: 1, duration: 0.32, ease: 'power1.inOut' }, 2.22)
       /* Welcome + arrow rise softly beneath it. */
       .fromTo(
         arrowRef.current,
@@ -363,7 +377,11 @@ export default function HeroScatter() {
         scrollTrigger: {
           trigger: wrapperRef.current,
           start: 'top top',
-          end: '+=500%',
+          /* Pin length = how much you scroll to form the hero. 500% was too
+             much, 160% felt too fast; ~300% is the middle. With scrub the
+             sentence forms WITH the scroll, so you can never pass it before
+             it's done and scrolling up rewinds it. This is the main pace dial. */
+          end: '+=300%',
           pin: sectionRef.current,
           /* On mobile (touch + iOS Safari address-bar show/hide),
              transform-based pins drift and the section scrolls past
@@ -371,7 +389,10 @@ export default function HeroScatter() {
              entirely. Desktop keeps transform — it's smoother there
              and avoids creating a containing block. */
           pinType: window.matchMedia('(max-width: 768px)').matches ? 'fixed' : 'transform',
-          scrub: 0.8,
+          /* Higher scrub = more smoothing: the timeline keeps catching up
+             for ~1s after you stop, so fast and slow scrolls both play out
+             more evenly. Raise toward 1.5 for a more uniform pace. */
+          scrub: 1,
           /* Welcome → Keep Scrolling crossfade is built into the timeline below
              (search "WELCOME → KEEP SCROLLING SWAP"), so progress drives the swap
              and the hint persists through scatter, fading as gather begins.
@@ -548,6 +569,11 @@ export default function HeroScatter() {
     return () => {
       document.body.classList.remove('hero-loading')
       document.body.style.overflow = ''
+      /* Revert the splits so a remount (React Strict Mode double-invokes
+         effects in dev) re-splits clean text instead of an already-split
+         DOM — otherwise "Welcome" splits twice and renders doubled. */
+      welcomeSplit?.revert()
+      hintSplit?.revert()
     }
   }, { scope: heroRef })
 
