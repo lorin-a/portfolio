@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef, useState, useEffect, useCallback } from 'react'
+import { useRef, useState, useEffect } from 'react'
 import { gsap, ScrollTrigger, SplitText } from '@/lib/gsap'
 import { useGSAP } from '@gsap/react'
 import ShapeMark from '@/components/marks/ShapeMark'
@@ -149,12 +149,10 @@ export default function HeroScatter() {
   const weaveRef = useRef(null)
   const measureRef = useRef(null)
 
-  const [shapeAnimate, setShapeAnimate] = useState(false)
   const [senseReplay, setSenseReplay] = useState(0)
   const [weaveReplay, setWeaveReplay] = useState(0)
   const flowerHoverable = useRef(false)
-  const shapeDrawDone = useRef(null)
-  const onShapeDrawComplete = useCallback(() => shapeDrawDone.current?.(), [])
+  const introDone = useRef(false)
 
   /* Mark intro as played so future visits in the same session skip
      straight to the static homepage. The provider already gates the
@@ -258,7 +256,7 @@ export default function HeroScatter() {
 
     gsap.set(subtitleRef.current, { autoAlpha: 0 })
     gsap.set(ctaRef.current, { autoAlpha: 0 })
-    gsap.set(arrowRef.current, { autoAlpha: 0, xPercent: -50 })
+    gsap.set(arrowRef.current, { autoAlpha: 1, xPercent: -50 })
     /* Both texts visible at element-level; per-char masking handles the swap.
        SplitText needs the elements rendered with their final font metrics
        before splitting, so we split here (after fonts loaded via opener)
@@ -269,7 +267,9 @@ export default function HeroScatter() {
       type: 'chars', mask: 'chars', charsClass: 'wChar',
     })
     const hintSplit = SplitText.create(scrollHintRef.current, {
-      type: 'chars', mask: 'chars', charsClass: 'hChar',
+      /* words,chars (not chars alone) so the space between "Keep" and
+         "Scrolling" survives — char-only + mask collapses it into one run. */
+      type: 'words,chars', mask: 'chars', charsClass: 'hChar',
     })
     /* Welcome chars start in place (visible). Hint chars start lifted out
        of their mask (below the mask box), so they wipe up into view. */
@@ -277,50 +277,55 @@ export default function HeroScatter() {
     gsap.set(hintSplit.chars, { yPercent: 110 })
     gsap.set(measureRef.current, { autoAlpha: 0 })
 
-    /* Lock scrolling during flower opener */
-    document.body.style.overflow = 'hidden'
+    /* ─── A fresh welcome (cold-start) ───
+       A self-contained entrance, NOT a fragment of the old opener. One
+       gentle, intentional gesture: the flower blooms in on a soft bounce —
+       the hello — then the Welcome cue rises beneath it, then the peek
+       letters drift home from beyond the frame, a quiet preview of the
+       scatter the scroll will continue. Each element owns its own clean
+       fade (no whole-section opacity hack — that's what made it read as a
+       glitch). Nothing is locked: scroll is live, and a first scroll snaps
+       the entrance to its composed end so the scrub never inherits a
+       half-bloomed flower. */
 
-    /* Build scroll timeline (establishes pin) but disable it until flower completes */
-    const heroST = buildScrollTimeline()
-    if (heroST) heroST.disable()
+    /* Flower is spinnable on hover from the first frame. */
+    flowerHoverable.current = true
 
-    /* ─── FLOWER OPENER (time-based) ─── */
-    setShapeAnimate(true)
-    shapeDrawDone.current = () => {
-      /* Bounce after spin — invitational pulse */
-      const bounceTl = gsap.timeline({
-        onComplete: () => {
-          flowerHoverable.current = true
-          /* Enable the scroll timeline + unlock scrolling. normalizeScroll
-             keeps the pin holding through native scroll on macOS/iOS
-             (prevents elastic bounce from desyncing the scrub). Note:
-             Lenis is intentionally disabled on the homepage in
-             PortfolioShell so it does not fight this trigger. */
-          document.body.style.overflow = ''
-          /* Fade welcome in BEFORE enabling the scrub timeline. The
-             timeline's tl.set at position 0 would otherwise snap autoAlpha
-             to 1 the moment scrub activates, overriding this soft fade. */
-          gsap.to(arrowRef.current, {
-            autoAlpha: 1, duration: 0.5, ease: 'power1.inOut',
-            onComplete: () => {
-              if (heroST) heroST.enable()
-              ScrollTrigger.normalizeScroll(true)
-              ScrollTrigger.refresh()
-            },
-          })
-          /* Peek letters slide in from further offscreen, fading in alongside
-             Welcome — a wordless hint that more exists beyond the frame. */
-          gsap.to(peekEls, {
-            x: 0, y: 0, autoAlpha: 1,
-            duration: 0.9, ease: 'power1.inOut',
-            stagger: 0.08,
-          })
-          document.body.classList.remove('hero-loading')
-        },
-      })
-      bounceTl.to(flower, { scale: 1.15, duration: 0.25, ease: 'power2.out' })
-      bounceTl.to(flower, { scale: 1, duration: 0.3, ease: 'power1.inOut' })
-    }
+    /* `intro` is read by the scroll timeline's onUpdate (to snap it done on
+       a first scroll), so it must exist before the trigger is built. */
+    let intro
+    buildScrollTimeline()
+    ScrollTrigger.normalizeScroll(true)
+    ScrollTrigger.refresh()
+
+    intro = gsap.timeline({
+      onComplete: () => {
+        introDone.current = true
+        document.body.classList.remove('hero-loading')
+      },
+    })
+    intro
+      /* The flower blooms — gentle overshoot, the welcoming gesture. */
+      .fromTo(
+        flower,
+        { autoAlpha: 0, scale: 0.72 },
+        { autoAlpha: 1, scale: 1, duration: 0.7, ease: 'back.out(1.5)' },
+        0
+      )
+      /* Welcome + arrow rise softly beneath it. */
+      .fromTo(
+        arrowRef.current,
+        { autoAlpha: 0, y: 16 },
+        { autoAlpha: 1, y: 0, duration: 0.55, ease: 'power3.out' },
+        0.4
+      )
+      /* Peek letters drift in from off-frame, arriving last and gently so it
+         reads as composed, not snapped. */
+      .to(
+        peekEls,
+        { x: 0, y: 0, autoAlpha: 1, duration: 0.9, ease: 'power3.out', stagger: 0.08 },
+        0.55
+      )
 
     function buildScrollTimeline() {
       /* ─── MEASURE final positions with kerning ─── */
@@ -380,7 +385,16 @@ export default function HeroScatter() {
              show welcome during the flower opener — this callback avoids
              both pitfalls. */
           onUpdate: (self) => {
-            if (self.progress < 0.05 && arrowRef.current) {
+            /* First real scroll during the entrance: snap it to its composed
+               end so the scrub takes over a finished frame, never a
+               half-bloomed flower. */
+            if (self.progress > 0 && !introDone.current) {
+              introDone.current = true
+              if (intro) intro.progress(1)
+            }
+            /* Restore the welcome cue if scrubbed back to the very top after
+               the entrance has finished. */
+            if (introDone.current && self.progress < 0.05 && arrowRef.current) {
               gsap.set(arrowRef.current, { y: 0, autoAlpha: 1 })
             }
           },
@@ -552,9 +566,8 @@ export default function HeroScatter() {
                 onComplete: () => { el._hoverActive = false },
               })
             }}>
-            <ShapeMark animate={shapeAnimate} showBrush fillReveal
-              gradientColors={isDark ? DARK_GRADIENT : LIGHT_GRADIENT}
-              onDrawComplete={onShapeDrawComplete} />
+            <ShapeMark complete showBrush
+              gradientColors={isDark ? DARK_GRADIENT : LIGHT_GRADIENT} />
           </div>
 
           {'Designing'.split('').map((c, i) => (
