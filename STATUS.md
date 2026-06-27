@@ -23,25 +23,17 @@ The case study is now **one gated page: `/projects/groundswell/hero`** = `Ground
 
 ---
 
-## Homepage — Lorin feedback (logged + actioned 2026-06-26)
+## Homepage — shipped this session (2026-06-27, all live on `origin/main` / lorin.work)
 
-### 1. Sense / Weave / Shape practice cards — equal height ✅ DONE
+All deployed as isolated cherry-pick pushes to `origin/main` (the held Groundswell case-study commits stayed local):
+- **Practice cards equal height** — `.practiceFan` `align-items: center → stretch`.
+- **Hero intro reworked, locked on scrub.** Pass-through sweep (the scatter cluster is a pass-through waypoint, not a rest); cold-start entrance (flower *grows → spins once → bounces*, hover-spin arms after); even pacing (`end:'+=300%'`, `scrub:1`); "Keep Scrolling" renders two words (`.hWord` margin); no double-"Welcome" (SplitText `.revert()` on cleanup). **Guardrail logged in `PROGRESS.md` → stays scrub + `normalizeScroll`; do NOT decouple into timed-play / scroll-lock — that broke scroll repeatedly this session.**
+- **About photo iris** reveals in the gaze (IntersectionObserver boundary trigger, not the old `top 85%` ScrollTrigger).
+- **Groundswell homepage preview — data-viz gated** (commit `c4ab96e`): the data-viz recordings (`gs-opener`, `gs-pod-data` — real care data + licensed art) now sit behind a lock + `blur(4px)` via the new `components/CardStack/GatedOverlay` primitive (content illegible, work still reads, click-through preserved). "Data Visualization" moved to the **middle** file/tab (pills reorder with it); file-card media is now `object-fit: cover` (fills wide like other previews); **Experience Design leads with the cover-cropped `gs-walkthrough` video**.
 
-The **Sense** card rendered shorter than Weave/Shape in the practice fan (`components/AboutSection/`). **Not an illusion — real.** Cause: `.practiceFan` used `align-items: center`, so each card sized to its own content (`min-height: 340px` is only a floor; Sense's body wraps to fewer lines).
+**Next move (homepage):** the **Experience Design** card still shows `gs-hero` (corridor) + `gs-artwall` — Blue Garden art, public on the homepage. Give them the same gated/swap treatment when Lorin wants (she scoped this session to the data-viz recordings only).
 
-**Fix shipped:** `.practiceFan` → `align-items: stretch`, so all three match the tallest. The GSAP fan-out only animates `x`/`rotation`/`autoAlpha` (never height), so it's unaffected; the ≤800px mobile block already overrode this (column stack, full-width cards), so no mobile side effect. Verified statically across breakpoints; not yet eyes-on in browser.
-
-### 2. Intro opener — kill the false midpoint, keep the instruction ✅ IMPLEMENTED (needs eyes-on)
-
-**Refined diagnosis (Lorin's, sharper than the first read):** the "Keep Scrolling" instruction is *good and stays*. The real fault was the letter **architecture** — letters animated in two phases with the scatter cluster as a *resting waypoint*: drag-in eased `power2.out` (decelerates to a stop at the cluster), then gather eased `power2.inOut` (eases in from a stop). The velocity-zero at the cluster made it read as a finished composition, so the user stopped and had to re-initiate scroll to morph cluster → sentence. The old timing-overlap fix never worked because the *easing* reintroduced the stop, not the timing.
-
-**Fix shipped** (`components/Hero/HeroScatter.js`, `buildScrollTimeline`): merged the two per-element position tweens into **one keyframed tween** where the scatter cluster is a *pass-through* waypoint. Phase 1 `power2.in` accelerates into the cluster (peak velocity at arrival); phase 2 `power2.out` leaves immediately and settles into the kerned sentence. No velocity-zero at the midpoint → no false destination. Single tween per property also prevents the old drag-in/gather pair from fighting mid-scrub. Applied to all letters + Sense/Weave marks + the centre flower (`SWEEP_IN 0.30` / `SWEEP_OUT 0.34`). "Keep Scrolling" swap/dissolve left as-is — it now cues one continuous build and fades (~0.30) right as the letters cross the cluster.
-
-**Open:** needs a real scroll to confirm the *feel* (the whole point). Couldn't run automated eyes-on this session — Playwright browser profile was locked by an open Chrome. Dev server is live on :3000. Open call when reviewed: pass-through vs. the more radical one-path (single tween straight offscreen → sentence, no scatter waypoint) if the constellation moment isn't earning its keep.
-
-### 3. Photo iris reveal — fire in the gaze ✅ IMPLEMENTED (needs eyes-on)
-
-`AboutSection.js` photo iris was on a ScrollTrigger (`top 85%`) that fired while the photo was still near the viewport bottom, so the open finished before it reached the reading zone. Switched to **IntersectionObserver play-once** (the pattern the rest of the section uses; pin-shifted ScrollTrigger starts are unreliable here), snappier ease, so the open is witnessed whole. Committed separately this session.
+**Push state:** `origin/main` = `c4ab96e`. Local `main` reads ahead/behind because the pushed commits are cherry-pick hashes — a `git pull --rebase` dedupes them. The other session's `GroundswellHero`/`GroundswellSpine` WIP is uncommitted in the tree (not mine — left untouched).
 
 ---
 
