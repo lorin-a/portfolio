@@ -332,9 +332,8 @@ export default function GroundswellSpine() {
 
             <Step label="What I walked into" say="A windowless unit, cramped desks, constant interruption. Staff skipping meals, saving their tears for the car ride home, attending funerals alone. Over one in five healthcare workers has experienced PTSD, and most carry it with nowhere to put it." />
 
-            <Step label="How I worked" say="Over fifteen weeks I embedded with the gynecologic oncology staff: shadowing shifts, interviewing across roles, and facilitating participatory workshops designed to surface what people often couldn’t say out loud.">
-              <Slideshow slides={METHODS} />
-            </Step>
+            <Step label="How I worked" say="Over fifteen weeks I embedded with the gynecologic oncology staff: shadowing shifts, interviewing across roles, and facilitating participatory workshops designed to surface what people often couldn’t say out loud." />
+            <Slideshow slides={METHODS} />
 
             <Step label="What I heard" say="Part of what healed me in working with oncology staff was feeling connected to others who carry contradicting, complex emotional experiences with grace, who find their way back to gratitude even when they are also devastated.">
               <blockquote className={styles.quote}>“A special person can do this work forever, a good person can do it for a little while, most people couldn’t do it for a day.”<span className={styles.quoteAttr}>— Oncology staff</span></blockquote>
@@ -355,9 +354,8 @@ export default function GroundswellSpine() {
             <Reveal as="p" className={styles.beatKicker}>Weave · 02</Reveal>
             <Statement>I shaped what we heard into <em>four interventions that work as one system</em>.</Statement>
 
-            <Step label="The system" say="Everything pointed to the moments where support could land: arriving at work, taking a break, a patient loss, a hard day, a one-on-one. I helped translate the patterns into four connected interventions, each meeting staff in one of those moments rather than a single fix.">
-              <SystemMap />
-            </Step>
+            <Step label="The system" say="Everything pointed to the moments where support could land: arriving at work, taking a break, a patient loss, a hard day, a one-on-one. I helped translate the patterns into four connected interventions, each meeting staff in one of those moments rather than a single fix." />
+            <SystemMap />
 
             <Reveal as="p" className={styles.bandLabel}>What I heard → what we made</Reveal>
             <div className={styles.pairs}>
