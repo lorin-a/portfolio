@@ -299,15 +299,23 @@ export default function GroundswellSpine() {
         <main className={styles.main}>
           {/* ── FRAME — two-column masthead: personal statement + way-in | meta panel ── */}
           <section id="overview" ref={set('overview')} className={`${styles.beat} ${styles.mast}`}>
+            <Reveal className={styles.mastLede}>
+              <span className={styles.ledeShot}>
+                <img src={photo('gs-playtest-01', 1200)} alt="Setting up the Groundswell reflection station at UPMC Magee — the program poster, the synthesis diagrams, and the reflection cards laid out for a playtest." loading="lazy" />
+              </span>
+              <span className={`${styles.ledeShot} ${styles.ledeStaff}`}>
+                <img src={photo('gs-workshop-grief-02', 1200)} alt="A trauma-responsive grief workshop in session — oncology staff around a table with worksheets and a soft object to hold, a “For Staff” sign in the window." loading="lazy" />
+              </span>
+            </Reveal>
+            <div className={styles.mastBody}>
             <div className={styles.mastMain}>
-              <Reveal as="p" className={styles.beatKicker}>The process</Reveal>
               <Statement>I helped design Groundswell <em>with</em> the people it serves: a connected ecosystem of emotional support for oncology staff.</Statement>
               <Reveal as="p" className={styles.lead}>
                 The concept started out as a class project at Carnegie Mellon in Professor Kristin Hughes’ course, <a className={styles.inlineLink} href="https://www.design.cmu.edu/news/kristin-hughes-designing-care" target="_blank" rel="noreferrer">Designing with CARE</a>—a collaborative course in partnership with UPMC Magee-Womens Hospital.
               </Reveal>
               <details className={styles.more}>
                 <summary className={styles.moreSummary}>
-                  <span className={styles.moreLabel}>More personal context</span>
+                  <span className={styles.moreLabel}>More context</span>
                   <span className={styles.moreIcon} aria-hidden="true" />
                 </summary>
                 <div className={styles.moreBody}>
@@ -332,6 +340,7 @@ export default function GroundswellSpine() {
                 ))}
               </div>
             </Reveal>
+            </div>
           </section>
 
           {/* ── SENSE · 01 — The Void (margin-label walkthrough) ── */}
