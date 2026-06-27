@@ -14,11 +14,13 @@ const photo = (key, w = 1400) => cloudImg(GS_IMAGES[key], w)
    Hero = centered/cinematic (the system); process = left, structured (her, telling it).
    ============================================================================ */
 
+// Act colours map to the EXACT Sense/Weave/Shape mark colours used site-wide
+// (components/marks/*). The rail is the legend; the act washes use the same tokens.
 const RAIL = [
   { id: 'overview', label: 'Overview' },
-  { id: 'sense', label: 'Sense', act: 'I' },
-  { id: 'weave', label: 'Weave', act: 'II' },
-  { id: 'shape', label: 'Shape', act: 'III' },
+  { id: 'sense', label: 'Sense', act: 'I', color: 'var(--color-sage)' },
+  { id: 'weave', label: 'Weave', act: 'II', color: 'var(--color-plum)' },
+  { id: 'shape', label: 'Shape', act: 'III', color: 'var(--color-terracotta)' },
   { id: 'close', label: 'Outcome' },
 ]
 
@@ -57,22 +59,20 @@ function Step({ label, say, children }) {
   )
 }
 
-function Expand({ summary, children }) {
+/* ❗tension → ⭐response → the rationale — the connective logic, all visible.
+   Optional documentary photo bleeds to the card edges; art credited inline. */
+function Pair({ insight, move, detail, img, alt, credit }) {
   return (
-    <details className={styles.expand}>
-      <summary>{summary}</summary>
-      <div className={styles.expandBody}>{children}</div>
-    </details>
-  )
-}
-
-/* ❗insight → ⭐intervention — the connective logic */
-function Pair({ insight, move, expand }) {
-  return (
-    <Reveal className={styles.pair}>
+    <Reveal className={`${styles.pair} ${img ? styles.pairPhoto : ''}`}>
+      {img && (
+        <span className={styles.pairFig}>
+          <img src={photo(img, 900)} alt={alt} loading="lazy" />
+        </span>
+      )}
       <p className={styles.insight}><b className={styles.bang}>❗</b><span>{insight}</span></p>
       <p className={styles.move}><b className={styles.star}>⭐</b><span>{move}</span></p>
-      {expand && <Expand summary="See how I got there →">{expand}</Expand>}
+      {detail && <p className={styles.pairDetail}>{detail}</p>}
+      {credit && <p className={styles.pairCredit}>{credit}</p>}
     </Reveal>
   )
 }
@@ -282,7 +282,7 @@ export default function GroundswellSpine() {
         <nav className={styles.rail} aria-label="Case study sections">
           <ol>
             {RAIL.map((r) => (
-              <li key={r.id}>
+              <li key={r.id} style={r.color ? { '--mark': r.color } : undefined}>
                 <button className={`${styles.railItem} ${active === r.id ? styles.railOn : ''}`} onClick={go(r.id)}>
                   <span className={styles.railTick} aria-hidden="true" />
                   <span className={styles.railText}>
@@ -301,15 +301,24 @@ export default function GroundswellSpine() {
           <section id="overview" ref={set('overview')} className={`${styles.beat} ${styles.mast}`}>
             <div className={styles.mastMain}>
               <Reveal as="p" className={styles.beatKicker}>The process</Reveal>
-              <Statement>I helped design Groundswell <em>with</em> the people it serves: a connected system of emotional support for oncology staff.</Statement>
+              <Statement>I helped design Groundswell <em>with</em> the people it serves: a connected ecosystem of emotional support for oncology staff.</Statement>
               <Reveal as="p" className={styles.lead}>
-                I come from a long line of healers, educators, and innovators. That is why I went back to grad school for design, and why I took Professor Kristin Hughes’ co-design course, <em>Designing with CARE</em>. Within minutes of speaking with the staff, I knew we were cut from the same cloth.
+                The concept started out as a class project at Carnegie Mellon in Professor Kristin Hughes’ course, <a className={styles.inlineLink} href="https://www.design.cmu.edu/news/kristin-hughes-designing-care" target="_blank" rel="noreferrer">Designing with CARE</a>—a collaborative course in partnership with UPMC Magee-Womens Hospital.
               </Reveal>
-              <Reveal>
-                <Expand summary="More on how I got here →">
-                  Stepping into the oncology department healed something in me. I have had a fear of death since I was ten, and I have always been drawn to the depths of the human experience. It started as a class project, one that would only amount to a final pitch. But I felt my marketing skills could at least get this department a donated pod, a temporary solution to give them respite. I did not anticipate that securing that donation would meet a perfectly timed grant, and the project would leave the classroom and become real.
-                </Expand>
-              </Reveal>
+              <details className={styles.more}>
+                <summary className={styles.moreSummary}>
+                  <span className={styles.moreLabel}>More personal context</span>
+                  <span className={styles.moreIcon} aria-hidden="true" />
+                </summary>
+                <div className={styles.moreBody}>
+                  <p className={styles.leadMore}>
+                    I went to CMU for grad school to learn how to co-design meaningful change within complex systems and immediately knew that this class would be life changing. Not only because it would put me up close and personal with my fear of mortality but it would be a real world opportunity to be of service and learn the ethics of my budding design philosophy, relational design.
+                  </p>
+                  <p className={styles.leadMore}>
+                    I could not have predicted that our final project concept would receive grant funding to become a pilot study, but looking back on the process I can now see exactly how it all came together through embedded relationships, divine timing, an idea guided by co-design expertise, and above all, the opportunity that the CARE course gave us to amplify the voices, ideas, and needs of oncology staff.
+                  </p>
+                </div>
+              </details>
             </div>
             <Reveal as="aside" className={styles.mastAside}>
               <dl className={styles.meta}>
@@ -326,7 +335,7 @@ export default function GroundswellSpine() {
           </section>
 
           {/* ── SENSE · 01 — The Void (margin-label walkthrough) ── */}
-          <section id="sense" ref={set('sense')} className={styles.beat} style={{ '--accent': '#5C7A41' }}>
+          <section id="sense" ref={set('sense')} className={styles.beat} style={{ '--accent': 'var(--color-sage)' }}>
             <Reveal as="p" className={styles.beatKicker}>Sense · 01</Reveal>
             <Statement>Burnout on the floor wasn’t an individual failure. It was <em>systemic</em>.</Statement>
 
@@ -350,7 +359,7 @@ export default function GroundswellSpine() {
           </section>
 
           {/* ── WEAVE · 02 — the system map (asset interactions) ── */}
-          <section id="weave" ref={set('weave')} className={styles.beat} style={{ '--accent': '#8A5580' }}>
+          <section id="weave" ref={set('weave')} className={styles.beat} style={{ '--accent': 'var(--color-plum)' }}>
             <Reveal as="p" className={styles.beatKicker}>Weave · 02</Reveal>
             <Statement>I shaped what we heard into <em>four interventions that work as one system</em>.</Statement>
 
@@ -359,15 +368,15 @@ export default function GroundswellSpine() {
 
             <Reveal as="p" className={styles.bandLabel}>What I heard → what we made</Reveal>
             <div className={styles.pairs}>
-              <Pair insight="Staff feared retaliation for showing feelings" move="Art Wall: anonymous, collective voice" expand="A community wall for anonymous shared expression across the full spectrum of oncology experience, giving public, collective voice to the care community." />
-              <Pair insight="“They save their tears for the car ride home”" move="Restorative Pod: real space to decompress" expand="A dedicated space for emotional decompression, nestled in a former phone-booth nook. The message: emotional labor is real work deserving of real space." />
-              <Pair insight="Grief includes contradictory, complex emotions" move="Reflection Cards: validation and a somatic exercise" expand="My own healing journey led me to somatics and nervous-system approaches, and I wanted to channel that into the content. Each card starts with validation, then invites a simple exercise. I kept the language approachable so any experience level could engage." />
-              <Pair insight="A nurse had already built a compassionate death-notice" move="CTB email: honor and amplify what was already there" expand="What looked like a cold clinical protocol was a staff-created act of compassion. That shifted our whole approach: from “the system has let you down” to “you have already created a beautiful culture of care.”" />
+              <Pair insight="Staff feared retaliation for showing feelings" move="Art Wall: anonymous, collective voice" detail="A community wall for anonymous shared expression across the full spectrum of oncology experience, giving public, collective voice to the care community." img="gs-artwall" alt="A staff member adds a small token to the floral community art wall on the oncology unit." credit="Artwork Carolyn Gavin · Photography Kevin Lorenzi" />
+              <Pair insight="“They save their tears for the car ride home”" move="Restorative Pod: real space to decompress" detail="A dedicated space for emotional decompression, nestled in a former phone-booth nook. The message: emotional labor is real work deserving of real space." img="gs-pod" alt="The restorative pod, a floral-wrapped enclosure tucked into the unit corridor beneath the Purple Zone sign." credit="Artwork Carolyn Gavin · Photography Kevin Lorenzi" />
+              <Pair insight="Grief includes contradictory, complex emotions" move="Reflection Cards: validation and a somatic exercise" detail="My own healing journey led me to somatics and nervous-system approaches, and I wanted to channel that into the content. Each card starts with validation, then invites a simple exercise. I kept the language approachable so any experience level could engage." img="gs-cards" alt="A staff member holds a fanned deck of reflection cards, one open to the “vulnerable” card." credit="Artwork Carolyn Gavin · Photography Kevin Lorenzi" />
+              <Pair insight="A nurse had already built a compassionate death-notice" move="CTB email: honor and amplify what was already there" detail="What looked like a cold clinical protocol was a staff-created act of compassion. That shifted our whole approach: from “the system has let you down” to “you have already created a beautiful culture of care.”" img="gs-ctb-email" alt="A staff member composes the “Call to the Bedside” sympathy notice on a laptop, the template bordered by the floral art." credit="Artwork Carolyn Gavin · Photography Kevin Lorenzi" />
             </div>
           </section>
 
           {/* ── SHAPE · 03 — making it real ── */}
-          <section id="shape" ref={set('shape')} className={styles.beat} style={{ '--accent': '#A85A3C' }}>
+          <section id="shape" ref={set('shape')} className={styles.beat} style={{ '--accent': 'var(--color-terracotta)' }}>
             <Reveal as="p" className={styles.beatKicker}>Shape · 03</Reveal>
             <Statement>From concept to an <em>installed pilot</em> in ten weeks.</Statement>
 
@@ -376,8 +385,8 @@ export default function GroundswellSpine() {
 
             <Reveal as="p" className={styles.bandLabel}>The calls that mattered</Reveal>
             <div className={styles.pairs}>
-              <Pair insight="“Grief” narrowed it: staff named hope, joy, resilience too" move="Shifted the whole project to “restoration”" expand="Our tagline evolved from “Making Space for Grief, Together” to “Making Space to Restore, Together.” The shift permeated every component. Attunement to staff wisdom over our first instinct." />
-              <Pair insight="Admin wanted a key-card system to monitor pod access" move="A permeable acrylic facade: “trust, not surveillance”" expand="Care must include the freedom to pause without guilt. The final design signals use with subtle LED light instead of monitoring it. A constraint turned into a values stance." />
+              <Pair insight="“Grief” narrowed it: staff named hope, joy, resilience too" move="Shifted the whole project to “restoration”" detail="Our tagline evolved from “Making Space for Grief, Together” to “Making Space to Restore, Together.” The shift permeated every component. Attunement to staff wisdom over our first instinct." />
+              <Pair insight="Admin wanted a key-card system to monitor pod access" move="A permeable acrylic facade: “trust, not surveillance”" detail="Care must include the freedom to pause without guilt. The final design signals use with subtle LED light instead of monitoring it. A constraint turned into a values stance." />
             </div>
 
             <Step label="What I brought" say="I led donor outreach and secured the assets and partnerships: the pod itself, the woodworking added to it, the sensor within it, the ceramic finger labyrinths, and the Schlage door locks. It was my meditation and shadow-work teacher, Catherine Liggett, who volunteered to co-edit, author, and record the meditations used in the study. I drafted first-round copy for nearly all of the project, co-led playtesting, helped with build and installation, and (working mostly remote) ran project coordination, documentation, and strategy." />
@@ -414,7 +423,7 @@ export default function GroundswellSpine() {
             </Reveal>
           </section>
 
-          <footer className={styles.end}>end of spine · depth lives behind the expands + the linked full record</footer>
+          <footer className={styles.end}>end of spine · the full record lives in the linked documentation</footer>
         </main>
       </div>
     </div>

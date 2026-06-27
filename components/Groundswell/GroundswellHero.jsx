@@ -215,7 +215,7 @@ export default function GroundswellHero({ connectorsSvg }) {
 
         <p className={styles.intro} ref={introRef}>
           When the people who give care help design it, the outcome is a{' '}
-          <em>connected system of care</em>.
+          <em>connected ecosystem of care</em>.
         </p>
 
         {/* connector lines (her export), recoloured + revealed */}
