@@ -1,5 +1,5 @@
 # Project Status
-### Last updated: 2026-06-28 (portfolio strategy locked — positioning, 3 stars + lean grid + playground, content-driven build)
+### Last updated: 2026-06-28 (eve) — Birth Story iteration/system sections built BUT judged off-bar; next session = holistic design-led redesign. Dark→light page transition shipped (good).
 
 This is the living status doc for the lorin.work portfolio redesign. Updated at the end of every working session. Detailed in-flight state lives in memory `PROGRESS.md`.
 
@@ -48,16 +48,17 @@ This is the living status doc for the lorin.work portfolio redesign. Updated at 
 
 **Birth Story is the pilot that defines the case-study template** (Mode B). Full draft live at `/projects/birthstory-care-pod` (not gated; on dev port 3007). It proves: the beat recipe, the `DeviceMockup` primitive, the gather signature hero, compositional rhythm, and real screens from Figma.
 
-**Shipped 2026-06-28:**
-- **`<DeviceMockup>` primitive** (`components/CaseStudy/`) — image | looping video | screens; reduced-motion + lazy-load. Reused by every app project.
-- **`BirthStoryHero`** — Mode B gather signature (fragments coalesce into the phone), GSAP paused-timeline, replays on enter-view. Hook (proposed): *"A birth, pieced together by everyone who lived it."*
-- **`BirthStoryBody`** — Overview → Sense → Weave → Shape → Close, copy drafted close to her words (from `PORTFOLIO-all-copy-RAW.md`), all 9 statement headings proposed (hers to bless). **Ruled meta masthead leads with Role.** Compositional rhythm: centered claims + split device beats (alternating) + tonal chapters (cream↔cream-dark).
-- **Real Figma screens wired** into the device beats (home, Care Pod ring, brand gradient) — `public/images/birthstory/`. Placeholders retired.
-- **Nav fixed** — global Nav (same wordmark) now shows light + persistent on case studies (was hidden, gated to homepage hero-intro).
+**⚠️ Lorin's verdict (2026-06-28 eve, binding):** the iteration + system sections I built this session are **NOT at standard** — I took her rich content and "bandaid fixed it into the awesome wireframe we built," losing the **class, flow, feel, and web-design cohesion** of the layout. Next session is **not** more bolt-ons: take a HARD critical look at everything on this case study, **review EVERY Birth Story Figma frame in the MCP** (full asset map preserved in memory `REFERENCE.md → "Birth Story — Figma asset map"`), and **be the expert who pulls it all into one cohesive, design-led flow** — *then* Lorin perfects copy + details. Likely root cause to interrogate: the new sections are styled in portfolio chrome (Fraunces/Open Sans, plum/sage/terracotta) instead of Birth Story's own brand (teal `#1A434D`, Terfens/Gotham, blush-teal gradient) — so they read disconnected. Full detail: memory `PROGRESS.md → "Birth Story case study — NEEDS HOLISTIC REDESIGN"`.
 
-**Next move:** Lorin to **bless/edit the 9 statement headings + depth** in the Birth Story body (her words, my distillation) and confirm who said *"I wish this could be real right now!"*. Then: **add the dark→light page transition** (the last "jarring" seam between dark home and light case study). Optional polish: rebuild one moment as code motion (the ring assembling). Real device recordings/brand board swap in when she has them.
+**Shipped 2026-06-28 (earlier — solid foundation):** `<DeviceMockup>` primitive; `BirthStoryHero` (Mode B gather signature); `BirthStoryBody` (Overview → Sense/Weave/Shape → Close, 9 statement headings proposed); real Figma screens wired; global Nav fixed (light + persistent on case studies).
 
-**Then:** apply the same template to **Transition Design** (star #3; distill from the 6 team PDFs + raw copy), then the **"More work" grid + Playground**. Groundswell hero gets its **ecosystem circle→web pivot** (see `DECISIONS.md`).
+**Shipped 2026-06-28 (eve):**
+- **`components/PageTransition/`** — dark→light page transition (matched-field dawn/dusk crossfade; intercepts theme-crossing nav; masks the last "jarring" seam). Wired in `PortfolioShell.js`, verified. **GOOD — keep.**
+- **`SystemEvolution` + `EvolutionViewer`** (`components/Birthstory/`) — the system (IA diagrams) + iteration (flows → Care Pod annotation panel). **Drafts to be re-judged, not foundations** (see verdict above). Lots of Figma assets pulled + sliced under `public/images/birthstory/evolution/` + `system/`.
+
+**Next move:** **Holistic Birth Story redesign.** Open the whole `/projects/birthstory-care-pod` with fresh eyes, review all Figma frames (asset map in memory), and re-derive ONE cohesive case-study composition that speaks Birth Story's brand — order *and* execution. Proposed flow (under review): Hero → Brief → Research (+ blurred interview frames, **need Cloudinary IDs from Lorin**) → System → Iteration → Resolved app (annotation panels) → Brand → Outcome, with a slim sticky section index. Sense/Weave/Shape dividers likely retire for this project.
+
+**Then:** Lorin perfects copy/details; bless the statement headings; apply the settled template to **Transition Design** (star #3); then **"More work" grid + Playground**.
 
 ---
 

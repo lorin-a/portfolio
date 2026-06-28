@@ -2,6 +2,8 @@
 
 import { useEffect, useRef, useState } from 'react'
 import DeviceMockup from '@/components/CaseStudy/DeviceMockup'
+import SystemEvolution from './SystemEvolution'
+import EvolutionViewer from './EvolutionViewer'
 import styles from './BirthStoryBody.module.css'
 
 /* ============================================================================
@@ -172,6 +174,10 @@ export default function BirthStoryBody() {
       </Beat>
 
       <ActDivider act="II" name="Weave" />
+
+      {/* The system (zoomed out) → the iteration (flows + one interaction) */}
+      <SystemEvolution />
+      <EvolutionViewer />
 
       <Beat
         tone="shade"

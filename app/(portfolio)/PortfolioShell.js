@@ -7,6 +7,7 @@ import { gsap, ScrollTrigger } from '@/lib/gsap'
 import { HeroIntroProvider } from '@/components/HeroIntroContext'
 import Nav from '@/components/Nav/Nav'
 import Footer from '@/components/Footer/Footer'
+import PageTransition from '@/components/PageTransition/PageTransition'
 
 /**
  * Client shell for the portfolio layout.
@@ -75,6 +76,7 @@ export default function PortfolioShell({ children }) {
 
   return (
     <HeroIntroProvider isHomepage={isHomepage}>
+      <PageTransition />
       {!hideGlobalNav && <Nav />}
       <main id="main-content">
         {children}
