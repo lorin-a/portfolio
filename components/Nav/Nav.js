@@ -30,9 +30,15 @@ export default function Nav() {
     const observer = new MutationObserver(check)
     observer.observe(root, { attributes: true, attributeFilter: ['data-theme'] })
 
-    /* Hide nav during intro (also hide when phase is null/resolving) */
-    if (phase === null || phase === 'waiting' || phase === 'playing') {
+    /* Hide nav during the hero intro — but ONLY on the homepage, where the
+       hero scroll timeline reveals it. On case-study / other routes there is
+       no intro, so the nav must be visible immediately (it was staying hidden
+       forever, leaving those pages with no chrome). */
+    const isHome = pathname === '/'
+    if (isHome && (phase === null || phase === 'waiting' || phase === 'playing')) {
       gsap.set(headerRef.current, { autoAlpha: 0, pointerEvents: 'none' })
+    } else if (!isHome) {
+      gsap.set(headerRef.current, { autoAlpha: 1, pointerEvents: 'auto' })
     }
 
     /* Nav reveal is handled by the hero scroll timeline.
@@ -83,7 +89,7 @@ export default function Nav() {
     }
   }, {
     scope: headerRef,
-    dependencies: [phase],
+    dependencies: [phase, pathname],
   })
 
   /* Spin on hover */

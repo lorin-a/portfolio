@@ -1,0 +1,69 @@
+/* DeviceMockup — calm iPhone frame. Neutral hardware so the screen carries the
+   colour (colour from media, not page tints). */
+
+.wrap {
+  margin: 0;
+  display: grid;
+  justify-items: center;
+  gap: var(--space-md);
+}
+
+.phone {
+  position: relative;
+  width: min(280px, 72vw);
+  padding: 10px;
+  border-radius: 46px;
+  background: linear-gradient(150deg, #2b2b2d, #161618);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.10) inset,
+    0 34px 60px -26px rgba(44, 44, 44, 0.45),
+    0 10px 22px -14px rgba(44, 44, 44, 0.30);
+}
+
+.island {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  width: 32%;
+  height: 22px;
+  background: #0c0c0d;
+  border-radius: 999px;
+}
+
+.screen {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 36px;
+  background: var(--color-cream);
+}
+
+.media {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.caption {
+  max-width: 28ch;
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  line-height: 1.45;
+  letter-spacing: 0.01em;
+  color: var(--color-ink-faint);
+  text-align: center;
+}
+
+.float {
+  animation: floaty 6.5s var(--ease-in-out) infinite;
+}
+@keyframes floaty {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-9px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .float { animation: none; }
+}

@@ -1,11 +1,67 @@
 # Project Status
-### Last updated: 2026-06-27 (Groundswell hero trimmed to hook; ecosystem moved into Weave)
+### Last updated: 2026-06-28 (portfolio strategy locked — positioning, 3 stars + lean grid + playground, content-driven build)
 
 This is the living status doc for the lorin.work portfolio redesign. Updated at the end of every working session. Detailed in-flight state lives in memory `PROGRESS.md`.
 
 ---
 
-## Right now — Groundswell case study (one consolidated page)
+## Portfolio strategy — LOCKED 2026-06-28 (the north star — read first)
+
+**Positioning:** design **researcher / strategist who can also ship** — *not* a UX/UI designer with research skills (that market is too competitive). Research, synthesis, systems thinking, and co-design are the headline; UX/UI is supporting evidence. Case studies lead with framing and insight, not UI shots.
+
+**Goal chain:** finish a tight, hiring-manager-ready portfolio ASAP → frees creative energy to finish Whelm + Inkling → job search. The portfolio must not keep eating creative energy.
+
+**Tiered case studies (depth over quantity):**
+- **3 stars** — full scannable Sense/Weave/Shape, real writing, curated captioned media:
+  - **Groundswell** — co-design + real pilot (outcome).
+  - **Birth Story** — UX/UI product + research, healthcare (proof she can ship).
+  - **Transition Design** — systems thinking + data viz (the strategist signal; rounds the trio to research / product / systems).
+- **Lean tier** — frontmatter framing + hero + embedded class deck/slideshow, near-zero writing:
+  - **Bridging the G.A.P.** (brand + animation; visual, reads well lean) > **SomeBuddy** (lean or cut — dominated by Bridging).
+- **Off the portfolio for now:** Whelm + Inkling (unfinished). Whelm = eventual **4th star** (solo, full ownership) once done.
+
+**Three surfaces, decreasing ask on the viewer (added 2026-06-28):**
+1. **Stars** — featured, full case studies (depth).
+2. **"More work" grid** — lean projects as compact cards; each opens a thin framed page (one-line problem + role + outcome + embedded deck). Breadth, no writing burden. **A grid, not a dropdown** — Lorin has spent the project removing dropdowns; don't reintroduce one.
+3. **Playground** — a separate, clearly-labeled light gallery for casual/experimental work. Personality + range, held away from the case studies so it never dilutes them.
+
+**Operating principle:** identical bones, bespoke flesh. Scannable in 3 minutes. Every section legible from its headline + captions alone. Reveals, never scrubs. Interaction is a bonus, never the only path to the information. (From the two case-study articles Lorin sent — semplice.com, uxpilot.ai.)
+
+**Build approach — content-driven (refines the "one editorial form for all" memory decision):**
+- **Lean tier** rides the existing markdown system (`app/(portfolio)/projects/[slug]` + `content/projects/*.md`) — modernize to V2 + deck embed (the `liveUrl` iframe already exists).
+- **Rich tier** = the `GroundswellSpine` editorial form (`/projects/groundswell/hero`), made content-driven so Birth Story + Transition Design pour in without copy-pasting JSX.
+- Groundswell keeps its one bespoke signature (the art-wall hero).
+- Reconcile three template artifacts: keep `[slug]` (lean) · `GroundswellSpine` → rich-tier engine · retire `GroundswellPreview` (superseded).
+
+**Hero mode is per-project, set by the deliverable (added 2026-06-28):** the opening sets the contract for the scroll that follows.
+- **Mode A — full-bleed photo/video hero** that *transitions down* into editorial formats. For physical/experiential deliverables (Groundswell's art-wall hero).
+- **Mode B — text + an isolated component** that starts calm and centered, then *reorganizes on scroll* into new layouts. For app deliverables (Birth Story Care Pod).
+- Systems work (Transition Design) may open on a data-viz hero. Same bones, bespoke opening.
+
+**Shipped 2026-06-28 (calibration):** reusable `<DeviceMockup>` primitive (`components/CaseStudy/DeviceMockup.jsx` — static image | looping prototype video | screens; reduced-motion + lazy-load handled) and the **Birth Story Care Pod calibration beat** (`components/Birthstory/`, route `/projects/birthstory-care-pod`). This beat is the tuning-fork for the minimalism / process / interactivity balance: centered Mode B opening, statement + device + depth line, color only inside the screen. DeviceMockup is reused by every app project (SomeBuddy, Homi, Heirloom, MindfulNest).
+
+**Critical path:** Claude builds the lean template + ships Bridging *now* (no blocking on writing); Lorin writes Birth Story + Transition Design copy (only she can — her voice); then Claude makes the Spine content-driven and pours the stars in.
+
+---
+
+## Right now — Birth Story (the template pilot)
+
+**Birth Story is the pilot that defines the case-study template** (Mode B). Full draft live at `/projects/birthstory-care-pod` (not gated; on dev port 3007). It proves: the beat recipe, the `DeviceMockup` primitive, the gather signature hero, compositional rhythm, and real screens from Figma.
+
+**Shipped 2026-06-28:**
+- **`<DeviceMockup>` primitive** (`components/CaseStudy/`) — image | looping video | screens; reduced-motion + lazy-load. Reused by every app project.
+- **`BirthStoryHero`** — Mode B gather signature (fragments coalesce into the phone), GSAP paused-timeline, replays on enter-view. Hook (proposed): *"A birth, pieced together by everyone who lived it."*
+- **`BirthStoryBody`** — Overview → Sense → Weave → Shape → Close, copy drafted close to her words (from `PORTFOLIO-all-copy-RAW.md`), all 9 statement headings proposed (hers to bless). **Ruled meta masthead leads with Role.** Compositional rhythm: centered claims + split device beats (alternating) + tonal chapters (cream↔cream-dark).
+- **Real Figma screens wired** into the device beats (home, Care Pod ring, brand gradient) — `public/images/birthstory/`. Placeholders retired.
+- **Nav fixed** — global Nav (same wordmark) now shows light + persistent on case studies (was hidden, gated to homepage hero-intro).
+
+**Next move:** Lorin to **bless/edit the 9 statement headings + depth** in the Birth Story body (her words, my distillation) and confirm who said *"I wish this could be real right now!"*. Then: **add the dark→light page transition** (the last "jarring" seam between dark home and light case study). Optional polish: rebuild one moment as code motion (the ring assembling). Real device recordings/brand board swap in when she has them.
+
+**Then:** apply the same template to **Transition Design** (star #3; distill from the 6 team PDFs + raw copy), then the **"More work" grid + Playground**. Groundswell hero gets its **ecosystem circle→web pivot** (see `DECISIONS.md`).
+
+---
+
+## Groundswell case study (flagship — pending hero pivot)
 
 The case study is now **one gated page: `/projects/groundswell/hero`** = `GroundswellHero` (cinematic dark hook) + `GroundswellSpine` (light process). The model + voice live in `docs/case-study-editorial/CASE_STUDY_PLAYBOOK.md → THE SPEC`; her origin copy is in `GROUNDSWELL_VOICE_DRAFT.md` (do not re-interview). Full detail in memory `PROGRESS.md → "Groundswell case study — CONSOLIDATED build"`.
 
@@ -19,7 +75,8 @@ The case study is now **one gated page: `/projects/groundswell/hero`** = `Ground
 
 **Shipped 2026-06-27 (hero restructure — biggest change):** the **mega-hero was trimmed to a hook** (`GroundswellHero`, **560/380vh → 165vh**, ~2 scrolls): thesis question → art-wall full-bleed → promise line → "Process ↓". The **ecosystem diagram was REMOVED from the hero** — it duplicated the Weave system map — and **consolidated INTO Weave**, where it now renders on her **real `connectors.svg` geometry** (her arrows draw on as the substrate, a plum lit overlay traces connections on select), placed **after the four intervention cards** as the synthesis ("How they connect"). `connectors.svg` now passes to `GroundswellSpine` server-side. No skip affordance (she chose a clean hook). Verified eyes-on 1440 + 400px; only pre-existing console noise (ShapeMark hydration + favicon).
 
-**Next move:** Lorin to **scroll the restructured `/hero` on a real trackpad** and judge the hook's full-bleed pacing at 165vh (a feel call — lower toward 140vh or restore dwell if the peak feels rushed) and the **Weave "How they connect" map** in context. Then open **copy (hers):** bless the assembled statement headings + write the **"what I'd do differently"** line (`[LORIN TO WRITE]` in Close).
+**Reviewed 2026-06-28 (hero pacing + Weave map):** the 165vh hook is **rushed at the front, dead at the tail** (whole hook ≈ one trackpad swipe; the thesis question gone by ~120px). Recommendation logged: go **up to ~200–210vh** and hold the question longer (don't drop to 140 — that compresses further). **3 fixes shipped:** "Process ↓" / credit collision (credit → bottom-right corner), promise legibility (added contained scrim), and the Weave map caption grammar ("When a patient loss," → grammatical for all 6 moments). Weave "How they connect" map works in context.
+**Next move (Groundswell):** the hero gets **rebuilt as the ecosystem circle→web signature** (the pivot — see `DECISIONS.md`); art-wall demotes to its intervention beat. Lower priority than finishing Birth Story + Transition Design. Copy: statement headings to bless + the **"what I'd do differently"** line still `[LORIN TO WRITE]` in Close.
 
 **License (binding):** documentary art in approved context is OK with Carolyn credited inline; no NEW uses (card-flip deck, alterations). The legacy `GroundswellContent.js` build stays gated. See `PROGRESS.md → "Groundswell artwork-license hold"`.
 

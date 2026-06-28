@@ -189,12 +189,12 @@ function Device({ kind, beh, ratio = '16 / 9', note }) {
 const FRAME_W = 1736
 const FRAME_H = 1080
 const SM_MOMENTS = [
-  { id: 'arrive', label: 'Arrive', full: 'arrive at work', x: 12.20, y: 5.98 },
-  { id: 'break', label: 'Break', full: 'take a break', x: 50.00, y: 5.98 },
-  { id: 'leave', label: 'Leave', full: 'leave work', x: 87.70, y: 5.98 },
-  { id: 'loss', label: 'Patient loss', full: 'a patient loss', x: 12.20, y: 94.02 },
-  { id: 'hard', label: 'Hard day', full: 'a hard day', x: 50.00, y: 94.02 },
-  { id: 'meeting', label: '1:1', full: 'a one-on-one', x: 87.70, y: 94.02 },
+  { id: 'arrive', label: 'Arrive', full: 'arriving at work', x: 12.20, y: 5.98 },
+  { id: 'break', label: 'Break', full: 'taking a break', x: 50.00, y: 5.98 },
+  { id: 'leave', label: 'Leave', full: 'leaving for the day', x: 87.70, y: 5.98 },
+  { id: 'loss', label: 'Patient loss', full: 'a patient dies', x: 12.20, y: 94.02 },
+  { id: 'hard', label: 'Hard day', full: 'the day is hard', x: 50.00, y: 94.02 },
+  { id: 'meeting', label: '1:1', full: 'in a one-on-one', x: 87.70, y: 94.02 },
 ]
 const SM_NODES = [
   { id: 'ctb', label: 'CTB', full: 'CTB Email', x: 12.30, y: 47.03, insight: 'a nurse had already built a compassionate death-notice', move: 'honor and amplify what was already there' },

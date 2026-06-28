@@ -154,6 +154,15 @@
   color: var(--on-dark);
   text-shadow: 0 1px 14px rgba(0, 0, 0, 0.55), 0 1px 3px rgba(0, 0, 0, 0.5);
 }
+/* contained scrim — lifts the promise off the busy art and the printed sign */
+.intro::before {
+  content: '';
+  position: absolute;
+  inset: -0.7em -1.6em;
+  z-index: -1;
+  background: radial-gradient(62% 72% at 50% 50%, rgba(20, 18, 18, 0.62), rgba(20, 18, 18, 0) 76%);
+  pointer-events: none;
+}
 .intro em { font-style: italic; font-weight: 340; color: var(--accent); }
 
 /* ── the art-wall image (grows from a band to full-bleed; sits under the overlays) ── */
@@ -201,15 +210,14 @@
   .diveArrow { animation: none; }
 }
 
-/* ── persistent credit ── */
+/* ── persistent credit (corner — the "Process ↓" cue owns bottom-centre) ── */
 .credit {
   position: absolute;
   z-index: 5;
-  left: 50%;
-  transform: translateX(-50%);
+  right: clamp(var(--space-md), 5vw, var(--space-xl));
   bottom: var(--space-md);
   margin: 0;
-  text-align: center;
+  text-align: right;
   font-size: 0.72rem;
   letter-spacing: 0.06em;
   color: var(--on-dark-faint);
