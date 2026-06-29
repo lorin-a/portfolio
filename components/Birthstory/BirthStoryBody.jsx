@@ -79,10 +79,10 @@ function Brief() {
       </Split>
 
       <div className={`${b.ff} ${sys.up}`}>
-        <span className={sys.askKicker}>every function had a feeling to land</span>
+        <p className={b.ffHead}>Every function had a feeling to land</p>
         <ul className={b.ffList}>
           {[['collect usable data', 'intuitive & calming'], ['tell a compelling story', 'easy to navigate'], ['record the medical detail', 'empathetic & trauma-informed'], ['prompt reflection', 'therapeutic']].map(([fn, feel]) => (
-            <li key={fn}><span className={b.fn}>{fn}</span><span className={b.arrow}>→</span><span className={b.feel}>{feel}</span></li>
+            <li key={fn}><span className={b.fn}>{fn}</span><span className={b.arrow} aria-hidden="true">→</span><span className={b.feel}>{feel}</span></li>
           ))}
         </ul>
       </div>

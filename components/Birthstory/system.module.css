@@ -23,7 +23,7 @@
 
 /* leave room for the fixed spine rail on wide screens so it never overlaps */
 @media (min-width: 1340px) {
-  .case { padding-left: 10rem; }
+  .case { padding-left: 13.5rem; }
 }
 
 /* ── section shell ── */
@@ -118,12 +118,12 @@
 
 /* ============================================================================
    FIELD-NOTES REGISTER — the process voice. Question-led, real artifacts as
-   figure plates, first-person running prose, monospace metadata, admitted
-   friction, cooler paper. Every section composes these via kit's FieldSection.
+   figure plates, first-person running prose, tracked-caps labels (the site's
+   two faces only — Fraunces + Noto Sans, no third typeface), admitted friction,
+   cooler paper. Every section composes these via kit's FieldSection.
    ============================================================================ */
 
 .field {
-  --mono: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
   padding: clamp(4.5rem, 11vh, 9rem) var(--bs-pad);
   background-color: #F1F2F0;
   background-image: radial-gradient(rgba(26, 67, 77, 0.05) 1px, transparent 1px);
@@ -135,20 +135,20 @@
 .sheetWide { max-width: 78rem; }
 
 .fieldHead {
-  display: flex; align-items: baseline; gap: 0.8rem;
-  padding-bottom: 0.9rem; margin-bottom: clamp(1.8rem, 4vw, 3rem);
-  border-bottom: 1px solid rgba(26, 67, 77, 0.18);
-  font-family: var(--mono);
+  display: flex; align-items: baseline; gap: 0.85rem;
+  padding-bottom: 0.95rem; margin-bottom: clamp(1.8rem, 4vw, 3rem);
+  border-bottom: 1px solid rgba(26, 67, 77, 0.22);
+  font-family: var(--font-body);
 }
-.fNum { font-size: 0.78rem; font-weight: 600; color: var(--bs-accent); }
-.fCrumb { font-size: 0.74rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-ink); }
-.fWhen { margin-left: auto; font-size: 0.7rem; color: var(--color-ink-faint); }
+.fNum { font-size: 0.95rem; font-weight: 700; letter-spacing: 0.02em; color: var(--bs-accent); }
+.fCrumb { font-size: 0.86rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-ink); }
+.fWhen { margin-left: auto; font-size: 0.74rem; letter-spacing: 0.04em; color: var(--color-ink-faint); }
 
 .flow { display: grid; gap: clamp(1.8rem, 4vw, 3.2rem); }
 
 /* question — curiosity first */
 .askBlock { display: grid; gap: 0.7rem; max-width: 40rem; }
-.askKicker { font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--bs-teal-soft); }
+.askKicker { font-family: var(--font-body); font-weight: 600; font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--bs-teal-soft); }
 .ask {
   margin: 0;
   font-family: var(--font-heading); font-variation-settings: 'SOFT' 60, 'WONK' 0; font-weight: 400;
@@ -180,12 +180,12 @@
 .plateWide { max-width: 56rem; }
 .plateTab {
   position: absolute; top: -0.7rem; left: 1rem; padding: 0.15rem 0.55rem; border-radius: 3px;
-  background: var(--bs-accent); color: #fff; font-family: var(--mono); font-size: 0.64rem; letter-spacing: 0.04em;
+  background: var(--bs-accent); color: #fff; font-family: var(--font-body); font-size: 0.64rem; letter-spacing: 0.04em;
 }
 .plateArt { grid-column: 1; background: #16323a; border-radius: 3px; padding: 0.6rem; display: grid; place-items: center; }
 .plateArt img { max-width: 100%; height: auto; display: block; }
 .plateArtLight { background: #fff; box-shadow: inset 0 0 0 1px rgba(26,67,77,0.08); }
-.plateCap { grid-column: 1; margin: 0.55rem 0 0; font-family: var(--mono); font-size: 0.68rem; line-height: 1.4; color: var(--color-ink-faint); }
+.plateCap { grid-column: 1; margin: 0.55rem 0 0; font-family: var(--font-body); font-size: 0.68rem; line-height: 1.4; color: var(--color-ink-faint); }
 .plateMargin {
   grid-column: 2; align-self: center; margin: 0; padding-left: 0.9rem;
   border-left: 2px solid var(--bs-teal-soft);
@@ -195,7 +195,7 @@
 /* shot — app screens shown in device frames, as figures (keeps the mockups she likes) */
 .shotRow { display: flex; flex-wrap: wrap; gap: clamp(0.8rem, 2vw, 1.6rem); align-items: flex-start; }
 .shot { display: grid; gap: 0.5rem; justify-items: start; }
-.shotCap { font-family: var(--mono); font-size: 0.66rem; line-height: 1.4; color: var(--color-ink-faint); max-width: 22ch; }
+.shotCap { font-family: var(--font-body); font-size: 0.66rem; line-height: 1.4; color: var(--color-ink-faint); max-width: 22ch; }
 
 /* friction — admits the open question */
 .friction {
@@ -203,7 +203,7 @@
   font-family: var(--font-body); font-size: 0.95rem; line-height: 1.6; color: var(--color-ink-light);
 }
 .friction b { font-weight: 700; color: var(--bs-accent); font-style: normal; }
-.frictionTag { display: inline-block; margin-right: 0.6rem; font-family: var(--mono); font-size: 0.64rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--bs-teal-soft); }
+.frictionTag { display: inline-block; margin-right: 0.6rem; font-family: var(--font-body); font-size: 0.64rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--bs-teal-soft); }
 
 @media (max-width: 720px) {
   .plate, .plateNarrow { grid-template-columns: 1fr; transform: none; }
@@ -227,7 +227,7 @@
 .figTag {
   position: absolute; top: 0.7rem; left: 0.7rem; z-index: 2;
   padding: 0.18rem 0.6rem; border-radius: 3px; background: var(--bs-accent); color: #fff;
-  font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.06em; text-transform: uppercase;
+  font-family: var(--font-body); font-size: 0.62rem; letter-spacing: 0.06em; text-transform: uppercase;
 }
 .figTagAlt { background: var(--bs-teal-soft); }
 .figArt {
@@ -240,7 +240,7 @@
 /* portrait photo: large but contained, so a 2:3 image doesn't tower; centered
    in the media column so it still commands the right side */
 .figPortrait { justify-self: center; max-width: min(33rem, 100%); }
-.figCap { margin: 0; font-family: var(--mono); font-size: 0.68rem; line-height: 1.45; color: var(--color-ink-faint); }
+.figCap { margin: 0; font-family: var(--font-body); font-size: 0.68rem; line-height: 1.45; color: var(--color-ink-faint); }
 .figByline { display: block; margin-top: 0.25rem; letter-spacing: 0.04em; color: var(--bs-teal-soft); }
 
 /* finding — the compressed takeaway (replaces paragraphs); 20% copy, full weight */
