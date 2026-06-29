@@ -1,8 +1,15 @@
-/* Iteration — rounds in the field-notes register. */
+/* Iteration — each round is a Split; the screens run big beside the change. */
 
-.round { display: grid; gap: clamp(0.8rem, 1.6vw, 1.2rem); }
-.shots { display: flex; flex-wrap: wrap; gap: clamp(0.7rem, 1.6vw, 1.2rem); align-items: flex-start; max-width: 52rem; }
+.strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(0.7rem, 1.6vw, 1.4rem); align-items: start; }
+.screen { margin: 0; display: grid; gap: 0.55rem; }
+.screenCap { font-family: var(--font-body); font-size: 0.74rem; line-height: 1.35; color: var(--color-ink-light); text-align: center; text-wrap: balance; }
 
-@media (max-width: 540px) {
-  .shots { gap: 0.6rem; }
+/* on narrow screens the three tall phones can't all be big — swipe them instead */
+@media (max-width: 600px) {
+  .strip {
+    grid-auto-flow: column; grid-template-columns: none; grid-auto-columns: 68%;
+    overflow-x: auto; scroll-snap-type: x mandatory; gap: 0.8rem;
+    padding-bottom: 0.4rem;
+  }
+  .screen { scroll-snap-align: start; }
 }
