@@ -1,6 +1,6 @@
 'use client'
 
-import { FieldSection, Ask, Prose, Split, Figure, Finding, useSeen, sys } from './kit'
+import { FieldSection, Ask, Prose, Split, Figure, Finding, sys } from './kit'
 import { birthPhoto } from '@/lib/cloudinary'
 import SecArchitecture from './SecArchitecture'
 import SecIteration from './SecIteration'
@@ -20,8 +20,9 @@ const SPINE = [
   { id: 'outcome', label: 'Outcome' },
 ]
 
-function Meta() {
-  const [ref, seen] = useSeen(0.2)
+/* Project credits — the metadata, now the masthead of the Brief (below the
+   progress bar) rather than its own competing band. */
+function Credits() {
   const rows = [
     ['role', 'UX/UI · research · copywriting · brand'],
     ['team', 'Lorin Anderberg · Michael Juan'],
@@ -29,11 +30,11 @@ function Meta() {
     ['client', 'Sarah Burns (MSW) · Tamar Krishnamurti (PhD)'],
   ]
   return (
-    <section ref={ref} className={`${b.meta} ${seen ? sys.in : ''}`}>
-      <dl className={b.metaList}>
-        {rows.map(([k, v]) => <div key={k} className={b.metaItem}><dt>{k}</dt><dd>{v}</dd></div>)}
-      </dl>
-    </section>
+    <dl className={`${b.credits} ${sys.up}`}>
+      {rows.map(([k, v]) => (
+        <div key={k} className={b.creditItem}><dt>{k}</dt><dd>{v}</dd></div>
+      ))}
+    </dl>
   )
 }
 
@@ -41,6 +42,7 @@ function Brief() {
   const birth = birthPhoto('circle', 1100) // Grey Art Weddings — two parents’ hands cradle a newborn foot, b&w
   return (
     <FieldSection id="brief" num="01" crumb="brief" when="week 1 · the ask" wide>
+      <Credits />
       <Split
         text={
           <>
@@ -163,7 +165,6 @@ function Close() {
 export default function BirthStoryBody() {
   return (
     <div className={sys.case}>
-      <Meta />
       <BirthStorySpine sections={SPINE} />
       <Brief />
       <Research />
