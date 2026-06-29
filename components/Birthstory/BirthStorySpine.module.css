@@ -9,11 +9,11 @@
   background: rgba(241, 242, 240, 0.92);
   -webkit-backdrop-filter: blur(8px);
   backdrop-filter: blur(8px);
-  border-bottom: 1px solid rgba(26, 67, 77, 0.14);
+  border-bottom: 1px solid var(--bs-rule, rgba(26, 67, 77, 0.3));
 }
 
 .list {
-  list-style: none; margin: 0 auto; max-width: 78rem;
+  list-style: none; margin: 0 auto; max-width: 92rem;
   padding: 0.8rem 0;
   display: flex; align-items: center; justify-content: space-between; gap: 0.4rem;
 }
@@ -25,17 +25,17 @@
   border: 0; background: transparent; cursor: pointer;
 }
 .num {
-  font-family: var(--font-body); font-size: 0.66rem; letter-spacing: 0.04em;
-  font-variant-numeric: tabular-nums; color: var(--color-ink-faint); opacity: 0.7;
-  transition: color var(--motion-fast) var(--ease-out), opacity var(--motion-fast) var(--ease-out);
+  font-family: var(--font-body); font-size: 0.74rem; letter-spacing: 0.04em;
+  font-variant-numeric: tabular-nums; color: var(--color-ink-light);
+  transition: color var(--motion-fast) var(--ease-out);
 }
 .label {
-  font-family: var(--font-body); font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase;
-  color: var(--color-ink-faint); opacity: 0.75;
-  transition: color var(--motion-fast) var(--ease-out), opacity var(--motion-fast) var(--ease-out);
+  font-family: var(--font-body); font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--color-ink-light);
+  transition: color var(--motion-fast) var(--ease-out);
 }
 
-.node:hover .num, .node:hover .label { opacity: 1; color: var(--color-ink); }
+.node:hover .num, .node:hover .label { color: var(--color-ink); }
 
 .on .num { color: var(--bs-teal-soft); opacity: 1; }
 .on .label { color: var(--bs-accent); opacity: 1; font-weight: 700; }
@@ -43,7 +43,7 @@
 .node:focus-visible { outline: 2px solid var(--bs-teal-soft); outline-offset: 3px; border-radius: 4px; }
 
 /* progress fill along the base */
-.track { position: relative; height: 2px; background: rgba(26, 67, 77, 0.12); }
+.track { position: relative; height: 2px; background: rgba(26, 67, 77, 0.18); }
 .fill {
   position: absolute; left: 0; top: 0; height: 100%;
   background: var(--bs-accent);

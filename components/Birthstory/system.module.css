@@ -9,7 +9,8 @@
 
 .case {
   --bs-teal: #1A434D;
-  --bs-teal-soft: #6D8F99;
+  --bs-teal-soft: #466F7B; /* darkened for AA-legible labels + less-faded accents */
+  --bs-rule: rgba(26, 67, 77, 0.3); /* page breaks / hairlines, clearly visible */
   --bs-blush: #DBADAD;
   --bs-peri: #B1C1F4;
   --bs-lav: #E6E5FD;
@@ -59,7 +60,7 @@
 }
 
 /* a quiet sub-label inside a section (e.g. "What testers said") */
-.eyebrow { font-family: var(--font-body); font-weight: 700; font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--bs-teal-soft); margin: 0; }
+.eyebrow { font-family: var(--font-body); font-weight: 700; font-size: 0.75rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--bs-teal-soft); margin: 0; }
 
 /* ── device frame (the polish bar; everything else rises to it) ── */
 .phone { position: relative; display: inline-block; padding: 6px; border-radius: 22px; background: #1d1d1f; box-shadow: 0 24px 48px -28px rgba(26, 67, 77, 0.55); }
@@ -79,7 +80,7 @@
 .baPane { display: grid; gap: 0.6rem; align-content: start; padding: clamp(1.1rem, 2vw, 1.6rem); border-radius: 16px; }
 .baBefore { background: #fff; box-shadow: inset 0 0 0 1px rgba(44, 44, 44, 0.08); }
 .baAfter { background: var(--bs-accent); color: var(--color-cream); }
-.baTag { font-family: var(--font-body); font-weight: 700; font-size: 0.66rem; letter-spacing: 0.18em; text-transform: uppercase; }
+.baTag { font-family: var(--font-body); font-weight: 700; font-size: 0.74rem; letter-spacing: 0.16em; text-transform: uppercase; }
 .baBefore .baTag { color: var(--color-ink-faint); }
 .baAfter .baTag { color: rgba(251, 249, 246, 0.7); }
 .baText { margin: 0; font-family: var(--font-heading); font-variation-settings: 'SOFT' 60, 'WONK' 0; font-size: clamp(1.05rem, 0.9rem + 0.5vw, 1.3rem); line-height: 1.3; }
@@ -128,12 +129,12 @@
 .fieldAlt { background-color: #EDEFEC; }
 .sheet { max-width: 60rem; margin: 0 auto; }
 /* wide sheet for split sections — lets the media column run to the right edge */
-.sheetWide { max-width: 78rem; }
+.sheetWide { max-width: 92rem; }
 
 .fieldHead {
   display: flex; align-items: baseline; gap: 0.85rem;
   padding-bottom: 0.95rem; margin-bottom: clamp(1.8rem, 4vw, 3rem);
-  border-bottom: 1px solid rgba(26, 67, 77, 0.22);
+  border-bottom: 1px solid var(--bs-rule);
   font-family: var(--font-body);
 }
 .fNum { font-size: 0.95rem; font-weight: 700; letter-spacing: 0.02em; color: var(--bs-accent); }
@@ -144,7 +145,7 @@
 
 /* question — curiosity first */
 .askBlock { display: grid; gap: 0.7rem; max-width: 40rem; }
-.askKicker { font-family: var(--font-body); font-weight: 600; font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--bs-teal-soft); }
+.askKicker { font-family: var(--font-body); font-weight: 600; font-size: 0.75rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--bs-teal-soft); }
 .ask {
   margin: 0;
   font-family: var(--font-heading); font-variation-settings: 'SOFT' 60, 'WONK' 0; font-weight: 400;
@@ -176,12 +177,12 @@
 .plateWide { max-width: 56rem; }
 .plateTab {
   position: absolute; top: -0.7rem; left: 1rem; padding: 0.15rem 0.55rem; border-radius: 3px;
-  background: var(--bs-accent); color: #fff; font-family: var(--font-body); font-size: 0.64rem; letter-spacing: 0.04em;
+  background: var(--bs-accent); color: #fff; font-family: var(--font-body); font-weight: 600; font-size: 0.72rem; letter-spacing: 0.04em;
 }
 .plateArt { grid-column: 1; background: #16323a; border-radius: 3px; padding: 0.6rem; display: grid; place-items: center; }
 .plateArt img { max-width: 100%; height: auto; display: block; }
 .plateArtLight { background: #fff; box-shadow: inset 0 0 0 1px rgba(26,67,77,0.08); }
-.plateCap { grid-column: 1; margin: 0.55rem 0 0; font-family: var(--font-body); font-size: 0.68rem; line-height: 1.4; color: var(--color-ink-faint); }
+.plateCap { grid-column: 1; margin: 0.55rem 0 0; font-family: var(--font-body); font-size: 0.78rem; line-height: 1.4; color: var(--color-ink-light); }
 .plateMargin {
   grid-column: 2; align-self: center; margin: 0; padding-left: 0.9rem;
   border-left: 2px solid var(--bs-teal-soft);
@@ -191,7 +192,7 @@
 /* shot — app screens shown in device frames, as figures (keeps the mockups she likes) */
 .shotRow { display: flex; flex-wrap: wrap; gap: clamp(0.8rem, 2vw, 1.6rem); align-items: flex-start; }
 .shot { display: grid; gap: 0.5rem; justify-items: start; }
-.shotCap { font-family: var(--font-body); font-size: 0.66rem; line-height: 1.4; color: var(--color-ink-faint); max-width: 22ch; }
+.shotCap { font-family: var(--font-body); font-size: 0.78rem; line-height: 1.4; color: var(--color-ink-light); max-width: 24ch; }
 
 /* friction — admits the open question */
 .friction {
@@ -199,7 +200,7 @@
   font-family: var(--font-body); font-size: 0.95rem; line-height: 1.6; color: var(--color-ink-light);
 }
 .friction b { font-weight: 700; color: var(--bs-accent); font-style: normal; }
-.frictionTag { display: inline-block; margin-right: 0.6rem; font-family: var(--font-body); font-size: 0.64rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--bs-teal-soft); }
+.frictionTag { display: inline-block; margin-right: 0.6rem; font-family: var(--font-body); font-weight: 600; font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--bs-teal-soft); }
 
 @media (max-width: 720px) {
   .plate, .plateNarrow { grid-template-columns: 1fr; transform: none; }
@@ -211,8 +212,8 @@
    media column that commands the right side. The visuals carry the section. ── */
 .split {
   display: grid;
-  grid-template-columns: minmax(0, 21rem) minmax(0, 1fr);
-  gap: clamp(1.6rem, 4vw, 4rem);
+  grid-template-columns: minmax(0, 26rem) minmax(0, 1fr);
+  gap: clamp(2rem, 6vw, 7rem);
   align-items: start;
 }
 .splitText { display: grid; gap: clamp(1.3rem, 3vw, 2.2rem); align-content: start; }
@@ -223,7 +224,7 @@
 .figTag {
   position: absolute; top: 0.7rem; left: 0.7rem; z-index: 2;
   padding: 0.18rem 0.6rem; border-radius: 3px; background: var(--bs-accent); color: #fff;
-  font-family: var(--font-body); font-size: 0.62rem; letter-spacing: 0.06em; text-transform: uppercase;
+  font-family: var(--font-body); font-weight: 600; font-size: 0.72rem; letter-spacing: 0.06em; text-transform: uppercase;
 }
 .figTagAlt { background: var(--bs-teal-soft); }
 .figArt {
@@ -233,10 +234,10 @@
 .figArt img { display: block; width: 100%; height: auto; }
 .figArtScreen { background: #16323a; } /* matte behind screen mockups that don't fill */
 .figSmall { justify-self: start; max-width: min(26rem, 70%); }
-/* portrait photo: large but contained, so a 2:3 image doesn't tower; centered
-   in the media column so it still commands the right side */
-.figPortrait { justify-self: center; max-width: min(33rem, 100%); }
-.figCap { margin: 0; font-family: var(--font-body); font-size: 0.68rem; line-height: 1.45; color: var(--color-ink-faint); }
+/* portrait photo: large but contained, anchored to the right edge so it fills
+   the right side instead of floating in the middle of a wide media column */
+.figPortrait { justify-self: end; max-width: min(40rem, 100%); }
+.figCap { margin: 0; font-family: var(--font-body); font-size: 0.78rem; line-height: 1.45; color: var(--color-ink-light); }
 .figByline { display: block; margin-top: 0.25rem; letter-spacing: 0.04em; color: var(--bs-teal-soft); }
 
 /* finding — the compressed takeaway (replaces paragraphs); 20% copy, full weight */
