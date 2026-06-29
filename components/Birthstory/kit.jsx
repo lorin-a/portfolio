@@ -126,4 +126,46 @@ export function Friction({ tag = 'still open', children }) {
   return <p className={`${s.friction} ${s.up}`}><span className={s.frictionTag}>{tag}</span>{children}</p>
 }
 
+/* ── paired: the human context (the need) ⇄ the design answer (screen/evidence) ──
+   Left column is a contextual photograph that places the app inside the lived
+   birth experience; right column is the screen or evidence it produced. The
+   photo carries a Pexels byline. Pass photo.src empty to render the labeled
+   placeholder slot (structure is real; the image swaps in later). */
+export function Pair({ photo = {}, tag = 'the need', answerTag, flip = false, children }) {
+  const hasImg = Boolean(photo.src)
+  return (
+    <div className={`${s.pair} ${flip ? s.pairFlip : ''} ${s.up}`}>
+      <figure className={s.pairNeed}>
+        <span className={s.pairTag}>{tag}</span>
+        <div className={`${s.pairPhoto} ${hasImg ? '' : s.pairPhotoEmpty}`}>
+          {hasImg
+            ? <img src={photo.src} alt={photo.alt || ''} loading="lazy" draggable="false" />
+            : <span className={s.pairPending}>family photo · to place</span>}
+        </div>
+        {(photo.cap || photo.byline) && (
+          <figcaption className={s.pairCap}>
+            {photo.cap}
+            {photo.byline && <span className={s.pairByline}>Photo · {photo.byline} / Pexels</span>}
+          </figcaption>
+        )}
+      </figure>
+      <div className={s.pairAnswer}>
+        {answerTag && <span className={`${s.pairTag} ${s.pairTagAlt}`}>{answerTag}</span>}
+        {children}
+      </div>
+    </div>
+  )
+}
+
+/* ── finding: the compressed takeaway that replaces a paragraph. One emphatic
+   line; bold carries the accent. This is the 20% copy doing the work. ── */
+export function Finding({ kicker = 'the finding', children }) {
+  return (
+    <div className={`${s.finding} ${s.up}`}>
+      <span className={s.askKicker}>{kicker}</span>
+      <p className={s.findingText}>{children}</p>
+    </div>
+  )
+}
+
 export { s as sys }

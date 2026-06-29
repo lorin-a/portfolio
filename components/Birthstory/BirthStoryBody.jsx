@@ -1,6 +1,7 @@
 'use client'
 
-import { FieldSection, Ask, Prose, Friction, useSeen, sys } from './kit'
+import { FieldSection, Ask, Prose, Pair, Finding, useSeen, sys } from './kit'
+import { birthPhoto } from '@/lib/cloudinary'
 import SecArchitecture from './SecArchitecture'
 import SecIteration from './SecIteration'
 import SecFeatures from './SecFeatures'
@@ -83,23 +84,25 @@ function Research() {
   return (
     <FieldSection id="research" num="02" crumb="research" when="week 2 · interviews" alt>
       <Ask>What does a parent actually need in the <em>fog</em> right after?</Ask>
-      <Prose>
-        I interviewed seven parents. I expected a wish-list of features. What I heard instead was that
-        many of their births were traumatic, that they lacked any tool to process them — and that in the
-        days afterward, another busy app was the last thing they had room for.
-      </Prose>
 
-      <figure className={`${b.frames} ${sys.up}`}>
+      {/* PAIR — the lived moment (Saul Siguenza, Pexels) ⇄ the evidence we gathered. */}
+      <Pair
+        tag="the moment"
+        answerTag="the evidence"
+        photo={{
+          ...birthPhoto('fog'),
+          alt: 'An exhausted parent rests cheek to cheek with a swaddled newborn in the hours just after birth.',
+          cap: 'the hours the app is built for: newborn here, the birth already receding',
+        }}
+      >
         <img src="https://res.cloudinary.com/dc17mvdyv/image/upload/v1782679668/UX_Interview.jpg" alt="A parent interview over video call; the interviewee’s tile is blurred for privacy." loading="lazy" />
-        <img src="https://res.cloudinary.com/dc17mvdyv/image/upload/v1782679669/UX_Interview_2.jpg" alt="A second parent interview over video call; the interviewee’s tile is blurred for privacy." loading="lazy" />
-        <figcaption>interviews · 7 parents · interviewee blurred for privacy</figcaption>
-      </figure>
+        <figcaption className={sys.shotCap}>interviews · 7 parents · interviewee blurred for privacy</figcaption>
+      </Pair>
 
-      <Prose>
-        So the finding that set the whole direction wasn’t a feature at all. It was a <b>constraint</b>:
-        less, not more. Everything after this had to earn its place against a tired, grieving, overjoyed
-        person who didn’t want homework.
-      </Prose>
+      <Finding kicker="what set the whole direction">
+        Not a feature. A <b>constraint</b>: many of these births were hard, with no place to process
+        them, and no room afterward for another busy app. The work became <b>less, not more</b>.
+      </Finding>
     </FieldSection>
   )
 }
