@@ -1,3 +1,13 @@
+/* Features — an interactive tour up top, then each decision as a balanced row. */
+
+.tourIntro { display: grid; gap: 0.5rem; }
+.tourLede { margin: 0; max-width: 44ch; font-family: var(--font-heading); font-variation-settings: 'SOFT' 60, 'WONK' 0; font-weight: 400; font-size: clamp(1.15rem, 1rem + 0.6vw, 1.55rem); line-height: 1.25; color: var(--color-ink); text-wrap: balance; }
+
+.decisionsHead {
+  margin: 0; padding-top: clamp(1.6rem, 4vw, 2.6rem); border-top: 1px solid var(--bs-rule);
+  font-family: var(--font-body); font-size: 0.78rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--bs-teal-soft);
+}
+
 /* Features — each decision is a balanced row: question + reasoning on one side,
    the real screen(s) shown big on the other, anchored to opposite edges. */
 

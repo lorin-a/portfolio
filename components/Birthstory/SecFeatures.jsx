@@ -1,6 +1,7 @@
 'use client'
 
 import { FieldSection, Ask, Prose, sys } from './kit'
+import OnboardingTour from './OnboardingTour'
 import styles from './SecFeatures.module.css'
 
 /* 05 — Features, each led by the question that produced it. Real screens shown
@@ -24,7 +25,7 @@ const FEATURES = [
   {
     q: <>Where do these memories go if the app <em>disappears</em>?</>,
     prose: <>One parent said it would be tragic to lose these moments if the app went away. That stuck. So the record can leave the app entirely: a printed Birth Story Book, or a free PDF. The memory never depends on us surviving.</>,
-    shots: [['/images/birthstory/evolution/screens/v3-4.png', 'The Birth Story Book screen: order a keepsake or export a PDF.', 'birth-story-book']],
+    shots: [['/images/birthstory/hero/phone-book.jpg', 'The Birth Story Book screen: order a keepsake or export a PDF.', 'birth-story-book']],
   },
 ]
 
@@ -43,6 +44,14 @@ function Screen({ src, alt, cap, solo }) {
 export default function SecFeatures() {
   return (
     <FieldSection id="features" num="05" crumb="features" when="the product, decided" wide>
+      <div className={styles.tourIntro}>
+        <span className={sys.askKicker}>take the tour</span>
+        <p className={styles.tourLede}>What shipped: four ways in, walked one at a time. Drive it yourself.</p>
+      </div>
+      <OnboardingTour />
+
+      <p className={styles.decisionsHead}>Each of these was a decision.</p>
+
       {FEATURES.map((f, i) => (
         <div key={i} className={styles.feat}>
           <div className={styles.text}>
