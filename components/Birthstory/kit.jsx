@@ -89,7 +89,7 @@ export function FieldSection({ id, num, crumb, when, alt = false, wide = false, 
 export function Ask({ kicker = 'the question', children }) {
   return (
     <div className={`${s.askBlock} ${s.up}`}>
-      <span className={s.askKicker}>{kicker}</span>
+      {kicker && <span className={s.askKicker}>{kicker}</span>}
       <p className={s.ask}>{children}</p>
     </div>
   )

@@ -11,24 +11,17 @@
 .metaItem dd { margin: 0; font-family: var(--font-body); font-size: 0.82rem; line-height: 1.4; color: var(--color-ink); }
 @media (max-width: 720px) { .metaList { grid-template-columns: 1fr 1fr; } }
 
-/* framing band — the honest contract: this is a concept, and what it documents */
-.framing {
-  padding: clamp(2.4rem, 6vw, 4rem) var(--bs-pad);
-  background: #F1F2F0;
-  border-bottom: 1px solid rgba(26, 67, 77, 0.12);
+/* brief — the lede (setup) and the tasking line that frame the big question */
+.briefLede {
+  margin: 0; max-width: 34ch;
+  font-family: var(--font-body); font-size: clamp(1rem, 0.95rem + 0.25vw, 1.12rem);
+  line-height: 1.6; color: var(--color-ink-light); text-wrap: pretty;
 }
-.framingText {
-  max-width: 52rem; margin: 0 auto; padding-left: clamp(1rem, 2vw, 1.6rem);
-  border-left: 2px solid var(--bs-teal-soft, #6D8F99);
-  font-family: var(--font-heading); font-variation-settings: 'SOFT' 60, 'WONK' 0; font-weight: 400;
-  font-size: clamp(1.15rem, 1rem + 0.7vw, 1.5rem); line-height: 1.45; letter-spacing: -0.008em;
-  color: var(--color-ink-light); text-wrap: pretty;
+.briefTask {
+  margin: 0; max-width: 34ch;
+  font-family: var(--font-body); font-size: 0.95rem; line-height: 1.55; color: var(--color-ink-light); text-wrap: pretty;
 }
-.framingText b { font-weight: 600; color: var(--color-ink); }
-.framingKicker {
-  display: block; margin-bottom: 0.7rem;
-  font-family: var(--font-body); font-size: 0.66rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--bs-teal-soft, #6D8F99);
-}
+.briefTask b { color: var(--bs-accent); font-weight: 700; }
 
 /* function → feel — a contained spec the eye stops on: every function the app
    had to perform, paired with the feeling it had to land. A clear artifact. */

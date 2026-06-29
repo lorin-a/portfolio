@@ -37,20 +37,6 @@ function Meta() {
   )
 }
 
-function Framing() {
-  const [ref, seen] = useSeen(0.3)
-  return (
-    <section ref={ref} className={`${b.framing} ${seen ? sys.in : ''}`}>
-      <p className={`${b.framingText} ${sys.up}`}>
-        <span className={b.framingKicker}>what this is</span>
-        A concept, not a built product: screen mockups of a flow, with a few key features tested with
-        parents. That is the whole of it. What it holds in abundance is potential, and the thinking
-        that got there. <b>Documenting that thinking is the point.</b>
-      </p>
-    </section>
-  )
-}
-
 function Brief() {
   const birth = birthPhoto('circle', 1100) // Grey Art Weddings — two parents’ hands cradle a newborn foot, b&w
   return (
@@ -58,12 +44,15 @@ function Brief() {
       <Split
         text={
           <>
-            <Ask>What does a <em>birth</em> need that a pregnancy app doesn’t?</Ask>
-            <Finding kicker="the brief, narrowed">
-              Myana already held pregnancy and postpartum. The birth itself gets <b>eclipsed</b> by the
-              newborn the moment they arrive. So the brief stayed narrow on purpose: a companion just
-              for capturing and making sense of the <b>Birth Story</b>.
-            </Finding>
+            <p className={`${b.briefLede} ${sys.up}`}>
+              Parents who use Myana, a pregnancy and postpartum app, noted a gap in their
+              experience—giving birth. Birth experiences vary widely and hardly go according to plan.
+              It is a complex physical and emotional time that often gets forgotten when the newborn arrives.
+            </p>
+            <Ask kicker={null}>How might we help parents document, reflect, and make sense of their birth experience?</Ask>
+            <p className={`${b.briefTask} ${sys.up}`}>
+              We were tasked with creating and pitching a concept for Myana’s companion app: <b>Birth Story</b>.
+            </p>
           </>
         }
       >
@@ -176,7 +165,6 @@ export default function BirthStoryBody() {
     <div className={sys.case}>
       <BirthStorySpine sections={SPINE} />
       <Meta />
-      <Framing />
       <Brief />
       <Research />
       <SecArchitecture />
