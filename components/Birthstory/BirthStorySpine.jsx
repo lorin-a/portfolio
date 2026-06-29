@@ -4,11 +4,10 @@ import { useEffect, useRef, useState } from 'react'
 import styles from './BirthStorySpine.module.css'
 
 /* ============================================================================
-   BirthStorySpine — the case study's backbone. A slim fixed rail (desktop)
-   that lists the beats, tracks where you are as you scroll, and lets you jump.
-   It gives the document a visible structure and a sense of the whole — the
-   "spine" the editorial beats hang from. Hidden on narrow viewports (the
-   centered column has no room); the content stays fully navigable without it.
+   BirthStorySpine — the case study's backbone. A horizontal progress bar that
+   sits after the metadata and sticks to the top (below the nav) as you scroll,
+   tracking which beat you're in and letting you jump. Horizontal so the left
+   gutter is free for content. A fill at its base shows how far through you are.
    ============================================================================ */
 
 export default function BirthStorySpine({ sections }) {
@@ -42,8 +41,11 @@ export default function BirthStorySpine({ sections }) {
     el.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' })
   }
 
+  const activeIndex = sections.findIndex((s) => s.id === active)
+  const pct = activeIndex >= 0 ? ((activeIndex + 1) / sections.length) * 100 : 0
+
   return (
-    <nav className={`${styles.spine} ${active ? styles.shown : ''}`} aria-label="Case study sections">
+    <nav className={styles.spine} aria-label="Case study sections">
       <ol className={styles.list}>
         {sections.map((s, i) => (
           <li key={s.id} className={styles.item}>
@@ -52,13 +54,15 @@ export default function BirthStorySpine({ sections }) {
               onClick={() => jump(s.id)}
               aria-current={active === s.id ? 'true' : undefined}
             >
-              <span className={styles.dot} aria-hidden="true" />
               <span className={styles.num} aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
               <span className={styles.label}>{s.label}</span>
             </button>
           </li>
         ))}
       </ol>
+      <div className={styles.track} aria-hidden="true">
+        <div className={styles.fill} style={{ width: `${pct}%` }} />
+      </div>
     </nav>
   )
 }

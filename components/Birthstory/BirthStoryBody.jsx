@@ -163,8 +163,8 @@ function Close() {
 export default function BirthStoryBody() {
   return (
     <div className={sys.case}>
-      <BirthStorySpine sections={SPINE} />
       <Meta />
+      <BirthStorySpine sections={SPINE} />
       <Brief />
       <Research />
       <SecArchitecture />
