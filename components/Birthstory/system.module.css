@@ -240,6 +240,9 @@
 .figPortrait { justify-self: end; max-width: min(40rem, 100%); }
 .figCap { margin: 0; font-family: var(--font-body); font-size: 0.78rem; line-height: 1.45; color: var(--color-ink-light); }
 .figByline { display: block; margin-top: 0.25rem; letter-spacing: 0.04em; color: var(--bs-teal-soft); }
+/* native diagram artifact — drawn in the page palette, no raster screen behind it */
+.figDiagram { position: relative; }
+.figTagOnPanel { background: var(--bs-teal); } /* chip sits over a light panel, keep it solid teal */
 
 /* finding — the compressed takeaway (replaces paragraphs); 20% copy, full weight */
 .finding { display: grid; gap: 0.55rem; max-width: 40rem; }

@@ -1,6 +1,7 @@
 'use client'
 
 import { FieldSection, Ask, Finding, Figure, Split, Friction } from './kit'
+import { IaV1, IaFinal } from './IaDiagrams'
 import { birthPhoto } from '@/lib/cloudinary'
 
 /* 03 — Architecture. Question-led: what should a parent meet first? The first
@@ -34,10 +35,10 @@ export default function SecArchitecture() {
 
       <Figure
         tag="first answer"
-        src="/images/birthstory/system/ia-v1.png"
-        alt="V1 information architecture: a wide branching questionnaire fanning into conditional paths for phase, place, and entry type before a first note."
-        cap="ia-v1 · figma · a branching questionnaire, conditional questions before a single entry."
-      />
+        cap="ia-v1 · a branching questionnaire, conditional questions before a single entry."
+      >
+        <IaV1 />
+      </Figure>
       <Finding kicker="what testing showed">
         It read like a form at the front desk while you were still catching your breath.
       </Finding>
@@ -46,10 +47,10 @@ export default function SecArchitecture() {
 
       <Figure
         tag="what shipped"
-        src="/images/birthstory/system/ia-final.png"
-        alt="Final information architecture: five tabs — Notes, Care Pod, a center New Note button, Book, and Search."
-        cap="ia-final · figma · five tabs, a + in the dead center, nothing to answer before you begin."
-      />
+        cap="ia-final · five tabs, a + in the dead center, nothing to answer before you begin."
+      >
+        <IaFinal />
+      </Figure>
 
       <Friction>
         Should <b>New Note</b> be its own tab, or a floating <b>+</b>? It tested fine as a tab, but I

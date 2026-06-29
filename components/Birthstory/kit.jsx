@@ -141,16 +141,20 @@ export function Split({ text, children }) {
 /* ── figure: one large artifact — a context photograph or a screen mockup —
    shown big, with a documentary caption and (for photos) a Pexels byline.
    `tag` is the corner chip ("the moment", "the flow", "the evidence"). ── */
-export function Figure({ src, alt = '', tag, cap, byline, photo = false, small = false, portrait = false, ratio, focus, className = '' }) {
+export function Figure({ src, alt = '', tag, cap, byline, photo = false, small = false, portrait = false, ratio, focus, className = '', children }) {
   return (
     <figure className={`${s.fig} ${small ? s.figSmall : ''} ${portrait ? s.figPortrait : ''} ${className}`}>
-      {tag && <span className={`${s.figTag} ${small ? s.figTagAlt : ''}`}>{tag}</span>}
-      <div
-        className={`${s.figArt} ${ratio ? s.figArtCrop : ''} ${photo ? '' : s.figArtScreen}`}
-        style={ratio ? { aspectRatio: ratio } : undefined}
-      >
-        <img src={src} alt={alt} loading="lazy" draggable="false" style={focus ? { objectPosition: focus } : undefined} />
-      </div>
+      {tag && <span className={`${s.figTag} ${small ? s.figTagAlt : ''} ${children ? s.figTagOnPanel : ''}`}>{tag}</span>}
+      {children ? (
+        <div className={s.figDiagram}>{children}</div>
+      ) : (
+        <div
+          className={`${s.figArt} ${ratio ? s.figArtCrop : ''} ${photo ? '' : s.figArtScreen}`}
+          style={ratio ? { aspectRatio: ratio } : undefined}
+        >
+          <img src={src} alt={alt} loading="lazy" draggable="false" style={focus ? { objectPosition: focus } : undefined} />
+        </div>
+      )}
       {(cap || byline) && (
         <figcaption className={s.figCap}>
           {cap}
