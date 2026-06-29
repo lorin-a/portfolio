@@ -215,12 +215,12 @@
    media column that commands the right side. The visuals carry the section. ── */
 .split {
   display: grid;
-  grid-template-columns: minmax(0, 19rem) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 21rem) minmax(0, 1fr);
   gap: clamp(1.6rem, 4vw, 4rem);
   align-items: start;
 }
 .splitText { display: grid; gap: clamp(1.3rem, 3vw, 2.2rem); align-content: start; }
-.splitMedia { display: grid; gap: clamp(1rem, 2.4vw, 1.8rem); min-width: 0; }
+.splitMedia { display: grid; gap: clamp(1.4rem, 3vw, 2.6rem); min-width: 0; }
 
 /* large figure — the artifact shown big (photo or screen mockup) */
 .fig { position: relative; margin: 0; display: grid; gap: 0.6rem; }

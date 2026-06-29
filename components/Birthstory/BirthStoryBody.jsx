@@ -52,7 +52,7 @@ function Framing() {
 }
 
 function Brief() {
-  const birth = birthPhoto('circle') // Grey Art Weddings — two parents’ hands cradle a newborn foot, b&w
+  const birth = birthPhoto('circle', 1100) // Grey Art Weddings — two parents’ hands cradle a newborn foot, b&w
   return (
     <FieldSection id="brief" num="01" crumb="brief" when="week 1 · the ask" wide>
       <Split
@@ -91,7 +91,7 @@ function Brief() {
 }
 
 function Research() {
-  const fog = birthPhoto('fog')
+  const fog = birthPhoto('fog', 1400)
   return (
     <FieldSection id="research" num="02" crumb="research" when="week 2 · interviews" alt wide>
       <Split
@@ -115,8 +115,7 @@ function Research() {
         />
         <Figure
           tag="the evidence"
-          small
-          src="https://res.cloudinary.com/dc17mvdyv/image/upload/f_auto,q_auto,w_640/v1782679668/UX_Interview.jpg"
+          src="https://res.cloudinary.com/dc17mvdyv/image/upload/f_auto,q_auto,w_1300/v1782679668/UX_Interview.jpg"
           alt="A parent interview over video call; the interviewee’s tile is blurred for privacy."
           cap="interviews · 7 parents · interviewee blurred for privacy"
         />
