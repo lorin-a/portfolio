@@ -59,18 +59,19 @@ function Brief() {
         }
       >
         <Figure
-          tag="the birth itself"
+          tag="context"
           photo
-          portrait
+          ratio="3 / 2"
+          focus="center 42%"
           src={birth.src}
           byline={birth.byline}
           alt="Two parents’ hands, one darker and one lighter, cradle a newborn’s tiny foot."
-          cap="the hours a pregnancy app never sees"
+          cap="The hours around birth that a pregnancy app doesn’t cover."
         />
       </Split>
 
       <div className={`${b.ff} ${sys.up}`}>
-        <p className={b.ffHead}>Every function had a feeling to land</p>
+        <p className={b.ffHead}>Our design values</p>
         <ul className={b.ffList}>
           {[['collect usable data', 'intuitive & calming'], ['tell a compelling story', 'easy to navigate'], ['record the medical detail', 'empathetic & trauma-informed'], ['prompt reflection', 'therapeutic']].map(([fn, feel]) => (
             <li key={fn}><span className={b.fn}>{fn}</span><span className={b.arrow} aria-hidden="true">→</span><span className={b.feel}>{feel}</span></li>
@@ -97,18 +98,18 @@ function Research() {
         }
       >
         <Figure
-          tag="the moment"
+          tag="context"
           photo
           src={fog.src}
           byline={fog.byline}
           alt="An exhausted parent rests cheek to cheek with a swaddled newborn in the hours just after birth."
-          cap="the hours the app is built for: newborn here, the birth already receding"
+          cap="A parent and newborn in the first hours after birth."
         />
         <Figure
-          tag="the evidence"
+          tag="interviews"
           src="https://res.cloudinary.com/dc17mvdyv/image/upload/f_auto,q_auto,w_1300/v1782679668/UX_Interview.jpg"
           alt="A parent interview over video call; the interviewee’s tile is blurred for privacy."
-          cap="interviews · 7 parents · interviewee blurred for privacy"
+          cap="7 parent interviews · interviewee blurred for privacy"
         />
       </Split>
     </FieldSection>
