@@ -1,0 +1,71 @@
+'use client'
+
+import { useEffect, useRef, useState } from 'react'
+import s from './system.module.css'
+
+/* Shared kit for the Birth Story case study — the predictable system.
+   Every section composes Section + SectionHead and the small primitives below. */
+
+export function useSeen(threshold = 0.2) {
+  const ref = useRef(null)
+  const [seen, setSeen] = useState(false)
+  useEffect(() => {
+    const el = ref.current
+    if (!el) return
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) { setSeen(true); return }
+    const o = new IntersectionObserver(([e]) => { if (e.isIntersecting) { setSeen(true); o.disconnect() } }, { threshold })
+    o.observe(el)
+    return () => o.disconnect()
+  }, [threshold])
+  return [ref, seen]
+}
+
+/* tone: 'cream' | 'shade' | 'tint' */
+export function Section({ id, tone = 'cream', threshold = 0.15, className = '', children }) {
+  const [ref, seen] = useSeen(threshold)
+  const toneCls = tone === 'shade' ? s.shade : tone === 'tint' ? s.tint : ''
+  return (
+    <section ref={ref} id={id} className={`${s.section} ${toneCls} ${seen ? s.in : ''} ${className}`}>
+      <div className={s.inner}>{children}</div>
+    </section>
+  )
+}
+
+export function SectionHead({ num, label, headline, takeaway, wide = false }) {
+  return (
+    <header className={`${s.head} ${wide ? s.headWide : ''}`}>
+      <p className={`${s.label} ${s.up}`}><span className={s.labelNum}>{num}</span>{label}</p>
+      {headline && <h2 className={`${s.headline} ${s.up}`} style={{ '--d': '90ms' }}>{headline}</h2>}
+      {takeaway && <p className={`${s.takeaway} ${s.up}`} style={{ '--d': '180ms' }}>{takeaway}</p>}
+    </header>
+  )
+}
+
+export function Phone({ src, alt, width = '220px', caption, className = '' }) {
+  return (
+    <figure className={className} style={{ margin: 0, display: 'grid', justifyItems: 'center' }}>
+      <span className={s.phone} style={{ width }}>
+        <span className={s.phoneNotch} aria-hidden="true" />
+        <span className={s.phoneScreen}><img src={src} alt={alt} loading="lazy" draggable="false" /></span>
+      </span>
+      {caption && <figcaption className={s.cap}>{caption}</figcaption>}
+    </figure>
+  )
+}
+
+export function Note({ children, who }) {
+  return <p className={s.note}>{children}{who && <span className={s.noteWho}>{who}</span>}</p>
+}
+
+export function BeforeAfter({ before, after, why }) {
+  return (
+    <div className={s.ba}>
+      <div className={`${s.baPane} ${s.baBefore}`}><span className={s.baTag}>Before</span><p className={s.baText}>{before}</p></div>
+      <span className={s.baArrow} aria-hidden="true">→</span>
+      <div className={`${s.baPane} ${s.baAfter}`}><span className={s.baTag}>After</span><p className={s.baText}>{after}</p></div>
+      {why && <p className={s.baWhy}>{why}</p>}
+    </div>
+  )
+}
+
+export { s as sys }

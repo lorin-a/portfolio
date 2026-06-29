@@ -1,255 +1,177 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
-import DeviceMockup from '@/components/CaseStudy/DeviceMockup'
-import SystemEvolution from './SystemEvolution'
-import EvolutionViewer from './EvolutionViewer'
-import styles from './BirthStoryBody.module.css'
+import { Section, SectionHead, BeforeAfter, useSeen, sys } from './kit'
+import SecArchitecture from './SecArchitecture'
+import SecIteration from './SecIteration'
+import SecFeatures from './SecFeatures'
+import SecBrand from './SecBrand'
+import BirthStorySpine from './BirthStorySpine'
+import b from './BirthStoryBody.module.css'
 
-/* ============================================================================
-   Birth Story — case-study BODY. Shared bones (the beat recipe), bespoke flesh
-   (asset menu). Composition has RHYTHM: a ruled meta masthead leads, claims sit
-   centred, device beats go split (alternating sides), tone alternates cream ↔
-   shade for chapters — so it reads distinct from the airy hero, not one endless
-   centred column. Copy drafted close to Lorin's words; headings hers to bless.
-   ============================================================================ */
-
-function useSeen(threshold = 0.25) {
-  const ref = useRef(null)
-  const [seen, setSeen] = useState(false)
-  useEffect(() => {
-    const el = ref.current
-    if (!el) return
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) { setSeen(true); return }
-    const o = new IntersectionObserver(
-      ([e]) => { if (e.isIntersecting) { setSeen(true); o.disconnect() } },
-      { threshold }
-    )
-    o.observe(el)
-    return () => o.disconnect()
-  }, [threshold])
-  return [ref, seen]
-}
-
-/* the recipe — layout: 'center' | 'split'; flip puts the asset first; tone shades */
-function Beat({ kicker, statement, children, depth, attr, layout = 'center', flip = false, tone }) {
-  const [ref, seen] = useSeen()
-  const cls = [styles.beat, tone === 'shade' && styles.shade, seen && styles.in].filter(Boolean).join(' ')
-
-  if (layout === 'split') {
-    return (
-      <section ref={ref} className={cls}>
-        <div className={`${styles.split} ${flip ? styles.flip : ''}`}>
-          <div className={styles.textCol}>
-            {kicker && <p className={styles.kicker}>{kicker}</p>}
-            {statement && <h2 className={styles.statement}>{statement}</h2>}
-            {depth && <p className={styles.depth}>{depth}{attr && <span className={styles.attr}>{attr}</span>}</p>}
-          </div>
-          <div className={styles.assetCol}>{children}</div>
-        </div>
-      </section>
-    )
-  }
-
-  return (
-    <section ref={ref} className={cls}>
-      <div className={styles.col}>
-        {kicker && <p className={styles.kicker}>{kicker}</p>}
-        {statement && <h2 className={styles.statement}>{statement}</h2>}
-        {children && <div className={styles.assetWrap}>{children}</div>}
-        {depth && <p className={styles.depth}>{depth}{attr && <span className={styles.attr}>{attr}</span>}</p>}
-      </div>
-    </section>
-  )
-}
+const SPINE = [
+  { id: 'brief', label: 'Brief' },
+  { id: 'research', label: 'Research' },
+  { id: 'architecture', label: 'Architecture' },
+  { id: 'iteration', label: 'Iteration' },
+  { id: 'features', label: 'Features' },
+  { id: 'voice', label: 'Voice' },
+  { id: 'brand', label: 'Brand' },
+  { id: 'outcome', label: 'Outcome' },
+]
 
 function Meta() {
-  const rows = [
-    ['Role', 'UX/UI Design, UX Research, Copywriting, Brand Identity'],
-    ['Timeline', '6-week graduate studio sprint'],
-    ['Team', 'Lorin Anderberg, Michael Juan'],
-    ['Client', 'Sarah Burns (MSW, LSW) · Tamar Krishnamurti (PhD)'],
-    ['Context', 'CMU MA in Design · Studio II: Intro to IXD'],
-    ['Outcome', 'Preliminary R&D for a Birth Story app, to be built'],
-  ]
   const [ref, seen] = useSeen(0.2)
+  const rows = [
+    ['Role', 'UX/UI · Research · Copywriting · Brand'],
+    ['Team', 'Lorin Anderberg · Michael Juan'],
+    ['Timeline', '6-week graduate studio'],
+    ['Client', 'Sarah Burns (MSW) · Tamar Krishnamurti (PhD)'],
+    ['Context', 'CMU MA Design · Studio II: IXD'],
+    ['Outcome', 'R&D for an app the client intends to build'],
+  ]
   return (
-    <section ref={ref} className={`${styles.metaSection} ${seen ? styles.in : ''}`}>
-      <dl className={styles.meta}>
-        {rows.map(([k, v]) => (
-          <div key={k} className={styles.metaItem}><dt>{k}</dt><dd>{v}</dd></div>
+    <section ref={ref} className={`${b.meta} ${seen ? sys.in : ''}`}>
+      <dl className={b.metaList}>
+        {rows.map(([k, v], i) => (
+          <div key={k} className={`${b.metaItem} ${sys.up}`} style={{ '--d': `${i * 50}ms` }}><dt>{k}</dt><dd>{v}</dd></div>
         ))}
       </dl>
     </section>
   )
 }
 
-function ActDivider({ act, name }) {
-  const [ref, seen] = useSeen(0.4)
+function Brief() {
+  const cols = [
+    ['Requirements', ['Gather the story, the medical facts, the context', 'Help a parent build the birth narrative', 'Log feelings; make room for meaning', 'Support processing, not just recording']],
+    ['Our approach', ['Appropriate', 'Supportive', 'Inviting', 'Trauma-informed', 'Easy to understand', 'Useful']],
+    ['Deliverables', ['Four flows: onboard, reflect, document, collect', 'A brand that echoes Myana', 'The keepsake Birth Story Book', 'A client presentation']],
+  ]
+  const ff = [
+    ['Collect usable data', 'Intuitive & calming'],
+    ['Tell a compelling story', 'Easy to navigate'],
+    ['Record the medical record', 'Empathetic & trauma-informed'],
+    ['Prompt reflection', 'Therapeutic'],
+  ]
   return (
-    <section ref={ref} className={`${styles.act} ${styles.shade} ${seen ? styles.in : ''}`}>
-      <p className={styles.actNum}>Act {act}</p>
-      <p className={styles.actName}>{name}</p>
-    </section>
+    <Section id="brief" tone="cream">
+      <SectionHead
+        num="01"
+        label="The brief"
+        headline={<>A micro-app for the birth, <em>and only the birth</em>.</>}
+        takeaway="The ask: design a companion to Myana’s pregnancy and postpartum apps, focused entirely on capturing and reflecting on the Birth Story. These were the bars we held it to."
+        wide
+      />
+      <div className={`${b.cols} ${sys.up}`} style={{ '--d': '220ms' }}>
+        {cols.map(([title, items]) => (
+          <div key={title} className={b.card}>
+            <p className={b.cardLabel}>{title}</p>
+            <ul className={b.cardList}>{items.map((it) => <li key={it}>{it}</li>)}</ul>
+          </div>
+        ))}
+      </div>
+      <div className={`${b.ff} ${sys.up}`} style={{ '--d': '320ms' }}>
+        <p className={b.ffLabel}>Every function had a feeling to land</p>
+        <ul className={b.ffList}>
+          {ff.map(([fn, feel]) => (
+            <li key={fn} className={b.ffRow}><span className={b.ffFn}>{fn}</span><span className={b.ffArrow} aria-hidden="true">→</span><span className={b.ffFeel}>{feel}</span></li>
+          ))}
+        </ul>
+      </div>
+    </Section>
   )
 }
 
-/* ── assets ──────────────────────────────────────────────── */
-function StatRow({ items }) {
+function Research() {
   return (
-    <div className={styles.statRow}>
-      {items.map(([n, c]) => (
-        <div key={c} className={styles.stat}><span className={styles.statNum}>{n}</span><span className={styles.statCap}>{c}</span></div>
-      ))}
-    </div>
+    <Section id="research" tone="tint">
+      <SectionHead
+        num="02"
+        label="Research"
+        headline={<>Postpartum needs <em>less</em>, not more.</>}
+        takeaway="We interviewed seven parents. Many described their births as traumatic and said they lacked the tools to process them — and that in the fog afterward, another busy app was the last thing they needed. That finding set the whole direction."
+        wide
+      />
+      <div className={`${b.research} ${sys.up}`} style={{ '--d': '220ms' }}>
+        <figure className={b.frames}>
+          <img src="https://res.cloudinary.com/dc17mvdyv/image/upload/v1782679668/UX_Interview.jpg" alt="A parent interview over video call; the participant’s tile is blurred for privacy." loading="lazy" />
+          <img src="https://res.cloudinary.com/dc17mvdyv/image/upload/v1782679669/UX_Interview_2.jpg" alt="A second parent interview over video call; the participant’s tile is blurred for privacy." loading="lazy" />
+          <figcaption>Parent interviews · interviewee blurred for privacy</figcaption>
+        </figure>
+        <aside className={b.bigStat}>
+          <span className={b.bigNum}>7</span>
+          <span className={b.bigCap}>parents interviewed about their birth experience</span>
+        </aside>
+      </div>
+    </Section>
   )
-}
-function StatBig({ n, cap }) {
-  return <div className={styles.statBig}><span className={styles.statBigNum}>{n}</span><span className={styles.statBigCap}>{cap}</span></div>
-}
-function Timeline({ phases }) {
-  return (
-    <ol className={styles.timeline}>
-      {phases.map((p, i) => (
-        <li key={p} className={styles.phase}><span className={styles.phaseDot}>{i + 1}</span><span className={styles.phaseName}>{p}</span><span className={styles.phaseDur}>1 wk</span></li>
-      ))}
-    </ol>
-  )
-}
-function BeforeAfter({ before, after, note }) {
-  return (
-    <div className={styles.ba}>
-      <div className={styles.baPane}><span className={styles.baLabel}>Before</span><p className={styles.baText}>{before}</p></div>
-      <span className={styles.baArrow} aria-hidden="true">→</span>
-      <div className={`${styles.baPane} ${styles.baAfter}`}><span className={styles.baLabel}>After</span><p className={styles.baText}>{after}</p></div>
-      {note && <p className={styles.baNote}>{note}</p>}
-    </div>
-  )
-}
-function PullQuote({ children, attr }) {
-  return <blockquote className={styles.quote}>{children}<span className={styles.quoteAttr}>{attr}</span></blockquote>
 }
 
-/* ── the body ── */
+function Voice() {
+  return (
+    <Section id="voice" tone="cream">
+      <SectionHead
+        num="06"
+        label="The voice"
+        headline={<>I rewrote it from <em>trauma-first to community-first</em>.</>}
+        takeaway="Our first copy assumed a hard birth. Those experiences live in the data — but the words shouldn’t presume them. A tester flagged “reclaim” as a tell, so I shifted the whole voice toward connection."
+        wide
+      />
+      <div className={sys.up} style={{ '--d': '220ms' }}>
+        <BeforeAfter
+          before="“Reclaim your narrative.”"
+          after="“A space to make sense of it, together.”"
+          why={<><strong>Why:</strong> language that presumes trauma can alienate the parent who didn’t experience it that way. Community-first holds both.</>}
+        />
+      </div>
+    </Section>
+  )
+}
+
+function Outcome() {
+  return (
+    <Section id="outcome" tone="shade">
+      <SectionHead
+        num="08"
+        label="The outcome"
+        headline={<>A concept the client <em>wished was real</em>.</>}
+        takeaway="The work became preliminary research and ideation for a Birth Story app that the professors and client intend to build."
+      />
+      <blockquote className={`${b.quote} ${sys.up}`} style={{ '--d': '220ms' }}>
+        “I wish this could be real right now!”
+        <span className={b.quoteAttr}>— Sarah Burns, MSW, LSW · client</span>
+      </blockquote>
+    </Section>
+  )
+}
+
+function Close() {
+  return (
+    <Section id="close" tone="cream">
+      <SectionHead num="09" label="What I’d do differently" wide />
+      <p className={`${b.reflect} ${sys.up}`} style={{ '--d': '120ms' }}>
+        I’d begin by simplifying. Naming the core need early would have kept me focused, instead of trying
+        to do too much at once — and I learned not to put anything in a wireframe that distracts from the
+        main purpose, or opens an avenue for feedback I didn’t mean to invite.
+      </p>
+      <p className={`${b.tools} ${sys.up}`} style={{ '--d': '220ms' }}>Figma · SVG Repo · Unsplash</p>
+    </Section>
+  )
+}
+
 export default function BirthStoryBody() {
   return (
-    <div className={styles.body}>
+    <div className={sys.case}>
+      <BirthStorySpine sections={SPINE} />
       <Meta />
-
-      {/* OVERVIEW — centred thesis anchor */}
-      <Beat
-        kicker="Overview"
-        statement={<>A micro-app to <em>document and reflect</em> on giving birth.</>}
-        depth="A sister app to Myana (Mothers You Are Not Alone), made in a graduate studio with CMU, the founders of Dezudio, and the University of Pittsburgh Center for Research on Healthcare. The concept was refined through interviews with real parents and rounds of group critique and client feedback."
-      >
-        <DeviceMockup width="210px" media="image" src="/images/birthstory/bs-home.png" alt="The Birth Story home screen: New Entry, with prompts to add memorable events, notes about the experience, and medical events, on a chronological timeline." caption="The record: notes and journal, in one place." />
-        <StatRow items={[['7', 'parents interviewed'], ['6 wks', 'studio sprint'], ['4', 'core flows']]} />
-      </Beat>
-
-      <ActDivider act="I" name="Sense" />
-
-      <Beat
-        kicker="01 · The tension"
-        statement={<>Birth gets <em>overshadowed</em> by the newborn’s needs.</>}
-        depth="Birthing parents lack systems of support before, during, and after giving birth, an experience that is so often overshadowed by the needs of a newborn."
-      />
-
-      {/* split — big stat to the side */}
-      <Beat
-        layout="split"
-        tone="shade"
-        kicker="02 · What we heard"
-        statement={<>Postpartum brain fog needs <em>less</em>, not more.</>}
-        depth="We interviewed seven parents. Many described their births as traumatic, and said they lacked the tools to process them. Our first wireframes tried to offer every tool we could imagine; feedback taught us that simple is better for postpartum brain fog."
-      >
-        <StatBig n="7" cap="parents interviewed about their birth experience" />
-      </Beat>
-
-      <Beat
-        kicker="03 · How we worked"
-        statement={<>Six weeks, brief to <em>client presentation</em>.</>}
-        depth="Six one-week phases, from client research and design research through ideation, parent interviews, and iteration, to the final client presentation."
-      >
-        <Timeline phases={['Research I', 'Research II', 'Ideation', 'Interviews', 'Iteration', 'Presentation']} />
-      </Beat>
-
-      <ActDivider act="II" name="Weave" />
-
-      {/* The system (zoomed out) → the iteration (flows + one interaction) */}
-      <SystemEvolution />
-      <EvolutionViewer />
-
-      <Beat
-        tone="shade"
-        kicker="04 · The concept"
-        statement={<>One home for both <em>documenting and reflecting</em>.</>}
-        depth="We first split the app into two functions, Document and Reflect. Parent feedback led us to integrate both on the home page, lowering the barrier to entry so users could engage with whatever they needed in the moment."
-      >
-        <BeforeAfter before="Two screens: Document, then Reflect." after="One home, both at once." note="The home-page redesign, after parent feedback." />
-      </Beat>
-
-      {/* split — device right */}
-      <Beat
-        layout="split"
-        kicker="05 · Care Pod"
-        statement={<>Birth is held by <em>a circle</em>, so the app invited one in.</>}
-        depth="Research revealed that parents wanted to bring loved ones in. That insight became the Care Pod: a curated inner circle that shares supportive messages and receives birth updates."
-      >
-        <DeviceMockup width="216px" media="image" src="/images/birthstory/bs-carepod.png" alt="The Care Pod screen: loved ones' photos orbiting a central heart marked 'You', in concentric rings, with a Send Update button." caption="The Care Pod: loved ones orbiting a central “You.”" />
-      </Beat>
-
-      <Beat
-        tone="shade"
-        kicker="06 · Birth Story Book"
-        statement={<>A keepsake, because memories <em>shouldn’t depend on an app</em>.</>}
-        depth="Because people don’t fully trust that digital memories will last, the Birth Story Book turns entries into a physical keepsake: a free PDF, or an affordable printed booklet."
-      >
-        <PullQuote attr="— a parent we interviewed">“It would be tragic to lose those moments if the app disappeared someday.”</PullQuote>
-      </Beat>
-
-      <Beat
-        kicker="07 · The copy"
-        statement={<>I rewrote the voice from <em>trauma-first to community-first</em>.</>}
-        depth="Our first copy was highly trauma-informed, but feedback showed the language assumed a negative experience. Those experiences are in the data, so we shifted to a holistic, user-driven voice centered on connecting with community."
-      >
-        <BeforeAfter before="Language that assumed a hard birth." after="Language centered on connection." note="A copywriting decision, made from feedback." />
-      </Beat>
-
-      {/* split flipped — device left */}
-      <Beat
-        layout="split"
-        flip
-        tone="shade"
-        kicker="08 · Brand"
-        statement={<>Calm enough for the wee hours and the <em>hospital light</em>.</>}
-        depth="We wanted the interface to feel calming, organic, and emotionally supportive: a safe space for difficult emotions and uplifting moments alike. We built a new gradient to echo Myana, the parent app."
-      >
-        <DeviceMockup width="216px" media="image" src="/images/birthstory/bs-brand.png" alt="The Birth Story brand: the wordmark over a soft blush-to-sage gradient, echoing the parent app Myana." caption="The brand gradient, echoing Myana." />
-      </Beat>
-
-      <ActDivider act="III" name="Shape" />
-
-      <Beat
-        kicker="09 · The outcome"
-        statement={<>A concept the client <em>wished was real</em>.</>}
-        depth="The work became real, preliminary research and ideation for a Birth Story app that the professors and client intend to build."
-      >
-        <StatBig n="“I wish this could be real right now!”" cap="— Sarah Burns, MSW, LSW · client" />
-      </Beat>
-
-      {/* CLOSE */}
-      <section className={styles.close}>
-        <div className={styles.col}>
-          <p className={styles.kicker}>What I’d do differently</p>
-          <p className={styles.reflect}>
-            If I could do this project again, I’d begin by simplifying. Identifying the core need early
-            would have helped me stay focused, rather than trying to do too much at once. I also learned
-            how important it is not to add anything to a wireframe that distracts from the main purpose
-            or opens unnecessary avenues for feedback.
-          </p>
-          <p className={styles.tools}>Figma · SVG Repo icons · Unsplash</p>
-        </div>
-      </section>
+      <Brief />
+      <Research />
+      <SecArchitecture />
+      <SecIteration />
+      <SecFeatures />
+      <Voice />
+      <SecBrand />
+      <Outcome />
+      <Close />
     </div>
   )
 }
