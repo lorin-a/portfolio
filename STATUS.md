@@ -1,5 +1,5 @@
 # Project Status
-### Last updated: 2026-06-29 — Birth Story case study rebuilt in a field-notes / question-led register (process, not pitch). Direction locked; copy pass is next.
+### Last updated: 2026-06-29 — Birth Story HERO rebuilt as a staged fan-blossom (documentation, not pitch; the real Care Pod + Message Board rebuilt to animate) on the /heroes calibration route. Next: wire it live + fix Nav contrast.
 
 This is the living status doc for the lorin.work portfolio redesign. Updated at the end of every working session. Detailed in-flight state lives in memory `PROGRESS.md`.
 
@@ -50,15 +50,16 @@ This is the living status doc for the lorin.work portfolio redesign. Updated at 
 
 **The locked direction — process, not pitch · curiosity first** (full principle in memory `DECISIONS.md → "Case-study VOICE"`): every section OPENS on its driving question, then shows the thinking — `the question → my first (wrong) answer → the reframe → the better answer → what's still open`. First-person, contingent prose that admits missteps; **her real Figma files/screens as figure plates (NOT recreations)**; documentary furniture (monospace metadata, dated entries, figure numbers); **cool paper ground `#F1F2F0`** (the warm cream read "tan"). App screens still in the device mockups she likes, shown as figures. This register is the candidate model for Transition Design + the other stars.
 
-**Shipped 2026-06-29 (the rebuild, uncommitted on main until this session's commit):**
-- **Shared register** in `system.module.css` + `kit.jsx`: `FieldSection · Ask · Prose · Plate · Shot · Friction · useSeen`. Every section composes these — consistent, predictable.
-- **All sections rebuilt:** Hero (real app home in the gradient + Care Pod orbiting it + the central question) · 01 Brief · 02 Research (+ blurred interview frames, Cloudinary `dc17mvdyv/UX_Interview`+`_2`) · 03 Architecture (the model section — native IA *and* real Figma plates) · 04 Iteration (rounds, feedback inline) · 05 Features (per-feature questions) · 06 Voice (before/after) · 07 Brand (palette/gradient/type + moodboard) · 08 Outcome · 09 Close. Slim scroll-spy **spine** (noun labels; sections open on questions).
-- Retired the V3 polished components (`Simplification`, `CarePod`, old `SectionHead`-based sections, `SystemEvolution`/`EvolutionViewer` — git history = recovery).
-- Verified eyes-on at 1440, clean console. **Page transition (`components/PageTransition/`) from the prior session still in place — keep.**
+**Shipped this session 2026-06-29 — the HERO** (calibration route `/projects/birthstory-care-pod/heroes`, noindex; **uncommitted on main until this session's commit**):
+- A **staged fan-blossom** hero — reads as documentation, not a pitch. Lead = `Birth Story` (site Fraunces recipe) + one subhead (framing + **bolded** HMW question, her words) + a quiet micro-app disclosure, all aligned to the Nav grid (under "Lorin Anderberg").
+- **Reveal sequence:** three phones fan open → the Care Pod's care circle **targets outward** from "You" → members drop on → the **Live Message Board populates** message-by-message → over a large slowly-turning **ambient care-ring**.
+- **The real screens rebuilt in code to animate** (Figma exports are flattened images): `CarePodScreen.jsx` (rings + orbiting real member photos), `MessageBoardScreen.jsx` (populating chat). Member avatars cropped from the Figma export → `public/images/birthstory/hero/members/`. Components: `BirthStoryHeroFan` + `CarePodScreen` + `MessageBoardScreen`. (Superseded explorations `BirthStoryHeroDeck`/`Variants`/`HeroCompare` also in the tree.) Detail in memory `PROGRESS.md → "Birth Story HERO"` and `DECISIONS.md`.
 
-**Next move:** **Lorin's copy pass.** All prose is Claude's *draft* in her voice; the per-section driving questions are "a good start." She owns the words now that the container fits how she thinks. (Open dials if she wants: hero polish, density tuning, the live micro-interactions.)
+**Prior-session body rebuild (committed `33d3dca`, still in place):** all 9 sections on the shared field-notes register (`system.module.css` + `kit.jsx`: `FieldSection · Ask · Prose · Plate · Shot · Friction · useSeen`); slim scroll-spy spine; retired the V3 polished components. `components/PageTransition/` from before — keep.
 
-**Then:** apply the settled register to **Transition Design** (star #3); then **"More work" grid + Playground**.
+**Next move:** **wire `BirthStoryHeroFan` into the live `page.js`** (it still mounts the old `BirthStoryHero`) and **fix Nav contrast** (dark ink, invisible over the teal gradient on this route). Small: decide the "All is well" cap in the message board (hers, left verbatim, flagged).
+
+**Then:** **Lorin's copy pass** on the body (all prose is Claude's draft in her voice; questions are "a good start"). Then apply the settled register to **Transition Design** (star #3); then **"More work" grid + Playground**.
 
 ---
 

@@ -1,0 +1,18 @@
+/* Floating switcher for the hero pick step. */
+
+.bar {
+  position: fixed; top: 1.1rem; left: 50%; transform: translateX(-50%);
+  z-index: 100; display: flex; gap: 0.3rem;
+  padding: 0.3rem; border-radius: 999px;
+  background: rgba(255,255,255,0.86); backdrop-filter: blur(10px);
+  box-shadow: 0 10px 30px -14px rgba(26,67,77,0.5), inset 0 0 0 1px rgba(26,67,77,0.08);
+}
+.pill {
+  min-height: 44px; padding: 0 1.1rem; border: 0; border-radius: 999px;
+  background: transparent; color: #3E5E6A; cursor: pointer;
+  font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 0.78rem; letter-spacing: 0.02em;
+  transition: background 0.2s var(--ease-out), color 0.2s var(--ease-out);
+}
+.pill:hover { background: rgba(26,67,77,0.06); }
+.pill.active { background: #1A434D; color: #fff; }
+.pill:focus-visible { outline: 2px solid #1A434D; outline-offset: 2px; }

@@ -1,0 +1,69 @@
+/* Care Pod screen — rebuilt from Figma, sized entirely in container units so it
+   scales with the phone. The screen is the query container; everything inside is
+   expressed in cqw/cqh. Reveal + orbit are gated by `.on` on an ancestor. */
+
+.screen {
+  container-type: size;
+  position: relative; width: 100%; height: 100%;
+  display: flex; flex-direction: column;
+  background: linear-gradient(168deg, #244e58 0%, #1a434d 58%, #15323a 100%);
+  color: #fff; overflow: hidden;
+}
+
+/* ── status bar ── */
+.status { display: flex; align-items: center; justify-content: space-between; padding: 4.5cqh 7cqw 0; }
+.time { font-family: var(--font-body); font-weight: 600; font-size: 4.4cqw; letter-spacing: 0.02em; }
+.island { width: 26cqw; height: 7.5cqw; border-radius: 999px; background: #000; }
+.statusRight { display: flex; align-items: center; gap: 1.6cqw; }
+.signal { width: 5.5cqw; height: 4cqw; border-radius: 1px; background: linear-gradient(90deg, #fff 0 70%, rgba(255,255,255,0.45) 70%); }
+.battery { width: 7cqw; height: 3.6cqw; border-radius: 1.2px; border: 1px solid rgba(255,255,255,0.7); background: linear-gradient(90deg, #fff 0 80%, transparent 80%); background-clip: content-box; padding: 0.6px; }
+
+/* ── tabs ── */
+.tabs { display: flex; justify-content: center; gap: 6cqw; padding: 4cqh 0 0; font-family: var(--font-body); font-size: 5cqw; }
+.tabActive { font-weight: 700; padding-bottom: 1cqh; border-bottom: 2px solid rgba(255,255,255,0.85); }
+.tab { font-weight: 500; color: rgba(255,255,255,0.7); }
+
+/* ── orbit field ── */
+.field { position: relative; flex: 1 1 auto; }
+.orbit { position: absolute; inset: 0; }
+
+/* "target" reveal — each ring expands outward from the centre, inner → outer */
+.ring { position: absolute; top: 50%; left: 50%; border-radius: 50%; border: 1.5px dashed rgba(255,255,255,0.5); transform: translate(-50%, -50%) scale(0); opacity: 0; transition: opacity 0.55s var(--ease-out), transform 0.8s var(--ease-out); }
+.ringInner { width: 30cqw; height: 30cqw; transition-delay: 0.18s; }
+.ringMid   { width: 58cqw; height: 58cqw; transition-delay: 0.34s; }
+.ringOuter { width: 84cqw; height: 84cqw; transition-delay: 0.5s; }
+.on .ring { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+
+/* each member rides a rotating arm pinned to the orbit centre */
+.arm { position: absolute; top: 50%; left: 50%; width: 0; height: 0; transform: rotate(var(--start)); animation: orbit 120s linear infinite; }
+.node { position: absolute; top: 0; left: 0; transform: translate(-50%, -50%) translateX(var(--r)); }
+.spin { display: block; transform: rotate(calc(-1 * var(--start))); animation: orbitRev 120s linear infinite; }
+
+.face { position: relative; display: block; width: 19cqw; height: 19cqw; border-radius: 50%; overflow: visible; opacity: 0; transform: scale(0); transition: opacity 0.5s var(--ease-out), transform 0.6s var(--ease-bounce); transition-delay: calc(0.9s + var(--i) * 0.12s); }
+.face img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; display: block; }
+.on .face { opacity: 1; transform: scale(1); }
+
+.badge { position: absolute; top: -2cqw; right: -2cqw; width: 7cqw; height: 7cqw; display: grid; place-items: center; border-radius: 50%; background: #fff; color: #2b2b2b; font-family: var(--font-body); font-weight: 600; font-size: 5cqw; line-height: 1; }
+
+@keyframes orbit { from { transform: rotate(var(--start)); } to { transform: rotate(calc(var(--start) + 360deg)); } }
+@keyframes orbitRev { from { transform: rotate(calc(-1 * var(--start))); } to { transform: rotate(calc(-1 * var(--start) - 360deg)); } }
+
+/* the "You" heart at centre */
+.you { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.5); display: grid; place-items: center; opacity: 0; transition: opacity 0.6s var(--ease-out), transform 0.7s var(--ease-bounce); transition-delay: 0.05s; }
+.on .you { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+.heart { width: 16cqw; height: 15cqw; fill: #fff; filter: drop-shadow(0 2cqw 4cqw rgba(13,24,30,0.4)); }
+.youText { position: absolute; top: 54%; left: 50%; transform: translate(-50%, -50%); font-family: var(--font-body); font-weight: 700; font-size: 4.2cqw; color: #1a434d; }
+
+/* ── Send Update ── */
+.send { display: flex; align-items: center; justify-content: space-between; margin: 0 9cqw 3.5cqh; padding: 4cqw 5.5cqw; border-radius: 5cqw; background: rgba(173,173,196,0.6); font-family: var(--font-body); font-weight: 700; font-size: 5.2cqw; color: #fff; backdrop-filter: blur(3px); }
+.sendPlus { display: grid; place-items: center; width: 10cqw; height: 10cqw; border-radius: 50%; border: 1.5px solid rgba(255,255,255,0.85); font-weight: 400; font-size: 6cqw; }
+
+/* ── bottom nav ── */
+.nav { display: flex; align-items: center; justify-content: space-around; padding: 4.5cqh 6cqw 7cqh; background: #fbfaf7; border-radius: 8cqw 8cqw 0 0; }
+.navIcon { width: 7cqw; height: 7cqw; color: #1a434d; }
+.fab { display: grid; place-items: center; width: 12.5cqw; height: 12.5cqw; border-radius: 50%; background: linear-gradient(150deg, #e3c2cb, #8089c2); color: #fff; font-weight: 300; font-size: 8cqw; box-shadow: 0 2cqw 5cqw rgba(13,24,30,0.25); }
+
+@media (prefers-reduced-motion: reduce) {
+  .ring, .face, .you { transition: none; }
+  .arm, .spin { animation: none; }
+}
