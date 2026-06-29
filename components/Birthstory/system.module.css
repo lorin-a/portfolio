@@ -131,6 +131,8 @@
 }
 .fieldAlt { background-color: #EDEFEC; }
 .sheet { max-width: 60rem; margin: 0 auto; }
+/* wide sheet for split sections — lets the media column run to the right edge */
+.sheetWide { max-width: 78rem; }
 
 .fieldHead {
   display: flex; align-items: baseline; gap: 0.8rem;
@@ -209,49 +211,48 @@
 }
 @media (prefers-reduced-motion: reduce) { .plate { transform: none; } }
 
-/* ── paired: human context (the need) ⇄ the design answer (screen/evidence) ──
-   The visual spine of the 80/20 register: a contextual photograph sets the
-   lived moment; the screen or evidence it produced sits beside it. */
-.pair {
+/* ── split: documentation layout. Narrow text column (the thinking), large
+   media column that commands the right side. The visuals carry the section. ── */
+.split {
   display: grid;
-  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  grid-template-columns: minmax(0, 19rem) minmax(0, 1fr);
+  gap: clamp(1.6rem, 4vw, 4rem);
   align-items: start;
-  gap: clamp(1.2rem, 3.5vw, 3rem);
-  width: 100%; max-width: 56rem;
 }
-.pairFlip > .pairNeed { order: 2; }
-.pairNeed, .pairAnswer { margin: 0; display: grid; gap: 0.7rem; align-content: start; }
-.pairNeed { position: relative; }
-.pairTag {
-  justify-self: start; padding: 0.15rem 0.55rem; border-radius: 3px;
-  background: var(--bs-accent); color: #fff;
+.splitText { display: grid; gap: clamp(1.3rem, 3vw, 2.2rem); align-content: start; }
+.splitMedia { display: grid; gap: clamp(1rem, 2.4vw, 1.8rem); min-width: 0; }
+
+/* large figure — the artifact shown big (photo or screen mockup) */
+.fig { position: relative; margin: 0; display: grid; gap: 0.6rem; }
+.figTag {
+  position: absolute; top: 0.7rem; left: 0.7rem; z-index: 2;
+  padding: 0.18rem 0.6rem; border-radius: 3px; background: var(--bs-accent); color: #fff;
   font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.06em; text-transform: uppercase;
 }
-.pairTagAlt { background: var(--bs-teal-soft); }
-.pairPhoto {
-  position: relative; overflow: hidden; border-radius: 6px;
-  box-shadow: 0 26px 54px -30px rgba(26, 67, 77, 0.5);
+.figTagAlt { background: var(--bs-teal-soft); }
+.figArt {
+  overflow: hidden; border-radius: 8px;
+  box-shadow: 0 32px 64px -34px rgba(26, 67, 77, 0.55);
 }
-.pairPhoto img { width: 100%; height: auto; display: block; }
-.pairPhotoEmpty {
-  aspect-ratio: 4 / 5; display: grid; place-content: center;
-  background: linear-gradient(155deg, #2a525c, #6d8f99 70%, #b1c1f4);
-}
-.pairPending { font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(255, 255, 255, 0.86); }
-.pairCap { margin: 0; font-family: var(--mono); font-size: 0.68rem; line-height: 1.45; color: var(--color-ink-faint); }
-.pairByline { display: block; margin-top: 0.25rem; letter-spacing: 0.04em; color: var(--bs-teal-soft); }
-.pairAnswer img { width: 100%; border-radius: 4px; display: block; box-shadow: 0 20px 46px -32px rgba(26, 67, 77, 0.42); }
+.figArt img { display: block; width: 100%; height: auto; }
+.figArtScreen { background: #16323a; } /* matte behind screen mockups that don't fill */
+.figSmall { justify-self: start; max-width: min(26rem, 70%); }
+/* portrait photo: large but contained, so a 2:3 image doesn't tower; centered
+   in the media column so it still commands the right side */
+.figPortrait { justify-self: center; max-width: min(33rem, 100%); }
+.figCap { margin: 0; font-family: var(--mono); font-size: 0.68rem; line-height: 1.45; color: var(--color-ink-faint); }
+.figByline { display: block; margin-top: 0.25rem; letter-spacing: 0.04em; color: var(--bs-teal-soft); }
 
 /* finding — the compressed takeaway (replaces paragraphs); 20% copy, full weight */
 .finding { display: grid; gap: 0.55rem; max-width: 40rem; }
 .findingText {
   margin: 0; font-family: var(--font-heading); font-variation-settings: 'SOFT' 60, 'WONK' 0; font-weight: 400;
-  font-size: clamp(1.25rem, 1rem + 1vw, 1.7rem); line-height: 1.3; letter-spacing: -0.01em;
+  font-size: clamp(1.2rem, 1rem + 0.9vw, 1.6rem); line-height: 1.32; letter-spacing: -0.01em;
   color: var(--color-ink); text-wrap: balance;
 }
 .findingText b { font-weight: 600; color: var(--bs-accent); font-style: normal; }
 
-@media (max-width: 720px) {
-  .pair { grid-template-columns: 1fr; }
-  .pairFlip > .pairNeed { order: 0; }
+@media (max-width: 860px) {
+  .split { grid-template-columns: 1fr; gap: clamp(1.4rem, 5vw, 2.4rem); }
+  .figSmall { max-width: min(22rem, 80%); }
 }

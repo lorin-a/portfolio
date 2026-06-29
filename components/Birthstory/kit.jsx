@@ -70,11 +70,11 @@ export function BeforeAfter({ before, after, why }) {
 
 /* ── field-notes register (the process voice) ── */
 
-export function FieldSection({ id, num, crumb, when, alt = false, threshold = 0.15, children }) {
+export function FieldSection({ id, num, crumb, when, alt = false, wide = false, threshold = 0.15, children }) {
   const [ref, seen] = useSeen(threshold)
   return (
     <section ref={ref} id={id} className={`${s.field} ${alt ? s.fieldAlt : ''} ${seen ? s.in : ''}`}>
-      <div className={s.sheet}>
+      <div className={`${s.sheet} ${wide ? s.sheetWide : ''}`}>
         <header className={s.fieldHead}>
           <span className={s.fNum}>{num}</span>
           <span className={s.fCrumb}>{crumb}</span>
@@ -126,34 +126,35 @@ export function Friction({ tag = 'still open', children }) {
   return <p className={`${s.friction} ${s.up}`}><span className={s.frictionTag}>{tag}</span>{children}</p>
 }
 
-/* ── paired: the human context (the need) ⇄ the design answer (screen/evidence) ──
-   Left column is a contextual photograph that places the app inside the lived
-   birth experience; right column is the screen or evidence it produced. The
-   photo carries a Pexels byline. Pass photo.src empty to render the labeled
-   placeholder slot (structure is real; the image swaps in later). */
-export function Pair({ photo = {}, tag = 'the need', answerTag, flip = false, children }) {
-  const hasImg = Boolean(photo.src)
+/* ── split: documentation layout — a narrow text column (the thinking) and a
+   large media column that commands the right side of the page. The visuals do
+   the talking; the copy annotates. `text` stays put while tall media scrolls. */
+export function Split({ text, children }) {
   return (
-    <div className={`${s.pair} ${flip ? s.pairFlip : ''} ${s.up}`}>
-      <figure className={s.pairNeed}>
-        <span className={s.pairTag}>{tag}</span>
-        <div className={`${s.pairPhoto} ${hasImg ? '' : s.pairPhotoEmpty}`}>
-          {hasImg
-            ? <img src={photo.src} alt={photo.alt || ''} loading="lazy" draggable="false" />
-            : <span className={s.pairPending}>family photo · to place</span>}
-        </div>
-        {(photo.cap || photo.byline) && (
-          <figcaption className={s.pairCap}>
-            {photo.cap}
-            {photo.byline && <span className={s.pairByline}>Photo · {photo.byline} / Pexels</span>}
-          </figcaption>
-        )}
-      </figure>
-      <div className={s.pairAnswer}>
-        {answerTag && <span className={`${s.pairTag} ${s.pairTagAlt}`}>{answerTag}</span>}
-        {children}
-      </div>
+    <div className={s.split}>
+      <div className={s.splitText}>{text}</div>
+      <div className={`${s.splitMedia} ${s.up}`}>{children}</div>
     </div>
+  )
+}
+
+/* ── figure: one large artifact — a context photograph or a screen mockup —
+   shown big, with a documentary caption and (for photos) a Pexels byline.
+   `tag` is the corner chip ("the moment", "the flow", "the evidence"). ── */
+export function Figure({ src, alt = '', tag, cap, byline, photo = false, small = false, portrait = false, className = '' }) {
+  return (
+    <figure className={`${s.fig} ${small ? s.figSmall : ''} ${portrait ? s.figPortrait : ''} ${className}`}>
+      {tag && <span className={`${s.figTag} ${small ? s.figTagAlt : ''}`}>{tag}</span>}
+      <div className={`${s.figArt} ${photo ? '' : s.figArtScreen}`}>
+        <img src={src} alt={alt} loading="lazy" draggable="false" />
+      </div>
+      {(cap || byline) && (
+        <figcaption className={s.figCap}>
+          {cap}
+          {byline && <span className={s.figByline}>Photo · {byline} / Pexels</span>}
+        </figcaption>
+      )}
+    </figure>
   )
 }
 

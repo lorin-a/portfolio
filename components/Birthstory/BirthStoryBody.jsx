@@ -1,6 +1,6 @@
 'use client'
 
-import { FieldSection, Ask, Prose, Pair, Finding, useSeen, sys } from './kit'
+import { FieldSection, Ask, Prose, Split, Figure, Finding, useSeen, sys } from './kit'
 import { birthPhoto } from '@/lib/cloudinary'
 import SecArchitecture from './SecArchitecture'
 import SecIteration from './SecIteration'
@@ -37,36 +37,46 @@ function Meta() {
   )
 }
 
-function Brief() {
+function Framing() {
+  const [ref, seen] = useSeen(0.3)
   return (
-    <FieldSection id="brief" num="01" crumb="brief" when="week 1 · the ask">
-      <Ask>What does a <em>birth</em> need that a pregnancy app doesn’t?</Ask>
-      <Prose>
-        Myana already held pregnancy and postpartum. The gap was the birth itself — the hours that get
-        eclipsed by the newborn the moment they arrive. So the brief was narrow on purpose: a companion
-        just for capturing and making sense of the Birth Story.
-      </Prose>
+    <section ref={ref} className={`${b.framing} ${seen ? sys.in : ''}`}>
+      <p className={`${b.framingText} ${sys.up}`}>
+        <span className={b.framingKicker}>what this is</span>
+        A concept, not a built product: screen mockups of a flow, with a few key features tested with
+        parents. That is the whole of it. What it holds in abundance is potential, and the thinking
+        that got there. <b>Documenting that thinking is the point.</b>
+      </p>
+    </section>
+  )
+}
 
-      <div className={`${b.brief} ${sys.up}`}>
-        <div className={b.briefCol}>
-          <span className={sys.askKicker}>what we were asked for</span>
-          <ul className={b.list}>
-            <li>Gather the story, the medical facts, the context</li>
-            <li>Help a parent build the birth narrative</li>
-            <li>Log feelings; make room for meaning</li>
-            <li>Support processing, not just recording</li>
-          </ul>
-        </div>
-        <div className={b.briefCol}>
-          <span className={sys.askKicker}>what I held myself to</span>
-          <ul className={b.list}>
-            <li>Appropriate · supportive · inviting</li>
-            <li>Trauma-informed</li>
-            <li>Easy to understand</li>
-            <li>Actually useful to the care team</li>
-          </ul>
-        </div>
-      </div>
+function Brief() {
+  const birth = birthPhoto('circle') // Grey Art Weddings — two parents’ hands cradle a newborn foot, b&w
+  return (
+    <FieldSection id="brief" num="01" crumb="brief" when="week 1 · the ask" wide>
+      <Split
+        text={
+          <>
+            <Ask>What does a <em>birth</em> need that a pregnancy app doesn’t?</Ask>
+            <Finding kicker="the brief, narrowed">
+              Myana already held pregnancy and postpartum. The birth itself gets <b>eclipsed</b> by the
+              newborn the moment they arrive. So the brief stayed narrow on purpose: a companion just
+              for capturing and making sense of the <b>Birth Story</b>.
+            </Finding>
+          </>
+        }
+      >
+        <Figure
+          tag="the birth itself"
+          photo
+          portrait
+          src={birth.src}
+          byline={birth.byline}
+          alt="Two parents’ hands, one darker and one lighter, cradle a newborn’s tiny foot."
+          cap="the hours a pregnancy app never sees"
+        />
+      </Split>
 
       <div className={`${b.ff} ${sys.up}`}>
         <span className={sys.askKicker}>every function had a feeling to land</span>
@@ -81,28 +91,36 @@ function Brief() {
 }
 
 function Research() {
+  const fog = birthPhoto('fog')
   return (
-    <FieldSection id="research" num="02" crumb="research" when="week 2 · interviews" alt>
-      <Ask>What does a parent actually need in the <em>fog</em> right after?</Ask>
-
-      {/* PAIR — the lived moment (Saul Siguenza, Pexels) ⇄ the evidence we gathered. */}
-      <Pair
-        tag="the moment"
-        answerTag="the evidence"
-        photo={{
-          ...birthPhoto('fog'),
-          alt: 'An exhausted parent rests cheek to cheek with a swaddled newborn in the hours just after birth.',
-          cap: 'the hours the app is built for: newborn here, the birth already receding',
-        }}
+    <FieldSection id="research" num="02" crumb="research" when="week 2 · interviews" alt wide>
+      <Split
+        text={
+          <>
+            <Ask>What does a parent actually need in the <em>fog</em> right after?</Ask>
+            <Finding kicker="what set the whole direction">
+              Not a feature. A <b>constraint</b>: many of these births were hard, with no place to
+              process them, and no room afterward for another busy app. The work became <b>less, not more</b>.
+            </Finding>
+          </>
+        }
       >
-        <img src="https://res.cloudinary.com/dc17mvdyv/image/upload/v1782679668/UX_Interview.jpg" alt="A parent interview over video call; the interviewee’s tile is blurred for privacy." loading="lazy" />
-        <figcaption className={sys.shotCap}>interviews · 7 parents · interviewee blurred for privacy</figcaption>
-      </Pair>
-
-      <Finding kicker="what set the whole direction">
-        Not a feature. A <b>constraint</b>: many of these births were hard, with no place to process
-        them, and no room afterward for another busy app. The work became <b>less, not more</b>.
-      </Finding>
+        <Figure
+          tag="the moment"
+          photo
+          src={fog.src}
+          byline={fog.byline}
+          alt="An exhausted parent rests cheek to cheek with a swaddled newborn in the hours just after birth."
+          cap="the hours the app is built for: newborn here, the birth already receding"
+        />
+        <Figure
+          tag="the evidence"
+          small
+          src="https://res.cloudinary.com/dc17mvdyv/image/upload/f_auto,q_auto,w_640/v1782679668/UX_Interview.jpg"
+          alt="A parent interview over video call; the interviewee’s tile is blurred for privacy."
+          cap="interviews · 7 parents · interviewee blurred for privacy"
+        />
+      </Split>
     </FieldSection>
   )
 }
@@ -159,6 +177,7 @@ export default function BirthStoryBody() {
     <div className={sys.case}>
       <BirthStorySpine sections={SPINE} />
       <Meta />
+      <Framing />
       <Brief />
       <Research />
       <SecArchitecture />
