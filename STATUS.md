@@ -1,5 +1,5 @@
 # Project Status
-### Last updated: 2026-06-29 — Birth Story HERO rebuilt as a staged fan-blossom (documentation, not pitch; the real Care Pod + Message Board rebuilt to animate) on the /heroes calibration route. Next: wire it live + fix Nav contrast.
+### Last updated: 2026-06-29 (evening) — Birth Story body rebuilt on a "split" register (narrow text + BIG media); IA diagrams redrawn native; an interactive annotated Features tour shipped. Lorin: tour is "a good start, rough-draft quality." Next: the direct-feedback inline annotations (the missing half) + polish.
 
 This is the living status doc for the lorin.work portfolio redesign. Updated at the end of every working session. Detailed in-flight state lives in memory `PROGRESS.md`.
 
@@ -50,16 +50,17 @@ This is the living status doc for the lorin.work portfolio redesign. Updated at 
 
 **The locked direction — process, not pitch · curiosity first** (full principle in memory `DECISIONS.md → "Case-study VOICE"`): every section OPENS on its driving question, then shows the thinking — `the question → my first (wrong) answer → the reframe → the better answer → what's still open`. First-person, contingent prose that admits missteps; **her real Figma files/screens as figure plates (NOT recreations)**; documentary furniture (monospace metadata, dated entries, figure numbers); **cool paper ground `#F1F2F0`** (the warm cream read "tan"). App screens still in the device mockups she likes, shown as figures. This register is the candidate model for Transition Design + the other stars.
 
-**Shipped this session 2026-06-29 — the HERO** (calibration route `/projects/birthstory-care-pod/heroes`, noindex; **uncommitted on main until this session's commit**):
-- A **staged fan-blossom** hero — reads as documentation, not a pitch. Lead = `Birth Story` (site Fraunces recipe) + one subhead (framing + **bolded** HMW question, her words) + a quiet micro-app disclosure, all aligned to the Nav grid (under "Lorin Anderberg").
-- **Reveal sequence:** three phones fan open → the Care Pod's care circle **targets outward** from "You" → members drop on → the **Live Message Board populates** message-by-message → over a large slowly-turning **ambient care-ring**.
-- **The real screens rebuilt in code to animate** (Figma exports are flattened images): `CarePodScreen.jsx` (rings + orbiting real member photos), `MessageBoardScreen.jsx` (populating chat). Member avatars cropped from the Figma export → `public/images/birthstory/hero/members/`. Components: `BirthStoryHeroFan` + `CarePodScreen` + `MessageBoardScreen`. (Superseded explorations `BirthStoryHeroDeck`/`Variants`/`HeroCompare` also in the tree.) Detail in memory `PROGRESS.md → "Birth Story HERO"` and `DECISIONS.md`.
+**Shipped this session 2026-06-29 evening (committed local on main `2b14165`→`febb9cd`; not pushed):**
+- **Hero `BirthStoryHeroFan` wired live** + **Nav contrast fixed** (`.overHero` white-ink over the teal gradient; reverts to dark on scroll).
+- **Body rebuilt on a "split" register** — each beat = narrow text (the thinking) + BIG media (the artifact). New primitives in `kit.jsx`/`system.module.css`: `Split`, `Figure` (now also hosts a **native DOM artifact via `children`**), `Finding`, `FieldSection wide`. Progress spine is now a **horizontal sticky bar** (`BirthStorySpine`); metadata folded into Brief as `Credits`. **5 of 8 sections converted, screens shown BIG** (was 138–150px thumbs): 01 Brief · 02 Research · 03 Architecture · 04 Iteration · 05 Features. Em dashes cleared from those drafts.
+- **03 Architecture — IA diagrams REBUILT NATIVE** (`IaDiagrams.jsx`): the black Figma-canvas PNGs read as alien slabs; redrawn as DOM in the teal-on-paper palette (`IaV1` branching questionnaire w/ measured fan connectors, `IaFinal` five-tab tree). Lorin: "so much better."
+- **05 Features — interactive annotated TOUR** (`OnboardingTour.jsx`) leads the section: marries big rendered mockups + animation + inline annotations. Walks 4 destinations; pin + measured leader line ties each to a callout (her verbatim onboarding copy); rebuilt nav rail lights the active tab; auto-advances/clickable; reduced-motion + mobile handled. Decision rows stay below as the *why*. **Lorin: "a good start, rough-draft quality."**
 
-**Prior-session body rebuild (committed `33d3dca`, still in place):** all 9 sections on the shared field-notes register (`system.module.css` + `kit.jsx`: `FieldSection · Ask · Prose · Plate · Shot · Friction · useSeen`); slim scroll-spy spine; retired the V3 polished components. `components/PageTransition/` from before — keep.
+**Next move:** **add the direct/specific-feedback inline annotations** — the half still missing. Reuse the tour's pin+leader, styled as a distinct **"tester said" crit voice**, with 3 real quotes: *"it would be tragic to lose these moments…"* → Book · *"why 'reclaim'?"* → Voice · *"too many buttons and options"* → Iteration round 1. Then a **polish pass on the tour** (it's rough-draft) and fix Care Pod's nav bar peeking on mobile.
 
-**Next move:** **wire `BirthStoryHeroFan` into the live `page.js`** (it still mounts the old `BirthStoryHero`) and **fix Nav contrast** (dark ink, invisible over the teal gradient on this route). Small: decide the "All is well" cap in the message board (hers, left verbatim, flagged).
+**Then:** convert the copy-led sections (06 Voice · 07 Brand · 08 Outcome/Close) and **Lorin's copy pass** on all body prose (Claude's draft in her voice). Then apply the settled register to **Transition Design** (star #3); then **"More work" grid + Playground**.
 
-**Then:** **Lorin's copy pass** on the body (all prose is Claude's draft in her voice; questions are "a good start"). Then apply the settled register to **Transition Design** (star #3); then **"More work" grid + Playground**.
+**Asset gotcha:** clean app screens = `evolution/v3-home.png`, `bs-carepod.png`, `hero/phone-book.jpg` (Book), `evolution/screens/v3-7.png` (search). `v3-4.png`/`v3-5.png` are **coach-mark frames** (baked callouts) — don't use where a clean screen is needed. Full map in `PROGRESS.md`.
 
 ---
 
