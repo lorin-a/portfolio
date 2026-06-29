@@ -1,33 +1,8 @@
-/* Iteration rounds — real screens framed, feedback inline, colour journey. */
+/* Iteration — rounds in the field-notes register. */
 
-.rounds { margin-top: clamp(2.5rem, 5vw, 4rem); display: grid; gap: clamp(1.5rem, 3vw, 2.5rem); }
+.round { display: grid; gap: clamp(0.8rem, 1.6vw, 1.2rem); }
+.shots { display: flex; flex-wrap: wrap; gap: clamp(0.7rem, 1.6vw, 1.2rem); align-items: flex-start; max-width: 52rem; }
 
-.round {
-  display: grid;
-  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.5fr);
-  align-items: center;
-  gap: clamp(1.5rem, 4vw, 3.5rem);
-  padding: clamp(1.5rem, 3vw, 2.6rem);
-  border-radius: 20px;
-}
-.flip > .text { order: 2; }
-.flip > .screens { order: 1; }
-
-/* tonal journey: pastel → grey → teal-tinted */
-.blush { background: linear-gradient(180deg, rgba(219,173,173,0.16), rgba(219,173,173,0.05)); }
-.slate { background: linear-gradient(180deg, rgba(60,70,80,0.10), rgba(60,70,80,0.03)); }
-.teal { background: linear-gradient(180deg, rgba(26,67,77,0.12), rgba(109,143,153,0.05)); }
-
-.text { display: grid; gap: 0.9rem; align-content: center; }
-.tag { margin: 0; font-family: var(--font-body); font-weight: 700; font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--bs-accent); }
-.changed { margin: 0; max-width: 32ch; font-family: var(--font-heading); font-variation-settings: 'SOFT' 60, 'WONK' 0; font-weight: 360; font-size: clamp(1.15rem, 0.95rem + 0.7vw, 1.5rem); line-height: 1.32; color: var(--color-ink); }
-.shipped { margin: 0; font-family: var(--font-body); font-size: 0.8rem; letter-spacing: 0.06em; color: var(--bs-teal-soft); }
-
-.screens { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(0.6rem, 1.5vw, 1.1rem); }
-.slot { display: grid; justify-items: center; }
-
-@media (max-width: 820px) {
-  .round, .flip > .text, .flip > .screens { grid-template-columns: 1fr; order: 0; }
-  .round { grid-template-columns: 1fr; }
-  .screens { order: 0; }
+@media (max-width: 540px) {
+  .shots { gap: 0.6rem; }
 }

@@ -68,4 +68,62 @@ export function BeforeAfter({ before, after, why }) {
   )
 }
 
+/* ── field-notes register (the process voice) ── */
+
+export function FieldSection({ id, num, crumb, when, alt = false, threshold = 0.15, children }) {
+  const [ref, seen] = useSeen(threshold)
+  return (
+    <section ref={ref} id={id} className={`${s.field} ${alt ? s.fieldAlt : ''} ${seen ? s.in : ''}`}>
+      <div className={s.sheet}>
+        <header className={s.fieldHead}>
+          <span className={s.fNum}>{num}</span>
+          <span className={s.fCrumb}>{crumb}</span>
+          {when && <span className={s.fWhen}>{when}</span>}
+        </header>
+        <div className={s.flow}>{children}</div>
+      </div>
+    </section>
+  )
+}
+
+export function Ask({ kicker = 'the question', children }) {
+  return (
+    <div className={`${s.askBlock} ${s.up}`}>
+      <span className={s.askKicker}>{kicker}</span>
+      <p className={s.ask}>{children}</p>
+    </div>
+  )
+}
+
+export function Prose({ children }) {
+  return <p className={`${s.prose} ${s.up}`}>{children}</p>
+}
+
+export function Plate({ tab, src, alt = '', cap, margin, rot = '0deg', narrow = false, wide = false, light = false }) {
+  return (
+    <figure className={`${s.plate} ${narrow ? s.plateNarrow : ''} ${wide ? s.plateWide : ''} ${s.up}`} style={{ '--rot': rot }}>
+      {tab && <span className={s.plateTab}>{tab}</span>}
+      <div className={`${s.plateArt} ${light ? s.plateArtLight : ''}`}><img src={src} alt={alt} loading="lazy" draggable="false" /></div>
+      {cap && <figcaption className={s.plateCap}>{cap}</figcaption>}
+      {margin && <p className={s.plateMargin}>{margin}</p>}
+    </figure>
+  )
+}
+
+export function Shot({ src, alt = '', cap, width = '150px' }) {
+  return (
+    <figure className={`${s.shot} ${s.up}`}>
+      <span className={s.phone} style={{ width }}>
+        <span className={s.phoneNotch} aria-hidden="true" />
+        <span className={s.phoneScreen}><img src={src} alt={alt} loading="lazy" draggable="false" /></span>
+      </span>
+      {cap && <figcaption className={s.shotCap}>{cap}</figcaption>}
+    </figure>
+  )
+}
+
+export function Friction({ tag = 'still open', children }) {
+  return <p className={`${s.friction} ${s.up}`}><span className={s.frictionTag}>{tag}</span>{children}</p>
+}
+
 export { s as sys }

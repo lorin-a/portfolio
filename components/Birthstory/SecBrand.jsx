@@ -1,61 +1,60 @@
 'use client'
 
-import { Section, SectionHead, sys } from './kit'
+import { FieldSection, Ask, Prose, Plate, sys } from './kit'
 import styles from './SecBrand.module.css'
 
-/* 08 — The brand. Identity recreated natively (palette + gradient + type), the
-   moodboard shown as the artifact it is. Process voice: the decision was calm,
-   organic, kin to the parent app — here is what that resolved into. */
+/* 07 — Brand. Question: what should this feel like at 3am? Palette, type and
+   gradient shown as documented decisions; the moodboard as the artifact it is. */
 
 const PALETTE = [
-  ['#1A434D', 'Teal'], ['#3E5E6A', 'Slate'], ['#6D8F99', 'Sage'], ['#B1C1F4', 'Peri'], ['#DBADAD', 'Blush'],
-  ['#9DA3BF', 'Dusk'], ['#BFC0D4', 'Mist'], ['#E6E5FD', 'Lilac'], ['#DBE6FA', 'Sky'], ['#FFFCFA', 'Paper'],
+  ['#1A434D', 'teal'], ['#3E5E6A', 'slate'], ['#6D8F99', 'sage'], ['#B1C1F4', 'peri'], ['#DBADAD', 'blush'],
+  ['#9DA3BF', 'dusk'], ['#BFC0D4', 'mist'], ['#E6E5FD', 'lilac'], ['#DBE6FA', 'sky'], ['#FFFCFA', 'paper'],
 ]
 
 export default function SecBrand() {
   return (
-    <Section id="brand" tone="shade">
-      <SectionHead
-        num="07"
-        label="The brand"
-        headline={<>Calm enough for the <em>wee hours</em> and the hospital light.</>}
-        takeaway="The interface had to feel calming, organic and emotionally supportive — a safe space for hard feelings and bright ones alike. So the system stayed soft, and a gradient was built to echo Myana, the parent app."
-      />
+    <FieldSection id="brand" num="07" crumb="brand" when="the feel">
+      <Ask>What should this feel like at <em>3am</em> — and in the hospital light?</Ask>
+      <Prose>
+        It had to hold hard feelings and bright ones without tipping into either — calm, organic, never
+        clinical. I built a gradient to echo Myana, the parent app, so Birth Story felt like family, and
+        kept everything soft enough to read at the worst hour of the night.
+      </Prose>
 
-      <div className={`${styles.grid} ${sys.up}`} style={{ '--d': '200ms' }}>
-        <div className={styles.specs}>
-          <div className={styles.block}>
-            <p className={styles.blockLabel}>Palette</p>
-            <div className={styles.swatches}>
-              {PALETTE.map(([hex, name]) => (
-                <div key={hex} className={styles.swatch}>
-                  <span className={styles.chip} style={{ background: hex }} />
-                  <span className={styles.sName}>{name}</span>
-                  <span className={styles.sHex}>{hex}</span>
-                </div>
-              ))}
-            </div>
+      <div className={`${styles.system} ${sys.up}`}>
+        <div className={styles.block}>
+          <span className={sys.askKicker}>palette</span>
+          <div className={styles.swatches}>
+            {PALETTE.map(([hex, name]) => (
+              <div key={hex} className={styles.swatch}>
+                <span className={styles.chip} style={{ background: hex }} />
+                <span className={styles.sName}>{name}</span>
+                <span className={styles.sHex}>{hex}</span>
+              </div>
+            ))}
           </div>
-
-          <div className={styles.block}>
-            <p className={styles.blockLabel}>Type</p>
-            <div className={styles.type}>
-              <div className={styles.typeRow}><span className={styles.typeFace}>Terfens</span><span className={styles.typeUse}>Titles &amp; headers</span></div>
-              <div className={styles.typeRow}><span className={`${styles.typeFace} ${styles.typeBody}`}>Gotham</span><span className={styles.typeUse}>Sub-headers &amp; body</span></div>
-            </div>
+          <div className={styles.type}>
+            <span className={sys.askKicker}>type</span>
+            <div className={styles.typeRow}><span className={styles.face}>Terfens</span><span className={styles.use}>titles</span></div>
+            <div className={styles.typeRow}><span className={`${styles.face} ${styles.body}`}>Gotham</span><span className={styles.use}>everything else</span></div>
           </div>
         </div>
-
         <div className={styles.gradient}>
           <span className={styles.gWord}>Birth Story</span>
-          <span className={styles.gNote}>Blush → periwinkle → teal. The whole identity in one object.</span>
+          <span className={styles.gNote}>blush → periwinkle → teal · the whole identity in one object</span>
         </div>
       </div>
 
-      <figure className={`${styles.moodFig} ${sys.up}`} style={{ '--d': '300ms' }}>
-        <img className={styles.mood} src="/images/birthstory/moodboard.png" alt="The Birth Story moodboard: Georgia O’Keeffe florals, lunar and gradient imagery, and wellness apps with orbiting members and keepsake books." loading="lazy" />
-        <figcaption className={styles.moodCap}>The moodboard — O’Keeffe’s organic forms, lunar calm, and the orbiting-circle apps that became the Care Pod.</figcaption>
-      </figure>
-    </Section>
+      <Plate
+        tab="moodboard"
+        wide
+        light
+        src="/images/birthstory/moodboard.png"
+        alt="The Birth Story moodboard: Georgia O’Keeffe florals, lunar and gradient imagery, and wellness apps with orbiting members and keepsake books."
+        cap="moodboard · figma"
+        margin="O’Keeffe’s organic forms, lunar calm, and the orbiting-circle apps that became the Care Pod."
+        rot="-0.5deg"
+      />
+    </FieldSection>
   )
 }
