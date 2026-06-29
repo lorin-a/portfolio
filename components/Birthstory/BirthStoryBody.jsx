@@ -46,12 +46,12 @@ function Brief() {
       <Split
         text={
           <>
+            <Ask kicker={null}>How might we help parents document, reflect, and make sense of their birth experience?</Ask>
             <p className={`${b.briefLede} ${sys.up}`}>
               Parents who use Myana, a pregnancy and postpartum app, noted a gap in their
               experience—giving birth. Birth experiences vary widely and hardly go according to plan.
               It is a complex physical and emotional time that often gets forgotten when the newborn arrives.
             </p>
-            <Ask kicker={null}>How might we help parents document, reflect, and make sense of their birth experience?</Ask>
             <p className={`${b.briefTask} ${sys.up}`}>
               We were tasked with creating and pitching a concept for Myana’s companion app: <b>Birth Story</b>.
             </p>
@@ -70,14 +70,17 @@ function Brief() {
         />
       </Split>
 
-      <div className={`${b.ff} ${sys.up}`}>
-        <p className={b.ffHead}>Our design values</p>
-        <ul className={b.ffList}>
-          {[['collect usable data', 'intuitive & calming'], ['tell a compelling story', 'easy to navigate'], ['record the medical detail', 'empathetic & trauma-informed'], ['prompt reflection', 'therapeutic']].map(([fn, feel]) => (
-            <li key={fn}><span className={b.fn}>{fn}</span><span className={b.arrow} aria-hidden="true">→</span><span className={b.feel}>{feel}</span></li>
+      <section className={`${b.values} ${sys.up}`}>
+        <p className={b.valuesHead}>Our design values</p>
+        <ul className={b.valuesList}>
+          {[['Intuitive & calming', 'collect usable data'], ['Easy to navigate', 'tell a compelling story'], ['Empathetic & trauma-informed', 'record the medical detail'], ['Therapeutic', 'prompt reflection']].map(([val, fn]) => (
+            <li key={val}>
+              <span className={b.valueName}>{val}</span>
+              <span className={b.valueFor}>{fn}</span>
+            </li>
           ))}
         </ul>
-      </div>
+      </section>
     </FieldSection>
   )
 }

@@ -31,34 +31,25 @@
 }
 .briefTask b { color: var(--bs-accent); font-weight: 700; }
 
-/* function → feel — a contained spec the eye stops on: every function the app
-   had to perform, paired with the feeling it had to land. A clear artifact. */
-.ff {
-  max-width: 44rem;
-  padding: clamp(1.5rem, 3vw, 2.1rem) clamp(1.6rem, 3vw, 2.3rem);
-  background: #fff; border-radius: 12px;
-  border: 1px solid rgba(26, 67, 77, 0.12);
-  box-shadow: 0 26px 54px -36px rgba(26, 67, 77, 0.45);
-  display: grid; gap: 0.4rem;
+/* our design values — the qualities each function had to embody. A flat,
+   full-width principles strip, set off from the brief by a hairline (not a
+   floating card), so it reads as part of the section. */
+.values {
+  padding-top: clamp(1.8rem, 4vw, 2.8rem);
+  border-top: 1px solid var(--bs-rule);
+  display: grid; gap: clamp(1.2rem, 2.5vw, 1.8rem);
 }
-.ffHead {
-  margin: 0 0 0.6rem;
+.valuesHead {
+  margin: 0;
   font-family: var(--font-heading); font-variation-settings: 'SOFT' 60, 'WONK' 0; font-weight: 400;
-  font-size: clamp(1.1rem, 1rem + 0.45vw, 1.4rem); line-height: 1.2; color: var(--color-ink);
+  font-size: clamp(1.15rem, 1rem + 0.5vw, 1.5rem); line-height: 1.2; color: var(--color-ink);
 }
-.ffList { margin: 0; padding: 0; list-style: none; display: grid; }
-.ffList li {
-  display: grid; grid-template-columns: 1fr auto 1fr; align-items: baseline; gap: clamp(0.7rem, 2vw, 1.4rem);
-  padding: 0.85rem 0; border-top: 1px solid rgba(26, 67, 77, 0.12);
-}
-.fn { font-family: var(--font-body); font-size: clamp(0.92rem, 0.88rem + 0.2vw, 1.02rem); color: var(--color-ink-light); text-align: right; }
-.arrow { font-family: var(--font-body); color: var(--bs-teal-soft); font-weight: 700; }
-.feel { font-family: var(--font-body); font-size: clamp(0.92rem, 0.88rem + 0.2vw, 1.02rem); color: var(--bs-accent); font-weight: 700; }
-@media (max-width: 540px) {
-  .ffList li { grid-template-columns: 1fr; gap: 0.2rem; }
-  .fn { text-align: left; }
-  .arrow { display: none; }
-}
+.valuesList { margin: 0; padding: 0; list-style: none; display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.6rem 2.5rem; }
+.valuesList li { display: grid; gap: 0.45rem; align-content: start; }
+.valueName { font-family: var(--font-body); font-weight: 700; font-size: clamp(1rem, 0.95rem + 0.3vw, 1.18rem); line-height: 1.25; color: var(--bs-accent); }
+.valueFor { font-family: var(--font-body); font-size: 0.88rem; line-height: 1.4; color: var(--color-ink-light); }
+@media (max-width: 760px) { .valuesList { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 440px) { .valuesList { grid-template-columns: 1fr; } }
 
 /* voice before/after — clear labels, documentary */
 .ba { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: clamp(1rem, 3vw, 2.5rem); max-width: 48rem; }
