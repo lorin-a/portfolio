@@ -1,49 +1,59 @@
 'use client'
 
-import { FieldSection, Ask, Prose, Plate, Friction } from './kit'
+import { FieldSection, Ask, Finding, Figure, Split, Friction } from './kit'
+import { birthPhoto } from '@/lib/cloudinary'
 
-/* 03 — Architecture. Question-led: what should a parent meet first? My first
+/* 03 — Architecture. Question-led: what should a parent meet first? The first
    answer (triage) was wrong; the reframe (get out of the way) was the work.
-   Real Figma files as evidence. Copy draft — hers. */
+   Real IA diagrams as the before / after. Copy is draft, in her voice. */
 
 export default function SecArchitecture() {
+  const disorient = birthPhoto('disorient', 1300)
   return (
-    <FieldSection id="architecture" num="03" crumb="architecture" when="week 3 · information architecture">
-      <Ask>What should a parent have to deal with <em>first</em> — on one of the most disorienting days of their life?</Ask>
+    <FieldSection id="architecture" num="03" crumb="architecture" when="week 3 · information architecture" wide>
+      <Split
+        text={
+          <>
+            <Ask>What should a parent deal with <em>first</em>, on one of the most disorienting days of their life?</Ask>
+            <Finding kicker="my first answer">
+              Ask them. The app would open by working out where you were: before, during, or after the
+              birth, at home or the hospital, what kind of entry this was. I thought that was thorough.
+            </Finding>
+          </>
+        }
+      >
+        <Figure
+          tag="context"
+          photo
+          src={disorient.src}
+          byline={disorient.byline}
+          alt="A hand holds a newborn's foot in a hospital room in the first hours after birth."
+          cap="A newborn in hospital, the first hours the home screen has to meet."
+        />
+      </Split>
 
-      <Prose>
-        My first answer was to ask them. The app opened by working out where you were — before, during,
-        or after the birth; at home or the hospital; what kind of entry this was. I thought that was thorough.
-      </Prose>
-
-      <Plate
-        tab="Fig. 1"
+      <Figure
+        tag="first answer"
         src="/images/birthstory/system/ia-v1.png"
-        alt="V1 information architecture from Figma: a wide branching questionnaire fanning into conditional paths for phase, place, and entry type."
-        cap="ia-v1 · figma — twelve conditional paths before a first entry"
-        margin="In testing it felt like a form at the front desk while you were still catching your breath."
-        rot="-0.8deg"
+        alt="V1 information architecture: a wide branching questionnaire fanning into conditional paths for phase, place, and entry type before a first note."
+        cap="ia-v1 · figma · a branching questionnaire, conditional questions before a single entry."
       />
+      <Finding kicker="what testing showed">
+        It read like a form at the front desk while you were still catching your breath.
+      </Finding>
 
-      <Ask kicker="the real question">Not “where are you in your birth.” It was: how does the app <em>get out of the way</em>?</Ask>
+      <Ask kicker="the reframe">Not “where are you in your birth.” The real question was how the app <em>gets out of the way</em>.</Ask>
 
-      <Prose>
-        That reframe is what cut the triage. The home just opens — Notes and Journal already there, a&nbsp;<b>+</b>&nbsp;in
-        the dead center, five tabs and nothing to answer before you begin.
-      </Prose>
-
-      <Plate
-        tab="Fig. 2"
-        narrow
+      <Figure
+        tag="what shipped"
         src="/images/birthstory/system/ia-final.png"
-        alt="Final information architecture from Figma: a clean five-tab home."
-        cap="ia-final · figma — five tabs, and out of the way"
-        rot="0.9deg"
+        alt="Final information architecture: five tabs — Notes, Care Pod, a center New Note button, Book, and Search."
+        cap="ia-final · figma · five tabs, a + in the dead center, nothing to answer before you begin."
       />
 
       <Friction>
-        Should “New Note” be its own tab, or a floating&nbsp;<b>+</b>? It tested fine as a tab — but I never
-        put the two side by side, so I can’t say it’s the right answer, only that it worked.
+        Should <b>New Note</b> be its own tab, or a floating <b>+</b>? It tested fine as a tab, but I
+        never put the two side by side, so I can say it worked, not that it’s the right answer.
       </Friction>
     </FieldSection>
   )
