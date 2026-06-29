@@ -133,8 +133,16 @@ export default function Nav() {
   const LIGHT_GRADIENT = ['#8A9263', '#9F84A9', '#C97D64']
   const DARK_GRADIENT = ['#C5CFA6', '#C7AAD1', '#F79C7E']
 
+  /* Routes that open on a full-bleed dark hero: the nav floats over it with no
+     background, so dark ink disappears. Render light ink there until the user
+     scrolls and the cream nav background fades in (then dark ink reads again). */
+  const overDarkHero = pathname.startsWith('/projects/birthstory-care-pod') && !scrolled
+
   return (
-    <header ref={headerRef} className={`${styles.header} ${scrolled ? styles.scrolled : ''}`}>
+    <header
+      ref={headerRef}
+      className={`${styles.header} ${scrolled ? styles.scrolled : ''} ${overDarkHero ? styles.overHero : ''}`}
+    >
       <nav className={styles.nav} aria-label="Main navigation">
         <Link href="/" className={styles.navName}>
           Lorin Anderberg

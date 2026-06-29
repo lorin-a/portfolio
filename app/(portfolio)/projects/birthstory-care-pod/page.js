@@ -1,4 +1,4 @@
-import BirthStoryHero from '@/components/Birthstory/BirthStoryHero'
+import BirthStoryHeroFan from '@/components/Birthstory/BirthStoryHeroFan'
 import BirthStoryBody from '@/components/Birthstory/BirthStoryBody'
 
 // Birth Story — full case study draft (Mode B gather hero + the templated body).
@@ -11,7 +11,7 @@ export const metadata = {
 export default function BirthStoryPage() {
   return (
     <>
-      <BirthStoryHero />
+      <BirthStoryHeroFan />
       <BirthStoryBody />
     </>
   )
