@@ -1,6 +1,6 @@
 'use client'
 
-import { FieldSection, Ask, Prose, Figure, TesterNote, sys } from './kit'
+import { FieldSection, Lead, Prose, Figure, TesterNote, sys } from './kit'
 import { birthPhoto } from '@/lib/cloudinary'
 import FeatureWall from './FeatureWall'
 import CarePodFlow from './CarePodFlow'
@@ -9,55 +9,55 @@ import DocReveal from './DocReveal'
 import SearchReveal from './SearchReveal'
 import styles from './SecFeatures.module.css'
 
-/* 05 — Features. The wall shows all four ways in at once; below, each capability
-   gets a deep-dive: the question leads, a short note explains the reasoning, and
-   the real screen sits large beside it — moving where the feature is a flow (the
-   medical entry opens; the Care Pod sends out and receives back; the Journal deck
-   deals a prompt). Copy is draft, in her voice. */
+/* 05 — The product. The wall shows all four ways in at once; below, each feature
+   is documented: the name, the requirement it maps to, and the need it answers,
+   with the real screen shown large beside it, moving where the feature is a flow
+   (the medical entry opens; the Care Pod sends out and receives back; the Journal
+   deck deals a prompt). */
 
 const DEEPDIVES = [
   {
     name: 'Documentation',
+    role: 'The core feature · all information-gathering, unified',
     kind: 'doc',
     layout: 'side',
-    q: <>How do you capture it when you can barely <em>type</em>?</>,
-    prose: <>One place for everything. A tender note from the delivery room, a prescription with the doctor’s instructions, a voice memo when your hands are full. Personal memory and medical detail land on the same timeline, the moment they happen.</>,
+    prose: <>Parents wanted to arrive directly at the main task. If nothing else is used, the app still holds a timeline of what they or a loved one managed to add. A note from the delivery room, a prescription, and a voice memo land on the same timeline, the moment they happen.</>,
   },
   {
     name: 'Care Pod',
+    role: 'The heart of the concept · the optional sharing and partner-participation features',
     kind: 'carepod',
     layout: 'side',
-    q: <>Who else is in the <em>room</em>?</>,
-    prose: <>One action keeps everyone informed. A support person sends updates, photos, and voice memos out; loved ones send messages and voice notes back. All of it saves into the Birth Story, so the conversations become part of the memory.</>,
+    prose: <>The idea came from one interview. A parent told me that someone in her close circle remembered a detail about her child’s birth that she did not, and she wished she had thought to ask everyone to add their notes and experiences, to form a full collective memory: the story of the birth, and how many people loved that child from day one. One support person sends updates, photos, and voice memos out; loved ones reply with messages and voice notes; all of it saves into the Birth Story.</>,
     context: {
       photo: birthPhoto('room', 1200),
       alt: 'A partner cradles a newborn while an older sibling leans in close to see.',
-      cap: 'Birth doesn’t happen to the mother alone. The people there, and those waiting to hear, each hold a piece of the story.',
+      cap: 'Birth doesn’t happen to the mother alone; the people there, and those waiting to hear, each hold a piece of the story.',
     },
-    cap: 'You send one update out; their replies come back into the story.',
+    cap: 'One update goes out; their replies come back into the story.',
   },
   {
     name: 'Reflection',
+    role: 'The processing and nudge requirements',
     kind: 'journal',
     layout: 'side',
-    q: <>Where does the parent get to <em>process</em> it?</>,
-    prose: <>Testers told me the quiet hours up at night, between feedings, were when they wanted to reflect. So the Journal deals gentle prompts: a letter to your past self, the needs you can’t name, the senses you want to keep. Something to do with the feeling while everyone else is asleep.</>,
+    prose: <>Every parent wanted to reflect, whether or not their birth was traumatic. Those who do not already journal often do not know where to start, so the feature offers gentle prompts: a letter to a past self, the needs that are hard to name, the senses worth keeping.</>,
     cap: 'The deck deals a prompt; you write, and tag how it felt.',
   },
   {
     name: 'Search',
+    role: 'Not required · my addition, for cognitive load',
     kind: 'search',
     layout: 'side',
-    q: <>How do you find one moment in <em>all</em> of it?</>,
-    prose: <>Months of notes, photos, voice memos, and entries stack up fast. So search lives one swipe off the edge from anywhere: pull it in and filter by emotion, category, or keyword to bring a single moment back.</>,
+    prose: <>Parents described real brain fog. As entries accumulate, search sits one swipe from any screen and filters by emotion, category, or keyword, so a single memory is never buried.</>,
     cap: 'Swipe it in from the edge; filter by feeling, category, or keyword.',
   },
   {
     name: 'The Book',
+    role: 'The optional baby book',
     kind: 'book',
     layout: 'side',
-    q: <>Where do these memories go if the app <em>disappears</em>?</>,
-    prose: <>Parents said they needed something real to keep, in case the app ever went away. So the record can leave entirely: a printed Birth Story Book or a free PDF, curated from everything already captured, and open to loved ones to add to.</>,
+    prose: <>A parent said she would not trust the app with this much precious information without a guarantee it would not be lost. So the record can leave the app entirely: a printed book or a free PDF, curated from existing entries and open to loved ones. It also gives the experience a sense of closure.</>,
     crit: {
       quote: 'It would be tragic to lose these moments if the app went away.',
       who: 'Parent tester',
@@ -102,22 +102,33 @@ function Media({ f }) {
 
 export default function SecFeatures() {
   return (
-    <FieldSection id="features" num="05" crumb="features" when="week 5 · the product" threshold={0.04} wide>
-      <Ask>Birth never goes to plan. How do you build something simple enough to use anyway?</Ask>
+    <FieldSection id="features" num="05" crumb="the product" when="Week 5" threshold={0.04} wide>
+      <Lead>Birth is unpredictable, so the app is deliberately simple.</Lead>
       <Prose>
-        The biggest thing testers told me: birth is unpredictable and complicated, so the app had to be
-        the opposite. Easy to enter, easy to understand, easy to engage, whatever stage you’re in. A home
-        that drops you straight into documenting, and a nav bar that reaches every other feature in two taps.
+        It opens into documentation and reaches every other feature in a tap or two. The screens below
+        are not static mockups: I rebuilt the wireframes as working prototypes for this case study, so
+        the interactions are real.
       </Prose>
 
       <FeatureWall />
 
-      <p className={styles.decisionsHead}>Each of these was a decision.</p>
+      <div className={styles.prioritize}>
+        <p className={`${sys.eyebrow} ${sys.up}`}>Prioritization</p>
+        <Prose>
+          The brief required information gathering, meaning-making, and onboarding, and offered five
+          optional features on top. I kept two of the optional ones (sharing and a keepsake book), added
+          one that was not requested (search, for cognitive load), and cut two (a symptom tracker and a
+          birth-plan builder) as the kind of scope the research told me to resist.
+        </Prose>
+      </div>
 
       {DEEPDIVES.map((f) => (
         <div key={f.name} className={`${styles.feat} ${styles.side} ${f.kind === 'book' ? styles.bookFeat : ''}`}>
           <div className={styles.copy}>
-            <Ask kicker={f.name}>{f.q}</Ask>
+            <div className={`${styles.featHead} ${sys.up}`}>
+              <h3 className={styles.featName}>{f.name}</h3>
+              <p className={styles.featRole}>{f.role}</p>
+            </div>
             <p className={`${styles.lede} ${sys.up}`}>{f.prose}</p>
             {f.context && (
               <Figure

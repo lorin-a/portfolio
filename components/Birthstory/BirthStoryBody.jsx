@@ -1,6 +1,6 @@
 'use client'
 
-import { FieldSection, Ask, Prose, Split, Figure, Finding, Note, TesterNote, sys } from './kit'
+import { FieldSection, Lead, Prose, SubBlock, Split, Figure, Note, TesterNote, sys } from './kit'
 import { birthPhoto, cloudImg } from '@/lib/cloudinary'
 import SecArchitecture from './SecArchitecture'
 import SecIteration from './SecIteration'
@@ -21,41 +21,63 @@ const SPINE = [
   { id: 'close', label: 'Reflection' },
 ]
 
-/* Project credits — the metadata, now the masthead of the Brief (below the
-   progress bar) rather than its own competing band. */
-function Credits() {
-  const rows = [
-    ['role', 'UX/UI · research · copywriting · brand'],
-    ['team', 'Lorin Anderberg · Michael Juan'],
-    ['when', '6-week graduate studio · CMU'],
-    ['client', 'Sarah Burns (MSW) · Tamar Krishnamurti (PhD)'],
+/* Overview — the at-a-glance masthead a hiring manager reads first. An editorial
+   summary, not a corporate fact grid: the statement, the metadata, the synopsis.
+   Sits between the hero and the spine; the spine still tracks the 9 process beats. */
+function Overview() {
+  const meta = [
+    ['Role', 'UX/UI lead · information architecture · visual identity · UX writing'],
+    ['Research', 'Co-led with Michael Juan'],
+    ['Context', '6-week graduate studio · Carnegie Mellon'],
+    ['Client', 'Sarah Burns (MSW) · Tamar Krishnamurti (PhD) · Myana'],
+    ['Methods', '7 parent interviews · 3 rounds of wireframe testing'],
+    ['Outcome', 'Strong client validation; sponsored to possibly inform future Myana iterations; no commitment to build'],
   ]
   return (
-    <dl className={`${b.credits} ${sys.up}`}>
-      {rows.map(([k, v]) => (
-        <div key={k} className={b.creditItem}><dt>{k}</dt><dd>{v}</dd></div>
-      ))}
-    </dl>
+    <section className={b.overview}>
+      <div className={b.overviewInner}>
+        <p className={b.overviewLede}>
+          Birth Story is a concept for a companion app to Myana, a postpartum support platform.
+          It helps parents document, reflect on, and make sense of giving birth: the part of the
+          perinatal experience that goes unsupported once a newborn arrives.
+        </p>
+        <dl className={b.overviewMeta}>
+          {meta.map(([k, v]) => (
+            <div key={k} className={b.metaItem}><dt>{k}</dt><dd>{v}</dd></div>
+          ))}
+        </dl>
+        <p className={b.overviewSummary}>
+          Working from an explicit brief, my partner and I interviewed parents, reframed the project
+          from a feature-heavy logging tool into a simple and emotionally intelligent space, and
+          narrowed three rounds of design down to four core features. I led the UX/UI, information
+          architecture, visual identity, and UX writing. The client validated the direction
+          enthusiastically. The app remains a concept: I designed it and built the prototypes shown
+          here with AI assistance.
+        </p>
+      </div>
+    </section>
   )
 }
 
 function Brief() {
   const birth = birthPhoto('fog', 1500, { grayscale: true }) // Saul Siguenza — exhausted parent + newborn, rendered B&W
   return (
-    <FieldSection id="brief" num="01" crumb="brief" when="week 1 · the ask" wide>
-      <Credits />
+    <FieldSection id="brief" num="01" crumb="brief" when="Week 1" wide>
       <Split
         text={
           <>
-            <Ask>How might we help parents document, reflect, and make sense of their birth experience?</Ask>
-            <p className={`${b.briefLede} ${sys.up}`}>
-              Parents who use Myana, a pregnancy and postpartum app, noted a gap in their
-              experience: giving birth. Birth experiences vary widely and hardly go according to plan.
-              It is a complex physical and emotional time that often gets forgotten when the newborn arrives.
-            </p>
-            <p className={`${b.briefTask} ${sys.up}`}>
-              We were tasked with creating and pitching a concept for Myana’s companion app: <b>Birth Story</b>.
-            </p>
+            <Lead>The brief was explicit, and its skeleton was strong. The work was to make it real for an actual parent.</Lead>
+            <Prose>
+              Pregnancy is supported and understood. Giving birth is often a blur: a complex physical
+              and emotional event that tends to be forgotten the moment the newborn arrives. Closing
+              that gap was the assignment.
+            </Prose>
+            <Prose>
+              The prompt was specific. The name, Birth Story, was given, along with the core idea,
+              document, reflect, and make sense of the experience, and suggestions to balance medical
+              and emotional detail and to offer a keepsake book. Our job was to turn that skeleton
+              into a real concept.
+            </Prose>
           </>
         }
       >
@@ -65,18 +87,37 @@ function Brief() {
           src={birth.src}
           byline={birth.byline}
           alt="An exhausted parent rests cheek to cheek with a swaddled newborn in the hours just after birth, in black and white."
-          cap="The hours around birth that a pregnancy app doesn’t cover."
+          cap="An exhausted parent and newborn in the hours after birth."
         />
         <Figure
           photo
-          tag="the client"
+          tag="the review"
           ratio="3 / 2"
           focus="center 54%"
           src={cloudImg('IMG_3010', 1600)}
           alt="A studio review on a projector screen: our client, Sarah Burns, joins by video on the left while the room of students faces the work on the right."
-          cap="A real client, not a hypothetical: reviewing the work with Sarah Burns (MSW) over video."
+          cap="Reviewing the work with our client, Sarah Burns (MSW), over video."
         />
       </Split>
+
+      <SubBlock label="My role">
+        <Prose>
+          Michael Juan and I shared the research, co-facilitating interviews, co-synthesizing, and
+          co-presenting to the client. I led the UX/UI, visual identity, user flows, and information
+          architecture. Michael focused on data-visualization concepts that did not make the final design.
+        </Prose>
+      </SubBlock>
+
+      <SubBlock label="Why I was close to it">
+        <Prose>
+          I come from a matriarchal family of mostly mothers, and many of their births did not go to
+          plan. One sister labored 24 hours toward a home birth and ended up in a hospital on
+          medication, then became a mother with no time to process the reversal. Another nearly lost
+          her life giving birth, and her son spent his first months in the NICU. None of the friends I
+          asked had been offered any support with the experience afterward. I care deeply about mental
+          health and trauma, and this was a need I understood firsthand.
+        </Prose>
+      </SubBlock>
     </FieldSection>
   )
 }
@@ -85,21 +126,27 @@ function Research() {
   const feeding = birthPhoto('feeding', 1400) // Craig Adderley — mother + newborn skin to skin, hospital (natively B&W)
   const gap = birthPhoto('gap', 1300) // William Fortunato — tired mother gazing at her sleeping newborn
   return (
-    <FieldSection id="research" num="02" crumb="research" when="week 2 · interviews" alt wide>
+    <FieldSection id="research" num="02" crumb="research" when="Week 2" alt wide>
       <Split
         text={
           <>
-            <Ask>What does a parent actually need in the <em>fog</em> right after?</Ask>
-            <Finding kicker="the reframe">
-              Not the feature I expected. Parents weren’t sold on logging every medical record. What they
-              wanted was <b>recognition</b> for doing something amazing and hard: a few photos, a loose
-              outline to come back to, room to be validated. The work became <b>less, not more</b>.
-            </Finding>
-            <p className={`${b.briefTask} ${sys.up}`}>
-              And they’d use it in pieces: sleep-deprived but on their phones between feedings, they wanted
-              <b> “select one”</b> questions in the moment, and the freedom to come back and write the long
-              version once the fog lifted.
-            </p>
+            <Lead>Seven parent interviews reframed the project from comprehensive logging to deliberate simplicity.</Lead>
+            <Prose>
+              We interviewed seven parents: two think-aloud walkthroughs of our wireframes over Zoom
+              with parents the client arranged, three family members, and two friends I spoke with on
+              my own. I supplemented the interviews with birth forums and blogs.
+            </Prose>
+            <Prose>
+              The central finding surprised me. Parents did not want to log every medical record. They
+              wanted recognition for doing something difficult: a few photos, a loose outline to return
+              to, room to feel validated. We had been trying to build too much. The real work was
+              <b> less, not more</b>.
+            </Prose>
+            <Prose>
+              They also described using the app in fragments, sleep-deprived and on their phones between
+              feedings. They wanted simple <b>“select one”</b> inputs in the moment, and the freedom to
+              come back and write the longer version once the fog lifted.
+            </Prose>
           </>
         }
       >
@@ -112,12 +159,12 @@ function Research() {
           cap="A parent and newborn in the first hours after birth."
         />
         <Figure
-          tag="the gap"
+          tag="context"
           photo
           src={gap.src}
           byline={gap.byline}
           alt="A mother lies beside her sleeping newborn, head propped on her hand, gazing at the baby with a tired, pensive look."
-          cap="After birth, attention shifts to the baby. The parent’s own experience is the part that goes unprocessed."
+          cap="After birth, attention shifts to the baby; the parent’s own experience often goes unprocessed."
         />
         <Figure
           tag="interviews"
@@ -152,14 +199,22 @@ function Research() {
 
 function Voice() {
   return (
-    <FieldSection id="voice" num="06" crumb="voice" when="week 5 · copy" wide>
+    <FieldSection id="voice" num="06" crumb="ux writing" when="Week 5" wide>
       <Split
         text={
           <>
-            <Ask>Whose story were we <em>assuming</em>?</Ask>
+            <Lead>The copy is trauma-informed without assuming trauma.</Lead>
             <Prose>
-              Our first copy quietly assumed a hard birth. The trauma is in the data, but the words
-              shouldn’t decide the experience for you.
+              Because births can be traumatic, I wrote the early copy in a careful, trauma-informed
+              tone. Testing showed I had over-corrected. A parent did not connect with the word
+              “reclaim,” and it became clear I was emphasizing the hard parts at the expense of the
+              connection and significance a birth can also hold. The words should not decide the
+              experience for the parent.
+            </Prose>
+            <Prose>
+              So I rewrote toward connection and left room for the parent to bring their own tone. The
+              next step, if the project continued, is to balance the reflection prompts so they reach
+              for joy as readily as they hold space for distress.
             </Prose>
           </>
         }
@@ -169,41 +224,57 @@ function Voice() {
           who="Parent tester"
         />
         <div className={`${b.rewriteBlock} ${sys.up}`}>
-          <div className={b.copyStep}>
-            <span className={b.copyLabel}>the draft</span>
-            <p className={b.draftLine}>“Reclaim your narrative.”</p>
+          <div className={b.rewritePair}>
+            <div className={b.copyStep}>
+              <span className={b.copyLabel}>draft</span>
+              <p className={b.draftLine}>“Reclaim your narrative.”</p>
+            </div>
+            <span className={b.copyArrow} aria-hidden="true">↓</span>
+            <div className={b.copyStep}>
+              <span className={b.copyLabel}>rewrite</span>
+              <p className={b.rewriteLine}>“A space to make sense of it, in your own words.”</p>
+            </div>
           </div>
-          <span className={b.copyArrow} aria-hidden="true">↓</span>
-          <div className={b.copyStep}>
-            <span className={b.copyLabel}>the rewrite</span>
-            <p className={b.rewriteLine}>“A space to make sense of it, in your own words.”</p>
+          <div className={b.rewritePair}>
+            <div className={b.copyStep}>
+              <span className={b.copyLabel}>draft</span>
+              <p className={b.draftLine}>“Find strength &amp; support.”</p>
+            </div>
+            <span className={b.copyArrow} aria-hidden="true">↓</span>
+            <div className={b.copyStep}>
+              <span className={b.copyLabel}>rewrite</span>
+              <p className={b.rewritePlaceholder}>[ Lorin to write: a name that assumes she is already strong, not in need of rescue. ]</p>
+            </div>
           </div>
         </div>
       </Split>
-
-      <Prose>So I rewrote the voice toward connection, and let the parent bring their own tone.</Prose>
     </FieldSection>
   )
 }
 
 function Outcome() {
   return (
-    <FieldSection id="outcome" num="08" crumb="outcome" when="week 6 · the pitch" wide>
-      <Finding kicker="where it landed">
-        The work didn’t stay a class project. It became the preliminary research and ideation for a
-        Birth Story app the <b>professors and client intend to build</b>.
-      </Finding>
+    <FieldSection id="outcome" num="08" crumb="outcome" when="Week 6" wide>
       <Split
         text={
-          <blockquote className={`${b.quote} ${sys.up}`}>
-            “I wish this could be real right now!”
-            <span className={b.quoteAttr}>Sarah Burns, MSW, LSW · client</span>
-          </blockquote>
+          <>
+            <Lead>Strong client validation, and an honest limit: no commitment to build.</Lead>
+            <Prose>
+              We presented the concept, and the client responded with praise and almost no notes. There
+              are no clear signals that the app will be built. Myana sponsored the project because it
+              may inform future versions of their own product, and the pitch served the student project
+              as much as the client. It gave the concept a strong starting point to develop further.
+            </Prose>
+          </>
         }
       >
+        <blockquote className={`${b.quote} ${sys.up}`}>
+          “I wish this could be real right now!”
+          <span className={b.quoteAttr}>Sarah Burns, MSW, LSW · client</span>
+        </blockquote>
         <Figure
           photo
-          tag="the room"
+          tag="final review"
           src={cloudImg('IMG_3012', 1600)}
           alt="The studio team standing together in front of the projector screen, with our client Sarah Burns smiling on the video call behind them."
           cap="The team and our client, Sarah Burns, at the final review."
@@ -215,12 +286,23 @@ function Outcome() {
 
 function Close() {
   return (
-    <FieldSection id="close" num="09" crumb="reflection" when="week 6 · in hindsight">
-      <Ask kicker="next time">What would I ask <em>differently</em>?</Ask>
+    <FieldSection id="close" num="09" crumb="reflection" when="In hindsight">
+      <Lead>What I would do differently, and what the project taught me about how I work.</Lead>
       <Prose>
-        I’d start from the constraint, not the possibilities. Naming the core need in week one (less,
-        not more) would have saved me a build full of tools nobody asked for. And I learned not to put
-        anything in a wireframe that opens a question I didn’t mean to ask.
+        I would start from the constraint rather than the possibilities. Naming the core need in the
+        first week, less rather than more, would have saved a build full of tools no one asked for. I
+        also learned to put something in a wireframe only when it raises a question I actually want
+        feedback on.
+      </Prose>
+      <Prose>
+        The project reflects a pattern I have noticed in myself. As a big dreamer, I start by trying to
+        do everything, then narrow further and further until I reach the heart of the product. This was
+        one of the first projects I led on the visual UX and UI side, and it shaped how I wireframe now.
+      </Prose>
+      <Prose>
+        Birth Story is a concept. I designed it, then taught myself to prototype, to prompt engineer,
+        and to build with AI, including this site. The screens are example flows; no app was built.
+        Designing the concept and then learning to build it is the direction I am moving in.
       </Prose>
       <p className={b.tools}>figma · svg repo · unsplash</p>
     </FieldSection>
@@ -230,6 +312,7 @@ function Close() {
 export default function BirthStoryBody() {
   return (
     <div className={sys.case}>
+      <Overview />
       <BirthStorySpine sections={SPINE} />
       <Brief />
       <Research />

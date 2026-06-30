@@ -99,6 +99,22 @@ export function Prose({ children }) {
   return <p className={`${s.prose} ${s.up}`}>{children}</p>
 }
 
+/* lead — the declarative statement that opens a section. The scannable takeaway,
+   in place of the old question. */
+export function Lead({ children }) {
+  return <p className={`${s.lead} ${s.up}`}>{children}</p>
+}
+
+/* a labeled sub-block: a small eyebrow over running prose (e.g. "My role"). */
+export function SubBlock({ label, children }) {
+  return (
+    <div className={s.subBlock}>
+      <p className={`${s.eyebrow} ${s.up}`}>{label}</p>
+      {children}
+    </div>
+  )
+}
+
 /* a standalone "a tester said" callout — the crit card without the pinned
    artifact or the leader line, for places the quote stands on its own. */
 export function TesterNote({ quote, who = 'Parent tester' }) {

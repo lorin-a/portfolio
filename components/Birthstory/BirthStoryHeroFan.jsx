@@ -61,7 +61,7 @@ function Lead() {
   return (
     <div className={s.lead}>
       <h1 className={s.title}>Birth Story</h1>
-      <p className={s.subhead}>Pregnancy is supported and understood but giving birth is often a blur. <strong>How might we support parents in documenting and reflecting on their birth experience?</strong></p>
+      <p className={s.subhead}>Pregnancy is supported and understood, but giving birth is often a blur. <strong>How might we help parents document, reflect on, and make sense of their birth experience?</strong></p>
       <p className={s.disclosure}>
         A micro-app concept for <a href="https://myana-app.com/team/" target="_blank" rel="noopener noreferrer">Myana</a>,
         a postpartum support platform by <a href="https://www.dezudio.com/" target="_blank" rel="noopener noreferrer">Dezudio</a>,

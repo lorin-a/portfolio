@@ -161,6 +161,20 @@
 }
 .ask em { font-style: italic; color: var(--bs-accent); }
 
+/* lead — the declarative takeaway that opens a section (replaces the question).
+   A statement a hiring manager can scan, set in the display face. */
+.lead {
+  margin: 0; max-width: 30ch;
+  font-family: var(--font-heading); font-variation-settings: 'SOFT' 60, 'WONK' 0; font-weight: 400;
+  font-size: clamp(1.5rem, 1.18rem + 1.35vw, 2.2rem); line-height: 1.2; letter-spacing: -0.014em;
+  color: var(--color-ink); text-wrap: balance;
+}
+.lead b { font-weight: 500; color: var(--bs-accent); font-style: normal; }
+.lead em { font-style: italic; color: var(--bs-accent); }
+
+/* a labeled sub-block inside a section: an eyebrow over running prose */
+.subBlock { display: grid; gap: 0.7rem; max-width: 44rem; }
+
 /* running first-person prose */
 .prose {
   margin: 0; max-width: 42rem;

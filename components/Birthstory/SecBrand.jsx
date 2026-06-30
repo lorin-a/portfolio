@@ -1,10 +1,10 @@
 'use client'
 
-import { FieldSection, Ask, Prose, Plate, sys } from './kit'
+import { FieldSection, Lead, Prose, Plate, sys } from './kit'
 import styles from './SecBrand.module.css'
 
-/* 07 — Brand. Question: what should this feel like at 3am? Palette, type and
-   gradient shown as documented decisions; the moodboard as the artifact it is. */
+/* 07 — Visual design. Palette, type, and gradient documented as decisions: calm,
+   emotionally intelligent, non-clinical; the moodboard as the artifact it is. */
 
 const PALETTE = [
   ['#1A434D', 'teal'], ['#3E5E6A', 'slate'], ['#6D8F99', 'sage'], ['#B1C1F4', 'peri'], ['#DBADAD', 'blush'],
@@ -13,17 +13,19 @@ const PALETTE = [
 
 export default function SecBrand() {
   return (
-    <FieldSection id="brand" num="07" crumb="brand" when="week 5 · the feel" wide>
-      <Ask>What should this feel like at <em>3am</em>, and in the hospital light?</Ask>
+    <FieldSection id="brand" num="07" crumb="visual design" when="Week 5" wide>
+      <Lead>Calm, emotionally intelligent, and deliberately non-clinical.</Lead>
       <Prose>
-        It had to hold hard feelings and bright ones without tipping into either: calm, organic, never
-        clinical. I built a gradient to echo Myana, the parent app, so Birth Story felt like family, and
-        kept everything soft enough to read at the worst hour of the night.
+        The app needed to feel calm, emotionally intelligent, and approachable, a break from clinical
+        experiences. Myana already used a gradient, so I built one here to connect the two products. The
+        lighter pink to darker teal carries two quiet metaphors: a gender spectrum, and the emotional
+        range of the day itself. Parents said they would use the app in the small hours between feedings,
+        so every choice had to read gently to an exhausted person in the middle of the night.
       </Prose>
 
       <div className={`${styles.signature} ${sys.up}`}>
         <span className={styles.gWord}>Birth Story</span>
-        <span className={styles.gNote}>blush → periwinkle → teal · the whole identity in one object</span>
+        <span className={styles.gNote}>blush → periwinkle → teal · the gradient that ties Birth Story to Myana</span>
       </div>
 
       <div className={`${styles.specs} ${sys.up}`}>

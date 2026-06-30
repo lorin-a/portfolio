@@ -1,5 +1,6 @@
 /* Iteration — each round is a Split; the screens run big beside the change. */
 
+.roundHead { display: grid; gap: 0.6rem; }
 .strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(0.7rem, 1.6vw, 1.4rem); align-items: start; }
 .screen { margin: 0; display: grid; gap: 0.55rem; }
 /* round 1 leads with one emblematic over-built screen, annotated */
