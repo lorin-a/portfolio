@@ -87,9 +87,9 @@ export default function SecIteration() {
 
       {ROUNDS.map((r) => <Round key={r.label} {...r} />)}
 
-      <Friction tag="what I could not test">
+      <Friction tag="what I couldn’t test">
         A six-week studio can’t show whether parents actually come back to the app weeks later, once
-        the fog has lifted. That return is the whole promise of the product, so it is the part I most
+        the fog has lifted. That return is the whole promise of the product, so it’s the part I most
         wish I had been able to test.
       </Friction>
 

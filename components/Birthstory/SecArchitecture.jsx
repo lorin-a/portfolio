@@ -19,7 +19,7 @@ export default function SecArchitecture() {
             <Prose>
               My first version opened by asking the parent where they were: before, during, or after the
               birth, at home or in the hospital. I thought that was being thorough, but in testing it
-              read like a form at the front desk while you are still catching your breath. It was too
+              read like a form at the front desk while you’re still catching your breath. It was too
               many questions to answer before getting to anything that mattered.
             </Prose>
           </>
@@ -30,7 +30,7 @@ export default function SecArchitecture() {
           photo
           src={disorient.src}
           byline={disorient.byline}
-          alt="A hand holds a newborn's foot in a hospital room in the first hours after birth."
+          alt="A hand holds a newborn’s foot in a hospital room in the first hours after birth."
           cap="The first hours after birth, the moment the home screen has to meet."
         />
       </Split>

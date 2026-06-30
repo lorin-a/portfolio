@@ -21,7 +21,7 @@ const DEEPDIVES = [
     role: 'The core feature · all information-gathering, unified',
     kind: 'doc',
     layout: 'side',
-    prose: <>Parents told me they wanted to land directly on the main task, so that is what the app does. Even if nothing else gets used, there is still a timeline of whatever they or a loved one managed to add, and a note from the delivery room, a prescription, and a voice memo when your hands are full all land on it together, the moment they happen.</>,
+    prose: <>Parents told me they wanted to land directly on the main task, so that’s what the app does. Even if nothing else gets used, there’s still a timeline of whatever they or a loved one managed to add, and a note from the delivery room, a prescription, and a voice memo when your hands are full all land on it together, the moment they happen.</>,
   },
   {
     name: 'Care Pod',
@@ -108,7 +108,7 @@ export default function SecFeatures() {
         Because birth is so unpredictable, I wanted the app to be the opposite, simple enough to use at
         any stage. It opens into documenting and reaches everything else in a tap or two. None of the
         screens below are flat mockups, by the way: I rebuilt the wireframes as working prototypes for
-        this case study, so what you are seeing is the real interaction.
+        this case study, so what you’re seeing is the real interaction.
       </Prose>
 
       <FeatureWall />
@@ -118,7 +118,7 @@ export default function SecFeatures() {
         <Prose>
           The brief gave us three required areas, information gathering, meaning-making, and onboarding,
           plus five optional features to choose from. I kept two of the optional ones, sharing and a
-          keepsake book, added one that was not on the list, search, because every parent described the
+          keepsake book, added one that wasn’t on the list, search, because every parent described the
           same brain fog, and cut the other two, a symptom tracker and a birth-plan builder, because
           they were exactly the kind of extra the research kept telling me to leave out.
         </Prose>

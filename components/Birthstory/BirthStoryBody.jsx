@@ -105,14 +105,14 @@ function Brief() {
         <Prose>
           Michael Juan and I shared the research, co-facilitating the interviews, synthesizing together,
           and co-presenting to the client. I led the UX and UI, the visual identity, the user flows, and
-          the information architecture, and Michael worked on data-visualization concepts that did not
+          the information architecture, and Michael worked on data-visualization concepts that didn’t
           end up in the final design.
         </Prose>
       </SubBlock>
 
       <SubBlock label="Why I was close to it">
         <Prose>
-          I come from a matriarchal family of mostly mothers, and many of their births did not go to
+          I come from a matriarchal family of mostly mothers, and many of their births didn’t go to
           plan. One sister planned a natural home birth, labored 24 hours, and ended up in a hospital on
           medication, the opposite of everything she had pictured, and then she was a mother with no
           time to process any of it. Another nearly lost her life giving birth, and her son spent his
@@ -138,17 +138,16 @@ function Research() {
               We talked with seven parents in all. Two were think-aloud walkthroughs of our wireframes
               over Zoom, with parents our client set us up with, and I did the other five on my own:
               three family members and two friends, plus the forums and blogs I read to hear from people
-              we could not reach in six weeks.
+              we couldn’t reach in six weeks.
             </Prose>
             <Prose>
-              What surprised me was how little they wanted from it. I had assumed they would want to log
-              every medical record, but what they really wanted was to feel recognized for doing
-              something hard: a few photos, a loose outline they could come back to, somewhere to be
-              validated. We had been trying to do too much, and most of what I did from there was take
-              things away.
+              What surprised me was how little they wanted from it. I had assumed they’d want to log
+              every medical record, but mostly they just wanted to feel recognized for doing something
+              hard: a few photos, a loose outline they could come back to, somewhere to be validated. We
+              had been trying to do too much, and most of what I did from there was take things away.
             </Prose>
             <Prose>
-              They also told me they would use it in pieces, sleep-deprived and on their phones between
+              They also told me they’d use it in pieces, sleep-deprived and on their phones between
               feedings, so they wanted simple select-one questions in the moment and the freedom to come
               back and write the longer version once the fog lifted.
             </Prose>
@@ -211,15 +210,15 @@ function Voice() {
             <Lead>The copy is trauma-informed without assuming trauma.</Lead>
             <Prose>
               Because I knew births could be traumatic, I wrote the first copy in a careful,
-              trauma-informed tone, and a tester showed me I had gone too far with it. She did not
+              trauma-informed tone, and a tester showed me I had gone too far with it. She didn’t
               connect with the word “reclaim,” and it made me realize I was leaning on the hard parts
-              and missing how much a birth can also be about connection and how significant it is. I did
-              not want the words to decide the experience for anyone.
+              and missing how much a birth can also be about connection and how significant it is. I
+              didn’t want the words to decide the experience for anyone.
             </Prose>
             <Prose>
               So I rewrote toward connection and left room for people to bring their own tone. If I kept
-              working on it, the next thing I would do is balance the reflection prompts so they reach
-              for joy as readily as they hold space for distress.
+              working on it, the next thing I’d do is balance the reflection prompts so they reach
+              for joy as readily as they make room for distress.
             </Prose>
           </>
         }
@@ -266,7 +265,7 @@ function Outcome() {
             <Lead>The client loved it, and it still isn’t getting built.</Lead>
             <Prose>
               When we presented, the client had almost nothing to change and told us she wished it were
-              real already. There is no real signal that the app will get built. Myana sponsored the
+              real already. There’s no real signal that the app will get built. Myana sponsored the
               project because it might inform future versions of their own product, and honestly the
               pitch was probably as much for us as for them, but it gave the concept a real starting
               point to keep developing from.
@@ -293,24 +292,24 @@ function Outcome() {
 function Close() {
   return (
     <FieldSection id="close" num="09" crumb="reflection" when="In hindsight">
-      <Lead>What I would do differently, and what the project taught me about how I work.</Lead>
+      <Lead>What I’d do differently, and what the project taught me about how I work.</Lead>
       <Prose>
-        If I did it again I would start from the constraint instead of the possibilities, because naming
-        the core need in the first week, less rather than more, would have saved me a whole build of
-        tools nobody asked for. The other thing I took from it is to only put something in a wireframe
-        when it is a question I actually want feedback on.
+        If I did it again I’d start from the constraint instead of the possibilities, because naming the
+        core need in the first week, less rather than more, would have saved me a whole build of tools
+        nobody asked for. The other thing I took from it is to only put something in a wireframe when
+        it’s a question I actually want feedback on.
       </Prose>
       <Prose>
-        The whole project follows a pattern I notice in myself: I am a big dreamer, so I start by trying
+        The whole project follows a pattern I notice in myself: I’m a big dreamer, so I start by trying
         to do everything, and I almost always end up narrowing and narrowing until I get to the heart of
-        it. This was one of the first projects I led on the visual side, and it has shaped how I
-        wireframe ever since.
+        it. This was one of the first projects I led on the visual side, and it’s shaped how I wireframe
+        ever since.
       </Prose>
       <Prose>
-        Birth Story is still a concept. I designed it, and since then I have taught myself to prototype,
+        Birth Story is still a concept. I designed it, and since then I’ve taught myself to prototype,
         then to prompt engineer, and now I build with AI, including this site, so the screens here are
-        example flows rather than a finished product. Designing something and then being able to build
-        it myself is the direction I am headed.
+        example flows rather than a finished product. Designing something and then being able to build it
+        myself is the direction I’m headed.
       </Prose>
       <p className={b.tools}>figma · svg repo · unsplash</p>
     </FieldSection>

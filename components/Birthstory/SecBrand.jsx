@@ -19,7 +19,7 @@ export default function SecBrand() {
         I wanted the app to feel calm, emotionally intelligent, and approachable, a real break from
         clinical experiences. Myana already used a gradient, so I built one here to tie the two together,
         and I chose a lighter pink moving into a darker teal because it let me hold a couple of things at
-        once: a gender spectrum, and the emotional range of the day itself. Parents told me they would
+        once: a gender spectrum, and the emotional range of the day itself. Parents told me they’d
         mostly reach for this in the small hours between feedings, so everything had to read gently to
         someone exhausted in the middle of the night.
       </Prose>
