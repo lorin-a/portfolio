@@ -21,14 +21,14 @@ const DEEPDIVES = [
     role: 'The core feature · all information-gathering, unified',
     kind: 'doc',
     layout: 'side',
-    prose: <>Parents wanted to arrive directly at the main task. If nothing else is used, the app still holds a timeline of what they or a loved one managed to add. A note from the delivery room, a prescription, and a voice memo land on the same timeline, the moment they happen.</>,
+    prose: <>Parents told me they wanted to land directly on the main task, so that is what the app does. Even if nothing else gets used, there is still a timeline of whatever they or a loved one managed to add, and a note from the delivery room, a prescription, and a voice memo when your hands are full all land on it together, the moment they happen.</>,
   },
   {
     name: 'Care Pod',
     role: 'The heart of the concept · the optional sharing and partner-participation features',
     kind: 'carepod',
     layout: 'side',
-    prose: <>The idea came from one interview. A parent told me that someone in her close circle remembered a detail about her child’s birth that she did not, and she wished she had thought to ask everyone to add their notes and experiences, to form a full collective memory: the story of the birth, and how many people loved that child from day one. One support person sends updates, photos, and voice memos out; loved ones reply with messages and voice notes; all of it saves into the Birth Story.</>,
+    prose: <>The idea came out of a single interview. A parent told me that someone in her circle remembered a detail about her child’s birth that she had completely lost, and she wished she had thought to ask everyone around her to add what they remembered while it was fresh. That became Care Pod: one support person sends updates, photos, and voice memos out, loved ones reply with their own messages and voice notes, and all of it saves into the Birth Story, so the whole story of who was there and how loved that child was stays in one place.</>,
     context: {
       photo: birthPhoto('room', 1200),
       alt: 'A partner cradles a newborn while an older sibling leans in close to see.',
@@ -41,7 +41,7 @@ const DEEPDIVES = [
     role: 'The processing and nudge requirements',
     kind: 'journal',
     layout: 'side',
-    prose: <>Every parent wanted to reflect, whether or not their birth was traumatic. Those who do not already journal often do not know where to start, so the feature offers gentle prompts: a letter to a past self, the needs that are hard to name, the senses worth keeping.</>,
+    prose: <>Every parent wanted to reflect, whether their birth was traumatic or not, but the ones who don’t already journal often don’t know where to start. So instead of a blank page, the journal hands them gentle prompts: a letter to a past self, the needs that are hard to name, the senses worth keeping.</>,
     cap: 'The deck deals a prompt; you write, and tag how it felt.',
   },
   {
@@ -49,7 +49,7 @@ const DEEPDIVES = [
     role: 'Not required · my addition, for cognitive load',
     kind: 'search',
     layout: 'side',
-    prose: <>Parents described real brain fog. As entries accumulate, search sits one swipe from any screen and filters by emotion, category, or keyword, so a single memory is never buried.</>,
+    prose: <>This is the one feature nobody asked for. I added it because so many parents described the same brain fog, and as the entries pile up I didn’t want anyone digging through the whole app to find one memory, so search is a swipe away from anywhere and filters by emotion, category, or keyword.</>,
     cap: 'Swipe it in from the edge; filter by feeling, category, or keyword.',
   },
   {
@@ -57,7 +57,7 @@ const DEEPDIVES = [
     role: 'The optional baby book',
     kind: 'book',
     layout: 'side',
-    prose: <>A parent said she would not trust the app with this much precious information without a guarantee it would not be lost. So the record can leave the app entirely: a printed book or a free PDF, curated from existing entries and open to loved ones. It also gives the experience a sense of closure.</>,
+    prose: <>We took the book seriously the moment a parent told me she wouldn’t trust an app with something this precious unless she knew it couldn’t disappear. So the whole record can leave the app, as a printed book or a free PDF, curated from what’s already there and open to the people who were part of it. It also gives the experience a sense of closure.</>,
     crit: {
       quote: 'It would be tragic to lose these moments if the app went away.',
       who: 'Parent tester',
@@ -105,9 +105,10 @@ export default function SecFeatures() {
     <FieldSection id="features" num="05" crumb="the product" when="Week 5" threshold={0.04} wide>
       <Lead>Birth is unpredictable, so the app is deliberately simple.</Lead>
       <Prose>
-        It opens into documentation and reaches every other feature in a tap or two. The screens below
-        are not static mockups: I rebuilt the wireframes as working prototypes for this case study, so
-        the interactions are real.
+        Because birth is so unpredictable, I wanted the app to be the opposite, simple enough to use at
+        any stage. It opens into documenting and reaches everything else in a tap or two. None of the
+        screens below are flat mockups, by the way: I rebuilt the wireframes as working prototypes for
+        this case study, so what you are seeing is the real interaction.
       </Prose>
 
       <FeatureWall />
@@ -115,10 +116,11 @@ export default function SecFeatures() {
       <div className={styles.prioritize}>
         <p className={`${sys.eyebrow} ${sys.up}`}>Prioritization</p>
         <Prose>
-          The brief required information gathering, meaning-making, and onboarding, and offered five
-          optional features on top. I kept two of the optional ones (sharing and a keepsake book), added
-          one that was not requested (search, for cognitive load), and cut two (a symptom tracker and a
-          birth-plan builder) as the kind of scope the research told me to resist.
+          The brief gave us three required areas, information gathering, meaning-making, and onboarding,
+          plus five optional features to choose from. I kept two of the optional ones, sharing and a
+          keepsake book, added one that was not on the list, search, because every parent described the
+          same brain fog, and cut the other two, a symptom tracker and a birth-plan builder, because
+          they were exactly the kind of extra the research kept telling me to leave out.
         </Prose>
       </div>
 

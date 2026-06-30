@@ -15,12 +15,12 @@ export default function SecArchitecture() {
       <Split
         text={
           <>
-            <Lead>The app opens directly into documentation. There is no home screen, and nothing to answer before you begin.</Lead>
+            <Lead>The app opens straight into documentation, with no home screen and nothing to answer first.</Lead>
             <Prose>
-              My first structure opened by asking where the parent was: before, during, or after the
-              birth, at home or in the hospital. In testing it read like a form at the front desk while
-              someone was still catching their breath. It added complexity the function did not justify,
-              and it asked too many questions before getting to the point.
+              My first version opened by asking the parent where they were: before, during, or after the
+              birth, at home or in the hospital. I thought that was being thorough, but in testing it
+              read like a form at the front desk while you are still catching your breath. It was too
+              many questions to answer before getting to anything that mattered.
             </Prose>
           </>
         }
@@ -43,15 +43,14 @@ export default function SecArchitecture() {
       </Figure>
 
       <Prose>
-        The reframe was to get out of the way. The app opens straight into note-taking, the feature
-        parents most wanted, and a brief onboarding flow introduces the others, which stay reachable
-        from the nav bar at all times.
+        So I cut the questions entirely. The app opens straight into note-taking, the thing parents
+        most wanted, and onboarding introduces the rest, which stay in the nav bar the whole time.
       </Prose>
       <Prose>
-        A second decision unified the data. The brief required four kinds of capture: medical,
-        contextual, narrative, and feelings. Rather than give each its own destination, I consolidated
-        them into one timeline that every entry feeds, tagged and filterable by topic. Earlier versions
-        separated them and tested as fragmented and complex.
+        While I was at it, I stopped splitting the data up. The brief asked for four kinds of capture,
+        medical, contextual, narrative, and feelings, and instead of giving each its own corner I put
+        them on one timeline you tag and filter, because the earlier versions that separated them had
+        tested as fragmented and confusing.
       </Prose>
 
       <Figure

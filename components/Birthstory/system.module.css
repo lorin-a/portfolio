@@ -175,14 +175,15 @@
 /* a labeled sub-block inside a section: an eyebrow over running prose */
 .subBlock { display: grid; gap: 0.7rem; max-width: 44rem; }
 
-/* running first-person prose */
+/* running first-person prose — the autobiographical body voice. Body typeface,
+   not Fraunces; Fraunces is reserved for leads, headings, and callouts. */
 .prose {
   margin: 0; max-width: 42rem;
-  font-family: var(--font-heading); font-variation-settings: 'SOFT' 60, 'WONK' 0; font-weight: 400;
-  font-size: clamp(1.02rem, 0.97rem + 0.34vw, 1.2rem); line-height: 1.55; letter-spacing: -0.003em;
+  font-family: var(--font-body); font-weight: 400;
+  font-size: clamp(1rem, 0.96rem + 0.3vw, 1.12rem); line-height: 1.65;
   color: var(--color-ink);
 }
-.prose b { font-weight: 600; color: var(--bs-accent); font-style: normal; }
+.prose b { font-weight: 600; color: var(--bs-accent); }
 .prose em { font-style: italic; }
 
 /* figure plate — flat artifact (diagrams, moodboard) */
