@@ -65,12 +65,8 @@
 @media (max-width: 440px) { .valuesList { grid-template-columns: 1fr; } }
 
 /* voice — the rejected draft copy, shown as the artifact a tester reacted to */
-/* voice — the tester critique beside the copy it rewrote (draft → rewrite) */
-.voiceGrid {
-  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  gap: clamp(1.6rem, 4vw, 3.2rem); align-items: center;
-  margin: clamp(0.4rem, 1.5vw, 0.9rem) 0;
-}
+/* voice — the tester critique and the copy it rewrote (draft → rewrite), shown
+   in the section's right column beside the question */
 .rewriteBlock { display: grid; gap: 0.7rem; justify-items: start; }
 .copyStep { display: grid; gap: 0.35rem; }
 .copyLabel { font-family: var(--font-body); font-weight: 600; font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--bs-teal-soft); }

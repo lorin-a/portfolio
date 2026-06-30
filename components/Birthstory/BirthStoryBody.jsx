@@ -151,14 +151,18 @@ function Research() {
 
 function Voice() {
   return (
-    <FieldSection id="voice" num="06" crumb="voice" when="copywriting">
-      <Ask>Whose story were we <em>assuming</em>?</Ask>
-      <Prose>
-        Our first copy quietly assumed a hard birth. The trauma is in the data, but the words shouldn’t
-        decide the experience for you.
-      </Prose>
-
-      <div className={b.voiceGrid}>
+    <FieldSection id="voice" num="06" crumb="voice" when="copywriting" wide>
+      <Split
+        text={
+          <>
+            <Ask>Whose story were we <em>assuming</em>?</Ask>
+            <Prose>
+              Our first copy quietly assumed a hard birth. The trauma is in the data, but the words
+              shouldn’t decide the experience for you.
+            </Prose>
+          </>
+        }
+      >
         <TesterNote
           quote="Assuming there’s a trauma, you shouldn’t call it that. I appreciate the acknowledgement, but it feels like an implied negative."
           who="Parent tester"
@@ -174,7 +178,7 @@ function Voice() {
             <p className={b.rewriteLine}>“A space to make sense of it, in your own words.”</p>
           </div>
         </div>
-      </div>
+      </Split>
 
       <Prose>So I rewrote the voice toward connection, and let the parent bring their own tone.</Prose>
     </FieldSection>

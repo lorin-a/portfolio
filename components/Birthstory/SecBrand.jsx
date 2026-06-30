@@ -13,7 +13,7 @@ const PALETTE = [
 
 export default function SecBrand() {
   return (
-    <FieldSection id="brand" num="07" crumb="brand" when="the feel">
+    <FieldSection id="brand" num="07" crumb="brand" when="the feel" wide>
       <Ask>What should this feel like at <em>3am</em>, and in the hospital light?</Ask>
       <Prose>
         It had to hold hard feelings and bright ones without tipping into either: calm, organic, never
