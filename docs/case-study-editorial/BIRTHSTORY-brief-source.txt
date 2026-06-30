@@ -1,0 +1,477 @@
+# Birth Story — project brief (converted from LaCie: IXD_ Myana Birth Story.docx, 2026-06-30)
+
+Project Overview
+Timeline:
+
+TUE 2/4
+Project kickoff
+	•	DUE TUESDAY 2/11: preliminary sketches
+THU 2/20
+Client check in
+TUE 2/25
+Evaluative research sessions
+THU 2/27
+Informal research read-out
+SPRING BREAK
+TUE 3/18
+Final client presentation
+FRI 3/21
+Final deliverables uploaded to
+course folder on Box by 9:00pm
+
+Meeting Times
+	•	Best times to meet? Thursdays after class + Fridays same ;)
+	•	Lorin’s Availability: 
+	•	Mon/Wed: 11:30-1:30, 4-6pm
+	•	Tues/Thurs: 12-2, 4-6pm
+	•	Fridays: all day
+	•	Weekends are okay, zoom is okay, some preference for in person when we can especially to brainstorm
+	•	Best times to meet? Thursdays after class + Fridays (this as well) but not this week
+	•	Michael’s Availability
+	•	Monday: 11:30-1:00
+	•	Tuesday: 12-6:50
+	•	Wednesday 11:30-1:50 4-6
+	•	Thursday 12-6:50
+	•	Friday: all day except for 12-2
+
+Deliverables: 
+	•	Final presentation
+	•	A diagram representing information architecture or key workflows within your application
+	•	Annotated wireframes detailing your design solution (including key interactions and associated rationale/templates)
+	•	High fidelity mockups of a representative subset of screens
+	•	Team evaluation form
+	•	Three to five high-resolution images that capture key ideas from this project and your solution
+
+App Requirements + Resources:
+	•	https://docs.google.com/spreadsheets/d/1Oq_xnSb-GYPeaAQ_4K6Hnk0X5zjVv5pKxy5kJRObO04/edit?usp=sharing (this is our copy that we can edit)
+	•	https://theconversation.com/birth-of-a-story-how-new-parents-find-meaning-after-childbirth-hints-at-how-they-will-adjust-203828 (why this helps mental health)
+	•	https://thebirthhour.com/ (example birth stories)
+	•	Our project Drive folder
+
+Process:
+	•	Understand App Requirements
+	•	Talk to people in our life who have given birth to get immersed in the subject matter
+	•	Research examples of journey/story tracking apps and flows to find inspiration across disciplines
+	•	Study existing Myana documentation, brand, language, etc.
+	•	Clarify goals/Define design direction—What is the feel we are focusing on? I.e. Tension between medical documentation + storytelling and strength building
+	•	Iterate: Take turns being generator + synthesizer
+
+Questions
+	•	Where to start? Do we first define our goals and then the goals of the project (what it should accomplish) before getting into the nitty gritty of things like “how do we intake medical information”? It seems like those types of decisions could be informed by the overall feel/goal for our proposed design direction
+	•	How do we approach collecting medical, personal, sentimental information? (photo, voice, text, who can add to this?)
+	•	How do we display and organize information?
+	•	Timeline? Category? Calendar view?
+	•	Key interaction paradigms: data capture, (form, form fields, check boxes, prompts one at a time, signature interactions will be the cornerstones of our app) 
+	•	DUE TUESDAY: preliminary sketches, creative alt approaches, sketch by hand mostly (artifacts to bring to class to convey for feedback) Consider starting with one or two requirements to sketch
+	•	Types of activities (medical info fields, personal journal entry, media uploads, feelings tracker, etc.)
+	•	Design Values:
+	•	I’m curious to start with how the app should Feel before getting technical as it will inform the rest
+Research
+Inspiration
+	•	Empathy App (Grief Support)
+	•	Good onboarding experience
+	•	Good copy/branding
+	•	Good resources
+	•	Consider looking @ mental health apps, journaling apps, medical apps, storytelling/sharing apps, sleep/dream journal apps, eating/diet/nutrition apps 
+	•	Reference 1 
+	•	Reference 2
+	•	Reference 3 
+	•	Reference 4
+	•	Reference 5 
+	•	Reference 6 
+	•	Reference 7
+	•	Reference 8 
+	•	Reference 9
+	•	
+	•	
+	•	
+	•	
+	•	
+
+
+Interviews
+	•	Tracking in a journal
+	•	Telling and re-telling the story
+	•	Days leading up
+	•	Multiple perspectives from those involved
+	•	In the hospital
+	•	Moments afterward
+	•	“It’s my story!” says mom, how to give people voice to the experience
+	•	Kaiser provided a binder of documents and offered a course to prepare, medical record. Come back in 5-30 days
+	•	Didn’t need that info
+	•	Lactation chart
+	•	Baby being in the NICU dylan, the paperwork wasn’t helpful because it was only for normal birth and she did not go through that
+	•	Medications only
+	•	Didn’t explain anything that had happened to me, or recaps of what specifically happened to you
+	•	More info provided by midwife than doctors for Lisa
+	•	Home birth could not clear Strep B diagnosis and had to go to the hospital, dangerous to baby if it is not cleared
+	•	Medication reminder features?
+	•	Navigating medical was difficult, insurance documentation
+	•	Records not transferred well between providers
+	•	Doctors may scare you into forcing your plan to go differently
+	•	Would have to be easy..
+	•	First couple of weeks you are up and on your phone every 2 hours while breastfeeding 
+	•	Knowing their brain is not in the right place, click yes and no at first and then freeform can come later on….
+	•	Drinking water and eating right..
+	•	How will you help people know that their data is protected when using an app like this, security for people’s information, disclosures, data usage, mistrust in data and medical
+	•	There is a screen that shows heart rate, baby’s heart rate. Interesting thing to watch but may not want to input that to the app
+	•	There was a point where the epidural failed, would need to document that
+	•	Make sure this app recognizes that many births involve trauma
+	•	It never goes according to plan
+	•	It can be really traumatic to have it go off the rails
+	•	What is the birth scene
+	•	What medical interventions have you had?
+	•	You can receive resources
+	•	You often have 1 person in your corner who has seen what you went through, who validates your experience and what you have done. This amazing thing you have done. Not everyone has that. 
+	•	Recognition, validation, reflection
+	•	Sense of failure for not having a natural birth
+	•	Would have been helpful to have voices that validated that I still had an experience even if it wasn’t what is traditional or “should be”
+	•	Huge sense of failure afterward that I had to “get over”
+	•	Resources to help process when it doesn’t go according to plan
+	•	The existing depression PPD tests do not have acknowledgement for what happened or the diversity of experiences
+	•	It is responsible to have resources
+	•	Can’t just leave people with their trauma with no support
+	•	Where do you go with that if you’re not in your phone <3
+	•	Accessing different stories on a community forum or a network for support
+	•	Shed light on “supposed to be able to do this” but if you can’t you fail. 
+	•	What is “normal” normalizing that things don’t go according to plan.
+	•	Leaning on the collective storytelling <3
+	•	You can’t take a self assessment when you aren’t aware of your feelings at the moment
+	•	Some signs to look out for feature of PPD
+	•	Judgement of other parents or blogs or norm of what you’re supposed to do to be a “good parent”
+	•	You are the expert of your child and your body and your experience
+	•	Reclaiming your birth story narrative
+	•	Navigating decisions about circumcision
+	•	EMDR therapy recommendations
+	•	The not so pretty
+	•	“B-Sides”
+	•	Time stamped, photo + talk about it
+	•	Where does the app start, is it with contraction timer
+	•	Book for the child to know their own story
+	•	The output people may want is unique
+	•	Record messages of support for mom or baby to be
+	•	Option for family member to submit a video of their telling of their version of the birth story
+	•	A place for photos, notification of reminders to document
+	•	
+Notes
+Notes from Class Talk 3/4/25
+Project 2:
+	•	Not developer level details on wireframes but key aspects highlighted
+	•	Be sure portfolio words represent that it is school projects pull from syllabus “propose a design direction” you never want to back pedal
+	•	The client wanted to sponsor this project as it may inform future iterations of their app
+	•	Health + sentimental information
+	•	Processing what happened when giving birth (trauma)
+	•	Not feeling listened to, birth plan doesn’t go how you expected or wanted
+	•	Myana app: Mothers, you are not alone (m.y.a.n.a.)
+	•	Look at the project requirements
+	•	Highlight what you learn from feedback from new moms
+Client Talk
+	•	Documentation of decisions that were made, how things happened throughout the birth process
+	•	700 women die each year from pregnancy-related complications in USA, 70% of these are near misses
+	•	80% are preventable
+	•	65% occur after delivery
+	•	1 in 3 occur after discharge
+	•	Black women are 3x more likely to die from pregnancy-related causes than white women
+	•	USA is leading in pregnancy deaths
+	•	Depression Suicide + interpersonal violence are leading causes of post-birth deaths
+	•	Postpartum Period = 6-10 weeks most vulnerable (preeclampsia, hemorrhage) - 1 year (depression, overdose, suicide)
+	•	Postpartum is a period of time, postpartum depression is something that can happen (15% feel this)
+	•	Why? delays in diagnosis/effective treatment, knowledge of warning signs, now knowing when to get help, limited time with healthcare providers
+	•	Myana: Track, Engage, Triage, Support
+	•	Track: symptoms of physical and emotional
+	•	Triage: symptoms to the appropriate level of care, letting them know when to seek help
+	•	Engage: people in postpartum care, how to care for yourself
+	•	Support: personalized support
+	•	Moms using it said they needed to also have some baby information, 80% mom 20% baby first 6 weeks and then shift to 20% mom 80% baby toward 1 year
+	•	They have a pregnancy app as well. People showing depression symptoms were using the app more
+	•	Look @ Myana documentation
+	•	Open ended journaling was used, learned what language they use to describe their experience
+Birth Story:
+	•	Sharing stories has a positive impact on mental health and help healing
+	•	Info gathering
+	•	who was there
+	•	what procedures happened
+	•	what medications given
+	•	when did it happen, how long did it take?
+	•	where did it happen?
+	•	how did it happen? how were you feeling? (”belabored” interesting word)
+	•	Meaning-making
+	•	Birth trauma, physical (tearing, muscle injury, unplanned C-section) + psychological (unplanned events, unmet expectations, inappropriate medical care, discrimination)
+	•	Processing this can positively impact future relationship with baby and predictor of parenting success
+	•	Highlight the positive, positive re-telling, silver-lining, benefits, what would you have changed?
+	•	This is also a wonderful thing to want to document and share, the bringing of life into the world, strength, etc.
+	•	How do the entries and interactions form into one overarching “birth story” ? Is that part of our job to figure out?
+	•	How do we set the right expectations about what this is for so that it is not confused with things like baby’s first photo books etc.
+	•	How it can be used, prior to birth? after? setting your expectations and then reflecting on, edit over time
+	•	Seems important to be able to revisit moments of your past entries and add new perspectives on it without editing or deleting the raw aspects of the story
+	•	Disclaimer about data privacy, give lots of control to user
+	•	There is no “normal” birth story or experience
+	•	What about the parts that were traumatic during pregnancy? What if the trauma is about the baby having issues? like Xavian?
+	•	What about the potential trauma of conceiving, miscarriage, finding donors, etc?
+	•	First client check in is 2/20
+
+	•	Visual style is flexible but respect overall feel of Myana. You can change color/fonts, etc. Do you want to challenge yourself to work with an existing brand or invent a new one?
+	•	Whole medical team leaves and doesn’t even look at mom to see if mom is okay, she could die!!!!
+	•	WE NEED DOULAS!
+
+2/11/25
+	•	Parents want a place to remember and capture data during delivery related to instructions about what to do when you get home….
+	•	How to make data quantifiable? #tags search
+	•	Need to focus on things to capture in the moment medical details
+	•	Understanding if you had braxton hicks etc. timing and procedure, premature, close to due date or not
+	•	It can be partner’s job to capture the information in the moment of delivery @ the hospital..
+	•	Focus on the medical intake forms that someone like a Doula would fill out and where does that live in the app?
+	•	If this isn’t your first time, or you want the info for the next time..
+	•	Be able to hand app to someone who can capture all the medical stuff, new born baby photos, umbilical cord cutting, details being logged, etc. No clue what happens to baby when they’re taken away
+	•	Birth parent often has no clue what happened down there if they aren’t seeing it in a mirror
+	•	If they don’t have anyone, can there be a voice recording option that takes in all the information so that it can be translated to text and then edited later !!!
+	•	Joseph brought up a question on what priority is for a partner. Recording for documentation or being attentive to the person giving birth.
+
+Client Feedback 2/20
+	•	Rui and Kevin
+	•	Text readable on projector but might look small on laptop and mobile
+	•	Supportive facts throughout user journey would be nice to let mom know she’s not alone
+	•	Need to flush out how we track emotions
+	•	What about a community aspect to hear about other people’s birth experiences
+	•	What about a contraction planner? I like focusing on the stages of birth experience…may be too complicated though
+	•	Access different stages retroactively if want to but mainly to be used at specific stages.
+	•	Ability to shuffle prompts if one is not resonating with you
+	•	No one will be on their phone in active labor…consider “what to expect” or “retroactive” look at birth experience
+	•	Timeframe between contractions. Difference between pushing/delivery and labor. You’re in the hospital very little time. Chunk into two group delivery and postpartum.
+	•	Designate someone to be the delivery documenter in advance? 
+	•	What about meditations and body scans? Soothing the birth parent
+	•	Pre-birth experience, asking what are your expectations about your birth experience? What are you fears? What might help you feel prepared? Packing list, preparing for things not to go according to plan <3 
+	•	Yaezi + Jackie
+	•	I really like how discoverable their UI is, you can swipe full screen between phase 1-3, there are always multiple menu options and visual indications of what comes next, M M M (Moments: Mantras, Meditation, Music)
+	•	I love the metaphor. Wishing ours felt like it hit home with a theme of some sort
+	•	Remembering the idea of a PIN for privacy when thinking about sharing access to the app
+	•	How do the journal/media entries all come together visually in zoom our view? Or collected view? Or scrollable timeline
+	•	Theirs feels to me like it just makes sense and is cohesive and does a few simple things well
+	•	Really want to think about what you open the app to. Main menu/home page. Should it have the timeline? Should it open straight to a journal entry + timeline? Should it stay as is and be a choice between Document + reflect?
+	•	Importance of introductory screen like onboarding or prompting to get started with the app and how it works
+	•	What about a vault where you can lock away any thoughts you feel that you’re not ready to process yet and have the PIN on that?
+	•	What about a button that says “I’m in labor!” sent out to contacts to keep people posted on the experience
+	•	Us
+	•	Consider making it fully private “just for you” message 
+	•	Need to refine the data viz idea, she liked the quilt
+	•	Likes the idea of auto-populating timeline but maybe timeline is vertical scroll easy to navigate
+	•	If timeline is medically focused it could have an export to PDF option to show provider
+	•	Likes compassionate copy
+	•	Community aspect could work but may have privacy issues, may be complex
+	•	Diane + Joseph
+	•	I like how their timeline has a  plus on the line to show you can add or edit past entries
+	•	I like that their entries have a share feature
+	•	I really like their visual timeline and that you can click to open the full entry zoom-out view
+	•	They split it by story + account + moments
+	•	Smart to add a “review” slide
+	•	Try not to overwhelm mom with entry
+	•	Think about how to nudge user to come back to use the app
+	•	Flexibility is important
+	•	Most people will use this after birth
+	•	A lot of loneliness at first, ruminating while sleep deprived and potentially feeling chaotic
+	•	Overwhelmed with time, thoughts, and babies
+	•	Eindra Elijah
+	•	They did so good!!
+	•	Has empty timeline at start but with prepopulated items
+	•	Kinda like notion
+	•	I really like “reflect, reframe, and release” SO COOL
+	•	I like how they have broken down the medical elements very informed with medical terminology nice that you can search the list as well and sort by what type of medical info that it is
+	•	Sarah likes the pre-populated selectable answers to medical info 
+	•	I like that they color coded sections that have been reflected on and grayed out ones that have not been reflected on or written about
+	•	I love their approach. Super satisfying and feels easy to use and also has emotional depth and logistical depth. Clap clap clap <3 
+	•	Sarah really likes the medical form the details help add more depth to understanding the procedural experience\
+	•	Not offering medical advice important
+	•	Their approach hits the spot for me. Like it feels cohesive and the quality shows across every feature. The depth and purpose are felt. It is clean and organized. It is educational and emotional. <3 
+	•	Reconstructing the medical information of what happened inside the room has been reported as helpful with sense making
+
+Lecture Notes 2/20
+	•	Typography, weights, styles, systems
+	•	Color hues and values
+	•	Texture
+	•	Contrast, shadows
+	•	Shapes, corners
+	•	Light, glow, shadow
+	•	Perception of depth, bevel, emboss, deboss
+	•	Proportions
+	•	Spacing
+	•	Transparency/Blur
+	•	Iconography, set
+	•	Movement
+	•	Photography
+	•	Copy editing
+	•	Illustration styles
+	•	Visual language
+	•	Don’t just replicate exact styles of existing brands, try to create your own
+	•	Watch Myana video, screenshot elements
+	•	DO LESS, Do ENOUGH
+	•	Take away and simplify visual styles rebuild to emphasize info. Attention is limited choose wisely
+	•	Less cognitive load
+	•	Iterate on the visual design
+	•	Make multiple mood boards with names and key themes (meditative, playful, etc.)
+	•	Evaluate visuals
+	•	We can make just a few wireframes high fidelity pixel prefect
+	•	Create styleguide
+	•	Reference libraries where icons assets are from UX components etc
+	•	Qualitative evaluations can help leap toward quantitative survey to support data
+	•	Learning more about the user next week
+	•	Think aloud
+	•	Prepare to walk them through every step of the user flow
+	•	Give enough info to allow them to participate but not too much that you take up all the time talking
+	•	Isolate one screen at a time for next week
+	•	Goal: Whats working, whats not working, what’s missing
+	•	Doesn’t have to be interactions but show screens in sequence to get feedback but it can be helpful
+	•	Need script and story
+	•	Wireframe quality for next week
+
+Moving forward to discuss:
+	•	Each create 2 separate mood board themes? (colors, illustrations vs photos, shapes, icons, type styles)
+	•	Rework data viz concept, lets show realistic examples of how we access the timeline, what it looks like, and how it’s edited or populated
+	•	Create entries that have photos, written text, etc.
+	•	Refine how to track emotions or physical sensations
+	•	Consider leaning in to the “just for you” private theme less collaborative
+	•	Experiment with community story share idea
+	•	Refine UI, flows, how to edit or add to previous documentation entries?
+	•	Review notes above of other groups and see what we can apply to ours
+	•	Refine wireframes, consider scaling down visuals to focus on features?
+	•	Make sure we have realistic placeholder content
+Interview Notes Rebecca
+Ivf
+Long process
+Week of two different acupuncture google app pregnancy diary. Want to remember. Date and bullet points first kick.
+Capture pictures doula and husband there.where what when key moments. Memory went in and out
+Not sure if husband in right space.
+
+Brain dump after going home
+View collection has a plus
+Not sure what reclaim means
+Husband had friends record videos
+Didn’t have moment.
+
+Could be cool during labor to have supportive message from family and friends
+
+Icons don’t differentiate enough
+Document details should be first
+Voice notes would be fun right after.
+Queepsake (spellingO
+Wants third arm so 
+
+Search within any 4 category
+Likes that it still has other options
+Probably just use the journal
+Value in inviting people
+Want husband to be present whole time
+Want to quickly get to next prompt. Wonder if arrows on both sides
+X out prompt good.
+Liked having chunked photos
+Big thing expectation to have app on phone. How to export
+
+Cool to share with grandparents aunts and uncles. Privatize some of it.
+
+Got one drug, puking
+Wonder if way to have prompts all on one screen.
+Too many menus
+Autopopulate
+
+Shana
+Two kids
+2yo
+5months
+First case unexpected epidural 30 hour
+Induction date
+
+Doula same for both times. Took photos
+Sent out email with photos and time
+No written form for journaling
+Bought baby never used it
+Google album for both kids
+
+Reframe, why is current frame incorrect.
+Assuming there is a trauma should not call it that.
+Appreciate acknowledgement but feels like there is a implied negative
+
+Would I actually do this
+Don’t think reflection speaks to her
+
+A little confusing folders are names of medication
+
+(babys first illness)
+(babys first fever)
+ Don’t know if there’s export function
+Don’t know if she likes the prompts for documentation prompt
+
+Probably will be someone else
+Include subcategory for baby maybe
+Different color for baby and me
+
+Have place to take notes (todo list)
+Where to get birth certificate
+
+One place to keep info
+Need to be clear when putting information in do you need to enter date. (morning afternoon evening not specific time)
+
+During labor will not be doing any of this.
+Too amped to nervous. More someone before birth. Have husband use these three module
+Put peoples email in.
+Preinput email and hit send
+People will engage with it before and then after and maybe during
+
+—-
+
+Consolidated icons 
+First screen back arrow remove
+What kind of feedback
+
+Bottom icons undeveloped. Make sure they map with the groups
+
+Liked three prong 1 2 3 plus. Could move it to the bottom. Prompts could be renamed journal or reflection
+
+Collections what gets pulled out
+
+Book angle and collection angle seem to be conflicting
+
+Maybe have a little bit of configuration of the book (shuttle to the side but don’t need to flesh out)
+
+Don’t know if volume of information needs collection
+
+Maybe show tags in search bar
+instead of selection maybe just underline (soften it up)
+
+Maybe include some line art in the background
+xAlma website 
+Make some stuff bigger
+
+Colors are close but not tint blues. Or make it more intentional
+
+
+For all groups:
+Consistent language for the same thing
+By tuesday making screens even in terms  of fidelity. Treat them the same
+
+Don’t mix fidelity
+
+6 screens not enough 35 too many
+Could show 2 workflows with 4 screen 
+
+Don’t  need to really show account creation
+
+Don’t tell me show me
+
+
+Ideas
+	•	We might want to consider that some people experience traumas in their “birth story” prior to giving birth. Such as issues getting pregnant (miscarriages, donors, medications) ex. I know a trans couple who struggled with the process of finding donors etc. and dealt with discrimination
+	•	Also what about the trauma if something is wrong with baby? My sister’s baby had to stay in the ICU for 2 months and that was traumatic on its own outside of the rest of the experience
+	•	I get the feeling this is just the specific birth story but there may be room to preface the birth story with what was gone through prior to delivery
+	•	It could be interesting to have journal entries that can be revisited and edited but also the user could right back to themselves at that stage and offer perspective from a different place in their journey
+	•	Secondary trauma for family, etc.
+	•	Be careful not to be over-positive or deny the trauma but does help not re-traumatize the user. Find the balance.
+	•	How to design a system that works for people of all levels of intense experiences and still has room to hold space for trauma + positivity?
+	•	People have different goals for using this app..understand our user?
+	•	Consider adding:
+	•	Baby book
+	•	Tracker
+	•	Birth Plan
+	•	Sharing
+	•	Partner Participation
+	•	Collaboration with other caretakers
+	•	Consider: how does the “birth story” come together in the grand scheme? Is there a feature that replays the story back or makes it shareable? Is there an interactive timeline? What information is summarized? 
+	•	If they have customized this app prior to delivery, how can it be used by a care taker/partner to help document these things in the moment?

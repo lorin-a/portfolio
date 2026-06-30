@@ -1,0 +1,36 @@
+# Birth Story — app requirements (converted from LaCie: Birth Story App Requirements (copy).xlsx)
+
+
+===== xl/worksheets/sheet1.xml =====
+Feature name | Description | Notes and outstanding questions
+1.0 | Information gathering | Consider when and how this information is captured, edited, revisited over time.
+1.1 | Medical info | Provide a way to medical information about mom and baby during labor and delivery." | Birthgiver and baby-related medical information from the time of labor/delivery on related to medications that were given, diagnoses that were made, pain management options and interventions used during the time of birth, and treatment plans that were established for mom and/or baby during the postpartum period.
+1.2 | Contextual info | Help with the gathering of contextual information related to the time of delivery | Who was there? When did it happen? How long did it take? 
+Where did it happen?
+1.3 | Birth narrative | Facilitate logging of the narrative of what unfolded over time during labor and delivery.
+1.4 | Feelings | Provide the ability to gather information about how people were feeling at different points in the process.
+2.0 | Meaning making | Finding meaning in birth experience can affect future relationship quality with baby and be a predictor of parenting stress
+2.1 | Processing | Provide the birthgiving parent with the oppotunity to process any unplanned or traumatic experiences they underwent during labor and delivery. Do so in a way that focuses on the positive by facilitating positive retelling and not re-trumatizing.
+
+Provide ways to reflect on postive learnings and growth that comes from birthgiving. | Physical trauma might include things like perineal tearing, unplanned c-section, or pelvic floor muscle injury. Psychological or emotional trauma may occur from unplanned events, unmet expectations, inappropriate medical care, discrimination, etc.
+
+Strategies for processing these events might include:
+- Finding the silver-lining
+- What benefits are there to my personal experience?
+- What would you have changed?
+
+Remember that people will have different goals. Some may want to process trauma. Others might want to celebrate and share the joy and strength they found in the process. Some may want to do both.
+3.0 | App administration
+3.1 | Profile/Onboarding | Provide a quick and easy way for the birthgiving parent to set up the tool for themselves and their particular context. | This may include a way to tailor the content in the tool to the specific birthing context (hospital, doula, etc), and could provide access options for a partner or other family/care team members.
+3.2 | Nudges | Prompt the user(s) to enter birth story artifacts and information. | In research, the clinical team heard from many new moms that they wished they had captured more information at the time of labor and delivery, and also that they had more to look back on. Consider how the tool encourages or nudges in the user to capture information, both during and after labor and delivery. Consider tone and the way any prompts are framed to make the birthing parent feel comfortable and motivated to capture birth story information.
+Optional additional features and considerations
+A | Baby Book: Your team might choose to expore how to prompt the capture of sentimental artifacts and stories frrom the labor and delivery experience. You can consider making this a guided experience, or providing more open-ended methods of data capture. You might use categorical frameworks for capturing, or explore different capture modes (text, video, audio, etc.). You must also consider how the information that's captured is displayed—Is it categorical? On a timeline? Divided into birthgiver information and baby information?
+B | Trackers: Trackers for early baby growth or developmental milestones, mom posttpartum healing milestones, or for things like breastfeeding or baby diaper changes
+C | Birth Plan: Documentation of pre-labor events or plans (doctor's appointments and ultrsounds/sonograms, early contractions, water breaking, etc.)
+D | Sharing: Saving or sharing parts of, or the whole, birth story outside of the tool
+E | Partner Participation: Ways for a partner or other care team member to participate in capturing the birth story.
+* logging, displaying, or sharing any information prior to, or after, the labor and delivery process is optional.
+
+===== xl/worksheets/sheet2.xml =====
+Finding meaning after childbirth | https://theconversation.com/birth-of-a-story-how-new-parents-find-meaning-after-childbirth-hints-at-how-they-will-adjust-203828
+Examples of birth stories | https://thebirthhour.com/
