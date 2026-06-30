@@ -1,5 +1,8 @@
 # Birth Story — copy draft v3 (for Lorin to bless)
 
+> **IMPLEMENTED LIVE 2026-06-30** (commit `12fc167`). v3 is now on the page at `/projects/birthstory-care-pod` (port 3001), re-warmed during the build so it documents without going dry. This doc is the spec; the page is the artifact. Two slots remain open on the page: the `[LORIN TO WRITE]` rename in UX Writing (rendered as a visible placeholder) and the `[OPTIONAL]` systemic line in the Brief (currently cut).
+
+
 **The overhaul.** v1 and v2 were still pitch: rhetorical questions opening every section, italic punch-words, captions trying to be clever. v3 drops all of it. It is organized the way a hiring manager reading design-research case studies actually wants to read one: an at-a-glance summary first, then declarative sections that state the decision and document the reasoning. No questions as headers, no quips. Your substantive words are kept; the scaffolding is gone.
 
 **What blessing this changes in the build.** The current components are built around the question-led furniture (`<Ask>` blocks, "week 1 · the ask" labels, mood-captions). Implementing v3 means restructuring those, not just swapping text. Sections lead with a bold statement, not a question. A new Overview block goes at the top.
