@@ -1,6 +1,6 @@
 'use client'
 
-import { FieldSection, Ask, Prose, Finding, Note, Split, Figure, Friction, sys } from './kit'
+import { FieldSection, Ask, Prose, Finding, Note, Split, Figure, sys } from './kit'
 import { cloudImg } from '@/lib/cloudinary'
 import CritStage from './CritStage'
 import styles from './SecIteration.module.css'
@@ -20,7 +20,7 @@ const ROUNDS = [
   {
     kicker: 'round 2 · week 4',
     change: <>So I cut to two verbs, Document and Reflect, and walked people through one at a time. Then a tester caught the <em>words</em>.</>,
-    quote: 'Reconsider language — why “reclaim”? Compassionate copy may presume a negative experience.',
+    quote: 'Why “reclaim”? I’m not sure what it even means.',
     who: 'Parent tester',
     shots: [['v2-1', 'V2 splash'], ['v2-2', 'V2 welcome'], ['v2-3', 'one menu']],
   },
@@ -89,15 +89,11 @@ export default function SecIteration() {
         photo
         tag="the crit wall"
         className={styles.critWall}
-        src={cloudImg('class_notes', 1800)}
+        ratio="16 / 7"
+        src={cloudImg('class_notes', 2000)}
         alt="A whiteboard from the final review: printed app screens taped up in two columns labeled Gradient and Color Block, covered in red and orange handwritten feedback about tags, icons, the gradient, and touch-target sizes."
         cap="The whole final crit on one wall: every screen marked up, and the gradient-versus-color-block call argued out in red."
       />
-
-      <Friction>
-        I never ran a clean A/B between the two-verb split and the single home. The change came from
-        watching people stall, not from a controlled test. I trust it, but I’d want the numbers.
-      </Friction>
     </FieldSection>
   )
 }

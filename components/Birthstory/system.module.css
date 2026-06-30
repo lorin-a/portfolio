@@ -154,16 +154,16 @@
 .ask {
   margin: 0;
   font-family: var(--font-heading); font-variation-settings: 'SOFT' 60, 'WONK' 0; font-weight: 400;
-  font-size: clamp(1.5rem, 1.1rem + 1.4vw, 2.3rem); line-height: 1.22; letter-spacing: -0.012em;
+  font-size: clamp(1.4rem, 1.15rem + 1vw, 1.95rem); line-height: 1.24; letter-spacing: -0.012em;
   color: var(--color-ink); text-wrap: balance;
 }
 .ask em { font-style: italic; color: var(--bs-accent); }
 
 /* running first-person prose */
 .prose {
-  margin: 0; max-width: 40rem;
+  margin: 0; max-width: 42rem;
   font-family: var(--font-heading); font-variation-settings: 'SOFT' 60, 'WONK' 0; font-weight: 400;
-  font-size: clamp(1.12rem, 1rem + 0.5vw, 1.4rem); line-height: 1.52; letter-spacing: -0.005em;
+  font-size: clamp(1.02rem, 0.97rem + 0.34vw, 1.2rem); line-height: 1.55; letter-spacing: -0.003em;
   color: var(--color-ink);
 }
 .prose b { font-weight: 600; color: var(--bs-accent); font-style: normal; }
@@ -206,6 +206,21 @@
 }
 .friction b { font-weight: 700; color: var(--bs-accent); font-style: normal; }
 .frictionTag { display: inline-block; margin-right: 0.6rem; font-family: var(--font-body); font-weight: 600; font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--bs-teal-soft); }
+
+/* standalone tester callout — the crit voice, no pin or leader */
+.testerNote {
+  margin: 0; max-width: 32rem; display: grid; gap: 0.5rem;
+  padding: clamp(1.1rem, 2.4vw, 1.5rem) clamp(1.2rem, 2.6vw, 1.7rem);
+  background: var(--bs-crit-wash);
+  border: 1px solid var(--bs-crit-line); border-left: 3px solid var(--bs-crit);
+  border-radius: 4px 14px 14px 4px;
+}
+.testerKicker { margin: 0; font-family: var(--font-body); font-weight: 700; font-size: 0.7rem; letter-spacing: 0.13em; text-transform: uppercase; color: var(--bs-crit); }
+.testerQuote {
+  margin: 0; font-family: var(--font-heading); font-variation-settings: 'SOFT' 60, 'WONK' 0; font-style: italic; font-weight: 400;
+  font-size: clamp(1.05rem, 0.95rem + 0.45vw, 1.3rem); line-height: 1.33; color: var(--color-ink); text-wrap: pretty;
+}
+.testerWho { margin: 0; font-family: var(--font-body); font-size: 0.72rem; letter-spacing: 0.06em; color: var(--bs-crit); }
 
 @media (max-width: 720px) {
   .plate, .plateNarrow { grid-template-columns: 1fr; transform: none; }
@@ -253,7 +268,7 @@
 .finding { display: grid; gap: 0.55rem; max-width: 40rem; }
 .findingText {
   margin: 0; font-family: var(--font-heading); font-variation-settings: 'SOFT' 60, 'WONK' 0; font-weight: 400;
-  font-size: clamp(1.2rem, 1rem + 0.9vw, 1.6rem); line-height: 1.32; letter-spacing: -0.01em;
+  font-size: clamp(1.08rem, 1rem + 0.5vw, 1.32rem); line-height: 1.4; letter-spacing: -0.006em;
   color: var(--color-ink); text-wrap: balance;
 }
 .findingText b { font-weight: 600; color: var(--bs-accent); font-style: normal; }

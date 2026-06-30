@@ -99,6 +99,18 @@ export function Prose({ children }) {
   return <p className={`${s.prose} ${s.up}`}>{children}</p>
 }
 
+/* a standalone "a tester said" callout — the crit card without the pinned
+   artifact or the leader line, for places the quote stands on its own. */
+export function TesterNote({ quote, who = 'Parent tester' }) {
+  return (
+    <figure className={`${s.testerNote} ${s.up}`}>
+      <figcaption className={s.testerKicker}>a tester said</figcaption>
+      <p className={s.testerQuote}>“{quote}”</p>
+      <p className={s.testerWho}>{who}</p>
+    </figure>
+  )
+}
+
 export function Plate({ tab, src, alt = '', cap, margin, rot = '0deg', narrow = false, wide = false, light = false }) {
   return (
     <figure className={`${s.plate} ${narrow ? s.plateNarrow : ''} ${wide ? s.plateWide : ''} ${s.up}`} style={{ '--rot': rot }}>

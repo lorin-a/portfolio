@@ -14,15 +14,20 @@ const PALETTE = [
 export default function SecBrand() {
   return (
     <FieldSection id="brand" num="07" crumb="brand" when="the feel">
-      <Ask>What should this feel like at <em>3am</em> — and in the hospital light?</Ask>
+      <Ask>What should this feel like at <em>3am</em>, and in the hospital light?</Ask>
       <Prose>
-        It had to hold hard feelings and bright ones without tipping into either — calm, organic, never
+        It had to hold hard feelings and bright ones without tipping into either: calm, organic, never
         clinical. I built a gradient to echo Myana, the parent app, so Birth Story felt like family, and
         kept everything soft enough to read at the worst hour of the night.
       </Prose>
 
-      <div className={`${styles.system} ${sys.up}`}>
-        <div className={styles.block}>
+      <div className={`${styles.signature} ${sys.up}`}>
+        <span className={styles.gWord}>Birth Story</span>
+        <span className={styles.gNote}>blush → periwinkle → teal · the whole identity in one object</span>
+      </div>
+
+      <div className={`${styles.specs} ${sys.up}`}>
+        <div className={styles.palette}>
           <span className={sys.askKicker}>palette</span>
           <div className={styles.swatches}>
             {PALETTE.map(([hex, name]) => (
@@ -33,15 +38,11 @@ export default function SecBrand() {
               </div>
             ))}
           </div>
-          <div className={styles.type}>
-            <span className={sys.askKicker}>type</span>
-            <div className={styles.typeRow}><span className={styles.face}>Terfens</span><span className={styles.use}>titles</span></div>
-            <div className={styles.typeRow}><span className={`${styles.face} ${styles.body}`}>Gotham</span><span className={styles.use}>everything else</span></div>
-          </div>
         </div>
-        <div className={styles.gradient}>
-          <span className={styles.gWord}>Birth Story</span>
-          <span className={styles.gNote}>blush → periwinkle → teal · the whole identity in one object</span>
+        <div className={styles.type}>
+          <span className={sys.askKicker}>type</span>
+          <div className={styles.typeRow}><span className={styles.face}>Terfens</span><span className={styles.use}>titles</span></div>
+          <div className={styles.typeRow}><span className={`${styles.face} ${styles.body}`}>Gotham</span><span className={styles.use}>everything else</span></div>
         </div>
       </div>
 

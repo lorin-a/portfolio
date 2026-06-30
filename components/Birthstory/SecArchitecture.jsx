@@ -1,6 +1,6 @@
 'use client'
 
-import { FieldSection, Ask, Finding, Figure, Split, Friction } from './kit'
+import { FieldSection, Ask, Finding, Figure, Split } from './kit'
 import { IaV1, IaFinal } from './IaDiagrams'
 import { birthPhoto } from '@/lib/cloudinary'
 
@@ -51,11 +51,6 @@ export default function SecArchitecture() {
       >
         <IaFinal />
       </Figure>
-
-      <Friction>
-        Should <b>New Note</b> be its own tab, or a floating <b>+</b>? It tested fine as a tab, but I
-        never put the two side by side, so I can say it worked, not that it’s the right answer.
-      </Friction>
     </FieldSection>
   )
 }

@@ -1,8 +1,7 @@
 'use client'
 
-import { FieldSection, Ask, Prose, Split, Figure, Finding, sys } from './kit'
+import { FieldSection, Ask, Prose, Split, Figure, Finding, Note, TesterNote, sys } from './kit'
 import { birthPhoto, cloudImg } from '@/lib/cloudinary'
-import CritStage from './CritStage'
 import SecArchitecture from './SecArchitecture'
 import SecIteration from './SecIteration'
 import SecFeatures from './SecFeatures'
@@ -90,10 +89,16 @@ function Research() {
         text={
           <>
             <Ask>What does a parent actually need in the <em>fog</em> right after?</Ask>
-            <Finding kicker="what set the whole direction">
-              Not a feature. A <b>constraint</b>: many of these births were hard, with no place to
-              process them, and no room afterward for another busy app. The work became <b>less, not more</b>.
+            <Finding kicker="the reframe">
+              Not the feature I expected. Parents weren’t sold on logging every medical record. What they
+              wanted was <b>recognition</b> for doing something amazing and hard: a few photos, a loose
+              outline to come back to, room to be validated. The work became <b>less, not more</b>.
             </Finding>
+            <p className={`${b.briefTask} ${sys.up}`}>
+              And they’d use it in pieces: sleep-deprived but on their phones between feedings, they wanted
+              <b> “select one”</b> questions in the moment, and the freedom to come back and write the long
+              version once the fog lifted.
+            </p>
           </>
         }
       >
@@ -121,16 +126,24 @@ function Research() {
         />
       </Split>
 
+      <div className={sys.up}>
+        <Note who="Parent interview">
+          “You often have one person in your corner who has seen what you went through, who validates your
+          experience and what you’ve done. This amazing thing you’ve done. Not everyone has that.”
+        </Note>
+      </div>
+
       <section className={`${b.values} ${sys.up}`}>
         <p className={b.valuesHead}>Our design values</p>
-        <ul className={b.valuesList}>
-          {[['Intuitive & calming', 'collect usable data'], ['Easy to navigate', 'tell a compelling story'], ['Empathetic & trauma-informed', 'record the medical detail'], ['Therapeutic', 'prompt reflection']].map(([val, fn]) => (
+        <ol className={b.valuesList}>
+          {[['Intuitive & calming', 'collect usable data'], ['Easy to navigate', 'tell a compelling story'], ['Empathetic & trauma-informed', 'record the medical detail'], ['Therapeutic', 'prompt reflection']].map(([val, fn], i) => (
             <li key={val}>
+              <span className={b.valueNum}>{String(i + 1).padStart(2, '0')}</span>
               <span className={b.valueName}>{val}</span>
               <span className={b.valueFor}>{fn}</span>
             </li>
           ))}
-        </ul>
+        </ol>
       </section>
     </FieldSection>
   )
@@ -144,22 +157,25 @@ function Voice() {
         Our first copy quietly assumed a hard birth. The trauma is in the data, but the words shouldn’t
         decide the experience for you.
       </Prose>
-      <CritStage
-        align="start"
-        side="right"
-        pin={{ x: 38, y: 42 }}
-        quote="Why ‘reclaim’? Compassionate copy may presume a negative experience."
-        who="Parent tester"
-      >
-        <div className={b.draftCard}>
-          <span className={b.draftTag}>draft copy</span>
-          <p className={b.draftLine}>“Reclaim your narrative.”</p>
+
+      <div className={b.voiceGrid}>
+        <TesterNote
+          quote="Assuming there’s a trauma, you shouldn’t call it that. I appreciate the acknowledgement, but it feels like an implied negative."
+          who="Parent tester"
+        />
+        <div className={`${b.rewriteBlock} ${sys.up}`}>
+          <div className={b.copyStep}>
+            <span className={b.copyLabel}>the draft</span>
+            <p className={b.draftLine}>“Reclaim your narrative.”</p>
+          </div>
+          <span className={b.copyArrow} aria-hidden="true">↓</span>
+          <div className={b.copyStep}>
+            <span className={b.copyLabel}>the rewrite</span>
+            <p className={b.rewriteLine}>“A space to make sense of it, in your own words.”</p>
+          </div>
         </div>
-      </CritStage>
-      <p className={`${b.rewrite} ${sys.up}`}>
-        <span className={sys.askKicker}>the rewrite</span>
-        <span className={b.rewriteLine}>“A space to make sense of it, in your own words.”</span>
-      </p>
+      </div>
+
       <Prose>So I rewrote the voice toward connection, and let the parent bring their own tone.</Prose>
     </FieldSection>
   )
@@ -168,15 +184,15 @@ function Voice() {
 function Outcome() {
   return (
     <FieldSection id="outcome" num="08" crumb="outcome" when="the result" wide>
-      <Prose>
+      <Finding kicker="where it landed">
         The work didn’t stay a class project. It became the preliminary research and ideation for a
-        Birth Story app the professors and client intend to build.
-      </Prose>
+        Birth Story app the <b>professors and client intend to build</b>.
+      </Finding>
       <Split
         text={
           <blockquote className={`${b.quote} ${sys.up}`}>
             “I wish this could be real right now!”
-            <span className={b.quoteAttr}>— Sarah Burns, MSW, LSW · client</span>
+            <span className={b.quoteAttr}>Sarah Burns, MSW, LSW · client</span>
           </blockquote>
         }
       >
