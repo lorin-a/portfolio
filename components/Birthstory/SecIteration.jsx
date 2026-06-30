@@ -1,6 +1,8 @@
 'use client'
 
-import { FieldSection, Ask, Prose, Finding, Note, Split, Friction, sys } from './kit'
+import { FieldSection, Ask, Prose, Finding, Note, Split, Figure, Friction, sys } from './kit'
+import { cloudImg } from '@/lib/cloudinary'
+import CritStage from './CritStage'
 import styles from './SecIteration.module.css'
 
 /* 04 — Iteration. Question: when people are overwhelmed, what do you take away?
@@ -11,10 +13,9 @@ import styles from './SecIteration.module.css'
 const ROUNDS = [
   {
     kicker: 'round 1 · week 3',
-    change: <>The first build offered every tool I could imagine: a path for every situation.</>,
-    quote: 'Onboarding is nice, but there are too many buttons and options.',
-    who: 'Parent tester',
-    shots: [['v1-1', 'V1 welcome'], ['v1-3', 'reflect / document / connect'], ['v1-4', 'reflect grid']],
+    change: <>The first build offered every tool I could imagine: a path for every situation. A parent put the problem plainly.</>,
+    crit: { pin: { x: 50, y: 61 }, quote: 'Onboarding is nice, but there are too many buttons and options.', who: 'Parent tester' },
+    shots: [['v1-3', 'V1: reflect / document / connect, the build that did too much']],
   },
   {
     kicker: 'round 2 · week 4',
@@ -46,7 +47,7 @@ function Screen({ id, cap }) {
   )
 }
 
-function Round({ kicker, change, quote, who, shots }) {
+function Round({ kicker, change, quote, who, crit, shots }) {
   return (
     <Split
       text={
@@ -56,9 +57,22 @@ function Round({ kicker, change, quote, who, shots }) {
         </>
       }
     >
-      <div className={styles.strip}>
-        {shots.map(([id, cap]) => <Screen key={id} id={id} cap={cap} />)}
-      </div>
+      {crit ? (
+        <CritStage pin={crit.pin} quote={crit.quote} who={crit.who} side="right" cap={shots[0][1]}>
+          <span className={styles.critDevice}>
+            <span className={sys.phone} style={{ width: '100%' }}>
+              <span className={sys.phoneNotch} aria-hidden="true" />
+              <span className={sys.phoneScreen}>
+                <img src={`/images/birthstory/evolution/screens/${shots[0][0]}.png`} alt={shots[0][1]} loading="lazy" draggable="false" />
+              </span>
+            </span>
+          </span>
+        </CritStage>
+      ) : (
+        <div className={styles.strip}>
+          {shots.map(([id, cap]) => <Screen key={id} id={id} cap={cap} />)}
+        </div>
+      )}
     </Split>
   )
 }
@@ -70,6 +84,15 @@ export default function SecIteration() {
       <Prose>Each round I put wireframes in front of parents and changed course on what they told me. Watching them in order, you can see the app calm down.</Prose>
 
       {ROUNDS.map((r) => <Round key={r.kicker} {...r} />)}
+
+      <Figure
+        photo
+        tag="the crit wall"
+        className={styles.critWall}
+        src={cloudImg('class_notes', 1800)}
+        alt="A whiteboard from the final review: printed app screens taped up in two columns labeled Gradient and Color Block, covered in red and orange handwritten feedback about tags, icons, the gradient, and touch-target sizes."
+        cap="The whole final crit on one wall: every screen marked up, and the gradient-versus-color-block call argued out in red."
+      />
 
       <Friction>
         I never ran a clean A/B between the two-verb split and the single home. The change came from

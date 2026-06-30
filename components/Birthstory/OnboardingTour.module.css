@@ -1,20 +1,39 @@
 /* Interactive feature tour. Tokens cascade from .case. */
 
-.tour { display: grid; gap: clamp(1.6rem, 3.5vw, 2.6rem); }
+.tour { display: grid; }
 
 .stage {
   position: relative;
-  display: grid; grid-template-columns: auto minmax(18rem, 32rem);
-  justify-content: center; align-items: stretch; gap: clamp(1.5rem, 4vw, 3.5rem);
+  display: grid; grid-template-columns: auto minmax(18rem, 30rem);
+  justify-content: center; align-items: center; gap: clamp(1.5rem, 4vw, 3.5rem);
 }
 
 /* the phone — a big rendered mockup, screens crossfading per step */
-.phoneCol { position: relative; width: clamp(240px, 27vw, 300px); align-self: center; }
+.phoneCol { position: relative; width: clamp(232px, 25vw, 286px); align-self: center; }
 .phone { width: 100%; }
-/* screens crop ~10% off the bottom to hide each mockup's own nav bar — the
-   rebuilt rail below is the only navigation */
-.shot { position: absolute; top: 0; left: 0; width: 100%; height: 111%; object-fit: cover; object-position: top center; opacity: 0; transition: opacity 600ms var(--ease-out, ease); }
+.screenHost { position: relative; }
+/* full screen shown; the rebuilt rail (below) masks each mockup's own nav bar */
+.shot { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; object-position: top center; opacity: 0; transition: opacity 600ms var(--ease-out, ease); }
 .shotOn { opacity: 1; }
+
+/* the app is tappable — a transparent overlay over the screen advances the
+   tour; sits above the screens, below the nav rail so tab clicks still land */
+.advance { position: absolute; inset: 0; z-index: 1; background: none; border: 0; padding: 0; cursor: pointer; }
+.advance:focus-visible { outline: 2px solid var(--bs-teal); outline-offset: -3px; border-radius: 17px; }
+
+/* a one-time "this is live" cue, floating above the rail until the first tap */
+.hint {
+  position: absolute; left: 50%; bottom: 4.6rem; z-index: 3;
+  display: inline-flex; align-items: center; gap: 0.45rem;
+  padding: 0.4rem 0.8rem; border-radius: 999px;
+  background: rgba(26, 67, 77, 0.92); color: #F1F2F0;
+  font-family: var(--font-body); font-size: 0.72rem; font-weight: 600; letter-spacing: 0.02em; white-space: nowrap;
+  pointer-events: none; opacity: 0; transform: translate(-50%, 6px);
+  transition: opacity 400ms var(--ease-out, ease), transform 400ms var(--ease-out, ease);
+}
+.hintIn { opacity: 1; transform: translate(-50%, 0); animation: hintBob 2.4s var(--ease-in-out, ease) 0.6s infinite; }
+.hintDot { width: 7px; height: 7px; border-radius: 50%; background: #F1F2F0; }
+@keyframes hintBob { 0%, 100% { transform: translate(-50%, 0); } 50% { transform: translate(-50%, -4px); } }
 
 /* the pin — a pulsing marker on the feature it describes */
 .pin {
@@ -22,7 +41,7 @@
   transform: translate(-50%, -50%);
   background: var(--bs-teal); box-shadow: 0 0 0 4px rgba(241, 242, 240, 0.9), 0 4px 12px -2px rgba(26, 67, 77, 0.6);
   transition: left 600ms var(--ease-out, ease), top 600ms var(--ease-out, ease);
-  z-index: 3;
+  pointer-events: none; z-index: 5;
 }
 .pin::after {
   content: ''; position: absolute; inset: -6px; border-radius: 50%;
@@ -36,48 +55,58 @@
 
 /* the leader line from pin to callout */
 .leads { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; z-index: 2; }
-.leads line { stroke: var(--bs-teal-soft); stroke-width: 1.4; stroke-dasharray: 3 4; opacity: 0.7; }
+.leads line { stroke: var(--bs-teal-soft); stroke-width: 1.4; stroke-dasharray: 3 4; opacity: 0.8; }
 
-/* the callout — Lorin's verbatim onboarding copy, tracking the pin's height so
-   the leader stays short */
-.calloutCol { position: relative; }
+/* the callout — Lorin's verbatim onboarding copy, vertically centered beside
+   the phone; the leader carries the eye from the pin to the words */
+.calloutCol { display: grid; align-items: center; }
 .callout {
-  position: absolute; left: 0; right: 0;
-  top: clamp(4.5rem, calc(var(--pin-y, 50) * 1%), calc(100% - 4.5rem));
-  transform: translateY(-50%);
-  margin: 0; display: grid; gap: 0.5rem;
-  padding: clamp(1.1rem, 2.5vw, 1.6rem) clamp(1.3rem, 3vw, 1.9rem);
+  margin: 0; display: grid; gap: 0.55rem;
+  padding: clamp(1.2rem, 2.6vw, 1.7rem) clamp(1.4rem, 3vw, 2rem);
   background: rgba(241, 242, 240, 0.82); border: 1px solid var(--bs-rule); border-radius: 14px;
-  transition: top 600ms var(--ease-out, ease);
 }
-.calloutKicker { font-family: var(--font-body); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--bs-teal-soft); }
+.calloutKicker { display: flex; align-items: center; gap: 0.7rem; flex-wrap: wrap; }
+.calloutStep { font-family: var(--font-body); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; color: var(--bs-teal-soft); font-variant-numeric: tabular-nums; }
+.calloutStep span { opacity: 0.5; margin: 0 0.1em; }
+.calloutLabel { font-family: var(--font-body); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--bs-teal); position: relative; padding-left: 0.7rem; }
+.calloutLabel::before { content: ''; position: absolute; left: 0; top: 50%; width: 1px; height: 0.85em; transform: translateY(-50%); background: var(--bs-rule); }
 .calloutTitle { margin: 0; font-family: var(--font-heading); font-variation-settings: 'SOFT' 60, 'WONK' 0; font-weight: 400; font-size: clamp(1.3rem, 1.05rem + 1vw, 1.8rem); line-height: 1.18; color: var(--color-ink); }
 .calloutBody { margin: 0; font-family: var(--font-body); font-size: clamp(0.92rem, 0.88rem + 0.2vw, 1.05rem); line-height: 1.5; color: var(--color-ink-light); text-wrap: pretty; }
 
-/* the rebuilt nav rail — the tab that's lit is the one you're touring */
-.rail { display: grid; grid-auto-flow: column; justify-content: center; gap: clamp(0.4rem, 2vw, 1.4rem); padding: 0.5rem; border-top: 1px solid var(--bs-rule); }
+/* the rebuilt nav rail — lives at the foot of the phone, masking the screen's
+   own baked nav, so it reads as the live app's navigation */
+.rail {
+  position: absolute; left: 0; right: 0; bottom: 0; z-index: 4;
+  display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; align-items: stretch;
+  padding: 0.45rem 0.3rem 0.7rem;
+  background: rgba(244, 245, 243, 0.96);
+  -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+  border-top: 1px solid var(--bs-rule);
+}
 .tab {
-  display: grid; justify-items: center; gap: 0.3rem; padding: 0.7rem clamp(0.7rem, 2vw, 1.4rem);
-  background: none; border: 0; border-radius: 12px; cursor: pointer; color: var(--color-ink-light);
-  transition: color 250ms var(--ease-out, ease), background 250ms var(--ease-out, ease);
+  position: relative; display: grid; justify-items: center; align-content: center; gap: 0.18rem;
+  padding: 0.4rem 0.15rem; background: none; border: 0; cursor: pointer; color: var(--color-ink-faint);
+  transition: color 250ms var(--ease-out, ease);
   min-height: 44px;
 }
 .tab:hover { color: var(--bs-teal); }
-.tabIcon { display: grid; place-items: center; width: 26px; height: 26px; }
+.tabIcon { display: grid; place-items: center; width: 23px; height: 23px; }
 .tabIcon svg { width: 100%; height: 100%; }
-.tabLabel { font-family: var(--font-body); font-size: 0.74rem; font-weight: 600; letter-spacing: 0.04em; }
-.tabOn { color: var(--bs-teal); background: rgba(26, 67, 77, 0.07); }
-.tab:focus-visible { outline: 2px solid var(--bs-teal); outline-offset: 2px; }
+.tabLabel { font-family: var(--font-body); font-size: 0.6rem; font-weight: 600; letter-spacing: 0.01em; }
+.tabOn { color: var(--bs-teal); }
+.tab:focus-visible { outline: 2px solid var(--bs-teal); outline-offset: -2px; border-radius: 8px; }
+
+/* auto-advance progress — a line that fills over the dwell on the active tab */
+.tabProgress { position: absolute; top: 0; left: 16%; right: 16%; height: 2px; border-radius: 2px; background: var(--bs-teal); transform-origin: left center; animation: tabFill 4200ms linear forwards; }
+@keyframes tabFill { from { transform: scaleX(0); } to { transform: scaleX(1); } }
 
 @media (max-width: 760px) {
   .stage { grid-template-columns: 1fr; gap: clamp(1.4rem, 5vw, 2rem); }
   .phoneCol { justify-self: center; }
   .calloutCol { min-height: 0; }
-  .callout { position: static; transform: none; top: auto; }
-  .tabLabel { font-size: 0.7rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .shot, .pin, .callout { transition: none; }
-  .pin::after { animation: none; }
+  .shot, .pin { transition: none; }
+  .pin::after, .tabProgress, .hintIn { animation: none; }
 }

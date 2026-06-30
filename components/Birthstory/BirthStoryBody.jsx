@@ -1,7 +1,8 @@
 'use client'
 
 import { FieldSection, Ask, Prose, Split, Figure, Finding, sys } from './kit'
-import { birthPhoto } from '@/lib/cloudinary'
+import { birthPhoto, cloudImg } from '@/lib/cloudinary'
+import CritStage from './CritStage'
 import SecArchitecture from './SecArchitecture'
 import SecIteration from './SecIteration'
 import SecFeatures from './SecFeatures'
@@ -39,7 +40,7 @@ function Credits() {
 }
 
 function Brief() {
-  const birth = birthPhoto('circle', 1100) // Grey Art Weddings — two parents’ hands cradle a newborn foot, b&w
+  const birth = birthPhoto('fog', 1500, { grayscale: true }) // Saul Siguenza — exhausted parent + newborn, rendered B&W
   return (
     <FieldSection id="brief" num="01" crumb="brief" when="week 1 · the ask" wide>
       <Credits />
@@ -61,12 +62,62 @@ function Brief() {
         <Figure
           tag="context"
           photo
-          ratio="3 / 2"
-          focus="center 42%"
           src={birth.src}
           byline={birth.byline}
-          alt="Two parents’ hands, one darker and one lighter, cradle a newborn’s tiny foot."
+          alt="An exhausted parent rests cheek to cheek with a swaddled newborn in the hours just after birth, in black and white."
           cap="The hours around birth that a pregnancy app doesn’t cover."
+        />
+        <Figure
+          photo
+          tag="the client"
+          ratio="3 / 2"
+          focus="center 54%"
+          src={cloudImg('IMG_3010', 1600)}
+          alt="A studio review on a projector screen: our client, Sarah Burns, joins by video on the left while the room of students faces the work on the right."
+          cap="A real client, not a hypothetical: reviewing the work with Sarah Burns (MSW) over video."
+        />
+      </Split>
+    </FieldSection>
+  )
+}
+
+function Research() {
+  const feeding = birthPhoto('feeding', 1400) // Craig Adderley — mother + newborn skin to skin, hospital (natively B&W)
+  const gap = birthPhoto('gap', 1300) // William Fortunato — tired mother gazing at her sleeping newborn
+  return (
+    <FieldSection id="research" num="02" crumb="research" when="week 2 · interviews" alt wide>
+      <Split
+        text={
+          <>
+            <Ask>What does a parent actually need in the <em>fog</em> right after?</Ask>
+            <Finding kicker="what set the whole direction">
+              Not a feature. A <b>constraint</b>: many of these births were hard, with no place to
+              process them, and no room afterward for another busy app. The work became <b>less, not more</b>.
+            </Finding>
+          </>
+        }
+      >
+        <Figure
+          tag="context"
+          photo
+          src={feeding.src}
+          byline={feeding.byline}
+          alt="A mother holds her newborn skin to skin in a hospital bed, her eyes closed, in black and white."
+          cap="A parent and newborn in the first hours after birth."
+        />
+        <Figure
+          tag="the gap"
+          photo
+          src={gap.src}
+          byline={gap.byline}
+          alt="A mother lies beside her sleeping newborn, head propped on her hand, gazing at the baby with a tired, pensive look."
+          cap="After birth, attention shifts to the baby. The parent’s own experience is the part that goes unprocessed."
+        />
+        <Figure
+          tag="interviews"
+          src="https://res.cloudinary.com/dc17mvdyv/image/upload/f_auto,q_auto,w_1300/v1782679668/UX_Interview.jpg"
+          alt="A parent interview over video call; the interviewee’s tile is blurred for privacy."
+          cap="7 parent interviews · interviewee blurred for privacy"
         />
       </Split>
 
@@ -85,69 +136,58 @@ function Brief() {
   )
 }
 
-function Research() {
-  const fog = birthPhoto('fog', 1400)
-  return (
-    <FieldSection id="research" num="02" crumb="research" when="week 2 · interviews" alt wide>
-      <Split
-        text={
-          <>
-            <Ask>What does a parent actually need in the <em>fog</em> right after?</Ask>
-            <Finding kicker="what set the whole direction">
-              Not a feature. A <b>constraint</b>: many of these births were hard, with no place to
-              process them, and no room afterward for another busy app. The work became <b>less, not more</b>.
-            </Finding>
-          </>
-        }
-      >
-        <Figure
-          tag="context"
-          photo
-          src={fog.src}
-          byline={fog.byline}
-          alt="An exhausted parent rests cheek to cheek with a swaddled newborn in the hours just after birth."
-          cap="A parent and newborn in the first hours after birth."
-        />
-        <Figure
-          tag="interviews"
-          src="https://res.cloudinary.com/dc17mvdyv/image/upload/f_auto,q_auto,w_1300/v1782679668/UX_Interview.jpg"
-          alt="A parent interview over video call; the interviewee’s tile is blurred for privacy."
-          cap="7 parent interviews · interviewee blurred for privacy"
-        />
-      </Split>
-    </FieldSection>
-  )
-}
-
 function Voice() {
   return (
     <FieldSection id="voice" num="06" crumb="voice" when="copywriting">
       <Ask>Whose story were we <em>assuming</em>?</Ask>
       <Prose>
-        Our first copy quietly assumed a hard birth. A tester stopped on the word “reclaim” — it
-        presumes there was something taken. The trauma is in the data, but the words shouldn’t decide
-        the experience for you. So I rewrote the voice toward connection, and let the parent bring their own tone.
+        Our first copy quietly assumed a hard birth. The trauma is in the data, but the words shouldn’t
+        decide the experience for you.
       </Prose>
-      <div className={`${b.ba} ${sys.up}`}>
-        <div className={b.baCol}><span className={sys.askKicker}>before</span><p className={b.before}>“Reclaim your narrative.”</p></div>
-        <span className={b.baArrow} aria-hidden="true">→</span>
-        <div className={b.baCol}><span className={sys.askKicker}>after</span><p className={b.after}>“A space to make sense of it, in your own words.”</p></div>
-      </div>
+      <CritStage
+        align="start"
+        side="right"
+        pin={{ x: 38, y: 42 }}
+        quote="Why ‘reclaim’? Compassionate copy may presume a negative experience."
+        who="Parent tester"
+      >
+        <div className={b.draftCard}>
+          <span className={b.draftTag}>draft copy</span>
+          <p className={b.draftLine}>“Reclaim your narrative.”</p>
+        </div>
+      </CritStage>
+      <p className={`${b.rewrite} ${sys.up}`}>
+        <span className={sys.askKicker}>the rewrite</span>
+        <span className={b.rewriteLine}>“A space to make sense of it, in your own words.”</span>
+      </p>
+      <Prose>So I rewrote the voice toward connection, and let the parent bring their own tone.</Prose>
     </FieldSection>
   )
 }
 
 function Outcome() {
   return (
-    <FieldSection id="outcome" num="08" crumb="outcome" when="the result">
+    <FieldSection id="outcome" num="08" crumb="outcome" when="the result" wide>
       <Prose>
         The work didn’t stay a class project. It became the preliminary research and ideation for a
         Birth Story app the professors and client intend to build.
       </Prose>
-      <blockquote className={`${b.quote} ${sys.up}`}>
-        “I wish this could be real right now!”
-        <span className={b.quoteAttr}>— Sarah Burns, MSW, LSW · client</span>
-      </blockquote>
+      <Split
+        text={
+          <blockquote className={`${b.quote} ${sys.up}`}>
+            “I wish this could be real right now!”
+            <span className={b.quoteAttr}>— Sarah Burns, MSW, LSW · client</span>
+          </blockquote>
+        }
+      >
+        <Figure
+          photo
+          tag="the room"
+          src={cloudImg('IMG_3012', 1600)}
+          alt="The studio team standing together in front of the projector screen, with our client Sarah Burns smiling on the video call behind them."
+          cap="The team and our client, Sarah Burns, at the final review."
+        />
+      </Split>
     </FieldSection>
   )
 }

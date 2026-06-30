@@ -33,9 +33,9 @@ function TabIcon({ name }) {
 const STEPS = [
   {
     tab: 'home', label: 'Home', n: '01',
-    src: '/images/birthstory/evolution/v3-home.png',
+    src: '/images/birthstory/bs-home.png',
     alt: 'The Birth Story home: a New Entry box above prompts for memorable events, notes, and medical details, on a scrollable dated timeline.',
-    pin: { x: 54, y: 27 },
+    pin: { x: 50, y: 29 },
     title: 'Add Memorable Events',
     body: 'Key moments, surprises, a chronological diary of experiences.',
   },
@@ -43,7 +43,7 @@ const STEPS = [
     tab: 'pod', label: 'Care Pod', n: '02',
     src: '/images/birthstory/bs-carepod.png',
     alt: 'The Care Pod: loved ones orbiting a heart marked “You” on concentric dashed rings.',
-    pin: { x: 50, y: 49 },
+    pin: { x: 61, y: 27 },
     title: 'Curate Your Care Pod',
     body: 'Send live birth updates, group messages, and invite your community to add their experience to your Birth Story.',
   },
@@ -51,7 +51,7 @@ const STEPS = [
     tab: 'book', label: 'Book', n: '03',
     src: '/images/birthstory/hero/phone-book.jpg',
     alt: 'The Birth Story Book screen: a spiral keepsake book, a feature list, and Order Now or Download buttons.',
-    pin: { x: 50, y: 43 },
+    pin: { x: 47, y: 41 },
     title: 'Order Your Birth Story Book!',
     body: 'Curate your entries in the app, photos, and reflections into a physical Birth Story Book or free PDF to export and share.',
   },
@@ -59,7 +59,7 @@ const STEPS = [
     tab: 'search', label: 'Search', n: '04',
     src: '/images/birthstory/evolution/screens/v3-7.png',
     alt: 'The search screen: a search bar above emotion and category tags, notes, journal entries, and a photo grid.',
-    pin: { x: 50, y: 11 },
+    pin: { x: 50, y: 13 },
     title: 'Search With Ease',
     body: 'Search the entire app for key words, media type, or category/emotion tag for seamless organization.',
   },
@@ -69,12 +69,14 @@ export default function OnboardingTour() {
   const [step, setStep] = useState(0)
   const [seen, setSeen] = useState(false)
   const [auto, setAuto] = useState(true)
+  const [touched, setTouched] = useState(false)
   const [lead, setLead] = useState(null)
 
   const stageRef = useRef(null)
   const pinRef = useRef(null)
   const calloutRef = useRef(null)
   const reduce = useRef(false)
+  const idleRef = useRef(null)
 
   // reveal + reduced-motion
   useEffect(() => {
@@ -87,14 +89,27 @@ export default function OnboardingTour() {
     return () => o.disconnect()
   }, [])
 
-  // auto-advance once in view, until the user takes over
+  // auto-advance once in view. Keeps cycling through hover so a scanner sees
+  // every feature without engaging; only a tap takes manual control.
   useEffect(() => {
     if (!seen || !auto || reduce.current) return
     const id = setInterval(() => setStep((s) => (s + 1) % STEPS.length), 4200)
     return () => clearInterval(id)
   }, [seen, auto])
 
-  const go = (i) => { setAuto(false); setStep(i) }
+  useEffect(() => () => clearTimeout(idleRef.current), [])
+
+  // a tap (tab or the app itself) takes over; autoplay resumes after a pause of
+  // inactivity, so a curious click never strands the viewer on one feature
+  const drive = (i) => {
+    setTouched(true)
+    setAuto(false)
+    setStep(i)
+    clearTimeout(idleRef.current)
+    if (!reduce.current) idleRef.current = setTimeout(() => setAuto(true), 9000)
+  }
+  const go = (i) => drive(i)
+  const next = () => drive((step + 1) % STEPS.length)
 
   // measure the leader line from the pin to the callout
   useIso(() => {
@@ -123,16 +138,12 @@ export default function OnboardingTour() {
   const cur = STEPS[step]
 
   return (
-    <div
-      className={`${t.tour} ${seen ? t.seen : ''}`}
-      onMouseEnter={() => setAuto(false)}
-      onFocusCapture={() => setAuto(false)}
-    >
+    <div className={t.tour}>
       <div className={t.stage} ref={stageRef}>
         <div className={t.phoneCol}>
           <span className={`${sys.phone} ${t.phone}`}>
             <span className={sys.phoneNotch} aria-hidden="true" />
-            <span className={sys.phoneScreen}>
+            <span className={`${sys.phoneScreen} ${t.screenHost}`}>
               {STEPS.map((s, i) => (
                 <img
                   key={s.tab}
@@ -144,6 +155,39 @@ export default function OnboardingTour() {
                   aria-hidden={i === step ? undefined : true}
                 />
               ))}
+
+              {/* the app itself is tappable — clicking the screen walks to the
+                  next feature, matching the instinct to "click the app" */}
+              <button type="button" className={t.advance} onClick={next} aria-label="Next feature" />
+
+              {/* a one-time cue that the mockup is live, until the first tap */}
+              {!touched && (
+                <span className={`${t.hint} ${seen ? t.hintIn : ''}`} aria-hidden="true">
+                  <span className={t.hintDot} />Tap to explore
+                </span>
+              )}
+
+              {/* the rebuilt nav sits where the app's own nav sits — the lit tab
+                  is the one you're touring; the progress line times the auto-advance */}
+              <span className={t.rail} role="tablist" aria-label="Birth Story feature tour">
+                {STEPS.map((s, i) => (
+                  <button
+                    key={s.tab}
+                    type="button"
+                    role="tab"
+                    aria-selected={i === step}
+                    aria-label={s.label}
+                    className={`${t.tab} ${i === step ? t.tabOn : ''}`}
+                    onClick={() => go(i)}
+                  >
+                    <span className={t.tabIcon}><TabIcon name={s.tab} /></span>
+                    <span className={t.tabLabel}>{s.label}</span>
+                    {i === step && seen && auto && !reduce.current && (
+                      <span key={`${step}-${seen}`} className={t.tabProgress} aria-hidden="true" />
+                    )}
+                  </button>
+                ))}
+              </span>
             </span>
           </span>
           <span
@@ -158,29 +202,16 @@ export default function OnboardingTour() {
           {lead && <line x1={lead.x1} y1={lead.y1} x2={lead.x2} y2={lead.y2} />}
         </svg>
 
-        <div className={t.calloutCol} style={{ '--pin-y': cur.pin.y }}>
+        <div className={t.calloutCol}>
           <figure className={t.callout} ref={calloutRef} aria-live="polite">
-            <figcaption className={t.calloutKicker}>{cur.label}</figcaption>
+            <figcaption className={t.calloutKicker}>
+              <span className={t.calloutStep}>{cur.n} <span aria-hidden="true">/</span> {String(STEPS.length).padStart(2, '0')}</span>
+              <span className={t.calloutLabel}>{cur.label}</span>
+            </figcaption>
             <p className={t.calloutTitle}>{cur.title}</p>
             <p className={t.calloutBody}>{cur.body}</p>
           </figure>
         </div>
-      </div>
-
-      <div className={t.rail} role="tablist" aria-label="Birth Story feature tour">
-        {STEPS.map((s, i) => (
-          <button
-            key={s.tab}
-            type="button"
-            role="tab"
-            aria-selected={i === step}
-            className={`${t.tab} ${i === step ? t.tabOn : ''}`}
-            onClick={() => go(i)}
-          >
-            <span className={t.tabIcon}><TabIcon name={s.tab} /></span>
-            <span className={t.tabLabel}>{s.label}</span>
-          </button>
-        ))}
       </div>
     </div>
   )

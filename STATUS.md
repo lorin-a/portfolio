@@ -1,5 +1,5 @@
 # Project Status
-### Last updated: 2026-06-29 (evening) — Birth Story body rebuilt on a "split" register (narrow text + BIG media); IA diagrams redrawn native; an interactive annotated Features tour shipped. Lorin: tour is "a good start, rough-draft quality." Next: the direct-feedback inline annotations (the missing half) + polish.
+### Last updated: 2026-06-30 — Birth Story Features section rebuilt (4-up wall + 4 deep-dives on real Figma screens); tester "crit voice" annotations; class photos bookended; crit-wall whiteboard; context photos to B&W. Next: polish Voice / Brand / Outcome, then Lorin's copy pass.
 
 This is the living status doc for the lorin.work portfolio redesign. Updated at the end of every working session. Detailed in-flight state lives in memory `PROGRESS.md`.
 
@@ -50,17 +50,19 @@ This is the living status doc for the lorin.work portfolio redesign. Updated at 
 
 **The locked direction — process, not pitch · curiosity first** (full principle in memory `DECISIONS.md → "Case-study VOICE"`): every section OPENS on its driving question, then shows the thinking — `the question → my first (wrong) answer → the reframe → the better answer → what's still open`. First-person, contingent prose that admits missteps; **her real Figma files/screens as figure plates (NOT recreations)**; documentary furniture (monospace metadata, dated entries, figure numbers); **cool paper ground `#F1F2F0`** (the warm cream read "tan"). App screens still in the device mockups she likes, shown as figures. This register is the candidate model for Transition Design + the other stars.
 
-**Shipped this session 2026-06-29 evening (committed local on main `2b14165`→`febb9cd`; not pushed):**
-- **Hero `BirthStoryHeroFan` wired live** + **Nav contrast fixed** (`.overHero` white-ink over the teal gradient; reverts to dark on scroll).
-- **Body rebuilt on a "split" register** — each beat = narrow text (the thinking) + BIG media (the artifact). New primitives in `kit.jsx`/`system.module.css`: `Split`, `Figure` (now also hosts a **native DOM artifact via `children`**), `Finding`, `FieldSection wide`. Progress spine is now a **horizontal sticky bar** (`BirthStorySpine`); metadata folded into Brief as `Credits`. **5 of 8 sections converted, screens shown BIG** (was 138–150px thumbs): 01 Brief · 02 Research · 03 Architecture · 04 Iteration · 05 Features. Em dashes cleared from those drafts.
-- **03 Architecture — IA diagrams REBUILT NATIVE** (`IaDiagrams.jsx`): the black Figma-canvas PNGs read as alien slabs; redrawn as DOM in the teal-on-paper palette (`IaV1` branching questionnaire w/ measured fan connectors, `IaFinal` five-tab tree). Lorin: "so much better."
-- **05 Features — interactive annotated TOUR** (`OnboardingTour.jsx`) leads the section: marries big rendered mockups + animation + inline annotations. Walks 4 destinations; pin + measured leader line ties each to a callout (her verbatim onboarding copy); rebuilt nav rail lights the active tab; auto-advances/clickable; reduced-motion + mobile handled. Decision rows stay below as the *why*. **Lorin: "a good start, rough-draft quality."**
+Earlier this build (2026-06-29): hero `BirthStoryHeroFan` wired live + Nav contrast fix; body on the split register; 03 Architecture IA diagrams rebuilt native (`IaDiagrams.jsx`, "so much better"); horizontal sticky progress bar (`BirthStorySpine`); Credits masthead in Brief.
 
-**Next move:** **add the direct/specific-feedback inline annotations** — the half still missing. Reuse the tour's pin+leader, styled as a distinct **"tester said" crit voice**, with 3 real quotes: *"it would be tragic to lose these moments…"* → Book · *"why 'reclaim'?"* → Voice · *"too many buttons and options"* → Iteration round 1. Then a **polish pass on the tour** (it's rough-draft) and fix Care Pod's nav bar peeking on mobile.
+**Shipped this session 2026-06-30 (committed local on `main`; NOT pushed):**
+- **Tester "crit voice"** — new `CritStage.jsx` (terracotta pin + measured leader, "a tester said" card, set against the product teal). Placed: Voice (*why "reclaim"?* on the rejected draft copy) · Iteration round 1 (*too many buttons and options* on the over-built V1) · Book (*tragic to lose these moments*).
+- **05 Features REBUILT** — retired the interactive tour (`OnboardingTour.jsx` kept on disk, unused). Now a **4-up `FeatureWall`** (Home · Care Pod · Book · Search, all side by side) opening on the insight *"birth never goes to plan, so the app is the opposite,"* then **four capability deep-dives** (Documentation · Care Pod · Reflection · Book), each = question + thinking + the real screens shown big.
+- **Real Figma screens pulled** — 8 final "Gradient" screens exported 2× PNG to `public/images/birthstory/bs-{doc-note,doc-medical,reflect-card,reflect-entry,carepod-update,carepod-stories,book-order,book-curate}.png` (node ids + `download_assets` workflow in memory `REFERENCE.md`).
+- **Photos** — class-presentation shots **bookend** the study (Brief top `IMG_3010` cropped 2∶1; Outcome `IMG_3012` paired with the client quote). New context photos added then **swapped to B&W**: Brief = `fog` (B&W via Cloudinary `e_grayscale`), Research = `feeding` (natively B&W); plus `gap`, `room` (Care Pod "why"). **Design values moved Brief → Research.** Brief client photo now **aligned in the same column** as the context photo (3∶2, not the 2∶1 band). **Final crit-wall whiteboard** (`class_notes.heic` via `f_auto`) closes Iteration.
 
-**Then:** convert the copy-led sections (06 Voice · 07 Brand · 08 Outcome/Close) and **Lorin's copy pass** on all body prose (Claude's draft in her voice). Then apply the settled register to **Transition Design** (star #3); then **"More work" grid + Playground**.
+**Next move:** **polish 06 Voice · 07 Brand · 08 Outcome/Close** (Brand still references the deck; Outcome bookend is in). Then **Lorin's copy pass** on the deep-dive captions + body prose (Claude's draft in her voice). Then apply the register to **Transition Design** (star #3); then the **"More work" grid + Playground**.
 
-**Asset gotcha:** clean app screens = `evolution/v3-home.png`, `bs-carepod.png`, `hero/phone-book.jpg` (Book), `evolution/screens/v3-7.png` (search). `v3-4.png`/`v3-5.png` are **coach-mark frames** (baked callouts) — don't use where a clean screen is needed. Full map in `PROGRESS.md`.
+**Open:** Lorin mentioned a **2nd whiteboard photo** (only `class_notes` placed so far) — ask if it covers different ground. Low-res holdouts: Search (`v3-7`, 239px) + the iteration evolution wireframes (`v1/v2/v3-*`, ~240px) — no higher-res source; would sharpen with new Figma exports.
+
+**Asset note:** Birth Story screens live in `public/images/birthstory/` (2× PNG); context/documentary photos are Cloudinary (`birthPhoto()` map in `lib/cloudinary.js`). Pull more Figma screens by node id (REFERENCE.md). Pasted screenshots can't be grabbed — use Figma or Cloudinary.
 
 ---
 

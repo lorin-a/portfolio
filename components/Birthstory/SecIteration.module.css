@@ -2,6 +2,10 @@
 
 .strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(0.7rem, 1.6vw, 1.4rem); align-items: start; }
 .screen { margin: 0; display: grid; gap: 0.55rem; }
+/* round 1 leads with one emblematic over-built screen, annotated */
+.critDevice { display: block; width: clamp(208px, 24vw, 248px); }
+/* the final-review whiteboard — a wide documentary capstone, set apart by a rule */
+.critWall { width: 100%; max-width: 72rem; justify-self: center; padding-top: clamp(1.4rem, 3vw, 2.4rem); border-top: 1px solid var(--bs-rule); }
 .screenCap { font-family: var(--font-body); font-size: 0.74rem; line-height: 1.35; color: var(--color-ink-light); text-align: center; text-wrap: balance; }
 
 /* on narrow screens the three tall phones can't all be big — swipe them instead */

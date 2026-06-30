@@ -15,6 +15,11 @@
   --bs-peri: #B1C1F4;
   --bs-lav: #E6E5FD;
   --bs-accent: var(--bs-teal);
+  /* crit voice — tester feedback, a warm ink set apart from the product teal */
+  --bs-crit: #8A4F3C;       /* AA-legible on the paper ground + the wash */
+  --bs-crit-soft: #A0644E;  /* pin ring + leader */
+  --bs-crit-line: rgba(138, 79, 60, 0.28);
+  --bs-crit-wash: rgba(160, 100, 78, 0.07);
   --bs-wide: 76rem;
   --bs-pad: clamp(1.5rem, 5vw, 6rem);
 

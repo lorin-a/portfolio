@@ -22,6 +22,12 @@
 }
 .text { display: grid; gap: clamp(1rem, 2.5vw, 1.5rem); align-content: center; max-width: 40ch; flex: 1 1 22rem; }
 .media { display: flex; gap: clamp(0.8rem, 2vw, 1.4rem); align-items: start; flex: 0 1 auto; }
+/* the annotated book: screen + tester crit travel together, so the row gives the
+   pair room to sit beside the reasoning */
+.mediaCrit { flex: 1 1 34rem; justify-content: center; }
+.critDevice { display: block; width: clamp(208px, 22vw, 250px); }
+/* the human "why" behind a decision — a context photo seated under the reasoning */
+.contextFig { max-width: 100%; margin-top: 0.2rem; }
 
 .screen { margin: 0; display: grid; gap: 0.5rem; width: clamp(208px, 22vw, 250px); }
 .screen.solo { width: clamp(264px, 28vw, 330px); }
@@ -29,6 +35,7 @@
 
 @media (max-width: 720px) {
   .feat { flex-direction: column; align-items: stretch; }
-  .media { justify-content: flex-start; }
-  .screen, .screen.solo { width: clamp(220px, 60vw, 280px); }
+  .media, .mediaCrit { flex-direction: column; align-items: center; gap: clamp(1.4rem, 5vw, 2.2rem); }
+  .screen, .screen.solo { width: min(78vw, 300px); }
+  .critDevice { width: min(78vw, 300px); }
 }
