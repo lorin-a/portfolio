@@ -25,6 +25,14 @@ This is the living status doc for the lorin.work portfolio redesign. Updated at 
 2. **"More work" grid** — lean projects as compact cards; each opens a thin framed page (one-line problem + role + outcome + embedded deck). Breadth, no writing burden. **A grid, not a dropdown** — Lorin has spent the project removing dropdowns; don't reintroduce one.
 3. **Playground** — a separate, clearly-labeled light gallery for casual/experimental work. Personality + range, held away from the case studies so it never dilutes them.
 
+**Site architecture — homepage as "Selected Projects" + an "All Work" bento page (vision, added 2026-06-30):**
+This is the concrete shape the "three surfaces" now take, and the north star for the site build after the stars are written:
+- **Homepage = "Selected Projects."** The homepage is a *curated* landing — only the stars (Groundswell, Birth Story, Transition Design; Whelm later). It is not a complete index; it is the 90-second highlight reel that makes the strong first impression. Decreasing ask: the homepage shows the best, in full depth.
+- **"All Work" page = a traditional bento-box grid** of *every other* project. A classic bento layout (mixed-size tiles, each a project) that reads as a complete portfolio index without the writing burden of full case studies. Breadth lives here, away from the curated homepage.
+- **Each bento tile opens its own page** — eventually a full case study (when the project earns one) or, in the meantime, a **basic project outline / documentation** (frontmatter framing + hero + embedded deck/slideshow, near-zero writing). Tiles graduate from "outline" → "case study" over time; the bento grid is the durable home for all of them.
+- Mapping back to the three surfaces: **Selected Projects = surface 1 (stars)**; **All Work bento = surface 2 (the old "more work" grid, now a dedicated page)**; **Playground = surface 3** stays separate. The bento is still **a grid, not a dropdown** (the project's standing no-dropdowns rule).
+- **Sequencing:** finish the star case studies first (Birth Story is the template pilot), then build the lean outline template, then stand up the All Work bento page and pour every other project into it as outline-tier, upgrading to case studies as they're written.
+
 **Operating principle:** identical bones, bespoke flesh. Scannable in 3 minutes. Every section legible from its headline + captions alone. Reveals, never scrubs. Interaction is a bonus, never the only path to the information. (From the two case-study articles Lorin sent — semplice.com, uxpilot.ai.)
 
 **Build approach — content-driven (refines the "one editorial form for all" memory decision):**
