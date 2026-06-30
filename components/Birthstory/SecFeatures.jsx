@@ -1,28 +1,32 @@
 'use client'
 
-import { FieldSection, Ask, Prose, Figure, sys } from './kit'
+import { FieldSection, Ask, Prose, Figure, TesterNote, sys } from './kit'
 import { birthPhoto } from '@/lib/cloudinary'
 import FeatureWall from './FeatureWall'
-import CritStage from './CritStage'
+import CarePodFlow from './CarePodFlow'
+import JournalFlow from './JournalFlow'
+import DocReveal from './DocReveal'
+import SearchReveal from './SearchReveal'
 import styles from './SecFeatures.module.css'
 
 /* 05 — Features. The wall shows all four ways in at once; below, each capability
-   gets a deep-dive: the question, the thinking, and the real screens shown big.
-   Per the brief, the screens carry the use case; the copy calls out the reasoning.
-   Copy is draft, in her voice. */
+   gets a deep-dive: the question leads, a short note explains the reasoning, and
+   the real screen sits large beside it — moving where the feature is a flow (the
+   medical entry opens; the Care Pod sends out and receives back; the Journal deck
+   deals a prompt). Copy is draft, in her voice. */
 
 const DEEPDIVES = [
   {
     name: 'Documentation',
+    kind: 'doc',
+    layout: 'side',
     q: <>How do you capture it when you can barely <em>type</em>?</>,
     prose: <>One place for everything. A tender note from the delivery room, a prescription with the doctor’s instructions, a voice memo when your hands are full. Personal memory and medical detail land on the same timeline, the moment they happen.</>,
-    shots: [
-      ['/images/birthstory/bs-doc-note.png', 'A delivery-room note with a photo grid and camera, pen, and voice tools.', 'A note from the delivery room, with photos and a voice memo.'],
-      ['/images/birthstory/bs-doc-medical.png', 'A medical entry: an Ibuprofen prescription with pickup instructions and a voice memo, on the timeline.', 'A prescription, its instructions, and a voice note.'],
-    ],
   },
   {
     name: 'Care Pod',
+    kind: 'carepod',
+    layout: 'side',
     q: <>Who else is in the <em>room</em>?</>,
     prose: <>One action keeps everyone informed. A support person sends updates, photos, and voice memos out; loved ones send messages and voice notes back. All of it saves into the Birth Story, so the conversations become part of the memory.</>,
     context: {
@@ -30,26 +34,31 @@ const DEEPDIVES = [
       alt: 'A partner cradles a newborn while an older sibling leans in close to see.',
       cap: 'Birth doesn’t happen to the mother alone. The people there, and those waiting to hear, each hold a piece of the story.',
     },
-    shots: [
-      ['/images/birthstory/bs-carepod-update.png', 'The Care Pod: loved ones orbiting a heart marked “You”, with a Send Update button.', 'Your curated circle. One update reaches everyone.'],
-      ['/images/birthstory/bs-carepod-stories.png', 'Stories from loved ones: messages with photos and voice notes sent in.', 'Messages, photos, and voice notes, sent back in.'],
-    ],
+    cap: 'You send one update out; their replies come back into the story.',
   },
   {
     name: 'Reflection',
+    kind: 'journal',
+    layout: 'side',
     q: <>Where does the parent get to <em>process</em> it?</>,
-    prose: <>Testers told me the quiet hours up at night, between feedings, were when they wanted to reflect. So the Journal offers gentle prompts: a letter to your past self, an emotion to name. Something to do with the feeling while everyone else is asleep.</>,
-    shots: [
-      ['/images/birthstory/bs-reflect-card.png', 'A reflection prompt card: a letter to your past self.', 'Gentle prompts, one card at a time.'],
-      ['/images/birthstory/bs-reflect-entry.png', 'A finished journal entry tagged Empowered and Hopeful.', 'A finished entry, tagged with how it felt.'],
-    ],
+    prose: <>Testers told me the quiet hours up at night, between feedings, were when they wanted to reflect. So the Journal deals gentle prompts: a letter to your past self, the needs you can’t name, the senses you want to keep. Something to do with the feeling while everyone else is asleep.</>,
+    cap: 'The deck deals a prompt; you write, and tag how it felt.',
+  },
+  {
+    name: 'Search',
+    kind: 'search',
+    layout: 'side',
+    q: <>How do you find one moment in <em>all</em> of it?</>,
+    prose: <>Months of notes, photos, voice memos, and entries stack up fast. So search lives one swipe off the edge from anywhere: pull it in and filter by emotion, category, or keyword to bring a single moment back.</>,
+    cap: 'Swipe it in from the edge; filter by feeling, category, or keyword.',
   },
   {
     name: 'The Book',
+    kind: 'book',
+    layout: 'side',
     q: <>Where do these memories go if the app <em>disappears</em>?</>,
     prose: <>Parents said they needed something real to keep, in case the app ever went away. So the record can leave entirely: a printed Birth Story Book or a free PDF, curated from everything already captured, and open to loved ones to add to.</>,
     crit: {
-      pin: { x: 50, y: 39 },
       quote: 'It would be tragic to lose these moments if the app went away.',
       who: 'Parent tester',
     },
@@ -69,18 +78,31 @@ function Device({ src, alt }) {
   )
 }
 
-function Screen({ src, alt, cap, solo }) {
+function Screen({ src, alt, cap }) {
   return (
-    <figure className={`${styles.screen} ${solo ? styles.solo : ''}`}>
+    <figure className={styles.screen}>
       <Device src={src} alt={alt} />
       <figcaption className={styles.screenCap}>{cap}</figcaption>
     </figure>
   )
 }
 
+function Media({ f }) {
+  if (f.kind === 'doc') return <DocReveal cap="Entries stay closed until you open one — the medical detail lives a tap away." />
+  if (f.kind === 'carepod') return <CarePodFlow cap={f.cap} />
+  if (f.kind === 'journal') return <JournalFlow cap={f.cap} />
+  if (f.kind === 'search') return <SearchReveal cap={f.cap} />
+  if (f.kind === 'book') return (
+    <div className={styles.bookPair}>
+      {f.shots.map(([src, alt, cap]) => <Screen key={cap} src={src} alt={alt} cap={cap} />)}
+    </div>
+  )
+  return null
+}
+
 export default function SecFeatures() {
   return (
-    <FieldSection id="features" num="05" crumb="features" when="the product, decided" wide>
+    <FieldSection id="features" num="05" crumb="features" when="the product, decided" threshold={0.04} wide>
       <Ask>Birth never goes to plan. How do you build something simple enough to use anyway?</Ask>
       <Prose>
         The biggest thing testers told me: birth is unpredictable and complicated, so the app had to be
@@ -92,39 +114,28 @@ export default function SecFeatures() {
 
       <p className={styles.decisionsHead}>Each of these was a decision.</p>
 
-      {DEEPDIVES.map((f, i) => (
-        <div key={f.name} className={styles.feat}>
-          <div className={styles.text}>
+      {DEEPDIVES.map((f) => (
+        <div key={f.name} className={`${styles.feat} ${styles.side} ${f.kind === 'book' ? styles.bookFeat : ''}`}>
+          <div className={styles.copy}>
             <Ask kicker={f.name}>{f.q}</Ask>
-            <Prose>{f.prose}</Prose>
+            <p className={`${styles.lede} ${sys.up}`}>{f.prose}</p>
             {f.context && (
               <Figure
                 photo
                 tag="the why"
-                className={styles.contextFig}
+                className={styles.whyFig}
                 src={f.context.photo.src}
                 byline={f.context.photo.byline}
                 alt={f.context.alt}
                 cap={f.context.cap}
               />
             )}
+            {f.crit && <div className={sys.up}><TesterNote quote={f.crit.quote} who={f.crit.who} /></div>}
           </div>
-          {f.crit ? (
-            <div className={`${styles.media} ${styles.mediaCrit} ${sys.up}`}>
-              <CritStage pin={f.crit.pin} quote={f.crit.quote} who={f.crit.who} side="left" cap={f.shots[0][2]}>
-                <span className={styles.critDevice}><Device src={f.shots[0][0]} alt={f.shots[0][1]} /></span>
-              </CritStage>
-              {f.shots.slice(1).map(([src, alt, cap]) => (
-                <Screen key={cap} src={src} alt={alt} cap={cap} />
-              ))}
-            </div>
-          ) : (
-            <div className={`${styles.media} ${sys.up}`}>
-              {f.shots.map(([src, alt, cap]) => (
-                <Screen key={cap} src={src} alt={alt} cap={cap} solo={f.shots.length === 1} />
-              ))}
-            </div>
-          )}
+
+          <div className={`${styles.stage} ${sys.up}`}>
+            {f.kind === 'book' ? <Media f={f} /> : <div className={styles.media}><Media f={f} /></div>}
+          </div>
         </div>
       ))}
     </FieldSection>

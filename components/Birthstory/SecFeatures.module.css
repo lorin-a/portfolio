@@ -1,41 +1,58 @@
-/* Features — an interactive tour up top, then each decision as a balanced row. */
-
-.tourIntro { display: grid; gap: 0.5rem; }
-.tourLede { margin: 0; max-width: 44ch; font-family: var(--font-heading); font-variation-settings: 'SOFT' 60, 'WONK' 0; font-weight: 400; font-size: clamp(1.15rem, 1rem + 0.6vw, 1.55rem); line-height: 1.25; color: var(--color-ink); text-wrap: balance; }
+/* Features — the wall up top, then each capability as a deep-dive: the question
+   and a short note on the left, the real screen shown large on the right, moving
+   where the feature is a flow. The screens carry the design; the copy annotates. */
 
 .decisionsHead {
   margin: 0; padding-top: clamp(1.6rem, 4vw, 2.6rem); border-top: 1px solid var(--bs-rule);
   font-family: var(--font-body); font-size: 0.78rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--bs-teal-soft);
 }
 
-/* Features — each decision is a balanced row: question + reasoning on one side,
-   the real screen(s) shown big on the other, anchored to opposite edges. */
-
-.feat {
-  display: flex; flex-wrap: wrap; align-items: center;
-  justify-content: space-between; gap: clamp(1.8rem, 4vw, 4rem);
-}
 .feat + .feat {
-  margin-top: clamp(2.2rem, 5vw, 4rem);
-  padding-top: clamp(2.2rem, 5vw, 4rem);
+  margin-top: clamp(2.4rem, 5.5vw, 4.2rem);
+  padding-top: clamp(2.4rem, 5.5vw, 4.2rem);
   border-top: 1px solid var(--bs-rule);
 }
-.text { display: grid; gap: clamp(1rem, 2.5vw, 1.5rem); align-content: center; max-width: 40ch; flex: 1 1 22rem; }
-.media { display: flex; gap: clamp(0.8rem, 2vw, 1.4rem); align-items: start; flex: 0 1 auto; }
-/* the annotated book: screen + tester crit travel together, so the row gives the
-   pair room to sit beside the reasoning */
-.mediaCrit { flex: 1 1 34rem; justify-content: center; }
-.critDevice { display: block; width: clamp(208px, 22vw, 250px); }
-/* the human "why" behind a decision — a context photo seated under the reasoning */
-.contextFig { max-width: 100%; margin-top: 0.2rem; }
 
-.screen { margin: 0; display: grid; gap: 0.5rem; width: clamp(208px, 22vw, 250px); }
-.screen.solo { width: clamp(264px, 28vw, 330px); }
-.screenCap { font-family: var(--font-body); font-size: 0.74rem; line-height: 1.35; color: var(--color-ink-light); text-wrap: balance; }
+/* side layout — copy on the left spine, the device on a soft stage that fills the
+   right column to the edge, so the two read as balanced masses, not two islands */
+.side {
+  display: grid; align-items: stretch;
+  grid-template-columns: minmax(0, 30rem) 1fr;
+  gap: clamp(1.6rem, 3vw, 3rem);
+}
+.copy { align-self: center; display: grid; gap: clamp(0.8rem, 2vw, 1.2rem); }
+.stage {
+  align-self: stretch; display: grid; place-content: center; justify-items: center;
+  padding: clamp(1.6rem, 3.5vw, 3rem);
+  border-radius: clamp(16px, 2vw, 26px);
+  background: rgba(26, 67, 77, 0.05);
+}
+.media { width: clamp(280px, 27vw, 340px); }
 
+/* the book has two screens, so it gets a narrower copy column and a wider stage */
+.bookFeat { grid-template-columns: minmax(0, 25rem) 1fr; }
+.bookPair { display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-start; gap: clamp(1rem, 2.5vw, 2rem); }
+.bookPair .screen { width: clamp(190px, 17vw, 250px); }
+
+/* the short reasoning note — prominent but body voice, not the display serif */
+.lede {
+  margin: 0; max-width: 46ch;
+  font-family: var(--font-body); font-size: clamp(1rem, 0.95rem + 0.28vw, 1.14rem);
+  line-height: 1.6; color: var(--color-ink-light); text-wrap: pretty;
+}
+.whyFig { margin: 0.4rem 0 0; max-width: 100%; }
+
+.screen { margin: 0; display: grid; gap: 0.6rem; width: clamp(230px, 27vw, 300px); }
+.screenCap { font-family: var(--font-body); font-size: 0.78rem; line-height: 1.4; color: var(--color-ink-light); text-wrap: balance; }
+
+@media (max-width: 860px) {
+  .side, .bookFeat { grid-template-columns: 1fr; gap: clamp(1.4rem, 5vw, 2rem); }
+  .copy { max-width: 60ch; }
+  .stage { padding: clamp(1.4rem, 5vw, 2.4rem); }
+  .media { width: min(82vw, 340px); margin-inline: auto; }
+}
 @media (max-width: 720px) {
-  .feat { flex-direction: column; align-items: stretch; }
-  .media, .mediaCrit { flex-direction: column; align-items: center; gap: clamp(1.4rem, 5vw, 2.2rem); }
-  .screen, .screen.solo { width: min(78vw, 300px); }
-  .critDevice { width: min(78vw, 300px); }
+  .bookPair { gap: clamp(1.4rem, 6vw, 2.2rem); }
+  .bookPair .screen { width: min(74vw, 280px); }
+  .screen { width: min(80vw, 320px); }
 }

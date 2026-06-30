@@ -1,0 +1,40 @@
+/* Care Pod send-out showcase. The hosted screens (orbit, message board) fill the
+   phone; the compose sheet is a real screen capture that slides up over them. */
+
+.wrap { margin: 0; display: grid; justify-items: center; gap: clamp(0.9rem, 2vw, 1.3rem); }
+.phone { width: 100%; }
+.screen { position: relative; background: #1a434d; }
+
+/* the compose sheet, swiping up from below */
+.compose {
+  position: absolute; inset: 0; z-index: 3;
+  transform: translateY(100%); transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.composeUp { transform: translateY(0); }
+.compose img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.compose::before {
+  content: ''; position: absolute; left: 50%; top: 1.4%; width: 14%; height: 0.5%;
+  transform: translateX(-50%); border-radius: 999px; background: rgba(255, 255, 255, 0.5);
+}
+
+/* the Send Update tap */
+.tapDot {
+  position: absolute; left: 50%; top: 80.5%; width: 12%; aspect-ratio: 1; z-index: 2;
+  transform: translate(-50%, -50%) scale(0.4); border-radius: 50%;
+  background: rgba(255, 255, 255, 0.4); opacity: 0; pointer-events: none;
+}
+.tapOn { animation: tap 0.55s ease-out; }
+
+.cap {
+  max-width: 30ch; text-align: center;
+  font-family: var(--font-body); font-size: 0.8rem; line-height: 1.4; color: var(--color-ink-light); text-wrap: balance;
+}
+
+@keyframes tap {
+  0% { transform: translate(-50%, -50%) scale(0.4); opacity: 0.9; }
+  100% { transform: translate(-50%, -50%) scale(1.6); opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .compose { display: none; }
+}
