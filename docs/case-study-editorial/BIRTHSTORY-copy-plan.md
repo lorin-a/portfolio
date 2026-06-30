@@ -5,11 +5,11 @@
 ## Where we are (2026-06-30)
 Interview complete (Q1–Q16). Official brief + requirements read off LaCie and distilled into `BIRTHSTORY-interview.md`. **Next step:** build the case-study copy IN LORIN'S VOICE, section by section, into a draft she blesses, then implement into the live components. Lorin gave **permission to copyedit without losing her voice**; her voice reference = the verbatim interview answers.
 
-## ⛔ Blocking decisions (waiting on Lorin)
-1. **Kept/cut feature map accurate?** Search = her own addition; Trackers (req B) + Birth Plan (req C) = deliberately cut.
-2. **Brief tone:** use the maternal-mortality stats for gravity, OR keep it warm/personal (her sisters) and leave systemic stats out?
-3. **Read `MY PART.docx`** (same LaCie folder) for precise, defensible contribution language?
-4. **Olympic-endurance stat** (birth exertion ≈ Olympic athlete) — NOT in the brief; verify/source externally or soften to framing.
+## ✅ The 4 decisions — RESOLVED 2026-06-30 (in the copy draft)
+1. **Kept/cut feature map:** CONFIRMED accurate vs Q10/Q11 + requirements. Search = her addition; Trackers (B) + Birth Plan (C) = deliberate cuts. Surfaced as the "cut list" strategist beat in Features.
+2. **Brief tone:** warm/personal LEADS (Q4 — her matriarchal family, her two sisters; this material was MISSING from the study and is the biggest add). Systemic maternal-mortality stats offered as an OPTIONAL toggle in the draft, not baked in.
+3. **`MY PART.docx`:** READ. It contains NO Birth Story content — Tab 1 = SomeBuddy, Tab 2 = the Transition Design / Pittsburgh food-systems project (source for star #3). So **Q2 is the authoritative contribution split.** No further sourcing needed.
+4. **Olympic-endurance stat:** CUT the number, kept as framing ("as physically demanding as anything the body does"). No unsourced stat.
 
 ## 🔒 Standing corrections (must apply when building)
 - **Outcome:** DROP "the professors and client intend to build it." Truth (from brief): *client sponsored it; it may inform future Myana iterations; no commitment.* Frame as "proposed a design direction." (Doc note-to-self: "'propose a design direction,' never back-pedal.")
