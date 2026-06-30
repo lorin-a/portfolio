@@ -88,7 +88,7 @@ function Screen({ src, alt, cap }) {
 }
 
 function Media({ f }) {
-  if (f.kind === 'doc') return <DocReveal cap="Entries stay closed until you open one — the medical detail lives a tap away." />
+  if (f.kind === 'doc') return <DocReveal cap="Entries stay closed until you open one; the medical detail lives a tap away." />
   if (f.kind === 'carepod') return <CarePodFlow cap={f.cap} />
   if (f.kind === 'journal') return <JournalFlow cap={f.cap} />
   if (f.kind === 'search') return <SearchReveal cap={f.cap} />
@@ -102,7 +102,7 @@ function Media({ f }) {
 
 export default function SecFeatures() {
   return (
-    <FieldSection id="features" num="05" crumb="features" when="the product, decided" threshold={0.04} wide>
+    <FieldSection id="features" num="05" crumb="features" when="week 5 · the product" threshold={0.04} wide>
       <Ask>Birth never goes to plan. How do you build something simple enough to use anyway?</Ask>
       <Prose>
         The biggest thing testers told me: birth is unpredictable and complicated, so the app had to be

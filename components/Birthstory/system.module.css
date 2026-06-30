@@ -11,6 +11,8 @@
   --bs-teal: #1A434D;
   --bs-teal-soft: #466F7B; /* darkened for AA-legible labels + less-faded accents */
   --bs-rule: rgba(26, 67, 77, 0.3); /* page breaks / hairlines, clearly visible */
+  --bs-wash: rgba(26, 67, 77, 0.05); /* soft teal panel fill — cards, stages */
+  --bs-hairline: rgba(26, 67, 77, 0.12); /* inner card rules, subtler than --bs-rule */
   --bs-blush: #DBADAD;
   --bs-peri: #B1C1F4;
   --bs-lav: #E6E5FD;
@@ -182,7 +184,7 @@
 .plateWide { max-width: 56rem; }
 .plateTab {
   position: absolute; top: -0.7rem; left: 1rem; padding: 0.15rem 0.55rem; border-radius: 3px;
-  background: var(--bs-accent); color: #fff; font-family: var(--font-body); font-weight: 600; font-size: 0.72rem; letter-spacing: 0.04em;
+  background: var(--bs-accent); color: #fff; font-family: var(--font-body); font-weight: 600; font-size: 0.72rem; letter-spacing: 0.06em; text-transform: uppercase;
 }
 .plateArt { grid-column: 1; background: #16323a; border-radius: 3px; padding: 0.6rem; display: grid; place-items: center; }
 .plateArt img { max-width: 100%; height: auto; display: block; }
@@ -201,7 +203,7 @@
 
 /* friction — admits the open question */
 .friction {
-  margin: 0; max-width: 40rem; padding: 1.1rem 1.3rem; background: rgba(26, 67, 77, 0.05); border-radius: 6px;
+  margin: 0; max-width: 40rem; padding: 1.1rem 1.3rem; background: var(--bs-wash); border-radius: 6px;
   font-family: var(--font-body); font-size: 0.95rem; line-height: 1.6; color: var(--color-ink-light);
 }
 .friction b { font-weight: 700; color: var(--bs-accent); font-style: normal; }
@@ -218,7 +220,7 @@
 .testerKicker { margin: 0; font-family: var(--font-body); font-weight: 700; font-size: 0.7rem; letter-spacing: 0.13em; text-transform: uppercase; color: var(--bs-crit); }
 .testerQuote {
   margin: 0; font-family: var(--font-heading); font-variation-settings: 'SOFT' 60, 'WONK' 0; font-style: italic; font-weight: 400;
-  font-size: clamp(1.05rem, 0.95rem + 0.45vw, 1.3rem); line-height: 1.33; color: var(--color-ink); text-wrap: pretty;
+  font-size: clamp(1.05rem, 0.95rem + 0.45vw, 1.35rem); line-height: 1.33; color: var(--color-ink); text-wrap: pretty;
 }
 .testerWho { margin: 0; font-family: var(--font-body); font-size: 0.72rem; letter-spacing: 0.06em; color: var(--bs-crit); }
 

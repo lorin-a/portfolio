@@ -23,7 +23,7 @@
 .sHex { font-family: var(--font-body); font-size: 0.58rem; letter-spacing: 0.02em; color: var(--color-ink-faint); }
 
 .type { display: grid; gap: clamp(0.9rem, 2vw, 1.3rem); align-content: start; }
-.typeRow { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; padding-bottom: 0.6rem; border-bottom: 1px solid rgba(26, 67, 77, 0.12); }
+.typeRow { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; padding-bottom: 0.6rem; border-bottom: 1px solid var(--bs-hairline); }
 .face { font-family: var(--font-heading); font-variation-settings: 'SOFT' 60, 'WONK' 0; font-weight: 400; font-size: clamp(1.3rem, 1rem + 1vw, 1.75rem); color: var(--bs-accent); }
 .body { font-family: var(--font-body); font-weight: 700; }
 .use { font-family: var(--font-body); font-size: 0.7rem; color: var(--color-ink-light); }

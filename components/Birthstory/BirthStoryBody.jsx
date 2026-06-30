@@ -18,6 +18,7 @@ const SPINE = [
   { id: 'voice', label: 'Voice' },
   { id: 'brand', label: 'Brand' },
   { id: 'outcome', label: 'Outcome' },
+  { id: 'close', label: 'Reflection' },
 ]
 
 /* Project credits — the metadata, now the masthead of the Brief (below the
@@ -46,10 +47,10 @@ function Brief() {
       <Split
         text={
           <>
-            <Ask kicker={null}>How might we help parents document, reflect, and make sense of their birth experience?</Ask>
+            <Ask>How might we help parents document, reflect, and make sense of their birth experience?</Ask>
             <p className={`${b.briefLede} ${sys.up}`}>
               Parents who use Myana, a pregnancy and postpartum app, noted a gap in their
-              experience—giving birth. Birth experiences vary widely and hardly go according to plan.
+              experience: giving birth. Birth experiences vary widely and hardly go according to plan.
               It is a complex physical and emotional time that often gets forgotten when the newborn arrives.
             </p>
             <p className={`${b.briefTask} ${sys.up}`}>
@@ -151,7 +152,7 @@ function Research() {
 
 function Voice() {
   return (
-    <FieldSection id="voice" num="06" crumb="voice" when="copywriting" wide>
+    <FieldSection id="voice" num="06" crumb="voice" when="week 5 · copy" wide>
       <Split
         text={
           <>
@@ -187,7 +188,7 @@ function Voice() {
 
 function Outcome() {
   return (
-    <FieldSection id="outcome" num="08" crumb="outcome" when="the result" wide>
+    <FieldSection id="outcome" num="08" crumb="outcome" when="week 6 · the pitch" wide>
       <Finding kicker="where it landed">
         The work didn’t stay a class project. It became the preliminary research and ideation for a
         Birth Story app the <b>professors and client intend to build</b>.
@@ -214,11 +215,11 @@ function Outcome() {
 
 function Close() {
   return (
-    <FieldSection id="close" num="09" crumb="what I’d do differently">
+    <FieldSection id="close" num="09" crumb="reflection" when="week 6 · in hindsight">
       <Ask kicker="next time">What would I ask <em>differently</em>?</Ask>
       <Prose>
-        I’d start from the constraint, not the possibilities. Naming the core need in week one — less,
-        not more — would have saved me a build full of tools nobody asked for. And I learned not to put
+        I’d start from the constraint, not the possibilities. Naming the core need in week one (less,
+        not more) would have saved me a build full of tools nobody asked for. And I learned not to put
         anything in a wireframe that opens a question I didn’t mean to ask.
       </Prose>
       <p className={b.tools}>figma · svg repo · unsplash</p>
