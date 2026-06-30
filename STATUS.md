@@ -1,5 +1,5 @@
 # Project Status
-### Last updated: 2026-06-30 — Birth Story Features section rebuilt (4-up wall + 4 deep-dives on real Figma screens); tester "crit voice" annotations; class photos bookended; crit-wall whiteboard; context photos to B&W. Next: polish Voice / Brand / Outcome, then Lorin's copy pass.
+### Last updated: 2026-06-30 (late) — Birth Story case study FULLY REBUILT + uniform: Features as animated showcases (DocReveal/CarePodFlow/JournalFlow/SearchReveal); Voice/Brand/Outcome/Book redesigned; full uniformity audit; Research/Voice/Iteration grounded in real participant quotes. Lorin's full interview (Q1–Q16) + the official brief/requirements captured. **Next: the COPY PASS in her voice — start at `docs/case-study-editorial/BIRTHSTORY-copy-plan.md`.**
 
 This is the living status doc for the lorin.work portfolio redesign. Updated at the end of every working session. Detailed in-flight state lives in memory `PROGRESS.md`.
 
