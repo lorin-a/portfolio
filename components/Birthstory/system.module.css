@@ -25,12 +25,12 @@
   --bs-wide: 76rem;
   --bs-pad: clamp(1.5rem, 5vw, 6rem);
 
-  /* the two section grounds are the brand gradient's poles — blush + periwinkle —
-     value-matched so they marry (relative luminance ≈ 0.915 for both); the only
-     difference is hue (warm ↔ cool), which mirrors the gradient's gender spectrum.
-     --bs-paper is the blush pole (odd sections); .fieldAlt is the periwinkle pole. */
-  --bs-paper: #F3E7E9;
-  --bs-paper-rgb: 243, 231, 233;
+  /* quiet light-neutral ground for the whole study — near-white, hue-neutral so
+     nothing competes with the content. Color is intentional: carried by the teal
+     accents, the app screens, the photos, and reserved colored moments — never the
+     section grounds. (Green-grey / warm greige / blush-periwinkle all tried and cut.) */
+  --bs-paper: #F2F2F0;
+  --bs-paper-rgb: 242, 242, 240;
   background: var(--bs-paper);
   color: var(--color-ink);
 }
@@ -139,7 +139,7 @@
   background-image: radial-gradient(rgba(26, 67, 77, 0.05) 1px, transparent 1px);
   background-size: 24px 24px;
 }
-.fieldAlt { background-color: #E7E8F4; } /* soft periwinkle (from the brand gradient) — alternates with the cool paper so the flow has hue rhythm, not grey-on-grey */
+.fieldAlt { background-color: var(--bs-paper); } /* no colored alternation — the majority is the quiet neutral; color is reserved for intentional moments */
 .sheet { max-width: 60rem; margin: 0 auto; }
 /* wide sheet for split sections — lets the media column run to the right edge */
 .sheetWide { max-width: 92rem; }
