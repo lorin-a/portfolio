@@ -93,9 +93,9 @@ function Brief() {
           <div className={b.askCol}>
             <p className={b.specLabel}>Required</p>
             <ul className={b.specList}>
-              <li><b>Info-gathering.</b> The medical record: who was there, what happened, which interventions and medications, in what order.</li>
-              <li><b>Meaning-making.</b> Helping parents process a birth that is often traumatic, sometimes joyful, and rarely goes to plan.</li>
-              <li><b>Onboarding.</b> A way in for a first-time, sleep-deprived user.</li>
+              <li><b>Info-gathering.</b> The medical record: who, what, interventions, medications.</li>
+              <li><b>Meaning-making.</b> Processing a birth that rarely goes to plan.</li>
+              <li><b>Onboarding.</b> A calm way in for an exhausted first-timer.</li>
             </ul>
           </div>
           <div className={b.askCol}>
@@ -109,9 +109,9 @@ function Brief() {
           <div className={`${b.askCol} ${b.stakesCol}`}>
             <p className={b.specLabel}>The stakes</p>
             <div className={b.stakeRow}><span className={b.stakeFig}>80%</span><span className={b.stakeText}>of U.S. maternal deaths are preventable</span></div>
-            <div className={b.stakeRow}><span className={b.stakeFig}>65%</span><span className={b.stakeText}>happen after delivery, not during it</span></div>
+            <div className={b.stakeRow}><span className={b.stakeFig}>65%</span><span className={b.stakeText}>happen after delivery</span></div>
             <div className={b.stakeRow}><span className={b.stakeFig}>3×</span><span className={b.stakeText}>the risk for Black mothers</span></div>
-            <p className={b.stakeSource}>The postpartum window is dangerous and under-supported. <b>Figures from the project brief.</b></p>
+            <p className={b.stakeSource}>A dangerous, under-supported window. <b>Figures from the project brief.</b></p>
           </div>
         </div>
       </div>
