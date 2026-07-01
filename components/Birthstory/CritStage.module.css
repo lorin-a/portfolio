@@ -45,9 +45,10 @@
 .card {
   margin: 0; max-width: 19rem; display: grid; gap: 0.5rem;
   padding: clamp(1rem, 2.2vw, 1.4rem) clamp(1.15rem, 2.6vw, 1.6rem);
-  background: var(--bs-crit-wash);
+  background: #fff;
   border: 1px solid var(--bs-crit-line); border-left: 3px solid var(--bs-crit);
   border-radius: 4px 14px 14px 4px;
+  box-shadow: 0 14px 30px -24px rgba(138, 79, 60, 0.4);
   opacity: 0; transform: translateY(14px);
   transition: opacity var(--motion-medium) var(--ease-out), transform var(--motion-medium) var(--ease-out);
 }
