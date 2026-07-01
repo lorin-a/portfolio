@@ -53,7 +53,7 @@ function Brief() {
       <Split
         text={
           <>
-            <Lead>A companion app for the part Myana didn’t cover: the birth itself.</Lead>
+            <Lead>Pitch a concept for Myana’s companion micro-app that helps parents document and reflect on their birth experience.</Lead>
             <Prose>
               Myana already supports parents through pregnancy and postpartum. Its researchers saw that
               the birth itself still went undocumented and unprocessed, and brought that gap to our studio
@@ -66,8 +66,13 @@ function Brief() {
               rel="noopener noreferrer"
             >
               <span className={b.myanaTag}>The app it companions</span>
-              <span className={b.myanaName}>Myana</span>
-              <span className={b.myanaDesc}>Postpartum and parenting support from the University of Pittsburgh.</span>
+              <span className={b.myanaMain}>
+                <img className={b.myanaIcon} src="/images/birthstory/myana-icon.jpg" alt="Myana app icon" loading="lazy" draggable="false" />
+                <span className={b.myanaText}>
+                  <span className={b.myanaName}>Myana</span>
+                  <span className={b.myanaDesc}>Postpartum and parenting support from the University of Pittsburgh.</span>
+                </span>
+              </span>
               <span className={b.myanaLink}>View on the App Store ↗</span>
             </a>
           </>
@@ -84,44 +89,44 @@ function Brief() {
         />
       </Split>
 
-      <div className={`${b.statBand} ${sys.up}`}>
-        <div className={b.statItem}><span className={b.statFig}>80%</span><span className={b.statText}>of U.S. maternal deaths are preventable</span></div>
-        <div className={b.statItem}><span className={b.statFig}>65%</span><span className={b.statText}>happen after delivery, not during it</span></div>
-        <div className={b.statItem}><span className={b.statFig}>3×</span><span className={b.statText}>the risk for Black mothers</span></div>
-        <p className={b.statSource}>The postpartum window is dangerous and under-supported. <b>Figures from the project brief.</b></p>
-      </div>
-
-      <div className={`${b.spec} ${sys.up}`}>
-        <p className={b.specIntro}>The requirements were explicit.</p>
-        <div className={b.specGroup}>
-          <p className={b.specLabel}>Required</p>
-          <ul className={b.specList}>
-            <li><b>Info-gathering.</b> The medical record: who was there, what happened, which interventions and medications, in what order.</li>
-            <li><b>Meaning-making.</b> Helping parents process a birth that is often traumatic, sometimes joyful, and rarely goes to plan.</li>
-            <li><b>Onboarding.</b> A way in for a first-time, sleep-deprived user.</li>
-          </ul>
+      <div className={`${b.askBand} ${sys.up}`}>
+        <div className={b.spec}>
+          <p className={b.specIntro}>The requirements were explicit.</p>
+          <div className={b.specGroup}>
+            <p className={b.specLabel}>Required</p>
+            <ul className={b.specList}>
+              <li><b>Info-gathering.</b> The medical record: who was there, what happened, which interventions and medications, in what order.</li>
+              <li><b>Meaning-making.</b> Helping parents process a birth that is often traumatic, sometimes joyful, and rarely goes to plan.</li>
+              <li><b>Onboarding.</b> A way in for a first-time, sleep-deprived user.</li>
+            </ul>
+          </div>
+          <div className={b.specGroup}>
+            <p className={b.specLabel}>Provided</p>
+            <ul className={b.specList}>
+              <li>The name, Birth Story, and the core concept.</li>
+              <li>Five optional features to choose from.</li>
+              <li>Client sponsorship, to possibly inform future Myana versions.</li>
+            </ul>
+          </div>
         </div>
-        <div className={b.specGroup}>
-          <p className={b.specLabel}>Given</p>
-          <ul className={b.specList}>
-            <li>The name, Birth Story, and the core concept.</li>
-            <li>Five optional features to choose from.</li>
-            <li>Client sponsorship, to possibly inform future Myana versions.</li>
-          </ul>
-        </div>
+        <aside className={b.stakes}>
+          <p className={b.specLabel}>The stakes</p>
+          <div className={b.stakeRow}><span className={b.stakeFig}>80%</span><span className={b.stakeText}>of U.S. maternal deaths are preventable</span></div>
+          <div className={b.stakeRow}><span className={b.stakeFig}>65%</span><span className={b.stakeText}>happen after delivery, not during it</span></div>
+          <div className={b.stakeRow}><span className={b.stakeFig}>3×</span><span className={b.stakeText}>the risk for Black mothers</span></div>
+          <p className={b.stakeSource}>The postpartum window is dangerous and under-supported. <b>Figures from the project brief.</b></p>
+        </aside>
       </div>
 
       <Split
         text={
           <SubBlock label="My connection">
             <Prose>
-              I had a personal stake in this. I come from a matriarchal family, and a lot of those births
-              didn’t go how the women had hoped. One of my sisters planned a home birth, labored for 24
-              hours, and ended up in a hospital on medication, a mother before she’d had a moment to
-              process any of it. Another nearly died delivering, and spent her son’s first months in the
-              NICU. When I started asking friends about their own births, what stayed with me was that
-              none had been offered any support afterward. I’d already worked on mental health and trauma,
-              so I recognized the need right away.
+              I came to this with a personal stake. I’m from a matriarchal family whose births rarely went
+              to plan, and I’ve been close to it in other ways: once as a night nanny for a newborn whose
+              mother had an emergency C-section after an unexpected breast cancer diagnosis. Across my
+              family and the friends I asked, what stayed with me was how little support anyone got with
+              the birth afterward.
             </Prose>
           </SubBlock>
         }

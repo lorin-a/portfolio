@@ -115,7 +115,7 @@
    companions. Real facts + a real App Store link; reproduces none of Myana's
    proprietary UI. Also anchors the short intro against the tall opening photo. ── */
 .myanaRef {
-  display: grid; gap: 0.28rem; max-width: 24rem;
+  display: grid; gap: 0.6rem; max-width: 25rem;
   margin-top: clamp(0.4rem, 1.5vw, 1rem);
   padding: clamp(1rem, 2.2vw, 1.3rem) clamp(1.1rem, 2.4vw, 1.4rem);
   background: #fff; border: 1px solid var(--bs-hairline); border-radius: 10px;
@@ -126,41 +126,34 @@
 @media (hover: hover) { .myanaRef:hover { transform: translateY(-2px); box-shadow: 0 22px 42px -24px rgba(26, 67, 77, 0.5); } }
 .myanaRef:focus-visible { outline: 2px solid var(--bs-accent); outline-offset: 3px; }
 .myanaTag { font-family: var(--font-body); font-weight: 700; font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--bs-teal-soft); }
+.myanaMain { display: grid; grid-template-columns: auto 1fr; gap: 0.85rem; align-items: center; }
+.myanaIcon { width: 3.4rem; height: 3.4rem; border-radius: 22%; display: block; box-shadow: inset 0 0 0 1px rgba(26, 67, 77, 0.12); }
+.myanaText { display: grid; gap: 0.18rem; }
 .myanaName { font-family: var(--font-heading); font-variation-settings: 'SOFT' 60, 'WONK' 0; font-weight: 400; font-size: clamp(1.2rem, 1.05rem + 0.6vw, 1.5rem); line-height: 1.1; color: var(--bs-accent); }
 .myanaDesc { font-family: var(--font-body); font-size: 0.85rem; line-height: 1.45; color: var(--color-ink-light); }
 .myanaLink { margin-top: 0.35rem; font-family: var(--font-body); font-weight: 600; font-size: 0.8rem; letter-spacing: 0.01em; color: var(--bs-accent); }
 
 /* ── the ask — the brief laid out explicitly: required areas, then givens, as
    labeled bullet groups (objective record, structured, not prose). ── */
-.spec { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(1.4rem, 3.5vw, 3rem) clamp(2.5rem, 5vw, 5rem); align-items: start; max-width: 64rem; }
-.specIntro { grid-column: 1 / -1; margin: 0; font-family: var(--font-body); font-size: clamp(1rem, 0.96rem + 0.3vw, 1.12rem); line-height: 1.55; color: var(--color-ink); }
+/* the ask band — requirements (left) beside the stakes stats (right); one
+   balanced full-width row so neither floats. */
+.askBand { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: clamp(2rem, 5vw, 5rem); align-items: start; }
+.spec { display: grid; gap: clamp(1.5rem, 3.5vw, 2.4rem); align-content: start; }
+.specIntro { margin: 0; font-family: var(--font-body); font-size: clamp(1rem, 0.96rem + 0.3vw, 1.12rem); line-height: 1.55; color: var(--color-ink); }
 .specGroup { display: grid; gap: 0.65rem; align-content: start; }
-@media (max-width: 720px) { .spec { grid-template-columns: 1fr; } }
+.stakes { display: grid; gap: clamp(0.9rem, 2vw, 1.35rem); align-content: start; }
+.stakeRow { display: grid; grid-template-columns: minmax(3.6rem, auto) 1fr; gap: 0.85rem; align-items: baseline; }
+.stakeFig { font-family: var(--font-heading); font-variation-settings: 'SOFT' 60, 'WONK' 0; font-weight: 400; font-size: clamp(2rem, 1.5rem + 1.7vw, 2.9rem); line-height: 0.9; letter-spacing: -0.02em; color: var(--bs-accent); }
+.stakeText { font-family: var(--font-body); font-size: clamp(0.88rem, 0.85rem + 0.2vw, 0.98rem); line-height: 1.38; color: var(--color-ink-light); }
+.stakeSource { margin: 0.4rem 0 0; font-family: var(--font-body); font-size: 0.8rem; line-height: 1.5; color: var(--color-ink-faint); }
+.stakeSource b { color: var(--bs-teal-soft); font-weight: 600; }
+@media (max-width: 820px) { .askBand { grid-template-columns: 1fr; gap: clamp(1.8rem, 5vw, 2.6rem); } }
 .specLabel { margin: 0; font-family: var(--font-body); font-weight: 700; font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--bs-teal-soft); }
 .specList { margin: 0; padding: 0; list-style: none; display: grid; gap: 0.6rem; }
 .specList li { position: relative; padding-left: 1.15rem; font-family: var(--font-body); font-size: 0.95rem; line-height: 1.5; color: var(--color-ink-light); }
 .specList li::before { content: ''; position: absolute; left: 0; top: 0.6em; width: 0.42rem; height: 0.42rem; border-radius: 1px; background: var(--bs-teal-soft); }
 .specList b { font-weight: 700; color: var(--color-ink); }
 
-/* ── stats — big figures, full width, early. The stakes of the postpartum
-   window, from the brief. ── */
-.statBand {
-  display: grid; grid-template-columns: repeat(3, auto); justify-content: start;
-  gap: 0.5rem clamp(2rem, 4vw, 3.4rem);
-  padding: clamp(1.5rem, 3vw, 2.3rem) 0;
-  border-top: 1px solid var(--bs-rule); border-bottom: 1px solid var(--bs-rule);
-  align-items: start;
-}
-.statItem { display: grid; gap: 0.35rem; align-content: start; }
-.statFig {
-  font-family: var(--font-heading); font-variation-settings: 'SOFT' 60, 'WONK' 0; font-weight: 400;
-  font-size: clamp(2.2rem, 1.7rem + 2.2vw, 3.4rem); line-height: 0.9; letter-spacing: -0.02em; color: var(--bs-accent);
-}
-.statText { font-family: var(--font-body); font-size: clamp(0.85rem, 0.82rem + 0.18vw, 0.95rem); line-height: 1.38; color: var(--color-ink-light); max-width: 15ch; }
-.statSource { grid-column: 1 / -1; margin: 0.9rem 0 0; font-family: var(--font-body); font-size: 0.8rem; line-height: 1.45; color: var(--color-ink-faint); }
-.statSource b { color: var(--bs-teal-soft); font-weight: 600; }
-@media (max-width: 640px) { .statBand { grid-template-columns: 1fr; gap: 1.3rem; } }
-@media (max-width: 460px) { .overviewMeta { grid-template-columns: 1fr; } }
 
 /* two before/after pairs stacked in the voice section */
 .rewriteBlock { gap: clamp(1.2rem, 3vw, 1.8rem); }
