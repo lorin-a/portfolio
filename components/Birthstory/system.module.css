@@ -181,7 +181,7 @@
   margin: 0; max-width: 42rem;
   font-family: var(--font-body); font-weight: 400;
   font-size: clamp(1rem, 0.96rem + 0.3vw, 1.12rem); line-height: 1.65;
-  color: var(--color-ink);
+  color: var(--color-ink); text-wrap: pretty;
 }
 .prose b { font-weight: 600; color: var(--bs-accent); }
 .prose em { font-style: italic; }

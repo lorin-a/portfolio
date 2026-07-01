@@ -79,13 +79,12 @@ function Brief() {
         }
       >
         <Figure
+          tag="context"
           photo
-          tag="the review"
-          ratio="3 / 2"
-          focus="center 54%"
-          src={cloudImg('IMG_3010', 1600)}
-          alt="A studio review on a projector screen: our client, Sarah Burns, joins by video on the left while the room of students faces the work on the right."
-          cap="Reviewing the work with our client, Sarah Burns (MSW), over video."
+          src={birth.src}
+          byline={birth.byline}
+          alt="A parent rests cheek to cheek with a swaddled newborn in the hours just after birth, in black and white."
+          cap="A parent and newborn in the hours after birth."
         />
       </Split>
 
@@ -122,22 +121,23 @@ function Brief() {
         text={
           <SubBlock label="My connection">
             <Prose>
-              I came to this with a personal stake. I’m from a matriarchal family whose births rarely went
-              to plan, and I’ve been close to it in other ways: once as a night nanny for a newborn whose
-              mother had an emergency C-section after an unexpected breast cancer diagnosis. Across my
-              family and the friends I asked, what stayed with me was how little support anyone got with
-              the birth afterward.
+              Supporting mothers is personal for me. I come from a matriarchal family that has a history
+              of complicated births. While interviewing my family members, I understood for the first
+              time how traumatic their experiences were. When I worked as a night nanny for an infant
+              whose mother was in breast cancer treatment, I experienced sleep deprivation firsthand.
+              Creating this concept was deeply rewarding.
             </Prose>
           </SubBlock>
         }
       >
         <Figure
-          tag="context"
           photo
-          src={birth.src}
-          byline={birth.byline}
-          alt="An exhausted parent rests cheek to cheek with a swaddled newborn in the hours just after birth, in black and white."
-          cap="An exhausted parent and newborn in the hours after birth."
+          tag="the review"
+          ratio="3 / 2"
+          focus="center 54%"
+          src={cloudImg('IMG_3010', 1600)}
+          alt="A studio review on a projector screen: our client, Sarah Burns, joins by video on the left while the room of students faces the work on the right."
+          cap="Reviewing the work with our client, Sarah Burns (MSW), over video."
         />
       </Split>
     </FieldSection>
