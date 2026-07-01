@@ -25,10 +25,12 @@
   --bs-wide: 76rem;
   --bs-pad: clamp(1.5rem, 5vw, 6rem);
 
-  /* warm-neutral paper — tuned to complement the periwinkle alt as a warm/cool
-     pair (was a cold green-grey that read drab beside the lavender). One token. */
-  --bs-paper: #F3EFE6;
-  --bs-paper-rgb: 243, 239, 230;
+  /* the two section grounds are the brand gradient's poles — blush + periwinkle —
+     value-matched so they marry (relative luminance ≈ 0.915 for both); the only
+     difference is hue (warm ↔ cool), which mirrors the gradient's gender spectrum.
+     --bs-paper is the blush pole (odd sections); .fieldAlt is the periwinkle pole. */
+  --bs-paper: #F3E7E9;
+  --bs-paper-rgb: 243, 231, 233;
   background: var(--bs-paper);
   color: var(--color-ink);
 }
