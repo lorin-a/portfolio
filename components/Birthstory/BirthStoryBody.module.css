@@ -52,9 +52,10 @@
   box-shadow: 0 1px 2px rgba(26, 67, 77, 0.06), 0 14px 30px -18px rgba(26, 67, 77, 0.22), inset 0 0 0 1px var(--bs-hairline);
 }
 .valueNum {
-  align-self: flex-start; min-width: 1.9rem; padding: 0.15rem 0.4rem; border-radius: 3px;
-  background: var(--bs-accent); color: #fff;
-  font-family: var(--font-body); font-weight: 700; font-size: 0.68rem; letter-spacing: 0.08em; text-align: center;
+  align-self: flex-start;
+  font-family: var(--font-heading); font-variation-settings: 'SOFT' 60, 'WONK' 0; font-weight: 380;
+  font-size: clamp(2.1rem, 1.6rem + 1.5vw, 2.9rem); line-height: 0.85; letter-spacing: -0.015em;
+  color: var(--bs-accent);
 }
 .valueName { font-family: var(--font-heading); font-variation-settings: 'SOFT' 60, 'WONK' 0; font-weight: 400; font-size: clamp(1.06rem, 0.98rem + 0.36vw, 1.28rem); line-height: 1.2; color: var(--color-ink); }
 .valueFor {
