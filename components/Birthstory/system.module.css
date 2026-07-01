@@ -29,8 +29,8 @@
      nothing competes with the content. Color is intentional: carried by the teal
      accents, the app screens, the photos, and reserved colored moments — never the
      section grounds. (Green-grey / warm greige / blush-periwinkle all tried and cut.) */
-  --bs-paper: #F2F2F0;
-  --bs-paper-rgb: 242, 242, 240;
+  --bs-paper: #F8F8F7;
+  --bs-paper-rgb: 248, 248, 247;
   background: var(--bs-paper);
   color: var(--color-ink);
 }
