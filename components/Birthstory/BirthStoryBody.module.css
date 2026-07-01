@@ -98,7 +98,7 @@
   background-image: radial-gradient(rgba(26, 67, 77, 0.05) 1px, transparent 1px);
   background-size: 24px 24px;
 }
-.overviewInner { max-width: 62rem; margin: 0 auto; }
+.overviewInner { max-width: 92rem; margin: 0 auto; }
 .overviewMeta {
   margin: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: clamp(1.5rem, 3vw, 2.4rem) clamp(2rem, 4vw, 3.5rem);
