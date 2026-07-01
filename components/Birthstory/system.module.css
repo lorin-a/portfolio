@@ -25,13 +25,13 @@
   --bs-wide: 76rem;
   --bs-pad: clamp(1.5rem, 5vw, 6rem);
 
-  /* WARM HUMAN PAPER — a near-white with a rose/blush undertone (NOT yellow; yellow
-     greige goes dingy). Warm and human like skin or warm paper stock, but kept
-     light and crisp so the photos and app screens stay razor-sharp — the color is
-     a subordinate ground, never a statement. Teal stays the accent (labels, icons,
-     headers), never a full shade. */
-  --bs-paper: #F7EFEE;
-  --bs-paper-rgb: 247, 239, 238;
+  /* SILENT GROUND — bright, hue-neutral near-white (gallery white). Every tinted
+     ground read wrong (drab grey / yellow greige / juvenile pink-blue / clinical
+     teal / immature warm-rose), because the background shouldn't be a design
+     element at all. It disappears; the photos, app screens, and teal accents are
+     the only color. Bright enough to read clean-white, not muddy-grey. */
+  --bs-paper: #FAFAFA;
+  --bs-paper-rgb: 250, 250, 250;
   background: var(--bs-paper);
   color: var(--color-ink);
 }
