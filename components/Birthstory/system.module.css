@@ -105,7 +105,7 @@
 .noteWho { display: block; margin-top: 0.3rem; font-size: 0.68rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--bs-teal-soft); }
 
 /* ── reveal: children carry .up; the section root toggles .in ── */
-.up { opacity: 0; transform: translateY(18px); transition: opacity var(--motion-medium) var(--ease-out), transform var(--motion-medium) var(--ease-out); transition-delay: var(--d, 0ms); }
+.up { opacity: 0; transform: translateY(22px); transition: opacity 700ms var(--ease-out), transform 700ms var(--ease-out); transition-delay: var(--d, 0ms); }
 .in .up { opacity: 1; transform: none; }
 
 @media (prefers-reduced-motion: reduce) {

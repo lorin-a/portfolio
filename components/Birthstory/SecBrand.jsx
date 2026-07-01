@@ -1,6 +1,6 @@
 'use client'
 
-import { FieldSection, Lead, Prose, Plate, sys } from './kit'
+import { FieldSection, Lead, Prose, sys } from './kit'
 import styles from './SecBrand.module.css'
 
 /* 07 — Visual design. Palette, type, and gradient documented as decisions: calm,
@@ -49,16 +49,23 @@ export default function SecBrand() {
         </div>
       </div>
 
-      <Plate
-        tab="moodboard"
-        wide
-        light
-        src="/images/birthstory/moodboard.png"
-        alt="The Birth Story moodboard: Georgia O’Keeffe florals, lunar and gradient imagery, and wellness apps with orbiting members and keepsake books."
-        cap="moodboard · figma"
-        margin="O’Keeffe’s organic forms, lunar calm, and the orbiting-circle apps that became the Care Pod."
-        rot="-0.5deg"
-      />
+      <figure className={`${styles.board} ${sys.up}`}>
+        <div className={styles.boardArt}>
+          <span className={styles.boardTab}>moodboard</span>
+          <img
+            src="/images/birthstory/moodboard.png"
+            alt="The Birth Story moodboard: Georgia O’Keeffe florals, lunar and gradient imagery, and wellness apps with orbiting members and keepsake books."
+            loading="lazy"
+            draggable="false"
+          />
+        </div>
+        <figcaption className={styles.boardCap}>
+          <span className={styles.boardSrc}>moodboard · figma</span>
+          <p className={styles.boardNote}>
+            O’Keeffe’s organic forms, lunar calm, and the orbiting-circle apps that became the Care Pod.
+          </p>
+        </figcaption>
+      </figure>
     </FieldSection>
   )
 }

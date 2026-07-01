@@ -31,6 +31,16 @@
 }
 .briefTask b { color: var(--bs-accent); font-weight: 700; }
 
+/* brief meta — "My role" + "Why I was close to it" ride inside the Split's text
+   column now, set off from the narrative by a hairline so the short column fills
+   down the page beside the stacked photos instead of stranding a half-empty band
+   below the split. */
+.briefMeta {
+  display: grid; gap: clamp(1.5rem, 3vw, 2.2rem);
+  padding-top: clamp(1.6rem, 3vw, 2.2rem);
+  border-top: 1px solid var(--bs-rule);
+}
+
 /* our design values — the qualities each function had to embody. A flat,
    full-width principles strip, set off from the brief by a hairline (not a
    floating card), so it reads as part of the section. */

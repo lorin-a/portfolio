@@ -28,6 +28,28 @@
 .body { font-family: var(--font-body); font-weight: 700; }
 .use { font-family: var(--font-body); font-size: 0.7rem; color: var(--color-ink-light); }
 
+/* moodboard — a single compact, contained artifact. The image sits in a white
+   card with the source + reading stacked beneath it, so nothing floats in a
+   half-empty margin column (the old wide plate left a large upper-right void). */
+.board { margin: 0; max-width: 38rem; display: grid; gap: 0.85rem; }
+.boardArt {
+  position: relative; padding: clamp(0.7rem, 1.4vw, 1.1rem);
+  background: #fff; border-radius: 6px;
+  box-shadow: 0 22px 50px -30px rgba(26, 67, 77, 0.4), inset 0 0 0 1px rgba(26, 67, 77, 0.08);
+}
+.boardArt img { display: block; width: 100%; height: auto; border-radius: 3px; }
+.boardTab {
+  position: absolute; top: -0.7rem; left: 1rem; padding: 0.15rem 0.55rem; border-radius: 3px;
+  background: var(--bs-accent); color: #fff;
+  font-family: var(--font-body); font-weight: 600; font-size: 0.72rem; letter-spacing: 0.06em; text-transform: uppercase;
+}
+.boardCap { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.35rem 1rem; }
+.boardSrc { font-family: var(--font-body); font-size: 0.78rem; color: var(--color-ink-light); }
+.boardNote {
+  margin: 0; max-width: 42ch;
+  font-family: var(--font-body); font-style: italic; font-size: 0.86rem; line-height: 1.5; color: var(--color-ink-light);
+}
+
 @media (max-width: 760px) {
   .specs { grid-template-columns: 1fr; gap: clamp(1.4rem, 5vw, 2.2rem); }
   .swatches { grid-template-columns: repeat(5, 1fr); }

@@ -79,6 +79,29 @@ function Brief() {
               suggestions about balancing medical and emotional detail and offering a book at the end.
               There was a strong skeleton in theory, and it was up to us to turn it into something real.
             </Prose>
+
+            <div className={b.briefMeta}>
+              <SubBlock label="My role">
+                <Prose>
+                  Michael Juan and I shared the research, co-facilitating the interviews, synthesizing
+                  together, and co-presenting to the client. I led the UX and UI, the visual identity, the
+                  user flows, and the information architecture, and Michael worked on data-visualization
+                  concepts that didn’t end up in the final design.
+                </Prose>
+              </SubBlock>
+
+              <SubBlock label="Why I was close to it">
+                <Prose>
+                  I come from a matriarchal family of mostly mothers, and many of their births didn’t go to
+                  plan. One sister planned a natural home birth, labored 24 hours, and ended up in a hospital
+                  on medication, the opposite of everything she had pictured, and then she was a mother with
+                  no time to process any of it. Another nearly lost her life giving birth, and her son spent
+                  his first months in the NICU. When I started asking friends who had given birth, it
+                  surprised me that none of them had been offered any support with the experience afterward. I
+                  care a lot about mental health and trauma, so this was a need I already understood.
+                </Prose>
+              </SubBlock>
+            </div>
           </>
         }
       >
@@ -100,27 +123,6 @@ function Brief() {
           cap="Reviewing the work with our client, Sarah Burns (MSW), over video."
         />
       </Split>
-
-      <SubBlock label="My role">
-        <Prose>
-          Michael Juan and I shared the research, co-facilitating the interviews, synthesizing together,
-          and co-presenting to the client. I led the UX and UI, the visual identity, the user flows, and
-          the information architecture, and Michael worked on data-visualization concepts that didn’t
-          end up in the final design.
-        </Prose>
-      </SubBlock>
-
-      <SubBlock label="Why I was close to it">
-        <Prose>
-          I come from a matriarchal family of mostly mothers, and many of their births didn’t go to
-          plan. One sister planned a natural home birth, labored 24 hours, and ended up in a hospital on
-          medication, the opposite of everything she had pictured, and then she was a mother with no
-          time to process any of it. Another nearly lost her life giving birth, and her son spent his
-          first months in the NICU. When I started asking friends who had given birth, it surprised me
-          that none of them had been offered any support with the experience afterward. I care a lot
-          about mental health and trauma, so this was a need I already understood.
-        </Prose>
-      </SubBlock>
     </FieldSection>
   )
 }
@@ -270,13 +272,13 @@ function Outcome() {
               pitch was probably as much for us as for them, but it gave the concept a real starting
               point to keep developing from.
             </Prose>
+            <blockquote className={`${b.quote} ${sys.up}`}>
+              “I wish this could be real right now!”
+              <span className={b.quoteAttr}>Sarah Burns, MSW, LSW · client</span>
+            </blockquote>
           </>
         }
       >
-        <blockquote className={`${b.quote} ${sys.up}`}>
-          “I wish this could be real right now!”
-          <span className={b.quoteAttr}>Sarah Burns, MSW, LSW · client</span>
-        </blockquote>
         <Figure
           photo
           tag="final review"
