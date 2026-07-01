@@ -16,12 +16,11 @@ export default function SecBrand() {
     <FieldSection id="brand" num="07" crumb="visual design" when="Week 5" wide>
       <Lead>Calm, emotionally intelligent, and deliberately non-clinical.</Lead>
       <Prose>
-        I wanted the app to feel calm, emotionally intelligent, and approachable, a real break from
-        clinical experiences. Myana already used a gradient, so I built one here to tie the two together,
-        and I chose a lighter pink moving into a darker teal because it let me hold a couple of things at
-        once: a gender spectrum, and the emotional range of the day itself. Parents told me they’d
-        mostly reach for this in the small hours between feedings, so everything had to read gently to
-        someone exhausted in the middle of the night.
+        Myana already used a gradient, so I built one here to tie the two together, and chose a lighter
+        pink into a darker teal because it let me hold two things at once: a gender spectrum, and the
+        emotional range of the day itself. Parents told me they’d mostly reach for this in the small
+        hours between feedings, so everything had to read gently to someone exhausted in the middle of
+        the night.
       </Prose>
 
       <div className={`${styles.signature} ${sys.up}`}>

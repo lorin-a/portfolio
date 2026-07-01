@@ -21,14 +21,14 @@ const DEEPDIVES = [
     role: 'The core feature · all information-gathering, unified',
     kind: 'doc',
     layout: 'side',
-    prose: <>Parents told me they wanted to land directly on the main task, so that’s what the app does. Even if nothing else gets used, there’s still a timeline of whatever they or a loved one managed to add, and a note from the delivery room, a prescription, and a voice memo when your hands are full all land on it together, the moment they happen.</>,
+    prose: <>Parents told me they wanted to land on the main task, so that’s what the app does. Even if nothing else gets used, there’s a timeline of whatever they or a loved one managed to add, and a note from the delivery room, a prescription, and a voice memo when your hands are full all land on it together, the moment they happen.</>,
   },
   {
     name: 'Care Pod',
     role: 'The heart of the concept · the optional sharing and partner-participation features',
     kind: 'carepod',
     layout: 'side',
-    prose: <>The idea came out of a single interview. A parent told me that someone in her circle remembered a detail about her child’s birth that she had completely lost, and she wished she had thought to ask everyone around her to add what they remembered while it was fresh. That became Care Pod: one support person sends updates, photos, and voice memos out, loved ones reply with their own messages and voice notes, and all of it saves into the Birth Story, so the whole story of who was there and how loved that child was stays in one place.</>,
+    prose: <>The idea came out of a single interview. A parent told me someone in her circle remembered a detail about her child’s birth that she had lost, and wished she’d asked everyone around her to add what they remembered while it was fresh. That became Care Pod: one support person sends out updates, photos, and voice memos, loved ones reply with messages and voice notes, and all of it saves into the Birth Story, so the whole story of who was there and how loved that child was stays in one place.</>,
     context: {
       photo: birthPhoto('room', 1200),
       alt: 'A partner cradles a newborn while an older sibling leans in close to see.',
@@ -49,7 +49,7 @@ const DEEPDIVES = [
     role: 'Not required · my addition, for cognitive load',
     kind: 'search',
     layout: 'side',
-    prose: <>This is the one feature nobody asked for. I added it because so many parents described the same brain fog, and as the entries pile up I didn’t want anyone digging through the whole app to find one memory, so search is a swipe away from anywhere and filters by emotion, category, or keyword.</>,
+    prose: <>This is the one feature nobody asked for. As the entries pile up, I didn’t want anyone digging through the whole app to find one memory, so search is a swipe away from anywhere and filters by emotion, category, or keyword.</>,
     cap: 'Swipe it in from the edge; filter by feeling, category, or keyword.',
   },
   {
@@ -57,7 +57,7 @@ const DEEPDIVES = [
     role: 'The optional baby book',
     kind: 'book',
     layout: 'side',
-    prose: <>We took the book seriously the moment a parent told me she wouldn’t trust an app with something this precious unless she knew it couldn’t disappear. So the whole record can leave the app, as a printed book or a free PDF, curated from what’s already there and open to the people who were part of it. It also gives the experience a sense of closure.</>,
+    prose: <>We took the book seriously the moment a parent told me she wouldn’t trust an app with something this precious unless she knew it couldn’t disappear. So the whole record can leave the app, as a printed book or a free PDF, curated from what’s already there and open to the people who were part of it.</>,
     crit: {
       quote: 'It would be tragic to lose these moments if the app went away.',
       who: 'Parent tester',
@@ -105,10 +105,9 @@ export default function SecFeatures() {
     <FieldSection id="features" num="05" crumb="the product" when="Week 5" threshold={0.04} wide>
       <Lead>Birth is unpredictable, so the app is deliberately simple.</Lead>
       <Prose>
-        Because birth is so unpredictable, I wanted the app to be the opposite, simple enough to use at
-        any stage. It opens into documenting and reaches everything else in a tap or two. None of the
-        screens below are flat mockups, by the way: I rebuilt the wireframes as working prototypes for
-        this case study, so what you’re seeing is the real interaction.
+        It opens into documenting and reaches everything else in a tap or two. None of the screens below
+        are flat mockups: I rebuilt the wireframes as working prototypes, so what you’re seeing is the
+        real interaction.
       </Prose>
 
       <FeatureWall />
@@ -117,10 +116,10 @@ export default function SecFeatures() {
         <p className={`${sys.eyebrow} ${sys.up}`}>Prioritization</p>
         <Prose>
           The brief gave us three required areas, information gathering, meaning-making, and onboarding,
-          plus five optional features to choose from. I kept two of the optional ones, sharing and a
-          keepsake book, added one that wasn’t on the list, search, because every parent described the
-          same brain fog, and cut the other two, a symptom tracker and a birth-plan builder, because
-          they were exactly the kind of extra the research kept telling me to leave out.
+          plus five optional features. I kept two, sharing and a keepsake book, added one that wasn’t on
+          the list, search, because every parent described the same brain fog, and cut the other two, a
+          symptom tracker and a birth-plan builder, the kind of extra the research kept telling me to
+          leave out.
         </Prose>
       </div>
 
