@@ -151,7 +151,7 @@
   border-bottom: 1px solid var(--bs-rule);
   font-family: var(--font-body);
 }
-.fNum { font-size: 1.35rem; font-weight: 700; letter-spacing: 0.01em; color: var(--bs-accent); }
+.fNum { font-family: var(--font-heading); font-variation-settings: 'SOFT' 60, 'WONK' 0; font-size: clamp(2.4rem, 1.9rem + 1.8vw, 3.4rem); font-weight: 380; line-height: 0.9; letter-spacing: -0.01em; color: var(--bs-accent); }
 .fCrumb { font-size: 1.08rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-ink); }
 .fWhen { margin-left: auto; align-self: center; font-size: 0.8rem; letter-spacing: 0.04em; color: var(--color-ink-light); }
 
