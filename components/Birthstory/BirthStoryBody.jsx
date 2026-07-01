@@ -221,7 +221,7 @@ function Research() {
 
 function Voice() {
   return (
-    <FieldSection id="voice" num="06" crumb="ux writing" when="Week 5" wide>
+    <FieldSection id="voice" num="06" crumb="ux writing" when="Week 5" alt wide>
       <Split
         text={
           <>
@@ -276,7 +276,7 @@ function Voice() {
 
 function Outcome() {
   return (
-    <FieldSection id="outcome" num="08" crumb="outcome" when="Week 6" wide>
+    <FieldSection id="outcome" num="08" crumb="outcome" when="Week 6" alt wide>
       <Split
         text={
           <>

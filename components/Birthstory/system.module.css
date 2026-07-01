@@ -133,7 +133,7 @@
   background-image: radial-gradient(rgba(26, 67, 77, 0.05) 1px, transparent 1px);
   background-size: 24px 24px;
 }
-.fieldAlt { background-color: #EDEFEC; }
+.fieldAlt { background-color: #E7E8F4; } /* soft periwinkle (from the brand gradient) — alternates with the cool paper so the flow has hue rhythm, not grey-on-grey */
 .sheet { max-width: 60rem; margin: 0 auto; }
 /* wide sheet for split sections — lets the media column run to the right edge */
 .sheetWide { max-width: 92rem; }
