@@ -140,21 +140,16 @@
    as distinct, scannable columns rather than one inline list. */
 .askBand { display: grid; gap: clamp(1.2rem, 2.5vw, 1.9rem); }
 .askIntro { margin: 0; font-family: var(--font-body); font-size: clamp(1rem, 0.96rem + 0.3vw, 1.12rem); line-height: 1.55; color: var(--color-ink); text-wrap: pretty; }
-.askCols { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--bs-rule); }
-.askCol { display: grid; gap: 0.8rem; align-content: start; padding: clamp(1.3rem, 2.6vw, 1.9rem) clamp(1.4rem, 2.8vw, 2.2rem) clamp(0.6rem, 1.5vw, 1rem); border-right: 1px solid var(--bs-hairline); }
-.askCol:first-child { padding-left: 0; }
-.askCol:last-child { border-right: none; padding-right: 0; }
+.askCols { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(0.9rem, 2vw, 1.4rem); }
+.askCol { display: grid; gap: 0.85rem; align-content: start; padding: clamp(1.3rem, 2.6vw, 1.8rem); background: #fff; border: 1px solid var(--bs-hairline); border-radius: 12px; box-shadow: 0 14px 34px -28px rgba(26, 67, 77, 0.4); }
+.askCol .specLabel { padding-bottom: 0.7rem; border-bottom: 1px solid var(--bs-hairline); font-size: 0.78rem; }
 .stakesCol { gap: clamp(0.85rem, 1.8vw, 1.15rem); }
 .stakeRow { display: grid; grid-template-columns: auto 1fr; gap: 0.7rem; align-items: baseline; }
 .stakeFig { font-family: var(--font-heading); font-variation-settings: 'SOFT' 60, 'WONK' 0; font-weight: 400; font-size: clamp(1.7rem, 1.3rem + 1.4vw, 2.4rem); line-height: 0.9; letter-spacing: -0.02em; color: var(--bs-accent); }
 .stakeText { font-family: var(--font-body); font-size: clamp(0.86rem, 0.83rem + 0.18vw, 0.95rem); line-height: 1.35; color: var(--color-ink-light); text-wrap: pretty; }
 .stakeSource { margin: 0.35rem 0 0; font-family: var(--font-body); font-size: 0.78rem; line-height: 1.5; color: var(--color-ink-faint); text-wrap: pretty; }
 .stakeSource b { color: var(--bs-teal-soft); font-weight: 600; }
-@media (max-width: 820px) {
-  .askCols { grid-template-columns: 1fr; }
-  .askCol { border-right: none; border-bottom: 1px solid var(--bs-hairline); padding-left: 0; padding-right: 0; }
-  .askCol:last-child { border-bottom: none; padding-bottom: 0; }
-}
+@media (max-width: 820px) { .askCols { grid-template-columns: 1fr; } }
 .specLabel { margin: 0; font-family: var(--font-body); font-weight: 700; font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--bs-teal-soft); }
 .specList { margin: 0; padding: 0; list-style: none; display: grid; gap: 0.6rem; }
 .specList li { position: relative; padding-left: 1.15rem; font-family: var(--font-body); font-size: 0.95rem; line-height: 1.5; color: var(--color-ink-light); text-wrap: pretty; }
