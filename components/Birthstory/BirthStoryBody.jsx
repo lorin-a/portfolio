@@ -89,7 +89,6 @@ function Brief() {
       </Split>
 
       <div className={`${b.askBand} ${sys.up}`}>
-        <p className={b.askIntro}>The requirements were explicit.</p>
         <div className={b.askCols}>
           <div className={b.askCol}>
             <p className={b.specLabel}>Required</p>

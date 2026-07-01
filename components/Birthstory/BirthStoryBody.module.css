@@ -139,7 +139,6 @@
    thirds: Required · Provided · The stakes, ruled and divided so the three read
    as distinct, scannable columns rather than one inline list. */
 .askBand { display: grid; gap: clamp(1.2rem, 2.5vw, 1.9rem); }
-.askIntro { margin: 0; font-family: var(--font-body); font-size: clamp(1rem, 0.96rem + 0.3vw, 1.12rem); line-height: 1.55; color: var(--color-ink); text-wrap: pretty; }
 .askCols { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(0.9rem, 2vw, 1.4rem); }
 .askCol { display: grid; gap: 0.85rem; align-content: start; padding: clamp(1.3rem, 2.6vw, 1.8rem); background: #fff; border: 1px solid var(--bs-hairline); border-radius: 12px; box-shadow: 0 14px 34px -28px rgba(26, 67, 77, 0.4); }
 .askCol .specLabel { padding-bottom: 0.7rem; border-bottom: 1px solid var(--bs-hairline); font-size: 0.78rem; }
