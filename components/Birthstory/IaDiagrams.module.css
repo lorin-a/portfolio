@@ -23,7 +23,7 @@
   text-wrap: balance;
 }
 .nodePrimary { background: var(--bs-teal); color: #fff; }
-.nodeSub { background: var(--color-paper, #f1f2f0); color: var(--bs-teal); border: 1.5px solid var(--bs-rule); font-weight: 600; }
+.nodeSub { background: var(--bs-paper, #f3efe6); color: var(--bs-teal); border: 1.5px solid var(--bs-rule); font-weight: 600; }
 .nodeOutline { background: transparent; color: var(--color-ink-light); border: 1px solid var(--bs-rule); font-weight: 500; }
 
 /* ════ ia-final — five-tab tree ════ */
@@ -32,7 +32,7 @@
   display: grid; justify-items: center; gap: 0.55rem;
   padding: 0.9rem 0.7rem 1.1rem;
   border: 1px solid var(--bs-rule); border-radius: 16px;
-  background: rgba(241, 242, 240, 0.5);
+  background: rgba(var(--bs-paper-rgb, 243, 239, 230), 0.5);
 }
 .colCenter { background: rgba(26, 67, 77, 0.06); border-color: rgba(26, 67, 77, 0.28); }
 

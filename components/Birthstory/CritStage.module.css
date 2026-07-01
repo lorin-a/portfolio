@@ -18,7 +18,7 @@
 .pin {
   position: absolute; width: 15px; height: 15px; border-radius: 50%;
   transform: translate(-50%, -50%) scale(0.4); opacity: 0;
-  background: var(--bs-crit); box-shadow: 0 0 0 4px rgba(241, 242, 240, 0.92), 0 4px 12px -2px rgba(138, 79, 60, 0.55);
+  background: var(--bs-crit); box-shadow: 0 0 0 4px rgba(var(--bs-paper-rgb, 243, 239, 230), 0.92), 0 4px 12px -2px rgba(138, 79, 60, 0.55);
   transition: opacity 500ms var(--ease-out), transform 500ms var(--ease-bounce);
   z-index: 3;
 }

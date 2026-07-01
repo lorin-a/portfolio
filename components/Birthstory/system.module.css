@@ -25,7 +25,11 @@
   --bs-wide: 76rem;
   --bs-pad: clamp(1.5rem, 5vw, 6rem);
 
-  background: #F1F2F0; /* cool paper ground (replaces the warm cream) */
+  /* warm-neutral paper — tuned to complement the periwinkle alt as a warm/cool
+     pair (was a cold green-grey that read drab beside the lavender). One token. */
+  --bs-paper: #F3EFE6;
+  --bs-paper-rgb: 243, 239, 230;
+  background: var(--bs-paper);
   color: var(--color-ink);
 }
 
@@ -129,7 +133,7 @@
 .field {
   padding: clamp(4.5rem, 11vh, 9rem) var(--bs-pad);
   scroll-margin-top: 9.5rem; /* clear the fixed nav + sticky progress bar on jump */
-  background-color: #F1F2F0;
+  background-color: var(--bs-paper);
   background-image: radial-gradient(rgba(26, 67, 77, 0.05) 1px, transparent 1px);
   background-size: 24px 24px;
 }
