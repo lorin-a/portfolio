@@ -51,17 +51,8 @@
   background: #fff; border-radius: 14px;
   box-shadow: 0 1px 2px rgba(26, 67, 77, 0.06), 0 14px 30px -18px rgba(26, 67, 77, 0.22), inset 0 0 0 1px var(--bs-hairline);
 }
-.valueNum {
-  align-self: flex-start;
-  font-family: var(--font-heading); font-variation-settings: 'SOFT' 60, 'WONK' 0; font-weight: 380;
-  font-size: clamp(2.1rem, 1.6rem + 1.5vw, 2.9rem); line-height: 0.85; letter-spacing: -0.015em;
-  color: var(--bs-accent);
-}
-.valueName { font-family: var(--font-heading); font-variation-settings: 'SOFT' 60, 'WONK' 0; font-weight: 400; font-size: clamp(1.06rem, 0.98rem + 0.36vw, 1.28rem); line-height: 1.2; color: var(--color-ink); }
-.valueFor {
-  margin-top: auto; padding-top: 0.6rem; border-top: 1px solid var(--bs-hairline);
-  font-family: var(--font-body); font-size: 0.82rem; line-height: 1.45; color: var(--color-ink-light);
-}
+.valueCat { font-family: var(--font-body); font-weight: 700; font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--bs-teal-soft); }
+.valueName { font-family: var(--font-heading); font-variation-settings: 'SOFT' 60, 'WONK' 0; font-weight: 400; font-size: clamp(1.12rem, 1rem + 0.4vw, 1.35rem); line-height: 1.28; color: var(--color-ink); text-wrap: pretty; }
 @media (max-width: 760px) { .valuesList { grid-template-columns: 1fr 1fr; } }
 @media (max-width: 440px) { .valuesList { grid-template-columns: 1fr; } }
 
@@ -116,7 +107,7 @@
   margin-top: clamp(0.4rem, 1.5vw, 1rem);
   padding: clamp(1rem, 2.2vw, 1.3rem) clamp(1.1rem, 2.4vw, 1.4rem);
   background: #fff; border: 1px solid var(--bs-hairline); border-radius: 10px;
-  box-shadow: 0 14px 34px -26px rgba(26, 67, 77, 0.45);
+  box-shadow: 0 1px 2px rgba(26, 67, 77, 0.06), 0 14px 30px -18px rgba(26, 67, 77, 0.22);
   text-decoration: none; color: inherit;
   transition: box-shadow var(--motion-fast) var(--ease-out), transform var(--motion-fast) var(--ease-out);
 }

@@ -206,11 +206,15 @@ function Research() {
       <section className={`${b.values} ${sys.up}`}>
         <p className={b.valuesHead}>Our design values</p>
         <ol className={b.valuesList}>
-          {[['Intuitive & calming', 'collect usable data'], ['Easy to navigate', 'tell a compelling story'], ['Empathetic & trauma-informed', 'record the medical detail'], ['Therapeutic', 'prompt reflection']].map(([val, fn], i) => (
-            <li key={val}>
-              <span className={b.valueNum}>{String(i + 1).padStart(2, '0')}</span>
+          {[
+            ['Look & Feel', 'Calm, emotionally intelligent, non-clinical.'],
+            ['Function', 'Hold the medical record and the emotional story in one place.'],
+            ['Flow', 'Intuitive and easy to navigate.'],
+            ['Voice', 'Empathetic and trauma-informed.'],
+          ].map(([cat, val]) => (
+            <li key={cat}>
+              <span className={b.valueCat}>{cat}</span>
               <span className={b.valueName}>{val}</span>
-              <span className={b.valueFor}>{fn}</span>
             </li>
           ))}
         </ol>
