@@ -89,9 +89,9 @@ function Brief() {
       </Split>
 
       <div className={`${b.askBand} ${sys.up}`}>
-        <div className={b.spec}>
-          <p className={b.specIntro}>The requirements were explicit.</p>
-          <div className={b.specGroup}>
+        <p className={b.askIntro}>The requirements were explicit.</p>
+        <div className={b.askCols}>
+          <div className={b.askCol}>
             <p className={b.specLabel}>Required</p>
             <ul className={b.specList}>
               <li><b>Info-gathering.</b> The medical record: who was there, what happened, which interventions and medications, in what order.</li>
@@ -99,7 +99,7 @@ function Brief() {
               <li><b>Onboarding.</b> A way in for a first-time, sleep-deprived user.</li>
             </ul>
           </div>
-          <div className={b.specGroup}>
+          <div className={b.askCol}>
             <p className={b.specLabel}>Provided</p>
             <ul className={b.specList}>
               <li>The name, Birth Story, and the core concept.</li>
@@ -107,14 +107,14 @@ function Brief() {
               <li>Client sponsorship, to possibly inform future Myana versions.</li>
             </ul>
           </div>
+          <div className={`${b.askCol} ${b.stakesCol}`}>
+            <p className={b.specLabel}>The stakes</p>
+            <div className={b.stakeRow}><span className={b.stakeFig}>80%</span><span className={b.stakeText}>of U.S. maternal deaths are preventable</span></div>
+            <div className={b.stakeRow}><span className={b.stakeFig}>65%</span><span className={b.stakeText}>happen after delivery, not during it</span></div>
+            <div className={b.stakeRow}><span className={b.stakeFig}>3×</span><span className={b.stakeText}>the risk for Black mothers</span></div>
+            <p className={b.stakeSource}>The postpartum window is dangerous and under-supported. <b>Figures from the project brief.</b></p>
+          </div>
         </div>
-        <aside className={b.stakes}>
-          <p className={b.specLabel}>The stakes</p>
-          <div className={b.stakeRow}><span className={b.stakeFig}>80%</span><span className={b.stakeText}>of U.S. maternal deaths are preventable</span></div>
-          <div className={b.stakeRow}><span className={b.stakeFig}>65%</span><span className={b.stakeText}>happen after delivery, not during it</span></div>
-          <div className={b.stakeRow}><span className={b.stakeFig}>3×</span><span className={b.stakeText}>the risk for Black mothers</span></div>
-          <p className={b.stakeSource}>The postpartum window is dangerous and under-supported. <b>Figures from the project brief.</b></p>
-        </aside>
       </div>
 
       <Split
