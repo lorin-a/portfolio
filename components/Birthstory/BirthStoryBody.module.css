@@ -49,7 +49,7 @@
   display: flex; flex-direction: column; gap: 0.65rem;
   padding: clamp(1.2rem, 2vw, 1.6rem);
   background: #fff; border-radius: 14px;
-  box-shadow: 0 12px 28px -24px rgba(26, 67, 77, 0.4), inset 0 0 0 1px var(--bs-hairline);
+  box-shadow: 0 1px 2px rgba(26, 67, 77, 0.06), 0 14px 30px -18px rgba(26, 67, 77, 0.22), inset 0 0 0 1px var(--bs-hairline);
 }
 .valueNum {
   align-self: flex-start; min-width: 1.9rem; padding: 0.15rem 0.4rem; border-radius: 3px;
