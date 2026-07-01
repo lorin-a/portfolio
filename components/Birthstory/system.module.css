@@ -224,6 +224,22 @@
 .friction b { font-weight: 700; color: var(--bs-accent); font-style: normal; }
 .frictionTag { display: inline-block; margin-right: 0.6rem; font-family: var(--font-body); font-weight: 600; font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--bs-teal-soft); }
 
+/* the "my thinking" callout — the designer's voice-track. Teal, display face,
+   labeled; the mirror of the terracotta tester note. Recognizable on sight so a
+   reader always knows this is reasoning, not the objective record. */
+.insight {
+  margin: 0; max-width: 40rem; display: grid; gap: 0.5rem;
+  padding: clamp(1.1rem, 2.4vw, 1.5rem) clamp(1.3rem, 2.8vw, 1.7rem);
+  background: var(--bs-wash);
+  border: 1px solid var(--bs-hairline); border-left: 3px solid var(--bs-accent);
+  border-radius: 4px 14px 14px 4px;
+}
+.insightTag { margin: 0; font-family: var(--font-body); font-weight: 700; font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--bs-accent); }
+.insightText {
+  margin: 0; font-family: var(--font-heading); font-variation-settings: 'SOFT' 60, 'WONK' 0; font-weight: 400;
+  font-size: clamp(1.08rem, 1rem + 0.42vw, 1.34rem); line-height: 1.38; color: var(--color-ink); text-wrap: pretty;
+}
+
 /* standalone tester callout — the crit voice, no pin or leader */
 .testerNote {
   margin: 0; max-width: 32rem; display: grid; gap: 0.5rem;

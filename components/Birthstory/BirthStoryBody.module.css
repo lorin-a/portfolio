@@ -31,16 +31,6 @@
 }
 .briefTask b { color: var(--bs-accent); font-weight: 700; }
 
-/* brief meta — "My role" + "Why I was close to it" ride inside the Split's text
-   column now, set off from the narrative by a hairline so the short column fills
-   down the page beside the stacked photos instead of stranding a half-empty band
-   below the split. */
-.briefMeta {
-  display: grid; gap: clamp(1.5rem, 3vw, 2.2rem);
-  padding-top: clamp(1.6rem, 3vw, 2.2rem);
-  border-top: 1px solid var(--bs-rule);
-}
-
 /* our design values — the qualities each function had to embody. A flat,
    full-width principles strip, set off from the brief by a hairline (not a
    floating card), so it reads as part of the section. */
@@ -99,36 +89,77 @@
 /* close */
 .tools { margin: 0; font-family: var(--font-body); font-size: 0.72rem; letter-spacing: 0.04em; color: var(--color-ink-faint); }
 
-/* ── overview — the at-a-glance masthead, between hero and spine. Editorial,
-   not a corporate fact grid: a statement, a clean metadata band, a synopsis. ── */
+/* ── overview — a metadata-forward masthead. No synopsis paragraph: the detail
+   is folded into verbose, sectioned rows so a reader scans it in seconds and
+   gets to the project. Label column, value column, hairline-ruled rows. ── */
 .overview {
   padding: clamp(3.5rem, 8vh, 6rem) var(--bs-pad) clamp(3rem, 6vh, 4.5rem);
   background-color: #F1F2F0;
   background-image: radial-gradient(rgba(26, 67, 77, 0.05) 1px, transparent 1px);
   background-size: 24px 24px;
 }
-.overviewInner { max-width: 60rem; margin: 0 auto; display: grid; gap: clamp(1.8rem, 4vw, 2.8rem); }
-.overviewLede {
-  margin: 0; max-width: 40rem;
-  font-family: var(--font-heading); font-variation-settings: 'SOFT' 60, 'WONK' 0; font-weight: 400;
-  font-size: clamp(1.5rem, 1.18rem + 1.4vw, 2.25rem); line-height: 1.22; letter-spacing: -0.014em;
-  color: var(--color-ink); text-wrap: balance;
-}
+.overviewInner { max-width: 62rem; margin: 0 auto; }
 .overviewMeta {
   margin: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: clamp(1.3rem, 2.5vw, 2rem) clamp(2rem, 4vw, 3.5rem);
-  padding: clamp(1.6rem, 3vw, 2.2rem) 0;
+  gap: clamp(1.5rem, 3vw, 2.4rem) clamp(2rem, 4vw, 3.5rem);
+  padding: clamp(1.6rem, 3vw, 2.4rem) 0;
   border-top: 1px solid var(--bs-rule); border-bottom: 1px solid var(--bs-rule);
 }
-.metaItem { display: grid; gap: 0.4rem; align-content: start; }
-.metaItem dt { font-family: var(--font-body); font-weight: 600; font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--bs-teal-soft); }
-.metaItem dd { margin: 0; font-family: var(--font-body); font-size: 0.93rem; line-height: 1.5; color: var(--color-ink); }
-.overviewSummary {
-  margin: 0; max-width: 46rem;
-  font-family: var(--font-body); font-size: clamp(1rem, 0.96rem + 0.3vw, 1.12rem);
-  line-height: 1.65; color: var(--color-ink-light); text-wrap: pretty;
-}
+.metaItem { display: grid; gap: 0.45rem; align-content: start; }
+.metaItem dt { font-family: var(--font-body); font-weight: 700; font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--bs-teal-soft); }
+.metaItem dd { margin: 0; font-family: var(--font-body); font-size: clamp(0.92rem, 0.88rem + 0.25vw, 1.02rem); line-height: 1.5; color: var(--color-ink); }
 @media (max-width: 760px) { .overviewMeta { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 460px) { .overviewMeta { grid-template-columns: 1fr; } }
+
+/* ── Myana reference — a cited link to the real, shipping app Birth Story
+   companions. Real facts + a real App Store link; reproduces none of Myana's
+   proprietary UI. Also anchors the short intro against the tall opening photo. ── */
+.myanaRef {
+  display: grid; gap: 0.28rem; max-width: 24rem;
+  margin-top: clamp(0.4rem, 1.5vw, 1rem);
+  padding: clamp(1rem, 2.2vw, 1.3rem) clamp(1.1rem, 2.4vw, 1.4rem);
+  background: #fff; border: 1px solid var(--bs-hairline); border-radius: 10px;
+  box-shadow: 0 14px 34px -26px rgba(26, 67, 77, 0.45);
+  text-decoration: none; color: inherit;
+  transition: box-shadow var(--motion-fast) var(--ease-out), transform var(--motion-fast) var(--ease-out);
+}
+@media (hover: hover) { .myanaRef:hover { transform: translateY(-2px); box-shadow: 0 22px 42px -24px rgba(26, 67, 77, 0.5); } }
+.myanaRef:focus-visible { outline: 2px solid var(--bs-accent); outline-offset: 3px; }
+.myanaTag { font-family: var(--font-body); font-weight: 700; font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--bs-teal-soft); }
+.myanaName { font-family: var(--font-heading); font-variation-settings: 'SOFT' 60, 'WONK' 0; font-weight: 400; font-size: clamp(1.2rem, 1.05rem + 0.6vw, 1.5rem); line-height: 1.1; color: var(--bs-accent); }
+.myanaDesc { font-family: var(--font-body); font-size: 0.85rem; line-height: 1.45; color: var(--color-ink-light); }
+.myanaLink { margin-top: 0.35rem; font-family: var(--font-body); font-weight: 600; font-size: 0.8rem; letter-spacing: 0.01em; color: var(--bs-accent); }
+
+/* ── the ask — the brief laid out explicitly: required areas, then givens, as
+   labeled bullet groups (objective record, structured, not prose). ── */
+.spec { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(1.4rem, 3.5vw, 3rem) clamp(2.5rem, 5vw, 5rem); align-items: start; max-width: 64rem; }
+.specIntro { grid-column: 1 / -1; margin: 0; font-family: var(--font-body); font-size: clamp(1rem, 0.96rem + 0.3vw, 1.12rem); line-height: 1.55; color: var(--color-ink); }
+.specGroup { display: grid; gap: 0.65rem; align-content: start; }
+@media (max-width: 720px) { .spec { grid-template-columns: 1fr; } }
+.specLabel { margin: 0; font-family: var(--font-body); font-weight: 700; font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--bs-teal-soft); }
+.specList { margin: 0; padding: 0; list-style: none; display: grid; gap: 0.6rem; }
+.specList li { position: relative; padding-left: 1.15rem; font-family: var(--font-body); font-size: 0.95rem; line-height: 1.5; color: var(--color-ink-light); }
+.specList li::before { content: ''; position: absolute; left: 0; top: 0.6em; width: 0.42rem; height: 0.42rem; border-radius: 1px; background: var(--bs-teal-soft); }
+.specList b { font-weight: 700; color: var(--color-ink); }
+
+/* ── stats — big figures, full width, early. The stakes of the postpartum
+   window, from the brief. ── */
+.statBand {
+  display: grid; grid-template-columns: repeat(3, auto); justify-content: start;
+  gap: 0.5rem clamp(2rem, 4vw, 3.4rem);
+  padding: clamp(1.5rem, 3vw, 2.3rem) 0;
+  border-top: 1px solid var(--bs-rule); border-bottom: 1px solid var(--bs-rule);
+  align-items: start;
+}
+.statItem { display: grid; gap: 0.35rem; align-content: start; }
+.statFig {
+  font-family: var(--font-heading); font-variation-settings: 'SOFT' 60, 'WONK' 0; font-weight: 400;
+  font-size: clamp(2.2rem, 1.7rem + 2.2vw, 3.4rem); line-height: 0.9; letter-spacing: -0.02em; color: var(--bs-accent);
+}
+.statText { font-family: var(--font-body); font-size: clamp(0.85rem, 0.82rem + 0.18vw, 0.95rem); line-height: 1.38; color: var(--color-ink-light); max-width: 15ch; }
+.statSource { grid-column: 1 / -1; margin: 0.9rem 0 0; font-family: var(--font-body); font-size: 0.8rem; line-height: 1.45; color: var(--color-ink-faint); }
+.statSource b { color: var(--bs-teal-soft); font-weight: 600; }
+@media (max-width: 640px) { .statBand { grid-template-columns: 1fr; gap: 1.3rem; } }
 @media (max-width: 460px) { .overviewMeta { grid-template-columns: 1fr; } }
 
 /* two before/after pairs stacked in the voice section */

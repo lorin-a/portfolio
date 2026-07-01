@@ -26,32 +26,21 @@ const SPINE = [
    Sits between the hero and the spine; the spine still tracks the 9 process beats. */
 function Overview() {
   const meta = [
-    ['Role', 'UX/UI lead · information architecture · visual identity · UX writing'],
-    ['Research', 'Co-led with Michael Juan'],
-    ['Context', '6-week graduate studio · Carnegie Mellon'],
-    ['Client', 'Sarah Burns (MSW) · Tamar Krishnamurti (PhD) · Myana'],
-    ['Methods', '7 parent interviews · 3 rounds of wireframe testing'],
-    ['Outcome', 'Strong client validation; sponsored to possibly inform future Myana iterations; no commitment to build'],
+    ['Role', 'UX/UI lead: research (co-led with Michael Juan), information architecture, visual identity, UX writing'],
+    ['Context', '6-week graduate studio, Carnegie Mellon'],
+    ['Client', 'Myana. Researchers Sarah Burns (MSW) and Tamar Krishnamurti (PhD), from CONVERGE at the University of Pittsburgh'],
+    ['Methods', '7 parent interviews, 3 rounds of wireframe testing'],
+    ['Outcome', 'Strong client validation; sponsored to possibly inform future Myana versions'],
+    ['Build', 'Concept. Wireframes in Figma, prototypes here built with Claude Code'],
   ]
   return (
     <section className={b.overview}>
       <div className={b.overviewInner}>
-        <p className={b.overviewLede}>
-          Birth Story is a concept for a companion app to Myana, a postpartum support platform.
-          It helps parents document, reflect on, and make sense of giving birth: the part that goes
-          unsupported once a newborn arrives.
-        </p>
         <dl className={b.overviewMeta}>
           {meta.map(([k, v]) => (
             <div key={k} className={b.metaItem}><dt>{k}</dt><dd>{v}</dd></div>
           ))}
         </dl>
-        <p className={b.overviewSummary}>
-          Working from an explicit brief, my partner and I interviewed parents, reframed the project
-          from a feature-heavy logging tool into a simple, emotionally intelligent space, and narrowed
-          three rounds of design to four core features. The client validated the direction. The app
-          remains a concept: I designed it and built the prototypes shown here with AI assistance.
-        </p>
       </div>
     </section>
   )
@@ -64,41 +53,77 @@ function Brief() {
       <Split
         text={
           <>
-            <Lead>The brief was strong. Our job was to make it real for a parent.</Lead>
+            <Lead>A companion app for the part Myana didn’t cover: the birth itself.</Lead>
             <Prose>
-              Myana is a pregnancy and postpartum app, and the parents who use it kept naming the same
-              gap: giving birth itself. It gets lost the moment the newborn arrives, so we were
-              designing for the part that usually goes unsupported.
+              Myana already supports parents through pregnancy and postpartum. Its researchers saw that
+              the birth itself still went undocumented and unprocessed, and brought that gap to our studio
+              to conceptualize.
             </Prose>
-            <Prose>
-              We were given a very explicit prompt. The name was already there, Birth Story, and the
-              core idea came with it: document, reflect, and make sense of the experience, with
-              suggestions about balancing medical and emotional detail and offering a book at the end.
-            </Prose>
-
-            <div className={b.briefMeta}>
-              <SubBlock label="My role">
-                <Prose>
-                  Michael Juan and I shared the research, co-facilitating interviews, synthesizing, and
-                  co-presenting to the client. I led UX and UI, visual identity, user flows, and information
-                  architecture, and Michael worked on data-visualization concepts that didn’t end up in the
-                  final design.
-                </Prose>
-              </SubBlock>
-
-              <SubBlock label="Why I was close to it">
-                <Prose>
-                  I come from a matriarchal family of mostly mothers, and many of their births didn’t go to
-                  plan. One sister planned a natural home birth, labored 24 hours, and ended up in a hospital
-                  on medication, the opposite of everything she had pictured, then a mother with no time to
-                  process any of it. Another nearly lost her life giving birth, and her son spent his first
-                  months in the NICU. When I asked friends who had given birth, it surprised me that none had
-                  been offered support afterward. I care about mental health and trauma, so this was a need I
-                  already understood.
-                </Prose>
-              </SubBlock>
-            </div>
+            <a
+              className={`${b.myanaRef} ${sys.up}`}
+              href="https://apps.apple.com/us/app/myana-pa/id6752866138"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <span className={b.myanaTag}>The app it companions</span>
+              <span className={b.myanaName}>Myana</span>
+              <span className={b.myanaDesc}>Postpartum and parenting support from the University of Pittsburgh.</span>
+              <span className={b.myanaLink}>View on the App Store ↗</span>
+            </a>
           </>
+        }
+      >
+        <Figure
+          photo
+          tag="the review"
+          ratio="3 / 2"
+          focus="center 54%"
+          src={cloudImg('IMG_3010', 1600)}
+          alt="A studio review on a projector screen: our client, Sarah Burns, joins by video on the left while the room of students faces the work on the right."
+          cap="Reviewing the work with our client, Sarah Burns (MSW), over video."
+        />
+      </Split>
+
+      <div className={`${b.statBand} ${sys.up}`}>
+        <div className={b.statItem}><span className={b.statFig}>80%</span><span className={b.statText}>of U.S. maternal deaths are preventable</span></div>
+        <div className={b.statItem}><span className={b.statFig}>65%</span><span className={b.statText}>happen after delivery, not during it</span></div>
+        <div className={b.statItem}><span className={b.statFig}>3×</span><span className={b.statText}>the risk for Black mothers</span></div>
+        <p className={b.statSource}>The postpartum window is dangerous and under-supported. <b>Figures from the project brief.</b></p>
+      </div>
+
+      <div className={`${b.spec} ${sys.up}`}>
+        <p className={b.specIntro}>The requirements were explicit.</p>
+        <div className={b.specGroup}>
+          <p className={b.specLabel}>Required</p>
+          <ul className={b.specList}>
+            <li><b>Info-gathering.</b> The medical record: who was there, what happened, which interventions and medications, in what order.</li>
+            <li><b>Meaning-making.</b> Helping parents process a birth that is often traumatic, sometimes joyful, and rarely goes to plan.</li>
+            <li><b>Onboarding.</b> A way in for a first-time, sleep-deprived user.</li>
+          </ul>
+        </div>
+        <div className={b.specGroup}>
+          <p className={b.specLabel}>Given</p>
+          <ul className={b.specList}>
+            <li>The name, Birth Story, and the core concept.</li>
+            <li>Five optional features to choose from.</li>
+            <li>Client sponsorship, to possibly inform future Myana versions.</li>
+          </ul>
+        </div>
+      </div>
+
+      <Split
+        text={
+          <SubBlock label="My connection">
+            <Prose>
+              I had a personal stake in this. I come from a matriarchal family, and a lot of those births
+              didn’t go how the women had hoped. One of my sisters planned a home birth, labored for 24
+              hours, and ended up in a hospital on medication, a mother before she’d had a moment to
+              process any of it. Another nearly died delivering, and spent her son’s first months in the
+              NICU. When I started asking friends about their own births, what stayed with me was that
+              none had been offered any support afterward. I’d already worked on mental health and trauma,
+              so I recognized the need right away.
+            </Prose>
+          </SubBlock>
         }
       >
         <Figure
@@ -108,15 +133,6 @@ function Brief() {
           byline={birth.byline}
           alt="An exhausted parent rests cheek to cheek with a swaddled newborn in the hours just after birth, in black and white."
           cap="An exhausted parent and newborn in the hours after birth."
-        />
-        <Figure
-          photo
-          tag="the review"
-          ratio="3 / 2"
-          focus="center 54%"
-          src={cloudImg('IMG_3010', 1600)}
-          alt="A studio review on a projector screen: our client, Sarah Burns, joins by video on the left while the room of students faces the work on the right."
-          cap="Reviewing the work with our client, Sarah Burns (MSW), over video."
         />
       </Split>
     </FieldSection>

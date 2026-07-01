@@ -115,6 +115,20 @@ export function SubBlock({ label, children }) {
   )
 }
 
+/* the designer's-thinking callout — the recurring, recognizable "my thinking"
+   voice-track, set apart from the objective record. Teal (the product), display
+   face, labeled, so a reader always knows this is Lorin's reasoning, not the
+   brief or the process. Pairs with TesterNote (terracotta) as the two margin
+   voices. */
+export function Insight({ children, label = 'My thinking' }) {
+  return (
+    <aside className={`${s.insight} ${s.up}`}>
+      <span className={s.insightTag}>{label}</span>
+      <p className={s.insightText}>{children}</p>
+    </aside>
+  )
+}
+
 /* a standalone "a tester said" callout — the crit card without the pinned
    artifact or the leader line, for places the quote stands on its own. */
 export function TesterNote({ quote, who = 'Parent tester' }) {
