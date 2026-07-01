@@ -25,12 +25,16 @@
   --bs-wide: 76rem;
   --bs-pad: clamp(1.5rem, 5vw, 6rem);
 
-  /* quiet light-neutral ground for the whole study — near-white, hue-neutral so
-     nothing competes with the content. Color is intentional: carried by the teal
-     accents, the app screens, the photos, and reserved colored moments — never the
-     section grounds. (Green-grey / warm greige / blush-periwinkle all tried and cut.) */
-  --bs-paper: #F8F8F7;
-  --bs-paper-rgb: 248, 248, 247;
+  /* MONOCHROMATIC TEAL LADDER — the ground is the palest rung of the teal family,
+     not a neutral stranger, so the teal app screens + teal accents sit anchored in
+     a teal world instead of floating on white. The ladder, all one hue (~H195):
+       ground  var(--bs-paper) #E9F0EF   → palest
+       panel   #fff (white cards)         → half-step up, teal-shadowed
+       mid     var(--bs-teal-soft) #466F7B → slate, secondary labels/eyebrows
+       accent  var(--bs-teal) #1A434D      → deep, the strongest mark
+     Mid-contrast steps, never white→bold. */
+  --bs-paper: #E9F0EF;
+  --bs-paper-rgb: 233, 240, 239;
   background: var(--bs-paper);
   color: var(--color-ink);
 }
