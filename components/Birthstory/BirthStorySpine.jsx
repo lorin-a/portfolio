@@ -45,7 +45,7 @@ export default function BirthStorySpine({ sections }) {
   const pct = activeIndex >= 0 ? ((activeIndex + 1) / sections.length) * 100 : 0
 
   return (
-    <nav className={styles.spine} aria-label="Case study sections">
+    <nav className={`${styles.spine} ${active ? '' : styles.hidden}`} aria-label="Case study sections" aria-hidden={active ? undefined : 'true'}>
       <ol className={styles.list}>
         {sections.map((s, i) => (
           <li key={s.id} className={styles.item}>

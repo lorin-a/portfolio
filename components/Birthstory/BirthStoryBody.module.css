@@ -94,16 +94,12 @@
    gets to the project. Label column, value column, hairline-ruled rows. ── */
 .overview {
   padding: clamp(3.5rem, 8vh, 6rem) var(--bs-pad) clamp(3rem, 6vh, 4.5rem);
-  background-color: #F1F2F0;
-  background-image: radial-gradient(rgba(26, 67, 77, 0.05) 1px, transparent 1px);
-  background-size: 24px 24px;
+  background-color: #ffffff; /* clean solid masthead panel, set apart from the dotted paper body */
 }
 .overviewInner { max-width: 92rem; margin: 0 auto; }
 .overviewMeta {
   margin: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: clamp(1.5rem, 3vw, 2.4rem) clamp(2rem, 4vw, 3.5rem);
-  padding: clamp(1.6rem, 3vw, 2.4rem) 0;
-  border-top: 1px solid var(--bs-rule); border-bottom: 1px solid var(--bs-rule);
+  gap: clamp(1.6rem, 3vw, 2.6rem) clamp(2rem, 4vw, 3.5rem);
 }
 .metaItem { display: grid; gap: 0.45rem; align-content: start; }
 .metaItem dt { font-family: var(--font-body); font-weight: 700; font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--bs-teal-soft); }
