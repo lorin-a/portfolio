@@ -94,7 +94,7 @@
 .draftLine {
   margin: 0; font-family: var(--font-heading); font-style: italic; font-weight: 360;
   font-size: clamp(1.15rem, 1rem + 0.6vw, 1.42rem); line-height: 1.28; color: var(--color-ink-light);
-  text-decoration: line-through; text-decoration-color: var(--bs-crit);
+  text-decoration: line-through; text-decoration-color: var(--bs-crit-soft);
 }
 .rewriteLine {
   margin: 0; font-family: var(--font-heading); font-style: italic; font-weight: 360;

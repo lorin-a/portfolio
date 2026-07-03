@@ -17,13 +17,13 @@
   --bs-peri: #B1C1F4;
   --bs-lav: #E6E5FD;
   --bs-accent: var(--bs-teal);
-  /* crit voice — tester feedback in a deep blush PINK (the brand gradient's
-     pole, #DBADAD's dark sibling — decisively not rust/orange), so the two
-     margin voices are the gradient's two poles: teal = the designer's
-     thinking, blush = the testers'. 5.5:1 on white. */
-  --bs-crit: #9E5266;
-  --bs-crit-soft: #B47283;  /* pin ring + leader */
-  --bs-crit-line: rgba(158, 82, 102, 0.28);
+  /* crit voice — the tester chips wear the LITERAL brand blush (#DBADAD, the
+     palette swatch) with teal text (5.4:1), so the voice is unmistakably of
+     the palette. Every darkened derivative kept reading rust/plum. Deep blush
+     carries only decorative lines (leaders, strikes, rings). */
+  --bs-crit: #DBADAD;
+  --bs-crit-soft: #C9969B;  /* pin pulse + leader + strikethrough */
+  --bs-crit-line: rgba(190, 135, 141, 0.5);
   --bs-crit-wash: rgba(219, 173, 173, 0.12);
   --bs-wide: 76rem;
   --bs-pad: clamp(1.5rem, 5vw, 6rem);
@@ -275,8 +275,10 @@
   font-size: clamp(1.08rem, 1rem + 0.42vw, 1.34rem); line-height: 1.38; color: var(--color-ink); text-wrap: pretty;
 }
 /* narrow: a margin-note proportion for when the card sits alone in a wide
-   column — a 40rem two-liner there reads as a banner, not a note */
-.insightNarrow { max-width: 26rem; }
+   column — a 40rem two-liner there reads as a banner, not a note. Anchored
+   to the grid's right edge so the emptiness reads as margin, not void. */
+.insightNarrow { max-width: 26rem; justify-self: end; }
+@media (max-width: 860px) { .insightNarrow { justify-self: start; } }
 
 /* standalone tester callout — the crit voice, no pin or leader */
 .testerNote {
@@ -288,14 +290,14 @@
 .testerKicker {
   position: absolute; top: -0.7rem; left: 1rem;
   padding: 0.18rem 0.6rem; border-radius: 3px;
-  background: var(--bs-crit); color: #fff;
-  font-family: var(--font-body); font-weight: 600; font-size: 0.72rem; letter-spacing: 0.06em; text-transform: uppercase;
+  background: var(--bs-crit); color: var(--bs-teal);
+  font-family: var(--font-body); font-weight: 700; font-size: 0.72rem; letter-spacing: 0.06em; text-transform: uppercase;
 }
 .testerQuote {
   margin: 0; font-family: var(--font-heading); font-variation-settings: 'SOFT' 60, 'WONK' 0; font-style: italic; font-weight: 400;
   font-size: clamp(1.05rem, 0.95rem + 0.45vw, 1.35rem); line-height: 1.33; color: var(--color-ink); text-wrap: pretty;
 }
-.testerWho { margin: 0; font-family: var(--font-body); font-size: 0.72rem; letter-spacing: 0.06em; color: var(--bs-crit); }
+.testerWho { margin: 0; font-family: var(--font-body); font-size: 0.72rem; letter-spacing: 0.06em; color: var(--bs-teal-soft); }
 
 @media (max-width: 720px) {
   .plate, .plateNarrow { grid-template-columns: 1fr; transform: none; }

@@ -142,6 +142,13 @@ export default function SecFeatures() {
       </div>
 
       <div className={styles.prioritize}>
+        <Prose>
+          The brief gave us three required areas, information gathering, meaning-making, and onboarding,
+          plus five optional features. I kept two, sharing and a keepsake book, added one that wasn’t on
+          the list, search, because every parent described the same brain fog, and cut the other two, a
+          symptom tracker and a birth-plan builder, the kind of extra the research kept telling me to
+          leave out.
+        </Prose>
         <div className={`${styles.prioCard} ${sys.up}`}>
           <p className={styles.prioHead}>Prioritization</p>
           <div className={styles.prioCells}>
@@ -159,13 +166,6 @@ export default function SecFeatures() {
             </div>
           </div>
         </div>
-        <Prose>
-          The brief gave us three required areas, information gathering, meaning-making, and onboarding,
-          plus five optional features. I kept two, sharing and a keepsake book, added one that wasn’t on
-          the list, search, because every parent described the same brain fog, and cut the other two, a
-          symptom tracker and a birth-plan builder, the kind of extra the research kept telling me to
-          leave out.
-        </Prose>
       </div>
 
       {DEEPDIVES.map((f) => (

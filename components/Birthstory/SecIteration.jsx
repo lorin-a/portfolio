@@ -60,7 +60,7 @@ function Round({ label, change, quote, who, crit, shots }) {
       }
     >
       {crit ? (
-        <CritStage pin={crit.pin} quote={crit.quote} who={crit.who} side="right" cap={shots[0][1]}>
+        <CritStage pin={crit.pin} quote={crit.quote} who={crit.who} side="right" align="start" cap={shots[0][1]}>
           <span className={styles.critDevice}>
             <span className={sys.phone} style={{ width: '100%' }}>
               <span className={sys.phoneNotch} aria-hidden="true" />
