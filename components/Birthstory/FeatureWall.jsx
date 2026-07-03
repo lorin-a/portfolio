@@ -33,7 +33,7 @@ const WAYS = [
   },
   {
     tab: 'Search',
-    src: '/images/birthstory/evolution/screens/v3-7.png',
+    src: '/images/birthstory/bs-search.png', // Gradient "Search2" 1:51807, 2× export (replaced the 239px v3-7 wireframe)
     alt: 'The Search screen: a search bar above emotion and category tags and a photo grid.',
     desc: 'Find any moment by keyword, media type, or emotion tag.',
   },
