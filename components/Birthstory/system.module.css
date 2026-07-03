@@ -26,6 +26,11 @@
   --bs-crit-soft: #8089C2;  /* pin + pulse + leader + strikethrough */
   --bs-crit-line: rgba(128, 137, 194, 0.55);
   --bs-crit-wash: rgba(177, 193, 244, 0.14);
+  /* her thinking — lilac chip (+ dusk ring), so every chip color maps to a
+     voice: teal = the record, lilac = the designer's thinking, peri = the
+     testers. Teal text on lilac: 8.6:1. */
+  --bs-think: #E6E5FD;
+  --bs-think-line: rgba(157, 163, 191, 0.55);
   --bs-wide: 76rem;
   --bs-pad: clamp(1.5rem, 5vw, 6rem);
 
@@ -238,21 +243,21 @@
 .shot { display: grid; gap: 0.5rem; justify-items: start; }
 .shotCap { font-family: var(--font-body); font-size: 0.78rem; line-height: 1.4; color: var(--color-ink-light); max-width: 24ch; }
 
-/* friction — admits the open question. Same chip-card DNA as the voices,
-   chip in the quieter teal so it reads as the author's aside. */
+/* friction — admits the open question. Her voice too, so it wears the
+   thinking lilac. */
 .friction {
   position: relative; margin: 0.7rem 0 0; max-width: 40rem;
   padding: clamp(1.2rem, 2.4vw, 1.5rem) clamp(1.3rem, 2.8vw, 1.6rem) clamp(1.05rem, 2.2vw, 1.3rem);
   background: #fff; border-radius: 12px;
-  box-shadow: 0 1px 2px rgba(26, 67, 77, 0.06), 0 14px 30px -18px rgba(26, 67, 77, 0.22), 0 0 0 1px var(--bs-hairline);
+  box-shadow: 0 1px 2px rgba(157, 163, 191, 0.08), 0 14px 30px -18px rgba(157, 163, 191, 0.35), 0 0 0 1px var(--bs-think-line);
   font-family: var(--font-body); font-size: 0.95rem; line-height: 1.6; color: var(--color-ink-light);
 }
 .friction b { font-weight: 700; color: var(--bs-accent); font-style: normal; }
 .frictionTag {
   position: absolute; top: -0.7rem; left: 1rem;
   padding: 0.18rem 0.6rem; border-radius: 3px;
-  background: var(--bs-teal-soft); color: #fff;
-  font-family: var(--font-body); font-weight: 600; font-size: 0.72rem; letter-spacing: 0.06em; text-transform: uppercase;
+  background: var(--bs-think); color: var(--bs-teal);
+  font-family: var(--font-body); font-weight: 700; font-size: 0.72rem; letter-spacing: 0.06em; text-transform: uppercase;
 }
 
 /* ── the two margin voices, on the study's one card DNA: a white grounded card
@@ -263,13 +268,13 @@
   position: relative; margin: 0.7rem 0 0; max-width: 40rem; display: grid; gap: 0.55rem;
   padding: clamp(1.3rem, 2.6vw, 1.7rem) clamp(1.3rem, 2.8vw, 1.7rem) clamp(1.1rem, 2.4vw, 1.5rem);
   background: #fff; border-radius: 12px;
-  box-shadow: 0 1px 2px rgba(26, 67, 77, 0.06), 0 14px 30px -18px rgba(26, 67, 77, 0.22), 0 0 0 1px var(--bs-hairline);
+  box-shadow: 0 1px 2px rgba(157, 163, 191, 0.08), 0 14px 30px -18px rgba(157, 163, 191, 0.35), 0 0 0 1px var(--bs-think-line);
 }
 .insightTag {
   position: absolute; top: -0.7rem; left: 1rem;
   padding: 0.18rem 0.6rem; border-radius: 3px;
-  background: var(--bs-accent); color: #fff;
-  font-family: var(--font-body); font-weight: 600; font-size: 0.72rem; letter-spacing: 0.06em; text-transform: uppercase;
+  background: var(--bs-think); color: var(--bs-teal);
+  font-family: var(--font-body); font-weight: 700; font-size: 0.72rem; letter-spacing: 0.06em; text-transform: uppercase;
 }
 .insightText {
   margin: 0; font-family: var(--font-heading); font-variation-settings: 'SOFT' 60, 'WONK' 0; font-weight: 400;
