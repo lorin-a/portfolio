@@ -135,7 +135,7 @@
 
 .field {
   padding: clamp(4.5rem, 11vh, 9rem) var(--bs-pad);
-  scroll-margin-top: 9.5rem; /* clear the fixed nav + sticky progress bar on jump */
+  scroll-margin-top: 9.75rem; /* clear the fixed nav + sticky progress bar on jump */
   background-color: var(--bs-paper);
   background-image: radial-gradient(rgba(26, 67, 77, 0.05) 1px, transparent 1px);
   background-size: 24px 24px;

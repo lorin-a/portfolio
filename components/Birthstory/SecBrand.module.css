@@ -2,12 +2,13 @@
 
 /* the signature — the identity in one object, a full-width gradient band */
 .signature {
-  display: grid; align-content: end; gap: 0.45rem;
+  display: grid; align-content: end; justify-items: end; gap: 0.45rem;
   min-height: clamp(170px, 22vw, 232px);
   padding: clamp(1.6rem, 3.5vw, 2.8rem);
   border-radius: 14px;
   background: linear-gradient(106deg, #E7C3C8 0%, #B9C2EC 48%, #1A434D 100%);
   box-shadow: 0 28px 60px -38px rgba(26, 67, 77, 0.6);
+  text-align: right; /* the words live on the teal end — white on the blush end fails contrast */
 }
 .gWord { font-family: var(--font-heading); font-variation-settings: 'SOFT' 60, 'WONK' 0; font-weight: 400; font-size: clamp(1.9rem, 1.4rem + 1.8vw, 2.9rem); line-height: 1; color: #fff; }
 .gNote { font-family: var(--font-body); font-size: 0.72rem; letter-spacing: 0.02em; line-height: 1.4; color: rgba(255, 255, 255, 0.9); }

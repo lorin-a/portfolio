@@ -17,14 +17,17 @@
 
 .list {
   list-style: none; margin: 0 auto; max-width: 92rem;
-  padding: 0.8rem 0;
+  padding: 0.3rem 0;
   display: flex; align-items: center; justify-content: space-between; gap: 0.4rem;
 }
 .item { margin: 0; min-width: 0; }
 
+/* padding-block carries the node to the 44px touch floor; the list padding
+   above shrinks to match so the bar's total height stays inside the sections'
+   9.5rem scroll-margin */
 .node {
   display: inline-flex; align-items: baseline; gap: 0.45rem;
-  padding: 0.25rem 0; white-space: nowrap;
+  padding: 0.6rem 0.2rem; min-height: 44px; white-space: nowrap;
   border: 0; background: transparent; cursor: pointer;
 }
 .num {
@@ -58,6 +61,7 @@
   .label { display: none; }
   .num { font-size: 0.74rem; }
   .list { gap: 0.2rem; }
+  .node { padding-inline: 0.55rem; } /* number-only nodes still need a 44px-wide thumb target */
 }
 @media (prefers-reduced-motion: reduce) {
   .spine, .num, .label, .fill { transition: none; }
