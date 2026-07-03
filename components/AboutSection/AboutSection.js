@@ -590,6 +590,15 @@ export default function AboutSection() {
                   LinkedIn
                 </a>
                 <span className={styles.bylineLinkSep} aria-hidden="true">·</span>
+                <a
+                  className={styles.bylineLink}
+                  href="https://github.com/lorin-a"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  GitHub
+                </a>
+                <span className={styles.bylineLinkSep} aria-hidden="true">·</span>
                 {/* TODO(Lorin): once your résumé is on Drive, swap this span for
                    an <a href="DRIVE_URL" target="_blank" rel="noopener noreferrer">
                    className={styles.bylineLink}> — and wire the matching disabled
