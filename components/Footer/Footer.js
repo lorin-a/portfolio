@@ -11,6 +11,13 @@ export default function Footer() {
         >
           LinkedIn
         </a>
+        <a
+          href="https://github.com/lorin-a"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          GitHub
+        </a>
         <span className={styles.linkDisabled}>Resume</span>
         <a href="mailto:lorinanderberg1@gmail.com">Email</a>
       </div>
