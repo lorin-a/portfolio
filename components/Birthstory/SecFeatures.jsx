@@ -21,6 +21,10 @@ const DEEPDIVES = [
     role: 'The core feature · all information-gathering, unified',
     kind: 'doc',
     layout: 'side',
+    annots: {
+      l: { label: 'One timeline', text: 'Medical, contextual, narrative, and feelings, tagged and filtered in one place.', mt: '15rem' },
+      r: { label: 'The medical record', text: 'Entries stay closed until you open one; the detail lives a tap away.', mt: '7.5rem' },
+    },
     prose: <>Parents told me they wanted to land on the main task, so that’s what the app does. Even if nothing else gets used, there’s a timeline of whatever they or a loved one managed to add, and a note from the delivery room, a prescription, and a voice memo when your hands are full all land on it together, the moment they happen.</>,
   },
   {
@@ -28,6 +32,10 @@ const DEEPDIVES = [
     role: 'The heart of the concept · the optional sharing and partner-participation features',
     kind: 'carepod',
     layout: 'side',
+    annots: {
+      l: { label: 'One action', text: 'One support person sends out updates, photos, and voice memos.', mt: '5.5rem' },
+      r: { label: 'Their replies', text: 'Loved ones reply, and all of it saves into the Birth Story.', mt: '13rem' },
+    },
     prose: <>The idea came out of a single interview. A parent told me someone in her circle remembered a detail about her child’s birth that she had lost, and wished she’d asked everyone around her to add what they remembered while it was fresh. That became Care Pod: one support person sends out updates, photos, and voice memos, loved ones reply with messages and voice notes, and all of it saves into the Birth Story, so the whole story of who was there and how loved that child was stays in one place.</>,
     context: {
       photo: birthPhoto('room', 1200),
@@ -122,19 +130,21 @@ export default function SecFeatures() {
       </div>
 
       <div className={styles.prioritize}>
-        <p className={`${sys.eyebrow} ${sys.up}`}>Prioritization</p>
-        <div className={`${styles.prioRow} ${sys.up}`}>
-          <div className={styles.prioCell}>
-            <span className={styles.prioFig}>2</span>
-            <span className={styles.prioText}><b>kept</b> sharing · keepsake book</span>
-          </div>
-          <div className={styles.prioCell}>
-            <span className={styles.prioFig}>1</span>
-            <span className={styles.prioText}><b>added</b> search</span>
-          </div>
-          <div className={styles.prioCell}>
-            <span className={styles.prioFig}>2</span>
-            <span className={styles.prioText}><b>cut</b> symptom tracker · birth-plan builder</span>
+        <div className={`${styles.prioCard} ${sys.up}`}>
+          <p className={styles.prioHead}>Prioritization</p>
+          <div className={styles.prioCells}>
+            <div className={styles.prioCell}>
+              <span className={styles.prioFigRow}><span className={styles.prioFig}>2</span><span className={styles.prioLabel}>kept</span></span>
+              <span className={styles.prioNames}>sharing · keepsake book</span>
+            </div>
+            <div className={styles.prioCell}>
+              <span className={styles.prioFigRow}><span className={styles.prioFig}>1</span><span className={styles.prioLabel}>added</span></span>
+              <span className={styles.prioNames}>search</span>
+            </div>
+            <div className={styles.prioCell}>
+              <span className={styles.prioFigRow}><span className={styles.prioFig}>2</span><span className={styles.prioLabel}>cut</span></span>
+              <span className={styles.prioNames}>symptom tracker · birth-plan builder</span>
+            </div>
           </div>
         </div>
         <Prose>
@@ -168,21 +178,21 @@ export default function SecFeatures() {
             {f.crit && <div className={sys.up}><TesterNote quote={f.crit.quote} who={f.crit.who} /></div>}
           </div>
 
-          <div className={`${styles.stage} ${f.kind === 'carepod' ? styles.stageInvention : ''} ${sys.up}`}>
-            {f.kind === 'doc' ? (
-              /* the annotated exemplar — the deck idiom (label · note · dotted
+          <div className={`${styles.stage} ${sys.up}`}>
+            {f.annots ? (
+              /* the annotated stage — the deck idiom (label · note · dotted
                  leader) flanking the live screen, so the reasoning sits ON the
                  artifact. Annotations hide at mobile; the caption takes over. */
               <div className={styles.annotStage}>
-                <div className={`${styles.annot} ${styles.annotL}`}>
-                  <p className={sys.annotLabel}>One timeline</p>
-                  <p className={sys.annotText}>Medical, contextual, narrative, and feelings, tagged and filtered in one place.</p>
+                <div className={`${styles.annot} ${styles.annotL}`} style={{ '--mt': f.annots.l.mt }}>
+                  <p className={sys.annotLabel}>{f.annots.l.label}</p>
+                  <p className={sys.annotText}>{f.annots.l.text}</p>
                   <span className={sys.leader} aria-hidden="true" />
                 </div>
                 <div className={styles.media}><Media f={f} /></div>
-                <div className={`${styles.annot} ${styles.annotR}`}>
-                  <p className={sys.annotLabel}>The medical record</p>
-                  <p className={sys.annotText}>Entries stay closed until you open one; the detail lives a tap away.</p>
+                <div className={`${styles.annot} ${styles.annotR}`} style={{ '--mt': f.annots.r.mt }}>
+                  <p className={sys.annotLabel}>{f.annots.r.label}</p>
+                  <p className={sys.annotText}>{f.annots.r.text}</p>
                   <span className={sys.leader} aria-hidden="true" />
                 </div>
               </div>

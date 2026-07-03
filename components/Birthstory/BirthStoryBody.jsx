@@ -263,25 +263,26 @@ function Voice() {
           quote="Assuming there’s a trauma, you shouldn’t call it that. I appreciate the acknowledgement, but it feels like an implied negative."
           who="Parent tester"
         />
-        <div className={`${b.rewriteBlock} ${sys.up}`}>
-          <div className={b.rewritePair}>
-            <div className={b.copyStep}>
+        <div className={`${b.revisions} ${sys.up}`}>
+          <span className={b.revTag}>revisions</span>
+          <div className={b.revRow}>
+            <div className={b.revCell}>
               <span className={b.copyLabel}>draft</span>
               <p className={b.draftLine}>“Reclaim your narrative.”</p>
             </div>
-            <span className={b.copyArrow} aria-hidden="true">↓</span>
-            <div className={b.copyStep}>
+            <span className={b.revArrow} aria-hidden="true">→</span>
+            <div className={b.revCell}>
               <span className={b.copyLabel}>rewrite</span>
               <p className={b.rewriteLine}>“A space to make sense of it, in your own words.”</p>
             </div>
           </div>
-          <div className={b.rewritePair}>
-            <div className={b.copyStep}>
+          <div className={b.revRow}>
+            <div className={b.revCell}>
               <span className={b.copyLabel}>draft</span>
               <p className={b.draftLine}>“Find strength &amp; support.”</p>
             </div>
-            <span className={b.copyArrow} aria-hidden="true">↓</span>
-            <div className={b.copyStep}>
+            <span className={b.revArrow} aria-hidden="true">→</span>
+            <div className={b.revCell}>
               <span className={b.copyLabel}>rewrite</span>
               <p className={b.rewritePlaceholder}>[ Lorin to write: a name that assumes she is already strong, not in need of rescue. ]</p>
             </div>

@@ -17,11 +17,13 @@
   --bs-peri: #B1C1F4;
   --bs-lav: #E6E5FD;
   --bs-accent: var(--bs-teal);
-  /* crit voice — tester feedback, a warm ink set apart from the product teal */
-  --bs-crit: #8A4F3C;       /* AA-legible on the paper ground + the wash */
-  --bs-crit-soft: #A0644E;  /* pin ring + leader */
-  --bs-crit-line: rgba(138, 79, 60, 0.28);
-  --bs-crit-wash: rgba(160, 100, 78, 0.07);
+  /* crit voice — tester feedback in a rose ink derived from the brand blush
+     (#DBADAD), so the two margin voices are the gradient's two poles: teal =
+     the designer's thinking, rose = the testers'. 6.1:1 on white. */
+  --bs-crit: #8E5059;
+  --bs-crit-soft: #A56A72;  /* pin ring + leader */
+  --bs-crit-line: rgba(142, 80, 89, 0.28);
+  --bs-crit-wash: rgba(219, 173, 173, 0.12);
   --bs-wide: 76rem;
   --bs-pad: clamp(1.5rem, 5vw, 6rem);
 
@@ -234,28 +236,39 @@
 .shot { display: grid; gap: 0.5rem; justify-items: start; }
 .shotCap { font-family: var(--font-body); font-size: 0.78rem; line-height: 1.4; color: var(--color-ink-light); max-width: 24ch; }
 
-/* friction — admits the open question */
+/* friction — admits the open question. Same chip-card DNA as the voices,
+   chip in the quieter teal so it reads as the author's aside. */
 .friction {
-  margin: 0; max-width: 40rem; padding: 1.1rem 1.3rem 1.1rem 1.4rem; background: #fff;
-  border-left: 3px solid var(--bs-teal-soft); border-radius: 4px 8px 8px 4px;
-  box-shadow: 0 12px 28px -24px rgba(26, 67, 77, 0.4);
+  position: relative; margin: 0.7rem 0 0; max-width: 40rem;
+  padding: clamp(1.2rem, 2.4vw, 1.5rem) clamp(1.3rem, 2.8vw, 1.6rem) clamp(1.05rem, 2.2vw, 1.3rem);
+  background: #fff; border-radius: 12px;
+  box-shadow: 0 1px 2px rgba(26, 67, 77, 0.06), 0 14px 30px -18px rgba(26, 67, 77, 0.22), 0 0 0 1px var(--bs-hairline);
   font-family: var(--font-body); font-size: 0.95rem; line-height: 1.6; color: var(--color-ink-light);
 }
 .friction b { font-weight: 700; color: var(--bs-accent); font-style: normal; }
-.frictionTag { display: inline-block; margin-right: 0.6rem; font-family: var(--font-body); font-weight: 600; font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--bs-teal-soft); }
-
-/* the "my thinking" callout — the designer's voice-track. Teal, display face,
-   labeled; the mirror of the terracotta tester note. Recognizable on sight so a
-   reader always knows this is reasoning, not the objective record. */
-.insight {
-  margin: 0; max-width: 40rem; display: grid; gap: 0.5rem;
-  padding: clamp(1.1rem, 2.4vw, 1.5rem) clamp(1.3rem, 2.8vw, 1.7rem);
-  background: #fff;
-  border: 1px solid var(--bs-hairline); border-left: 3px solid var(--bs-accent);
-  border-radius: 4px 14px 14px 4px;
-  box-shadow: 0 12px 28px -24px rgba(26, 67, 77, 0.4);
+.frictionTag {
+  position: absolute; top: -0.7rem; left: 1rem;
+  padding: 0.18rem 0.6rem; border-radius: 3px;
+  background: var(--bs-teal-soft); color: #fff;
+  font-family: var(--font-body); font-weight: 600; font-size: 0.72rem; letter-spacing: 0.06em; text-transform: uppercase;
 }
-.insightTag { margin: 0; font-family: var(--font-body); font-weight: 700; font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--bs-accent); }
+
+/* ── the two margin voices, on the study's one card DNA: a white grounded card
+   with a solid chip docked on its top edge (the same chip the figures and
+   plates wear — NOT the colored left-bar admonition). Teal chip = the
+   designer's thinking; rose chip = the testers'. ── */
+.insight {
+  position: relative; margin: 0.7rem 0 0; max-width: 40rem; display: grid; gap: 0.55rem;
+  padding: clamp(1.3rem, 2.6vw, 1.7rem) clamp(1.3rem, 2.8vw, 1.7rem) clamp(1.1rem, 2.4vw, 1.5rem);
+  background: #fff; border-radius: 12px;
+  box-shadow: 0 1px 2px rgba(26, 67, 77, 0.06), 0 14px 30px -18px rgba(26, 67, 77, 0.22), 0 0 0 1px var(--bs-hairline);
+}
+.insightTag {
+  position: absolute; top: -0.7rem; left: 1rem;
+  padding: 0.18rem 0.6rem; border-radius: 3px;
+  background: var(--bs-accent); color: #fff;
+  font-family: var(--font-body); font-weight: 600; font-size: 0.72rem; letter-spacing: 0.06em; text-transform: uppercase;
+}
 .insightText {
   margin: 0; font-family: var(--font-heading); font-variation-settings: 'SOFT' 60, 'WONK' 0; font-weight: 400;
   font-size: clamp(1.08rem, 1rem + 0.42vw, 1.34rem); line-height: 1.38; color: var(--color-ink); text-wrap: pretty;
@@ -263,14 +276,17 @@
 
 /* standalone tester callout — the crit voice, no pin or leader */
 .testerNote {
-  margin: 0; max-width: 32rem; display: grid; gap: 0.5rem;
-  padding: clamp(1.1rem, 2.4vw, 1.5rem) clamp(1.2rem, 2.6vw, 1.7rem);
-  background: #fff;
-  border: 1px solid var(--bs-crit-line); border-left: 3px solid var(--bs-crit);
-  border-radius: 4px 14px 14px 4px;
-  box-shadow: 0 12px 28px -24px rgba(138, 79, 60, 0.35);
+  position: relative; margin: 0.7rem 0 0; max-width: 32rem; display: grid; gap: 0.55rem;
+  padding: clamp(1.3rem, 2.6vw, 1.7rem) clamp(1.3rem, 2.8vw, 1.7rem) clamp(1.1rem, 2.4vw, 1.5rem);
+  background: #fff; border-radius: 12px;
+  box-shadow: 0 1px 2px rgba(142, 80, 89, 0.06), 0 14px 30px -18px rgba(142, 80, 89, 0.24), 0 0 0 1px var(--bs-crit-line);
 }
-.testerKicker { margin: 0; font-family: var(--font-body); font-weight: 700; font-size: 0.7rem; letter-spacing: 0.13em; text-transform: uppercase; color: var(--bs-crit); }
+.testerKicker {
+  position: absolute; top: -0.7rem; left: 1rem;
+  padding: 0.18rem 0.6rem; border-radius: 3px;
+  background: var(--bs-crit); color: #fff;
+  font-family: var(--font-body); font-weight: 600; font-size: 0.72rem; letter-spacing: 0.06em; text-transform: uppercase;
+}
 .testerQuote {
   margin: 0; font-family: var(--font-heading); font-variation-settings: 'SOFT' 60, 'WONK' 0; font-style: italic; font-weight: 400;
   font-size: clamp(1.05rem, 0.95rem + 0.45vw, 1.35rem); line-height: 1.33; color: var(--color-ink); text-wrap: pretty;

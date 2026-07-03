@@ -47,8 +47,12 @@ export default function SecArchitecture() {
         </Figure>
 
         <div className={`${a.turn} ${sys.up}`}>
-          <span className={a.turnFig}>4 → 0</span>
-          <span className={a.turnLabel}>questions before the first entry</span>
+          <span className={a.turnStem} aria-hidden="true" />
+          <span className={a.turnRow}>
+            <span className={a.turnFig}>4 → 0</span>
+            <span className={a.turnLabel}>questions before the first entry</span>
+          </span>
+          <span className={a.turnStem} aria-hidden="true" />
         </div>
 
         <Figure

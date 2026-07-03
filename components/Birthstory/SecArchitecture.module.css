@@ -3,14 +3,15 @@
    version above, the turn stat between, what shipped below. A hiring manager
    gets the whole judgment story in one glance; the reasoning prose follows. */
 
-.confront { display: grid; gap: clamp(1.2rem, 2.5vw, 1.8rem); }
+.confront { display: grid; gap: clamp(0.6rem, 1.2vw, 0.9rem); }
 
 /* the turn — the story's most skimmable number, set large between the two
-   diagrams. 4 is countable in the ia-v1 panel directly above it. */
-.turn {
-  display: flex; align-items: baseline; justify-content: center; gap: 1rem;
-  padding: clamp(0.4rem, 1vw, 0.8rem) 0;
-}
+   diagrams and BOUND to them by a dotted thread (the deck idiom): the eye
+   reads v1 → the stat → what shipped as one transformation. 4 is countable
+   in the ia-v1 panel directly above it. */
+.turn { display: grid; justify-items: center; gap: 0.55rem; }
+.turnStem { width: 0; height: clamp(1.5rem, 3vw, 2.4rem); border-left: 2px dotted var(--bs-teal-soft); }
+.turnRow { display: flex; align-items: baseline; gap: 1rem; }
 .turnFig {
   font-family: var(--font-heading); font-variation-settings: 'SOFT' 60, 'WONK' 0;
   font-weight: 420; font-size: clamp(2.2rem, 1.6rem + 2.4vw, 3.6rem); line-height: 1;

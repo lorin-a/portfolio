@@ -19,15 +19,32 @@
   display: grid; gap: clamp(0.9rem, 2vw, 1.3rem); max-width: 52rem;
   padding-top: clamp(1.6rem, 4vw, 2.6rem); border-top: 1px solid var(--bs-rule);
 }
-.prioRow { display: flex; flex-wrap: wrap; gap: clamp(1.4rem, 3.5vw, 3rem); }
-.prioCell { display: flex; align-items: baseline; gap: 0.6rem; }
+/* the decision on the ask band's card DNA: teal header bar, three ruled cells */
+.prioCard {
+  --pad: clamp(1.2rem, 2.4vw, 1.6rem);
+  background: #fff; border-radius: 12px; overflow: hidden;
+  box-shadow: 0 1px 2px rgba(26, 67, 77, 0.06), 0 14px 30px -18px rgba(26, 67, 77, 0.22), 0 0 0 1px var(--bs-hairline);
+}
+.prioHead {
+  margin: 0; padding: 0.62rem var(--pad);
+  background: var(--bs-accent); color: var(--color-cream);
+  font-family: var(--font-body); font-weight: 700; font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase;
+}
+.prioCells { display: grid; grid-template-columns: repeat(3, 1fr); }
+.prioCell { display: grid; gap: 0.35rem; align-content: start; padding: var(--pad); }
+.prioCell + .prioCell { border-left: 1px solid var(--bs-hairline); }
+.prioFigRow { display: flex; align-items: baseline; gap: 0.55rem; }
 .prioFig {
   font-family: var(--font-heading); font-variation-settings: 'SOFT' 60, 'WONK' 0;
-  font-weight: 420; font-size: clamp(1.7rem, 1.4rem + 1.2vw, 2.4rem); line-height: 1;
+  font-weight: 420; font-size: clamp(1.9rem, 1.5rem + 1.4vw, 2.6rem); line-height: 1;
   color: var(--bs-accent);
 }
-.prioText { font-family: var(--font-body); font-size: 0.92rem; line-height: 1.4; color: var(--color-ink-light); max-width: 15rem; text-wrap: balance; }
-.prioText b { display: block; font-weight: 700; font-size: 0.75rem; letter-spacing: 0.13em; text-transform: uppercase; color: var(--bs-teal-soft); }
+.prioLabel { font-family: var(--font-body); font-weight: 700; font-size: 0.75rem; letter-spacing: 0.13em; text-transform: uppercase; color: var(--bs-teal-soft); }
+.prioNames { font-family: var(--font-body); font-size: 0.9rem; line-height: 1.45; color: var(--color-ink-light); text-wrap: balance; }
+@media (max-width: 640px) {
+  .prioCells { grid-template-columns: 1fr; }
+  .prioCell + .prioCell { border-left: 0; border-top: 1px solid var(--bs-hairline); }
+}
 
 /* feature deep-dive heading — the name and the requirement it maps to */
 .featHead { display: grid; gap: 0.35rem; }
@@ -60,14 +77,9 @@
   border-radius: 14px;
   background: var(--bs-wash);
 }
-/* the invention marker — the Care Pod is the study's original contribution, so
-   its stage (and only its stage) carries the identity gradient, softened so the
-   screens still lead. Skim-readable: one glance says "this one is special." */
-.stageInvention {
-  background:
-    linear-gradient(rgba(250, 250, 250, 0.62), rgba(250, 250, 250, 0.62)),
-    linear-gradient(126deg, #E7C3C8 0%, #B9C2EC 48%, #1A434D 100%);
-}
+/* (the gradient invention-stage was tried and read as inconsistency, not
+   hierarchy — all stages share the wash; the Care Pod's "my invention" marking
+   moves to its role line in the copy pass) */
 .media { width: clamp(280px, 27vw, 340px); }
 
 /* the book has two screens, so it gets a narrower copy column and a wider stage */
@@ -101,12 +113,11 @@
    right-aligns toward the screen; each carries the dotted leader that draws on
    reveal. Offsets aim the notes at the screen regions they describe. */
 .annotStage { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: start; gap: clamp(1rem, 2.2vw, 1.8rem); width: 100%; }
-.annot { max-width: 15rem; display: grid; gap: 0.3rem; align-content: start; }
-.annotL { justify-self: end; text-align: right; margin-top: 15rem; }
-.annotR { justify-self: start; margin-top: 7.5rem; }
+.annot { max-width: 15rem; display: grid; gap: 0.3rem; align-content: start; margin-top: var(--mt, 6rem); }
+.annotL { justify-self: end; text-align: right; }
+.annotR { justify-self: start; }
 @media (max-width: 1100px) {
-  .annotL { margin-top: 11rem; }
-  .annotR { margin-top: 5.5rem; }
+  .annot { margin-top: calc(var(--mt, 6rem) * 0.72); }
 }
 @media (max-width: 860px) {
   .annot { display: none; }
