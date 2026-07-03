@@ -112,10 +112,31 @@ export default function SecFeatures() {
         </Prose>
       </div>
 
-      <FeatureWall />
+      {/* the product landmark — the four ways in, on the app's own surface.
+          One full-bleed teal moment so a skimming reader finds the UI instantly;
+          the deep-dives below return to paper. */}
+      <div className={styles.productBand}>
+        <div className={styles.productBandInner}>
+          <FeatureWall tone="dark" />
+        </div>
+      </div>
 
       <div className={styles.prioritize}>
         <p className={`${sys.eyebrow} ${sys.up}`}>Prioritization</p>
+        <div className={`${styles.prioRow} ${sys.up}`}>
+          <div className={styles.prioCell}>
+            <span className={styles.prioFig}>2</span>
+            <span className={styles.prioText}><b>kept</b> sharing · keepsake book</span>
+          </div>
+          <div className={styles.prioCell}>
+            <span className={styles.prioFig}>1</span>
+            <span className={styles.prioText}><b>added</b> search</span>
+          </div>
+          <div className={styles.prioCell}>
+            <span className={styles.prioFig}>2</span>
+            <span className={styles.prioText}><b>cut</b> symptom tracker · birth-plan builder</span>
+          </div>
+        </div>
         <Prose>
           The brief gave us three required areas, information gathering, meaning-making, and onboarding,
           plus five optional features. I kept two, sharing and a keepsake book, added one that wasn’t on
@@ -147,7 +168,7 @@ export default function SecFeatures() {
             {f.crit && <div className={sys.up}><TesterNote quote={f.crit.quote} who={f.crit.who} /></div>}
           </div>
 
-          <div className={`${styles.stage} ${sys.up}`}>
+          <div className={`${styles.stage} ${f.kind === 'carepod' ? styles.stageInvention : ''} ${sys.up}`}>
             {f.kind === 'doc' ? (
               /* the annotated exemplar — the deck idiom (label · note · dotted
                  leader) flanking the live screen, so the reasoning sits ON the

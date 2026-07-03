@@ -3,6 +3,7 @@
 import { FieldSection, Lead, Prose, Insight, Figure, Split, sys } from './kit'
 import { IaV1, IaFinal } from './IaDiagrams'
 import { birthPhoto } from '@/lib/cloudinary'
+import a from './SecArchitecture.module.css'
 
 /* 03 — Information architecture. The structural decision documented: no triage
    home screen, open straight into documentation, and unify the four capture
@@ -37,12 +38,26 @@ export default function SecArchitecture() {
         />
       </Split>
 
-      <Figure
-        tag="first version"
-        cap="ia-v1 · a branching questionnaire that asked conditional questions before any entry."
-      >
-        <IaV1 />
-      </Figure>
+      <div className={a.confront}>
+        <Figure
+          tag="first version"
+          cap="ia-v1 · a branching questionnaire that asked conditional questions before any entry."
+        >
+          <IaV1 />
+        </Figure>
+
+        <div className={`${a.turn} ${sys.up}`}>
+          <span className={a.turnFig}>4 → 0</span>
+          <span className={a.turnLabel}>questions before the first entry</span>
+        </div>
+
+        <Figure
+          tag="what shipped"
+          cap="ia-final · five tabs, a single add button at center, nothing to answer before beginning."
+        >
+          <IaFinal />
+        </Figure>
+      </div>
 
       <div className={sys.headCluster}>
         <Prose>
@@ -56,13 +71,6 @@ export default function SecArchitecture() {
           and confusing.
         </Prose>
       </div>
-
-      <Figure
-        tag="what shipped"
-        cap="ia-final · five tabs, a single add button at center, nothing to answer before beginning."
-      >
-        <IaFinal />
-      </Figure>
     </FieldSection>
   )
 }

@@ -39,7 +39,7 @@ const WAYS = [
   },
 ]
 
-export default function FeatureWall() {
+export default function FeatureWall({ tone }) {
   const ref = useRef(null)
   const [seen, setSeen] = useState(false)
 
@@ -53,7 +53,7 @@ export default function FeatureWall() {
   }, [])
 
   return (
-    <div ref={ref} className={`${w.wall} ${seen ? w.in : ''}`}>
+    <div ref={ref} className={`${w.wall} ${tone === 'dark' ? w.dark : ''} ${seen ? w.in : ''}`}>
       {WAYS.map((s, i) => (
         <figure key={s.tab} className={w.item} style={{ '--i': i }}>
           <span className={`${sys.phone} ${w.phone}`}>

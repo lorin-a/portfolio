@@ -25,6 +25,11 @@
   color: var(--color-ink-light); text-wrap: pretty;
 }
 
+/* dark tone — the wall on the product's own teal surface (the full-bleed band) */
+.dark .tab { color: rgba(251, 249, 246, 0.85); }
+.dark .desc { color: rgba(251, 249, 246, 0.78); }
+.dark .phone { box-shadow: 0 24px 48px -28px rgba(0, 0, 0, 0.6); border-radius: 22px; }
+
 @media (max-width: 900px) {
   .wall { grid-template-columns: repeat(2, 1fr); gap: clamp(1.4rem, 4vw, 2.6rem); }
 }
