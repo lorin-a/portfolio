@@ -106,8 +106,21 @@
 .quote { margin: 0; max-width: 18ch; font-family: var(--font-heading); font-variation-settings: 'SOFT' 60, 'WONK' 0; font-style: italic; font-weight: 360; font-size: clamp(1.7rem, 1.3rem + 1.7vw, 2.65rem); line-height: 1.18; color: var(--color-ink); }
 .quoteAttr { display: block; margin-top: 0.8em; font-family: var(--font-body); font-style: normal; font-weight: 600; font-size: 0.75rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--bs-teal-soft); }
 
-/* close */
-.tools { margin: 0; font-family: var(--font-body); font-size: 0.72rem; letter-spacing: 0.04em; color: var(--color-ink-faint); }
+/* close — the sources colophon. Attribution as a clear, ruled block (tools,
+   icons, photography), not a whisper-line a reader could miss. */
+.colophon {
+  margin: 0; display: grid; gap: 0.85rem;
+  padding-top: clamp(1.4rem, 3vw, 2rem);
+  border-top: 1px solid var(--bs-rule);
+  max-width: 44rem;
+}
+.colRow { display: grid; grid-template-columns: 8rem minmax(0, 1fr); gap: 1rem; align-items: baseline; }
+.colRow dt {
+  font-family: var(--font-body); font-weight: 700; font-size: 0.72rem;
+  letter-spacing: 0.14em; text-transform: uppercase; color: var(--bs-teal-soft);
+}
+.colRow dd { margin: 0; font-family: var(--font-body); font-size: 0.85rem; line-height: 1.55; color: var(--color-ink-light); text-wrap: pretty; }
+@media (max-width: 540px) { .colRow { grid-template-columns: 1fr; gap: 0.25rem; } }
 
 /* ── overview — a metadata-forward masthead. No synopsis paragraph: the detail
    is folded into verbose, sectioned rows so a reader scans it in seconds and

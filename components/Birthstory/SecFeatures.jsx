@@ -49,6 +49,10 @@ const DEEPDIVES = [
     role: 'The processing and nudge requirements',
     kind: 'journal',
     layout: 'side',
+    annots: {
+      l: { label: 'No blank page', text: 'The deck deals a prompt: a letter to a past self, the needs that are hard to name.', mt: '5rem' },
+      r: { label: 'Tag how it felt', text: 'You write, and tag how it felt.', mt: '12rem' },
+    },
     prose: <>Every parent wanted to reflect, whether their birth was traumatic or not, but the ones who don’t already journal often don’t know where to start. So instead of a blank page, the journal hands them gentle prompts: a letter to a past self, the needs that are hard to name, the senses worth keeping.</>,
     cap: 'The deck deals a prompt; you write, and tag how it felt.',
   },
@@ -57,6 +61,10 @@ const DEEPDIVES = [
     role: 'Not required · my addition, for cognitive load',
     kind: 'search',
     layout: 'side',
+    annots: {
+      l: { label: 'A swipe from anywhere', text: 'The drawer slides in over whatever screen you’re on.', mt: '9rem' },
+      r: { label: 'Filter by feeling', text: 'Emotion, category, or keyword.', mt: '4rem' },
+    },
     prose: <>This is the one feature nobody asked for. As the entries pile up, I didn’t want anyone digging through the whole app to find one memory, so search is a swipe away from anywhere and filters by emotion, category, or keyword.</>,
     cap: 'Swipe it in from the edge; filter by feeling, category, or keyword.',
   },
@@ -65,6 +73,10 @@ const DEEPDIVES = [
     role: 'The optional baby book',
     kind: 'book',
     layout: 'side',
+    annots: {
+      l: { label: 'It can leave the app', text: 'The whole record, as a printed book or a free PDF.', mt: '7rem' },
+      r: { label: 'Curated together', text: 'Built from what’s already there, open to the people who were part of it.', mt: '7rem' },
+    },
     prose: <>We took the book seriously the moment a parent told me she wouldn’t trust an app with something this precious unless she knew it couldn’t disappear. So the whole record can leave the app, as a printed book or a free PDF, curated from what’s already there and open to the people who were part of it.</>,
     crit: {
       quote: 'It would be tragic to lose these moments if the app went away.',
@@ -189,7 +201,7 @@ export default function SecFeatures() {
                   <p className={sys.annotText}>{f.annots.l.text}</p>
                   <span className={sys.leader} aria-hidden="true" />
                 </div>
-                <div className={styles.media}><Media f={f} /></div>
+                {f.kind === 'book' ? <Media f={f} /> : <div className={styles.media}><Media f={f} /></div>}
                 <div className={`${styles.annot} ${styles.annotR}`} style={{ '--mt': f.annots.r.mt }}>
                   <p className={sys.annotLabel}>{f.annots.r.label}</p>
                   <p className={sys.annotText}>{f.annots.r.text}</p>

@@ -71,15 +71,17 @@
   gap: clamp(1.6rem, 3vw, 3rem);
 }
 .copy { align-self: center; display: grid; gap: clamp(0.8rem, 2vw, 1.2rem); }
+/* every stage carries the identity gradient under a paper veil — one
+   consistent surface (Lorin: more interesting than the grey wash), soft
+   enough that the screens and annotations still lead */
 .stage {
   align-self: stretch; display: grid; place-content: center; justify-items: center;
   padding: clamp(1.6rem, 3.5vw, 3rem);
   border-radius: 14px;
-  background: var(--bs-wash);
+  background:
+    linear-gradient(rgba(250, 250, 250, 0.66), rgba(250, 250, 250, 0.66)),
+    linear-gradient(126deg, #E7C3C8 0%, #B9C2EC 48%, #1A434D 100%);
 }
-/* (the gradient invention-stage was tried and read as inconsistency, not
-   hierarchy — all stages share the wash; the Care Pod's "my invention" marking
-   moves to its role line in the copy pass) */
 .media { width: clamp(280px, 27vw, 340px); }
 
 /* the book has two screens, so it gets a narrower copy column and a wider stage */
@@ -113,7 +115,7 @@
    right-aligns toward the screen; each carries the dotted leader that draws on
    reveal. Offsets aim the notes at the screen regions they describe. */
 .annotStage { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: start; gap: clamp(1rem, 2.2vw, 1.8rem); width: 100%; }
-.annot { max-width: 15rem; display: grid; gap: 0.3rem; align-content: start; margin-top: var(--mt, 6rem); }
+.annot { width: min(14rem, 100%); display: grid; gap: 0.3rem; align-content: start; margin-top: var(--mt, 6rem); }
 .annotL { justify-self: end; text-align: right; }
 .annotR { justify-self: start; }
 @media (max-width: 1100px) {

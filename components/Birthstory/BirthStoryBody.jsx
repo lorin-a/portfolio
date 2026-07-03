@@ -349,7 +349,20 @@ function Close() {
           myself is the direction I’m headed.
         </Prose>
       </div>
-      <p className={b.tools}>figma · svg repo · unsplash</p>
+      <dl className={`${b.colophon} ${sys.up}`}>
+        <div className={b.colRow}>
+          <dt>Tools</dt>
+          <dd>Figma (wireframes and visual design) · Claude Code (the working prototypes on this page)</dd>
+        </div>
+        <div className={b.colRow}>
+          <dt>Icons</dt>
+          <dd>SVG Repo</dd>
+        </div>
+        <div className={b.colRow}>
+          <dt>Photography</dt>
+          <dd>Saul Siguenza, Craig Adderley, Narmin Aslanli, and Jonathan Borba, via Pexels · moodboard imagery via Unsplash · studio and review photos, CMU IXD Studio</dd>
+        </div>
+      </dl>
     </FieldSection>
   )
 }
