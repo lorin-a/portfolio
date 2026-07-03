@@ -1,6 +1,6 @@
 'use client'
 
-import { FieldSection, Lead, Prose, Insight, Friction, TesterNote, Split, Figure, sys } from './kit'
+import { FieldSection, Lead, Prose, Insight, Friction, TesterNote, Figure, sys } from './kit'
 import { cloudImg } from '@/lib/cloudinary'
 import CritStage from './CritStage'
 import styles from './SecIteration.module.css'
@@ -13,6 +13,7 @@ const ROUNDS = [
   {
     label: 'Version 1 · Week 3',
     change: <>The first version tried to do everything, with a tool for every situation and sub-menus inside menus. It was disorienting.</>,
+    note: 'Watching the versions in order, you can see the app calm down.',
     crit: { pin: { x: 50, y: 61 }, quote: 'Onboarding is nice, but there are too many buttons and options.', who: 'Parent tester' },
     shots: [['v1-3', 'V1: reflect / document / connect, the build that did too much']],
   },
@@ -46,36 +47,41 @@ function Screen({ id, cap }) {
   )
 }
 
-function Round({ label, change, quote, who, crit, shots }) {
+/* each round on the deep-dive grammar (Lorin's direction 2026-07-03): copy
+   column left — version marker, the change, and any margin voice — with the
+   artifact large on the right inside the gradient stage; the pinned tester
+   quote lives INSIDE the stage, part of the feature container. */
+function Round({ label, change, quote, who, crit, shots, note }) {
   return (
-    <Split
-      text={
-        <>
-          <div className={styles.roundHead}>
-            <p className={`${sys.eyebrow} ${sys.up}`}>{label}</p>
-            <Prose>{change}</Prose>
-          </div>
-          {quote && <TesterNote quote={quote} who={who} />}
-        </>
-      }
-    >
-      {crit ? (
-        <CritStage pin={crit.pin} quote={crit.quote} who={crit.who} side="right" align="start" cap={shots[0][1]}>
-          <span className={styles.critDevice}>
-            <span className={sys.phone} style={{ width: '100%' }}>
-              <span className={sys.phoneNotch} aria-hidden="true" />
-              <span className={sys.phoneScreen}>
-                <img src={`/images/birthstory/evolution/screens/${shots[0][0]}.png`} alt={shots[0][1]} loading="lazy" draggable="false" />
+    <div className={styles.round}>
+      <div className={styles.copy}>
+        <div className={styles.roundHead}>
+          <p className={`${sys.eyebrow} ${sys.up}`}>{label}</p>
+          <Prose>{change}</Prose>
+        </div>
+        {quote && <TesterNote quote={quote} who={who} />}
+        {note && <Insight>{note}</Insight>}
+      </div>
+
+      <div className={`${styles.stage} ${sys.up}`}>
+        {crit ? (
+          <CritStage pin={crit.pin} quote={crit.quote} who={crit.who} side="right" cap={shots[0][1]}>
+            <span className={styles.critDevice}>
+              <span className={sys.phone} style={{ width: '100%' }}>
+                <span className={sys.phoneNotch} aria-hidden="true" />
+                <span className={sys.phoneScreen}>
+                  <img src={`/images/birthstory/evolution/screens/${shots[0][0]}.png`} alt={shots[0][1]} loading="lazy" draggable="false" />
+                </span>
               </span>
             </span>
-          </span>
-        </CritStage>
-      ) : (
-        <div className={styles.strip}>
-          {shots.map(([id, cap]) => <Screen key={id} id={id} cap={cap} />)}
-        </div>
-      )}
-    </Split>
+          </CritStage>
+        ) : (
+          <div className={styles.strip}>
+            {shots.map(([id, cap]) => <Screen key={id} id={id} cap={cap} />)}
+          </div>
+        )}
+      </div>
+    </div>
   )
 }
 
@@ -84,16 +90,10 @@ export default function SecIteration() {
   // one canonical timeline (V1 · Week 3 → V3 · Week 5)
   return (
     <FieldSection id="iteration" num="04" crumb="iteration" alt wide>
-      <Split
-        text={
-          <>
-            <Lead>Each round of testing made the app simpler.</Lead>
-            <Prose>I put wireframes in front of parents three times and changed direction based on what they told me.</Prose>
-          </>
-        }
-      >
-        <Insight narrow>Watching the versions in order, you can see the app calm down.</Insight>
-      </Split>
+      <div className={sys.headCluster}>
+        <Lead>Each round of testing made the app simpler.</Lead>
+        <Prose>I put wireframes in front of parents three times and changed direction based on what they told me.</Prose>
+      </div>
 
       {ROUNDS.map((r) => <Round key={r.label} {...r} />)}
 

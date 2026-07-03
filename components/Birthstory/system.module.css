@@ -17,14 +17,15 @@
   --bs-peri: #B1C1F4;
   --bs-lav: #E6E5FD;
   --bs-accent: var(--bs-teal);
-  /* crit voice — the tester chips wear the LITERAL brand blush (#DBADAD, the
-     palette swatch) with teal text (5.4:1), so the voice is unmistakably of
-     the palette. Every darkened derivative kept reading rust/plum. Deep blush
-     carries only decorative lines (leaders, strikes, rings). */
-  --bs-crit: #DBADAD;
-  --bs-crit-soft: #C9969B;  /* pin pulse + leader + strikethrough */
-  --bs-crit-line: rgba(190, 135, 141, 0.5);
-  --bs-crit-wash: rgba(219, 173, 173, 0.12);
+  /* crit voice — the tester chips wear the brand PERIWINKLE (#B1C1F4, the
+     gradient's middle and the FAB accent) with teal text (6:1). Lorin's call
+     2026-07-03 after blush/rose/terracotta all missed. #8089C2 (the FAB
+     gradient's deep end) carries the decorative lines: leaders, pins,
+     strikethroughs. */
+  --bs-crit: #B1C1F4;
+  --bs-crit-soft: #8089C2;  /* pin + pulse + leader + strikethrough */
+  --bs-crit-line: rgba(128, 137, 194, 0.55);
+  --bs-crit-wash: rgba(177, 193, 244, 0.14);
   --bs-wide: 76rem;
   --bs-pad: clamp(1.5rem, 5vw, 6rem);
 

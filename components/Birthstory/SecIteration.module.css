@@ -1,15 +1,42 @@
-/* Iteration — each round is a Split; the screens run big beside the change. */
+/* Iteration — each round on the deep-dive grammar: copy column left, the
+   artifact large on the right inside the gradient stage (same recipe as the
+   Features stages), the pinned tester quote part of the stage. */
+
+.round {
+  display: grid; align-items: stretch;
+  grid-template-columns: minmax(0, 30rem) 1fr;
+  gap: clamp(1.6rem, 3vw, 3rem);
+}
+.round + .round {
+  margin-top: clamp(2.2rem, 5vw, 3.6rem);
+  padding-top: clamp(2.2rem, 5vw, 3.6rem);
+  border-top: 1px solid var(--bs-rule);
+}
+.copy { align-self: center; display: grid; gap: clamp(1.1rem, 2.2vw, 1.6rem); align-content: start; }
+.stage {
+  align-self: stretch; display: grid; place-content: center; justify-items: center;
+  padding: clamp(1.6rem, 3.5vw, 3rem);
+  border-radius: 14px;
+  background:
+    linear-gradient(rgba(250, 250, 250, 0.66), rgba(250, 250, 250, 0.66)),
+    linear-gradient(126deg, #E7C3C8 0%, #B9C2EC 48%, #1A434D 100%);
+}
 
 .roundHead { display: grid; gap: 0.6rem; }
-.strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(0.7rem, 1.6vw, 1.4rem); align-items: start; }
+.strip { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(0.7rem, 1.6vw, 1.4rem); align-items: start; width: 100%; max-width: 52rem; }
 .screen { margin: 0; display: grid; gap: 0.55rem; }
-/* round 1 leads with one emblematic over-built screen, annotated */
-.critDevice { display: block; width: clamp(208px, 24vw, 248px); }
+/* round 1 leads with one emblematic over-built screen, annotated in-stage */
+.critDevice { display: block; width: clamp(240px, 25vw, 300px); }
 /* the final-review whiteboard — a wide documentary capstone, set apart by a rule */
 /* the final-review whiteboard — a full-width cropped documentary band, set apart by a rule */
 .critWall { width: 100%; max-width: none; padding-top: clamp(1.4rem, 3vw, 2.4rem); border-top: 1px solid var(--bs-rule); }
 .screenCap { font-family: var(--font-body); font-size: 0.74rem; line-height: 1.35; color: var(--color-ink-light); text-align: center; text-wrap: balance; }
 
+@media (max-width: 860px) {
+  .round { grid-template-columns: 1fr; gap: clamp(1.2rem, 4vw, 1.8rem); }
+  .copy { max-width: 60ch; }
+  .stage { padding: clamp(1.2rem, 4vw, 2rem); }
+}
 /* on narrow screens the three tall phones can't all be big — swipe them instead */
 @media (max-width: 600px) {
   .strip {
