@@ -1,6 +1,6 @@
 'use client'
 
-import { FieldSection, Lead, Prose, SubBlock, Split, Figure, Note, TesterNote, sys } from './kit'
+import { FieldSection, Lead, Prose, SubBlock, Split, Figure, TesterNote, Insight, sys } from './kit'
 import { birthPhoto, cloudImg } from '@/lib/cloudinary'
 import SecArchitecture from './SecArchitecture'
 import SecIteration from './SecIteration'
@@ -158,17 +158,6 @@ function Research() {
               family members and two friends, plus forums and blogs to hear from people we couldn’t reach
               in six weeks.
             </Prose>
-            <Prose>
-              What surprised me was how little they wanted. I had assumed they’d want to log every
-              medical record, but mostly they wanted to feel recognized for doing something hard: a few
-              photos, a loose outline they could come back to, somewhere to be validated. We had been
-              trying to do too much, and most of what I did from there was take things away.
-            </Prose>
-            <Prose>
-              They told me they’d use it in pieces, sleep-deprived between feedings, so they wanted simple
-              select-one questions in the moment and the freedom to come back and write the longer version
-              once the fog lifted.
-            </Prose>
           </>
         }
       >
@@ -181,14 +170,6 @@ function Research() {
           cap="A parent and newborn in the first hours after birth."
         />
         <Figure
-          tag="context"
-          photo
-          src={gap.src}
-          byline={gap.byline}
-          alt="A mother lies beside her sleeping newborn, head propped on her hand, gazing at the baby with a tired, pensive look."
-          cap="After birth, attention shifts to the baby; the parent’s own experience often goes unprocessed."
-        />
-        <Figure
           tag="interviews"
           src="https://res.cloudinary.com/dc17mvdyv/image/upload/f_auto,q_auto,w_1300/v1782679668/UX_Interview.jpg"
           alt="A parent interview over video call; the interviewee’s tile is blurred for privacy."
@@ -196,12 +177,54 @@ function Research() {
         />
       </Split>
 
-      <div className={sys.up}>
-        <Note who="Parent interview">
-          “You often have one person in your corner who has seen what you went through, who validates your
-          experience and what you’ve done. This amazing thing you’ve done. Not everyone has that.”
-        </Note>
+      <div className={`${b.askBand} ${sys.up}`}>
+        <div className={b.askCols}>
+          <div className={b.askCol}>
+            <p className={b.specLabel}>What they wanted</p>
+            <ul className={b.specList}>
+              <li>A few photos.</li>
+              <li>A loose outline they could come back to.</li>
+              <li>Somewhere to be validated.</li>
+            </ul>
+          </div>
+          <div className={b.askCol}>
+            <p className={b.specLabel}>How they’d use it</p>
+            <ul className={b.specList}>
+              <li>In pieces, sleep-deprived between feedings.</li>
+              <li>Simple select-one questions in the moment.</li>
+              <li>The freedom to come back and write the longer version once the fog lifted.</li>
+            </ul>
+          </div>
+          <div className={`${b.askCol} ${b.voicesCol}`}>
+            <p className={b.specLabel}>In their words</p>
+            <blockquote className={b.parentQuote}>
+              “You often have one person in your corner who has seen what you went through, who
+              validates your experience and what you’ve done. This amazing thing you’ve done. Not
+              everyone has that.”
+            </blockquote>
+            <p className={b.parentWho}>Parent interview</p>
+          </div>
+        </div>
       </div>
+
+      <Split
+        text={
+          <Insight>
+            What surprised me was how little they wanted. I had assumed they’d want to log every
+            medical record, but mostly they wanted to feel recognized for doing something hard. We
+            had been trying to do too much, and most of what I did from there was take things away.
+          </Insight>
+        }
+      >
+        <Figure
+          tag="context"
+          photo
+          src={gap.src}
+          byline={gap.byline}
+          alt="A mother lies beside her sleeping newborn, head propped on her hand, gazing at the baby with a tired, pensive look."
+          cap="After birth, attention shifts to the baby; the parent’s own experience often goes unprocessed."
+        />
+      </Split>
 
       <section className={`${b.values} ${sys.up}`}>
         <p className={b.valuesHead}>Our design values</p>
