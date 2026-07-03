@@ -85,3 +85,12 @@ public/images/groundswell/091925-Groundswell-058.jpg
 public/images/groundswell/Mockup-2_ Sliding Barn Door-2.jpg
 public/images/groundswell/gs-hero.jpg
 public/images/groundswell/*.png
+
+# Internal process docs — local working material, never public
+STATUS.md
+docs/WORKING_WITH_LORIN.md
+docs/AGENT_PROTOCOL.md
+docs/archive/
+docs/case-study-editorial/
+docs/groundswell-pdf/
+docs/UPSKILL_RESEARCH_2026.md
