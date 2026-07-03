@@ -1,6 +1,6 @@
 'use client'
 
-import { FieldSection, Lead, Prose, Figure, Split } from './kit'
+import { FieldSection, Lead, Prose, Insight, Figure, Split } from './kit'
 import { IaV1, IaFinal } from './IaDiagrams'
 import { birthPhoto } from '@/lib/cloudinary'
 
@@ -18,10 +18,12 @@ export default function SecArchitecture() {
             <Lead>The app opens straight into documentation, with no home screen and nothing to answer first.</Lead>
             <Prose>
               My first version opened by asking the parent where they were: before, during, or after the
-              birth, at home or in the hospital. I thought that was thorough, but in testing it read like
-              a form at the front desk while you’re still catching your breath. It was too many questions
-              before anything that mattered.
+              birth, at home or in the hospital.
             </Prose>
+            <Insight>
+              I thought that was thorough, but in testing it read like a form at the front desk while
+              you’re still catching your breath. It was too many questions before anything that mattered.
+            </Insight>
           </>
         }
       >

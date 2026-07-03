@@ -155,7 +155,10 @@
 .fCrumb { font-size: 1.08rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-ink); }
 .fWhen { margin-left: auto; align-self: center; font-size: 0.8rem; letter-spacing: 0.04em; color: var(--color-ink-light); }
 
-.flow { display: grid; gap: clamp(1.8rem, 4vw, 3.2rem); }
+/* minmax(0, 1fr) pins the implicit track to the sheet — otherwise one
+   max-content child widens the track and every section child rides past
+   the viewport on mobile */
+.flow { display: grid; grid-template-columns: minmax(0, 1fr); gap: clamp(1.8rem, 4vw, 3.2rem); }
 
 /* question — curiosity first */
 .askBlock { display: grid; gap: 0.7rem; max-width: 40rem; }

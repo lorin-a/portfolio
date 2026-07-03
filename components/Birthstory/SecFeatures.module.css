@@ -68,3 +68,10 @@
   .bookPair .screen { width: min(74vw, 280px); }
   .screen { width: min(80vw, 320px); }
 }
+/* phone widths: the device + the stage's padding must fit the sheet together,
+   or the stage's min-content stretches the section past the viewport */
+@media (max-width: 480px) {
+  .stage { padding-inline: clamp(0.7rem, 3vw, 1.4rem); }
+  .media { width: min(78vw, 320px); }
+  .screen, .bookPair .screen { width: min(70vw, 280px); }
+}

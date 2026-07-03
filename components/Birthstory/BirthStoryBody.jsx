@@ -145,7 +145,6 @@ function Brief() {
 
 function Research() {
   const feeding = birthPhoto('feeding', 1400) // Craig Adderley — mother + newborn skin to skin, hospital (natively B&W)
-  const gap = birthPhoto('gap', 1300) // William Fortunato — tired mother gazing at her sleeping newborn
   return (
     <FieldSection id="research" num="02" crumb="research" when="Week 2" alt wide>
       <Split
@@ -161,14 +160,6 @@ function Research() {
           </>
         }
       >
-        <Figure
-          tag="context"
-          photo
-          src={feeding.src}
-          byline={feeding.byline}
-          alt="A mother holds her newborn skin to skin in a hospital bed, her eyes closed, in black and white."
-          cap="A parent and newborn in the first hours after birth."
-        />
         <Figure
           tag="interviews"
           src="https://res.cloudinary.com/dc17mvdyv/image/upload/f_auto,q_auto,w_1300/v1782679668/UX_Interview.jpg"
@@ -219,10 +210,10 @@ function Research() {
         <Figure
           tag="context"
           photo
-          src={gap.src}
-          byline={gap.byline}
-          alt="A mother lies beside her sleeping newborn, head propped on her hand, gazing at the baby with a tired, pensive look."
-          cap="After birth, attention shifts to the baby; the parent’s own experience often goes unprocessed."
+          src={feeding.src}
+          byline={feeding.byline}
+          alt="A mother holds her newborn skin to skin in a hospital bed, her eyes closed, in black and white."
+          cap="A parent and newborn in the first hours after birth."
         />
       </Split>
 

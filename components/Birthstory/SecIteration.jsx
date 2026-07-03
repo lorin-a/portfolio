@@ -1,6 +1,6 @@
 'use client'
 
-import { FieldSection, Lead, Prose, Friction, Note, Split, Figure, sys } from './kit'
+import { FieldSection, Lead, Prose, Insight, Friction, TesterNote, Split, Figure, sys } from './kit'
 import { cloudImg } from '@/lib/cloudinary'
 import CritStage from './CritStage'
 import styles from './SecIteration.module.css'
@@ -19,7 +19,7 @@ const ROUNDS = [
   {
     label: 'Version 2 · Week 4',
     change: <>For the second version I consolidated everything into one filterable notes section and narrowed the flow to two actions, document and reflect, one at a time. It was clearer, but still too many options, and this round a tester caught the writing too.</>,
-    quote: 'Why “reclaim”? I’m not sure what it even means.',
+    quote: 'Why ‘reclaim’? I’m not sure what it even means.',
     who: 'Parent tester',
     shots: [['v2-1', 'V2 splash'], ['v2-2', 'V2 welcome'], ['v2-3', 'one menu']],
   },
@@ -55,7 +55,7 @@ function Round({ label, change, quote, who, crit, shots }) {
             <p className={`${sys.eyebrow} ${sys.up}`}>{label}</p>
             <Prose>{change}</Prose>
           </div>
-          {quote && <div className={sys.up}><Note who={who}>“{quote}”</Note></div>}
+          {quote && <TesterNote quote={quote} who={who} />}
         </>
       }
     >
@@ -83,7 +83,8 @@ export default function SecIteration() {
   return (
     <FieldSection id="iteration" num="04" crumb="iteration" when="Weeks 3–5" alt wide>
       <Lead>Each round of testing made the app simpler.</Lead>
-      <Prose>I put wireframes in front of parents three times and changed direction based on what they told me. Watching the versions in order, you can see the app calm down.</Prose>
+      <Prose>I put wireframes in front of parents three times and changed direction based on what they told me.</Prose>
+      <Insight>Watching the versions in order, you can see the app calm down.</Insight>
 
       {ROUNDS.map((r) => <Round key={r.label} {...r} />)}
 
