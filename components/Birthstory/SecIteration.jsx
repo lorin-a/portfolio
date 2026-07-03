@@ -82,9 +82,16 @@ function Round({ label, change, quote, who, crit, shots }) {
 export default function SecIteration() {
   return (
     <FieldSection id="iteration" num="04" crumb="iteration" when="Weeks 3–5" alt wide>
-      <Lead>Each round of testing made the app simpler.</Lead>
-      <Prose>I put wireframes in front of parents three times and changed direction based on what they told me.</Prose>
-      <Insight>Watching the versions in order, you can see the app calm down.</Insight>
+      <Split
+        text={
+          <>
+            <Lead>Each round of testing made the app simpler.</Lead>
+            <Prose>I put wireframes in front of parents three times and changed direction based on what they told me.</Prose>
+          </>
+        }
+      >
+        <Insight>Watching the versions in order, you can see the app calm down.</Insight>
+      </Split>
 
       {ROUNDS.map((r) => <Round key={r.label} {...r} />)}
 

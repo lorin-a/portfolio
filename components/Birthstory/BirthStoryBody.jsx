@@ -327,25 +327,27 @@ function Outcome() {
 function Close() {
   return (
     <FieldSection id="close" num="09" crumb="reflection" when="In hindsight">
-      <Lead>What I’d do differently, and what it taught me about how I work.</Lead>
-      <Prose>
-        If I did it again I’d start from the constraint instead of the possibilities: naming the core
-        need in the first week, less rather than more, would have saved me a whole build of tools nobody
-        asked for. The other thing I took from it is to only put something in a wireframe when it’s a
-        question I want feedback on.
-      </Prose>
-      <Prose>
-        The project follows a pattern I notice in myself: I’m a big dreamer, so I start by trying to do
-        everything, and almost always end up narrowing and narrowing until I get to the heart of it.
-        This was one of the first projects I led on the visual side, and it’s shaped how I wireframe ever
-        since.
-      </Prose>
-      <Prose>
-        Birth Story is still a concept. I designed it, and since then I’ve taught myself to prototype,
-        then to prompt engineer, and now I build with AI, including this site, so the screens here are
-        example flows rather than a finished product. Designing something and being able to build it
-        myself is the direction I’m headed.
-      </Prose>
+      <div className={sys.headCluster}>
+        <Lead>What I’d do differently, and what it taught me about how I work.</Lead>
+        <Prose>
+          If I did it again I’d start from the constraint instead of the possibilities: naming the core
+          need in the first week, less rather than more, would have saved me a whole build of tools nobody
+          asked for. The other thing I took from it is to only put something in a wireframe when it’s a
+          question I want feedback on.
+        </Prose>
+        <Prose>
+          The project follows a pattern I notice in myself: I’m a big dreamer, so I start by trying to do
+          everything, and almost always end up narrowing and narrowing until I get to the heart of it.
+          This was one of the first projects I led on the visual side, and it’s shaped how I wireframe ever
+          since.
+        </Prose>
+        <Prose>
+          Birth Story is still a concept. I designed it, and since then I’ve taught myself to prototype,
+          then to prompt engineer, and now I build with AI, including this site, so the screens here are
+          example flows rather than a finished product. Designing something and being able to build it
+          myself is the direction I’m headed.
+        </Prose>
+      </div>
       <p className={b.tools}>figma · svg repo · unsplash</p>
     </FieldSection>
   )

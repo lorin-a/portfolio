@@ -45,14 +45,22 @@
   letter-spacing: 0.14em; text-transform: uppercase; color: var(--bs-teal-soft);
 }
 .valuesList { margin: 0; padding: 0; list-style: none; display: grid; grid-template-columns: repeat(4, 1fr); gap: clamp(0.9rem, 1.8vw, 1.4rem); }
+/* same card DNA as the ask band: solid teal header bar, white body, grounded
+   elevation — the values read as siblings of Required / Provided, not a
+   flatter second system */
 .valuesList li {
-  display: flex; flex-direction: column; gap: 0.65rem;
-  padding: clamp(1.2rem, 2vw, 1.6rem);
-  background: #fff; border-radius: 14px;
-  box-shadow: 0 1px 2px rgba(26, 67, 77, 0.06), 0 14px 30px -18px rgba(26, 67, 77, 0.22), inset 0 0 0 1px var(--bs-hairline);
+  --pad: clamp(1.1rem, 2vw, 1.5rem);
+  display: flex; flex-direction: column;
+  padding: 0; overflow: hidden;
+  background: #fff; border-radius: 12px;
+  box-shadow: 0 1px 2px rgba(26, 67, 77, 0.06), 0 14px 30px -18px rgba(26, 67, 77, 0.22), 0 0 0 1px var(--bs-hairline);
 }
-.valueCat { font-family: var(--font-body); font-weight: 700; font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--bs-teal-soft); }
-.valueName { font-family: var(--font-heading); font-variation-settings: 'SOFT' 60, 'WONK' 0; font-weight: 400; font-size: clamp(1.12rem, 1rem + 0.4vw, 1.35rem); line-height: 1.28; color: var(--color-ink); text-wrap: pretty; }
+.valueCat {
+  padding: 0.62rem var(--pad);
+  background: var(--bs-accent); color: var(--color-cream);
+  font-family: var(--font-body); font-weight: 700; font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase;
+}
+.valueName { padding: 0.9rem var(--pad) var(--pad); font-family: var(--font-heading); font-variation-settings: 'SOFT' 60, 'WONK' 0; font-weight: 400; font-size: clamp(1.12rem, 1rem + 0.4vw, 1.35rem); line-height: 1.28; color: var(--color-ink); text-wrap: pretty; }
 @media (max-width: 760px) { .valuesList { grid-template-columns: 1fr 1fr; } }
 @media (max-width: 440px) { .valuesList { grid-template-columns: 1fr; } }
 

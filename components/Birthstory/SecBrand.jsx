@@ -1,6 +1,6 @@
 'use client'
 
-import { FieldSection, Lead, Prose, sys } from './kit'
+import { FieldSection, Lead, Prose, Insight, Split, sys } from './kit'
 import styles from './SecBrand.module.css'
 
 /* 07 — Visual design. Palette, type, and gradient documented as decisions: calm,
@@ -14,57 +14,68 @@ const PALETTE = [
 export default function SecBrand() {
   return (
     <FieldSection id="brand" num="07" crumb="visual design" when="Week 5" wide>
-      <Lead>Calm, emotionally intelligent, and deliberately non-clinical.</Lead>
-      <Prose>
-        Myana already used a gradient, so I built one here to tie the two together, and chose a lighter
-        pink into a darker teal because it let me hold two things at once: a gender spectrum, and the
-        emotional range of the day itself. Parents told me they’d mostly reach for this in the small
-        hours between feedings, so everything had to read gently to someone exhausted in the middle of
-        the night.
-      </Prose>
+      <Split
+        text={
+          <>
+            <Lead>Calm, emotionally intelligent, and deliberately non-clinical.</Lead>
+            <Prose>
+              Myana already used a gradient, so I built one here to tie the two together. Parents told
+              me they’d mostly reach for this in the small hours between feedings, so everything had to
+              read gently to someone exhausted in the middle of the night.
+            </Prose>
+          </>
+        }
+      >
+        <Insight>
+          I chose a lighter pink into a darker teal because it let me hold two things at once: a gender
+          spectrum, and the emotional range of the day itself.
+        </Insight>
+      </Split>
 
       <div className={`${styles.signature} ${sys.up}`}>
         <span className={styles.gWord}>Birth Story</span>
         <span className={styles.gNote}>blush → periwinkle → teal · the gradient that ties Birth Story to Myana</span>
       </div>
 
-      <div className={`${styles.specs} ${sys.up}`}>
-        <div className={styles.palette}>
-          <span className={sys.askKicker}>palette</span>
-          <div className={styles.swatches}>
-            {PALETTE.map(([hex, name]) => (
-              <div key={hex} className={styles.swatch}>
-                <span className={styles.chip} style={{ background: hex }} />
-                <span className={styles.sName}>{name}</span>
-                <span className={styles.sHex}>{hex}</span>
-              </div>
-            ))}
+      <div className={`${styles.lower} ${sys.up}`}>
+        <div className={styles.specsCol}>
+          <div className={styles.palette}>
+            <span className={sys.askKicker}>palette</span>
+            <div className={styles.swatches}>
+              {PALETTE.map(([hex, name]) => (
+                <div key={hex} className={styles.swatch}>
+                  <span className={styles.chip} style={{ background: hex }} />
+                  <span className={styles.sName}>{name}</span>
+                  <span className={styles.sHex}>{hex}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className={styles.type}>
+            <span className={sys.askKicker}>type</span>
+            <div className={styles.typeRow}><span className={styles.face}>Terfens</span><span className={styles.use}>titles</span></div>
+            <div className={styles.typeRow}><span className={`${styles.face} ${styles.body}`}>Gotham</span><span className={styles.use}>everything else</span></div>
           </div>
         </div>
-        <div className={styles.type}>
-          <span className={sys.askKicker}>type</span>
-          <div className={styles.typeRow}><span className={styles.face}>Terfens</span><span className={styles.use}>titles</span></div>
-          <div className={styles.typeRow}><span className={`${styles.face} ${styles.body}`}>Gotham</span><span className={styles.use}>everything else</span></div>
-        </div>
-      </div>
 
-      <figure className={`${styles.board} ${sys.up}`}>
-        <div className={styles.boardArt}>
-          <span className={styles.boardTab}>moodboard</span>
-          <img
-            src="/images/birthstory/moodboard.png"
-            alt="The Birth Story moodboard: Georgia O’Keeffe florals, lunar and gradient imagery, and wellness apps with orbiting members and keepsake books."
-            loading="lazy"
-            draggable="false"
-          />
-        </div>
-        <figcaption className={styles.boardCap}>
-          <span className={styles.boardSrc}>moodboard · figma</span>
-          <p className={styles.boardNote}>
-            O’Keeffe’s organic forms, lunar calm, and the orbiting-circle apps that became the Care Pod.
-          </p>
-        </figcaption>
-      </figure>
+        <figure className={styles.board}>
+          <div className={styles.boardArt}>
+            <span className={styles.boardTab}>moodboard</span>
+            <img
+              src="/images/birthstory/moodboard.png"
+              alt="The Birth Story moodboard: Georgia O’Keeffe florals, lunar and gradient imagery, and wellness apps with orbiting members and keepsake books."
+              loading="lazy"
+              draggable="false"
+            />
+          </div>
+          <figcaption className={styles.boardCap}>
+            <span className={styles.boardSrc}>moodboard · figma</span>
+            <p className={styles.boardNote}>
+              O’Keeffe’s organic forms, lunar calm, and the orbiting-circle apps that became the Care Pod.
+            </p>
+          </figcaption>
+        </figure>
+      </div>
     </FieldSection>
   )
 }

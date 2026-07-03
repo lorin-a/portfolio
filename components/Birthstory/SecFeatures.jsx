@@ -103,12 +103,14 @@ function Media({ f }) {
 export default function SecFeatures() {
   return (
     <FieldSection id="features" num="05" crumb="the product" when="Week 5" threshold={0.04} wide>
-      <Lead>Birth is unpredictable, so the app is deliberately simple.</Lead>
-      <Prose>
-        It opens into documenting and reaches everything else in a tap or two. None of the screens below
-        are flat mockups: I rebuilt the wireframes as working prototypes, so what you’re seeing is the
-        real interaction.
-      </Prose>
+      <div className={sys.headCluster}>
+        <Lead>Birth is unpredictable, so the app is deliberately simple.</Lead>
+        <Prose>
+          It opens into documenting and reaches everything else in a tap or two. None of the screens below
+          are flat mockups: I rebuilt the wireframes as working prototypes, so what you’re seeing is the
+          real interaction.
+        </Prose>
+      </div>
 
       <FeatureWall />
 
@@ -146,7 +148,24 @@ export default function SecFeatures() {
           </div>
 
           <div className={`${styles.stage} ${sys.up}`}>
-            {f.kind === 'book' ? <Media f={f} /> : <div className={styles.media}><Media f={f} /></div>}
+            {f.kind === 'doc' ? (
+              /* the annotated exemplar — the deck idiom (label · note · dotted
+                 leader) flanking the live screen, so the reasoning sits ON the
+                 artifact. Annotations hide at mobile; the caption takes over. */
+              <div className={styles.annotStage}>
+                <div className={`${styles.annot} ${styles.annotL}`}>
+                  <p className={sys.annotLabel}>One timeline</p>
+                  <p className={sys.annotText}>Medical, contextual, narrative, and feelings, tagged and filtered in one place.</p>
+                  <span className={sys.leader} aria-hidden="true" />
+                </div>
+                <div className={styles.media}><Media f={f} /></div>
+                <div className={`${styles.annot} ${styles.annotR}`}>
+                  <p className={sys.annotLabel}>The medical record</p>
+                  <p className={sys.annotText}>Entries stay closed until you open one; the detail lives a tap away.</p>
+                  <span className={sys.leader} aria-hidden="true" />
+                </div>
+              </div>
+            ) : f.kind === 'book' ? <Media f={f} /> : <div className={styles.media}><Media f={f} /></div>}
           </div>
         </div>
       ))}

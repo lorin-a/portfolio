@@ -15,8 +15,8 @@
   font-size: clamp(1.4rem, 1.15rem + 1vw, 1.95rem); line-height: 1.18; letter-spacing: -0.012em; color: var(--color-ink);
 }
 .featRole {
-  margin: 0; font-family: var(--font-body); font-weight: 600; font-size: 0.74rem;
-  letter-spacing: 0.04em; line-height: 1.45; color: var(--bs-teal-soft);
+  margin: 0; font-family: var(--font-body); font-weight: 600; font-size: 0.92rem;
+  letter-spacing: 0.02em; line-height: 1.5; color: var(--bs-teal-soft);
 }
 
 .feat + .feat {
@@ -55,7 +55,7 @@
 .whyFig { margin: 0.4rem 0 0; max-width: 100%; }
 
 .screen { margin: 0; display: grid; gap: 0.6rem; width: clamp(230px, 27vw, 300px); }
-.screenCap { font-family: var(--font-body); font-size: 0.78rem; line-height: 1.4; color: var(--color-ink-light); text-wrap: balance; }
+.screenCap { font-family: var(--font-body); font-size: 0.82rem; line-height: 1.45; color: var(--color-ink-light); text-wrap: balance; }
 
 @media (max-width: 860px) {
   .side, .bookFeat { grid-template-columns: 1fr; gap: clamp(1.4rem, 5vw, 2rem); }
@@ -68,6 +68,26 @@
   .bookPair .screen { width: min(74vw, 280px); }
   .screen { width: min(80vw, 320px); }
 }
+/* the annotated stage — deck-idiom notes flanking the device. The left note
+   right-aligns toward the screen; each carries the dotted leader that draws on
+   reveal. Offsets aim the notes at the screen regions they describe. */
+.annotStage { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: start; gap: clamp(1rem, 2.2vw, 1.8rem); width: 100%; }
+.annot { max-width: 15rem; display: grid; gap: 0.3rem; align-content: start; }
+.annotL { justify-self: end; text-align: right; margin-top: 15rem; }
+.annotR { justify-self: start; margin-top: 7.5rem; }
+@media (max-width: 1100px) {
+  .annotL { margin-top: 11rem; }
+  .annotR { margin-top: 5.5rem; }
+}
+@media (max-width: 860px) {
+  .annot { display: none; }
+  .annotStage { grid-template-columns: 1fr; justify-items: center; }
+}
+/* at desktop the right annotation carries the caption's content — don't say it twice */
+@media (min-width: 861px) {
+  .annotStage figcaption { display: none; }
+}
+
 /* phone widths: the device + the stage's padding must fit the sheet together,
    or the stage's min-content stretches the section past the viewport */
 @media (max-width: 480px) {

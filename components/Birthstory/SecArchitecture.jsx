@@ -1,6 +1,6 @@
 'use client'
 
-import { FieldSection, Lead, Prose, Insight, Figure, Split } from './kit'
+import { FieldSection, Lead, Prose, Insight, Figure, Split, sys } from './kit'
 import { IaV1, IaFinal } from './IaDiagrams'
 import { birthPhoto } from '@/lib/cloudinary'
 
@@ -44,16 +44,18 @@ export default function SecArchitecture() {
         <IaV1 />
       </Figure>
 
-      <Prose>
-        So I cut the questions entirely. The app opens straight into note-taking, the thing parents
-        most wanted, and onboarding introduces the rest, which stay in the nav bar the whole time.
-      </Prose>
-      <Prose>
-        I also stopped splitting the data up. The brief asked for four kinds of capture, medical,
-        contextual, narrative, and feelings, and instead of giving each its own corner I put them on one
-        timeline you tag and filter, because earlier versions that separated them tested as fragmented
-        and confusing.
-      </Prose>
+      <div className={sys.headCluster}>
+        <Prose>
+          So I cut the questions entirely. The app opens straight into note-taking, the thing parents
+          most wanted, and onboarding introduces the rest, which stay in the nav bar the whole time.
+        </Prose>
+        <Prose>
+          I also stopped splitting the data up. The brief asked for four kinds of capture, medical,
+          contextual, narrative, and feelings, and instead of giving each its own corner I put them on one
+          timeline you tag and filter, because earlier versions that separated them tested as fragmented
+          and confusing.
+        </Prose>
+      </div>
 
       <Figure
         tag="what shipped"

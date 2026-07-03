@@ -13,26 +13,29 @@
 .gWord { font-family: var(--font-heading); font-variation-settings: 'SOFT' 60, 'WONK' 0; font-weight: 400; font-size: clamp(1.9rem, 1.4rem + 1.8vw, 2.9rem); line-height: 1; color: #fff; }
 .gNote { font-family: var(--font-body); font-size: 0.72rem; letter-spacing: 0.02em; line-height: 1.4; color: rgba(255, 255, 255, 0.9); }
 
-/* the specimens — palette on the left, type on the right */
-.specs { display: grid; grid-template-columns: 1.5fr 0.9fr; align-items: start; gap: clamp(1.8rem, 4vw, 3.5rem); max-width: 62rem; }
+/* the lower band — specimens stacked left (palette over type), the moodboard
+   filling the right column, so the section carries its full width instead of
+   leaving the right half dead */
+.lower { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 40rem); align-items: start; gap: clamp(2rem, 4.5vw, 4.5rem); }
+.specsCol { display: grid; gap: clamp(1.8rem, 3.5vw, 2.8rem); align-content: start; }
 .palette { display: grid; gap: clamp(0.9rem, 2vw, 1.3rem); align-content: start; }
 
 .swatches { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0.6rem; }
 .swatch { display: grid; gap: 0.3rem; }
 .chip { height: 46px; border-radius: 8px; box-shadow: inset 0 0 0 1px rgba(26, 67, 77, 0.1); }
-.sName { font-family: var(--font-body); font-size: 0.68rem; color: var(--color-ink); }
-.sHex { font-family: var(--font-body); font-size: 0.58rem; letter-spacing: 0.02em; color: var(--color-ink-faint); }
+.sName { font-family: var(--font-body); font-size: 0.78rem; color: var(--color-ink); }
+.sHex { font-family: var(--font-body); font-size: 0.68rem; letter-spacing: 0.02em; color: var(--color-ink-faint); }
 
 .type { display: grid; gap: clamp(0.9rem, 2vw, 1.3rem); align-content: start; }
 .typeRow { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; padding-bottom: 0.6rem; border-bottom: 1px solid var(--bs-hairline); }
 .face { font-family: var(--font-heading); font-variation-settings: 'SOFT' 60, 'WONK' 0; font-weight: 400; font-size: clamp(1.3rem, 1rem + 1vw, 1.75rem); color: var(--bs-accent); }
 .body { font-family: var(--font-body); font-weight: 700; }
-.use { font-family: var(--font-body); font-size: 0.7rem; color: var(--color-ink-light); }
+.use { font-family: var(--font-body); font-size: 0.8rem; color: var(--color-ink-light); }
 
 /* moodboard — a single compact, contained artifact. The image sits in a white
    card with the source + reading stacked beneath it, so nothing floats in a
    half-empty margin column (the old wide plate left a large upper-right void). */
-.board { margin: 0; max-width: 38rem; display: grid; gap: 0.85rem; }
+.board { margin: 0; display: grid; gap: 0.85rem; }
 .boardArt {
   position: relative; padding: clamp(0.7rem, 1.4vw, 1.1rem);
   background: #fff; border-radius: 6px;
@@ -51,8 +54,8 @@
   font-family: var(--font-body); font-style: italic; font-size: 0.86rem; line-height: 1.5; color: var(--color-ink-light);
 }
 
-@media (max-width: 760px) {
-  .specs { grid-template-columns: 1fr; gap: clamp(1.4rem, 5vw, 2.2rem); }
+@media (max-width: 900px) {
+  .lower { grid-template-columns: 1fr; gap: clamp(1.8rem, 5vw, 2.6rem); }
   .swatches { grid-template-columns: repeat(5, 1fr); }
 }
 @media (max-width: 440px) {

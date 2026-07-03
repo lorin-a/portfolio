@@ -185,6 +185,11 @@
 /* a labeled sub-block inside a section: an eyebrow over running prose */
 .subBlock { display: grid; gap: 0.7rem; max-width: 44rem; }
 
+/* head cluster — Lead + its body prose held tight as one thought, so the full
+   .flow gap reads as the break BETWEEN thoughts, not inside them. Use in
+   sections whose opening isn't already clustered by a Split. */
+.headCluster { display: grid; gap: clamp(0.9rem, 1.8vw, 1.3rem); }
+
 /* running first-person prose — the autobiographical body voice. Body typeface,
    not Fraunces; Fraunces is reserved for leads, headings, and callouts. */
 .prose {
