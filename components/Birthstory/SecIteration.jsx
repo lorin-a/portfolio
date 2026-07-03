@@ -29,6 +29,7 @@ const ROUNDS = [
     change: <>By the third version I kept only the features parents came back to, and left room to go deeper.</>,
     quote: null,
     who: null,
+    friction: true, // "what I couldn't test" rides V3's copy column, not a floating line
     shots: [['v3-2', 'final home'], ['v3-4', 'Birth Story Book'], ['v3-5', 'search']],
   },
 ]
@@ -51,7 +52,7 @@ function Screen({ id, cap }) {
    column left — version marker, the change, and any margin voice — with the
    artifact large on the right inside the gradient stage; the pinned tester
    quote lives INSIDE the stage, part of the feature container. */
-function Round({ label, change, quote, who, crit, shots, note }) {
+function Round({ label, change, quote, who, crit, shots, note, friction }) {
   return (
     <div className={styles.round}>
       <div className={styles.copy}>
@@ -61,6 +62,13 @@ function Round({ label, change, quote, who, crit, shots, note }) {
         </div>
         {quote && <TesterNote quote={quote} who={who} />}
         {note && <Insight>{note}</Insight>}
+        {friction && (
+          <Friction tag="what I couldn’t test">
+            A six-week studio can’t show whether parents come back weeks later, once the fog has lifted.
+            That return is the whole promise of the product, so it’s the part I most wish I had been able
+            to test.
+          </Friction>
+        )}
       </div>
 
       <div className={`${styles.stage} ${sys.up}`}>
@@ -97,18 +105,12 @@ export default function SecIteration() {
 
       {ROUNDS.map((r) => <Round key={r.label} {...r} />)}
 
-      <Friction tag="what I couldn’t test">
-        A six-week studio can’t show whether parents come back weeks later, once the fog has lifted.
-        That return is the whole promise of the product, so it’s the part I most wish I had been able to
-        test.
-      </Friction>
-
       <Figure
         photo
         tag="the crit wall"
         className={styles.critWall}
         ratio="16 / 7"
-        src={cloudImg('class_notes', 2000)}
+        src={cloudImg('class_notes', 2000, { effects: ['white_balance', 'improve'] })} /* brightened + color-corrected: the board reads white, the marker stays legible */
         alt="A whiteboard from the final review: printed app screens taped up in two columns labeled Gradient and Color Block, covered in red and orange handwritten feedback about tags, icons, the gradient, and touch-target sizes."
         cap="The final review: every screen printed and marked up, with the gradient-versus-color-block decision worked out in red."
       />
