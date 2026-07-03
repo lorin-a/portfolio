@@ -58,8 +58,9 @@
 .send { display: flex; align-items: center; justify-content: space-between; margin: 0 9cqw 3.5cqh; padding: 4cqw 5.5cqw; border-radius: 5cqw; background: rgba(173,173,196,0.6); font-family: var(--font-body); font-weight: 700; font-size: 5.2cqw; color: #fff; backdrop-filter: blur(3px); }
 .sendPlus { display: grid; place-items: center; width: 10cqw; height: 10cqw; border-radius: 50%; border: 1.5px solid rgba(255,255,255,0.85); font-weight: 400; font-size: 6cqw; }
 
-/* ── bottom nav ── */
-.nav { display: flex; align-items: center; justify-content: space-around; padding: 4.5cqh 6cqw 7cqh; background: #fbfaf7; border-radius: 8cqw 8cqw 0 0; }
+/* ── bottom nav — held to real iOS tab-bar proportions (~11% of screen with
+   the FAB; the old 4.5/7cqh pads read ~16%, visibly taller than the design) ── */
+.nav { display: flex; align-items: center; justify-content: space-around; padding: 2.4cqh 6cqw 3.2cqh; background: #fbfaf7; border-radius: 8cqw 8cqw 0 0; }
 .navIcon { width: 7cqw; height: 7cqw; color: #1a434d; }
 .fab { display: grid; place-items: center; width: 12.5cqw; height: 12.5cqw; border-radius: 50%; background: linear-gradient(150deg, #e3c2cb, #8089c2); color: #fff; font-weight: 300; font-size: 8cqw; box-shadow: 0 2cqw 5cqw rgba(13,24,30,0.25); }
 

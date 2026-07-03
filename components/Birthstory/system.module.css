@@ -133,8 +133,11 @@
    cooler paper. Every section composes these via kit's FieldSection.
    ============================================================================ */
 
+/* rhythm: between-section padding and within-section flow gap are tuned as a
+   pair (~3.4:1) — the old 11vh/9rem pads put ~290px of empty paper between
+   chapters while thoughts inside sat at ~50px, which read as inconsistent */
 .field {
-  padding: clamp(4.5rem, 11vh, 9rem) var(--bs-pad);
+  padding: clamp(3.5rem, 8vh, 6.5rem) var(--bs-pad);
   scroll-margin-top: 9.75rem; /* clear the fixed nav + sticky progress bar on jump */
   background-color: var(--bs-paper);
   background-image: radial-gradient(rgba(26, 67, 77, 0.05) 1px, transparent 1px);
@@ -158,7 +161,7 @@
 /* minmax(0, 1fr) pins the implicit track to the sheet — otherwise one
    max-content child widens the track and every section child rides past
    the viewport on mobile */
-.flow { display: grid; grid-template-columns: minmax(0, 1fr); gap: clamp(1.8rem, 4vw, 3.2rem); }
+.flow { display: grid; grid-template-columns: minmax(0, 1fr); gap: clamp(2.2rem, 4.5vw, 3.8rem); }
 
 /* question — curiosity first */
 .askBlock { display: grid; gap: 0.7rem; max-width: 40rem; }

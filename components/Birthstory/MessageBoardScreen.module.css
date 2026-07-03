@@ -44,8 +44,8 @@
 .left .bubble { border-bottom-left-radius: 1cqw; }
 .right .bubble { background: #dfe7ec; border-bottom-right-radius: 1cqw; }
 
-/* ── bottom nav ── */
-.nav { display: flex; align-items: center; justify-content: space-around; padding: 8.7cqw 6cqw 15.2cqw; background: #fbfaf7; }
+/* ── bottom nav — real iOS tab-bar proportions, matching the Care Pod bar ── */
+.nav { display: flex; align-items: center; justify-content: space-around; padding: 5.2cqw 6cqw 7cqw; background: #fbfaf7; }
 .navIcon { width: 7cqw; height: 7cqw; color: #1a434d; }
 .fab { display: grid; place-items: center; width: 12.5cqw; height: 12.5cqw; border-radius: 50%; background: linear-gradient(150deg, #e3c2cb, #8089c2); color: #fff; font-weight: 300; font-size: 8cqw; box-shadow: 0 2cqw 5cqw rgba(13,24,30,0.25); }
 
