@@ -63,7 +63,7 @@ export default function SecArchitecture() {
         </Figure>
       </div>
 
-      <div className={sys.headCluster}>
+      <div className={a.reasonCols}>
         <Prose>
           So I cut the questions entirely. The app opens straight into note-taking, the thing parents
           most wanted, and onboarding introduces the rest, which stay in the nav bar the whole time.

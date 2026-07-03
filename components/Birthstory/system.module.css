@@ -17,12 +17,13 @@
   --bs-peri: #B1C1F4;
   --bs-lav: #E6E5FD;
   --bs-accent: var(--bs-teal);
-  /* crit voice — tester feedback in a rose ink derived from the brand blush
-     (#DBADAD), so the two margin voices are the gradient's two poles: teal =
-     the designer's thinking, rose = the testers'. 6.1:1 on white. */
-  --bs-crit: #8E5059;
-  --bs-crit-soft: #A56A72;  /* pin ring + leader */
-  --bs-crit-line: rgba(142, 80, 89, 0.28);
+  /* crit voice — tester feedback in a deep blush PINK (the brand gradient's
+     pole, #DBADAD's dark sibling — decisively not rust/orange), so the two
+     margin voices are the gradient's two poles: teal = the designer's
+     thinking, blush = the testers'. 5.5:1 on white. */
+  --bs-crit: #9E5266;
+  --bs-crit-soft: #B47283;  /* pin ring + leader */
+  --bs-crit-line: rgba(158, 82, 102, 0.28);
   --bs-crit-wash: rgba(219, 173, 173, 0.12);
   --bs-wide: 76rem;
   --bs-pad: clamp(1.5rem, 5vw, 6rem);
@@ -273,13 +274,16 @@
   margin: 0; font-family: var(--font-heading); font-variation-settings: 'SOFT' 60, 'WONK' 0; font-weight: 400;
   font-size: clamp(1.08rem, 1rem + 0.42vw, 1.34rem); line-height: 1.38; color: var(--color-ink); text-wrap: pretty;
 }
+/* narrow: a margin-note proportion for when the card sits alone in a wide
+   column — a 40rem two-liner there reads as a banner, not a note */
+.insightNarrow { max-width: 26rem; }
 
 /* standalone tester callout — the crit voice, no pin or leader */
 .testerNote {
   position: relative; margin: 0.7rem 0 0; max-width: 32rem; display: grid; gap: 0.55rem;
   padding: clamp(1.3rem, 2.6vw, 1.7rem) clamp(1.3rem, 2.8vw, 1.7rem) clamp(1.1rem, 2.4vw, 1.5rem);
   background: #fff; border-radius: 12px;
-  box-shadow: 0 1px 2px rgba(142, 80, 89, 0.06), 0 14px 30px -18px rgba(142, 80, 89, 0.24), 0 0 0 1px var(--bs-crit-line);
+  box-shadow: 0 1px 2px rgba(158, 82, 102, 0.06), 0 14px 30px -18px rgba(158, 82, 102, 0.24), 0 0 0 1px var(--bs-crit-line);
 }
 .testerKicker {
   position: absolute; top: -0.7rem; left: 1rem;

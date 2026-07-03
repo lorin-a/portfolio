@@ -26,7 +26,7 @@ export default function SecBrand() {
           </>
         }
       >
-        <Insight>
+        <Insight narrow>
           I chose a lighter pink into a darker teal because it let me hold two things at once: a gender
           spectrum, and the emotional range of the day itself.
         </Insight>

@@ -120,9 +120,9 @@ export function SubBlock({ label, children }) {
    face, labeled, so a reader always knows this is Lorin's reasoning, not the
    brief or the process. Pairs with TesterNote (terracotta) as the two margin
    voices. */
-export function Insight({ children, label = 'My thinking' }) {
+export function Insight({ children, label = 'My thinking', narrow = false }) {
   return (
-    <aside className={`${s.insight} ${s.up}`}>
+    <aside className={`${s.insight} ${narrow ? s.insightNarrow : ''} ${s.up}`}>
       <span className={s.insightTag}>{label}</span>
       <p className={s.insightText}>{children}</p>
     </aside>

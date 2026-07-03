@@ -80,8 +80,10 @@ function Round({ label, change, quote, who, crit, shots }) {
 }
 
 export default function SecIteration() {
+  // no section-level week stamp — the three version markers below are the
+  // one canonical timeline (V1 · Week 3 → V3 · Week 5)
   return (
-    <FieldSection id="iteration" num="04" crumb="iteration" when="Weeks 3–5" alt wide>
+    <FieldSection id="iteration" num="04" crumb="iteration" alt wide>
       <Split
         text={
           <>
@@ -90,7 +92,7 @@ export default function SecIteration() {
           </>
         }
       >
-        <Insight>Watching the versions in order, you can see the app calm down.</Insight>
+        <Insight narrow>Watching the versions in order, you can see the app calm down.</Insight>
       </Split>
 
       {ROUNDS.map((r) => <Round key={r.label} {...r} />)}
