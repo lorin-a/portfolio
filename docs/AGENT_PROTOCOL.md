@@ -8,17 +8,6 @@ Standing operating rules for Claude on this project. These are binding — not p
 - **Default to subagents for anything >3 searches.** Asset audits, "where is X used," cross-file consistency checks all go to `Explore`. Main context stays clean for design judgment, not file hunting.
 - **Pipe-test scripts before wiring them in.** Hooks, build scripts, validation commands — synthesize the input, run the raw command, confirm exit code AND side effect. Never wire untested.
 
-## Model routing
-
-Spend the best model on the work that *decides* quality; never on the substrate. The goal is best-of-best where it matters — reserve the premium so it isn't eaten on trivia, not to be cheap.
-
-- **Fable 5 — the innovation partner. Deliberate, main-thread.** For vision alignment, UXUI / interaction / layout ideation, design-finesse breakthroughs, hard strategy, and research synthesis where the *insight* is the deliverable — the moments where the job is to run with Lorin's vision and make something she couldn't have reached alone. Fable navigates ambiguity, infers intent from context, and pushes back instead of executing literally. Give it the goal and the *why*, not step-by-step prescription — over-instructing it lowers its quality. Enter these sessions on Fable via `/model`; this is where the premium is spent on purpose.
-- **Opus 4.8 — high-bar execution. Main-thread default.** Normal build / motion / copy sessions where the vision is set and the job is executing it beautifully. Best voice in the family — for prose and voice specifically, prefer Opus even inside a Fable session. Everything customer-facing passes through Opus.
-- **Haiku 4.5 — substrate. Delegated.** grep/glob sweeps, file moves, Cloudinary export bookkeeping, curly-quote and typo scans, token/CSS audits, `Explore` readers whose job is *locate*, not *judge*. Downroute only behind a cheap check: mechanically verifiable (file moved, exports present, audit returns a clean list) or flows straight back up for the judgment call.
-- **Sonnet 5 — research deep-reads.** Reading many sources to pull facts; synthesis returns to Opus or Fable.
-
-That's how "best of the best without it eating all my tokens" works: Fable on purpose for the vision and innovation work, Opus for execution, Haiku for the invisible substrate.
-
 ## Handoff discipline
 
 - **Targeted taste callouts, not "let me know what you think."** Every handoff names the element and the question. Bad: "Scene 4 ready, thoughts?" Good: "Scene 4: watch fragments 2→3 transition. Question: does the held beat feel right or rushed?"
