@@ -19,7 +19,7 @@ export default function Footer() {
           GitHub
         </a>
         <a
-          href="https://drive.google.com/file/d/1OD6T3sargcPE8hm1j1PFZjchY_ZSNJX3/view"
+          href="https://drive.google.com/file/d/1v7_2V-vi9BQ3RgRMzg0MJNVb3Q-i_Iaq/view"
           target="_blank"
           rel="noopener noreferrer"
         >
