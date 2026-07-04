@@ -138,9 +138,9 @@
 }
 .codaInner { max-width: 42rem; margin: 0 auto; display: grid; justify-items: center; text-align: center; gap: clamp(1.8rem, 4vw, 2.7rem); }
 .codaLine {
-  margin: 0; max-width: 22ch;
+  margin: 0; max-width: 30ch;
   font-family: var(--font-heading); font-variation-settings: 'SOFT' 60, 'WONK' 0; font-style: italic; font-weight: 360;
-  font-size: clamp(1.7rem, 1.3rem + 1.7vw, 2.7rem); line-height: 1.22; letter-spacing: -0.012em;
+  font-size: clamp(1.45rem, 1.15rem + 1.3vw, 2.15rem); line-height: 1.34; letter-spacing: -0.01em;
   color: #fff; text-wrap: balance;
 }
 .codaActions { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 1rem 1.6rem; }
