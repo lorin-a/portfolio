@@ -351,6 +351,10 @@ function Close() {
       </div>
       <dl className={`${b.colophon} ${sys.up}`}>
         <div className={b.colRow}>
+          <dt>Consent</dt>
+          <dd>Participant quotes appear with their consent; names are withheld.</dd>
+        </div>
+        <div className={b.colRow}>
           <dt>Tools</dt>
           <dd>Figma (wireframes and visual design) · Claude Code (the working prototypes on this page)</dd>
         </div>
