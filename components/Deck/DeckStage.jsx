@@ -16,7 +16,7 @@ import { prefersReducedMotion } from './useDeckBuild'
      render: ({ active, step }) => JSX,
    }>
 */
-export default function DeckStage({ slides, caseLabel = 'Birth Story', timeDial = null, badge = 'Draft · frame demo' }) {
+export default function DeckStage({ slides, caseLabel = 'Birth Story', timeDial = null, badge = 'Draft · frame demo', showHint = true, jumpTo = null, stageStyle = undefined }) {
   const [slide, setSlide] = useState(0)
   const [step, setStep] = useState(0)
   const [reduce, setReduce] = useState(false)
@@ -84,6 +84,14 @@ export default function DeckStage({ slides, caseLabel = 'Birth Story', timeDial 
 
   // guard the single render between a cut change and the reset effect
   const idx = Math.min(slide, slides.length - 1)
+  // editor can drive the deck to a specific beat (to preview what's being edited)
+  useEffect(() => {
+    if (jumpTo == null) return
+    const i = slides.findIndex((sl) => sl.id === jumpTo.id)
+    if (i >= 0) { setSlide(i); setStep(Math.max(0, stepsFor(i) - 1)) }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [jumpTo])
+
   const current = slides[idx]
   const atStart = slide === 0 && step === 0
   const atEnd = slide === lastSlide && step === stepsFor(lastSlide) - 1
@@ -102,14 +110,16 @@ export default function DeckStage({ slides, caseLabel = 'Birth Story', timeDial 
   }, [slide, stepsFor])
 
   return (
-    <div className={s.deck} role="application" aria-label={`${caseLabel} deck`}>
+    <div className={s.deck} role="application" aria-label={`${caseLabel} deck`} style={stageStyle}>
       <span className={s.badge}>
         <span className={s.badgeDot} aria-hidden="true" />
         {badge}
       </span>
-      <p className={s.hint} aria-hidden="true">
-        <kbd>←</kbd> <kbd>→</kbd> to move
-      </p>
+      {showHint && (
+        <p className={s.hint} aria-hidden="true">
+          <kbd>←</kbd> <kbd>→</kbd> to move
+        </p>
+      )}
 
       <div className={s.stageWrap}>
         <div className={s.stage}>

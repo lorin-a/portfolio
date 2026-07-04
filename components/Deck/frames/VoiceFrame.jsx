@@ -3,6 +3,7 @@
 import { useRef } from 'react'
 import { gsap } from '@/lib/gsap'
 import { useDeckBuild } from '../useDeckBuild'
+import { renderText } from '../text'
 import f from '../frames.module.css'
 
 /* VOICE — the human register. Content-driven: when the quote is the specimen,
@@ -28,7 +29,7 @@ export default function VoiceFrame({ active, step, chip, quote, attribution, pla
           .addLabel('step-1')
       }
     },
-    deps: [quote, attribution, placeholder],
+    deps: [Boolean(attribution), placeholder],
   })
 
   return (
@@ -40,9 +41,9 @@ export default function VoiceFrame({ active, step, chip, quote, attribution, pla
           <span className={f.voiceQuotePlaceholder}>{quote}</span>
         </blockquote>
       ) : (
-        <blockquote data-quote className={f.voiceQuote} style={{ margin: 0 }}>“{quote}”</blockquote>
+        <blockquote data-quote className={f.voiceQuote} style={{ margin: 0 }}>“{renderText(quote)}”</blockquote>
       )}
-      {attribution && <p data-attr className={f.voiceAttr}>{attribution}</p>}
+      {attribution && <p data-attr className={f.voiceAttr}>{renderText(attribution)}</p>}
     </figure>
   )
 }

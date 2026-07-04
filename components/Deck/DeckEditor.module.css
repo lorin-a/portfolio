@@ -1,0 +1,123 @@
+/* Cockpit editor chrome. Lives outside DeckStage's token scope, so it defines
+   its own. Quiet, utilitarian — the deck is the subject; this is the workbench. */
+.wrap {
+  --drawer-w: 340px;
+  --accent: #1A434D;
+  --accent-soft: #466F7B;
+  --ink: #2C2C2C;
+  --ink-light: #5A5550;
+  --ink-faint: #7A7570;
+  --paper: #FAFAFA;
+  --line: rgba(26, 67, 77, 0.14);
+  --wash: rgba(26, 67, 77, 0.05);
+  font-family: var(--font-body);
+}
+
+.editToggle {
+  position: fixed;
+  top: clamp(0.75rem, 2vh, 1.4rem);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 40;
+  min-height: 2.4rem;
+  padding: 0 1.1rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(4px);
+  color: var(--accent);
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition: background var(--motion-fast) var(--ease-out), color var(--motion-fast) var(--ease-out);
+}
+.editToggle:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.editToggleOn { background: var(--accent); color: var(--paper); border-color: var(--accent); }
+
+.drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 30;
+  width: var(--drawer-w);
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border-left: 1px solid var(--line);
+  box-shadow: -24px 0 48px -32px rgba(26, 67, 77, 0.4);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.drawerHead { padding: 1.2rem 1.1rem 0.9rem; border-bottom: 1px solid var(--line); }
+.drawerTitle { margin: 0 0 0.3rem; font-family: var(--font-heading); font-weight: 500; font-size: 1.1rem; color: var(--ink); }
+.drawerNote { margin: 0; font-size: 0.76rem; line-height: 1.45; color: var(--ink-faint); }
+
+.list { list-style: none; margin: 0; padding: 0.5rem 0.6rem; display: grid; gap: 0.25rem; }
+.row {
+  display: grid;
+  grid-template-columns: auto auto 1fr;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.3rem 0.4rem;
+  border-radius: 8px;
+}
+.rowSel { background: var(--wash); }
+.rowOff { opacity: 0.5; }
+
+.rowMove { display: grid; gap: 0.15rem; }
+.iconBtn {
+  display: grid; place-content: center;
+  width: 1.7rem; height: 1.35rem;
+  border: 1px solid var(--line); border-radius: 5px;
+  background: #fff; color: var(--accent); font-size: 0.7rem; cursor: pointer;
+}
+.iconBtn:hover:not(:disabled) { background: var(--wash); }
+.iconBtn:disabled { opacity: 0.3; cursor: default; }
+.iconBtn:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+
+.rowInc { display: grid; place-content: center; }
+.rowInc input { width: 1.05rem; height: 1.05rem; accent-color: var(--accent); cursor: pointer; }
+
+.rowLabel {
+  display: grid; gap: 0.05rem; text-align: left;
+  border: 0; background: transparent; cursor: pointer; padding: 0.2rem 0.1rem; min-width: 0;
+}
+.rowBeat { font-size: 0.82rem; font-weight: 600; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.rowMeta { font-size: 0.66rem; letter-spacing: 0.04em; color: var(--ink-faint); text-transform: capitalize; }
+.rowLabel:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; border-radius: 4px; }
+
+.fields { padding: 0.9rem 1.1rem 1.4rem; border-top: 1px solid var(--line); display: grid; gap: 0.7rem; }
+.fieldsHead { display: flex; align-items: baseline; justify-content: space-between; gap: 0.5rem; }
+.fieldsTitle { font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); }
+.hiddenTag { font-size: 0.64rem; color: var(--ink-faint); font-style: italic; }
+
+.field { display: grid; gap: 0.25rem; }
+.fieldLabel { font-size: 0.66rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-faint); }
+.input {
+  width: 100%;
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  line-height: 1.4;
+  color: var(--ink);
+  padding: 0.45rem 0.55rem;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: #fff;
+  resize: vertical;
+}
+.input:focus-visible { outline: 2px solid var(--accent); outline-offset: 0; border-color: var(--accent); }
+.tip { margin: 0.1rem 0 0; font-size: 0.68rem; color: var(--ink-faint); }
+
+.srOnly {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+}
+
+@media (max-width: 720px) {
+  .wrap { --drawer-w: 100vw; }
+  .editToggle { z-index: 50; }
+}

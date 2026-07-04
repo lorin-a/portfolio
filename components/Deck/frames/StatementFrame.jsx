@@ -3,6 +3,7 @@
 import { useRef } from 'react'
 import { gsap } from '@/lib/gsap'
 import { useDeckBuild } from '../useDeckBuild'
+import { renderText } from '../text'
 import f from '../frames.module.css'
 
 /* STATEMENT — the sparse register. Content-driven: opens either on a FIGURE
@@ -28,7 +29,7 @@ export default function StatementFrame({ active, step, eyebrow, figure, headline
           .addLabel('step-1')
       }
     },
-    deps: [figure?.from, figure?.to, headline, caption],
+    deps: [Boolean(figure), Boolean(caption)],
   })
 
   return (
@@ -42,10 +43,10 @@ export default function StatementFrame({ active, step, eyebrow, figure, headline
           <span className={f.to}>{figure.to}</span>
         </p>
       ) : (
-        <h2 data-hero className={f.statementLine}>{headline}</h2>
+        <h2 data-hero className={f.statementLine}>{renderText(headline)}</h2>
       )}
 
-      {caption && <p data-cap className={figure ? f.statementCap : f.statementCap}>{caption}</p>}
+      {caption && <p data-cap className={f.statementCap}>{renderText(caption)}</p>}
     </div>
   )
 }

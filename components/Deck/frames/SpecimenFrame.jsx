@@ -3,6 +3,7 @@
 import { useRef } from 'react'
 import { gsap } from '@/lib/gsap'
 import { useDeckBuild } from '../useDeckBuild'
+import { renderText } from '../text'
 import f from '../frames.module.css'
 
 /* SPECIMEN — the evidence register. Content-driven: an asserting headline, one
@@ -33,22 +34,22 @@ export default function SpecimenFrame({ active, step, headline, media, annotatio
           .addLabel(`step-${i + 1}`)
       })
     },
-    deps: [headline, media?.src, annotations.length],
+    deps: [media?.kind, annotations.length],
   })
 
   return (
     <div ref={root} className={`${f.frame} ${f.specimen}`}>
       <div className={f.specimenText}>
-        <h2 data-head className={f.specimenHead}>{headline}</h2>
+        <h2 data-head className={f.specimenHead}>{renderText(headline)}</h2>
         {annotations.length > 0 && (
           <div className={f.annots}>
             {annotations.map((a, i) => (
               <div data-annot={i} key={i} className={f.annot}>
                 <div className={f.annotRow}>
                   <span className={f.annotDot} aria-hidden="true" />
-                  <p className={f.annotLabel}>{a.label}</p>
+                  <p className={f.annotLabel}>{renderText(a.label)}</p>
                 </div>
-                {a.text && <p className={f.annotText}>{a.text}</p>}
+                {a.text && <p className={f.annotText}>{renderText(a.text)}</p>}
                 <span data-leader={i} className={f.leader} aria-hidden="true" />
               </div>
             ))}

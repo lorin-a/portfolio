@@ -3,6 +3,7 @@
 import { useRef } from 'react'
 import { gsap } from '@/lib/gsap'
 import { useDeckBuild } from '../useDeckBuild'
+import { renderText } from '../text'
 import f from '../frames.module.css'
 
 /* DIAGRAM — the structure register. Content-driven: a set of labeled items
@@ -51,12 +52,12 @@ export default function DiagramFrame({
         tl.addLabel(`step-${s}`)
       }
     },
-    deps: [headline, items.length, turn?.a, dest?.label, collapse],
+    deps: [items.length, Boolean(turn), Boolean(dest), Boolean(gateLabel), collapse],
   })
 
   return (
     <div ref={root} className={`${f.frame} ${f.diagram}`}>
-      <h2 data-head className={f.diagramHead}>{headline}</h2>
+      <h2 data-head className={f.diagramHead}>{renderText(headline)}</h2>
 
       <div className={f.flow}>
         <div className={f.gate}>
@@ -64,7 +65,7 @@ export default function DiagramFrame({
           {items.map((it, i) => (
             <div data-item key={i} className={f.qcard}>
               {it.n != null && <span className={f.qcardNum}>{it.n}</span>}
-              <p className={f.qcardText}>{it.label ? <b>{it.label}. </b> : null}{it.text}</p>
+              <p className={f.qcardText}>{it.label ? <b>{it.label}. </b> : null}{renderText(it.text)}</p>
             </div>
           ))}
         </div>
@@ -72,14 +73,14 @@ export default function DiagramFrame({
         {turn && (
           <div data-turn className={f.turn}>
             <span className={f.turnFig}>{turn.a} <span aria-hidden="true">→</span> <span className={f.to}>{turn.b}</span></span>
-            {turn.label && <span className={f.turnLabel}>{turn.label}</span>}
+            {turn.label && <span className={f.turnLabel}>{renderText(turn.label)}</span>}
           </div>
         )}
 
         {dest && (
           <div data-dest className={f.dest}>
-            <span className={f.destNode}><span className={f.destNodeLabel}>{dest.label}</span></span>
-            {dest.sub && <p className={f.destSub}>{dest.sub}</p>}
+            <span className={f.destNode}><span className={f.destNodeLabel}>{renderText(dest.label)}</span></span>
+            {dest.sub && <p className={f.destSub}>{renderText(dest.sub)}</p>}
           </div>
         )}
       </div>
