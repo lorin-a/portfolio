@@ -131,12 +131,13 @@ export function Insight({ children, label = 'My thinking', narrow = false }) {
 
 /* a standalone "a tester said" callout — the crit card without the pinned
    artifact or the leader line, for places the quote stands on its own. */
-export function TesterNote({ quote, who = 'Parent tester', kicker = 'a tester said' }) {
+export function TesterNote({ quote, who = 'Parent tester', kicker = 'a tester said', summary = false }) {
   return (
-    <figure className={`${s.testerNote} ${s.up}`}>
+    <figure className={`${s.testerNote} ${summary ? s.testerSummary : ''} ${s.up}`}>
       <figcaption className={s.testerKicker}>{kicker}</figcaption>
-      <p className={s.testerQuote}>“{quote}”</p>
-      <p className={s.testerWho}>{who}</p>
+      {/* summary = paraphrased feedback (no quote marks); only verbatim quotes wear the marks */}
+      <p className={s.testerQuote}>{summary ? quote : `“${quote}”`}</p>
+      {who && <p className={s.testerWho}>{who}</p>}
     </figure>
   )
 }

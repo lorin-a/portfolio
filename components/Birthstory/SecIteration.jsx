@@ -14,14 +14,16 @@ const ROUNDS = [
     label: 'Version 1 · Week 3',
     change: <>The first version tried to do everything, with a tool for every situation and sub-menus inside menus. It was disorienting.</>,
     note: 'Watching the versions in order, you can see the app calm down.',
-    crit: { pin: { x: 50, y: 61 }, quote: 'Onboarding is nice, but there are too many buttons and options.', who: 'Parent tester' },
+    crit: { pin: { x: 50, y: 61 }, summary: true, kicker: 'the feedback', quote: 'Too many menus, too many buttons; the first build tried to do everything.', who: null },
     shots: [['v1-3', 'V1: reflect / document / connect, the build that did too much']],
   },
   {
     label: 'Version 2 · Week 4',
-    change: <>For the second version I consolidated everything into one filterable notes section and narrowed the flow to two actions, document and reflect, one at a time. It was clearer, but still too many options, and this round a tester caught the writing too.</>,
-    quote: 'Why ‘reclaim’? I’m not sure what it even means.',
-    who: 'Parent tester',
+    change: <>For the second version I consolidated everything into one filterable notes section and narrowed the flow to two actions, document and reflect, one at a time. It was clearer, but still too many options, and the copy drew a flag too.</>,
+    summary: true,
+    kicker: 'the feedback',
+    quote: 'The word ‘reclaim’ made the app feel braced for trauma: it pre-framed birth as something to recover from, not the feat and the memory it also is.',
+    who: null,
     shots: [['v2-1', 'V2 splash'], ['v2-2', 'V2 welcome'], ['v2-3', 'one menu']],
   },
   {
@@ -52,7 +54,7 @@ function Screen({ id, cap }) {
    column left — version marker, the change, and any margin voice — with the
    artifact large on the right inside the gradient stage; the pinned tester
    quote lives INSIDE the stage, part of the feature container. */
-function Round({ label, change, quote, who, crit, shots, note, friction }) {
+function Round({ label, change, quote, who, kicker, summary, crit, shots, note, friction }) {
   return (
     <div className={styles.round}>
       <div className={styles.copy}>
@@ -60,7 +62,7 @@ function Round({ label, change, quote, who, crit, shots, note, friction }) {
           <p className={`${sys.eyebrow} ${sys.up}`}>{label}</p>
           <Prose>{change}</Prose>
         </div>
-        {quote && <TesterNote quote={quote} who={who} />}
+        {quote && <TesterNote quote={quote} who={who} kicker={kicker} summary={summary} />}
         {note && <Insight>{note}</Insight>}
         {friction && (
           <Friction tag="what I couldn’t test">
@@ -73,7 +75,7 @@ function Round({ label, change, quote, who, crit, shots, note, friction }) {
 
       <div className={`${styles.stage} ${sys.up}`}>
         {crit ? (
-          <CritStage pin={crit.pin} quote={crit.quote} who={crit.who} side="right" cap={shots[0][1]}>
+          <CritStage pin={crit.pin} quote={crit.quote} who={crit.who} kicker={crit.kicker} summary={crit.summary} side="right" cap={shots[0][1]}>
             <span className={styles.critDevice}>
               <span className={sys.phone} style={{ width: '100%' }}>
                 <span className={sys.phoneNotch} aria-hidden="true" />
@@ -99,8 +101,8 @@ export default function SecIteration() {
   return (
     <FieldSection id="iteration" num="04" crumb="iteration" alt wide>
       <div className={sys.headCluster}>
-        <Lead>Each round of testing made the app simpler.</Lead>
-        <Prose>I put wireframes in front of parents three times and changed direction based on what they told me.</Prose>
+        <Lead>Each round made the app simpler.</Lead>
+        <Prose>I took three versions through critique, a client check-in, and one round of testing with parents, and changed direction based on what I heard.</Prose>
       </div>
 
       {ROUNDS.map((r) => <Round key={r.label} {...r} />)}

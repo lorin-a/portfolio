@@ -12,7 +12,7 @@ import c from './CritStage.module.css'
 
 const useIso = typeof window === 'undefined' ? useEffect : useLayoutEffect
 
-export default function CritStage({ pin, side = 'right', align = 'center', quote, who = 'Parent tester', cap, children }) {
+export default function CritStage({ pin, side = 'right', align = 'center', quote, who = 'Parent tester', kicker = 'a tester said', summary = false, cap, children }) {
   const [seen, setSeen] = useState(false)
   const [lead, setLead] = useState(null)
 
@@ -74,9 +74,9 @@ export default function CritStage({ pin, side = 'right', align = 'center', quote
       </svg>
 
       <figure ref={cardRef} className={c.card}>
-        <figcaption className={c.kicker}>a tester said</figcaption>
-        <p className={c.quote}>“{quote}”</p>
-        <p className={c.who}>{who}</p>
+        <figcaption className={c.kicker}>{kicker}</figcaption>
+        <p className={c.quote} style={summary ? { fontStyle: 'normal' } : undefined}>{summary ? quote : `“${quote}”`}</p>
+        {who && <p className={c.who}>{who}</p>}
       </figure>
     </div>
   )
