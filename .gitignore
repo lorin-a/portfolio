@@ -91,6 +91,7 @@ public/images/groundswell/*.png
 
 # Internal process docs — local working material, never public
 STATUS.md
+docs/DECK_SYSTEM.md
 docs/WORKING_WITH_LORIN.md
 docs/AGENT_PROTOCOL.md
 docs/archive/
