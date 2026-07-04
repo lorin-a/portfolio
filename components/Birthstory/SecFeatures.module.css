@@ -30,7 +30,17 @@
   background: var(--bs-accent); color: var(--color-cream);
   font-family: var(--font-body); font-weight: 700; font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase;
 }
-.prioCells { display: grid; grid-template-columns: repeat(3, 1fr); }
+/* the standalone frame — states the starting point + what the numbers mean, so
+   the card reads on its own (Lorin's page-wide rule: callout cards give explicit
+   information without leaning on the prose beside them) */
+.prioSub {
+  margin: 0; max-width: 62ch;
+  padding: clamp(0.95rem, 2vw, 1.25rem) var(--pad);
+  font-family: var(--font-body); font-size: clamp(0.9rem, 0.87rem + 0.2vw, 1rem);
+  line-height: 1.55; color: var(--color-ink-light); text-wrap: pretty;
+}
+.prioSub b { color: var(--color-ink); font-weight: 700; }
+.prioCells { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--bs-hairline); }
 .prioCell { display: grid; gap: 0.35rem; align-content: start; padding: var(--pad); }
 .prioCell + .prioCell { border-left: 1px solid var(--bs-hairline); }
 .prioFigRow { display: flex; align-items: baseline; gap: 0.55rem; }

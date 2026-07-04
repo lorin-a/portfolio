@@ -10,7 +10,9 @@
   box-shadow: 0 28px 60px -38px rgba(26, 67, 77, 0.6);
   text-align: right; /* the words live on the teal end — white on the blush end fails contrast */
 }
-.gWord { font-family: var(--font-heading); font-variation-settings: 'SOFT' 60, 'WONK' 0; font-weight: 400; font-size: clamp(1.9rem, 1.4rem + 1.8vw, 2.9rem); line-height: 1; color: #fff; }
+/* the wordmark image — sized by height so the Terfens vector keeps its ratio;
+   the signature's justify-items:end anchors it to the legible teal end */
+.gWord { display: block; width: auto; height: clamp(1.9rem, 1.4rem + 2vw, 3.05rem); }
 .gNote { font-family: var(--font-body); font-size: 0.72rem; letter-spacing: 0.02em; line-height: 1.4; color: rgba(255, 255, 255, 0.9); }
 
 /* the lower band — specimens stacked left (palette over type), the moodboard

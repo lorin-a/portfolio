@@ -151,6 +151,10 @@ export default function SecFeatures() {
         </Prose>
         <div className={`${styles.prioCard} ${sys.up}`}>
           <p className={styles.prioHead}>Prioritization</p>
+          <p className={styles.prioSub}>
+            The brief offered five optional features. I kept two, added one that wasn’t on the list, and
+            cut two the research kept telling me to leave out.
+          </p>
           <div className={styles.prioCells}>
             <div className={styles.prioCell}>
               <span className={styles.prioFigRow}><span className={styles.prioFig}>2</span><span className={styles.prioLabel}>kept</span></span>

@@ -33,7 +33,10 @@ export default function SecBrand() {
       </Split>
 
       <div className={`${styles.signature} ${sys.up}`}>
-        <span className={styles.gWord}>Birth Story</span>
+        {/* the real wordmark, set in Terfens (the app's title face, a commercial
+            font not installed here) — exported from Figma as vector, not
+            re-typeset in Fraunces */}
+        <img className={styles.gWord} src="/images/birthstory/wordmark-birthstory.svg" alt="Birth Story" width="267" height="54" draggable="false" />
         <span className={styles.gNote}>blush → periwinkle → teal · the gradient that ties Birth Story to Myana</span>
       </div>
 
