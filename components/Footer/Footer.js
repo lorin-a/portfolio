@@ -18,7 +18,13 @@ export default function Footer() {
         >
           GitHub
         </a>
-        <span className={styles.linkDisabled}>Resume</span>
+        <a
+          href="https://drive.google.com/file/d/1OD6T3sargcPE8hm1j1PFZjchY_ZSNJX3/view"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Resume
+        </a>
         <a href="mailto:lorinanderberg1@gmail.com">Email</a>
       </div>
       <div className={styles.colophon}>

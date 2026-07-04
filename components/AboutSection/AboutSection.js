@@ -599,11 +599,14 @@ export default function AboutSection() {
                   GitHub
                 </a>
                 <span className={styles.bylineLinkSep} aria-hidden="true">·</span>
-                {/* TODO(Lorin): once your résumé is on Drive, swap this span for
-                   an <a href="DRIVE_URL" target="_blank" rel="noopener noreferrer">
-                   className={styles.bylineLink}> — and wire the matching disabled
-                   Resume in components/Footer/Footer.js at the same time. */}
-                <span className={styles.bylineLinkDisabled}>Resume</span>
+                <a
+                  className={styles.bylineLink}
+                  href="https://drive.google.com/file/d/1OD6T3sargcPE8hm1j1PFZjchY_ZSNJX3/view"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Resume
+                </a>
               </div>
               <p className={styles.location}>
                 <svg
