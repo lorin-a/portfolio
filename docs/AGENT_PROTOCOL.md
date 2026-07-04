@@ -8,6 +8,18 @@ Standing operating rules for Claude on this project. These are binding — not p
 - **Default to subagents for anything >3 searches.** Asset audits, "where is X used," cross-file consistency checks all go to `Explore`. Main context stays clean for design judgment, not file hunting.
 - **Pipe-test scripts before wiring them in.** Hooks, build scripts, validation commands — synthesize the input, run the raw command, confirm exit code AND side effect. Never wire untested.
 
+## Model routing
+
+Delegated work gets the cheapest model that can do it *without the quality showing*. This governs subagents and workflow steps only — the main thread stays on Opus 4.8.
+
+- **If the output has taste in it, it's Opus 4.8.** Layout, motion, copy/voice, design judgment, and every final/customer-facing pass never leave Opus — regardless of what built the draft.
+- **If it fetches, moves, scans, or locates, it's Haiku 4.5.** grep/glob sweeps, file moves, Cloudinary export bookkeeping, curly-quote and typo scans, token/CSS audits, `Explore` readers whose job is *locate*, not *judge*.
+- **Downroute only behind a cheap check.** Haiku is safe when the result is mechanically verifiable (file moved, exports present, audit returns a clean list) or flows straight back to Opus for the judgment call. No cheap check → keep it on Opus.
+- **Sonnet 5 for research deep-reads only** — reading many sources to pull facts, with synthesis returning to Opus. Rare on this project.
+- **Fable 5 stays off.** It's a 2×-price autonomous-engineering model; nothing here needs it, and it is worse at Lorin's voice than Opus.
+
+The reasoning behind "efficiency on principle": the trivial substrate visibly goes to a lighter worker; nothing Lorin would notice ever drops below the bar.
+
 ## Handoff discipline
 
 - **Targeted taste callouts, not "let me know what you think."** Every handoff names the element and the question. Bad: "Scene 4 ready, thoughts?" Good: "Scene 4: watch fragments 2→3 transition. Question: does the held beat feel right or rushed?"
