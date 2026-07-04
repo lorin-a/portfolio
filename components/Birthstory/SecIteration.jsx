@@ -109,7 +109,7 @@ export default function SecIteration() {
         photo
         tag="the crit wall"
         className={styles.critWall}
-        src={cloudImg('class_notes', 2000, { effects: ['improve:80', 'brightness:30', 'vibrance:20'] })} /* corrected to read as a true whiteboard, marker still saturated; uncropped — every note on the board is content */
+        src={cloudImg('class_notes', 2000, { chain: ['e_brightness:48', 'e_contrast:level_16;type_sigmoidal', 'ar_16:9,c_auto'] })} /* Lorin's Media Editor correction — don't stack further e_* on top; 16:9 c_auto verified to keep every note on the board */
         alt="A whiteboard from the final review: printed app screens taped up in two columns labeled Gradient and Color Block, covered in red and orange handwritten feedback about tags, icons, the gradient, and touch-target sizes."
         cap="The final review: every screen printed and marked up, with the gradient-versus-color-block decision worked out in red."
       />
