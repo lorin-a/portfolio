@@ -16,13 +16,17 @@ import { prefersReducedMotion } from './useDeckBuild'
      render: ({ active, step }) => JSX,
    }>
 */
-export default function DeckStage({ slides, caseLabel = 'Birth Story' }) {
+export default function DeckStage({ slides, caseLabel = 'Birth Story', timeDial = null, badge = 'Draft · frame demo' }) {
   const [slide, setSlide] = useState(0)
   const [step, setStep] = useState(0)
   const [reduce, setReduce] = useState(false)
   const liveRef = useRef(null)
 
   useEffect(() => { setReduce(prefersReducedMotion()) }, [])
+
+  // When the cut changes (e.g. the time dial re-times the deck), restart it.
+  const slidesKey = slides.map((s) => s.id).join('|')
+  useEffect(() => { setSlide(0); setStep(0) }, [slidesKey])
 
   const stepsFor = useCallback(
     (i) => (reduce ? 1 : Math.max(1, slides[i]?.steps ?? 1)),
@@ -78,7 +82,9 @@ export default function DeckStage({ slides, caseLabel = 'Birth Story' }) {
     return () => window.removeEventListener('keydown', onKey)
   }, [next, prev, goStart, goEnd])
 
-  const current = slides[slide]
+  // guard the single render between a cut change and the reset effect
+  const idx = Math.min(slide, slides.length - 1)
+  const current = slides[idx]
   const atStart = slide === 0 && step === 0
   const atEnd = slide === lastSlide && step === stepsFor(lastSlide) - 1
 
@@ -99,7 +105,7 @@ export default function DeckStage({ slides, caseLabel = 'Birth Story' }) {
     <div className={s.deck} role="application" aria-label={`${caseLabel} deck`}>
       <span className={s.badge}>
         <span className={s.badgeDot} aria-hidden="true" />
-        Draft · frame demo
+        {badge}
       </span>
       <p className={s.hint} aria-hidden="true">
         <kbd>←</kbd> <kbd>→</kbd> to move
@@ -128,6 +134,20 @@ export default function DeckStage({ slides, caseLabel = 'Birth Story' }) {
         <span className={s.qtag}>{current.question}</span>
 
         <div className={`${s.railGroup} ${s.railRight}`}>
+          {timeDial && (
+            <div className={s.dial} role="group" aria-label="Presentation length">
+              {timeDial.options.map((o) => (
+                <button
+                  key={o.value}
+                  className={`${s.dialBtn} ${o.value === timeDial.value ? s.dialOn : ''}`}
+                  aria-pressed={o.value === timeDial.value}
+                  onClick={() => timeDial.onChange(o.value)}
+                >
+                  {o.label}
+                </button>
+              ))}
+            </div>
+          )}
           <div className={s.dots} aria-hidden="true">
             {dots.map((i) => (
               <span

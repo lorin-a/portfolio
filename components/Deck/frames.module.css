@@ -60,6 +60,22 @@
   text-wrap: balance;
 }
 
+/* statement in line-mode: a big assertion sentence as the punchline (the wonky
+   face is permitted here). Used when a beat opens on a claim, not a figure. */
+.statementLine {
+  margin: 0;
+  max-width: 20ch;
+  font-family: var(--font-heading);
+  font-variation-settings: 'SOFT' 60, 'WONK' 1, 'opsz' 144;
+  font-weight: 340;
+  font-size: 8.2cqh;
+  line-height: 1.06;
+  letter-spacing: -0.018em;
+  color: var(--ink);
+  text-wrap: balance;
+}
+.statementLine em { font-style: italic; color: var(--accent); }
+
 /* ── SPECIMEN — the evidence register. Asserting headline, the artifact big,
    annotations that draw in one at a time to pace the eye. ── */
 .specimen {
@@ -129,6 +145,18 @@
   height: 66cqh; aspect-ratio: 430 / 932; background: var(--accent);
 }
 .phoneScreen img { display: block; width: 100%; height: 100%; object-fit: cover; }
+
+/* image-mode specimen: a framed documentary photo or flat artifact (for case
+   studies that aren't apps — e.g. Groundswell's physical interventions). */
+.mediaImage {
+  overflow: hidden;
+  border-radius: 1.4cqh;
+  height: 62cqh;
+  aspect-ratio: 5 / 6;
+  background: #16323a;
+  box-shadow: 0 5cqh 9cqh -5cqh rgba(26, 67, 77, 0.5);
+}
+.mediaImage img { display: block; width: 100%; height: 100%; object-fit: cover; }
 
 /* ── DIAGRAM — the structure register. Labels inside the graphic, a progressive
    reveal that enacts the 4 → 0 decision. ── */
@@ -241,6 +269,26 @@
 }
 .voiceAttr::before {
   content: ''; width: 3cqw; height: 0.2cqh; background: var(--tester-soft);
+}
+
+/* a quote slot awaiting Lorin's words — honestly marked, never faked. */
+.voiceQuotePlaceholder {
+  color: var(--ink-faint);
+  font-style: italic;
+}
+.toWrite {
+  display: inline-block;
+  margin-bottom: 1.4cqh;
+  padding: 0.5cqh 1.2cqw;
+  border: 1px dashed var(--tester-soft);
+  border-radius: 0.6cqh;
+  font-family: var(--font-body);
+  font-style: normal;
+  font-weight: 700;
+  font-size: 1.3cqh;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--tester-soft);
 }
 
 @media (max-width: 640px) {

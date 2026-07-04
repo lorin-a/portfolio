@@ -5,11 +5,10 @@ import { gsap } from '@/lib/gsap'
 import { useDeckBuild } from '../useDeckBuild'
 import f from '../frames.module.css'
 
-/* VOICE — the human register. When the quote is the specimen, show it and stop
-   talking. The periwinkle chip is the testers' voice in the study's color
-   system. Draft content: a verbatim parent-tester quote, its attribution kept
-   role-only per the study's attribution policy. */
-export default function VoiceFrame({ active, step }) {
+/* VOICE — the human register. Content-driven: when the quote is the specimen,
+   show it and stop. `placeholder` marks a quote slot still awaiting Lorin's
+   words — rendered honestly as a to-write prompt, never a fabricated quote. */
+export default function VoiceFrame({ active, step, chip, quote, attribution, placeholder = false }) {
   const root = useRef(null)
 
   useDeckBuild({
@@ -24,18 +23,26 @@ export default function VoiceFrame({ active, step }) {
       tl.to('[data-chip]', { autoAlpha: 1, y: 0, duration: 0.4, ease: 'power2.out' })
         .to('[data-quote]', { autoAlpha: 1, y: 0, duration: 0.75, ease: 'power3.out' }, '-=0.1')
         .addLabel('step-0')
-        .to('[data-attr]', { autoAlpha: 1, y: 0, duration: 0.5, ease: 'power2.out' }, '+=0.1')
-        .addLabel('step-1')
+      if (attribution) {
+        tl.to('[data-attr]', { autoAlpha: 1, y: 0, duration: 0.5, ease: 'power2.out' }, '+=0.1')
+          .addLabel('step-1')
+      }
     },
+    deps: [quote, attribution, placeholder],
   })
 
   return (
     <figure ref={root} className={`${f.frame} ${f.voice}`} style={{ margin: 0 }}>
-      <figcaption data-chip className={f.voiceChip}>a tester said</figcaption>
-      <blockquote data-quote className={f.voiceQuote} style={{ margin: 0 }}>
-        “It would be tragic to lose these moments if the app went away.”
-      </blockquote>
-      <p data-attr className={f.voiceAttr}>Parent tester · on the keepsake book</p>
+      <figcaption data-chip className={f.voiceChip}>{chip}</figcaption>
+      {placeholder ? (
+        <blockquote data-quote className={f.voiceQuote} style={{ margin: 0 }}>
+          <span className={f.toWrite}>Lorin to write</span>
+          <span className={f.voiceQuotePlaceholder}>{quote}</span>
+        </blockquote>
+      ) : (
+        <blockquote data-quote className={f.voiceQuote} style={{ margin: 0 }}>“{quote}”</blockquote>
+      )}
+      {attribution && <p data-attr className={f.voiceAttr}>{attribution}</p>}
     </figure>
   )
 }
