@@ -10,15 +10,14 @@ Standing operating rules for Claude on this project. These are binding — not p
 
 ## Model routing
 
-Delegated work gets the cheapest model that can do it *without the quality showing*. This governs subagents and workflow steps only — the main thread stays on Opus 4.8.
+Spend the best model on the work that *decides* quality; never on the substrate. The goal is best-of-best where it matters — reserve the premium so it isn't eaten on trivia, not to be cheap.
 
-- **If the output has taste in it, it's Opus 4.8.** Layout, motion, copy/voice, design judgment, and every final/customer-facing pass never leave Opus — regardless of what built the draft.
-- **If it fetches, moves, scans, or locates, it's Haiku 4.5.** grep/glob sweeps, file moves, Cloudinary export bookkeeping, curly-quote and typo scans, token/CSS audits, `Explore` readers whose job is *locate*, not *judge*.
-- **Downroute only behind a cheap check.** Haiku is safe when the result is mechanically verifiable (file moved, exports present, audit returns a clean list) or flows straight back to Opus for the judgment call. No cheap check → keep it on Opus.
-- **Sonnet 5 for research deep-reads only** — reading many sources to pull facts, with synthesis returning to Opus. Rare on this project.
-- **Fable 5 stays off.** It's a 2×-price autonomous-engineering model; nothing here needs it, and it is worse at Lorin's voice than Opus.
+- **Fable 5 — the innovation partner. Deliberate, main-thread.** For vision alignment, UXUI / interaction / layout ideation, design-finesse breakthroughs, hard strategy, and research synthesis where the *insight* is the deliverable — the moments where the job is to run with Lorin's vision and make something she couldn't have reached alone. Fable navigates ambiguity, infers intent from context, and pushes back instead of executing literally. Give it the goal and the *why*, not step-by-step prescription — over-instructing it lowers its quality. Enter these sessions on Fable via `/model`; this is where the premium is spent on purpose.
+- **Opus 4.8 — high-bar execution. Main-thread default.** Normal build / motion / copy sessions where the vision is set and the job is executing it beautifully. Best voice in the family — for prose and voice specifically, prefer Opus even inside a Fable session. Everything customer-facing passes through Opus.
+- **Haiku 4.5 — substrate. Delegated.** grep/glob sweeps, file moves, Cloudinary export bookkeeping, curly-quote and typo scans, token/CSS audits, `Explore` readers whose job is *locate*, not *judge*. Downroute only behind a cheap check: mechanically verifiable (file moved, exports present, audit returns a clean list) or flows straight back up for the judgment call.
+- **Sonnet 5 — research deep-reads.** Reading many sources to pull facts; synthesis returns to Opus or Fable.
 
-The reasoning behind "efficiency on principle": the trivial substrate visibly goes to a lighter worker; nothing Lorin would notice ever drops below the bar.
+That's how "best of the best without it eating all my tokens" works: Fable on purpose for the vision and innovation work, Opus for execution, Haiku for the invisible substrate.
 
 ## Handoff discipline
 
