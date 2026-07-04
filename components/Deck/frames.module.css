@@ -1,0 +1,250 @@
+/* ============================================================================
+   Register frames. Four projections of the site DNA onto slide functions:
+   STATEMENT (sparse) · SPECIMEN (evidence) · DIAGRAM (structure) · VOICE (human).
+   Type is sized in container-query units (cqw/cqh) so it tracks the 16:9 stage,
+   not the viewport — a slide reads the same projected large or previewed small.
+   Every reveal is GSAP-driven; nothing here carries a CSS transition.
+   ============================================================================ */
+
+.frame {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  padding: 7cqh 7cqw;
+  color: var(--ink);
+}
+
+.eyebrow {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 1.5cqh;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin: 0;
+}
+
+/* ── STATEMENT — the sparse register. The punchline stands alone; the wonky
+   Fraunces axis is permitted here and nowhere else. ── */
+.statement {
+  place-content: center;
+  justify-items: start;
+  gap: 3.2cqh;
+  text-align: left;
+}
+.statementFig {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-variation-settings: 'SOFT' 60, 'WONK' 1, 'opsz' 144;
+  font-weight: 360;
+  font-size: 27cqh;
+  line-height: 0.9;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  display: flex;
+  align-items: baseline;
+  gap: 0.14em;
+}
+.statementFig .arrow { color: var(--accent-soft); font-weight: 300; }
+.statementFig .to { color: var(--accent); }
+.statementCap {
+  margin: 0;
+  max-width: 22ch;
+  font-family: var(--font-heading);
+  font-variation-settings: 'SOFT' 60, 'WONK' 0;
+  font-weight: 380;
+  font-size: 4cqh;
+  line-height: 1.18;
+  letter-spacing: -0.01em;
+  color: var(--ink-light);
+  text-wrap: balance;
+}
+
+/* ── SPECIMEN — the evidence register. Asserting headline, the artifact big,
+   annotations that draw in one at a time to pace the eye. ── */
+.specimen {
+  grid-template-columns: 1fr 0.92fr;
+  align-items: center;
+  gap: 6cqw;
+}
+.specimenText { display: grid; gap: 3cqh; align-content: center; max-width: 34ch; }
+.specimenHead {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-variation-settings: 'SOFT' 60, 'WONK' 0;
+  font-weight: 380;
+  font-size: 5.4cqh;
+  line-height: 1.14;
+  letter-spacing: -0.012em;
+  color: var(--ink);
+  text-wrap: balance;
+}
+.specimenHead em { font-style: italic; color: var(--accent); }
+
+.annots { display: grid; gap: 2.2cqh; }
+.annot { display: grid; gap: 0.7cqh; }
+.annotRow { display: flex; align-items: baseline; gap: 1cqw; }
+.annotDot {
+  flex: 0 0 auto;
+  width: 1.1cqh; height: 1.1cqh; border-radius: 999px;
+  background: var(--accent);
+  transform: translateY(-0.2cqh);
+}
+.annotLabel {
+  margin: 0;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 2cqh;
+  color: var(--accent);
+}
+.annotText {
+  margin: 0.2cqh 0 0;
+  font-family: var(--font-body);
+  font-size: 1.75cqh;
+  line-height: 1.45;
+  color: var(--ink-light);
+}
+.leader {
+  height: 0;
+  margin-top: 0.4cqh;
+  border-top: 0.28cqh dotted var(--accent-soft);
+  transform-origin: left center;
+}
+
+.specimenStage { display: grid; place-items: center; }
+.phone {
+  position: relative;
+  display: inline-block;
+  padding: 0.55cqh;
+  border-radius: 2.4cqh;
+  background: #1d1d1f;
+  box-shadow: 0 5cqh 9cqh -5cqh rgba(26, 67, 77, 0.55);
+}
+.phoneNotch {
+  position: absolute; top: 1.1cqh; left: 50%; width: 26%; height: 1cqh;
+  transform: translateX(-50%); border-radius: 999px; background: #1d1d1f; z-index: 2;
+}
+.phoneScreen {
+  display: block; overflow: hidden; border-radius: 1.9cqh;
+  height: 66cqh; aspect-ratio: 430 / 932; background: var(--accent);
+}
+.phoneScreen img { display: block; width: 100%; height: 100%; object-fit: cover; }
+
+/* ── DIAGRAM — the structure register. Labels inside the graphic, a progressive
+   reveal that enacts the 4 → 0 decision. ── */
+.diagram { grid-template-rows: auto 1fr; gap: 3cqh; align-content: start; }
+.diagramHead {
+  margin: 0;
+  max-width: 30ch;
+  font-family: var(--font-heading);
+  font-variation-settings: 'SOFT' 60, 'WONK' 0;
+  font-weight: 380;
+  font-size: 4.6cqh;
+  line-height: 1.16;
+  letter-spacing: -0.012em;
+  color: var(--ink);
+  text-wrap: balance;
+}
+.diagramHead em { font-style: italic; color: var(--accent); }
+
+.flow {
+  display: grid;
+  grid-template-columns: auto auto 1fr;
+  align-items: center;
+  gap: 4cqw;
+  align-self: center;
+}
+.gate { display: grid; gap: 1.4cqh; }
+.qcard {
+  display: flex; align-items: center; gap: 1.2cqw;
+  padding: 1.4cqh 1.8cqw;
+  background: #fff;
+  border: 0.14cqh solid var(--hairline);
+  border-radius: 1.2cqh;
+  box-shadow: 0 2cqh 5cqh -3cqh rgba(26, 67, 77, 0.28);
+}
+.qcardNum {
+  flex: 0 0 auto;
+  display: inline-grid; place-content: center;
+  width: 2.8cqh; height: 2.8cqh; border-radius: 999px;
+  background: var(--wash); color: var(--accent);
+  font-family: var(--font-body); font-weight: 700; font-size: 1.5cqh;
+}
+.qcardText {
+  margin: 0;
+  font-family: var(--font-body); font-size: 1.7cqh; line-height: 1.3;
+  color: var(--ink-light); max-width: 24ch;
+}
+
+.turn { display: grid; justify-items: center; gap: 1cqh; padding: 0 2cqw; }
+.turnFig {
+  font-family: var(--font-heading);
+  font-variation-settings: 'SOFT' 60, 'WONK' 0;
+  font-weight: 360; font-size: 9cqh; line-height: 0.9; letter-spacing: -0.01em;
+  color: var(--ink); white-space: nowrap;
+}
+.turnFig .to { color: var(--accent); }
+.turnLabel {
+  font-family: var(--font-body); font-weight: 700;
+  font-size: 1.35cqh; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--accent-soft); text-align: center; max-width: 16ch;
+}
+
+.dest { display: grid; gap: 1.2cqh; justify-items: start; }
+.destNode {
+  display: inline-flex; align-items: center; gap: 1.2cqw;
+  padding: 2cqh 2.6cqw;
+  background: var(--accent); color: var(--paper);
+  border-radius: 1.4cqh;
+  box-shadow: 0 3cqh 6cqh -3cqh rgba(26, 67, 77, 0.5);
+}
+.destNodeLabel {
+  font-family: var(--font-heading);
+  font-variation-settings: 'SOFT' 60, 'WONK' 0; font-weight: 400;
+  font-size: 3cqh; line-height: 1;
+}
+.destSub {
+  margin: 0;
+  font-family: var(--font-body); font-size: 1.6cqh; line-height: 1.4;
+  color: var(--ink-light); max-width: 26ch;
+}
+
+/* ── VOICE — the human register. The quote is the specimen: show it, stop. ── */
+.voice {
+  place-content: center;
+  justify-items: start;
+  gap: 3.4cqh;
+  max-width: 74cqw;
+}
+.voiceChip {
+  display: inline-flex; align-items: center;
+  padding: 0.7cqh 1.4cqw;
+  border-radius: 0.6cqh;
+  background: var(--tester);
+  color: var(--accent);
+  font-family: var(--font-body); font-weight: 700;
+  font-size: 1.5cqh; letter-spacing: 0.08em; text-transform: uppercase;
+}
+.voiceQuote {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-variation-settings: 'SOFT' 60, 'WONK' 0;
+  font-style: italic; font-weight: 360;
+  font-size: 5.6cqh; line-height: 1.26; letter-spacing: -0.008em;
+  color: var(--ink); text-wrap: pretty;
+}
+.voiceAttr {
+  margin: 0;
+  display: flex; align-items: center; gap: 1cqw;
+  font-family: var(--font-body); font-size: 1.9cqh; letter-spacing: 0.02em;
+  color: var(--ink-faint);
+}
+.voiceAttr::before {
+  content: ''; width: 3cqw; height: 0.2cqh; background: var(--tester-soft);
+}
+
+@media (max-width: 640px) {
+  .specimen { grid-template-columns: 1fr; gap: 3cqh; }
+  .specimenStage { display: none; }
+  .flow { grid-template-columns: 1fr; gap: 2.5cqh; }
+}

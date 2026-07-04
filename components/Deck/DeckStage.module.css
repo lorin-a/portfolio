@@ -1,0 +1,223 @@
+/* ============================================================================
+   Deck stage — the projected surface. 16:9, letterboxed, keyboard-advanced.
+   The register frames live inside; the stage owns the ground, the type scale
+   (via container-query units so text tracks the slide, not the viewport), and
+   the presenter chrome. Voice tokens are self-contained here so the deck is
+   case-agnostic: a future case study swaps --accent and its screens.
+   ============================================================================ */
+
+.deck {
+  /* voice colors — the Birth Story mapping (teal = the record, lilac = her
+     thinking, peri = the testers). Case-agnostic: override --accent per study. */
+  --paper: #FAFAFA;
+  --surround: #EFEEEC;
+  --accent: #1A434D;
+  --accent-soft: #466F7B;
+  --think: #E6E5FD;
+  --think-line: rgba(157, 163, 191, 0.55);
+  --tester: #B1C1F4;
+  --tester-soft: #8089C2;
+  --tester-line: rgba(128, 137, 194, 0.55);
+  --ink: #2C2C2C;
+  --ink-light: #5A5550;
+  --ink-faint: #7A7570;
+  --rule: rgba(26, 67, 77, 0.3);
+  --hairline: rgba(26, 67, 77, 0.12);
+  --wash: rgba(26, 67, 77, 0.05);
+
+  position: fixed;
+  inset: 0;
+  display: grid;
+  grid-template-rows: 1fr auto;
+  background: var(--surround);
+  color: var(--ink);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  overflow: hidden;
+}
+
+/* ── the slide surface ── */
+.stageWrap {
+  display: grid;
+  place-items: center;
+  padding: clamp(0.75rem, 2.5vh, 2rem);
+  min-height: 0;
+}
+
+.stage {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  width: min(100%, calc((100vh - 7.5rem) * 16 / 9));
+  max-width: 1560px;
+  container-type: size;
+  container-name: slide;
+  background: var(--paper);
+  border-radius: 10px;
+  box-shadow:
+    0 1px 0 rgba(26, 67, 77, 0.04),
+    0 40px 80px -48px rgba(26, 67, 77, 0.35);
+  overflow: hidden;
+}
+
+.slide {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity var(--motion-medium) var(--ease-out), visibility 0s linear var(--motion-medium);
+}
+.slideOn {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity var(--motion-medium) var(--ease-out);
+}
+
+/* ── presenter chrome — deliberately quiet; the slide is the subject ── */
+.rail {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding: 0 clamp(0.9rem, 2.5vw, 2rem);
+  height: 3.75rem;
+  border-top: 1px solid rgba(26, 67, 77, 0.08);
+  background: var(--surround);
+  font-family: var(--font-body);
+}
+
+.railGroup {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  min-width: 0;
+}
+.railLeft { flex: 1 1 0; }
+.railRight { flex: 1 1 0; justify-content: flex-end; }
+
+.register {
+  font-weight: 700;
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent);
+  white-space: nowrap;
+}
+.beat {
+  font-size: 0.82rem;
+  color: var(--ink-light);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.beat b { font-weight: 600; color: var(--ink); }
+
+.qtag {
+  flex: 0 0 auto;
+  display: inline-grid;
+  place-content: center;
+  padding: 0.28rem 0.7rem;
+  border-radius: 999px;
+  background: var(--wash);
+  color: var(--accent-soft);
+  font-weight: 700;
+  font-size: 0.68rem;
+  letter-spacing: 0.06em;
+}
+
+.counter {
+  font-variant-numeric: tabular-nums;
+  font-size: 0.8rem;
+  color: var(--ink-faint);
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+}
+
+.dots { display: flex; align-items: center; gap: 0.35rem; }
+.dot {
+  width: 0.42rem; height: 0.42rem; border-radius: 999px;
+  background: rgba(26, 67, 77, 0.18);
+  transition: background var(--motion-fast) var(--ease-out), transform var(--motion-fast) var(--ease-out);
+}
+.dotOn { background: var(--accent); transform: scale(1.15); }
+.dotDone { background: var(--accent-soft); }
+
+.navBtns { display: flex; gap: 0.4rem; }
+.navBtn {
+  display: inline-grid;
+  place-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border: 1px solid rgba(26, 67, 77, 0.16);
+  border-radius: 8px;
+  background: #fff;
+  color: var(--accent);
+  font-size: 1rem;
+  cursor: pointer;
+  transition: border-color var(--motion-fast) var(--ease-out), background var(--motion-fast) var(--ease-out), color var(--motion-fast) var(--ease-out);
+}
+@media (hover: hover) {
+  .navBtn:hover { border-color: var(--accent); background: var(--wash); }
+}
+.navBtn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+.navBtn:disabled { opacity: 0.35; cursor: default; }
+
+/* ── draft badge + keyboard hint, floated over the surround ── */
+.badge {
+  position: absolute;
+  top: clamp(0.75rem, 2vh, 1.4rem);
+  left: clamp(0.9rem, 2.5vw, 2rem);
+  z-index: 3;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.32rem 0.7rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(26, 67, 77, 0.1);
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+.badgeDot { width: 0.42rem; height: 0.42rem; border-radius: 999px; background: var(--tester-soft); }
+
+.hint {
+  position: absolute;
+  top: clamp(0.75rem, 2vh, 1.4rem);
+  right: clamp(0.9rem, 2.5vw, 2rem);
+  z-index: 3;
+  font-size: 0.68rem;
+  letter-spacing: 0.04em;
+  color: var(--ink-faint);
+}
+.hint kbd {
+  font-family: var(--font-body);
+  font-size: 0.66rem;
+  padding: 0.05rem 0.35rem;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(26, 67, 77, 0.12);
+  color: var(--ink-light);
+}
+
+.srOnly {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+}
+
+@media (max-width: 700px) {
+  .beat, .hint { display: none; }
+  .rail { height: 3.25rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .slide { transition: none; }
+  .slideOn { transition: none; }
+  .dot { transition: none; }
+}
