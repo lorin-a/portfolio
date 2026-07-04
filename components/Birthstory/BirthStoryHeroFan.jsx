@@ -11,7 +11,7 @@ import MessageBoardScreen from './MessageBoardScreen'
    populates — all on a large, slowly turning care-ring behind the screens.
    Reduced motion: composed, fanned, populated, still. */
 
-const WING_L = '/images/birthstory/evolution/screens/v3-1.png'  // the cover
+const WING_L = '/images/birthstory/hero/cover-wing.jpg'  // the cover — jpeg: the grainy gradient bloats PNG 7×
 
 /* neutral dots for the ambient care-ring behind the cluster */
 const ACCENT = [
