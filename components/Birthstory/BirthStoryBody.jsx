@@ -30,8 +30,8 @@ function Overview() {
     // direction: Michael co-led research AND IA; Client shortened to lead with the
     // product + institution (researcher names live in the Brief photo + Outcome quote).
     ['Role', 'UX/UI Lead. Visual identity and UX writing mine; research and information architecture co-led with Michael Juan'],
-    ['Context', '6-week graduate studio, Carnegie Mellon'],
-    ['Client', 'Myana, a maternal-health platform from the University of Pittsburgh'],
+    ['Context', '6-week graduate studio at Carnegie Mellon, taught by the founders of Dezudio, Myana’s design partner'],
+    ['Client', 'Myana, a maternal-health platform co-developed by researchers at the University of Pittsburgh'],
     ['Methods', '7 parent interviews, one round of usability testing, 3 wireframe iterations'],
     ['Outcome', 'Strong client validation; sponsored to possibly inform future Myana versions'],
     ['Build', 'Concept. Wireframes in Figma, prototypes here built with Claude Code'],

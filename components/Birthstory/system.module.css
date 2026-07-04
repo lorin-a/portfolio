@@ -308,6 +308,9 @@
   font-size: clamp(1.05rem, 0.95rem + 0.45vw, 1.35rem); line-height: 1.33; color: var(--color-ink); text-wrap: pretty;
 }
 .testerWho { margin: 0; font-family: var(--font-body); font-size: 0.72rem; letter-spacing: 0.06em; color: var(--bs-teal-soft); }
+/* summary variant — paraphrased feedback reads as synthesis, not a pulled quote:
+   upright (not italic), so the absence of quote marks is unmistakable */
+.testerSummary .testerQuote { font-style: normal; font-size: clamp(1rem, 0.92rem + 0.4vw, 1.24rem); line-height: 1.4; }
 
 @media (max-width: 720px) {
   .plate, .plateNarrow { grid-template-columns: 1fr; transform: none; }
