@@ -25,10 +25,7 @@ const SPINE = [
    Sits between the hero and the spine; the spine still tracks the 9 process beats. */
 function Overview() {
   const meta = [
-    // Role + Client wording provisional — Lorin's copy pass finalizes. Reflects her
-    // direction: Michael co-led research AND IA; Client shortened to lead with the
-    // product + institution (researcher names live in the Brief photo + Outcome quote).
-    ['Role', 'UX/UI Lead. Visual identity and UX writing mine; research and information architecture co-led with Michael Juan'],
+    ['Role', 'My partner Michael and I co-led research and information architecture. I led UX/UI, visual identity, and UX writing.'],
     ['Context', '6-week graduate studio at Carnegie Mellon, taught by the founders of Dezudio, Myana’s design partner'],
     ['Client', 'Myana, a maternal-health platform co-developed by researchers at the University of Pittsburgh'],
     ['Methods', '7 parent interviews, one round of usability testing, 3 wireframe iterations'],
@@ -336,35 +333,16 @@ function Outcome() {
 function Close() {
   return (
     <FieldSection id="close" crumb="reflection" when="In hindsight" sub>
-      <div className={sys.headCluster}>
-        <Lead>What I’d do differently, and what it taught me about how I work.</Lead>
-        <Prose>
-          If I did it again I’d start from the constraint instead of the possibilities: naming the core
-          need in the first week, less rather than more, would have saved me a whole build of tools nobody
-          asked for. The other thing I took from it is to only put something in a wireframe when it’s a
-          question I want feedback on.
-        </Prose>
-        <Prose>
-          The project follows a pattern I notice in myself: I’m a big dreamer, so I start by trying to do
-          everything, and almost always end up narrowing and narrowing until I get to the heart of it.
-          This was one of the first projects I led on the visual side, and it’s shaped how I wireframe ever
-          since.
-        </Prose>
-        <Prose>
-          Birth Story is still a concept. I designed it, and since then I’ve taught myself to prototype,
-          then to prompt engineer, and now I build with AI, including this site, so the screens here are
-          example flows rather than a finished product.
-        </Prose>
-      </div>
-
-      {/* the coda — a gradient finale that reprises the brand signature, so the
-          study closes on the identity it opened on. The display line is Lorin's
-          HIGH copy slot (her closing statement + impact answer land here); the
-          email exit is real. */}
+      {/* Reflection = the bookend (Lorin's call, option B). The three retrospective
+          paragraphs were cut — they read stale, and the "still a concept / built
+          with AI" honesty already lives in Overview → Build and the hero. The teal
+          block reprises the brand and carries one closing thought (her words, to be
+          finalized in her copy pass) plus the way to reach her. */}
       <div className={b.coda}>
         <div className={`${b.codaInner} ${sys.up}`}>
           <p className={b.codaLine}>
-            Designing something and being able to build it myself is the direction I’m headed.
+            I’m a big dreamer, so I start by trying to do everything, and almost always end up narrowing
+            and narrowing until I get to the heart of it.
           </p>
           <div className={b.codaActions}>
             <a className={b.codaCta} href="mailto:lorinanderberg1@gmail.com">Get in touch</a>
