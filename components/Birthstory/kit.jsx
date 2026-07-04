@@ -131,10 +131,10 @@ export function Insight({ children, label = 'My thinking', narrow = false }) {
 
 /* a standalone "a tester said" callout — the crit card without the pinned
    artifact or the leader line, for places the quote stands on its own. */
-export function TesterNote({ quote, who = 'Parent tester' }) {
+export function TesterNote({ quote, who = 'Parent tester', kicker = 'a tester said' }) {
   return (
     <figure className={`${s.testerNote} ${s.up}`}>
-      <figcaption className={s.testerKicker}>a tester said</figcaption>
+      <figcaption className={s.testerKicker}>{kicker}</figcaption>
       <p className={s.testerQuote}>“{quote}”</p>
       <p className={s.testerWho}>{who}</p>
     </figure>
