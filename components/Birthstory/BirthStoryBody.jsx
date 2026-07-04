@@ -259,6 +259,10 @@ function Voice() {
           </>
         }
       >
+        {/* the copy work grounded on the identity gradient veil — the same
+            designed surface as the feature stages, so the tester note and the
+            revision panel sit ON something instead of floating in white */}
+        <div className={b.voicePanel}>
         <TesterNote
           quote="Assuming there’s a trauma, you shouldn’t call it that. I appreciate the acknowledgement, but it feels like an implied negative."
           who="Parent tester"
@@ -287,6 +291,7 @@ function Voice() {
               <p className={b.rewritePlaceholder}>[ Lorin to write: a name that assumes she is already strong, not in need of rescue. ]</p>
             </div>
           </div>
+        </div>
         </div>
       </Split>
     </FieldSection>
@@ -345,10 +350,26 @@ function Close() {
         <Prose>
           Birth Story is still a concept. I designed it, and since then I’ve taught myself to prototype,
           then to prompt engineer, and now I build with AI, including this site, so the screens here are
-          example flows rather than a finished product. Designing something and being able to build it
-          myself is the direction I’m headed.
+          example flows rather than a finished product.
         </Prose>
       </div>
+
+      {/* the coda — a gradient finale that reprises the brand signature, so the
+          study closes on the identity it opened on. The display line is Lorin's
+          HIGH copy slot (her closing statement + impact answer land here); the
+          email exit is real. */}
+      <div className={b.coda}>
+        <div className={`${b.codaInner} ${sys.up}`}>
+          <p className={b.codaLine}>
+            Designing something and being able to build it myself is the direction I’m headed.
+          </p>
+          <div className={b.codaActions}>
+            <a className={b.codaCta} href="mailto:lorinanderberg1@gmail.com">Get in touch</a>
+            <a className={b.codaAlt} href="/">See more work</a>
+          </div>
+        </div>
+      </div>
+
       <dl className={`${b.colophon} ${sys.up}`}>
         <div className={b.colRow}>
           <dt>Consent</dt>

@@ -64,6 +64,22 @@
 @media (max-width: 760px) { .valuesList { grid-template-columns: 1fr 1fr; } }
 @media (max-width: 440px) { .valuesList { grid-template-columns: 1fr; } }
 
+/* voice — the copy work grounded. The tester note + revision panel were two
+   light cards floating on near-white paper; this seats them on the identity
+   gradient veil (the same designed surface as the feature deep-dive stages), so
+   the white cards read against something and the section stops feeling empty. */
+.voicePanel {
+  display: grid; gap: clamp(1.2rem, 2.6vw, 1.7rem);
+  padding: clamp(1.5rem, 3.2vw, 2.3rem);
+  border-radius: 16px;
+  background:
+    linear-gradient(rgba(250, 250, 250, 0.72), rgba(250, 250, 250, 0.72)),
+    linear-gradient(126deg, #E7C3C8 0%, #B9C2EC 48%, #1A434D 100%);
+}
+/* the cards already carry their own top margin for the docked chip; the panel's
+   gap handles separation, so zero it inside the panel */
+.voicePanel > * { margin-top: 0; }
+
 /* voice — the tester critique and the copy it rewrote, composed as one
    designed revision panel: white chip-card, each pair a ruled draft → rewrite
    row (not loose struck lines on the ground) */
@@ -106,6 +122,48 @@
 .quote { margin: 0; max-width: 18ch; font-family: var(--font-heading); font-variation-settings: 'SOFT' 60, 'WONK' 0; font-style: italic; font-weight: 360; font-size: clamp(1.7rem, 1.3rem + 1.7vw, 2.65rem); line-height: 1.18; color: var(--color-ink); }
 .quoteAttr { display: block; margin-top: 0.8em; font-family: var(--font-body); font-style: normal; font-weight: 600; font-size: 0.75rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--bs-teal-soft); }
 
+/* close — the coda. A full-bleed gradient finale that reprises the brand
+   identity (blush + peri glow over deep teal), so the study closes on the
+   gradient it opened on. Holds the closing statement and the one exit action.
+   Escapes the sheet with the 50% / 50vw trick. */
+.coda {
+  width: 100vw; margin-left: 50%; transform: translateX(-50%);
+  margin-top: clamp(2.6rem, 6vw, 4.5rem);
+  padding: clamp(3.5rem, 9vw, 6.5rem) var(--bs-pad);
+  background:
+    radial-gradient(115% 130% at 10% 0%, rgba(219, 173, 173, 0.30) 0%, transparent 46%),
+    radial-gradient(120% 130% at 88% 100%, rgba(177, 193, 244, 0.26) 0%, transparent 52%),
+    linear-gradient(158deg, #1F4750 0%, #1A434D 55%, #163038 100%);
+  color: #fff;
+}
+.codaInner { max-width: 42rem; margin: 0 auto; display: grid; justify-items: center; text-align: center; gap: clamp(1.8rem, 4vw, 2.7rem); }
+.codaLine {
+  margin: 0; max-width: 22ch;
+  font-family: var(--font-heading); font-variation-settings: 'SOFT' 60, 'WONK' 0; font-style: italic; font-weight: 360;
+  font-size: clamp(1.7rem, 1.3rem + 1.7vw, 2.7rem); line-height: 1.22; letter-spacing: -0.012em;
+  color: #fff; text-wrap: balance;
+}
+.codaActions { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 1rem 1.6rem; }
+.codaCta {
+  display: inline-flex; align-items: center; min-height: 44px; padding: 0.7rem 1.5rem;
+  background: var(--color-cream, #FFFCFA); color: var(--bs-teal);
+  border-radius: 999px; font-family: var(--font-body); font-weight: 600; font-size: 0.92rem; letter-spacing: 0.01em;
+  text-decoration: none;
+  transition: transform var(--motion-fast) var(--ease-out), box-shadow var(--motion-fast) var(--ease-out);
+  box-shadow: 0 14px 30px -18px rgba(0, 0, 0, 0.5);
+}
+@media (hover: hover) { .codaCta:hover { transform: translateY(-2px); box-shadow: 0 22px 40px -22px rgba(0, 0, 0, 0.6); } }
+.codaCta:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+.codaAlt {
+  display: inline-flex; align-items: center; min-height: 44px;
+  font-family: var(--font-body); font-weight: 600; font-size: 0.92rem;
+  color: rgba(255, 255, 255, 0.9); text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 1px;
+  text-decoration-color: rgba(255, 255, 255, 0.5);
+  transition: text-decoration-color var(--motion-fast) var(--ease-out);
+}
+@media (hover: hover) { .codaAlt:hover { text-decoration-color: rgba(255, 255, 255, 0.95); } }
+.codaAlt:focus-visible { outline: 2px solid #fff; outline-offset: 3px; border-radius: 4px; }
+
 /* close — the sources colophon. Attribution as a clear, ruled block (tools,
    icons, photography), not a whisper-line a reader could miss. */
 .colophon {
@@ -136,7 +194,9 @@
 }
 .metaItem { display: grid; gap: 0.45rem; align-content: start; }
 .metaItem dt { font-family: var(--font-body); font-weight: 700; font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--bs-teal-soft); }
-.metaItem dd { margin: 0; font-family: var(--font-body); font-size: clamp(0.92rem, 0.88rem + 0.25vw, 1.02rem); line-height: 1.5; color: var(--color-ink); text-wrap: pretty; }
+/* narrow value measure so each fact reads as a tidy 2–3 line block, balanced
+   across the three columns, instead of a value sprawling the full column width */
+.metaItem dd { margin: 0; max-width: 26ch; font-family: var(--font-body); font-size: clamp(0.92rem, 0.88rem + 0.25vw, 1.02rem); line-height: 1.5; color: var(--color-ink); text-wrap: pretty; }
 @media (max-width: 760px) { .overviewMeta { grid-template-columns: 1fr 1fr; } }
 @media (max-width: 460px) { .overviewMeta { grid-template-columns: 1fr; } }
 
