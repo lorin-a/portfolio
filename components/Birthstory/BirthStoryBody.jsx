@@ -26,10 +26,13 @@ const SPINE = [
    Sits between the hero and the spine; the spine still tracks the 9 process beats. */
 function Overview() {
   const meta = [
-    ['Role', 'UX/UI lead: research (co-led with Michael Juan), information architecture, visual identity, UX writing'],
+    // Role + Client wording provisional — Lorin's copy pass finalizes. Reflects her
+    // direction: Michael co-led research AND IA; Client shortened to lead with the
+    // product + institution (researcher names live in the Brief photo + Outcome quote).
+    ['Role', 'UX/UI Lead. Visual identity and UX writing mine; research and information architecture co-led with Michael Juan'],
     ['Context', '6-week graduate studio, Carnegie Mellon'],
-    ['Client', 'Myana. Researchers Sarah Burns (MSW) and Tamar Krishnamurti (PhD), from CONVERGE at the University of Pittsburgh'],
-    ['Methods', '7 parent interviews, 3 rounds of wireframe testing'],
+    ['Client', 'Myana, a maternal-health platform from the University of Pittsburgh'],
+    ['Methods', '7 parent interviews, one round of usability testing, 3 wireframe iterations'],
     ['Outcome', 'Strong client validation; sponsored to possibly inform future Myana versions'],
     ['Build', 'Concept. Wireframes in Figma, prototypes here built with Claude Code'],
   ]
@@ -246,7 +249,7 @@ function Voice() {
             <Lead>The copy is trauma-informed without assuming trauma.</Lead>
             <Prose>
               Because I knew births could be traumatic, I wrote the first copy in a careful,
-              trauma-informed tone, and a tester showed me I had gone too far. She didn’t connect with
+              trauma-informed tone, and a parent I interviewed showed me I had gone too far. She didn’t connect with
               the word “reclaim,” and it made me realize I was leaning on the hard parts, missing how
               much a birth can also be about connection. I didn’t want the words to decide the experience
               for anyone.
@@ -265,7 +268,8 @@ function Voice() {
         <div className={b.voicePanel}>
         <TesterNote
           quote="Assuming there’s a trauma, you shouldn’t call it that. I appreciate the acknowledgement, but it feels like an implied negative."
-          who="Parent tester"
+          who="Parent interview"
+          kicker="a parent said"
         />
         <div className={`${b.revisions} ${sys.up}`}>
           <span className={b.revTag}>revisions</span>

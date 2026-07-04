@@ -80,7 +80,7 @@ const DEEPDIVES = [
     prose: <>We took the book seriously the moment a parent told me she wouldn’t trust an app with something this precious unless she knew it couldn’t disappear. So the whole record can leave the app, as a printed book or a free PDF, curated from what’s already there and open to the people who were part of it.</>,
     crit: {
       quote: 'It would be tragic to lose these moments if the app went away.',
-      who: 'Parent tester',
+      who: 'Parent interview',
     },
     shots: [
       ['/images/birthstory/bs-book-order.png', 'The Birth Story Book screen: order a printed keepsake or download a PDF.', 'Order a keepsake, or download a PDF.'],
@@ -150,11 +150,11 @@ export default function SecFeatures() {
           leave out.
         </Prose>
         <div className={`${styles.prioCard} ${sys.up}`}>
-          <p className={styles.prioHead}>Prioritization</p>
-          <p className={styles.prioSub}>
-            The brief offered five optional features. I kept two, added one that wasn’t on the list, and
-            cut two the research kept telling me to leave out.
-          </p>
+          <div className={styles.prioLead}>
+            <p className={styles.prioKicker}>Prioritization · five optional features on the table</p>
+            {/* story headline — provisional, from Lorin's own prose; her copy pass finalizes */}
+            <p className={styles.prioStory}>The research kept telling me to leave things out.</p>
+          </div>
           <div className={styles.prioCells}>
             <div className={styles.prioCell}>
               <span className={styles.prioFigRow}><span className={styles.prioFig}>2</span><span className={styles.prioLabel}>kept</span></span>
@@ -191,7 +191,7 @@ export default function SecFeatures() {
                 cap={f.context.cap}
               />
             )}
-            {f.crit && <div className={sys.up}><TesterNote quote={f.crit.quote} who={f.crit.who} /></div>}
+            {f.crit && <div className={sys.up}><TesterNote quote={f.crit.quote} who={f.crit.who} kicker="a parent said" /></div>}
           </div>
 
           <div className={`${styles.stage} ${sys.up}`}>

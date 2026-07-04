@@ -64,9 +64,8 @@ function Lead() {
       <p className={s.subhead}>How might we help parents document, reflect on, and make sense of their birth experience?</p>
       <p className={s.disclosure}>
         A micro-app concept for <a href="https://myana-app.com/team/" target="_blank" rel="noopener noreferrer">Myana</a>,
-        a postpartum support platform by <a href="https://www.dezudio.com/" target="_blank" rel="noopener noreferrer">Dezudio</a>,
-        made in a graduate studio at Carnegie Mellon. Created with client feedback, not professional
-        work with Dezudio or UPMC.
+        a postpartum support platform, made in a graduate studio at Carnegie Mellon. Created with
+        client feedback, not professional work.
       </p>
       <button type="button" className={s.cue} onClick={follow}>
         Follow the thinking <span aria-hidden="true">↓</span>
