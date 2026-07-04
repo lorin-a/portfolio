@@ -167,6 +167,25 @@
 .fCrumb { font-size: 1.08rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-ink); }
 .fWhen { margin-left: auto; align-self: center; font-size: 0.8rem; letter-spacing: 0.04em; color: var(--color-ink-light); }
 
+/* sub-beat within a chapter — pulled up tight under its primary so the two read
+   as one chapter, with a quieter subhead (no big numeral) */
+.fieldSub { padding-top: 0; }
+.subHead {
+  display: flex; align-items: baseline; gap: 0.7rem;
+  padding-bottom: 0.7rem; margin-bottom: clamp(1.6rem, 3.5vw, 2.6rem);
+  border-bottom: 1px solid var(--bs-hairline);
+}
+.subCrumb {
+  position: relative; padding-left: 1.5rem;
+  font-family: var(--font-body); font-size: 0.9rem; font-weight: 700;
+  letter-spacing: 0.14em; text-transform: uppercase; color: var(--bs-teal-soft);
+}
+/* a short lead-in rule marks it as a continuation, not a new chapter */
+.subCrumb::before {
+  content: ''; position: absolute; left: 0; top: 0.5em;
+  width: 0.9rem; height: 2px; border-radius: 1px; background: var(--bs-teal-soft);
+}
+
 /* minmax(0, 1fr) pins the implicit track to the sheet — otherwise one
    max-content child widens the track and every section child rides past
    the viewport on mobile */

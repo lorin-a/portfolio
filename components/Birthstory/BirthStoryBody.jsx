@@ -9,16 +9,15 @@ import SecBrand from './SecBrand'
 import BirthStorySpine from './BirthStorySpine'
 import b from './BirthStoryBody.module.css'
 
+/* six chapters; three of them fold a second beat under a subhead (see the `ids`
+   they cover), so the spine stays calm without dropping any part of the story */
 const SPINE = [
-  { id: 'brief', label: 'Brief' },
-  { id: 'research', label: 'Research' },
-  { id: 'architecture', label: 'Architecture' },
-  { id: 'iteration', label: 'Iteration' },
-  { id: 'features', label: 'Features' },
-  { id: 'voice', label: 'Voice' },
-  { id: 'brand', label: 'Brand' },
-  { id: 'outcome', label: 'Outcome' },
-  { id: 'close', label: 'Reflection' },
+  { id: 'brief', label: 'Brief', ids: ['brief'] },
+  { id: 'research', label: 'Research', ids: ['research'] },
+  { id: 'architecture', label: 'Structure', ids: ['architecture', 'iteration'] },
+  { id: 'features', label: 'The Product', ids: ['features'] },
+  { id: 'voice', label: 'Craft', ids: ['voice', 'brand'] },
+  { id: 'outcome', label: 'Outcome', ids: ['outcome', 'close'] },
 ]
 
 /* Overview — the at-a-glance masthead a hiring manager reads first. An editorial
@@ -242,7 +241,7 @@ function Research() {
 
 function Voice() {
   return (
-    <FieldSection id="voice" num="06" crumb="ux writing" when="Week 5" alt wide>
+    <FieldSection id="voice" num="05" crumb="ux writing" when="Week 5" alt wide>
       <Split
         text={
           <>
@@ -304,7 +303,7 @@ function Voice() {
 
 function Outcome() {
   return (
-    <FieldSection id="outcome" num="08" crumb="outcome" when="Week 6" alt wide>
+    <FieldSection id="outcome" num="06" crumb="outcome" when="Week 6" alt wide>
       <Split
         text={
           <>
@@ -336,7 +335,7 @@ function Outcome() {
 
 function Close() {
   return (
-    <FieldSection id="close" num="09" crumb="reflection" when="In hindsight">
+    <FieldSection id="close" crumb="reflection" when="In hindsight" sub>
       <div className={sys.headCluster}>
         <Lead>What I’d do differently, and what it taught me about how I work.</Lead>
         <Prose>
