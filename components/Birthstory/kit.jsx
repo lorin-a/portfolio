@@ -70,16 +70,26 @@ export function BeforeAfter({ before, after, why }) {
 
 /* ── field-notes register (the process voice) ── */
 
-export function FieldSection({ id, num, crumb, when, alt = false, wide = false, threshold = 0.15, children }) {
+export function FieldSection({ id, num, crumb, when, alt = false, wide = false, sub = false, threshold = 0.15, children }) {
   const [ref, seen] = useSeen(threshold)
   return (
-    <section ref={ref} id={id} className={`${s.field} ${alt ? s.fieldAlt : ''} ${seen ? s.in : ''}`}>
+    <section ref={ref} id={id} className={`${s.field} ${sub ? s.fieldSub : ''} ${alt ? s.fieldAlt : ''} ${seen ? s.in : ''}`}>
       <div className={`${s.sheet} ${wide ? s.sheetWide : ''}`}>
-        <header className={s.fieldHead}>
-          <span className={s.fNum}>{num}</span>
-          <span className={s.fCrumb}>{crumb}</span>
-          {when && <span className={s.fWhen}>{when}</span>}
-        </header>
+        {/* sub = a second beat inside the same chapter (e.g. Iteration under
+            Structure): a quieter ruled subhead, no chapter number, so the spine
+            reads as six chapters while the page keeps every beat */}
+        {sub ? (
+          <header className={s.subHead}>
+            <span className={s.subCrumb}>{crumb}</span>
+            {when && <span className={s.fWhen}>{when}</span>}
+          </header>
+        ) : (
+          <header className={s.fieldHead}>
+            <span className={s.fNum}>{num}</span>
+            <span className={s.fCrumb}>{crumb}</span>
+            {when && <span className={s.fWhen}>{when}</span>}
+          </header>
+        )}
         <div className={s.flow}>{children}</div>
       </div>
     </section>

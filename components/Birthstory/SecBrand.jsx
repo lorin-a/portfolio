@@ -13,7 +13,7 @@ const PALETTE = [
 
 export default function SecBrand() {
   return (
-    <FieldSection id="brand" num="07" crumb="visual design" when="Week 5" wide>
+    <FieldSection id="brand" crumb="visual design" when="Week 5" wide sub>
       <Split
         text={
           <>

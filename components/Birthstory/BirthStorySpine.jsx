@@ -11,22 +11,28 @@ import styles from './BirthStorySpine.module.css'
    ============================================================================ */
 
 export default function BirthStorySpine({ sections }) {
-  const [active, setActive] = useState(null)
+  const [active, setActive] = useState(null) // the active NODE id
   const ratios = useRef({})
+  const idToNode = useRef({})
 
   useEffect(() => {
-    const els = sections.map((s) => document.getElementById(s.id)).filter(Boolean)
+    // a node can cover several DOM sections (e.g. Structure = architecture +
+    // iteration); observe every covered section and map it back to its node
+    const map = {}
+    sections.forEach((s) => (s.ids || [s.id]).forEach((sid) => { map[sid] = s.id }))
+    idToNode.current = map
+    const els = Object.keys(map).map((id) => document.getElementById(id)).filter(Boolean)
     if (!els.length) return
 
     const obs = new IntersectionObserver(
       (entries) => {
         entries.forEach((e) => { ratios.current[e.target.id] = e.isIntersecting ? e.intersectionRatio : 0 })
-        // the most-visible tracked section wins
+        // the most-visible tracked section wins; resolve it to its node
         let best = null, top = 0
         for (const [id, r] of Object.entries(ratios.current)) {
           if (r > top) { top = r; best = id }
         }
-        setActive(best)
+        setActive(best ? idToNode.current[best] : null)
       },
       { threshold: [0.15, 0.4, 0.7], rootMargin: '-10% 0px -25% 0px' }
     )

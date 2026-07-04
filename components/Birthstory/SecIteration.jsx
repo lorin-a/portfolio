@@ -99,7 +99,7 @@ export default function SecIteration() {
   // no section-level week stamp — the three version markers below are the
   // one canonical timeline (V1 · Week 3 → V3 · Week 5)
   return (
-    <FieldSection id="iteration" num="04" crumb="iteration" alt wide>
+    <FieldSection id="iteration" crumb="iteration" alt wide sub>
       <div className={sys.headCluster}>
         <Lead>Each round made the app simpler.</Lead>
         <Prose>I took three versions through critique, a client check-in, and one round of testing with parents, and changed direction based on what I heard.</Prose>
