@@ -9,6 +9,12 @@ export const metadata = {
 
 const GRAPHIC_STUDIES = [
   {
+    slug: 'board',
+    name: 'G · Diverge/Converge — the synthesis',
+    thesis: 'The editorial register carries the clean chapters; the grid breaks only where the process did. Research is a real pinned board — the sisters’ group text, index cards, red thread — then the layout straightens: Architecture is half board half grid, the iteration clusters level out V1 → V3, and the app’s gradient only blooms once the product is real.',
+    reads: 'Reads: form follows process. Built from everything Lorin flagged in D, E, and F.',
+  },
+  {
     slug: 'print',
     name: 'D · The Print Issue',
     thesis: 'The case study as a designed magazine feature. Hierarchy lives entirely in the type system: folio marks, standfirsts, two-column body text, pull quotes. Photography runs duotone; screens are numbered plates; iteration is a contact sheet; the copy rewrites are set as an errata block.',

@@ -11,6 +11,7 @@ export default function VSwitch({ active }) {
     ['print', 'D · Print'],
     ['skin', 'E · Skin'],
     ['wall', 'F · Wall'],
+    ['board', 'G · Div/Con'],
   ]
   return (
     <nav className={s.bar} aria-label="Direction studies">
