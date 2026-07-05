@@ -15,7 +15,7 @@ const SPINE = [
   { id: 'brief', label: 'Brief', ids: ['brief'] },
   { id: 'research', label: 'Research', ids: ['research'] },
   { id: 'architecture', label: 'Architecture', ids: ['architecture', 'iteration'] },
-  { id: 'features', label: 'The Product', ids: ['features'] },
+  { id: 'features', label: 'Interface', ids: ['features'] },
   { id: 'voice', label: 'Craft', ids: ['voice', 'brand'] },
   { id: 'outcome', label: 'Outcome', ids: ['outcome', 'close'] },
 ]

@@ -118,7 +118,7 @@ function Media({ f }) {
 
 export default function SecFeatures() {
   return (
-    <FieldSection id="features" num="04" crumb="the product" when="Week 5" threshold={0.04} wide>
+    <FieldSection id="features" num="04" crumb="the interface" when="Week 5" threshold={0.04} wide>
       <div className={sys.headCluster}>
         <Lead>Birth is unpredictable, so the app is deliberately simple.</Lead>
         <Prose>

@@ -16,14 +16,20 @@ export default function SecArchitecture() {
       <Split
         text={
           <>
-            <Lead>The app opens straight into documentation, with no home screen and nothing to answer first.</Lead>
+            <Lead>
+              New parents recovering from birth have limited capacity, which made the introduction,
+              onboarding, and user flow make-or-break: they decide how a parent spends their few
+              precious free moments.
+            </Lead>
             <Prose>
-              My first version opened by asking the parent where they were: before, during, or after the
-              birth, at home or in the hospital.
+              Our first attempt met the user in the moment. The opening menu asked what phase they were
+              in, before, during, or after the birth, at home or in the hospital, to determine the need,
+              and with it the best feature for that moment.
             </Prose>
             <Insight>
-              I thought that was thorough, but in testing it read like a form at the front desk while
-              you’re still catching your breath. It was too many questions before anything that mattered.
+              Looking back, it did the opposite of what we intended. Meant to lower cognitive load, it
+              gate-kept features instead of offering freedom and autonomy, and it made the app layered and
+              disorienting: a form at the front desk while you’re still catching your breath.
             </Insight>
           </>
         }
@@ -63,14 +69,22 @@ export default function SecArchitecture() {
         </Figure>
       </div>
 
+      <Prose>
+        Think-aloud testing over Zoom confirmed it, and drove the most significant shift in our
+        approach: from a sequenced entry to an immediate one, opening directly into the main feature for
+        the most common use case, notes on a timeline.
+      </Prose>
+
       <div className={a.reasonCols}>
         <Prose>
-          So I cut the questions entirely. The app opens straight into note-taking, the thing parents
-          most wanted, and onboarding introduces the rest, which stay in the nav bar the whole time.
+          Rather than layer features, we embedded customization and options inside a simple core, always
+          available in the nav bar: four features, each with room to go deeper. If a parent never leaves
+          the home page, they still get the use case they wanted most, a timeline of their documentation.
+          The rest can be explored another time.
         </Prose>
         <Prose>
-          I also stopped splitting the data up. The brief asked for four kinds of capture, medical,
-          contextual, narrative, and feelings, and instead of giving each its own corner I put them on one
+          We also stopped splitting the data up. The brief asked for four kinds of capture, medical,
+          contextual, narrative, and feelings, and instead of giving each its own corner we put them on one
           timeline you tag and filter, because earlier versions that separated them tested as fragmented
           and confusing.
         </Prose>
