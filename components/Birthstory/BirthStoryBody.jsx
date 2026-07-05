@@ -186,9 +186,9 @@ function Research() {
           <div className={b.askCol}>
             <p className={b.specLabel}>What they wanted</p>
             <ul className={b.specList}>
-              <li>Less interested in medical record documentation, more interested in photos and a general outline of the events that happened to refer back to.</li>
+              <li>Less medical documentation, more photos and a general outline of events to refer back to.</li>
               <li>Recognition for doing something amazing and hard.</li>
-              <li>A safe space to reject the idea of a “normal” birth, and to hear other people’s stories like a forum and resources would be very helpful and important.</li>
+              <li>A safe space to reject the idea of a “normal” birth, with a forum of others’ stories and resources.</li>
             </ul>
           </div>
           <div className={b.askCol}>
@@ -213,13 +213,11 @@ function Research() {
       <Split
         text={
           <Insight>
-            My thinking was informed and rooted in my close family members’ traumatic experiences, which
-            explains why I took a trauma-informed approach. I was looking for the right balance of how to
-            support the individual experience and feat of giving birth and the collective experience of
-            those who were a part of the experience. I was also thinking about how to match the
-            interaction design to the capacity level of a new parent. I chose not to focus on medical records primarily,
-            but to leave documentation of medical information optional; instead, the focus would be
-            event-based and timeline-based by the final iteration.
+            My thinking was rooted in my close family members’ traumatic experiences, which led me to a
+            trauma-informed approach. I wanted the right balance between the individual feat of giving
+            birth and the collective experience around it, with an interaction matched to a new parent’s
+            capacity. So I left medical documentation optional and, by the final iteration, built the
+            design around events on a timeline.
           </Insight>
         }
       >
