@@ -32,3 +32,17 @@
   max-width: 76rem;
 }
 @media (max-width: 800px) { .reasonCols { grid-template-columns: 1fr; gap: 1.3rem; } }
+
+/* the cited method line — quiet appendix register beneath the decision it names */
+.methodCite {
+  margin: clamp(1.6rem, 3.5vw, 2.4rem) 0 0; max-width: 62ch;
+  padding-top: clamp(0.9rem, 2vw, 1.2rem);
+  border-top: 1px solid var(--bs-rule);
+  font-family: var(--font-body); font-size: 0.85rem; line-height: 1.6;
+  color: var(--color-ink-light); text-wrap: pretty;
+}
+.methodCiteTag {
+  display: inline-block; margin-right: 0.7rem;
+  font-weight: 700; font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--bs-teal-soft);
+}

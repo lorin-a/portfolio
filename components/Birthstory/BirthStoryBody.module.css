@@ -173,6 +173,47 @@
 @media (hover: hover) { .codaAlt:hover { text-decoration-color: rgba(255, 255, 255, 0.95); } }
 .codaAlt:focus-visible { outline: 2px solid #fff; outline-offset: 3px; border-radius: 4px; }
 
+/* close — the method map. A ruled ledger above the colophon: the taught
+   strategy quiet on the left, her actual move carrying the ink. Appendix
+   register, same column as the colophon so the two read as one closing block. */
+.methodMap {
+  margin: 0; display: grid; gap: clamp(0.9rem, 2vw, 1.2rem);
+  padding-top: clamp(1.4rem, 3vw, 2rem);
+  border-top: 1px solid var(--bs-rule);
+  max-width: 44rem;
+}
+.methodMapHead {
+  margin: 0;
+  font-family: var(--font-body); font-weight: 700; font-size: 0.72rem;
+  letter-spacing: 0.14em; text-transform: uppercase; color: var(--bs-teal-soft);
+}
+.methodMapIntro {
+  margin: 0; max-width: 52ch;
+  font-family: var(--font-body); font-size: 0.9rem; line-height: 1.55;
+  color: var(--color-ink-light); text-wrap: pretty;
+}
+.methodMapList { margin: 0.2rem 0 0; padding: 0; list-style: none; display: grid; }
+.methodMapRow {
+  display: grid; grid-template-columns: minmax(0, 15rem) minmax(0, 1fr);
+  gap: 0.4rem 1.4rem; align-items: baseline;
+  padding: 0.75rem 0;
+}
+.methodMapRow + .methodMapRow { border-top: 1px solid var(--bs-hairline); }
+.methodStrat {
+  font-family: var(--font-body); font-weight: 600; font-size: 0.78rem;
+  letter-spacing: 0.06em; text-transform: uppercase; line-height: 1.5;
+  color: var(--bs-teal-soft); text-wrap: pretty;
+}
+.methodNum {
+  display: inline-block; margin-right: 0.55rem;
+  font-weight: 700; color: var(--color-ink-faint); font-variant-numeric: tabular-nums;
+}
+.methodMove {
+  margin: 0; font-family: var(--font-body); font-size: 0.9rem; line-height: 1.55;
+  color: var(--color-ink); text-wrap: pretty;
+}
+@media (max-width: 600px) { .methodMapRow { grid-template-columns: 1fr; gap: 0.3rem; } }
+
 /* close — the sources colophon. Attribution as a clear, ruled block (tools,
    icons, photography), not a whisper-line a reader could miss. */
 .colophon {

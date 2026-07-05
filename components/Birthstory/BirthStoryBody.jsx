@@ -28,7 +28,7 @@ function Overview() {
     ['Role', 'My partner Michael and I co-led research and information architecture. I led UX/UI, visual identity, and UX writing.'],
     ['Context', '6-week graduate studio at Carnegie Mellon, taught by the founders of Dezudio, Myana’s design partner'],
     ['Client', 'Myana, a maternal-health platform co-developed by researchers at the University of Pittsburgh'],
-    ['Methods', '7 parent interviews, one round of usability testing, 3 wireframe iterations'],
+    ['Method', 'Dezudio’s five-strategy process: 7 parent interviews, think-aloud testing, 3 wireframe rounds'],
     ['Outcome', 'Strong client validation; sponsored to possibly inform future Myana versions'],
     ['Build', 'Concept. Wireframes in Figma, prototypes here built with Claude Code'],
   ]
@@ -362,10 +362,39 @@ function Close() {
         </div>
       </div>
 
+      {/* the method, mapped — the taught strategy beside what she actually did
+          with it here. Appendix register: proof of process for the reader who
+          finishes, without interrupting the story anywhere above. */}
+      <section className={`${b.methodMap} ${sys.up}`}>
+        <p className={b.methodMapHead}>Method</p>
+        <p className={b.methodMapIntro}>
+          The studio ran on Dezudio’s five strategies for creative problem solving. Where each
+          one shows up in this project:
+        </p>
+        <ol className={b.methodMapList}>
+          {[
+            ['Understand and document the current state', 'Seven parent interviews, plus forums and blogs, before any screens took shape.'],
+            ['Externalize your thinking', 'Color-block wireframes pinned to the crit wall, so feedback aimed at the flow instead of the finish.'],
+            ['Rely on abstraction to frame opportunities', 'The IA diagrams carried the biggest decision: four capture types unified into one tagged timeline.'],
+            ['Diverge and converge to unlock creativity', 'Start big, chisel down. Three rounds from everything-at-once to the heart of it.'],
+            ['Try it out and see what works', 'Think-aloud walkthroughs with parents, and the wireframes rebuilt as the working prototypes on this page.'],
+          ].map(([strat, move], i) => (
+            <li key={strat} className={b.methodMapRow}>
+              <span className={b.methodStrat}><span className={b.methodNum}>{i + 1}</span>{strat}</span>
+              <span className={b.methodMove}>{move}</span>
+            </li>
+          ))}
+        </ol>
+      </section>
+
       <dl className={`${b.colophon} ${sys.up}`}>
         <div className={b.colRow}>
           <dt>Consent</dt>
           <dd>Participant quotes appear with their consent; names are withheld.</dd>
+        </div>
+        <div className={b.colRow}>
+          <dt>Lineage</dt>
+          <dd>The studio was taught by Dezudio founders Raelynn O’Leary and Ashley Deal, CMU School of Design; the process follows their five strategies for creative problem solving and the analysis–synthesis bridge model (Dubberly, Evenson &amp; Robinson, 2008).</dd>
         </div>
         <div className={b.colRow}>
           <dt>Tools</dt>
