@@ -31,38 +31,65 @@
 }
 .briefTask b { color: var(--bs-accent); font-weight: 700; }
 
-/* our design values — the qualities each function had to embody. A flat,
-   full-width principles strip, set off from the brief by a hairline (not a
-   floating card), so it reads as part of the section. */
+/* design principles — the qualities the work had to embody, sharpened into
+   named principles (the studio's Saffer model: pithy, specific, a
+   differentiator). Numbered editorial cards, 2×2; the two that testing
+   sharpened carry a hairline-set "what it taught" note. Set off from the brief
+   by a hairline so it reads as part of the section. */
 .values {
   padding-top: clamp(1.8rem, 4vw, 2.8rem);
   border-top: 1px solid var(--bs-rule);
-  display: grid; gap: clamp(1.4rem, 3vw, 2rem);
+  display: grid; gap: clamp(1rem, 2.4vw, 1.5rem);
 }
 .valuesHead {
   margin: 0;
   font-family: var(--font-body); font-weight: 600; font-size: 0.75rem;
   letter-spacing: 0.14em; text-transform: uppercase; color: var(--bs-teal-soft);
 }
-.valuesList { margin: 0; padding: 0; list-style: none; display: grid; grid-template-columns: repeat(4, 1fr); gap: clamp(0.9rem, 1.8vw, 1.4rem); }
-/* same card DNA as the ask band: solid teal header bar, white body, grounded
-   elevation — the values read as siblings of Required / Provided, not a
-   flatter second system */
-.valuesList li {
+.valuesIntro {
+  margin: -0.5rem 0 0; max-width: 42rem;
+  font-family: var(--font-body); font-size: 0.95rem; line-height: 1.5;
+  color: var(--color-ink-light); text-wrap: pretty;
+}
+.valuesList {
+  margin: 0; padding: 0; list-style: none;
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(0.9rem, 1.8vw, 1.3rem);
+}
+/* same grounded card DNA as the ask band, opened up to hold the reasoning */
+.principle {
   --pad: clamp(1.1rem, 2vw, 1.5rem);
-  display: flex; flex-direction: column;
-  padding: 0; overflow: hidden;
+  display: grid; grid-template-columns: auto 1fr; gap: clamp(0.8rem, 1.6vw, 1.15rem);
+  padding: var(--pad);
   background: #fff; border-radius: 12px;
   box-shadow: 0 1px 2px rgba(26, 67, 77, 0.06), 0 14px 30px -18px rgba(26, 67, 77, 0.22), 0 0 0 1px var(--bs-hairline);
 }
-.valueCat {
-  padding: 0.62rem var(--pad);
-  background: var(--bs-accent); color: var(--color-cream);
-  font-family: var(--font-body); font-weight: 700; font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase;
+.principleNum {
+  font-family: var(--font-heading); font-variation-settings: 'SOFT' 60, 'WONK' 0;
+  font-weight: 420; font-size: clamp(1.3rem, 1.1rem + 0.7vw, 1.7rem); line-height: 1;
+  color: var(--bs-teal-soft); letter-spacing: -0.01em;
 }
-.valueName { padding: 0.9rem var(--pad) var(--pad); font-family: var(--font-heading); font-variation-settings: 'SOFT' 60, 'WONK' 0; font-weight: 400; font-size: clamp(1.12rem, 1rem + 0.4vw, 1.35rem); line-height: 1.28; color: var(--color-ink); text-wrap: pretty; }
-@media (max-width: 760px) { .valuesList { grid-template-columns: 1fr 1fr; } }
-@media (max-width: 440px) { .valuesList { grid-template-columns: 1fr; } }
+.principleBody { display: grid; gap: 0.5rem; align-content: start; }
+.principleName {
+  margin: 0; font-family: var(--font-heading); font-variation-settings: 'SOFT' 60, 'WONK' 0;
+  font-weight: 400; font-size: clamp(1.12rem, 1rem + 0.4vw, 1.35rem); line-height: 1.24;
+  color: var(--color-ink); text-wrap: balance;
+}
+.principleWhy {
+  margin: 0; font-family: var(--font-body); font-size: 0.92rem; line-height: 1.5;
+  color: var(--color-ink-light); text-wrap: pretty;
+}
+.principleEvolved {
+  margin: 0.25rem 0 0; padding-top: 0.75rem; border-top: 1px solid var(--bs-hairline);
+  font-family: var(--font-body); font-size: 0.86rem; line-height: 1.5;
+  color: var(--color-ink-light); text-wrap: pretty;
+}
+.principleEvolvedTag {
+  display: block; margin-bottom: 0.25rem;
+  font-weight: 700; font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--bs-accent);
+}
+@media (max-width: 640px) { .valuesList { grid-template-columns: 1fr; } }
 
 /* voice — the copy work grounded. The tester note + revision panel were two
    light cards floating on near-white paper; this seats them on the identity

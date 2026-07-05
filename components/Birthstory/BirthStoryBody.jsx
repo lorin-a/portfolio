@@ -231,18 +231,47 @@ function Research() {
         />
       </Split>
 
+      {/* design principles — the studio's Saffer model: pithy, specific,
+          differentiating. Two were sharpened by testing; the notes show how.
+          PROVISIONAL copy from Lorin's own words, hers to bless. */}
       <section className={`${b.values} ${sys.up}`}>
-        <p className={b.valuesHead}>Our design values</p>
+        <p className={b.valuesHead}>Design principles</p>
+        <p className={b.valuesIntro}>Four principles came out of the research. Testing sharpened two of them.</p>
         <ol className={b.valuesList}>
           {[
-            ['Look & Feel', 'Calm, emotionally intelligent, non-clinical.'],
-            ['Function', 'Hold the medical record and the emotional story in one place.'],
-            ['Flow', 'Intuitive and easy to navigate.'],
-            ['Voice', 'Empathetic and trauma-informed.'],
-          ].map(([cat, val]) => (
-            <li key={cat}>
-              <span className={b.valueCat}>{cat}</span>
-              <span className={b.valueName}>{val}</span>
+            {
+              name: 'Caring and compassionate, not clinical',
+              why: 'A birth lives inside cold clinical systems; the tool that holds it shouldn’t feel like one.',
+            },
+            {
+              name: 'Integrate facts and feelings',
+              why: 'The brief split capture four ways, but a birth isn’t lived in parts, so one timeline holds them together.',
+            },
+            {
+              name: 'Does not disorient',
+              why: 'A parent recovering on little sleep can’t afford a maze.',
+              tag: 'what testing taught',
+              taught: 'My first two builds meant to lower cognitive load and did the opposite. The principle didn’t change; testing taught me what disorienting really meant.',
+            },
+            {
+              name: 'Trauma-informed, not trauma-assuming',
+              why: 'Careful with pain, without deciding a parent’s experience for them.',
+              tag: 'what feedback taught',
+              taught: 'My first copy assumed trauma; a parent showed me the words shouldn’t choose the tone.',
+            },
+          ].map((p, i) => (
+            <li key={p.name} className={b.principle}>
+              <span className={b.principleNum} aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+              <div className={b.principleBody}>
+                <h3 className={b.principleName}>{p.name}</h3>
+                <p className={b.principleWhy}>{p.why}</p>
+                {p.taught && (
+                  <p className={b.principleEvolved}>
+                    <span className={b.principleEvolvedTag}>{p.tag}</span>
+                    {p.taught}
+                  </p>
+                )}
+              </div>
             </li>
           ))}
         </ol>
