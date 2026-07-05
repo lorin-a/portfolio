@@ -155,6 +155,7 @@ function Brief() {
 
 function Research() {
   const feeding = birthPhoto('feeding', 1400) // Craig Adderley — mother + newborn skin to skin, hospital (natively B&W)
+  const tired = birthPhoto('gap', 1400, { grayscale: true }) // William Fortunato — exhausted parent beside her sleeping newborn, rendered B&W
   return (
     <FieldSection id="research" num="02" crumb="research" when="Week 2" alt wide>
       <Split
@@ -164,22 +165,19 @@ function Research() {
             <Prose>
               Before we built anything, I researched blogs and existing products and ran information
               interviews with family to get familiar with the subject: my three sisters, my mom, and my
-              friend with a toddler. They were blunt about the reality of those early days: “First couple
-              of weeks you are up and on your phone every 2 hours while breastfeeding.”
-            </Prose>
-            <Prose>
-              Later, after our second build, Michael and I facilitated three think-aloud protocol (TAP)
-              walkthroughs of our wireframes over Zoom with parents our client connected us with, to see
-              whether the design held up in use.
+              friend with a toddler. An app would be nice because “First couple of weeks you are up and on
+              your phone every 2 hours while breastfeeding.”
             </Prose>
           </>
         }
       >
         <Figure
-          tag="walkthrough"
-          src="https://res.cloudinary.com/dc17mvdyv/image/upload/f_auto,q_auto,w_1300/v1782679668/UX_Interview.jpg"
-          alt="A think-aloud walkthrough over Zoom, with two facilitators on the right and the parent tile blurred for privacy on the left."
-          cap="A think-aloud (TAP) walkthrough over Zoom · parent blurred for privacy"
+          tag="context"
+          photo
+          src={tired.src}
+          byline={tired.byline}
+          alt="A tired parent rests her head on her hand, gazing at her sleeping newborn beside her, in black and white."
+          cap="The exhausted early weeks the app had to fit into."
         />
       </Split>
 
@@ -188,9 +186,9 @@ function Research() {
           <div className={b.askCol}>
             <p className={b.specLabel}>What they wanted</p>
             <ul className={b.specList}>
-              <li>Not every medical record. Photos, and a general outline to refer back to.</li>
+              <li>Less interested in medical record documentation, more interested in photos and a general outline of the events that happened to refer back to.</li>
               <li>Recognition for doing something amazing and hard.</li>
-              <li>A safe space to reject the idea of a “normal” birth.</li>
+              <li>A safe space to reject the idea of a “normal” birth, and to hear other people’s stories like a forum and resources would be very helpful and important.</li>
             </ul>
           </div>
           <div className={b.askCol}>
@@ -204,11 +202,10 @@ function Research() {
           <div className={`${b.askCol} ${b.voicesCol}`}>
             <p className={b.specLabel}>In their words</p>
             <blockquote className={b.parentQuote}>
-              “You often have one person in your corner who has seen what you went through, who
-              validates your experience and what you’ve done. This amazing thing you’ve done. Not
-              everyone has that.”
+              “None of our births went according to plan and they were traumatizing and it does not get
+              discussed enough.”
             </blockquote>
-            <p className={b.parentWho}>Parent interview</p>
+            <p className={b.parentWho}>Group call with my three sisters</p>
           </div>
         </div>
       </div>
