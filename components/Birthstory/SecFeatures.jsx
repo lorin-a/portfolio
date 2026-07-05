@@ -141,9 +141,8 @@ export default function SecFeatures() {
         <Prose>
           The brief gave us three required areas, information gathering, meaning-making, and onboarding,
           plus five optional features. I kept two, sharing and a keepsake book, added one that wasn’t on
-          the list, search, because every parent described the same brain fog, and cut the other two, a
-          symptom tracker and a birth-plan builder, the kind of extra the research kept telling me to
-          leave out.
+          the list, search, because every parent described the same brain fog, and cut the other two,
+          trackers and a birth plan, the kind of extra the research kept telling me to leave out.
         </Prose>
         <div className={`${styles.prioCard} ${sys.up}`}>
           <div className={styles.prioLead}>
@@ -162,7 +161,7 @@ export default function SecFeatures() {
             </div>
             <div className={styles.prioCell}>
               <span className={styles.prioFigRow}><span className={styles.prioFig}>2</span><span className={styles.prioLabel}>cut</span></span>
-              <span className={styles.prioNames}>symptom tracker · birth-plan builder</span>
+              <span className={styles.prioNames}>trackers · birth plan</span>
             </div>
           </div>
         </div>

@@ -14,7 +14,7 @@ import b from './BirthStoryBody.module.css'
 const SPINE = [
   { id: 'brief', label: 'Brief', ids: ['brief'] },
   { id: 'research', label: 'Research', ids: ['research'] },
-  { id: 'architecture', label: 'Structure', ids: ['architecture', 'iteration'] },
+  { id: 'architecture', label: 'Architecture', ids: ['architecture', 'iteration'] },
   { id: 'features', label: 'The Product', ids: ['features'] },
   { id: 'voice', label: 'Craft', ids: ['voice', 'brand'] },
   { id: 'outcome', label: 'Outcome', ids: ['outcome', 'close'] },
@@ -26,9 +26,9 @@ const SPINE = [
 function Overview() {
   const meta = [
     ['Role', 'My partner Michael and I co-led research and information architecture. I led UX/UI, visual identity, and UX writing.'],
-    ['Context', '6-week graduate studio at Carnegie Mellon, taught by the founders of Dezudio, Myana’s design partner'],
-    ['Client', 'Myana, a maternal-health platform co-developed by researchers at the University of Pittsburgh'],
-    ['Method', 'Dezudio’s five-strategy process: 7 parent interviews, think-aloud testing, 3 wireframe rounds'],
+    ['Context', <>6-week graduate studio at Carnegie Mellon, taught by the founders of <a href="https://dezudio.com/" target="_blank" rel="noopener noreferrer">Dezudio</a>, Myana’s design partner</>],
+    ['Client', <><a href="https://apps.apple.com/us/app/myana-pa/id6752866138" target="_blank" rel="noopener noreferrer">Myana</a>, a maternal-health platform co-developed by researchers at the University of Pittsburgh</>],
+    ['Method', 'Dezudio’s five-strategy process: 5 parent interviews, 3 think-aloud protocols (TAP), 3 wireframe rounds'],
     ['Outcome', 'Strong client validation; sponsored to possibly inform future Myana versions'],
     ['Build', 'Concept. Wireframes in Figma, prototypes here built with Claude Code'],
   ]
@@ -55,8 +55,8 @@ function Brief() {
             <Lead>Pitch a concept for Myana’s companion micro-app that helps parents document and reflect on their birth experience.</Lead>
             <Prose>
               Myana already supports parents through pregnancy and postpartum. Its researchers saw that
-              the birth itself still went undocumented and unprocessed, and brought that gap to our studio
-              to conceptualize.
+              the birth itself still went undocumented and unprocessed, and brought that gap to our
+              graduate studio to conceptualize.
             </Prose>
             <a
               className={`${b.myanaRef} ${sys.up}`}
@@ -89,20 +89,21 @@ function Brief() {
 
       <div className={`${b.askBand} ${sys.up}`}>
         <div className={b.askCols}>
+          {/* Required + Provided pulled from the course ask documents (the
+              requirements spreadsheet + project brief), in their terms */}
           <div className={b.askCol}>
             <p className={b.specLabel}>Required</p>
             <ul className={b.specList}>
-              <li><b>Info-gathering.</b> The medical record: who, what, interventions, medications.</li>
-              <li><b>Meaning-making.</b> Processing a birth that rarely goes to plan.</li>
-              <li><b>Onboarding.</b> A calm way in for an exhausted first-timer.</li>
+              <li><b>1.0 Information gathering.</b> Medical info, contextual info, the birth narrative, and feelings.</li>
+              <li><b>2.0 Meaning making.</b> Processing through positive retelling, without re-traumatizing.</li>
+              <li><b>3.0 App administration.</b> Profile and onboarding, plus nudges that prompt capture.</li>
             </ul>
           </div>
           <div className={b.askCol}>
             <p className={b.specLabel}>Provided</p>
             <ul className={b.specList}>
               <li>The name, Birth Story, and the core concept.</li>
-              <li>Five optional features to choose from.</li>
-              <li>Client sponsorship, to possibly inform future Myana versions.</li>
+              <li>Five optional features to choose from: Baby Book, Trackers, Birth Plan, Sharing, and Partner Participation.</li>
             </ul>
           </div>
           <div className={`${b.askCol} ${b.stakesCol}`}>
@@ -149,12 +150,12 @@ function Research() {
       <Split
         text={
           <>
-            <Lead>Seven interviews turned the project toward doing less.</Lead>
+            <Lead>Five interviews and three think-alouds turned the project toward doing less.</Lead>
             <Prose>
-              We talked with seven parents. Two were think-aloud walkthroughs of our wireframes over
-              Zoom, with parents our client set us up with, and I did the other five on my own: three
-              family members and two friends, plus forums and blogs to hear from people we couldn’t reach
-              in six weeks.
+              I ran five parent interviews on my own, three family members and two friends, and we did
+              three think-aloud protocol (TAP) walkthroughs of our wireframes over Zoom with parents our
+              client connected us with, plus forums and blogs to hear from people we couldn’t reach in
+              six weeks.
             </Prose>
           </>
         }
@@ -163,7 +164,7 @@ function Research() {
           tag="interviews"
           src="https://res.cloudinary.com/dc17mvdyv/image/upload/f_auto,q_auto,w_1300/v1782679668/UX_Interview.jpg"
           alt="A parent interview over video call; the interviewee’s tile is blurred for privacy."
-          cap="7 parent interviews · interviewee blurred for privacy"
+          cap="Parent interviews over Zoom · interviewee blurred for privacy"
         />
       </Split>
 
@@ -375,7 +376,7 @@ function Close() {
             </p>
             <ol className={b.methodMapList}>
               {[
-                ['Understand and document the current state', 'Seven parent interviews, plus forums and blogs, before any screens took shape.'],
+                ['Understand and document the current state', 'Five parent interviews, plus forums and blogs, before any screens took shape.'],
                 ['Externalize your thinking', 'Color-block wireframes pinned to the crit wall, so feedback aimed at the flow instead of the finish.'],
                 ['Rely on abstraction to frame opportunities', 'The IA diagrams carried the biggest decision: four capture types unified into one tagged timeline.'],
                 ['Diverge and converge to unlock creativity', 'Start big, chisel down. Three rounds from everything-at-once to the heart of it.'],
