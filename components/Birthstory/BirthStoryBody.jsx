@@ -132,8 +132,9 @@ function Brief() {
               Supporting mothers is personal for me. I come from a matriarchal family that has a history
               of complicated births. While interviewing my family members, I understood for the first
               time how traumatic their experiences were. When I worked as a night nanny for an infant
-              whose mother was in breast cancer treatment, I experienced sleep deprivation firsthand.
-              Creating this concept was deeply rewarding.
+              whose mother was in breast cancer treatment, I experienced sleep deprivation and
+              sleep-training struggles firsthand, which deepened my understanding. This opportunity to
+              support parents was deeply meaningful.
             </Prose>
           </SubBlock>
         }
