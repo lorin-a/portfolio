@@ -160,21 +160,21 @@ function Research() {
       <Split
         text={
           <>
-            <Lead>Five interviews and three think-alouds turned the project toward doing less.</Lead>
+            <Lead>This was a design sprint on a concept already built on extensive research, so our work focused on concept iteration.</Lead>
             <Prose>
-              I ran five parent interviews on my own, three family members and two friends, and we did
-              three think-aloud protocol (TAP) walkthroughs of our wireframes over Zoom with parents our
-              client connected us with, plus forums and blogs to hear from people we couldn’t reach in
-              six weeks.
+              To get familiar with the subject matter, I researched blogs and existing products, and
+              interviewed my three sisters, my mom, and my friend with a toddler. Together, Michael and I
+              facilitated three think-aloud protocol (TAP) walkthroughs of our wireframes over Zoom, with
+              parents our client connected us with.
             </Prose>
           </>
         }
       >
         <Figure
-          tag="interviews"
+          tag="walkthrough"
           src="https://res.cloudinary.com/dc17mvdyv/image/upload/f_auto,q_auto,w_1300/v1782679668/UX_Interview.jpg"
-          alt="A parent interview over video call; the interviewee’s tile is blurred for privacy."
-          cap="Parent interviews over Zoom · interviewee blurred for privacy"
+          alt="A think-aloud walkthrough over Zoom, with two facilitators on the right and the parent tile blurred for privacy on the left."
+          cap="A think-aloud (TAP) walkthrough over Zoom · parent blurred for privacy"
         />
       </Split>
 
@@ -386,7 +386,7 @@ function Close() {
             </p>
             <ol className={b.methodMapList}>
               {[
-                ['Understand and document the current state', 'Five parent interviews, plus forums and blogs, before any screens took shape.'],
+                ['Understand and document the current state', 'Five parent interviews, plus blogs and existing products, before any screens took shape.'],
                 ['Externalize your thinking', 'Color-block wireframes pinned to the crit wall, so feedback aimed at the flow instead of the finish.'],
                 ['Rely on abstraction to frame opportunities', 'The IA diagrams carried the biggest decision: four capture types unified into one tagged timeline.'],
                 ['Diverge and converge to unlock creativity', 'Start big, chisel down. Three rounds from everything-at-once to the heart of it.'],
