@@ -162,10 +162,15 @@ function Research() {
           <>
             <Lead>This was a design sprint on a concept already built on extensive research, so our work focused on concept iteration.</Lead>
             <Prose>
-              To get familiar with the subject matter, I researched blogs and existing products, and
-              interviewed my three sisters, my mom, and my friend with a toddler. Together, Michael and I
-              facilitated three think-aloud protocol (TAP) walkthroughs of our wireframes over Zoom, with
-              parents our client connected us with.
+              Before we built anything, I researched blogs and existing products and ran information
+              interviews with family to get familiar with the subject: my three sisters, my mom, and my
+              friend with a toddler. They were blunt about the reality of those early days: “First couple
+              of weeks you are up and on your phone every 2 hours while breastfeeding.”
+            </Prose>
+            <Prose>
+              Later, after our second build, Michael and I facilitated three think-aloud protocol (TAP)
+              walkthroughs of our wireframes over Zoom with parents our client connected us with, to see
+              whether the design held up in use.
             </Prose>
           </>
         }
@@ -183,17 +188,17 @@ function Research() {
           <div className={b.askCol}>
             <p className={b.specLabel}>What they wanted</p>
             <ul className={b.specList}>
-              <li>A few photos.</li>
-              <li>A loose outline they could come back to.</li>
-              <li>Somewhere to be validated.</li>
+              <li>Not every medical record. Photos, and a general outline to refer back to.</li>
+              <li>Recognition for doing something amazing and hard.</li>
+              <li>A safe space to reject the idea of a “normal” birth.</li>
             </ul>
           </div>
           <div className={b.askCol}>
             <p className={b.specLabel}>How they’d use it</p>
             <ul className={b.specList}>
-              <li>In pieces, sleep-deprived between feedings.</li>
-              <li>Simple select-one questions in the moment.</li>
-              <li>The freedom to come back and write the longer version once the fog lifted.</li>
+              <li>Select-one answers in the exhausted early weeks.</li>
+              <li>Free-form journaling later, once the fog lifts.</li>
+              <li>A keepsake book of the story in the end.</li>
             </ul>
           </div>
           <div className={`${b.askCol} ${b.voicesCol}`}>
