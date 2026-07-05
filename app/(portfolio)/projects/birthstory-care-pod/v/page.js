@@ -9,6 +9,12 @@ export const metadata = {
 
 const GRAPHIC_STUDIES = [
   {
+    slug: 'canvas',
+    name: 'H · The Canvas — the tech-native upgrade',
+    thesis: 'The draft’s skeleton pushed into 2026 design-tool native: a cool near-white canvas with a fine dot grid, labeled frames with selection blue, FigJam-crisp stickies in the app’s pastels, connectors, live cursors, and every piece of feedback as a comment thread pinned to the work — including the client’s verdict. No paper, no tape, no yellow.',
+    reads: 'Reads: fluent in the tools. Vector-crisp, cool-toned, current.',
+  },
+  {
     slug: 'board',
     name: 'G · Diverge/Converge — the synthesis',
     thesis: 'The editorial register carries the clean chapters; the grid breaks only where the process did. Research is a real pinned board — the sisters’ group text, index cards, red thread — then the layout straightens: Architecture is half board half grid, the iteration clusters level out V1 → V3, and the app’s gradient only blooms once the product is real.',
