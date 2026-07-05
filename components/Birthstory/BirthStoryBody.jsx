@@ -367,24 +367,44 @@ function Close() {
           finishes, without interrupting the story anywhere above. */}
       <section className={`${b.methodMap} ${sys.up}`}>
         <p className={b.methodMapHead}>Method</p>
-        <p className={b.methodMapIntro}>
-          The studio ran on Dezudio’s five strategies for creative problem solving. Where each
-          one shows up in this project:
-        </p>
-        <ol className={b.methodMapList}>
-          {[
-            ['Understand and document the current state', 'Seven parent interviews, plus forums and blogs, before any screens took shape.'],
-            ['Externalize your thinking', 'Color-block wireframes pinned to the crit wall, so feedback aimed at the flow instead of the finish.'],
-            ['Rely on abstraction to frame opportunities', 'The IA diagrams carried the biggest decision: four capture types unified into one tagged timeline.'],
-            ['Diverge and converge to unlock creativity', 'Start big, chisel down. Three rounds from everything-at-once to the heart of it.'],
-            ['Try it out and see what works', 'Think-aloud walkthroughs with parents, and the wireframes rebuilt as the working prototypes on this page.'],
-          ].map(([strat, move], i) => (
-            <li key={strat} className={b.methodMapRow}>
-              <span className={b.methodStrat}><span className={b.methodNum}>{i + 1}</span>{strat}</span>
-              <span className={b.methodMove}>{move}</span>
-            </li>
-          ))}
-        </ol>
+        <div className={b.methodMapGrid}>
+          <div className={b.methodMapMain}>
+            <p className={b.methodMapIntro}>
+              The studio ran on Dezudio’s five strategies for creative problem solving. Where each
+              one shows up in this project:
+            </p>
+            <ol className={b.methodMapList}>
+              {[
+                ['Understand and document the current state', 'Seven parent interviews, plus forums and blogs, before any screens took shape.'],
+                ['Externalize your thinking', 'Color-block wireframes pinned to the crit wall, so feedback aimed at the flow instead of the finish.'],
+                ['Rely on abstraction to frame opportunities', 'The IA diagrams carried the biggest decision: four capture types unified into one tagged timeline.'],
+                ['Diverge and converge to unlock creativity', 'Start big, chisel down. Three rounds from everything-at-once to the heart of it.'],
+                ['Try it out and see what works', 'Think-aloud walkthroughs with parents, and the wireframes rebuilt as the working prototypes on this page.'],
+              ].map(([strat, move], i) => (
+                <li key={strat} className={b.methodMapRow}>
+                  <span className={b.methodStrat}><span className={b.methodNum}>{i + 1}</span>{strat}</span>
+                  <span className={b.methodMove}>{move}</span>
+                </li>
+              ))}
+            </ol>
+          </div>
+          {/* their diagram cited as an artifact — their pixels, their credit — never
+              re-drawn in this page's language (citation, not mockup) */}
+          <Figure
+            small
+            tag="the taught process"
+            src="/images/birthstory/dezudio-process.png"
+            alt="Dezudio’s process diagram: two lines diverge and converge in waves through Explore, Develop Concepts, and Work Through the Details, converging at define the problem, propose a solution, and finalize design details."
+            cap={
+              <>
+                The process as our professors draw it. Ashley Deal &amp; Raelynn O’Leary, Dezudio ·{' '}
+                <a href="https://medium.com/dezudio/a-design-approach-to-creative-problem-solving-five-strategies-anyone-can-try-6afff05ca425" target="_blank" rel="noopener noreferrer">
+                  “A Design Approach to Creative Problem Solving” ↗
+                </a>
+              </>
+            }
+          />
+        </div>
       </section>
 
       <dl className={`${b.colophon} ${sys.up}`}>

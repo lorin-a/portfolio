@@ -80,8 +80,8 @@ export default function SecArchitecture() {
           the abstraction that carries the research across into the design */}
       <p className={`${a.methodCite} ${sys.up}`}>
         <span className={a.methodCiteTag}>method</span>
-        This move has a name, the analysis–synthesis bridge: cross from research to design in
-        diagrams first, screens second. Dubberly, Evenson &amp; Robinson, 2008 · taught in studio by Dezudio
+        The analysis–synthesis bridge: research crosses into design as diagrams first, screens
+        second. Dubberly, Evenson &amp; Robinson, 2008 · taught in studio by Dezudio
       </p>
     </FieldSection>
   )

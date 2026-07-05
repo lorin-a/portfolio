@@ -180,8 +180,17 @@
   margin: 0; display: grid; gap: clamp(0.9rem, 2vw, 1.2rem);
   padding-top: clamp(1.4rem, 3vw, 2rem);
   border-top: 1px solid var(--bs-rule);
-  max-width: 44rem;
+  max-width: 76rem;
 }
+/* ledger left, the cited Dezudio diagram right — the artifact fills the column
+   the colophon leaves empty, and the two read as one closing method block */
+.methodMapGrid {
+  display: grid; grid-template-columns: minmax(0, 44rem) minmax(0, 26rem);
+  gap: clamp(1.6rem, 4vw, 3.5rem); align-items: start;
+}
+.methodMapMain { display: grid; gap: clamp(0.9rem, 2vw, 1.2rem); }
+.methodMapGrid figcaption a { color: inherit; text-underline-offset: 3px; }
+@media (max-width: 900px) { .methodMapGrid { grid-template-columns: 1fr; } }
 .methodMapHead {
   margin: 0;
   font-family: var(--font-body); font-weight: 700; font-size: 0.72rem;
