@@ -103,3 +103,40 @@ Supporting quotes for V2 "what was most useful" (from her research doc): **"Docu
 **Systemic stakes (client talk, optional gravity for Brief):** 700 US maternal deaths/yr, 80% preventable, 65% after delivery, 1 in 3 after discharge, Black women 3× more likely. Myana = Track/Engage/Triage/Support; "Mothers, you are not alone."
 
 **Craft ethos from the studio (her case-study DNA):** "DO LESS, Do ENOUGH" · "6 screens not enough, 35 too many" · "Don't tell me, show me."
+
+---
+
+## Sister interviews — her verbatim synthesis (added 2026-07-05)
+
+Her own words describing the pre-build **information interviews with family** (generative
+phase, distinct from the post-V2 think-aloud/TAP evaluative research). Source for the
+Research-section "What they wanted / How they'd use it" findings.
+
+> Based on my interviews with my sisters, they aren't sold on the idea that we need to be
+> documenting all the medical records and such but that it would be nice to have more photos
+> and a general outline of the events that happened to refer back to. They felt more like they
+> needed validation and recognition for doing this amazing and hard thing. They said that at
+> first they will be sleep deprived but definitely on their phones while breastfeeding, that
+> they would prefer easy to answer questions like "select one" during this phase and then maybe
+> later they can revisit the entry and do more free form journaling. They like the idea that the
+> story or narrative eventually gets turned into a baby book of the story of how they came to be
+> in the world. They see value in being able to express multiple perspectives of the story via
+> partner, etc. but also owned that they feel a strong claim to "my experience". They hate the
+> idea of a "normal" birth and feel it is more traumatizing than it is not and this doesn't get
+> discussed enough. A safe space to reject the idea of what you "should do" and to hear other
+> people's stories like a forum and resources would be very helpful and important. They are
+> concerned about medical data security.
+
+**Findings not yet placed on the page** (available if wanted): multiple-perspectives-but-my-story
+(→ Care Pod's ownership tension), medical data-security concern (→ trust / the Book keepsake
+rationale), forum/community stories + resources.
+
+## Research → Architecture "My thinking" reflection — her words (added 2026-07-05)
+
+> My thinking was informed and rooted in my close family members' traumatic experiences, which
+> explains why I took a trauma-informed approach. I was looking for the right balance of how to
+> support the individual experience and feat of giving birth and the collective experience of
+> those who were a part of the experience. I was also thinking about how to match the interaction
+> design to the capacity level of a new parent. I chose not to focus on medical records primarily,
+> but to leave documentation of medical information optional; instead, the focus would be
+> event-based and timeline-based by the final iteration.
