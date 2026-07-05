@@ -8,6 +8,9 @@ export default function VSwitch({ active }) {
     ['ledger', 'A · Ledger'],
     ['artifact', 'B · One Artifact'],
     ['atlas', 'C · Atlas'],
+    ['print', 'D · Print'],
+    ['skin', 'E · Skin'],
+    ['wall', 'F · Wall'],
   ]
   return (
     <nav className={s.bar} aria-label="Direction studies">
