@@ -213,9 +213,13 @@ function Research() {
       <Split
         text={
           <Insight>
-            What surprised me was how little they wanted. I had assumed they’d want to log every
-            medical record, but mostly they wanted to feel recognized for doing something hard. We
-            had been trying to do too much, and most of what I did from there was take things away.
+            My thinking was informed and rooted in my close family members’ traumatic experiences, which
+            explains why I took a trauma-informed approach. I was looking for the right balance of how to
+            support the individual experience and feat of giving birth and the collective experience of
+            those who were a part of the experience. I was also thinking about how to match the
+            interaction design to the capacity level of a new parent. I chose not to focus on medical records primarily,
+            but to leave documentation of medical information optional; instead, the focus would be
+            event-based and timeline-based by the final iteration.
           </Insight>
         }
       >
