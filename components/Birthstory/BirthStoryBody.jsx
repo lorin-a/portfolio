@@ -94,16 +94,25 @@ function Brief() {
           <div className={b.askCol}>
             <p className={b.specLabel}>Required</p>
             <ul className={b.specList}>
-              <li><b>1.0 Information gathering.</b> Medical info, contextual info, the birth narrative, and feelings.</li>
-              <li><b>2.0 Meaning making.</b> Processing through positive retelling, without re-traumatizing.</li>
-              <li><b>3.0 App administration.</b> Profile and onboarding, plus nudges that prompt capture.</li>
+              <li><b>Information gathering.</b> Medical info, contextual info, the birth narrative, and feelings.</li>
+              <li><b>Meaning making.</b> Processing through positive retelling, without re-traumatizing.</li>
+              <li><b>App administration.</b> Profile and onboarding, plus nudges that prompt capture.</li>
             </ul>
           </div>
           <div className={b.askCol}>
             <p className={b.specLabel}>Provided</p>
             <ul className={b.specList}>
               <li>The name, Birth Story, and the core concept.</li>
-              <li>Five optional features to choose from: Baby Book, Trackers, Birth Plan, Sharing, and Partner Participation.</li>
+              <li>
+                Five optional features to choose from:
+                <ul className={b.specSubList}>
+                  <li>Baby Book</li>
+                  <li>Trackers</li>
+                  <li>Birth Plan</li>
+                  <li>Sharing</li>
+                  <li>Partner Participation</li>
+                </ul>
+              </li>
             </ul>
           </div>
           <div className={`${b.askCol} ${b.stakesCol}`}>

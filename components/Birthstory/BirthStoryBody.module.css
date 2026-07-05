@@ -320,3 +320,8 @@
 .specList li { position: relative; padding-left: 1.15rem; font-family: var(--font-body); font-size: 0.95rem; line-height: 1.5; color: var(--color-ink-light); text-wrap: pretty; }
 .specList li::before { content: ''; position: absolute; left: 0; top: 0.6em; width: 0.42rem; height: 0.42rem; border-radius: 1px; background: var(--bs-teal-soft); }
 .specList b { font-weight: 700; color: var(--color-ink); }
+/* nested options — indented dashes under the parent bullet, tighter and
+   quieter so they read as a set, not new top-level items */
+.specSubList { margin: 0.5rem 0 0; padding: 0; list-style: none; display: grid; gap: 0.32rem; }
+.specSubList li { position: relative; padding-left: 1rem; font-size: 0.9rem; line-height: 1.45; color: var(--color-ink); }
+.specSubList li::before { content: '–'; position: absolute; left: 0; top: 0; width: auto; height: auto; background: none; border-radius: 0; color: var(--bs-teal-soft); }
