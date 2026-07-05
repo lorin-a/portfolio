@@ -137,6 +137,15 @@
   color: #fff;
 }
 .codaInner { max-width: 42rem; margin: 0 auto; display: grid; justify-items: center; text-align: center; gap: clamp(1.8rem, 4vw, 2.7rem); }
+/* the display line + its quieter proof sentence read as one thought,
+   held tighter than the coda's outer gap */
+.codaText { display: grid; justify-items: center; gap: clamp(0.9rem, 2vw, 1.3rem); }
+.codaSub {
+  margin: 0; max-width: 46ch;
+  font-family: var(--font-body); font-weight: 400;
+  font-size: clamp(0.96rem, 0.9rem + 0.3vw, 1.1rem); line-height: 1.6;
+  color: rgba(255, 255, 255, 0.82); text-wrap: balance;
+}
 .codaLine {
   margin: 0; max-width: 30ch;
   font-family: var(--font-heading); font-variation-settings: 'SOFT' 60, 'WONK' 0; font-style: italic; font-weight: 360;
@@ -255,11 +264,3 @@
 .specList li { position: relative; padding-left: 1.15rem; font-family: var(--font-body); font-size: 0.95rem; line-height: 1.5; color: var(--color-ink-light); text-wrap: pretty; }
 .specList li::before { content: ''; position: absolute; left: 0; top: 0.6em; width: 0.42rem; height: 0.42rem; border-radius: 1px; background: var(--bs-teal-soft); }
 .specList b { font-weight: 700; color: var(--color-ink); }
-
-
-/* two before/after pairs stacked in the voice section */
-.rewritePlaceholder {
-  margin: 0; max-width: 28ch;
-  font-family: var(--font-body); font-style: italic; font-size: 0.92rem; line-height: 1.45;
-  color: var(--bs-teal-soft);
-}

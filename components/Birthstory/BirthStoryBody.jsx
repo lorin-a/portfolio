@@ -251,9 +251,14 @@ function Voice() {
               for anyone.
             </Prose>
             <Prose>
-              So I rewrote toward connection and left room for people to bring their own tone. The next
-              thing I’d do is balance the reflection prompts so they reach for joy as readily as they
-              make room for distress.
+              So I rewrote toward connection and left room for people to bring their own tone. Same for
+              “Find strength &amp; support” as a feature name: it positioned the new mother in a negative
+              light, when in fact most are empowered by doing an amazing and hard thing. It became
+              the Care Pod.
+            </Prose>
+            <Prose>
+              The next thing I’d do is balance the reflection prompts so they reach for joy as readily
+              as they make room for distress.
             </Prose>
           </>
         }
@@ -283,12 +288,12 @@ function Voice() {
           <div className={b.revRow}>
             <div className={b.revCell}>
               <span className={b.copyLabel}>draft</span>
-              <p className={b.draftLine}>“Find strength &amp; support.”</p>
+              <p className={b.draftLine}>“Find strength &amp; support”</p>
             </div>
             <span className={b.revArrow} aria-hidden="true">→</span>
             <div className={b.revCell}>
               <span className={b.copyLabel}>rewrite</span>
-              <p className={b.rewritePlaceholder}>[ Lorin to write: a name that assumes she is already strong, not in need of rescue. ]</p>
+              <p className={b.rewriteLine}>“Care Pod”</p>
             </div>
           </div>
         </div>
@@ -336,14 +341,20 @@ function Close() {
       {/* Reflection = the bookend (Lorin's call, option B). The three retrospective
           paragraphs were cut — they read stale, and the "still a concept / built
           with AI" honesty already lives in Overview → Build and the hero. The teal
-          block reprises the brand and carries one closing thought (her words, to be
-          finalized in her copy pass) plus the way to reach her. */}
+          block reprises the brand and carries the closing thought + the proof line
+          (both composed from her interview words, hers to bless) plus the way to reach her. */}
       <div className={b.coda}>
         <div className={`${b.codaInner} ${sys.up}`}>
-          <p className={b.codaLine}>
-            I’m a big dreamer, so I start by trying to do everything, and almost always end up narrowing
-            and narrowing until I get to the heart of it.
-          </p>
+          <div className={b.codaText}>
+            <p className={b.codaLine}>
+              I’m a big dreamer. I try to do everything first, then narrow and narrow until I get to
+              the heart of it.
+            </p>
+            <p className={b.codaSub}>
+              Designing something and then being able to build it myself is the direction I’m headed.
+              The working prototypes on this page are that proof.
+            </p>
+          </div>
           <div className={b.codaActions}>
             <a className={b.codaCta} href="mailto:lorinanderberg1@gmail.com">Get in touch</a>
             <a className={b.codaAlt} href="/">See more work</a>
