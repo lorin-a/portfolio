@@ -181,33 +181,37 @@ function Research() {
         />
       </Split>
 
-      <div className={`${b.askBand} ${sys.up}`}>
-        <div className={b.askCols}>
-          <div className={b.askCol}>
-            <p className={b.specLabel}>What they wanted</p>
-            <ul className={b.specList}>
-              <li>Less medical documentation, more photos and a general outline of events to refer back to.</li>
-              <li>Recognition for doing something amazing and hard.</li>
-              <li>A safe space to reject the idea of a “normal” birth, with a forum of others’ stories and resources.</li>
-            </ul>
-          </div>
-          <div className={b.askCol}>
-            <p className={b.specLabel}>How they’d use it</p>
-            <ul className={b.specList}>
-              <li>Select-one answers in the exhausted early weeks.</li>
-              <li>Free-form journaling later, once the fog lifts.</li>
-              <li>A keepsake book of the story in the end.</li>
-            </ul>
-          </div>
-          <div className={`${b.askCol} ${b.voicesCol}`}>
-            <p className={b.specLabel}>In their words</p>
-            <blockquote className={b.parentQuote}>
-              “None of our births went according to plan and they were traumatizing and it does not get
+      {/* the group call, as the group text it basically was — the casual,
+          personal research made legible. Incoming = their asks (summarized);
+          the marked bubble = one sister's words, verbatim. The rigor note keeps
+          the claim honest: nothing here is dressed up as data it isn't. */}
+      <div className={`${b.researchTalk} ${sys.up}`}>
+        <figure className={b.chatCard}>
+          <figcaption className={b.chatHead}>
+            <span className={b.chatDot} aria-hidden="true" />
+            the group call · my three sisters, my mom, a friend with a toddler
+          </figcaption>
+          <div className={b.chatBody}>
+            <p className={b.chatIn}>Less medical documentation. More photos, and an outline of what actually happened.</p>
+            <p className={b.chatIn}>Recognition for doing something this amazing and this hard.</p>
+            <p className={b.chatIn}>A space that doesn’t assume a “normal” birth: other people’s stories, resources.</p>
+            <p className={b.chatVerbatim}>
+              “None of our births went according to plan and they were traumatizing, and it doesn’t get
               discussed enough.”
-            </blockquote>
-            <p className={b.parentWho}>Group call with my three sisters</p>
+            </p>
           </div>
-        </div>
+          <p className={b.chatNote}>their asks, summarized · the quote, verbatim</p>
+        </figure>
+
+        <aside className={b.talkAside}>
+          <p className={b.specLabel}>How they’d use it</p>
+          <ol className={b.usePhases}>
+            <li><span className={b.usePhaseWhen}>Early, in the fog</span><span className={b.usePhaseWhat}>Select-one answers, a few taps at a time.</span></li>
+            <li><span className={b.usePhaseWhen}>Later, once it lifts</span><span className={b.usePhaseWhat}>Free-form journaling, at their own pace.</span></li>
+            <li><span className={b.usePhaseWhen}>In the end</span><span className={b.usePhaseWhat}>A keepsake book of the whole story.</span></li>
+          </ol>
+          <p className={b.talkTakeaway}>Capacity rises over time, so the app had to meet three different moments, not one.</p>
+        </aside>
       </div>
 
       <Split
