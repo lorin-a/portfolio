@@ -399,10 +399,30 @@
 /* the ask band — "The requirements were explicit." over a designed grid of
    thirds: Required · Provided · The stakes, ruled and divided so the three read
    as distinct, scannable columns rather than one inline list. */
-.askBand { display: grid; gap: clamp(1.2rem, 2.5vw, 1.9rem); }
-.askCols { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(0.9rem, 2vw, 1.4rem); }
-.askCol { --pad: clamp(1.2rem, 2.4vw, 1.6rem); display: grid; gap: 0.85rem; align-content: start; padding: var(--pad); background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 1px 2px rgba(26, 67, 77, 0.06), 0 14px 30px -18px rgba(26, 67, 77, 0.22), 0 0 0 1px var(--bs-hairline); }
-.askCol .specLabel { margin: calc(var(--pad) * -1) calc(var(--pad) * -1) 0.2rem; padding: 0.62rem var(--pad); background: var(--bs-accent); color: var(--color-cream); font-size: 0.78rem; letter-spacing: 0.12em; }
+/* the brief in its own terms — one considered panel split into three by thin
+   rules, not three student cards with colored header bars. Quiet eyebrows; the
+   stakes column carries the human weight. */
+.askBand {
+  display: grid;
+  padding: clamp(1.4rem, 3vw, 2.1rem) clamp(1.5rem, 3.2vw, 2.4rem);
+  background: #fff; border-radius: 16px;
+  box-shadow: 0 1px 2px rgba(26, 67, 77, 0.06), 0 18px 40px -22px rgba(26, 67, 77, 0.28), 0 0 0 1px var(--bs-hairline);
+}
+.askCols { display: grid; grid-template-columns: 1fr 1fr 1fr; }
+.askCol { display: grid; gap: 0.8rem; align-content: start; padding: 0 clamp(1.2rem, 2.6vw, 2.1rem); }
+.askCol:first-child { padding-left: 0; }
+.askCol:last-child { padding-right: 0; }
+.askCol + .askCol { border-left: 1px solid var(--bs-hairline); }
+.askCol .specLabel {
+  margin: 0 0 0.4rem; padding: 0 0 0.55rem; border-bottom: 1px solid var(--bs-hairline);
+  background: none; color: var(--bs-teal-soft);
+  font-weight: 700; font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase;
+}
+@media (max-width: 760px) {
+  .askCols { grid-template-columns: 1fr; }
+  .askCol { padding: 0; }
+  .askCol + .askCol { border-left: 0; border-top: 1px solid var(--bs-hairline); padding-top: 1.2rem; margin-top: 0.4rem; }
+}
 .stakesCol { gap: 0.6rem; }
 .stakeRow { display: grid; grid-template-columns: auto 1fr; gap: 0.55rem; align-items: baseline; }
 .stakeFig { font-family: var(--font-heading); font-variation-settings: 'SOFT' 60, 'WONK' 0; font-weight: 500; font-size: clamp(1.15rem, 1.05rem + 0.4vw, 1.35rem); line-height: 1.3; letter-spacing: -0.01em; color: var(--bs-accent); }

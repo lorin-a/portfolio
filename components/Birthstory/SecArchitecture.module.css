@@ -24,25 +24,42 @@
   max-width: 22rem; line-height: 1.5; text-wrap: balance;
 }
 
-/* the reasoning after the confrontation — two columns so the thought reads
-   wide and short instead of a long single column beside a void */
-.reasonCols {
-  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: clamp(1.5rem, 3.5vw, 3rem);
-  max-width: 76rem;
+/* the shift — the pivot sentence, framed so it reads as the hinge of the story
+   rather than a stray line of prose after the diagrams */
+.shift {
+  display: grid; gap: 0.5rem; max-width: 60rem;
+  margin-top: clamp(0.4rem, 1.5vw, 1rem);
+  padding-left: clamp(0.9rem, 1.8vw, 1.3rem); border-left: 3px solid var(--bs-accent);
 }
-@media (max-width: 800px) { .reasonCols { grid-template-columns: 1fr; gap: 1.3rem; } }
+.shiftLabel {
+  font-family: var(--font-body); font-weight: 700; font-size: 0.72rem;
+  letter-spacing: 0.14em; text-transform: uppercase; color: var(--bs-teal-soft);
+}
+.shiftText {
+  margin: 0; font-family: var(--font-heading); font-variation-settings: 'SOFT' 60, 'WONK' 0;
+  font-weight: 400; font-size: clamp(1.1rem, 1rem + 0.5vw, 1.4rem); line-height: 1.34;
+  color: var(--color-ink); text-wrap: pretty;
+}
 
-/* the cited method line — quiet appendix register beneath the decision it names */
-.methodCite {
-  margin: clamp(1.6rem, 3.5vw, 2.4rem) 0 0; max-width: 62ch;
-  padding-top: clamp(0.9rem, 2vw, 1.2rem);
-  border-top: 1px solid var(--bs-rule);
-  font-family: var(--font-body); font-size: 0.85rem; line-height: 1.6;
-  color: var(--color-ink-light); text-wrap: pretty;
+/* the two IA moves as named decision cards — contained, so the reasoning reads
+   as design judgment instead of paragraphs floating on the dotted ground */
+.moves {
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(1rem, 2vw, 1.5rem); max-width: 78rem;
 }
-.methodCiteTag {
-  display: inline-block; margin-right: 0.7rem;
-  font-weight: 700; font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase;
-  color: var(--bs-teal-soft);
+@media (max-width: 800px) { .moves { grid-template-columns: 1fr; } }
+.moveCard {
+  --pad: clamp(1.2rem, 2.4vw, 1.7rem);
+  display: grid; gap: 0.65rem; padding: var(--pad);
+  background: #fff; border-radius: 14px;
+  box-shadow: 0 1px 2px rgba(26, 67, 77, 0.06), 0 16px 34px -20px rgba(26, 67, 77, 0.24), 0 0 0 1px var(--bs-hairline);
+}
+.moveLabel {
+  margin: 0; font-family: var(--font-heading); font-variation-settings: 'SOFT' 60, 'WONK' 0;
+  font-weight: 400; font-size: clamp(1.12rem, 1rem + 0.45vw, 1.4rem); line-height: 1.2;
+  letter-spacing: -0.01em; color: var(--bs-accent);
+}
+.moveText {
+  margin: 0; font-family: var(--font-body); font-size: 0.94rem; line-height: 1.55;
+  color: var(--color-ink-light); text-wrap: pretty;
 }

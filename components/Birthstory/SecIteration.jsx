@@ -1,6 +1,6 @@
 'use client'
 
-import { FieldSection, Lead, Prose, Insight, Friction, TesterNote, Figure, sys } from './kit'
+import { FieldSection, Lead, Prose, Insight, Friction, TesterNote, Figure, Split, sys } from './kit'
 import { cloudImg } from '@/lib/cloudinary'
 import CritStage from './CritStage'
 import styles from './SecIteration.module.css'
@@ -100,19 +100,23 @@ export default function SecIteration() {
   // one canonical timeline (V1 · Week 3 → V3 · Week 5)
   return (
     <FieldSection id="iteration" crumb="iteration" alt wide sub>
-      <div className={sys.headCluster}>
-        <Lead>Each round made the app simpler.</Lead>
-        <Prose>I took three versions through critique, a client check-in, and one round of think-aloud testing (TAP) with parents our client connected us with, and changed direction based on what I heard.</Prose>
-      </div>
-
-      <Figure
-        photo
-        tag="think-aloud walkthrough"
-        className={styles.tapShot}
-        src="https://res.cloudinary.com/dc17mvdyv/image/upload/f_auto,q_auto,w_1300/v1782679668/UX_Interview.jpg"
-        alt="A think-aloud walkthrough over Zoom, with two facilitators on the right and the parent tile blurred for privacy on the left."
-        cap="A think-aloud (TAP) walkthrough over Zoom: parents talked through the wireframes so we could hear where the flow broke · parent blurred for privacy"
-      />
+      <Split
+        text={
+          <>
+            <Lead>Each round made the app simpler.</Lead>
+            <Prose>We took three versions through critique, a client check-in, and one round of think-aloud testing (TAP) with parents our client connected us with, and changed direction based on what we heard.</Prose>
+          </>
+        }
+      >
+        <Figure
+          photo
+          tag="think-aloud walkthrough"
+          className={styles.tapShot}
+          src="https://res.cloudinary.com/dc17mvdyv/image/upload/f_auto,q_auto,w_1300/v1782679668/UX_Interview.jpg"
+          alt="A think-aloud walkthrough over Zoom, with two facilitators on the right and the parent tile blurred for privacy on the left."
+          cap="A think-aloud (TAP) walkthrough over Zoom: parents talked through the wireframes so we could hear where the flow broke · parent blurred for privacy"
+        />
+      </Split>
 
       {ROUNDS.map((r) => <Round key={r.label} {...r} />)}
 

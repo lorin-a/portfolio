@@ -69,25 +69,36 @@ export default function SecArchitecture() {
         </Figure>
       </div>
 
-      <Prose>
-        Think-aloud testing over Zoom confirmed it, and drove the most significant shift in our
-        approach: from a sequenced entry to an immediate one, opening directly into the main feature for
-        the most common use case, notes on a timeline.
-      </Prose>
+      <div className={`${a.shift} ${sys.up}`}>
+        <span className={a.shiftLabel}>the shift</span>
+        <p className={a.shiftText}>
+          Think-aloud testing over Zoom confirmed it, and drove the most significant shift in our
+          approach: from a sequenced entry to an immediate one, opening directly into the main feature for
+          the most common use case, notes on a timeline.
+        </p>
+      </div>
 
-      <div className={a.reasonCols}>
-        <Prose>
-          Rather than layer features, we embedded customization and options inside a simple core, always
-          available in the nav bar: four features, each with room to go deeper. If a parent never leaves
-          the home page, they still get the use case they wanted most, a timeline of their documentation.
-          The rest can be explored another time.
-        </Prose>
-        <Prose>
-          We also stopped splitting the data up. The brief asked for four kinds of capture, medical,
-          contextual, narrative, and feelings, and instead of giving each its own corner we put them on one
-          timeline you tag and filter, because earlier versions that separated them tested as fragmented
-          and confusing.
-        </Prose>
+      {/* the two IA moves it produced, as named decisions on a card so they read
+          as design judgment, not paragraphs floating on the page */}
+      <div className={`${a.moves} ${sys.up}`}>
+        <div className={a.moveCard}>
+          <p className={a.moveLabel}>Open into the task</p>
+          <p className={a.moveText}>
+            Rather than layer features, we embedded customization and options inside a simple core, always
+            available in the nav bar: four features, each with room to go deeper. If a parent never leaves
+            the home page, they still get the use case they wanted most, a timeline of their documentation.
+            The rest can be explored another time.
+          </p>
+        </div>
+        <div className={a.moveCard}>
+          <p className={a.moveLabel}>Unify, don’t fragment</p>
+          <p className={a.moveText}>
+            We also stopped splitting the data up. The brief asked for four kinds of capture, medical,
+            contextual, narrative, and feelings, and instead of giving each its own corner we put them on
+            one timeline you tag and filter, because earlier versions that separated them tested as
+            fragmented and confusing.
+          </p>
+        </div>
       </div>
     </FieldSection>
   )

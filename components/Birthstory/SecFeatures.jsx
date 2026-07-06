@@ -22,8 +22,8 @@ const DEEPDIVES = [
     kind: 'doc',
     layout: 'side',
     annots: {
-      l: { label: 'One timeline', text: 'Medical, contextual, narrative, and feelings, tagged and filtered in one place.', mt: '15rem' },
-      r: { label: 'The medical record', text: 'Entries stay closed until you open one; the detail lives a tap away.', mt: '7.5rem' },
+      l: { label: 'One timeline', text: 'Medical, contextual, narrative, and feelings in one place — a birth isn’t lived in separate files.', mt: '15rem' },
+      r: { label: 'Calm by default', text: 'Entries stay closed until you open one, so a tired parent meets a surface, not a wall of clinical detail.', mt: '7.5rem' },
     },
     prose: <>Parents told me they wanted to land on the main task, so that’s what the app does. Even if nothing else gets used, there’s a timeline of whatever they or a loved one managed to add, and a note from the delivery room, a prescription, and a voice memo when your hands are full all land on it together, the moment they happen.</>,
   },
@@ -33,8 +33,8 @@ const DEEPDIVES = [
     kind: 'carepod',
     layout: 'side',
     annots: {
-      l: { label: 'One action', text: 'One support person sends out updates, photos, and voice memos.', mt: '5.5rem' },
-      r: { label: 'Their replies', text: 'Loved ones reply, and all of it saves into the Birth Story.', mt: '13rem' },
+      l: { label: 'You don’t carry it', text: 'One person you designate sends the updates, photos, and voice memos — not the laboring parent.', mt: '5.5rem' },
+      r: { label: 'Nothing is lost', text: 'Loved ones reply, and it all saves into the story: the detail you’d have forgotten, kept.', mt: '13rem' },
     },
     prose: <>The idea came out of a single interview. A parent told me someone in her circle remembered a detail about her child’s birth that she had lost, and wished she’d asked everyone around her to add what they remembered while it was fresh. That became Care Pod: one support person sends out updates, photos, and voice memos, loved ones reply with messages and voice notes, and all of it saves into the Birth Story, so the whole story of who was there and how loved that child was stays in one place.</>,
     context: {
@@ -50,7 +50,7 @@ const DEEPDIVES = [
     kind: 'journal',
     layout: 'side',
     annots: {
-      l: { label: 'No blank page', text: 'The deck deals a prompt: a letter to a past self, the needs that are hard to name.', mt: '5rem' },
+      l: { label: 'No blank page', text: 'The deck deals a prompt, because the parents who don’t already journal don’t know where to start.', mt: '5rem' },
       r: { label: 'Tag how it felt', text: 'So a memory can be found later by its emotion, not only its date.', mt: '12rem' },
     },
     prose: <>Every parent wanted to reflect, whether their birth was traumatic or not, but the ones who don’t already journal often don’t know where to start. So instead of a blank page, the journal hands them gentle prompts: a letter to a past self, the needs that are hard to name, the senses worth keeping.</>,
@@ -62,7 +62,7 @@ const DEEPDIVES = [
     kind: 'search',
     layout: 'side',
     annots: {
-      l: { label: 'A swipe from anywhere', text: 'The drawer slides in over whatever screen you’re on.', mt: '9rem' },
+      l: { label: 'A swipe from anywhere', text: 'Reachable over any screen, so brain fog never means digging through the app for one memory.', mt: '9rem' },
       r: { label: 'Filter by feeling', text: 'A parent recalls a memory by how it felt, not when it was logged.', mt: '4rem' },
     },
     prose: <>This is the one feature nobody asked for. As the entries pile up, I didn’t want anyone digging through the whole app to find one memory, so search is a swipe away from anywhere and filters by emotion, category, or keyword.</>,
@@ -74,7 +74,7 @@ const DEEPDIVES = [
     kind: 'book',
     layout: 'side',
     annots: {
-      l: { label: 'It can leave the app', text: 'The whole record, as a printed book or a free PDF.', mt: '7rem' },
+      l: { label: 'It can leave the app', text: 'The whole record as a book or a free PDF — no one trusts something this precious to a screen that could vanish.', mt: '7rem' },
       r: { label: 'Curated together', text: 'Built from what’s already there, open to the people who were part of it.', mt: '7rem' },
     },
     prose: <>We took the book seriously the moment a parent told me she wouldn’t trust an app with something this precious unless she knew it couldn’t disappear. So the whole record can leave the app, as a printed book or a free PDF, curated from what’s already there and open to the people who were part of it.</>,
@@ -139,10 +139,8 @@ export default function SecFeatures() {
 
       <div className={styles.prioritize}>
         <Prose>
-          The brief gave us three required areas, information gathering, meaning-making, and onboarding,
-          plus five optional features. I kept two, sharing and a keepsake book, added one that wasn’t on
-          the list, search, because every parent described the same brain fog, and cut the other two,
-          trackers and a birth plan, the kind of extra the research kept telling me to leave out.
+          Three areas were required: information gathering, meaning-making, and onboarding. The five
+          optional features were where the real design judgment lived.
         </Prose>
         <div className={`${styles.prioCard} ${sys.up}`}>
           <div className={styles.prioLead}>
@@ -157,11 +155,11 @@ export default function SecFeatures() {
             </div>
             <div className={styles.prioCell}>
               <span className={styles.prioFigRow}><span className={styles.prioFig}>1</span><span className={styles.prioLabel}>added</span></span>
-              <span className={styles.prioNames}>search</span>
+              <span className={`${styles.prioNames} ${styles.prioAdded}`}>search · for the brain fog every parent named</span>
             </div>
             <div className={styles.prioCell}>
               <span className={styles.prioFigRow}><span className={styles.prioFig}>2</span><span className={styles.prioLabel}>cut</span></span>
-              <span className={styles.prioNames}>trackers · birth plan</span>
+              <span className={`${styles.prioNames} ${styles.prioCut}`}>trackers · birth plan</span>
             </div>
           </div>
         </div>
