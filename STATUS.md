@@ -15,6 +15,13 @@
 | L6/L8 | Synthesis panel — build it | ✅ BUILT + verified (1440/390) — a **Fact › Insight › Implication** grid in Research ("What we heard, what we did"), 4 rows from her real midpoint feedback quotes → insight → decision. Reconstruction of real synthesis in the taught grammar; NO fabricated affinity wall. Provisional copy, hers to bless. Her deck's "Our Approach" quality→feature map remains available as a companion |
 | L9 | Find final deck on LaCie + Figma link | ✅ found — `LaCie/IXD Studio/Myana Finals/FINAL DOCUMENTATION DUE 3/` (Documentation 16pp = annotated wireframes; Presentation 22pp = client deck) |
 
+### Round 3 — 2026-07-05 late (the Fable visual-sophistication pass)
+
+| # | Note (her words, condensed) | Status |
+|---|---|---|
+| F1 | Strong Fable visual pass on the WHOLE page — flow, visual treatment, site styles, typographic hierarchy, interactions; 60% → 110%. Study the page against her reference bar first, then **propose the unifying visual system before touching components** | 🟡 proposal delivered — `docs/case-study-editorial/BIRTHSTORY-VISUAL-SYSTEM.md`; awaiting her bless |
+| F2 | Loves scrollytelling, sticky side-scroll, impressive reveals + motion/immersion — but **NEVER at the detriment of rigor, structure, story, or getting the point across**; treatment must enhance the viewer's ability to follow the storyline | 📌 standing constraint on the whole pass — baked into the proposal's motion grammar |
+
 ### Round 2 — 2026-07-05 eve (her design/craft batch on the built pass)
 
 | # | Note (her words, condensed) | Status |
