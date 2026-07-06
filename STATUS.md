@@ -19,21 +19,21 @@
 
 | # | Note (her words, condensed) | Status |
 |---|---|---|
-| R1 | "Craft" spine label too abstract → improve it too (like Product→Interface) | ⏳ |
-| R2 | Brief REQUIRED/PROVIDED/STAKES cards read **slightly novice, not design-expert** → redesign | ⏳ |
-| R3 | Research: reader doesn't know about the 3 sisters/family unless they read it → **mock up the sister convo as a group chat** (per the variant exploration — casual research, cleverly shown); give the section **more spine / connectedness** without sacrificing rigor | ⏳ |
-| R4 | Find the **Feb 16 2025 Zoom-call screenshot** if it exists | ⏳ |
-| R5 | Pronoun: she credits Michael with IA as **shared** → make we/our **consistent** (shared research+IA = we; solo UX/UI/identity/writing = I) | ⏳ |
-| R6 | Synthesis "What we heard" panel: loves the setup but **needs more design** — all lines / too editorial → a **callout or special visual treatment** | ⏳ |
-| R7 | Principles: apply the **accepted tightenings I never applied** — drop "Caring" → "Compassionate, not clinical", etc. | ⏳ |
-| R8 | Principles: the **"why"/derivation visual treatment feels lost, lacks intention/craft** → redesign it | ⏳ |
-| R9 | **Make the annotations rich** (fully, not the 2-line fix) — wants my help | ⏳ |
-| R10 | Architecture reasonCols (Image #2) looks **un-designed / like an error** → redesign | ⏳ |
-| R11 | **Remove the METHOD cite** in Architecture (buried, doesn't add much) | ⏳ |
-| R12 | **Remove the taught-process/method at bottom** — it was for the **SomeBuddy project, NOT Birth Story** (factual correction). ⚠️ FLAG: confirm whether the Overview "Method: Dezudio five-strategy process" row + "taught by the founders of Dezudio" line + any colophon lineage are ALSO SomeBuddy-derived | ⏳ |
-| R13 | Iteration: put the **interview image to the RIGHT of the text** (not stacked); consider a **sticky-scroll** interaction (the variant tree mocked an interesting version — inspo) | ⏳ |
-| R14 | Prioritization card (Image #3) is **weak, not earning its place** → reconsider if it belongs at all | ⏳ |
-| R15 | **Push — but NOT to main** (push to a branch) | ⏳ |
+| R1 | "Craft" spine label too abstract → improve | ✅ → **Identity** (pairs with Interface) |
+| R2 | Brief cards read novice → redesign | ✅ three header-bar cards → one spec panel split by thin rules, quiet eyebrows |
+| R3 | Research group-chat mockup + more spine | ✅ the group call as the group text (asks as bubbles, sister quote verbatim as accent bubble, "summarized · verbatim" rigor note) + phased "how they'd use it" + takeaway; replaced 3 loose cards |
+| R4 | Find Feb 16 2025 Zoom screenshot | ⚠️ **not found** (full-disk search hit only unrelated Groundswell Feb-16 shots + timed out). Group-chat mockup is the treatment she preferred anyway |
+| R5 | Pronoun consistency (shared = we) | ✅ Architecture + Iteration now "we" for shared research/IA/testing; personal reasoning + UX-writing + visual stay "I". (If any specific line still reads wrong, she flags) |
+| R6 | Synthesis panel needs more design | ✅ contained on a white card, › column progression, "What we did" lifted behind an accent rule |
+| R7 | Apply accepted principle tightenings | ✅ dropped "Caring" → "Compassionate, not clinical" |
+| R8 | Principle "why" treatment lost | ✅ pulled in behind a teal accent rule → reads as deliberate derivation |
+| R9 | Make annotations rich (full) | ✅ all five screens carry the why (calm-by-default, you-don't-carry-it, nothing-is-lost, brain-fog, trust) |
+| R10 | Architecture reasonCols un-designed | ✅ two named "move" cards + a framed "the shift" pivot line |
+| R11 | Remove Architecture method cite | ✅ removed |
+| R12 | Remove SomeBuddy taught-process/method | ✅ removed the bottom five-strategies map + Dezudio process diagram + colophon Lineage row + Overview "Dezudio's five-strategy process" phrasing. ⚠️ **KEPT + FLAGGED: the Overview "taught by the founders of Dezudio, Myana's design partner" context line** — the 51-612 course did carry Dezudio content (Saffer + Fact›Insight›Implication slides), so it's likely true for Birth Story; **needs her confirm** |
+| R13 | Iteration image right + sticky | ✅ image right of text (Split). ⏭️ **sticky-scroll = staged** as a focused next pass (real interaction build; wants her pick of variant flavor — VLedger rail vs VAtlas camera) |
+| R14 | Prioritization card weak | ✅ kept but de-duplicated (prose→setup only); cut features struck through (subtraction made visual); added one carries its reason |
+| R15 | Push — NOT to main | ✅ pushed branch **`birthstory-round2`** (main untouched) |
 | R16 | Care Pod A/B (my recap #7) — she said "good" → leave parked, no action | ✅ parked |
 | L7 | Make **external note-logging a GLOBAL rule** + preserve in NEW CLAUDE / sync kit | 🔨 in progress |
 
