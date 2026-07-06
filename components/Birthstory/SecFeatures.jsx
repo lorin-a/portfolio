@@ -51,7 +51,7 @@ const DEEPDIVES = [
     layout: 'side',
     annots: {
       l: { label: 'No blank page', text: 'The deck deals a prompt: a letter to a past self, the needs that are hard to name.', mt: '5rem' },
-      r: { label: 'Tag how it felt', text: 'You write, and tag how it felt.', mt: '12rem' },
+      r: { label: 'Tag how it felt', text: 'So a memory can be found later by its emotion, not only its date.', mt: '12rem' },
     },
     prose: <>Every parent wanted to reflect, whether their birth was traumatic or not, but the ones who don’t already journal often don’t know where to start. So instead of a blank page, the journal hands them gentle prompts: a letter to a past self, the needs that are hard to name, the senses worth keeping.</>,
     cap: 'The deck deals a prompt; you write, and tag how it felt.',
@@ -63,7 +63,7 @@ const DEEPDIVES = [
     layout: 'side',
     annots: {
       l: { label: 'A swipe from anywhere', text: 'The drawer slides in over whatever screen you’re on.', mt: '9rem' },
-      r: { label: 'Filter by feeling', text: 'Emotion, category, or keyword.', mt: '4rem' },
+      r: { label: 'Filter by feeling', text: 'A parent recalls a memory by how it felt, not when it was logged.', mt: '4rem' },
     },
     prose: <>This is the one feature nobody asked for. As the entries pile up, I didn’t want anyone digging through the whole app to find one memory, so search is a swipe away from anywhere and filters by emotion, category, or keyword.</>,
     cap: 'Swipe it in from the edge; filter by feeling, category, or keyword.',

@@ -231,6 +231,62 @@ function Research() {
         />
       </Split>
 
+      {/* synthesis — the studio-taught Fact › Insight › Implication grid, rebuilt
+          from the real midpoint feedback in her deck (the "Early Wireframes"
+          annotations) → her insight → the decision it drove. Reconstruction of
+          synthesis she actually did, in the taught grammar; copy hers to bless. */}
+      <section className={`${b.synth} ${sys.up}`}>
+        <p className={b.synthHead}>What we heard, what we did</p>
+        <p className={b.synthSub}>
+          The clearest signal from testing was to subtract. Feedback narrowed a broad first build into a
+          focused one.
+        </p>
+        <div className={b.synthTable}>
+          <div className={b.synthHeadRow} aria-hidden="true">
+            <span>What we heard</span>
+            <span>What we learned</span>
+            <span>What we did</span>
+          </div>
+          {[
+            {
+              heard: 'Onboarding is nice, but too many buttons and options. Too many menus.',
+              learned: 'Cognitive load was the enemy, not missing features.',
+              did: 'Open straight into notes on a timeline; everything else a tap away.',
+            },
+            {
+              heard: 'Why “reclaim”? Compassionate copy may be signaling a negative experience.',
+              learned: 'The words shouldn’t decide the experience for anyone.',
+              did: 'Care-centered copy; “Find strength & support” became the Care Pod.',
+            },
+            {
+              heard: 'Timeline is a must; journaling is unique to everyone.',
+              learned: 'Some needs are core, others are personal.',
+              did: 'The timeline is the home; journaling is there when you want it.',
+            },
+            {
+              heard: 'Big yes to voice recording; medical reflection is valuable but may not need its own category.',
+              learned: 'Capture has to fit full hands, and one place beats many.',
+              did: 'Voice memos and medical notes land on the one tagged timeline.',
+            },
+          ].map((r) => (
+            <div key={r.heard} className={b.synthRow}>
+              <div className={b.synthCell}>
+                <span className={b.synthColLabel}>What we heard</span>
+                <p className={b.synthFact}>{`“${r.heard}”`}</p>
+              </div>
+              <div className={b.synthCell}>
+                <span className={b.synthColLabel}>What we learned</span>
+                <p className={b.synthText}>{r.learned}</p>
+              </div>
+              <div className={b.synthCell}>
+                <span className={b.synthColLabel}>What we did</span>
+                <p className={b.synthText}>{r.did}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
       {/* design principles — the studio's Saffer model: pithy, specific,
           differentiating. Two were sharpened by testing; the notes show how.
           PROVISIONAL copy from Lorin's own words, hers to bless. */}

@@ -91,6 +91,65 @@
 }
 @media (max-width: 640px) { .valuesList { grid-template-columns: 1fr; } }
 
+/* synthesis — the taught Fact › Insight › Implication grid. A three-column
+   table set off by a hairline: quotes on the left, the decision on the right.
+   Rebuilt from real midpoint feedback. Collapses to stacked, labeled rows on
+   mobile so the heard→learned→did chain still reads. */
+.synth {
+  padding-top: clamp(1.8rem, 4vw, 2.8rem);
+  border-top: 1px solid var(--bs-rule);
+  display: grid; gap: clamp(1rem, 2.4vw, 1.5rem);
+}
+.synthHead {
+  margin: 0;
+  font-family: var(--font-body); font-weight: 600; font-size: 0.75rem;
+  letter-spacing: 0.14em; text-transform: uppercase; color: var(--bs-teal-soft);
+}
+.synthSub {
+  margin: -0.5rem 0 0; max-width: 46rem;
+  font-family: var(--font-body); font-size: 0.95rem; line-height: 1.5;
+  color: var(--color-ink-light); text-wrap: pretty;
+}
+.synthTable { display: grid; gap: 0; }
+.synthHeadRow, .synthRow {
+  display: grid; grid-template-columns: 1.15fr 1fr 1fr;
+  gap: clamp(1rem, 2.5vw, 2.2rem);
+}
+.synthHeadRow {
+  padding-bottom: 0.7rem;
+}
+.synthHeadRow span {
+  font-family: var(--font-body); font-weight: 700; font-size: 0.72rem;
+  letter-spacing: 0.12em; text-transform: uppercase; color: var(--bs-teal-soft);
+}
+.synthRow {
+  padding: clamp(1rem, 2vw, 1.35rem) 0;
+  border-top: 1px solid var(--bs-hairline);
+  align-items: start;
+}
+.synthColLabel { display: none; }
+.synthFact {
+  margin: 0; font-family: var(--font-heading);
+  font-variation-settings: 'SOFT' 60, 'WONK' 0; font-weight: 400;
+  font-size: clamp(1rem, 0.94rem + 0.3vw, 1.15rem); line-height: 1.35;
+  color: var(--color-ink); text-wrap: pretty;
+}
+.synthText {
+  margin: 0; font-family: var(--font-body);
+  font-size: 0.92rem; line-height: 1.5; color: var(--color-ink-light); text-wrap: pretty;
+}
+@media (max-width: 720px) {
+  .synthHeadRow { display: none; }
+  .synthRow { grid-template-columns: 1fr; gap: 0.75rem; }
+  .synthColLabel {
+    display: block; margin-bottom: 0.25rem;
+    font-family: var(--font-body); font-weight: 700; font-size: 0.66rem;
+    letter-spacing: 0.12em; text-transform: uppercase; color: var(--bs-accent);
+  }
+  /* the decision reads as the payoff — quiet lift on the third cell */
+  .synthRow .synthCell:last-child { padding-left: 0.9rem; border-left: 2px solid var(--bs-hairline); }
+}
+
 /* voice — the copy work grounded. The tester note + revision panel were two
    light cards floating on near-white paper; this seats them on the identity
    gradient veil (the same designed surface as the feature deep-dive stages), so
