@@ -1,0 +1,132 @@
+# Birth Story — the unifying visual system (Fable pass proposal, 2026-07-05)
+
+Status: **PROPOSED — awaiting Lorin's bless before any component is touched.**
+Brief (her words, condensed): a strong Fable visual-sophistication pass on the whole page — flow, visual
+treatment, site styles, typographic hierarchy, interactions — 60% → 110%. She loves scrollytelling, sticky
+side-scroll, and impressive reveals, but *never at the detriment of rigor, structure, story, or getting the
+point across: any treatment must enhance the viewer's ability to follow the storyline.*
+
+Bar for this pass: Roots of Racism / Advocacy Through Walls (scrolly depth), Nahel Moussi + A Present Force
+(her vibe), Studio Rodrigo (crisp + playful), Pentagram (quality). Taste ledger (locked 2026-07-05): editorial/
+journalistic hierarchy + duotone · gradient-as-accent · group-text idiom · tool-native register scoped to
+research mess · structure inventions as single-section features, not whole flows.
+
+---
+
+## 1 · Diagnosis — where "novice" actually lives
+
+Verified eyes-on (full 22,000px walk at 1440) + in the CSS:
+
+1. **Timid type scale.** The largest display type on the page is ~46px Fraunces (`.lead`) against 17px body,
+   and every section statement sits at that same size. Nothing on the page is genuinely big; the hierarchy
+   ratio never crosses 3:1 (the GRID.md gate floor). The chapter numerals (01–06) repeat identically and never
+   become a moment.
+2. **One layout loop.** Nearly every beat is the same recipe: ~40rem text column left, rounded media card
+   right, dark corner chip, small centered caption. It repeats 10+ times, Brief through Outcome. The 12-col
+   grid exists in the CSS (`.grid12`) but the field sections run on a single 60rem sheet — no asymmetry, no
+   full-bleed besides the one teal band, no visible grid edge.
+3. **Everything is a card.** Principles, brief spec, synthesis, move cards, gradient stages, chat — all white
+   rounded rectangles with soft shadows on cream. Uniform elevation flattens hierarchy, and it is precisely
+   the "overly rounded corners / callout cards" tell from her below-bar list. The real artifacts (working
+   prototypes, crit wall, wireframes) are trapped in identical containers, so evidence and furniture read at
+   the same weight.
+4. **Unmanaged whitespace.** Search/Reflection/Book text blocks float beside 900px-tall stages with the left
+   column ~70% empty; 300–500px dead bands sit between sections. Emptiness is leftover, not composed.
+5. **The identity is visited, not carried.** The blush→peri→teal gradient lives in the hero, stages, and Close,
+   but the paper page between is colorless: one teal accent, same slate chip everywhere. Photos are plain
+   grayscale stock, untied to the identity.
+6. **Zero motion.** Beyond a fade-up utility and the spine underline, the page is static. The two inherently
+   sequential stories — Architecture's 4→0 collapse and Iteration's "the app calms down" — are told in static
+   pictures. The page claims working prototypes and shows static PNGs.
+
+None of this is a content problem. Structure, story, and rigor are already strong; the *form* isn't doing the
+quiet intentional work her craft statement describes.
+
+## 2 · The organizing idea
+
+**The case study holds itself to the app's own four principles.** The page becomes the proof of the designer:
+
+- *Compassionate, not clinical* → editorial warmth: Fraunces at real display scale, duotone photography,
+  paper ground, generous composed space.
+- *Integrate facts and feelings* → the two-voice grammar made strict and visible: the RECORD (sans, ruled,
+  ledger-set, spec-sharp) vs THE THINKING/FEELING (serif, italic, chapter color) — woven on one grid, not
+  boxed in cards.
+- *Does not disorient* → one orientation system (spine + week folio + chapter timeline ticks), play-once
+  reveals, content never hidden behind interaction.
+- *Trauma-informed / calm by default* → the motion grammar: slow, soft, text-first, never scrub, immersive
+  through pacing rather than spectacle.
+
+One holistic system; every move below derives from it.
+
+## 3 · The system — six moves
+
+### 3.1 Typographic register (the voice gets a range)
+- New display tier: chapter-opener statements clamp to ~72px Fraunces, ≤16ch, tight leading, set asymmetric
+  (hanging across 8–9 columns). Section leads stay ~38–46px; pull quotes ~42px italic. Body unchanged.
+- Chapter numerals become oversized ghosted numerals (~10rem at low ink) beside/behind the opener — the
+  wayfinding throughline made visible; tiny letterspaced crumb + huge numeral gives the ≥3:1 contrast.
+- A **meta tier** for the record layer: week stamps, figure labels, spec eyebrows, counts — tabular,
+  letterspaced, consistently placed at grid edges (top-left label · top-right folio) so the grid itself reads.
+
+### 3.2 The grid made visible (from loop to composition)
+- All sections adopt the one 12-col system. Text columns may start at col 2 or 5; media spans vary (7-col,
+  9-col, full-bleed); at least one deliberate column-break moment per chapter.
+- Five named layout recipes, rotated deliberately instead of the single text+card loop:
+  **Statement** (chapter opener) · **Ledger** (record tables: brief spec, synthesis, prioritization — ruled,
+  not carded) · **Exhibit** (one artifact big, margin annotations) · **Stage** (gradient immersion band) ·
+  **Dialogue** (chat, tester voices).
+- Whitespace composed: dead bands become numeral/rail moments; tall stages get sticky text columns beside
+  them so nothing floats in a void.
+
+### 3.3 De-carding (rules instead of boxes)
+- The white rounded card + shadow stops being the default container. Record-layer content re-sets as ruled
+  ledgers: hairlines, column rules, generous type — "the structure of editorial, the sharpness of corporate."
+- Cards survive only where the artifact is genuinely a card: phone frames, chat bubbles, tool-native research
+  scraps.
+- Corner chips become a **specimen-label grammar**: small caps + hairline + figure number, on the grid, not
+  floating on the image.
+
+### 3.4 Color arc + duotone (the identity carried)
+- The gradient becomes the page's arc: each chapter owns a stop (Brief blush → Research peri → Architecture
+  dusk → Interface teal → Identity lilac → Outcome slate/teal), used **as accent only** — rules, labels,
+  numerals, the spine's active state. Gradient-as-accent per the taste ledger.
+- Documentary photos get one unified **duotone** (paper highlight, teal-ink shadow) — journalistic, hers, no
+  longer grayscale stock. Intensity is a dial for her to set on a live A/B.
+- Ground pacing stays paper with the two committed dark immersions (Interface band, Close bookend) plus the
+  dark hero — the page breathes dark → light → dark.
+
+### 3.5 Motion grammar (calm scrollytelling, story-first)
+All paused-timeline + IntersectionObserver play-once (the project's architecture), reduced-motion honored.
+Every beat below exists to make the argument easier to follow, not to decorate:
+- **Chapter openers:** numeral fades in, rule draws, statement lines rise (reuse the Whelm `revealClaim` beat).
+- **Architecture 4→0 (flagship #1):** sticky beat — the four onboarding questions stack, then strike and
+  collapse one by one to the "0"; the page's central design argument literally plays.
+- **Iteration sticky side-scroll (flagship #2, already staged):** text beats advance V1→V2→V3 while the
+  artifact stage swaps — "each round made the app simpler" animates. Recommended flavor: **VLedger rail**
+  (the VAtlas camera is more spectacle than story here).
+- **Group chat:** bubbles arrive in sequence; the verbatim sister quote lands last as the accent.
+- **Synthesis panel:** each row cascades Fact → Insight → Implication, mirroring the method it documents.
+- **Feature stages:** annotation leader-lines draw in; phones lift softly; prototypes shown as short looping
+  videos where they exist — motion doing rigor's work (proof they're real).
+- Micro: artifact hover lift + caption, spine progress fill, hero scroll-cue breathing.
+
+### 3.6 Orientation (the one-timeline thesis, scoped)
+- The spine keeps its job, gains craft: chapter color stops, a progress thread, tighter type.
+- Chapter openers carry a small timeline tick (Week 1 → 6) — the app's one-timeline idea as page structure,
+  scoped to the openers per her rule that structure inventions are section features, not whole flows.
+
+## 4 · Build plan (after her yes)
+
+Four passes, each eyes-on verified at 1440 + 390 with the GRID.md pre-ship gate:
+1. Foundation — type scale tokens, de-carding, grid recipes, whitespace composition.
+2. Chapter openers + color arc + duotone photography.
+3. Motion pass — openers, chat, synthesis, features, micro-interactions.
+4. Flagship scrolly beats — Architecture 4→0 and Iteration sticky (her flavor pick).
+
+## 5 · Only-she-holds decisions
+
+1. **Iteration flavor:** VLedger rail (recommended) vs VAtlas camera.
+2. **Duotone intensity:** subtle teal-shadow vs full journalistic duotone — will show both live on real photos.
+3. Anything in the current layout she wants held sacred before the loop is broken.
+
+*(Standing open flags, unchanged: Dezudio credit confirm; both remain in STATUS.md.)*
