@@ -14,6 +14,27 @@
 | L5 | Raise annotations to her real deck bar | ✅ BUILT — her deck copy was more functional than the site's, so a wholesale swap would've downgraded; instead raised the two pure-restatement annots (Reflection·R, Search·R) to real intention grounded in her emotion-tagging / search-by-feeling design. Kept the strong ones. Provisional, hers to bless |
 | L6/L8 | Synthesis panel — build it | ✅ BUILT + verified (1440/390) — a **Fact › Insight › Implication** grid in Research ("What we heard, what we did"), 4 rows from her real midpoint feedback quotes → insight → decision. Reconstruction of real synthesis in the taught grammar; NO fabricated affinity wall. Provisional copy, hers to bless. Her deck's "Our Approach" quality→feature map remains available as a companion |
 | L9 | Find final deck on LaCie + Figma link | ✅ found — `LaCie/IXD Studio/Myana Finals/FINAL DOCUMENTATION DUE 3/` (Documentation 16pp = annotated wireframes; Presentation 22pp = client deck) |
+
+### Round 2 — 2026-07-05 eve (her design/craft batch on the built pass)
+
+| # | Note (her words, condensed) | Status |
+|---|---|---|
+| R1 | "Craft" spine label too abstract → improve it too (like Product→Interface) | ⏳ |
+| R2 | Brief REQUIRED/PROVIDED/STAKES cards read **slightly novice, not design-expert** → redesign | ⏳ |
+| R3 | Research: reader doesn't know about the 3 sisters/family unless they read it → **mock up the sister convo as a group chat** (per the variant exploration — casual research, cleverly shown); give the section **more spine / connectedness** without sacrificing rigor | ⏳ |
+| R4 | Find the **Feb 16 2025 Zoom-call screenshot** if it exists | ⏳ |
+| R5 | Pronoun: she credits Michael with IA as **shared** → make we/our **consistent** (shared research+IA = we; solo UX/UI/identity/writing = I) | ⏳ |
+| R6 | Synthesis "What we heard" panel: loves the setup but **needs more design** — all lines / too editorial → a **callout or special visual treatment** | ⏳ |
+| R7 | Principles: apply the **accepted tightenings I never applied** — drop "Caring" → "Compassionate, not clinical", etc. | ⏳ |
+| R8 | Principles: the **"why"/derivation visual treatment feels lost, lacks intention/craft** → redesign it | ⏳ |
+| R9 | **Make the annotations rich** (fully, not the 2-line fix) — wants my help | ⏳ |
+| R10 | Architecture reasonCols (Image #2) looks **un-designed / like an error** → redesign | ⏳ |
+| R11 | **Remove the METHOD cite** in Architecture (buried, doesn't add much) | ⏳ |
+| R12 | **Remove the taught-process/method at bottom** — it was for the **SomeBuddy project, NOT Birth Story** (factual correction). ⚠️ FLAG: confirm whether the Overview "Method: Dezudio five-strategy process" row + "taught by the founders of Dezudio" line + any colophon lineage are ALSO SomeBuddy-derived | ⏳ |
+| R13 | Iteration: put the **interview image to the RIGHT of the text** (not stacked); consider a **sticky-scroll** interaction (the variant tree mocked an interesting version — inspo) | ⏳ |
+| R14 | Prioritization card (Image #3) is **weak, not earning its place** → reconsider if it belongs at all | ⏳ |
+| R15 | **Push — but NOT to main** (push to a branch) | ⏳ |
+| R16 | Care Pod A/B (my recap #7) — she said "good" → leave parked, no action | ✅ parked |
 | L7 | Make **external note-logging a GLOBAL rule** + preserve in NEW CLAUDE / sync kit | 🔨 in progress |
 
 ### Last updated: 2026-07-05 evening (latest — BIRTH STORY DIRECTION-STUDY EXPLORATION, closed) — **A 4-round Fable exploration built 8 radically different design studies of the finished case study; her verdict: “fun and clever — park this level of creativity for other ideas and keep the case study as is.” Nothing migrates into the draft.** The studies stay as a review-only, noindex **idea library** at `/projects/birthstory-care-pod/v` (index + floating switcher; 4 commits `88d098a`→`ef1d84c` on `main`, NOT pushed): A·Ledger (decision argument + honest liabilities column) · B·One Artifact (one pinned phone narrates 15 chapters) · C·Atlas (synthesis map + camera + minimap) · D·Print Issue (editorial folio/duotone/errata) · E·Product Skin (information as UI; flow players; push-notification quote) · F·Studio Wall (material board) · G·Diverge/Converge (mess scoped to research; register rejected) · H·Canvas (2026 Figma/FigJam-native: frames, stickies, cursors, comment threads). **Durable takeaway = her taste ledger** (memory `DECISIONS.md → Birth Story exploration taste ledger`): loves editorial/journalistic hierarchy + duotone, the group-text synthesis idiom, gradient-as-accent, tool-native cool register, grid-breaking scoped to research; rejects manila/material warmth; structure inventions read best as single-section features. Build gotchas in `REFERENCE.md → Birthstory variants build gotchas`. Shared infra: `components/Birthstory/variants/` (`content.js`, `FlowPlayer`, `VSwitch`). **The case study itself is UNCHANGED — next move below still stands.**

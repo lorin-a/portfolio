@@ -89,14 +89,6 @@ export default function SecArchitecture() {
           and confusing.
         </Prose>
       </div>
-
-      {/* the studio-taught move, cited where it happens — the diagrams above ARE
-          the abstraction that carries the research across into the design */}
-      <p className={`${a.methodCite} ${sys.up}`}>
-        <span className={a.methodCiteTag}>method</span>
-        The analysis–synthesis bridge: research crosses into design as diagrams first, screens
-        second. Dubberly, Evenson &amp; Robinson, 2008 · taught in studio by Dezudio
-      </p>
     </FieldSection>
   )
 }
