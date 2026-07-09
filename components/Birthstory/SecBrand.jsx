@@ -1,6 +1,6 @@
 'use client'
 
-import { FieldSection, Lead, Prose, Insight, Split, sys } from './kit'
+import { FieldSection, Prose, Insight, Split, sys } from './kit'
 import styles from './SecBrand.module.css'
 
 /* 07 — Visual design. Palette, type, and gradient documented as decisions: calm,
@@ -13,11 +13,13 @@ const PALETTE = [
 
 export default function SecBrand() {
   return (
-    <FieldSection id="brand" crumb="visual design" when="Week 5" wide sub>
+    <FieldSection
+      id="brand" crumb="visual design" when="Week 5" wide sub
+      statement={<>Calm, emotionally intelligent, and deliberately <b>non-clinical</b>.</>}
+    >
       <Split
         text={
           <>
-            <Lead>Calm, emotionally intelligent, and deliberately non-clinical.</Lead>
             <Prose>
               Myana already used a gradient, so I built one here to tie the two together. Parents told
               me they’d mostly reach for this in the small hours between feedings, so everything had to

@@ -1,6 +1,6 @@
 'use client'
 
-import { FieldSection, Lead, Prose, SubBlock, Split, Figure, TesterNote, Insight, sys } from './kit'
+import { FieldSection, Prose, SubBlock, Split, Figure, TesterNote, Insight, sys } from './kit'
 import { birthPhoto, cloudImg } from '@/lib/cloudinary'
 import SecArchitecture from './SecArchitecture'
 import SecIteration from './SecIteration'
@@ -48,11 +48,14 @@ function Overview() {
 function Brief() {
   const birth = birthPhoto('fog', 1500, { grayscale: true }) // Saul Siguenza — exhausted parent + newborn, rendered B&W
   return (
-    <FieldSection id="brief" num="01" crumb="brief" when="Week 1" wide>
+    <FieldSection
+      id="brief" num="01" crumb="brief" when="Week 1" wide
+      statement={<>Pitch a concept for Myana’s companion micro-app that helps parents <b>document and reflect</b> on their birth experience.</>}
+      statementLong
+    >
       <Split
         text={
           <>
-            <Lead>Pitch a concept for Myana’s companion micro-app that helps parents document and reflect on their birth experience.</Lead>
             <Prose>
               Myana already supports parents through pregnancy and postpartum. Its researchers saw that
               the birth itself still went undocumented and unprocessed, and brought that gap to our
@@ -157,11 +160,14 @@ function Research() {
   const feeding = birthPhoto('feeding', 1400) // Craig Adderley — mother + newborn skin to skin, hospital (natively B&W)
   const tired = birthPhoto('gap', 1400, { grayscale: true }) // William Fortunato — exhausted parent beside her sleeping newborn, rendered B&W
   return (
-    <FieldSection id="research" num="02" crumb="research" when="Week 2" alt wide>
+    <FieldSection
+      id="research" num="02" crumb="research" when="Week 2" alt wide
+      statement={<>This was a design sprint on a concept already built on extensive research, so our work focused on <b>concept iteration</b>.</>}
+      statementLong
+    >
       <Split
         text={
           <>
-            <Lead>This was a design sprint on a concept already built on extensive research, so our work focused on concept iteration.</Lead>
             <Prose>
               Before we built anything, I researched blogs and existing products and ran information
               interviews with family to get familiar with the subject: my three sisters, my mom, and my
@@ -214,7 +220,9 @@ function Research() {
         </aside>
       </div>
 
+      {/* the chapter's deliberate column break — media left, her thinking right */}
       <Split
+        flip
         text={
           <Insight>
             My thinking was rooted in my close family members’ traumatic experiences, which led me to a
@@ -342,11 +350,13 @@ function Research() {
 
 function Voice() {
   return (
-    <FieldSection id="voice" num="05" crumb="ux writing" when="Week 5" alt wide>
+    <FieldSection
+      id="voice" num="05" crumb="ux writing" when="Week 5" alt wide
+      statement={<>The copy is trauma-informed without <b>assuming</b> trauma.</>}
+    >
       <Split
         text={
           <>
-            <Lead>The copy is trauma-informed without assuming trauma.</Lead>
             <Prose>
               Because I knew births could be traumatic, I wrote the first copy in a careful,
               trauma-informed tone, and a parent I interviewed showed me I had gone too far. She didn’t connect with
@@ -409,11 +419,13 @@ function Voice() {
 
 function Outcome() {
   return (
-    <FieldSection id="outcome" num="06" crumb="outcome" when="Week 6" alt wide>
+    <FieldSection
+      id="outcome" num="06" crumb="outcome" when="Week 6" alt wide
+      statement={<>The client loved it, and it still isn’t getting built.</>}
+    >
       <Split
         text={
           <>
-            <Lead>The client loved it, and it still isn’t getting built.</Lead>
             <Prose>
               When we presented, the client had almost nothing to change. There’s no real signal the app
               will get built: Myana sponsored the project because it might inform future versions of

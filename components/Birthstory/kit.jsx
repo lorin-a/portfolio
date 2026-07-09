@@ -70,8 +70,10 @@ export function BeforeAfter({ before, after, why }) {
 
 /* ── field-notes register (the process voice) ── */
 
-export function FieldSection({ id, num, crumb, when, alt = false, wide = false, sub = false, threshold = 0.15, children }) {
+export function FieldSection({ id, num, crumb, when, alt = false, wide = false, sub = false, threshold = 0.15, statement, statementLong = false, children }) {
   const [ref, seen] = useSeen(threshold)
+  /* chapter statements are the page's h2 spine; sub-beat statements nest as h3 */
+  const St = sub ? 'h3' : 'h2'
   return (
     <section ref={ref} id={id} className={`${s.field} ${sub ? s.fieldSub : ''} ${alt ? s.fieldAlt : ''} ${seen ? s.in : ''}`}>
       <div className={`${s.sheet} ${wide ? s.sheetWide : ''}`}>
@@ -85,10 +87,20 @@ export function FieldSection({ id, num, crumb, when, alt = false, wide = false, 
           </header>
         ) : (
           <header className={s.fieldHead}>
-            <span className={s.fNum}>{num}</span>
             <span className={s.fCrumb}>{crumb}</span>
             {when && <span className={s.fWhen}>{when}</span>}
           </header>
+        )}
+        {/* the chapter opener — the Statement recipe: an oversized ghosted
+            numeral (wayfinding made visible) with the chapter's thesis hanging
+            asymmetric across the columns at true display scale */}
+        {statement && (
+          <div className={`${s.openerStage} ${sub ? s.openerSub : ''}`}>
+            {!sub && num && <span className={`${s.ghostNum} ${s.up}`} aria-hidden="true">{num}</span>}
+            <St className={`${s.statement} ${statementLong ? s.statementLong : ''} ${sub ? s.statementSub : ''} ${s.up}`} style={{ '--d': '90ms' }}>
+              {statement}
+            </St>
+          </div>
         )}
         <div className={s.flow}>{children}</div>
       </div>
@@ -133,7 +145,9 @@ export function SubBlock({ label, children }) {
 export function Insight({ children, label = 'My thinking', narrow = false }) {
   return (
     <aside className={`${s.insight} ${narrow ? s.insightNarrow : ''} ${s.up}`}>
-      <span className={s.insightTag}>{label}</span>
+      {/* labeled rule, not a box: the lilac chip rides a dotted hairline (her
+          hand's idiom), so the voice reads woven into the page, not carded */}
+      <span className={s.insightRule}><span className={s.insightTag}>{label}</span></span>
       <p className={s.insightText}>{children}</p>
     </aside>
   )
@@ -144,7 +158,7 @@ export function Insight({ children, label = 'My thinking', narrow = false }) {
 export function TesterNote({ quote, who = 'Parent tester', kicker = 'a tester said', summary = false }) {
   return (
     <figure className={`${s.testerNote} ${summary ? s.testerSummary : ''} ${s.up}`}>
-      <figcaption className={s.testerKicker}>{kicker}</figcaption>
+      <figcaption className={s.testerRule}><span className={s.testerKicker}>{kicker}</span></figcaption>
       {/* summary = paraphrased feedback (no quote marks); only verbatim quotes wear the marks */}
       <p className={s.testerQuote}>{summary ? quote : `“${quote}”`}</p>
       {who && <p className={s.testerWho}>{who}</p>}
@@ -176,15 +190,20 @@ export function Shot({ src, alt = '', cap, width = '150px' }) {
 }
 
 export function Friction({ tag = 'still open', children }) {
-  return <p className={`${s.friction} ${s.up}`}><span className={s.frictionTag}>{tag}</span>{children}</p>
+  return (
+    <div className={`${s.friction} ${s.up}`}>
+      <span className={s.insightRule}><span className={s.frictionTag}>{tag}</span></span>
+      <p className={s.frictionText}>{children}</p>
+    </div>
+  )
 }
 
 /* ── split: documentation layout — a narrow text column (the thinking) and a
    large media column that commands the right side of the page. The visuals do
    the talking; the copy annotates. `text` stays put while tall media scrolls. */
-export function Split({ text, children }) {
+export function Split({ text, flip = false, children }) {
   return (
-    <div className={s.split}>
+    <div className={`${s.split} ${flip ? s.splitFlip : ''}`}>
       <div className={s.splitText}>{text}</div>
       <div className={`${s.splitMedia} ${s.up}`}>{children}</div>
     </div>

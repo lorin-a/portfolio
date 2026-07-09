@@ -43,6 +43,7 @@
   --bs-paper-rgb: 250, 250, 250;
   background: var(--bs-paper);
   color: var(--color-ink);
+  counter-reset: fig; /* specimen-label figure numbering, page-wide */
 }
 
 /* ── section shell ── */
@@ -157,15 +158,56 @@
 /* wide sheet for split sections — lets the media column run to the right edge */
 .sheetWide { max-width: 92rem; }
 
+/* the meta tier — the record layer at the grid edges: crumb top-left, week
+   folio top-right, one hairline making the grid's top edge visible. The chapter
+   number itself moves down into the opener as the oversized ghost numeral. */
 .fieldHead {
   display: flex; align-items: baseline; gap: 0.85rem;
-  padding-bottom: 0.95rem; margin-bottom: clamp(1.8rem, 4vw, 3rem);
+  padding-bottom: 0.7rem; margin-bottom: 0;
   border-bottom: 1px solid var(--bs-rule);
   font-family: var(--font-body);
 }
-.fNum { font-family: var(--font-heading); font-variation-settings: 'SOFT' 60, 'WONK' 0; font-size: clamp(2.4rem, 1.9rem + 1.8vw, 3.4rem); font-weight: 380; line-height: 0.9; letter-spacing: -0.01em; color: var(--bs-accent); }
-.fCrumb { font-size: 1.08rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-ink); }
-.fWhen { margin-left: auto; align-self: center; font-size: 0.8rem; letter-spacing: 0.04em; color: var(--color-ink-light); }
+.fCrumb { font-size: 0.78rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-ink); }
+.fWhen { margin-left: auto; align-self: center; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; font-variant-numeric: tabular-nums; color: var(--bs-teal-soft); }
+
+/* ── the Statement recipe: the chapter opener at true display scale ──
+   An oversized ghosted numeral holds the left columns (the wayfinding
+   throughline made visible); the chapter's thesis hangs asymmetric from
+   ~col 3, overlapping the numeral. Tiny meta above + huge display below
+   is the ≥3:1 hierarchy the page was missing. */
+.openerStage {
+  position: relative;
+  padding: clamp(2.6rem, 6vw, 4.6rem) 0 clamp(1.2rem, 2.6vw, 2rem);
+  margin-bottom: clamp(1.6rem, 3.5vw, 2.6rem);
+}
+.ghostNum {
+  position: absolute; left: -0.04em; top: 50%; transform: translateY(-50%);
+  font-family: var(--font-heading); font-variation-settings: 'SOFT' 60, 'WONK' 0;
+  font-weight: 380; font-size: clamp(7.5rem, 5.5rem + 9vw, 13rem); line-height: 0.8;
+  letter-spacing: -0.02em; color: rgba(26, 67, 77, 0.08);
+  user-select: none; pointer-events: none;
+}
+.statement {
+  position: relative; z-index: 1;
+  margin: 0 0 0 clamp(3.5rem, 22%, 14rem); max-width: 18ch;
+  font-family: var(--font-heading); font-variation-settings: 'SOFT' 60, 'WONK' 0;
+  font-weight: 360; font-size: clamp(2.4rem, 1.65rem + 3.4vw, 4.5rem);
+  line-height: 1.05; letter-spacing: -0.018em;
+  color: var(--color-ink); text-wrap: balance;
+}
+.statement b { font-weight: 460; color: var(--bs-accent); font-style: normal; }
+.statement em { font-style: italic; color: var(--bs-accent); }
+/* long theses drop one step and open the measure — still well past 3:1 */
+.statementLong { max-width: 30ch; font-size: clamp(1.9rem, 1.35rem + 2.5vw, 3.4rem); line-height: 1.12; text-wrap: pretty; }
+/* sub-beat statements: one tier down, flush left (a continuation, not a chapter) */
+.openerSub { padding: clamp(1.2rem, 3vw, 2rem) 0 clamp(0.8rem, 1.8vw, 1.2rem); margin-bottom: clamp(1.2rem, 2.6vw, 1.8rem); }
+.statementSub { margin-left: 0; max-width: 24ch; font-size: clamp(1.7rem, 1.3rem + 1.7vw, 2.7rem); line-height: 1.1; }
+@media (max-width: 700px) {
+  .statement, .statementLong { margin-left: 0; }
+  .ghostNum { top: 0; transform: none; }
+  .openerStage { padding-top: clamp(3.4rem, 16vw, 4.5rem); }
+  .openerSub { padding-top: clamp(1.2rem, 3vw, 2rem); }
+}
 
 /* sub-beat within a chapter — pulled up tight under its primary so the two read
    as one chapter, with a quieter subhead (no big numeral) */
@@ -263,38 +305,25 @@
 .shotCap { font-family: var(--font-body); font-size: 0.78rem; line-height: 1.4; color: var(--color-ink-light); max-width: 24ch; }
 
 /* friction — admits the open question. Her voice too, so it wears the
-   thinking lilac. */
-.friction {
-  position: relative; margin: 0.7rem 0 0; max-width: 40rem;
-  padding: clamp(1.2rem, 2.4vw, 1.5rem) clamp(1.3rem, 2.8vw, 1.6rem) clamp(1.05rem, 2.2vw, 1.3rem);
-  background: #fff; border-radius: 12px;
-  box-shadow: 0 1px 2px rgba(157, 163, 191, 0.08), 0 14px 30px -18px rgba(157, 163, 191, 0.35), 0 0 0 1px var(--bs-think-line);
-  font-family: var(--font-body); font-size: 0.95rem; line-height: 1.6; color: var(--color-ink-light);
-}
-.friction b { font-weight: 700; color: var(--bs-accent); font-style: normal; }
+   thinking lilac and the dotted rule. */
+.friction { margin: 0.7rem 0 0; max-width: 40rem; display: grid; gap: 0.7rem; }
+.frictionText { margin: 0; font-family: var(--font-body); font-size: 0.95rem; line-height: 1.6; color: var(--color-ink-light); text-wrap: pretty; }
+.frictionText b { font-weight: 700; color: var(--bs-accent); font-style: normal; }
 .frictionTag {
-  position: absolute; top: -0.7rem; left: 1rem;
   padding: 0.18rem 0.6rem; border-radius: 3px;
   background: var(--bs-think); color: var(--bs-teal);
   font-family: var(--font-body); font-weight: 700; font-size: 0.72rem; letter-spacing: 0.06em; text-transform: uppercase;
 }
 
-/* ── the two margin voices, on the study's one card DNA: a white grounded card
-   with a solid chip docked on its top edge (the same chip the figures and
-   plates wear — NOT the colored left-bar admonition). Teal chip = the
-   designer's thinking; rose chip = the testers'. ── */
-.insight {
-  position: relative; margin: 0.7rem 0 0; max-width: 40rem; display: grid; gap: 0.55rem;
-  padding: clamp(1.3rem, 2.6vw, 1.7rem) clamp(1.3rem, 2.8vw, 1.7rem) clamp(1.1rem, 2.4vw, 1.5rem);
-  background: #fff; border-radius: 12px;
-  /* dotted border = her hand. The "my thinking" card wears the page's dotted
-     grammar (the same idiom as the annotation leaders and the 4→0 stems), so a
-     reader clocks it as Lorin's reasoning; the objective record stays solid-ruled. */
-  border: 1.5px dotted #9DA3BF;
-  box-shadow: 0 1px 2px rgba(157, 163, 191, 0.08), 0 14px 30px -18px rgba(157, 163, 191, 0.35);
-}
+/* ── the two margin voices, DE-CARDED: a labeled rule instead of a box. The
+   small voice chip (lilac = her thinking, peri = the testers) rides a hairline
+   that runs to the column edge — the specimen-label grammar — so the voices
+   read woven into the grid, not floated on white cards. The dotted rule stays
+   her hand's idiom; the record keeps solid rules. ── */
+.insight { margin: 0.7rem 0 0; max-width: 40rem; display: grid; gap: 0.8rem; }
+.insightRule { display: flex; align-items: center; gap: 0.85rem; }
+.insightRule::after { content: ''; flex: 1; border-top: 1.5px dotted #9DA3BF; }
 .insightTag {
-  position: absolute; top: -0.7rem; left: 1rem;
   padding: 0.18rem 0.6rem; border-radius: 3px;
   background: var(--bs-think); color: var(--bs-teal);
   font-family: var(--font-body); font-weight: 700; font-size: 0.72rem; letter-spacing: 0.06em; text-transform: uppercase;
@@ -311,15 +340,12 @@
 .insightNarrow { max-width: 26rem; justify-self: end; }
 @media (max-width: 860px) { .insightNarrow { justify-self: start; } }
 
-/* standalone tester callout — the crit voice, no pin or leader */
-.testerNote {
-  position: relative; margin: 0.7rem 0 0; max-width: 32rem; display: grid; gap: 0.55rem;
-  padding: clamp(1.3rem, 2.6vw, 1.7rem) clamp(1.3rem, 2.8vw, 1.7rem) clamp(1.1rem, 2.4vw, 1.5rem);
-  background: #fff; border-radius: 12px;
-  box-shadow: 0 1px 2px rgba(158, 82, 102, 0.06), 0 14px 30px -18px rgba(158, 82, 102, 0.24), 0 0 0 1px var(--bs-crit-line);
-}
+/* standalone tester callout — the crit voice, de-carded to the same labeled
+   rule (solid peri hairline; the peri chip keeps the voice→color mapping) */
+.testerNote { margin: 0.7rem 0 0; max-width: 32rem; display: grid; gap: 0.8rem; }
+.testerRule { display: flex; align-items: center; gap: 0.85rem; }
+.testerRule::after { content: ''; flex: 1; border-top: 1.5px solid var(--bs-crit-line); }
 .testerKicker {
-  position: absolute; top: -0.7rem; left: 1rem;
   padding: 0.18rem 0.6rem; border-radius: 3px;
   background: var(--bs-crit); color: var(--bs-teal);
   font-family: var(--font-body); font-weight: 700; font-size: 0.72rem; letter-spacing: 0.06em; text-transform: uppercase;
@@ -347,19 +373,34 @@
   gap: clamp(2rem, 4vw, 4.5rem);
   align-items: start;
 }
-.splitText { display: grid; gap: clamp(1.3rem, 3vw, 2.2rem); align-content: start; }
+/* the text column rides sticky beside tall media, so the left column never
+   sits 70% empty while a 900px artifact scrolls past (composed whitespace) */
+.splitText { display: grid; gap: clamp(1.3rem, 3vw, 2.2rem); align-content: start; position: sticky; top: 10rem; }
 .splitMedia { display: grid; gap: clamp(1.4rem, 3vw, 2.6rem); min-width: 0; }
+/* the deliberate column break — media left, text right (starts past center) */
+.splitFlip { grid-template-columns: minmax(0, 1fr) minmax(0, 27rem); }
+.splitFlip .splitText { order: 2; }
+.splitFlip .splitMedia { order: 1; }
 
 /* large figure — the artifact shown big (photo or screen mockup) */
 .fig { position: relative; margin: 0; display: grid; gap: 0.6rem; }
+/* the specimen label — small caps + figure number + a hairline running to the
+   column edge, set ON the grid above the artifact instead of a chip floating
+   on the image. The page-wide fig counter makes evidence citable. */
 .figTag {
-  position: absolute; top: 0.7rem; left: 0.7rem; z-index: 2;
-  padding: 0.18rem 0.6rem; border-radius: 3px; background: var(--bs-accent); color: #fff;
-  font-family: var(--font-body); font-weight: 600; font-size: 0.72rem; letter-spacing: 0.06em; text-transform: uppercase;
+  display: flex; align-items: center; gap: 0.85rem;
+  font-family: var(--font-body); font-weight: 700; font-size: 0.7rem;
+  letter-spacing: 0.14em; text-transform: uppercase; color: var(--bs-teal-soft);
 }
-.figTagAlt { background: var(--bs-teal-soft); }
+.figTag::before {
+  counter-increment: fig;
+  content: 'fig. ' counter(fig, decimal-leading-zero);
+  font-variant-numeric: tabular-nums; color: var(--color-ink);
+}
+.figTag::after { content: ''; flex: 1; border-top: 1px solid var(--bs-hairline); }
+.figTagAlt, .figTagOnPanel { background: none; }
 .figArt {
-  overflow: hidden; border-radius: 8px;
+  overflow: hidden; border-radius: 4px;
   box-shadow: 0 32px 64px -34px rgba(26, 67, 77, 0.55);
 }
 .figArt img { display: block; width: 100%; height: auto; }
@@ -373,7 +414,6 @@
 .figByline { display: block; margin-top: 0.25rem; letter-spacing: 0.04em; color: var(--bs-teal-soft); }
 /* native diagram artifact — drawn in the page palette, no raster screen behind it */
 .figDiagram { position: relative; }
-.figTagOnPanel { background: var(--bs-teal); } /* chip sits over a light panel, keep it solid teal */
 
 /* finding — the compressed takeaway (replaces paragraphs); 20% copy, full weight */
 .finding { display: grid; gap: 0.55rem; max-width: 40rem; }
@@ -385,6 +425,9 @@
 .findingText b { font-weight: 600; color: var(--bs-accent); font-style: normal; }
 
 @media (max-width: 860px) {
-  .split { grid-template-columns: 1fr; gap: clamp(1.4rem, 5vw, 2.4rem); }
+  .split, .splitFlip { grid-template-columns: 1fr; gap: clamp(1.4rem, 5vw, 2.4rem); }
+  .splitText { position: static; }
+  .splitFlip .splitText { order: 0; }
+  .splitFlip .splitMedia { order: 0; }
   .figSmall { max-width: min(22rem, 80%); }
 }

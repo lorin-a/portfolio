@@ -1,6 +1,6 @@
 'use client'
 
-import { FieldSection, Lead, Prose, Figure, TesterNote, sys } from './kit'
+import { FieldSection, Prose, Figure, TesterNote, sys } from './kit'
 import { birthPhoto } from '@/lib/cloudinary'
 import FeatureWall from './FeatureWall'
 import CarePodFlow from './CarePodFlow'
@@ -118,9 +118,11 @@ function Media({ f }) {
 
 export default function SecFeatures() {
   return (
-    <FieldSection id="features" num="04" crumb="the interface" when="Week 5" threshold={0.04} wide>
+    <FieldSection
+      id="features" num="04" crumb="the interface" when="Week 5" threshold={0.04} wide
+      statement={<>Birth is unpredictable, so the app is deliberately <b>simple</b>.</>}
+    >
       <div className={sys.headCluster}>
-        <Lead>Birth is unpredictable, so the app is deliberately simple.</Lead>
         <Prose>
           It opens into documenting and reaches everything else in a tap or two. None of the screens below
           are flat mockups: I rebuilt the wireframes as working prototypes, so what you’re seeing is the
@@ -165,8 +167,10 @@ export default function SecFeatures() {
         </div>
       </div>
 
-      {DEEPDIVES.map((f) => (
-        <div key={f.name} className={`${styles.feat} ${styles.side} ${f.kind === 'book' ? styles.bookFeat : ''}`}>
+      {/* the deep-dives alternate sides — the one-recipe loop broken on purpose:
+          copy left / stage right, then flipped, down the chapter */}
+      {DEEPDIVES.map((f, i) => (
+        <div key={f.name} className={`${styles.feat} ${styles.side} ${i % 2 === 1 ? styles.flip : ''} ${f.kind === 'book' ? styles.bookFeat : ''}`}>
           <div className={styles.copy}>
             <div className={`${styles.featHead} ${sys.up}`}>
               <h3 className={styles.featName}>{f.name}</h3>

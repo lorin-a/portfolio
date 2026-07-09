@@ -1,6 +1,6 @@
 'use client'
 
-import { FieldSection, Lead, Prose, Insight, Figure, Split, sys } from './kit'
+import { FieldSection, Prose, Insight, Figure, Split, sys } from './kit'
 import { IaV1, IaFinal } from './IaDiagrams'
 import { birthPhoto } from '@/lib/cloudinary'
 import a from './SecArchitecture.module.css'
@@ -12,15 +12,14 @@ import a from './SecArchitecture.module.css'
 export default function SecArchitecture() {
   const disorient = birthPhoto('disorient', 1300)
   return (
-    <FieldSection id="architecture" num="03" crumb="information architecture" when="Week 3" wide>
+    <FieldSection
+      id="architecture" num="03" crumb="information architecture" when="Week 3" wide
+      statement={<>New parents recovering from birth have limited capacity, which made the introduction, onboarding, and user flow <b>make-or-break</b>: they decide how a parent spends their few precious free moments.</>}
+      statementLong
+    >
       <Split
         text={
           <>
-            <Lead>
-              New parents recovering from birth have limited capacity, which made the introduction,
-              onboarding, and user flow make-or-break: they decide how a parent spends their few
-              precious free moments.
-            </Lead>
             <Prose>
               Our first attempt met the user in the moment. The opening menu asked what phase they were
               in, before, during, or after the birth, at home or in the hospital, to determine the need,

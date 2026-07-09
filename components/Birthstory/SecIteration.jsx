@@ -1,6 +1,6 @@
 'use client'
 
-import { FieldSection, Lead, Prose, Insight, Friction, TesterNote, Figure, Split, sys } from './kit'
+import { FieldSection, Prose, Insight, Friction, TesterNote, Figure, Split, sys } from './kit'
 import { cloudImg } from '@/lib/cloudinary'
 import CritStage from './CritStage'
 import styles from './SecIteration.module.css'
@@ -99,13 +99,13 @@ export default function SecIteration() {
   // no section-level week stamp — the three version markers below are the
   // one canonical timeline (V1 · Week 3 → V3 · Week 5)
   return (
-    <FieldSection id="iteration" crumb="iteration" alt wide sub>
+    <FieldSection
+      id="iteration" crumb="iteration" alt wide sub
+      statement={<>Each round made the app <b>simpler</b>.</>}
+    >
       <Split
         text={
-          <>
-            <Lead>Each round made the app simpler.</Lead>
-            <Prose>We took three versions through critique, a client check-in, and one round of think-aloud testing (TAP) with parents our client connected us with, and changed direction based on what we heard.</Prose>
-          </>
+          <Prose>We took three versions through critique, a client check-in, and one round of think-aloud testing (TAP) with parents our client connected us with, and changed direction based on what we heard.</Prose>
         }
       >
         <Figure
