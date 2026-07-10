@@ -165,19 +165,28 @@ function Brief() {
 function Research() {
   const feeding = birthPhoto('feeding', 1400) // Craig Adderley — mother + newborn skin to skin, hospital (natively B&W)
   return (
+    /* the statement is the chapter's CLAIM, not its setup — her strongest
+       research finding (formerly buried at the foot of the aside) leads;
+       the design-sprint context demotes to the opening prose */
     <FieldSection
       id="research" num="02" crumb="research" when="Week 2" alt wide
-      statement={<>This was a design sprint on a concept already built on extensive research, so our work focused on <b>concept iteration</b>.</>}
+      statement={<>Capacity rises over time, so the app had to meet <b>three different moments</b>, not one.</>}
       statementLong
     >
       {/* Round 4 trail cuts: the second context photo and the inline quote cut —
           the group-chat artifact below is this chapter's hero evidence and
           carries the family voices itself */}
-      <Prose>
-        Before we built anything, I researched blogs and existing products and ran information
-        interviews with family to get familiar with the subject: my three sisters, my mom, and my
-        friend with a toddler.
-      </Prose>
+      <div className={sys.headCluster}>
+        <Prose>
+          This was a design sprint on a concept already built on extensive research, so our work
+          focused on concept iteration.
+        </Prose>
+        <Prose>
+          Before we built anything, I researched blogs and existing products and ran information
+          interviews with family to get familiar with the subject: my three sisters, my mom, and my
+          friend with a toddler.
+        </Prose>
+      </div>
 
       {/* the group call, as the group text it basically was — the casual,
           personal research made legible. Incoming = their asks (summarized);
@@ -208,7 +217,6 @@ function Research() {
             <li><span className={b.usePhaseWhen}>Later, once it lifts</span><span className={b.usePhaseWhat}>Free-form journaling, at their own pace.</span></li>
             <li><span className={b.usePhaseWhen}>In the end</span><span className={b.usePhaseWhat}>A keepsake book of the whole story.</span></li>
           </ol>
-          <p className={b.talkTakeaway}>Capacity rises over time, so the app had to meet three different moments, not one.</p>
         </aside>
       </div>
 
