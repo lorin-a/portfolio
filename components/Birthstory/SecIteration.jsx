@@ -1,6 +1,6 @@
 'use client'
 
-import { FieldSection, Prose, Insight, Friction, TesterNote, Figure, Split, sys } from './kit'
+import { FieldSection, Prose, Insight, Friction, TesterNote, Figure, Bleed, Split, sys } from './kit'
 import { cloudImg } from '@/lib/cloudinary'
 import CritStage from './CritStage'
 import styles from './SecIteration.module.css'
@@ -100,7 +100,7 @@ export default function SecIteration() {
   // one canonical timeline (V1 · Week 3 → V3 · Week 5)
   return (
     <FieldSection
-      id="iteration" crumb="iteration" alt wide sub
+      id="iteration" crumb="iteration" alt wide sub arc="#6D8F99"
       statement={<>Each round made the app <b>simpler</b>.</>}
     >
       <Split
@@ -120,11 +120,13 @@ export default function SecIteration() {
 
       {ROUNDS.map((r) => <Round key={r.label} {...r} />)}
 
-      <Figure
-        photo
-        tag="the crit wall"
-        className={styles.critWall}
-        src={cloudImg('class_notes', 2000, { chain: ['e_brightness:48', 'e_contrast:level_16;type_sigmoidal', 'ar_16:9,c_auto'] })} /* Lorin's Media Editor correction — don't stack further e_* on top; 16:9 c_auto verified to keep every note on the board */
+      {/* the crit wall runs full-bleed and TRUE COLOR (the red marker is the
+          evidence) — the chapter's cinematic close, the squint layer's proof
+          of real process */}
+      <Bleed
+        duo={false}
+        tall
+        src={cloudImg('class_notes', 2800, { chain: ['e_brightness:48', 'e_contrast:level_16;type_sigmoidal', 'ar_16:9,c_auto'] })} /* Lorin's Media Editor correction — don't stack further e_* on top; 16:9 c_auto verified to keep every note on the board */
         alt="A whiteboard from the final review: printed app screens taped up in two columns labeled Gradient and Color Block, covered in red and orange handwritten feedback about tags, icons, the gradient, and touch-target sizes."
         cap="The final review: every screen printed and marked up, with the gradient-versus-color-block decision worked out in red."
       />

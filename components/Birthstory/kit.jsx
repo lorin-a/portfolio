@@ -70,12 +70,20 @@ export function BeforeAfter({ before, after, why }) {
 
 /* ── field-notes register (the process voice) ── */
 
-export function FieldSection({ id, num, crumb, when, alt = false, wide = false, sub = false, threshold = 0.15, statement, statementLong = false, children }) {
+export function FieldSection({ id, num, crumb, when, alt = false, wide = false, sub = false, threshold = 0.15, statement, statementLong = false, arc, arcInk, children }) {
   const [ref, seen] = useSeen(threshold)
   /* chapter statements are the page's h2 spine; sub-beat statements nest as h3 */
   const St = sub ? 'h3' : 'h2'
   return (
-    <section ref={ref} id={id} className={`${s.field} ${sub ? s.fieldSub : ''} ${alt ? s.fieldAlt : ''} ${seen ? s.in : ''}`}>
+    <section
+      ref={ref}
+      id={id}
+      className={`${s.field} ${sub ? s.fieldSub : ''} ${alt ? s.fieldAlt : ''} ${seen ? s.in : ''}`}
+      /* the chapter's stop on the identity gradient — carried by the ghost
+         numeral and the meta rule (fields, not text: text accents stay teal for
+         AA). arcInk balances perceived numeral weight across light/dark stops. */
+      style={arc ? { '--ch': arc, ...(arcInk ? { '--ch-ink': arcInk } : {}) } : undefined}
+    >
       <div className={`${s.sheet} ${wide ? s.sheetWide : ''}`}>
         {/* sub = a second beat inside the same chapter (e.g. Iteration under
             Structure): a quieter ruled subhead, no chapter number, so the spine
@@ -210,10 +218,30 @@ export function Split({ text, flip = false, children }) {
   )
 }
 
+/* ── bleed: a full-width cinematic image band — the squint layer. Documentary
+   context photos ride it in the identity's teal-ink duotone (shadows take the
+   teal, highlights stay paper); real project evidence can ride it true-color
+   with duo=false. ── */
+export function Bleed({ src, alt = '', cap, byline, duo = true, focus, tall = false }) {
+  return (
+    <figure className={`${s.bleed} ${s.up}`}>
+      <div className={`${s.bleedArt} ${duo ? s.bleedDuo : ''} ${tall ? s.bleedTall : ''}`}>
+        <img src={src} alt={alt} loading="lazy" draggable="false" style={focus ? { objectPosition: focus } : undefined} />
+      </div>
+      {(cap || byline) && (
+        <figcaption className={s.bleedCap}>
+          {cap}
+          {byline && <span className={s.figByline}>Photo · {byline} / Pexels</span>}
+        </figcaption>
+      )}
+    </figure>
+  )
+}
+
 /* ── figure: one large artifact — a context photograph or a screen mockup —
    shown big, with a documentary caption and (for photos) a Pexels byline.
    `tag` is the corner chip ("the moment", "the flow", "the evidence"). ── */
-export function Figure({ src, alt = '', tag, cap, byline, photo = false, small = false, portrait = false, ratio, focus, className = '', children }) {
+export function Figure({ src, alt = '', tag, cap, byline, photo = false, small = false, portrait = false, duo = false, ratio, focus, className = '', children }) {
   return (
     <figure className={`${s.fig} ${small ? s.figSmall : ''} ${portrait ? s.figPortrait : ''} ${className}`}>
       {tag && <span className={`${s.figTag} ${small ? s.figTagAlt : ''} ${children ? s.figTagOnPanel : ''}`}>{tag}</span>}
@@ -221,7 +249,7 @@ export function Figure({ src, alt = '', tag, cap, byline, photo = false, small =
         <div className={s.figDiagram}>{children}</div>
       ) : (
         <div
-          className={`${s.figArt} ${ratio ? s.figArtCrop : ''} ${photo ? '' : s.figArtScreen}`}
+          className={`${s.figArt} ${ratio ? s.figArtCrop : ''} ${photo ? '' : s.figArtScreen} ${duo ? s.figArtDuo : ''}`}
           style={ratio ? { aspectRatio: ratio } : undefined}
         >
           <img src={src} alt={alt} loading="lazy" draggable="false" style={focus ? { objectPosition: focus } : undefined} />

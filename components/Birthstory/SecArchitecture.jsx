@@ -12,6 +12,7 @@ export default function SecArchitecture() {
   return (
     <FieldSection
       id="architecture" num="03" crumb="information architecture" when="Week 3" wide
+      arc="#6D8F99"
       statement={<>New parents recovering from birth have limited capacity, which made the introduction, onboarding, and user flow <b>make-or-break</b>: they decide how a parent spends their few precious free moments.</>}
       statementLong
     >

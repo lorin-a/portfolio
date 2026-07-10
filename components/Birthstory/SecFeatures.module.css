@@ -102,7 +102,7 @@
     linear-gradient(rgba(250, 250, 250, 0.66), rgba(250, 250, 250, 0.66)),
     linear-gradient(126deg, #E7C3C8 0%, #B9C2EC 48%, #1A434D 100%);
 }
-.media { width: clamp(280px, 27vw, 340px); }
+.media { width: clamp(310px, 30vw, 400px); } /* squint layer: the artifacts lead */
 
 /* the book has two screens, so it gets a narrower copy column and a wider stage */
 .bookFeat { grid-template-columns: minmax(0, 25rem) 1fr; }

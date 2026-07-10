@@ -122,6 +122,7 @@ export default function SecFeatures() {
   return (
     <FieldSection
       id="features" num="04" crumb="the interface" when="Week 5" threshold={0.04} wide
+      arc="#1A434D" arcInk="24%"
       statement={<>Birth is unpredictable, so the app is deliberately <b>simple</b>.</>}
     >
       {/* the four-ways-in wall moved UP to the product overture after the Brief
@@ -175,6 +176,7 @@ export default function SecFeatures() {
             {f.context && (
               <Figure
                 photo
+                duo
                 tag="the why"
                 className={styles.whyFig}
                 src={f.context.photo.src}

@@ -164,7 +164,8 @@
 .fieldHead {
   display: flex; align-items: baseline; gap: 0.85rem;
   padding-bottom: 0.7rem; margin-bottom: 0;
-  border-bottom: 1px solid var(--bs-rule);
+  /* the meta rule carries the chapter's gradient stop — the arc read at a squint */
+  border-bottom: 2px solid var(--ch, var(--bs-rule));
   font-family: var(--font-body);
 }
 .fCrumb { font-size: 0.78rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-ink); }
@@ -184,7 +185,10 @@
   position: absolute; left: -0.04em; top: 50%; transform: translateY(-50%);
   font-family: var(--font-heading); font-variation-settings: 'SOFT' 60, 'WONK' 0;
   font-weight: 380; font-size: clamp(7.5rem, 5.5rem + 9vw, 13rem); line-height: 0.8;
-  letter-spacing: -0.02em; color: rgba(26, 67, 77, 0.08);
+  letter-spacing: -0.02em;
+  /* the numeral wears the chapter's gradient stop with real presence —
+     ghosted, but felt at a squint (decorative + aria-hidden, no AA duty) */
+  color: color-mix(in srgb, var(--ch, var(--bs-teal)) var(--ch-ink, 38%), transparent);
   user-select: none; pointer-events: none;
 }
 .statement {
@@ -225,7 +229,7 @@
 /* a short lead-in rule marks it as a continuation, not a new chapter */
 .subCrumb::before {
   content: ''; position: absolute; left: 0; top: 0.5em;
-  width: 0.9rem; height: 2px; border-radius: 1px; background: var(--bs-teal-soft);
+  width: 0.9rem; height: 2px; border-radius: 1px; background: var(--ch, var(--bs-teal-soft));
 }
 
 /* minmax(0, 1fr) pins the implicit track to the sheet — otherwise one
@@ -380,6 +384,26 @@
 .splitFlip .splitText { order: 2; }
 .splitFlip .splitMedia { order: 1; }
 
+/* ── bleed: the full-width cinematic band — the squint layer. The image runs
+   edge to edge; the caption keys back to the sheet's left edge. Duotone =
+   teal ground + screen-blended grayscale image: shadows take the ink,
+   highlights stay paper — the identity felt at any blur. ── */
+/* transform-free full-bleed (the .up reveal ends in transform:none, which would
+   cancel a translateX centering trick) */
+.bleed { width: 100vw; margin-left: calc(50% - 50vw); display: grid; gap: 0.7rem; }
+.bleedArt { overflow: hidden; background: var(--bs-teal); }
+.bleedArt img {
+  display: block; width: 100%;
+  height: clamp(340px, 58vh, 620px); object-fit: cover;
+}
+.bleedTall img { height: clamp(420px, 78vh, 780px); }
+.bleedDuo img { filter: grayscale(1) contrast(1.06) brightness(1.03); mix-blend-mode: screen; }
+.bleedCap {
+  margin: 0; font-family: var(--font-body); font-size: 0.78rem; line-height: 1.45;
+  color: var(--color-ink-light);
+  padding-inline: max(var(--bs-pad), calc((100vw - 92rem) / 2));
+}
+
 /* large figure — the artifact shown big (photo or screen mockup) */
 .fig { position: relative; margin: 0; display: grid; gap: 0.6rem; }
 /* the specimen label — small caps + figure number + a hairline running to the
@@ -403,6 +427,9 @@
 .figArt img { display: block; width: 100%; height: auto; }
 .figArtCrop img { height: 100%; object-fit: cover; object-position: center; } /* crop to the figure's aspect-ratio */
 .figArtScreen { background: #16323a; } /* matte behind screen mockups that don't fill */
+/* contained duotone — same ink grammar as the bleed, for photos in columns */
+.figArtDuo { background: var(--bs-teal); }
+.figArtDuo img { filter: grayscale(1) contrast(1.06) brightness(1.03); mix-blend-mode: screen; }
 .figSmall { justify-self: start; max-width: min(26rem, 70%); }
 /* portrait photo: large but contained, anchored to the right edge so it fills
    the right side instead of floating in the middle of a wide media column */

@@ -14,7 +14,7 @@ const PALETTE = [
 export default function SecBrand() {
   return (
     <FieldSection
-      id="brand" crumb="visual design" when="Week 5" wide sub
+      id="brand" crumb="visual design" when="Week 5" wide sub arc="#9DA3BF"
       statement={<>Calm, emotionally intelligent, and deliberately <b>non-clinical</b>.</>}
     >
       <Split

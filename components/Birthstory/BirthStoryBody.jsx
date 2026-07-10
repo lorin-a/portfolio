@@ -1,6 +1,6 @@
 'use client'
 
-import { FieldSection, Prose, SubBlock, Split, Figure, TesterNote, Insight, sys } from './kit'
+import { FieldSection, Prose, SubBlock, Split, Figure, Bleed, TesterNote, Insight, sys } from './kit'
 import { birthPhoto, cloudImg } from '@/lib/cloudinary'
 import FeatureWall from './FeatureWall'
 import SecArchitecture from './SecArchitecture'
@@ -65,48 +65,49 @@ function Overture() {
 }
 
 function Brief() {
-  const birth = birthPhoto('fog', 1500, { grayscale: true }) // Saul Siguenza — exhausted parent + newborn, rendered B&W
+  const birth = birthPhoto('fog', 2400, { grayscale: true }) // Saul Siguenza — exhausted parent + newborn, full-bleed duotone
   return (
     <FieldSection
       id="brief" num="01" crumb="brief" when="Week 1" wide
+      arc="#DBADAD"
       statement={<>Pitch a concept for Myana’s companion micro-app that helps parents <b>document and reflect</b> on their birth experience.</>}
       statementLong
     >
+      {/* the chapter opens cinematic — the context photo runs edge to edge in
+          the identity's teal-ink duotone (the squint layer) */}
+      <Bleed
+        src={birth.src}
+        byline={birth.byline}
+        alt="A parent rests cheek to cheek with a swaddled newborn in the hours just after birth, in teal-ink duotone."
+        cap="A parent and newborn in the hours after birth."
+        focus="center 42%"
+      />
+
       <Split
         text={
-          <>
-            <Prose>
-              Myana already supports parents through pregnancy and postpartum. Its researchers saw that
-              the birth itself still went undocumented and unprocessed, and brought that gap to our
-              graduate studio to conceptualize.
-            </Prose>
-            <a
-              className={`${b.myanaRef} ${sys.up}`}
-              href="https://apps.apple.com/us/app/myana-pa/id6752866138"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <span className={b.myanaTag}>The app it companions</span>
-              <span className={b.myanaMain}>
-                <img className={b.myanaIcon} src="/images/birthstory/myana-icon.jpg" alt="Myana app icon" loading="lazy" draggable="false" />
-                <span className={b.myanaText}>
-                  <span className={b.myanaName}>Myana</span>
-                  <span className={b.myanaDesc}>Postpartum and parenting support from the University of Pittsburgh.</span>
-                </span>
-              </span>
-              <span className={b.myanaLink}>View on the App Store ↗</span>
-            </a>
-          </>
+          <Prose>
+            Myana already supports parents through pregnancy and postpartum. Its researchers saw that
+            the birth itself still went undocumented and unprocessed, and brought that gap to our
+            graduate studio to conceptualize.
+          </Prose>
         }
       >
-        <Figure
-          tag="context"
-          photo
-          src={birth.src}
-          byline={birth.byline}
-          alt="A parent rests cheek to cheek with a swaddled newborn in the hours just after birth, in black and white."
-          cap="A parent and newborn in the hours after birth."
-        />
+        <a
+          className={`${b.myanaRef} ${sys.up}`}
+          href="https://apps.apple.com/us/app/myana-pa/id6752866138"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <span className={b.myanaTag}>The app it companions</span>
+          <span className={b.myanaMain}>
+            <img className={b.myanaIcon} src="/images/birthstory/myana-icon.jpg" alt="Myana app icon" loading="lazy" draggable="false" />
+            <span className={b.myanaText}>
+              <span className={b.myanaName}>Myana</span>
+              <span className={b.myanaDesc}>Postpartum and parenting support from the University of Pittsburgh.</span>
+            </span>
+          </span>
+          <span className={b.myanaLink}>View on the App Store ↗</span>
+        </a>
       </Split>
 
       <div className={`${b.askBand} ${sys.up}`}>
@@ -170,6 +171,7 @@ function Research() {
        the design-sprint context demotes to the opening prose */
     <FieldSection
       id="research" num="02" crumb="research" when="Week 2" alt wide
+      arc="#B1C1F4"
       statement={<>Capacity rises over time, so the app had to meet <b>three different moments</b>, not one.</>}
       statementLong
     >
@@ -236,9 +238,10 @@ function Research() {
         <Figure
           tag="context"
           photo
+          duo
           src={feeding.src}
           byline={feeding.byline}
-          alt="A mother holds her newborn skin to skin in a hospital bed, her eyes closed, in black and white."
+          alt="A mother holds her newborn skin to skin in a hospital bed, her eyes closed, in teal-ink duotone."
           cap="A parent and newborn in the first hours after birth."
         />
       </Split>
@@ -352,6 +355,7 @@ function Voice() {
   return (
     <FieldSection
       id="voice" num="05" crumb="ux writing" when="Week 5" alt wide
+      arc="#9DA3BF"
       statement={<>The copy is trauma-informed without <b>assuming</b> trauma.</>}
     >
       <Split
@@ -421,6 +425,7 @@ function Outcome() {
   return (
     <FieldSection
       id="outcome" num="06" crumb="outcome" when="Week 6" alt wide
+      arc="#3E5E6A" arcInk="30%"
       statement={<>The client loved it, and it still isn’t getting built.</>}
     >
       <Split
@@ -453,7 +458,7 @@ function Outcome() {
 
 function Close() {
   return (
-    <FieldSection id="close" crumb="reflection" when="In hindsight" sub>
+    <FieldSection id="close" crumb="reflection" when="In hindsight" sub arc="#3E5E6A">
       {/* Reflection = the bookend (Lorin's call, option B). The three retrospective
           paragraphs were cut — they read stale, and the "still a concept / built
           with AI" honesty already lives in Overview → Build and the hero. The teal
