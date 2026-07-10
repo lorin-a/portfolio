@@ -15,6 +15,17 @@
 | L6/L8 | Synthesis panel — build it | ✅ BUILT + verified (1440/390) — a **Fact › Insight › Implication** grid in Research ("What we heard, what we did"), 4 rows from her real midpoint feedback quotes → insight → decision. Reconstruction of real synthesis in the taught grammar; NO fabricated affinity wall. Provisional copy, hers to bless. Her deck's "Our Approach" quality→feature map remains available as a companion |
 | L9 | Find final deck on LaCie + Figma link | ✅ found — `LaCie/IXD Studio/Myana Finals/FINAL DOCUMENTATION DUE 3/` (Documentation 16pp = annotated wireframes; Presentation 22pp = client deck) |
 
+### Round 4 — 2026-07-09 (her verdict on build pass 1)
+
+| # | Note (her words, condensed) | Status |
+|---|---|---|
+| F4 | GOOD — keep: type hierarchy · adaptive scroll (sticky) · new text callouts · animations · alternating layout for demos | 📌 locked as keepers |
+| F5 | Too much to look at → confusion + overwhelm; "looks like user did not know how to make information easy to understand and just put everything on the screen" | 🟡 open — trail pass |
+| F6 | Not sure the flow is in the right order — "maybe I want to see the product in more depth first and then the process? Not sure." | 🟡 open — her pick (options presented) |
+| F7 | Lots of text, lots to read — "a skimmer will not absorb what is important" | 🟡 open — skim contract + concision sweep |
+| F8 | Not enough balance / clean display of contextual info — "a lot of text and sooo many lines" | 🟡 open — line-noise cut |
+| F9 | Page hasn't found its identity: "trying to be editorial but lacking the decisive, intelligent unfolding of a narrative. It reads like a newspaper not an engaging article. User is guided through a jungle rather than told what to take away from a well guided trail hike with one clear path." | 🟡 open — the Round 4 organizing idea |
+
 ### Round 3 — 2026-07-05 late (the Fable visual-sophistication pass)
 
 | # | Note (her words, condensed) | Status |

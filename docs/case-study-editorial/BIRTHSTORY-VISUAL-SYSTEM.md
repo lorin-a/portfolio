@@ -130,3 +130,46 @@ Four passes, each eyes-on verified at 1440 + 390 with the GRID.md pre-ship gate:
 3. Anything in the current layout she wants held sacred before the loop is broken.
 
 *(Standing open flags, unchanged: Dezudio credit confirm; both remain in STATUS.md.)*
+
+---
+
+## 6 · Round 4 — the trail, not the jungle (2026-07-09, after her verdict on pass 1)
+
+Her verdict, condensed: keeps the type hierarchy, sticky copy, de-carded callouts, reveals, and
+alternation — but the page overwhelms. Too much to look at, too much text for a skimmer, too many
+lines; "trying to be editorial but lacking the decisive, intelligent unfolding of a narrative. It
+reads like a newspaper not an engaging article… a jungle rather than a well guided trail hike with
+one clear path."
+
+**Diagnosis.** Pass 1 changed the *material* of the scaffolding (cards → rules) but not the
+*amount* of it, and it raised the volume of everything at once. Every beat still carries three to
+five simultaneous voices at equal weight, so nothing leads. A newspaper shows all its matter at
+once; an engaging article decides, per beat, the one thing you must take away — and subordinates
+the rest. The page performs structure instead of exercising judgment.
+
+**The organizing idea: one trail, marked overlooks, optional side paths.**
+
+1. **The skim contract.** Each chapter must land its whole point from three things only:
+   the statement + one hero artifact + one takeaway caption. A skimmer who reads nothing else
+   gets the full story. Everything else steps down a register.
+2. **One idea per viewport.** Re-pace every section so a scroll position holds one thing —
+   the statement alone, then the artifact, then the voice — never statement + prose + callout +
+   figure competing in one frame.
+3. **Cut the line noise.** One rule grammar page-wide. Hairlines survive only where a ledger
+   genuinely has rows; specimen labels lose their trailing rule; the dotted paper ground goes —
+   clean paper. Fewer, heavier moves.
+4. **Concision sweep** (her standing permission: cut, never paraphrase). Prose ≤ ~3 lines at
+   1440; anything a caption or annotation already says gets cut from the prose; secondary
+   paragraphs demote to a quieter supporting size or go.
+5. **Demote the record, promote the claim.** Supporting detail (method notes, second photos,
+   redundant context) steps down in size and position; the one claim per beat steps up.
+6. **Flow (her open question — product earlier?).** Recommendation: a **product overture** —
+   one viewport directly after the Brief: the four-ways-in wall + a single line, so the reader
+   holds *what we made* in mind while walking *how we got there*; the full Interface chapter
+   stays in place as the deep payoff. Alternative (her named instinct): move the whole Interface
+   chapter before Research — stronger product-forward, but the process then reads as flashback,
+   which fights "does not disorient." Her pick.
+
+Sequencing: this trail pass comes **before** the remaining visual-system passes; the color arc
+(pass 2) then lands on a page that can carry it — chapter color becomes part of the "decisive
+unfolding" answer, not more noise.
