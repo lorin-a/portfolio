@@ -173,3 +173,26 @@ the rest. The page performs structure instead of exercising judgment.
 Sequencing: this trail pass comes **before** the remaining visual-system passes; the color arc
 (pass 2) then lands on a page that can carry it — chapter color becomes part of the "decisive
 unfolding" answer, not more noise.
+
+---
+
+## 7 · V2 — the from-scratch rebuild (2026-07-09, her start-over mandate, F13)
+
+Not another pass. A new page, designed as ONE composition and built clean, in parallel at
+`/projects/birthstory-care-pod/v2` (the current draft untouched). Kept: her verbatim words, the
+facts, accessibility, the story order, the taste ledger as direction. Set aside: every inherited
+section structure, register furniture (crumbs, folios, spec labels, ledgers), and layout DNA.
+
+**The organizing idea: the page is a film strip of designed frames, not a document with sections.**
+Twelve frames, one idea each, composed to pass her squint test individually and as a color script:
+
+dark hero → THE ASK (type + three huge stakes) → THE VOICE (sister's verbatim huge over the
+full-bleed duotone) → THE RESEARCH (chat + three moments) → HEARD→DID (voices flow into product
+chips) → PRINCIPLES (four claims as type) → THE TURN (4→0 confrontation) → THREE ROUNDS (the app
+calms down; crit wall full-bleed) → THE PRODUCT (a sustained dark-teal world: wall, prioritization
+made visible, five working prototypes) → THE IDENTITY (gradient as artifact) → THE OUTCOME (client
+quote huge) → the teal coda.
+
+Text exists only as claims, captions, and her preserved verbatim moments; no paragraph columns.
+Motion grammar unchanged in spirit (play-once, reduced-motion honored); flagship theater (4→0
+strike, iteration sticky) layers on after the composition is blessed.
