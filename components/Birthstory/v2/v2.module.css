@@ -21,8 +21,8 @@
   color: var(--color-ink);
 }
 
-/* ── frame shell ── */
-.frame { padding: clamp(5rem, 13vh, 9.5rem) 0; }
+/* ── frame shell — Pearl-scale breathing: the gaps are part of the design ── */
+.frame { padding: clamp(6rem, 17vh, 13rem) 0; }
 .inner { max-width: 92rem; margin: 0 auto; padding: 0 var(--pad); }
 .paper { background: var(--paper); }
 .white { background: #fff; }
@@ -45,6 +45,9 @@
 }
 .claim b { font-weight: 460; color: var(--teal); font-style: normal; }
 .claimLong { max-width: 32ch; font-size: clamp(1.8rem, 1.25rem + 2.4vw, 3.3rem); line-height: 1.12; text-wrap: pretty; }
+/* the voiced chapter line — her voice in italic display serif (the Pearl move) */
+.voice { font-style: italic; font-weight: 380; }
+.voice b { font-style: italic; }
 .dark .claim, .dark .claim b { color: #fff; }
 .line {
   margin: clamp(1rem, 2.4vw, 1.6rem) 0 0; max-width: 52ch;
@@ -231,8 +234,8 @@
     linear-gradient(rgba(250, 250, 250, 0.66), rgba(250, 250, 250, 0.66)),
     linear-gradient(126deg, #E7C3C8 0%, #B9C2EC 48%, var(--teal) 100%);
 }
-.shot { margin: 0; display: grid; gap: 0.5rem; width: clamp(200px, 19vw, 280px); }
-.shotOne { width: clamp(260px, 26vw, 340px); }
+.shot { margin: 0; display: grid; gap: 0.5rem; width: clamp(220px, 21vw, 310px); }
+.shotOne { width: clamp(290px, 29vw, 380px); }
 .shotCap { margin: 0; font-family: var(--font-body); font-size: 0.74rem; line-height: 1.4; color: var(--color-ink-light); text-align: center; text-wrap: balance; }
 .calm {
   margin: clamp(2.2rem, 5vw, 3.2rem) auto 0; max-width: 30ch; text-align: center;
@@ -286,7 +289,7 @@
 .featureClaim { margin: 0; font-family: var(--font-body); font-weight: 600; font-size: clamp(1rem, 0.95rem + 0.3vw, 1.15rem); line-height: 1.45; color: var(--peri); text-wrap: pretty; }
 .featureLine { margin: 0; max-width: 46ch; font-family: var(--font-body); font-size: 0.98rem; line-height: 1.6; color: rgba(255, 255, 255, 0.78); text-wrap: pretty; }
 .featureMedia { display: grid; justify-items: center; gap: 0.8rem; }
-.featureMedia > * { width: clamp(300px, 29vw, 390px); }
+.featureMedia > * { width: clamp(340px, 33vw, 470px); }
 .bookRow { display: flex; flex-wrap: wrap; justify-content: center; gap: clamp(1rem, 2.5vw, 2rem); width: auto !important; }
 .bookRow .shot { width: clamp(200px, 18vw, 260px); }
 .bookRow .shotCap { color: rgba(255, 255, 255, 0.6); }
