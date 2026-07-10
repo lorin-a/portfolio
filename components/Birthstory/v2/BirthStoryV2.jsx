@@ -1,6 +1,5 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
 import { birthPhoto, cloudImg } from '@/lib/cloudinary'
 import FeatureWall from '../FeatureWall'
 import CarePodFlow from '../CarePodFlow'
@@ -9,51 +8,16 @@ import DocReveal from '../DocReveal'
 import SearchReveal from '../SearchReveal'
 import BuiltFromWords from '../moment/BuiltFromWords'
 import FourToZero from '../moment/FourToZero'
-import { sys } from '../kit'
+import { Frame, Phone, useSeen } from './frame'
+import DeepPlane from './DeepPlane'
 import s from './v2.module.css'
 
 /* Birth Story V2 — the from-scratch rebuild (F13, her start-over mandate).
-   A film strip of designed frames, one idea each; her verbatim words as claims,
-   voices, and captions; the artifacts do the talking. The V1 draft is untouched
-   at the parent route. Storyboard: BIRTHSTORY-VISUAL-SYSTEM.md §7. */
-
-function useSeen(threshold = 0.2) {
-  const ref = useRef(null)
-  const [seen, setSeen] = useState(false)
-  useEffect(() => {
-    const el = ref.current
-    if (!el) return
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) { setSeen(true); return }
-    const o = new IntersectionObserver(([e]) => { if (e.isIntersecting) { setSeen(true); o.disconnect() } }, { threshold })
-    o.observe(el)
-    return () => o.disconnect()
-  }, [threshold])
-  return [ref, seen]
-}
-
-function Frame({ id, tone = 'paper', kicker, threshold = 0.18, className = '', children }) {
-  const [ref, seen] = useSeen(threshold)
-  return (
-    <section ref={ref} id={id} className={`${s.frame} ${s[tone] || ''} ${seen ? s.in : ''} ${className}`}>
-      <div className={s.inner}>
-        {kicker && <p className={`${s.kicker} ${s.up}`}>{kicker}</p>}
-        {children}
-      </div>
-    </section>
-  )
-}
-
-function Phone({ src, alt, cap, capClass }) {
-  return (
-    <figure className={s.shot}>
-      <span className={sys.phone} style={{ width: '100%' }}>
-        <span className={sys.phoneNotch} aria-hidden="true" />
-        <span className={sys.phoneScreen}><img src={src} alt={alt} loading="lazy" draggable="false" /></span>
-      </span>
-      {cap && <figcaption className={capClass || s.shotCap}>{cap}</figcaption>}
-    </figure>
-  )
-}
+   Two planes (F22): part one is the score — a film strip of designed frames,
+   one idea each, scanner-complete on headlines and imagery alone; part two
+   (DeepPlane) is behind the work, for the curious. Her verbatim words as
+   claims, voices, and captions; the artifacts do the talking. The V1 draft is
+   untouched at the parent route. Storyboard: BIRTHSTORY-VISUAL-SYSTEM.md §7. */
 
 /* F3 — the sister's verbatim over the full-bleed duotone */
 function VoiceFrame() {
@@ -80,7 +44,7 @@ export default function BirthStoryV2() {
   return (
     <div className={s.v2}>
       {/* ── F2 · THE ASK ── */}
-      <Frame id="brief">
+      <Frame id="brief" kicker="01 · The brief">
         <h2 className={`${s.claim} ${s.claimLong} ${s.voice} ${s.up}`} style={{ '--d': '80ms' }}>
           Pitch a concept that helps parents <b>document and reflect</b> on their birth experience.
         </h2>
@@ -96,11 +60,21 @@ export default function BirthStoryV2() {
             </div>
           ))}
         </div>
-        <p className={`${s.askMeta} ${s.up}`} style={{ '--d': '520ms' }}>
-          <span>Myana · University of Pittsburgh</span>
-          <span>6-week CMU graduate studio</span>
-          <span>Figures from the project brief</span>
-        </p>
+        <p className={`${s.stakeSrc} ${s.up}`} style={{ '--d': '460ms' }}>Figures from the project brief.</p>
+        {/* F19 — the hiring-manager metadata, structured, on the fast plane
+            (content carried verbatim from the V1 Overview) */}
+        <dl className={`${s.meta} ${s.up}`} style={{ '--d': '540ms' }}>
+          {[
+            ['Role', <>My partner Michael and I co-led research and information architecture. I led UX/UI, visual identity, and UX writing.</>],
+            ['Context', <>6-week graduate studio at Carnegie Mellon, taught by the founders of <a href="https://dezudio.com/" target="_blank" rel="noopener noreferrer">Dezudio</a>, Myana’s design partner</>],
+            ['Client', <><a href="https://apps.apple.com/us/app/myana-pa/id6752866138" target="_blank" rel="noopener noreferrer">Myana</a>, a maternal-health platform co-developed by researchers at the University of Pittsburgh</>],
+            ['Method', '5 parent interviews, 3 think-aloud protocols (TAP), 3 wireframe rounds'],
+            ['Outcome', 'Strong client validation; sponsored to possibly inform future Myana versions'],
+            ['Build', 'Concept. Wireframes in Figma, prototypes here built with Claude Code'],
+          ].map(([k, v]) => (
+            <div key={k} className={s.metaItem}><dt>{k}</dt><dd>{v}</dd></div>
+          ))}
+        </dl>
       </Frame>
 
       {/* ── F3 · THE VOICE ── */}
@@ -110,12 +84,12 @@ export default function BirthStoryV2() {
           chat and the synthesis sections: the argument plays instead of being
           tabled. The ending line ("Built from their words.") is the beat's
           fast-path sentence; the imagery carries the story for skimmers. ── */}
-      <Frame id="research">
+      <Frame id="research" kicker="02 · The research">
         <BuiltFromWords embedded />
       </Frame>
 
       {/* ── F6 · PRINCIPLES ── */}
-      <Frame id="principles" kicker="Design principles">
+      <Frame id="principles" kicker="03 · Design principles">
         <ul className={s.principles}>
           {[
             {
@@ -147,7 +121,7 @@ export default function BirthStoryV2() {
       </Frame>
 
       {/* ── F7 · THE TURN ── */}
-      <Frame id="architecture">
+      <Frame id="architecture" kicker="04 · The architecture">
         <h2 className={`${s.claim} ${s.claimLong} ${s.voice} ${s.up}`} style={{ '--d': '80ms' }}>
           The user flow was <b>make-or-break</b>: it decides how a parent spends their few precious
           free moments.
@@ -163,7 +137,7 @@ export default function BirthStoryV2() {
       </Frame>
 
       {/* ── F8 · THREE ROUNDS ── */}
-      <Frame id="iteration" className={s.roundsFrame}>
+      <Frame id="iteration" kicker="05 · Three rounds" className={s.roundsFrame}>
         <h2 className={`${s.claim} ${s.voice} ${s.up}`} style={{ '--d': '80ms' }}>
           Each round made the app <b>simpler</b>.
         </h2>
@@ -225,7 +199,7 @@ export default function BirthStoryV2() {
       </figure>
 
       {/* ── F9 · THE PRODUCT — the sustained teal world ── */}
-      <Frame id="product" tone="dark" className={s.productFrame} threshold={0.06}>
+      <Frame id="product" tone="dark" kicker="06 · The product" className={s.productFrame} threshold={0.06}>
         <h2 className={`${s.claim} ${s.voice} ${s.up}`} style={{ '--d': '80ms' }}>
           Birth is unpredictable, so the app is deliberately <b>simple</b>.
         </h2>
@@ -310,7 +284,7 @@ export default function BirthStoryV2() {
       </Frame>
 
       {/* ── F10 · THE IDENTITY ── */}
-      <Frame id="identity">
+      <Frame id="identity" kicker="07 · The identity">
         <h2 className={`${s.claim} ${s.voice} ${s.up}`} style={{ '--d': '80ms' }}>
           Calm, emotionally intelligent, and deliberately <b>non-clinical</b>.
         </h2>
@@ -344,7 +318,7 @@ export default function BirthStoryV2() {
       </Frame>
 
       {/* ── F11 · THE OUTCOME ── */}
-      <Frame id="outcome">
+      <Frame id="outcome" kicker="08 · The outcome">
         <blockquote className={`${s.outcomeQuote} ${s.up}`} style={{ '--d': '80ms' }}>
           “I wish this could be real right now!”
         </blockquote>
@@ -370,6 +344,10 @@ export default function BirthStoryV2() {
           </figure>
         </div>
       </Frame>
+
+      {/* ── PART TWO · BEHIND THE WORK (F21/F22) — the deep plane for the
+          curious; the scanner's story is complete above this line ── */}
+      <DeepPlane />
 
       {/* ── F12 · THE CODA ── */}
       <Frame id="close" tone="dark">

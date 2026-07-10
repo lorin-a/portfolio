@@ -81,12 +81,22 @@
 }
 .stakeLabel { margin: 0; max-width: 22ch; font-family: var(--font-body); font-size: clamp(0.9rem, 0.86rem + 0.2vw, 1rem); line-height: 1.45; color: var(--color-ink-light); text-wrap: pretty; }
 .stakeSrc { margin: clamp(1.4rem, 3vw, 2rem) 0 0; font-family: var(--font-body); font-size: 0.78rem; color: var(--color-ink-faint); }
-.askMeta {
-  margin: clamp(2.4rem, 5vw, 3.6rem) 0 0; padding-top: 1rem; border-top: 1px solid rgba(26, 67, 77, 0.16);
-  font-family: var(--font-body); font-size: 0.85rem; line-height: 1.6; color: var(--color-ink-light);
-  display: flex; flex-wrap: wrap; gap: 0.4rem 2rem;
-}
 @media (max-width: 720px) { .stakes { grid-template-columns: 1fr; gap: 1.6rem; } }
+
+/* the hiring-manager metadata (F19) — structured, quiet, on the fast plane */
+.meta {
+  margin: clamp(3rem, 7vw, 5rem) 0 0; padding-top: clamp(1.6rem, 3.2vw, 2.4rem);
+  border-top: 1px solid rgba(26, 67, 77, 0.16);
+  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(1.6rem, 3.4vw, 2.6rem) clamp(2rem, 4.5vw, 4rem);
+}
+.metaItem { display: grid; gap: 0.35rem; align-content: start; }
+.metaItem dt { font-family: var(--font-body); font-weight: 700; font-size: 0.7rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--teal-soft); }
+.metaItem dd { margin: 0; font-family: var(--font-body); font-size: 0.92rem; line-height: 1.55; color: var(--color-ink-light); text-wrap: pretty; }
+.metaItem dd a { color: var(--teal); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: rgba(26, 67, 77, 0.35); }
+.metaItem dd a:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; border-radius: 2px; }
+@media (max-width: 860px) { .meta { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 560px) { .meta { grid-template-columns: 1fr; } }
 
 /* ════ F3 · THE VOICE — verbatim huge over the full-bleed duotone ════ */
 .voiceFrame { position: relative; padding: 0; background: var(--teal); overflow: hidden; }
@@ -377,3 +387,97 @@
   color: rgba(255, 255, 255, 0.55); text-align: center; text-wrap: pretty;
   padding: 0 var(--pad);
 }
+
+/* ============================================================================
+   PART TWO · BEHIND THE WORK (F21/F22 + F24) — the deep plane. Denser rhythm
+   than the score (an archive register, not a film strip); one deep core, the
+   rest stated crisply. Same grammar: dotted threads, speech, product surface.
+   ============================================================================ */
+
+/* the threshold — the visible reason for the register switch */
+.gate { padding: clamp(6rem, 15vh, 11rem) 0 clamp(2.5rem, 6vh, 4rem); text-align: center; }
+.gateStem { display: block; width: 0; height: clamp(2.4rem, 6vh, 4rem); margin: 0 auto clamp(1.6rem, 3.5vh, 2.4rem); border-left: 2px dotted var(--teal-soft); }
+.gateKicker { margin-bottom: 1.1rem; }
+.gateClaim { margin: 0 auto; }
+.gateLine { margin-left: auto; margin-right: auto; max-width: 52ch; }
+
+/* deep frames breathe less than the score — density is the register */
+.deep { padding: clamp(4.5rem, 11vh, 8rem) 0; }
+
+/* the decision chain */
+.step { margin-top: clamp(3.6rem, 8vw, 6rem); }
+.stepTag {
+  margin: 0 0 clamp(1.1rem, 2.4vw, 1.6rem);
+  font-family: var(--font-body); font-weight: 700; font-size: 0.7rem;
+  letter-spacing: 0.18em; text-transform: uppercase; color: var(--teal-soft);
+}
+.coreGrid {
+  display: grid; grid-template-columns: minmax(0, 26rem) minmax(0, 1fr);
+  gap: clamp(2rem, 5vw, 4rem); align-items: start;
+}
+.coreCopy { display: grid; gap: clamp(1.2rem, 2.6vw, 1.8rem); align-content: start; }
+.deepProse {
+  margin: 0; max-width: 52ch;
+  font-family: var(--font-body); font-size: clamp(0.98rem, 0.93rem + 0.28vw, 1.1rem);
+  line-height: 1.65; color: var(--color-ink); text-wrap: pretty;
+}
+.frictionText { max-width: 56ch; color: var(--color-ink-light); }
+@media (max-width: 860px) { .coreGrid { grid-template-columns: 1fr; } }
+
+/* her first-person judgment, labeled — the voice register (F24) */
+.think { padding-left: 1.3rem; border-left: 2px dotted var(--teal-soft); display: grid; gap: 0.45rem; }
+.thinkTag { margin: 0; font-family: var(--font-body); font-weight: 700; font-size: 0.66rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--teal-soft); }
+.thinkText {
+  margin: 0; max-width: 48ch;
+  font-family: var(--font-heading); font-variation-settings: 'SOFT' 60, 'WONK' 0;
+  font-style: italic; font-weight: 400; font-size: clamp(1.05rem, 1rem + 0.3vw, 1.25rem);
+  line-height: 1.5; color: var(--teal); text-wrap: pretty;
+}
+
+/* artifacts in the chain */
+.iaFig { margin: 0; display: grid; gap: 0.7rem; }
+.iaFigWide { max-width: 58rem; }
+.tapFig { margin: 0; display: grid; gap: 0.7rem; align-content: start; }
+.tapFig img { width: 100%; height: auto; display: block; border-radius: 4px; box-shadow: 0 28px 56px -34px rgba(26, 67, 77, 0.5); }
+.stripFig { margin: clamp(2.6rem, 6vw, 4rem) 0 0; display: grid; gap: 0.8rem; }
+.stripStack { display: grid; gap: clamp(0.8rem, 2vw, 1.2rem); }
+.stripStack img { width: 100%; height: auto; display: block; border: 1px solid rgba(26, 67, 77, 0.14); border-radius: 4px; background: #fff; }
+
+/* the archive — every screen of every round, stated crisply */
+.sheet { display: grid; gap: clamp(3rem, 6.5vw, 4.5rem); }
+.sheetRow {
+  display: grid; grid-template-columns: minmax(0, 22rem) minmax(0, 1fr);
+  gap: clamp(1.6rem, 4vw, 3rem); align-items: start;
+}
+.sheetIntro { display: grid; gap: 0.7rem; }
+.sheetChange { margin: 0; font-family: var(--font-body); font-size: 0.95rem; line-height: 1.6; color: var(--color-ink-light); text-wrap: pretty; }
+.thumbs { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: clamp(0.5rem, 1.2vw, 0.9rem); align-items: start; }
+.thumb { width: 100%; height: auto; display: block; border: 1px solid rgba(26, 67, 77, 0.14); border-radius: 4px; }
+@media (max-width: 860px) {
+  .sheetRow { grid-template-columns: 1fr; }
+  .thumbs { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+
+/* the words — before and after */
+.wordsGrid {
+  display: grid; grid-template-columns: minmax(0, 30rem) minmax(0, 1fr);
+  gap: clamp(2.4rem, 6vw, 5rem); align-items: start;
+  margin-top: clamp(2.4rem, 5.5vw, 3.8rem);
+}
+.wordsPanel { display: grid; gap: clamp(2rem, 4.5vw, 3rem); align-content: start; }
+.saidWrap { display: grid; gap: 0.8rem; justify-items: start; }
+.revs { display: grid; gap: 1.1rem; }
+.rev { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1.2fr); gap: 0.9rem; align-items: center; }
+.revDraft {
+  margin: 0;
+  font-family: var(--font-heading); font-variation-settings: 'SOFT' 60, 'WONK' 0;
+  font-style: italic; font-weight: 400; font-size: clamp(0.95rem, 0.9rem + 0.25vw, 1.1rem);
+  line-height: 1.4; color: var(--color-ink-faint); text-wrap: pretty;
+}
+.revArrow { font-family: var(--font-body); color: var(--teal-soft); font-size: 1.1rem; }
+@media (max-width: 860px) { .wordsGrid { grid-template-columns: 1fr; } }
+@media (max-width: 560px) { .rev { grid-template-columns: 1fr; gap: 0.45rem; justify-items: start; } .revArrow { transform: rotate(90deg); } }
+
+/* the pitch */
+.pitchFig { margin: 0; display: grid; gap: 0.8rem; }
+.pitchFig img { width: 100%; height: auto; display: block; border-radius: 4px; box-shadow: 0 32px 64px -36px rgba(26, 67, 77, 0.5); }

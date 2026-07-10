@@ -23,7 +23,8 @@ proven. Restraint reads senior.
    page earn motion/interaction/full-bleed. Stillness elsewhere is the design. (advice; cures F11)
 3. **Fast path / deep path on separate planes.** Headlines + one hero visual per beat must carry
    the whole argument in 90 seconds alone; evidence sits beneath, visually subordinate, available.
-   (F7, advice)
+   The deep path must EXIST beneath, not be cut — depth removed is depth she craves back; and
+   hiring-manager metadata is fast-path material, up top. (F7, F19, F21/F22, advice)
 4. **The story from images alone; words are optional depth.** (F14, her words)
 5. **No text-and-lines fields.** Content takes its native form: voices as speech, decisions as
    product surface, flows as movement, claims as type. (F8, F12)
@@ -39,6 +40,15 @@ proven. Restraint reads senior.
    named and appended here. (F15 method)
 10. **Voice guardrails.** Her words verbatim or cut, never paraphrased; no em dashes introduced;
     no "not X, it's Y" constructions; curly quotes. (standing)
+11. **One deep core.** Depth is proven by one decision taken to the bottom (down to the
+    micro-decision a non-designer would miss), not by uniform density; the rest is stated
+    crisply and trusted. (F24 advice, 2026-07-10)
+12. **The product is the evidence, not the reveal.** Every insight resolves into a pointable
+    feature; every feature has a lineage. "We heard X → we built Y → here it is, working."
+    (F24 advice)
+13. **Personal is a register, not a section.** What it's like to work with her rides the
+    narration: judgment shown, failure owned, collaborators credited, corrections absorbed.
+    Never a personality section. (F24 advice)
 
 Status: **PROPOSED — awaiting Lorin's bless before any component is touched.**
 Brief (her words, condensed): a strong Fable visual-sophistication pass on the whole page — flow, visual
