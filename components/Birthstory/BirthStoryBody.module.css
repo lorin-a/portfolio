@@ -36,138 +36,93 @@
    differentiator). Numbered editorial cards, 2×2; the two that testing
    sharpened carry a hairline-set "what it taught" note. Set off from the brief
    by a hairline so it reads as part of the section. */
+/* design principles — four CLAIMS set as type (F12): no numerals, no rules,
+   no boxes. The names carry the weight at a small display size; one quiet
+   line each beneath; the two testing-sharpened ones add one italic line. */
 .values {
-  padding-top: clamp(1.8rem, 4vw, 2.8rem);
-  border-top: 1px solid var(--bs-rule);
-  display: grid; gap: clamp(1rem, 2.4vw, 1.5rem);
+  padding-top: clamp(2.4rem, 5.5vw, 3.8rem);
+  display: grid; gap: clamp(1.6rem, 3.4vw, 2.4rem);
 }
 .valuesHead {
   margin: 0;
   font-family: var(--font-body); font-weight: 600; font-size: 0.75rem;
   letter-spacing: 0.14em; text-transform: uppercase; color: var(--bs-teal-soft);
 }
-.valuesIntro {
-  margin: -0.5rem 0 0; max-width: 42rem;
-  font-family: var(--font-body); font-size: 0.95rem; line-height: 1.5;
-  color: var(--color-ink-light); text-wrap: pretty;
-}
 .valuesList {
   margin: 0; padding: 0; list-style: none;
   display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0 clamp(2rem, 4.5vw, 4rem);
+  gap: clamp(2.2rem, 4.5vw, 3.4rem) clamp(3rem, 6vw, 5.5rem);
 }
-/* DE-CARDED: each principle opens on its own teal rule — a ruled 2×2, generous
-   type, no boxes. The numeral steps up so the set reads as a designed ledger. */
-.principle {
-  display: grid; grid-template-columns: auto 1fr; gap: clamp(0.9rem, 1.8vw, 1.3rem);
-  padding: clamp(1.1rem, 2vw, 1.5rem) 0 clamp(1.2rem, 2.4vw, 1.7rem);
-  border-top: 2px solid var(--bs-teal);
-}
-.principleNum {
-  font-family: var(--font-heading); font-variation-settings: 'SOFT' 60, 'WONK' 0;
-  font-weight: 380; font-size: clamp(1.9rem, 1.5rem + 1.5vw, 2.7rem); line-height: 0.9;
-  color: rgba(26, 67, 77, 0.28); letter-spacing: -0.01em;
-}
-.principleBody { display: grid; gap: 0.5rem; align-content: start; }
+.principle { display: grid; gap: 0.6rem; align-content: start; max-width: 34rem; }
 .principleName {
   margin: 0; font-family: var(--font-heading); font-variation-settings: 'SOFT' 60, 'WONK' 0;
-  font-weight: 400; font-size: clamp(1.12rem, 1rem + 0.4vw, 1.35rem); line-height: 1.24;
-  color: var(--color-ink); text-wrap: balance;
+  font-weight: 380; font-size: clamp(1.5rem, 1.25rem + 1.1vw, 2.1rem); line-height: 1.14;
+  letter-spacing: -0.012em; color: var(--color-ink); text-wrap: balance;
 }
-/* the observation the principle came from — pulled in behind a teal rule so it
-   reads as deliberate derivation (Saffer: observation → principle), not a caption */
 .principleWhy {
-  margin: 0.1rem 0 0; padding-left: 0.9rem; border-left: 2px solid var(--bs-accent);
-  font-family: var(--font-body); font-size: 0.9rem; line-height: 1.5;
-  color: var(--color-ink); text-wrap: pretty;
-}
-.principleEvolved {
-  margin: 0.6rem 0 0;
-  font-family: var(--font-body); font-size: 0.86rem; line-height: 1.5;
+  margin: 0; font-family: var(--font-body); font-size: 0.95rem; line-height: 1.55;
   color: var(--color-ink-light); text-wrap: pretty;
 }
-.principleEvolvedTag {
-  display: block; margin-bottom: 0.25rem;
-  font-weight: 700; font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase;
-  color: var(--bs-accent);
+.principleEvolved {
+  margin: 0.15rem 0 0; font-family: var(--font-body); font-style: italic;
+  font-size: 0.9rem; line-height: 1.5; color: var(--bs-teal-soft); text-wrap: pretty;
 }
-@media (max-width: 640px) { .valuesList { grid-template-columns: 1fr; } }
+@media (max-width: 640px) { .valuesList { grid-template-columns: 1fr; gap: 1.8rem; } }
 
-/* synthesis — the taught Fact › Insight › Implication grid. A three-column
-   table set off by a hairline: quotes on the left, the decision on the right.
-   Rebuilt from real midpoint feedback. Collapses to stacked, labeled rows on
-   mobile so the heard→learned→did chain still reads. */
+/* synthesis — INFORMATION DESIGN, not a table (F12): each row is a flow.
+   The tester's voice is speech (the chat-bubble grammar) → what it taught
+   rides a dotted thread → the move lands on the app's own dark surface.
+   At a squint: voices in, product out. */
 .synth {
-  padding-top: clamp(1.8rem, 4vw, 2.8rem);
-  border-top: 1px solid var(--bs-rule);
-  display: grid; gap: clamp(1rem, 2.4vw, 1.5rem);
+  padding-top: clamp(2.2rem, 5vw, 3.4rem);
+  display: grid; gap: clamp(1.6rem, 3.4vw, 2.4rem);
 }
 .synthHead {
   margin: 0;
   font-family: var(--font-body); font-weight: 600; font-size: 0.75rem;
   letter-spacing: 0.14em; text-transform: uppercase; color: var(--bs-teal-soft);
 }
-.synthSub {
-  margin: -0.5rem 0 0; max-width: 46rem;
-  font-family: var(--font-body); font-size: 0.95rem; line-height: 1.5;
-  color: var(--color-ink-light); text-wrap: pretty;
+.synthFlows { display: grid; gap: clamp(1.8rem, 3.6vw, 2.8rem); }
+.synthFlow {
+  display: grid; align-items: center;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.9fr) minmax(0, 1fr);
+  gap: clamp(1.2rem, 2.6vw, 2.2rem);
 }
-/* DE-CARDED: the synthesis is a record-layer table, so it reads as a ruled
-   ledger — teal top rule into hairline rows — with the decision column still
-   pulled out as the payoff (accent rule + weight) */
-.synthTable {
-  display: grid; gap: 0;
-  border-top: 2px solid var(--bs-teal);
-  border-bottom: 1px solid var(--bs-hairline);
-}
-.synthHeadRow, .synthRow {
-  display: grid; grid-template-columns: 1.15fr 1fr 1.05fr;
-  gap: clamp(1rem, 2.5vw, 2rem);
-}
-.synthHeadRow {
-  padding: 0.85rem 0 0.75rem;
-}
-.synthHeadRow span {
-  display: flex; align-items: center; gap: 0.5rem;
-  font-family: var(--font-body); font-weight: 700; font-size: 0.72rem;
-  letter-spacing: 0.12em; text-transform: uppercase; color: var(--bs-teal-soft);
-}
-/* the › progression, drawn between the column heads */
-.synthHeadRow span:not(:last-child)::after {
-  content: '›'; margin-left: auto; font-size: 1rem; color: var(--bs-accent); opacity: 0.7;
-}
-.synthRow {
-  padding: clamp(1rem, 2vw, 1.35rem) 0;
-  border-top: 1px solid var(--bs-hairline);
-  align-items: stretch;
-}
-/* the decision — the payoff cell, lifted behind an accent rule */
-.synthRow .synthCell:last-child {
-  padding-left: clamp(0.9rem, 1.6vw, 1.2rem);
-  border-left: 2px solid var(--bs-accent);
-}
-.synthRow .synthCell:last-child .synthText { color: var(--color-ink); font-weight: 500; }
-.synthColLabel { display: none; }
-.synthFact {
-  margin: 0; font-family: var(--font-heading);
-  font-variation-settings: 'SOFT' 60, 'WONK' 0; font-weight: 400;
-  font-size: clamp(1rem, 0.94rem + 0.3vw, 1.15rem); line-height: 1.35;
+/* the voice — a spoken thing, so it looks spoken (the chat grammar) */
+.synthHeard {
+  margin: 0; max-width: 34rem;
+  padding: clamp(0.8rem, 1.6vw, 1.05rem) clamp(1rem, 2vw, 1.3rem);
+  background: var(--bs-mist, #eef1f0); border-radius: 18px 18px 18px 5px;
+  font-family: var(--font-heading); font-variation-settings: 'SOFT' 60, 'WONK' 0;
+  font-style: italic; font-weight: 400;
+  font-size: clamp(1rem, 0.94rem + 0.3vw, 1.18rem); line-height: 1.38;
   color: var(--color-ink); text-wrap: pretty;
 }
-.synthText {
-  margin: 0; font-family: var(--font-body);
-  font-size: 0.92rem; line-height: 1.5; color: var(--color-ink-light); text-wrap: pretty;
+/* the thread — what the voice taught, traveling toward the decision on the
+   dotted line (her hand's idiom) */
+.synthThread { display: grid; gap: 0.5rem; align-content: center; }
+.synthLearned {
+  margin: 0; font-family: var(--font-body); font-size: 0.86rem; line-height: 1.45;
+  color: var(--color-ink-light); text-wrap: pretty;
 }
-@media (max-width: 720px) {
-  .synthHeadRow { display: none; }
-  .synthRow { grid-template-columns: 1fr; gap: 0.75rem; }
-  .synthColLabel {
-    display: block; margin-bottom: 0.25rem;
-    font-family: var(--font-body); font-weight: 700; font-size: 0.66rem;
-    letter-spacing: 0.12em; text-transform: uppercase; color: var(--bs-accent);
-  }
-  /* the decision reads as the payoff — accent lift on the third cell */
-  .synthRow .synthCell:last-child { padding-left: 0.9rem; border-left: 2px solid var(--bs-accent); margin-top: 0.15rem; }
+.synthLeader { display: block; height: 0; border-top: 2px dotted var(--bs-teal-soft); }
+/* the move — product, so it lands on the product's own surface */
+.synthDid {
+  margin: 0; justify-self: start;
+  padding: clamp(0.9rem, 1.8vw, 1.15rem) clamp(1.05rem, 2.2vw, 1.4rem);
+  background: linear-gradient(158deg, #1F4750 0%, #1A434D 60%, #16323A 100%);
+  color: #fff; border-radius: 14px;
+  box-shadow: 0 18px 36px -24px rgba(26, 67, 77, 0.6);
+  font-family: var(--font-body); font-weight: 500;
+  font-size: clamp(0.92rem, 0.88rem + 0.25vw, 1.02rem); line-height: 1.5; text-wrap: pretty;
+}
+@media (max-width: 820px) {
+  .synthFlow { grid-template-columns: 1fr; gap: 0.7rem; }
+  .synthHeard { justify-self: start; }
+  /* the thread turns vertical: a short dotted stem under the insight */
+  .synthThread { justify-items: start; gap: 0.4rem; padding-left: 0.4rem; }
+  .synthLeader { height: 1.4rem; border-top: 0; border-left: 2px dotted var(--bs-teal-soft); }
+  .synthDid { margin-left: 0.4rem; }
 }
 
 /* voice — the copy work grounded. The tester note + revision panel were two

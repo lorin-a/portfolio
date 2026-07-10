@@ -28,6 +28,8 @@
 | F10 | 2026-07-09 unleash license: "treat me as your project manager with art direction but ultimately YOU know what you can create… create what perhaps I could not imagine myself but would see and immediately know it hits the exact right spot" | 📌 standing — Claude owns remaining taste calls (incl. former §5 picks); she stays final judge on her words + facts; reversals of prior micro-blesses get noted here |
 | F11 | Saw the trail pass — "really am not loving it." THE ACCEPTANCE TEST: "even if I squint my eyes and scroll without reading, I will walk away with an impressed and satisfied feeling… I don't even know what this is about but I already know this person bleeds craft." | 🟡 first coat SHIPPED (`2f13ed8`): duotone Bleed bands (Brief fog full-bleed teal-ink; crit wall full-bleed true color), contained duotones (feeding, Care Pod room), chapter color arc blush→peri→sage→teal→dusk→slate on numerals + meta rules, artifacts scaled up. Verified with literal blur-injected squint shots + no x-overflow at 390/1440. **The other half of her test = motion (passes 3–4), next** |
 
+| F12 | Screenshot of Research synthesis + principles: "how can you claim this is an improvement? This is all text and lines, explicitly what I said was not working… I don't need flashy additions or duotone images, this feels novice, this is crowded, this is a D grade in information design" | 🟡 root cause named: containers were restyled, information wasn't redesigned. NEW STANDARD: every block takes its content's NATIVE FORM — voices as speech, decisions as product UI, flows as movement, claims as type. Synthesis + principles rebuilt first |
+
 ### Round 3 — 2026-07-05 late (the Fable visual-sophistication pass)
 
 | # | Note (her words, condensed) | Status |

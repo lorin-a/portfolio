@@ -246,22 +246,13 @@ function Research() {
         />
       </Split>
 
-      {/* synthesis — the studio-taught Fact › Insight › Implication grid, rebuilt
-          from the real midpoint feedback in her deck (the "Early Wireframes"
-          annotations) → her insight → the decision it drove. Reconstruction of
-          synthesis she actually did, in the taught grammar; copy hers to bless. */}
+      {/* synthesis — information design, not a table: each tester voice is
+          SPEECH (the chat grammar), it travels a dotted thread carrying what it
+          taught, and lands as the move we made, rendered on the app's own dark
+          surface. At a squint: voices in, product out. Copy hers to bless. */}
       <section className={`${b.synth} ${sys.up}`}>
         <p className={b.synthHead}>What we heard, what we did</p>
-        <p className={b.synthSub}>
-          The clearest signal from testing was to subtract. Feedback narrowed a broad first build into a
-          focused one.
-        </p>
-        <div className={b.synthTable}>
-          <div className={b.synthHeadRow} aria-hidden="true">
-            <span>What we heard</span>
-            <span>What we learned</span>
-            <span>What we did</span>
-          </div>
+        <div className={b.synthFlows}>
           {[
             {
               heard: 'Onboarding is nice, but too many buttons and options. Too many menus.',
@@ -284,31 +275,25 @@ function Research() {
               did: 'Voice memos and medical notes land on the one tagged timeline.',
             },
           ].map((r) => (
-            <div key={r.heard} className={b.synthRow}>
-              <div className={b.synthCell}>
-                <span className={b.synthColLabel}>What we heard</span>
-                <p className={b.synthFact}>{`“${r.heard}”`}</p>
+            <div key={r.heard} className={b.synthFlow}>
+              <p className={b.synthHeard}>{`“${r.heard}”`}</p>
+              <div className={b.synthThread}>
+                <p className={b.synthLearned}>{r.learned}</p>
+                <span className={b.synthLeader} aria-hidden="true" />
               </div>
-              <div className={b.synthCell}>
-                <span className={b.synthColLabel}>What we learned</span>
-                <p className={b.synthText}>{r.learned}</p>
-              </div>
-              <div className={b.synthCell}>
-                <span className={b.synthColLabel}>What we did</span>
-                <p className={b.synthText}>{r.did}</p>
-              </div>
+              <p className={b.synthDid}>{r.did}</p>
             </div>
           ))}
         </div>
       </section>
 
-      {/* design principles — the studio's Saffer model: pithy, specific,
-          differentiating. Two were sharpened by testing; the notes show how.
-          PROVISIONAL copy from Lorin's own words, hers to bless. */}
+      {/* design principles — four CLAIMS, set as type (the studio's Saffer
+          model: pithy, specific, differentiating). No numerals (they'd collide
+          with the chapter wayfinding), no rules, no boxes: the names carry the
+          weight, one quiet line each beneath. Copy hers to bless. */}
       <section className={`${b.values} ${sys.up}`}>
         <p className={b.valuesHead}>Design principles</p>
-        <p className={b.valuesIntro}>Four principles came out of the research. Testing sharpened two of them.</p>
-        <ol className={b.valuesList}>
+        <ul className={b.valuesList}>
           {[
             {
               name: 'Compassionate, not clinical',
@@ -321,31 +306,21 @@ function Research() {
             {
               name: 'Does not disorient',
               why: 'A parent recovering on little sleep can’t afford a maze.',
-              tag: 'what testing taught',
-              taught: 'My first two builds meant to lower cognitive load and did the opposite. The principle didn’t change; testing taught me what disorienting really meant.',
+              taught: 'My first two builds did the opposite of what they meant to; testing taught me what disorienting really meant.',
             },
             {
               name: 'Trauma-informed, not trauma-assuming',
               why: 'Careful with pain, without deciding a parent’s experience for them.',
-              tag: 'what feedback taught',
               taught: 'My first copy assumed trauma; a parent showed me the words shouldn’t choose the tone.',
             },
-          ].map((p, i) => (
+          ].map((p) => (
             <li key={p.name} className={b.principle}>
-              <span className={b.principleNum} aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
-              <div className={b.principleBody}>
-                <h3 className={b.principleName}>{p.name}</h3>
-                <p className={b.principleWhy}>{p.why}</p>
-                {p.taught && (
-                  <p className={b.principleEvolved}>
-                    <span className={b.principleEvolvedTag}>{p.tag}</span>
-                    {p.taught}
-                  </p>
-                )}
-              </div>
+              <h3 className={b.principleName}>{p.name}</h3>
+              <p className={b.principleWhy}>{p.why}</p>
+              {p.taught && <p className={b.principleEvolved}>{p.taught}</p>}
             </li>
           ))}
-        </ol>
+        </ul>
       </section>
     </FieldSection>
   )
