@@ -15,6 +15,17 @@
 | L6/L8 | Synthesis panel — build it | ✅ BUILT + verified (1440/390) — a **Fact › Insight › Implication** grid in Research ("What we heard, what we did"), 4 rows from her real midpoint feedback quotes → insight → decision. Reconstruction of real synthesis in the taught grammar; NO fabricated affinity wall. Provisional copy, hers to bless. Her deck's "Our Approach" quality→feature map remains available as a companion |
 | L9 | Find final deck on LaCie + Figma link | ✅ found — `LaCie/IXD Studio/Myana Finals/FINAL DOCUMENTATION DUE 3/` (Documentation 16pp = annotated wireframes; Presentation 22pp = client deck) |
 
+### Round 5 — 2026-07-10 (her temperature notes on the score at `/v2`)
+
+| # | Note (her words, condensed) | Status |
+|---|---|---|
+| F18 | KEEP: "Hero is good" · "The animations throughout and the work being larger is MUCH better" · "you did a great job of centralizing the flow on this one" | 📌 locked as keepers — the score survives |
+| F19 | "the first intro needs more structure and I actually miss the metadata because that is more what hiring managers want to see for what they need to know" | 🔨 this pass — structured metadata returns to the intro |
+| F20 | "It also needs structure labels" (her example word got garbled in transit — reading it as section/orientation labels, the "quiet orientation affordance" already queued for the finish layer; she corrects if wrong) | 🔨 this pass |
+| F21 | "I find myself missing more of the context, the screenshots of interviews and client pitches, I miss the annotations, I miss a little more of the process, before and after… you did lose some of the expertise and process depth I crave" | 🔨 this pass — depth restored on the deep plane |
+| F22 | THE ARCHITECTURE: "a quick scanner gets what they need to know from the top half and a curious person gets a lot more rich context, wireframe iterations, process depth in the second half, maybe even an embedded PDF presentation" | 🔨 this pass — the two-plane page; SPEC line 3 sharpened (the deep path must EXIST beneath, not be cut) |
+| F23 | License restated: "total freedom outside of copy… from what feels like a BETTER 70-80% there but still not hitting the sweet spot or perfect balance" | 📌 standing |
+
 ### Round 4 — 2026-07-09 (her verdict on build pass 1)
 
 | # | Note (her words, condensed) | Status |
