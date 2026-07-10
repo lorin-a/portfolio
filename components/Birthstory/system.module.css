@@ -146,12 +146,12 @@
 /* rhythm: between-section padding and within-section flow gap are tuned as a
    pair (~3.4:1) — the old 11vh/9rem pads put ~290px of empty paper between
    chapters while thoughts inside sat at ~50px, which read as inconsistent */
+/* clean paper — the dotted grid ground was one more thing to look at (Round 4:
+   "too much to look at… sooo many lines"); the artifacts carry the texture now */
 .field {
   padding: clamp(3.5rem, 8vh, 6.5rem) var(--bs-pad);
   scroll-margin-top: 9.75rem; /* clear the fixed nav + sticky progress bar on jump */
   background-color: var(--bs-paper);
-  background-image: radial-gradient(rgba(26, 67, 77, 0.05) 1px, transparent 1px);
-  background-size: 24px 24px;
 }
 .fieldAlt { background-color: var(--bs-paper); } /* no colored alternation — the majority is the quiet neutral; color is reserved for intentional moments */
 .sheet { max-width: 60rem; margin: 0 auto; }
@@ -321,8 +321,7 @@
    read woven into the grid, not floated on white cards. The dotted rule stays
    her hand's idiom; the record keeps solid rules. ── */
 .insight { margin: 0.7rem 0 0; max-width: 40rem; display: grid; gap: 0.8rem; }
-.insightRule { display: flex; align-items: center; gap: 0.85rem; }
-.insightRule::after { content: ''; flex: 1; border-top: 1.5px dotted #9DA3BF; }
+.insightRule { display: flex; align-items: center; }
 .insightTag {
   padding: 0.18rem 0.6rem; border-radius: 3px;
   background: var(--bs-think); color: var(--bs-teal);
@@ -343,8 +342,7 @@
 /* standalone tester callout — the crit voice, de-carded to the same labeled
    rule (solid peri hairline; the peri chip keeps the voice→color mapping) */
 .testerNote { margin: 0.7rem 0 0; max-width: 32rem; display: grid; gap: 0.8rem; }
-.testerRule { display: flex; align-items: center; gap: 0.85rem; }
-.testerRule::after { content: ''; flex: 1; border-top: 1.5px solid var(--bs-crit-line); }
+.testerRule { display: flex; align-items: center; }
 .testerKicker {
   padding: 0.18rem 0.6rem; border-radius: 3px;
   background: var(--bs-crit); color: var(--bs-teal);
@@ -397,7 +395,6 @@
   content: 'fig. ' counter(fig, decimal-leading-zero);
   font-variant-numeric: tabular-nums; color: var(--color-ink);
 }
-.figTag::after { content: ''; flex: 1; border-top: 1px solid var(--bs-hairline); }
 .figTagAlt, .figTagOnPanel { background: none; }
 .figArt {
   overflow: hidden; border-radius: 4px;

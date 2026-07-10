@@ -2,7 +2,6 @@
 
 import { FieldSection, Prose, Figure, TesterNote, sys } from './kit'
 import { birthPhoto } from '@/lib/cloudinary'
-import FeatureWall from './FeatureWall'
 import CarePodFlow from './CarePodFlow'
 import JournalFlow from './JournalFlow'
 import DocReveal from './DocReveal'
@@ -25,7 +24,8 @@ const DEEPDIVES = [
       l: { label: 'One timeline', text: 'Medical, contextual, narrative, and feelings in one place — a birth isn’t lived in separate files.', mt: '15rem' },
       r: { label: 'Calm by default', text: 'Entries stay closed until you open one, so a tired parent meets a surface, not a wall of clinical detail.', mt: '7.5rem' },
     },
-    prose: <>Parents told me they wanted to land on the main task, so that’s what the app does. Even if nothing else gets used, there’s a timeline of whatever they or a loved one managed to add, and a note from the delivery room, a prescription, and a voice memo when your hands are full all land on it together, the moment they happen.</>,
+    /* trail cut: the tail clause duplicated the One-timeline annotation */
+    prose: <>Parents told me they wanted to land on the main task, so that’s what the app does. Even if nothing else gets used, there’s a timeline of whatever they or a loved one managed to add.</>,
   },
   {
     name: 'Care Pod',
@@ -65,7 +65,8 @@ const DEEPDIVES = [
       l: { label: 'A swipe from anywhere', text: 'Reachable over any screen, so brain fog never means digging through the app for one memory.', mt: '9rem' },
       r: { label: 'Filter by feeling', text: 'A parent recalls a memory by how it felt, not when it was logged.', mt: '4rem' },
     },
-    prose: <>This is the one feature nobody asked for. As the entries pile up, I didn’t want anyone digging through the whole app to find one memory, so search is a swipe away from anywhere and filters by emotion, category, or keyword.</>,
+    /* trail cut: the "swipe away / filters by" clause duplicated the annotations + caption */
+    prose: <>This is the one feature nobody asked for. As the entries pile up, I didn’t want anyone digging through the whole app to find one memory.</>,
     cap: 'Swipe it in from the edge; filter by feeling, category, or keyword.',
   },
   {
@@ -77,7 +78,8 @@ const DEEPDIVES = [
       l: { label: 'It can leave the app', text: 'The whole record as a book or a free PDF — no one trusts something this precious to a screen that could vanish.', mt: '7rem' },
       r: { label: 'Curated together', text: 'Built from what’s already there, open to the people who were part of it.', mt: '7rem' },
     },
-    prose: <>We took the book seriously the moment a parent told me she wouldn’t trust an app with something this precious unless she knew it couldn’t disappear. So the whole record can leave the app, as a printed book or a free PDF, curated from what’s already there and open to the people who were part of it.</>,
+    /* trail cut: the second sentence duplicated the annotations + both captions */
+    prose: <>We took the book seriously the moment a parent told me she wouldn’t trust an app with something this precious unless she knew it couldn’t disappear.</>,
     shots: [
       ['/images/birthstory/bs-book-order.png', 'The Birth Story Book screen: order a printed keepsake or download a PDF.', 'Order a keepsake, or download a PDF.'],
       ['/images/birthstory/bs-book-curate.png', 'A timeline of entries with “Drag Content to Curate Your Story”, open to collaborators.', 'Curate from what’s already there, together.'],
@@ -122,21 +124,14 @@ export default function SecFeatures() {
       id="features" num="04" crumb="the interface" when="Week 5" threshold={0.04} wide
       statement={<>Birth is unpredictable, so the app is deliberately <b>simple</b>.</>}
     >
+      {/* the four-ways-in wall moved UP to the product overture after the Brief
+          (Round 4, her pick) — this chapter is now pure depth. The "opens into
+          documenting" line moved with it, verbatim. */}
       <div className={sys.headCluster}>
         <Prose>
-          It opens into documenting and reaches everything else in a tap or two. None of the screens below
-          are flat mockups: I rebuilt the wireframes as working prototypes, so what you’re seeing is the
-          real interaction.
+          None of the screens below are flat mockups: I rebuilt the wireframes as working prototypes,
+          so what you’re seeing is the real interaction.
         </Prose>
-      </div>
-
-      {/* the product landmark — the four ways in, on the app's own surface.
-          One full-bleed teal moment so a skimming reader finds the UI instantly;
-          the deep-dives below return to paper. */}
-      <div className={styles.productBand}>
-        <div className={styles.productBandInner}>
-          <FeatureWall tone="dark" />
-        </div>
       </div>
 
       <div className={styles.prioritize}>

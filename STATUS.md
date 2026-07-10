@@ -20,11 +20,12 @@
 | # | Note (her words, condensed) | Status |
 |---|---|---|
 | F4 | GOOD — keep: type hierarchy · adaptive scroll (sticky) · new text callouts · animations · alternating layout for demos | 📌 locked as keepers |
-| F5 | Too much to look at → confusion + overwhelm; "looks like user did not know how to make information easy to understand and just put everything on the screen" | 🟡 open — trail pass |
-| F6 | Not sure the flow is in the right order — "maybe I want to see the product in more depth first and then the process? Not sure." | 🟡 open — her pick (options presented) |
-| F7 | Lots of text, lots to read — "a skimmer will not absorb what is important" | 🟡 open — skim contract + concision sweep |
-| F8 | Not enough balance / clean display of contextual info — "a lot of text and sooo many lines" | 🟡 open — line-noise cut |
-| F9 | Page hasn't found its identity: "trying to be editorial but lacking the decisive, intelligent unfolding of a narrative. It reads like a newspaper not an engaging article. User is guided through a jungle rather than told what to take away from a well guided trail hike with one clear path." | 🟡 open — the Round 4 organizing idea |
+| F5 | Too much to look at → confusion + overwhelm; "looks like user did not know how to make information easy to understand and just put everything on the screen" | ✅ trail pass built — per-chapter cuts (2 context photos + review photo + duplicate prose gone), demotions, one-idea pacing |
+| F6 | Not sure the flow is in the right order — "maybe I want to see the product in more depth first and then the process? Not sure." | ✅ her pick: **product overture** — the four-ways wall + her relocated "opens into documenting" line now one viewport after the Brief; ch4 = pure depth. Her cut criterion logged: **show product-designer/researcher chops — cut only what doesn't evidence them** |
+| F7 | Lots of text, lots to read — "a skimmer will not absorb what is important" | ✅ concision sweep (cut-not-paraphrase): Brief connection −2 sentences · Research inline quote → chat carries it · 3 feature ledes de-duplicated vs annotations |
+| F8 | Not enough balance / clean display of contextual info — "a lot of text and sooo many lines" | ✅ line-noise cut: dotted ground GONE (clean paper) · specimen/voice/aside trailing rules gone · principle inner hairlines gone · one rule grammar |
+| F9 | Page hasn't found its identity: "trying to be editorial but lacking the decisive, intelligent unfolding of a narrative. It reads like a newspaper not an engaging article. User is guided through a jungle rather than told what to take away from a well guided trail hike with one clear path." | 🟡 partially answered by the trail (proposal §6); the rest lands in passes 2–4 (color arc = chapter identity, motion = the unfolding) |
+| F10 | 2026-07-09 unleash license: "treat me as your project manager with art direction but ultimately YOU know what you can create… create what perhaps I could not imagine myself but would see and immediately know it hits the exact right spot" | 📌 standing — Claude owns remaining taste calls (incl. former §5 picks); she stays final judge on her words + facts; reversals of prior micro-blesses get noted here |
 
 ### Round 3 — 2026-07-05 late (the Fable visual-sophistication pass)
 

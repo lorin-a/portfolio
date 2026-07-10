@@ -2,6 +2,7 @@
 
 import { FieldSection, Prose, SubBlock, Split, Figure, TesterNote, Insight, sys } from './kit'
 import { birthPhoto, cloudImg } from '@/lib/cloudinary'
+import FeatureWall from './FeatureWall'
 import SecArchitecture from './SecArchitecture'
 import SecIteration from './SecIteration'
 import SecFeatures from './SecFeatures'
@@ -12,7 +13,7 @@ import b from './BirthStoryBody.module.css'
 /* six chapters; three of them fold a second beat under a subhead (see the `ids`
    they cover), so the spine stays calm without dropping any part of the story */
 const SPINE = [
-  { id: 'brief', label: 'Brief', ids: ['brief'] },
+  { id: 'brief', label: 'Brief', ids: ['brief', 'overture'] },
   { id: 'research', label: 'Research', ids: ['research'] },
   { id: 'architecture', label: 'Architecture', ids: ['architecture', 'iteration'] },
   { id: 'features', label: 'Interface', ids: ['features'] },
@@ -40,6 +41,24 @@ function Overview() {
             <div key={k} className={b.metaItem}><dt>{k}</dt><dd>{v}</dd></div>
           ))}
         </dl>
+      </div>
+    </section>
+  )
+}
+
+/* the product overture — her Round 4 pick: one viewport after the Brief showing
+   WHAT we made (the four-ways-in wall on the app's own surface), so a skimmer
+   holds the product while walking the process. The orienting line is her
+   sentence, relocated verbatim from the Interface chapter (not duplicated). */
+function Overture() {
+  return (
+    <section id="overture" className={b.overture} aria-label="The product at a glance">
+      <div className={b.overtureInner}>
+        <header className={b.overtureHead}>
+          <p className={b.overtureKicker}>The product · in 30 seconds</p>
+          <p className={b.overtureLine}>It opens into documenting and reaches everything else in a tap or two.</p>
+        </header>
+        <FeatureWall tone="dark" />
       </div>
     </section>
   )
@@ -128,64 +147,37 @@ function Brief() {
         </div>
       </div>
 
-      <Split
-        text={
-          <SubBlock label="My connection">
-            <Prose>
-              Supporting mothers is personal for me. I come from a matriarchal family that has a history
-              of complicated births. While interviewing my family members, I understood for the first
-              time how traumatic their experiences were. When I worked as a night nanny for an infant
-              whose mother was in breast cancer treatment, I experienced sleep deprivation and
-              sleep-training struggles firsthand, which deepened my understanding. This opportunity to
-              support parents was deeply meaningful.
-            </Prose>
-          </SubBlock>
-        }
-      >
-        <Figure
-          photo
-          tag="the review"
-          ratio="3 / 2"
-          focus="center 54%"
-          src={cloudImg('IMG_3010', 1600)}
-          alt="A studio review on a projector screen: our client, Sarah Burns, joins by video on the left while the room of students faces the work on the right."
-          cap="Reviewing the work with our client, Sarah Burns (MSW), over video."
-        />
-      </Split>
+      {/* Round 4 trail cuts: the night-nanny elaboration and closing line
+          demoted out (her standing cut-not-paraphrase permission); the review
+          photo cut — the Outcome chapter carries the stronger final-review
+          shot with the client quote */}
+      <SubBlock label="My connection">
+        <Prose>
+          Supporting mothers is personal for me. I come from a matriarchal family that has a history
+          of complicated births. While interviewing my family members, I understood for the first
+          time how traumatic their experiences were.
+        </Prose>
+      </SubBlock>
     </FieldSection>
   )
 }
 
 function Research() {
   const feeding = birthPhoto('feeding', 1400) // Craig Adderley — mother + newborn skin to skin, hospital (natively B&W)
-  const tired = birthPhoto('gap', 1400, { grayscale: true }) // William Fortunato — exhausted parent beside her sleeping newborn, rendered B&W
   return (
     <FieldSection
       id="research" num="02" crumb="research" when="Week 2" alt wide
       statement={<>This was a design sprint on a concept already built on extensive research, so our work focused on <b>concept iteration</b>.</>}
       statementLong
     >
-      <Split
-        text={
-          <>
-            <Prose>
-              Before we built anything, I researched blogs and existing products and ran information
-              interviews with family to get familiar with the subject: my three sisters, my mom, and my
-              friend with a toddler. An app would be nice because “First couple of weeks you are up and on
-              your phone every 2 hours while breastfeeding.”
-            </Prose>
-          </>
-        }
-      >
-        <Figure
-          tag="context"
-          photo
-          src={tired.src}
-          byline={tired.byline}
-          alt="A tired parent rests her head on her hand, gazing at her sleeping newborn beside her, in black and white."
-          cap="The exhausted early weeks the app had to fit into."
-        />
-      </Split>
+      {/* Round 4 trail cuts: the second context photo and the inline quote cut —
+          the group-chat artifact below is this chapter's hero evidence and
+          carries the family voices itself */}
+      <Prose>
+        Before we built anything, I researched blogs and existing products and ran information
+        interviews with family to get familiar with the subject: my three sisters, my mom, and my
+        friend with a toddler.
+      </Prose>
 
       {/* the group call, as the group text it basically was — the casual,
           personal research made legible. Incoming = their asks (summarized);
@@ -506,6 +498,7 @@ export default function BirthStoryBody() {
       <Overview />
       <BirthStorySpine sections={SPINE} />
       <Brief />
+      <Overture />
       <Research />
       <SecArchitecture />
       <SecIteration />

@@ -1,8 +1,7 @@
 'use client'
 
-import { FieldSection, Prose, Insight, Figure, Split, sys } from './kit'
+import { FieldSection, Prose, Insight, Figure, sys } from './kit'
 import { IaV1, IaFinal } from './IaDiagrams'
-import { birthPhoto } from '@/lib/cloudinary'
 import a from './SecArchitecture.module.css'
 
 /* 03 — Information architecture. The structural decision documented: no triage
@@ -10,38 +9,27 @@ import a from './SecArchitecture.module.css'
    types into one timeline. Real IA diagrams as the before / after. */
 
 export default function SecArchitecture() {
-  const disorient = birthPhoto('disorient', 1300)
   return (
     <FieldSection
       id="architecture" num="03" crumb="information architecture" when="Week 3" wide
       statement={<>New parents recovering from birth have limited capacity, which made the introduction, onboarding, and user flow <b>make-or-break</b>: they decide how a parent spends their few precious free moments.</>}
       statementLong
     >
-      <Split
-        text={
-          <>
-            <Prose>
-              Our first attempt met the user in the moment. The opening menu asked what phase they were
-              in, before, during, or after the birth, at home or in the hospital, to determine the need,
-              and with it the best feature for that moment.
-            </Prose>
-            <Insight>
-              Looking back, it did the opposite of what we intended. Meant to lower cognitive load, it
-              gate-kept features instead of offering freedom and autonomy, and it made the app layered and
-              disorienting: a form at the front desk while you’re still catching your breath.
-            </Insight>
-          </>
-        }
-      >
-        <Figure
-          tag="context"
-          photo
-          src={disorient.src}
-          byline={disorient.byline}
-          alt="A hand holds a newborn’s foot in a hospital room in the first hours after birth."
-          cap="The first hours after birth, the moment the home screen has to meet."
-        />
-      </Split>
+      {/* Round 4 trail cut: the context photo goes — this chapter's hero
+          evidence is the 4→0 confrontation frame; the setup runs straight
+          into it */}
+      <div className={sys.headCluster}>
+        <Prose>
+          Our first attempt met the user in the moment. The opening menu asked what phase they were
+          in, before, during, or after the birth, at home or in the hospital, to determine the need,
+          and with it the best feature for that moment.
+        </Prose>
+        <Insight>
+          Looking back, it did the opposite of what we intended. Meant to lower cognitive load, it
+          gate-kept features instead of offering freedom and autonomy, and it made the app layered and
+          disorienting: a form at the front desk while you’re still catching your breath.
+        </Insight>
+      </div>
 
       <div className={a.confront}>
         <Figure

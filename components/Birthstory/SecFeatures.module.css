@@ -2,15 +2,8 @@
    and a short note on the left, the real screen shown large on the right, moving
    where the feature is a flow. The screens carry the design; the copy annotates. */
 
-/* the product band — full-bleed teal behind the four-screen wall. The one
-   colored ground on the page, and it's content: the app's own surface. Escapes
-   the sheet with the 50%/50vw trick; the inner keeps the sheet's grid. */
-.productBand {
-  width: 100vw; margin-left: 50%; transform: translateX(-50%);
-  background: linear-gradient(168deg, #1F4750 0%, #1A434D 55%, #16323A 100%);
-  padding: clamp(2.8rem, 6vw, 4.5rem) var(--bs-pad);
-}
-.productBandInner { max-width: 92rem; margin: 0 auto; }
+/* the product band moved up to the overture after the Brief (Round 4) — its
+   styles live in BirthStoryBody.module.css as .overture */
 
 /* prioritization — the kept / added / cut decision, set off above the deep-dives.
    The stat row is the skimmable distillation (same figures the prose reasons
