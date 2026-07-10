@@ -1,0 +1,177 @@
+/* ============================================================================
+   Moment study 01 — "Built from their words."
+   One fully-behaving viewport: the research chat plays in real cadence, and
+   each ask physically becomes product. Motion vocabulary = the app's own
+   principles: calm-by-default (slow soft arrivals), does-not-disorient
+   (nothing jumps or reverses), one playful accent (the Care Pod heart).
+   ============================================================================ */
+
+.stage {
+  --teal: #1A434D;
+  --teal-deep: #16323A;
+  --teal-soft: #466F7B;
+  --peri: #B1C1F4;
+  --blush: #DBADAD;
+  --mist: #eef1f0;
+  position: relative;
+  min-height: calc(100vh - 6rem);
+  display: grid; align-content: center;
+  background: #FAFAFA;
+  padding: clamp(3rem, 8vh, 5rem) clamp(1.5rem, 5vw, 6rem);
+  overflow: hidden;
+}
+.kicker {
+  position: absolute; top: clamp(1.2rem, 3vh, 2rem); left: clamp(1.5rem, 5vw, 6rem);
+  margin: 0; font-family: var(--font-body); font-weight: 700; font-size: 0.7rem;
+  letter-spacing: 0.18em; text-transform: uppercase; color: var(--teal-soft);
+}
+
+.grid {
+  position: relative;
+  max-width: 72rem; margin: 0 auto; width: 100%;
+  display: grid; grid-template-columns: minmax(0, 1fr) auto;
+  gap: clamp(3rem, 8vw, 7rem); align-items: center;
+}
+
+/* ── the conversation ── */
+.chat { display: grid; gap: 0.8rem; align-content: center; max-width: 30rem; }
+.chatHead {
+  margin: 0 0 0.4rem; font-family: var(--font-body); font-weight: 700; font-size: 0.7rem;
+  letter-spacing: 0.12em; text-transform: uppercase; color: var(--teal-soft);
+}
+.msg {
+  margin: 0; justify-self: start; max-width: 94%;
+  padding: 0.85rem 1.15rem; background: var(--mist); border-radius: 18px 18px 18px 5px;
+  font-family: var(--font-body); font-size: clamp(0.95rem, 0.9rem + 0.25vw, 1.06rem);
+  line-height: 1.5; color: var(--color-ink);
+  box-shadow: 0 6px 18px -12px rgba(26, 67, 77, 0.35);
+}
+.msgQuote {
+  background: var(--teal); color: #FBF9F6; border-radius: 18px 18px 5px 18px;
+  justify-self: end; max-width: 100%;
+  font-family: var(--font-heading); font-variation-settings: 'SOFT' 60, 'WONK' 0;
+  font-style: italic; font-weight: 400; font-size: clamp(1rem, 0.94rem + 0.3vw, 1.14rem);
+  line-height: 1.42;
+}
+.typing {
+  justify-self: start; display: inline-flex; gap: 5px; align-items: center;
+  padding: 0.7rem 0.95rem; background: var(--mist); border-radius: 18px 18px 18px 5px;
+}
+.typing i {
+  width: 6px; height: 6px; border-radius: 50%; background: var(--teal-soft); opacity: 0.4;
+  animation: tick 900ms infinite var(--ease-in-out);
+}
+.typing i:nth-child(2) { animation-delay: 150ms; }
+.typing i:nth-child(3) { animation-delay: 300ms; }
+@keyframes tick { 0%, 60%, 100% { opacity: 0.35; transform: none; } 30% { opacity: 0.95; transform: translateY(-2px); } }
+
+/* ── the phone, assembling ── */
+.device {
+  position: relative; width: clamp(280px, 26vw, 340px);
+  padding: 7px; border-radius: 26px; background: #1d1d1f;
+  box-shadow: 0 40px 80px -40px rgba(22, 50, 58, 0.65);
+}
+.notch { position: absolute; top: 13px; left: 50%; width: 26%; height: 10px; transform: translateX(-50%); border-radius: 999px; background: #1d1d1f; z-index: 3; }
+.screen {
+  position: relative; overflow: hidden; border-radius: 20px; aspect-ratio: 430 / 880;
+  background: linear-gradient(172deg, #1E4650 0%, var(--teal) 52%, var(--teal-deep) 100%);
+  display: grid; grid-template-rows: auto auto 1fr auto;
+  padding: 2rem 0.9rem 0.8rem;
+}
+/* the identity veil that warms in at the end */
+.veil {
+  position: absolute; inset: 0; opacity: 0; pointer-events: none;
+  background:
+    radial-gradient(90% 60% at 12% 0%, rgba(219, 173, 173, 0.32) 0%, transparent 55%),
+    radial-gradient(90% 70% at 90% 8%, rgba(177, 193, 244, 0.26) 0%, transparent 55%);
+}
+.appHead {
+  display: flex; justify-content: center; gap: 1.1rem; padding: 0.5rem 0 0.7rem;
+  font-family: var(--font-body); font-size: 0.72rem; font-weight: 600; color: rgba(255, 255, 255, 0.85);
+}
+.appHead u { text-underline-offset: 4px; text-decoration-thickness: 1.5px; }
+.appHead span { opacity: 0.55; }
+.newEntry {
+  margin: 0 0.2rem 0.7rem; padding: 0.5rem 0.8rem; border-radius: 10px;
+  background: rgba(255, 255, 255, 0.16); color: rgba(255, 255, 255, 0.9);
+  font-family: var(--font-body); font-size: 0.72rem; font-weight: 600;
+  display: flex; align-items: center; gap: 0.5rem;
+}
+.newEntry i { width: 14px; height: 14px; border-radius: 50%; border: 1.5px solid rgba(255,255,255,0.8); display: inline-grid; place-content: center; font-style: normal; font-size: 0.7rem; line-height: 1; }
+.rail { position: relative; display: grid; gap: 0.55rem; align-content: start; padding-left: 1.1rem; }
+.rail::before { content: ''; position: absolute; left: 0.35rem; top: 0.2rem; bottom: 0.4rem; width: 1.5px; background: rgba(255, 255, 255, 0.22); }
+.entry {
+  position: relative; padding: 0.55rem 0.7rem; border-radius: 9px;
+  background: rgba(255, 255, 255, 0.13);
+  color: rgba(255, 255, 255, 0.92);
+}
+.entryTitle { margin: 0; font-family: var(--font-body); font-weight: 600; font-size: 0.72rem; }
+.entryMeta { margin: 0.15rem 0 0; font-family: var(--font-body); font-size: 0.6rem; color: rgba(255, 255, 255, 0.55); }
+.entryNode { position: absolute; left: -0.87rem; top: 0.75rem; width: 9px; height: 9px; border-radius: 50%; background: #FBF9F6; box-shadow: 0 0 0 3px rgba(251, 249, 246, 0.15); }
+.dots { position: absolute; right: 0.6rem; top: 0.6rem; display: flex; gap: 4px; }
+.dots i {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--peri);
+}
+.dots i:nth-child(2) { background: var(--blush); }
+.dots i:nth-child(3) { background: #E6E5FD; }
+.photoRow { display: flex; gap: 4px; margin-top: 0.4rem; }
+.photoRow i { width: 22px; height: 22px; border-radius: 4px; background: rgba(255, 255, 255, 0.28); }
+.navBar {
+  margin-top: 0.7rem;
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 0.55rem 0.9rem; border-radius: 999px; background: #FBF9F6;
+}
+.navIcon { width: 21px; height: 21px; display: grid; place-content: center; color: var(--teal); }
+.navIcon svg { width: 19px; height: 19px; display: block; }
+.navPlus {
+  width: 30px; height: 30px; border-radius: 50%; display: grid; place-content: center;
+  background: linear-gradient(135deg, var(--blush) 0%, var(--peri) 60%, #8089C2 100%);
+  color: #fff;
+}
+.navPlus svg { width: 15px; height: 15px; }
+
+/* ── the flying sparks ── */
+.spark {
+  position: absolute; z-index: 5; left: 0; top: 0; opacity: 0; pointer-events: none;
+  padding: 0.35rem 0.65rem; border-radius: 8px;
+  background: #FBF9F6; color: var(--teal);
+  font-family: var(--font-body); font-weight: 600; font-size: 0.66rem; letter-spacing: 0.02em;
+  box-shadow: 0 10px 26px -14px rgba(26, 67, 77, 0.55), 0 0 0 1px rgba(26, 67, 77, 0.1);
+  white-space: nowrap;
+}
+
+/* ── the closing line ── */
+.caption {
+  margin: clamp(2rem, 5vh, 3rem) auto 0; text-align: center; max-width: 92rem;
+  font-family: var(--font-heading); font-variation-settings: 'SOFT' 60, 'WONK' 0;
+  font-style: italic; font-weight: 380;
+  font-size: clamp(1.3rem, 1.1rem + 1vw, 2rem); color: var(--color-ink);
+  opacity: 0;
+}
+
+/* ── replay (44px target) ── */
+.replay {
+  position: absolute; left: clamp(1.5rem, 5vw, 6rem); bottom: clamp(1rem, 3vh, 1.8rem);
+  display: inline-flex; align-items: center; gap: 0.5rem; min-height: 44px; padding: 0 0.6rem;
+  background: none; border: 0; cursor: pointer;
+  font-family: var(--font-body); font-weight: 600; font-size: 0.8rem; letter-spacing: 0.06em;
+  color: var(--teal-soft);
+  border-radius: 8px;
+}
+@media (hover: hover) { .replay:hover { color: var(--teal); } }
+.replay:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
+
+/* elements the timeline reveals start hidden (JS sets them; this is the
+   no-JS / reduced-motion safety: everything visible) */
+@media (prefers-reduced-motion: reduce) {
+  .typing { display: none; }
+  .spark { display: none; }
+  .caption { opacity: 1; }
+}
+
+@media (max-width: 820px) {
+  .grid { grid-template-columns: 1fr; justify-items: center; gap: 2.2rem; }
+  .chat { max-width: 100%; }
+  .device { width: min(72vw, 300px); }
+}

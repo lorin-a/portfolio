@@ -1,5 +1,45 @@
 # Birth Story — the unifying visual system (Fable pass proposal, 2026-07-05)
 
+---
+
+## §0 · THE SPEC (governing, 2026-07-09 — supersedes everything below as the working contract)
+
+Distilled from every verdict Lorin has given (F2–F15) plus her portfolio-advice doc. **Nothing is
+shown to her that hasn't been checked against every line.** Every future "no" deposits one new
+line here before the next attempt.
+
+**The thesis (center of gravity):** care as the strategic instrument; a human at the center of
+every piece; the rigor serves them. Same craft grammar as the engineer-canon, different gravity.
+The case study holds itself to the app's own four principles — and every treatment must answer
+*which principle am I serving* or be cut.
+
+**The target:** one hiring manager, 90 seconds, leaning in and wanting to meet her. Felt, not
+proven. Restraint reads senior.
+
+1. **One thing per screen.** Each beat commits ~95% to a single mode (research / craft / product /
+   story). Range accumulates across the sequence; it is never declared within a screen. (F5, F13,
+   advice)
+2. **Three arias, everything else still.** One peak per section maximum, and only ~3 on the whole
+   page earn motion/interaction/full-bleed. Stillness elsewhere is the design. (advice; cures F11)
+3. **Fast path / deep path on separate planes.** Headlines + one hero visual per beat must carry
+   the whole argument in 90 seconds alone; evidence sits beneath, visually subordinate, available.
+   (F7, advice)
+4. **The story from images alone; words are optional depth.** (F14, her words)
+5. **No text-and-lines fields.** Content takes its native form: voices as speech, decisions as
+   product surface, flows as movement, claims as type. (F8, F12)
+6. **Every register switch has a visible reason.** The cut from rigorous to cinematic should read
+   as judgment, in sequence position and treatment. (advice: HMs score decision rationale)
+7. **Human, not engineer.** A person in the frame — voices, photographs, stakes — before any
+   system. Motion vocabulary derives from the app's principles: calm-by-default = slow soft
+   arrivals; does-not-disorient = nothing jumps or reverses. (F15, advice)
+8. **Never at the detriment of the story.** Every treatment must make the storyline easier to
+   follow. (F2 — standing since Round 3)
+9. **Judged live, in the browser, by feel.** Never from stills; motion is half the artifact.
+   Her verdicts come as temperature ("colder / warmer / reads engineer / THIS") — each one gets
+   named and appended here. (F15 method)
+10. **Voice guardrails.** Her words verbatim or cut, never paraphrased; no em dashes introduced;
+    no "not X, it's Y" constructions; curly quotes. (standing)
+
 Status: **PROPOSED — awaiting Lorin's bless before any component is touched.**
 Brief (her words, condensed): a strong Fable visual-sophistication pass on the whole page — flow, visual
 treatment, site styles, typographic hierarchy, interactions — 60% → 110%. She loves scrollytelling, sticky
