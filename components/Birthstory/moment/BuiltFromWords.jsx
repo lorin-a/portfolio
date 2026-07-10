@@ -43,7 +43,7 @@ const PATHS = {
   search: 'M10.5 17a6.5 6.5 0 1 0 0-13 6.5 6.5 0 0 0 0 13ZM21 21l-5.8-5.8',
 }
 
-export default function BuiltFromWords() {
+export default function BuiltFromWords({ embedded = false }) {
   const stageRef = useRef(null)
   const tlRef = useRef(null)
 
@@ -154,8 +154,8 @@ export default function BuiltFromWords() {
   }
 
   return (
-    <div ref={stageRef} className={s.stage}>
-      <p className={s.kicker}>Moment study 01 · the group call becomes the app</p>
+    <div ref={stageRef} className={`${s.stage} ${embedded ? s.embedded : ''}`}>
+      {!embedded && <p className={s.kicker}>Moment study 01 · the group call becomes the app</p>}
 
       <div className={s.grid}>
         {/* the conversation */}

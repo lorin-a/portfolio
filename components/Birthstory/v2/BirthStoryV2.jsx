@@ -7,7 +7,8 @@ import CarePodFlow from '../CarePodFlow'
 import JournalFlow from '../JournalFlow'
 import DocReveal from '../DocReveal'
 import SearchReveal from '../SearchReveal'
-import { IaV1, IaFinal } from '../IaDiagrams'
+import BuiltFromWords from '../moment/BuiltFromWords'
+import FourToZero from '../moment/FourToZero'
 import { sys } from '../kit'
 import s from './v2.module.css'
 
@@ -105,69 +106,12 @@ export default function BirthStoryV2() {
       {/* ── F3 · THE VOICE ── */}
       <VoiceFrame />
 
-      {/* ── F4 · THE RESEARCH ── */}
+      {/* ── F4 · ARIA 2 — the group call becomes the app. Absorbs the research
+          chat and the synthesis sections: the argument plays instead of being
+          tabled. The ending line ("Built from their words.") is the beat's
+          fast-path sentence; the imagery carries the story for skimmers. ── */}
       <Frame id="research">
-        <h2 className={`${s.claim} ${s.claimLong} ${s.voice} ${s.up}`} style={{ '--d': '80ms' }}>
-          Capacity rises over time, so the app had to meet <b>three different moments</b>, not one.
-        </h2>
-        <div className={s.researchGrid}>
-          <figure className={`${s.chat} ${s.up}`} style={{ '--d': '220ms' }}>
-            <figcaption className={s.chatHead}>The group call · my three sisters, my mom, a friend with a toddler</figcaption>
-            <p className={s.chatIn}>Less medical documentation. More photos, and an outline of what actually happened.</p>
-            <p className={s.chatIn}>Recognition for doing something this amazing and this hard.</p>
-            <p className={s.chatIn}>A space that doesn’t assume a “normal” birth: other people’s stories, resources.</p>
-            <p className={s.chatNote}>their asks, summarized</p>
-          </figure>
-          <div className={s.moments}>
-            {[
-              ['Early, in the fog', 'Select-one answers, a few taps at a time.'],
-              ['Later, once it lifts', 'Free-form journaling, at their own pace.'],
-              ['In the end', 'A keepsake book of the whole story.'],
-            ].map(([when, what], i) => (
-              <div key={when} className={`${s.moment} ${s.up}`} style={{ '--d': `${300 + i * 120}ms` }}>
-                <p className={s.momentWhen}>{when}</p>
-                <p className={s.momentWhat}>{what}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </Frame>
-
-      {/* ── F5 · HEARD → DID ── */}
-      <Frame id="synthesis" tone="white" kicker="What we heard, what we did">
-        <div className={s.flows}>
-          {[
-            {
-              heard: 'Onboarding is nice, but too many buttons and options. Too many menus.',
-              learned: 'Cognitive load was the enemy, not missing features.',
-              did: 'Open straight into notes on a timeline; everything else a tap away.',
-            },
-            {
-              heard: 'Why “reclaim”? Compassionate copy may be signaling a negative experience.',
-              learned: 'The words shouldn’t decide the experience for anyone.',
-              did: 'Care-centered copy; “Find strength & support” became the Care Pod.',
-            },
-            {
-              heard: 'Timeline is a must; journaling is unique to everyone.',
-              learned: 'Some needs are core, others are personal.',
-              did: 'The timeline is the home; journaling is there when you want it.',
-            },
-            {
-              heard: 'Big yes to voice recording; medical reflection is valuable but may not need its own category.',
-              learned: 'Capture has to fit full hands, and one place beats many.',
-              did: 'Voice memos and medical notes land on the one tagged timeline.',
-            },
-          ].map((r, i) => (
-            <div key={r.heard} className={`${s.flow} ${s.up}`} style={{ '--d': `${i * 120}ms` }}>
-              <p className={s.heard}>{`“${r.heard}”`}</p>
-              <div className={s.thread}>
-                <p className={s.learned}>{r.learned}</p>
-                <span className={s.leader} aria-hidden="true" />
-              </div>
-              <p className={s.did}>{r.did}</p>
-            </div>
-          ))}
-        </div>
+        <BuiltFromWords embedded />
       </Frame>
 
       {/* ── F6 · PRINCIPLES ── */}
@@ -208,21 +152,9 @@ export default function BirthStoryV2() {
           The user flow was <b>make-or-break</b>: it decides how a parent spends their few precious
           free moments.
         </h2>
+        {/* ARIA 3 — the collapse plays; the shipped IA lands beneath it */}
         <div className={s.turnStage}>
-          <figure className={`${s.diagram} ${s.up}`} style={{ '--d': '160ms' }}>
-            <IaV1 />
-            <figcaption className={s.diagramCap}>The first version: a branching questionnaire that asked conditional questions before any entry.</figcaption>
-          </figure>
-          <div className={`${s.turnStat} ${s.up}`} style={{ '--d': '260ms' }}>
-            <span className={s.turnStem} aria-hidden="true" />
-            <span className={s.turnFig}>4 → 0</span>
-            <p className={s.turnLabel}>questions before the first entry</p>
-            <span className={s.turnStem} aria-hidden="true" />
-          </div>
-          <figure className={`${s.diagram} ${s.up}`} style={{ '--d': '360ms' }}>
-            <IaFinal />
-            <figcaption className={s.diagramCap}>What shipped: five tabs, a single add button at center, nothing to answer before beginning.</figcaption>
-          </figure>
+          <FourToZero />
         </div>
         <p className={`${s.shift} ${s.up}`} style={{ '--d': '440ms' }}>
           Think-aloud testing drove the most significant shift in our approach: from a sequenced
