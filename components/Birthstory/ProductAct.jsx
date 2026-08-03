@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useSeen, sys } from './kit'
 import { FEATURES } from './productFeatures'
 import CarePodFlow from './CarePodFlow'
@@ -130,8 +130,6 @@ function ariaBeats(f) {
 }
 
 function Aria({ f, i, total }) {
-  const trackRef = useRef(null)
-  const [active, setActive] = useState(0)
   const [pinned, setPinned] = useState(true)
   const beats = ariaBeats(f)
 
@@ -144,30 +142,6 @@ function Aria({ f, i, total }) {
     return () => mq.removeEventListener('change', apply)
   }, [])
 
-  useEffect(() => {
-    if (!pinned) return
-    const el = trackRef.current
-    if (!el) return
-    let frame = 0
-    const measure = () => {
-      frame = 0
-      const r = el.getBoundingClientRect()
-      const travel = r.height - window.innerHeight
-      if (travel <= 0) return
-      const progress = Math.min(Math.max(-r.top / travel, 0), 0.9999)
-      setActive(Math.floor(progress * beats.length))
-    }
-    const onScroll = () => { if (!frame) frame = requestAnimationFrame(measure) }
-    measure()
-    window.addEventListener('scroll', onScroll, { passive: true })
-    window.addEventListener('resize', onScroll)
-    return () => {
-      window.removeEventListener('scroll', onScroll)
-      window.removeEventListener('resize', onScroll)
-      if (frame) cancelAnimationFrame(frame)
-    }
-  }, [pinned, beats.length])
-
   return (
     <section
       id={`product-${i + 1}`}
@@ -175,9 +149,8 @@ function Aria({ f, i, total }) {
       aria-label={f.name}
     >
       <div
-        ref={trackRef}
         className={p.ariaTrack}
-        style={pinned ? { height: `${beats.length * 100 + 30}vh` } : undefined}
+        style={pinned ? { height: '170vh' } : undefined}
       >
         <div className={p.ariaSticky}>
           <div className={p.ariaFrame}>
@@ -189,22 +162,17 @@ function Aria({ f, i, total }) {
               </p>
               <h3 className={p.ariaName}>{f.name}</h3>
 
-              {/* THE OUTLINE FILLS IN.
+              {/* THE ARGUMENT SITS STILL.
 
-                  Reserving invisible space traded a jump for a void — it read as
-                  broken, and blank space cannot signal that more is coming. So
-                  all three labels are present from the first frame: the reader
-                  sees the shape of the argument immediately, and only the BODY
-                  of each beat expands as they reach it. The upcoming labels are
-                  the clue, which is the job the dots were failing to do, so the
-                  dots are gone. Nothing already read is ever removed or moved. */}
-              {beats.map((b, n) => (
-                <div
-                  key={b.key}
-                  className={`${p.ariaBeat} ${
-                    !pinned || n === active ? p.beatOn : n < active ? p.beatIn : p.beatNext
-                  }`}
-                >
+                  It used to fill in beat by beat on scroll. Her call: the demo
+                  and the words were both moving, and two things in motion at
+                  once is one too many to read — the motion belongs to the
+                  product, not to the type. So all three beats are composed and
+                  final from the first frame; the pin now exists only to hold
+                  the frame steady while the prototype plays through its states.
+                  Nothing here animates. */}
+              {beats.map((b) => (
+                <div key={b.key} className={p.ariaBeat}>
                   <p className={p.ariaKicker}>{b.kicker}</p>
                   <div className={p.ariaBody}><div>{b.body}</div></div>
                 </div>
@@ -214,15 +182,16 @@ function Aria({ f, i, total }) {
 
             {/* the callouts belong here and only here: the device is big and
                 alone, so a leader can actually point at the region it names.
-                They arrive on the last beat, once the feature has been built. */}
+                They are present from the start — they are type, and the type
+                no longer arrives. */}
             <div className={p.ariaStage}>
-              <div className={`${p.ariaAnnot} ${p.annotL} ${!pinned || active === beats.length - 1 ? p.annotOn : ''}`}>
+              <div className={`${p.ariaAnnot} ${p.annotL}`}>
                 <p className={p.noteLabel}>{f.annots.l.label}</p>
                 <p className={p.noteText}>{f.annots.l.text}</p>
                 <span className={p.leader} aria-hidden="true" />
               </div>
               <div className={p.ariaArt}><Media f={f} /></div>
-              <div className={`${p.ariaAnnot} ${p.annotR} ${!pinned || active === beats.length - 1 ? p.annotOn : ''}`}>
+              <div className={`${p.ariaAnnot} ${p.annotR}`}>
                 <p className={p.noteLabel}>{f.annots.r.label}</p>
                 <p className={p.noteText}>{f.annots.r.text}</p>
                 <span className={p.leader} aria-hidden="true" />

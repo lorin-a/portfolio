@@ -7,10 +7,15 @@
    uses it: every feature here, and every process beat below.
 
    THE ARIA — reserved, used once. A pinned moment whose beats are genuinely
-   different kinds of content (the ask · the research · the feature), which is
-   the only thing that earns taking the scroll. Callouts with leaders live here
-   and nowhere else, because here the artifact is big and alone enough to have
-   regions worth pointing at.
+   different kinds of content (the ask · the research · the feature). Callouts
+   with leaders live here and nowhere else, because here the artifact is big and
+   alone enough to have regions worth pointing at.
+
+   The aria's TYPE DOES NOT MOVE. Its beats used to fill in one at a time on
+   scroll; her call was that the demo and the words were both animating and that
+   is one moving thing too many, so the motion belongs to the product. The pin
+   now has exactly one job: hold the frame steady, and give the prototype room
+   to play its states without the page sliding out from under it.
 
    Reduced motion and anything under 1000px unpin the aria and unstick the rows;
    everything resolves to a plain, fully visible stack. */
@@ -156,44 +161,23 @@
   font-size: clamp(2rem, 1.5rem + 1.8vw, 3rem); line-height: 1.05;
   letter-spacing: -0.018em; color: var(--color-ink); text-wrap: balance;
 }
-/* THE OUTLINE FILLS IN.
+/* THE ARGUMENT SITS STILL.
 
-   Reserving invisible space traded a jump for a void: it read as broken, and
-   blank space cannot signal that more is coming. So every LABEL is present from
-   the first frame — the reader sees the shape of the argument at once — and only
-   the BODY of each beat expands as they reach it. The upcoming labels are the
-   clue. The column is top-anchored, so nothing already read ever moves; the
-   labels below simply travel down as the bodies above open. */
+   This column used to fill in beat by beat as you scrolled. Her call, and it is
+   the right one: the prototype in the frame is already animating, and two things
+   moving at once is one too many to read. The motion belongs to the product, not
+   to the type. So all three beats are composed and final from the first frame,
+   every tier at full strength, and nothing in here transitions. The pin survives
+   only to hold the frame steady while the demo plays. */
 .ariaCopy { display: grid; align-content: start; gap: clamp(0.9rem, 2.2vh, 1.4rem); }
 .ariaKicker {
   margin: 0; padding-top: 0.65rem;
-  border-top: 1px solid var(--bs-rule);
+  border-top: 2px solid var(--bs-teal);
   font-family: var(--font-body); font-weight: 700; font-size: 0.7rem;
   letter-spacing: 0.13em; text-transform: uppercase; color: var(--bs-teal-soft);
-  transition: border-color 450ms var(--ease-out), opacity 450ms var(--ease-out);
 }
-/* the body opens on its own row: 0fr → 1fr animates height without a magic
-   max-height number, so the timing is the same for a two-line beat and a six */
-.ariaBody {
-  display: grid; grid-template-rows: 1fr; overflow: hidden;
-  transition: grid-template-rows 620ms var(--ease-out), opacity 520ms var(--ease-out);
-}
+.ariaBody { display: grid; }
 .ariaBody > div { min-height: 0; }
-/* still to come: the label holds its place and the body is closed. The label
-   keeps its full strength — it was dimmed to 45%, which put it at 1.9:1, and a
-   clue you cannot read is not a clue. The closed body and the hairline rule are
-   what say "not yet". */
-.ariaPinned .beatNext .ariaBody { grid-template-rows: 0fr; opacity: 0; }
-/* The tiers recede by COLOUR, not by opacity: dimming already-legible text to
-   62% lands it at 2.8:1, under the AA floor. So the read beats hold the body
-   tone and the LIVE beat steps up to full ink instead — the same hierarchy
-   (13.4:1 against 7.1:1), with every tier readable. */
-.ariaPinned .beatOn .ariaLede { color: var(--color-ink); }
-/* live: the teal rule is the isolation */
-.ariaPinned .beatOn .ariaKicker,
-.aria:not(.ariaPinned) .ariaKicker { border-top: 2px solid var(--bs-teal); }
-.ariaBeat { transition: opacity 450ms var(--ease-out); }
-/* the body's own top margin lives here so the closed state can collapse fully */
 .ariaBody > div > * { margin-top: 0.5rem; }
 .ariaLede {
   margin: 0; max-width: 42ch;
@@ -226,19 +210,15 @@
 .ariaAnnot {
   width: min(13rem, 100%); display: grid; gap: 0.22rem; align-content: start;
   margin-top: var(--mt, 4rem);
-  opacity: 0; transition: opacity 600ms var(--ease-out);
 }
-.annotOn { opacity: 1; transition-delay: 160ms; }
 .annotL { justify-self: end; text-align: right; margin-top: 3rem; }
 .annotR { justify-self: start; margin-top: 8rem; }
+/* the leaders are drawn, not animated in — they point, and a pointer that is
+   still arriving is not yet pointing */
 .leader {
   display: block; height: 0; margin-top: 0.5rem;
   border-top: 2px dotted var(--bs-teal-soft);
-  transform: scaleX(0); transform-origin: right;
-  transition: transform var(--motion-slow) var(--ease-out);
 }
-.annotR .leader { transform-origin: left; }
-.annotOn .leader { transform: scaleX(1); transition-delay: 420ms; }
 .ariaStage figcaption { display: none; }
 
 /* short viewports: the aria's three beats have to clear the nav and the spine
@@ -267,7 +247,7 @@
   .ariaStage { grid-template-columns: minmax(0, 1fr); }
   .ariaAnnot {
     width: 100%; max-width: 46ch; margin-top: 0; justify-self: start; text-align: left;
-    padding-top: 0.65rem; border-top: 2px solid var(--bs-teal); opacity: 1;
+    padding-top: 0.65rem; border-top: 2px solid var(--bs-teal);
   }
   .leader { display: none; }
   .ariaArt { width: min(78vw, 300px); justify-self: center; }
@@ -278,15 +258,7 @@
   .bookPhone { width: min(70vw, 260px); }
 }
 
-/* unpinned: every beat open and at full strength */
-.aria:not(.ariaPinned) .ariaBody { grid-template-rows: 1fr; opacity: 1; }
-
 @media (prefers-reduced-motion: reduce) {
   .rise { opacity: 1; transform: none; transition: none; }
-  .ariaBeat { opacity: 1; transition: none; }
-  .ariaKicker { opacity: 1; border-top: 2px solid var(--bs-teal); }
-  .ariaBody { grid-template-rows: 1fr; opacity: 1; transition: none; }
   .copy { position: static; }
-  .ariaAnnot { opacity: 1; }
-  .leader { transform: scaleX(1); transition: none; }
 }
