@@ -5,6 +5,26 @@
 > Standing rule (2026-07-05): no feedback note lives only in a conversation. Each one is logged
 > here + as a harness task the instant it's sent, and closed only when done or explicitly deferred.
 
+### 2026-08-03 — Direction reset (new Claude account; deck dropped, template focus)
+
+*Context: Lorin was signed out of her prior Claude account; this Claude is the one going forward.
+Verified the persistent layer survived intact (same Mac — `~/.claude` is tied to the macOS user,
+not the subscription). The automated `~/.claude-context` repo (last synced 2026-08-02) is the live
+canonical off-machine copy; the Desktop `NEW CLAUDE` folder is an older manual handoff kit (last
+touched 2026-06-11) — an archive + browser-upload kit, not the current source of truth.*
+
+| # | Note (her words, condensed) | Status |
+|---|---|---|
+| N1 | Reopen / study / launch Birth Story to see where we left off | ✅ dev server live on :3000 → `/projects/birthstory-care-pod/v2` (the two-plane score). State = Round 5 close: split BLESSED, refinement round owed on both planes (see F25) |
+| N2 | Confirmed: we'd built a set of hiring-manager questions for the case study that would ALSO seed an interview-practice / pitch deck (the `docs/DECK_SYSTEM.md` 8-question Map); and the "product up top, process below" move = the `/v2` two-plane page | 📌 confirmed — research intact, nothing lost |
+| N3 | **Letting go of the interview pitch deck** as a deliverable | 🔨 accepted — the deck projection is dropped; the excavation research (question map + her interview answers) is kept |
+| N4 | Use the research to inform how the case study is DESIGNED to answer a hiring manager's questions (questions govern the case-study design directly, not a separate deck) | 🔨 THE NEW FRAME — fold the 8-question Map into the case-study spec as a design governor |
+| N5 | Make an easily replicable case-study TEMPLATE so this can be repeated across all her projects (some others may just reuse the pitch deck she already made) | 🔨 the deliverable — build on `CASE_STUDY_PLAYBOOK.md → THE SPEC`; Birth Story is the pilot instance |
+| N6 | Needs at least two strong case studies — likely **Birth Story + Groundswell** | 📌 the two template instances |
+| ⚠︎ | Uncommitted refinement work on disk (6 Birthstory `/v2` + `/moment` files, 122+/102−) from the last session's refinement round, never committed | 🟡 backed up to `scratchpad/birthstory-uncommitted-refinement-20260803.patch`; needs review — keep, finish, or discard (her call) |
+| N7 | Her verdict on `/v2` eyes-on (2026-08-03, Fable session): "not very happy… overly gimmicky, too focused on cool interactions that it loses the pitch altogether, too text heavy, boring sections with only text or interactive sections with too many animations. How can we RADICALLY simplify this so the story of the product IS the main content but the animation, interaction, and design uplift, support, and emphasize the research underneath?" | ✅ BLESSED ("Yes agreed on all"): the artifact-led grammar governs — every section = a product artifact doing its job; text → captions ("heard → built" one-liners); motion → only the artifact's own behavior. Two-plane split survives; arias as set-pieces + text-only sections die. Next: ONE screen test (entry flow) judged in 10s before rolling the grammar |
+| N8 | **THE THESIS (2026-08-03, her verbatim — preserved in full in `BIRTHSTORY-interview.md → THE THESIS`):** "birth is both an individual and shared experience and… the two are intertwined when it comes to processing documenting and reflecting." Care Pod = DURING (shared, + newborn updates) · Documentation = before/during/just-after (the partner's tool, shared) · Reflection = AFTER (birth parent, private safe space) · the Book = the outcome, "what they choose to carry forward" | 🔨 THE SPINE — the top plane organizes on the birth's own arc (during → documenting → after → the book) woven with the individual⇄shared axis. Retrospective-discovery honesty note logged in the interview doc (her call on owning it in reflection) |
+
 | # | Note (her words, condensed) | Status |
 |---|---|---|
 | L1 | Rename spine/progress-bar labels to design-speak (was **dropped once** — this is the re-raise) | ✅ done — `The Product` → `Interface` (kept her deliberate `Architecture`); crumb aligned |

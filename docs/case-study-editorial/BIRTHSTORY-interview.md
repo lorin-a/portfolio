@@ -140,3 +140,31 @@ rationale), forum/community stories + resources.
 > design to the capacity level of a new parent. I chose not to focus on medical records primarily,
 > but to leave documentation of medical information optional; instead, the focus would be
 > event-based and timeline-based by the final iteration.
+
+## THE THESIS — her words, verbatim (2026-08-03, the radical-simplification session)
+
+Asked whether the top plane's spine should be the user's journey or pitch order, she answered
+with the product's deeper thesis instead (her words, verbatim):
+
+> it is possible there is a deeper thesis to the product that I did not realize when making it
+> which could be that birth is both an individual and shared experience and that the two are
+> intertwined when it comes to processing documenting and reflecting on the experience. Which
+> makes the care pod a central feature DURING birth and perhaps for sending easy updates in the
+> newborn phase. The documentation is a great tool for a partner or loved one to keep track of
+> events and details leading up to, during, and just after the birth. The reflection questions
+> are useful AFTER the birth and center on the birth parent's experience in a private safe
+> space. But the ultimate outcome is a book they can curate to mark this moment and what they
+> choose to carry forward.
+
+**Structural reading (Claude's, provisional):** the thesis maps every feature to a moment in
+the birth's own arc AND a position on the individual⇄shared axis —
+- **Care Pod** → DURING (+ newborn-phase updates) · shared
+- **Documentation** → BEFORE / DURING / JUST AFTER · shared (the partner / loved one's tool)
+- **Reflection** → AFTER · individual, private safe space (the birth parent)
+- **The Book** → the outcome · the curated synthesis of both — "what they choose to carry forward"
+
+Honesty note: she said this thesis surfaced in retrospect ("did not realize when making it").
+The case study may use it as the organizing lens; whether to own the retrospective discovery
+explicitly (e.g. one line in reflection) is her call. Seed already present in her Q4 answer:
+"this is a shared experience for many… some features like journaling should be private for the
+individual or couple, others should be shared."
