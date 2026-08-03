@@ -205,19 +205,21 @@ export default function ProductAct() {
     <div className={p.act}>
       <header ref={headRef} id="product" className={`${p.actHead} ${headOn ? p.on : ''}`}>
         <div className={p.actHeadInner}>
-          <span className={p.actRule} aria-hidden="true" />
-          {/* her thesis for the interface, and the orienting line relocated
-              verbatim from the retired overture — both her words */}
+          {/* a title spread, not a stack: the thesis holds the left, the two
+              orienting lines hold the right, so the opener uses the page's full
+              measure instead of hanging off its left edge */}
           <h2 className={`${p.statement} ${p.rise}`}>
             Birth is unpredictable, so the app is deliberately <b>simple</b>.
           </h2>
-          <p className={`${p.actLede} ${p.rise}`} style={{ '--d': '90ms' }}>
-            It opens into documenting and reaches everything else in a tap or two.
-          </p>
-          <p className={`${p.actNote} ${p.rise}`} style={{ '--d': '180ms' }}>
-            None of the screens below are flat mockups: I rebuilt the wireframes as working prototypes,
-            so what you’re seeing is the real interaction.
-          </p>
+          <div className={p.actAside}>
+            <p className={`${p.actLede} ${p.rise}`} style={{ '--d': '90ms' }}>
+              It opens into documenting and reaches everything else in a tap or two.
+            </p>
+            <p className={`${p.actNote} ${p.rise}`} style={{ '--d': '180ms' }}>
+              None of the screens below are flat mockups: I rebuilt the wireframes as working prototypes,
+              so what you’re seeing is the real interaction.
+            </p>
+          </div>
         </div>
       </header>
 
@@ -233,20 +235,22 @@ export default function ProductAct() {
                 <Beat f={f} i={i} total={FEATURES.length} state={stateOf(i)} />
               </section>
             ))}
-          </div>
 
-          {/* the act's own step marker — five ticks, the live one filled. The
-              anchor that tells you where you are inside the pin. */}
-          {pinned && (
-            <ol className={p.steps} aria-hidden="true">
-              {FEATURES.map((f, i) => (
-                <li key={f.name} className={`${p.step} ${i === active ? p.stepOn : ''} ${i < active ? p.stepPast : ''}`}>
-                  <span className={p.stepTick} />
-                  <span className={p.stepName}>{f.name}</span>
-                </li>
-              ))}
-            </ol>
-          )}
+            {/* the act's index — a vertical rail down the right edge, where the
+                composition was leaving dead space. Vertical on purpose: the page
+                already carries a horizontal chapter spine at the top, and a
+                second horizontal bar at the foot read as a duplicate of it. */}
+            {pinned && (
+              <ol className={p.steps} aria-hidden="true">
+                {FEATURES.map((f, i) => (
+                  <li key={f.name} className={`${p.step} ${i === active ? p.stepOn : ''} ${i < active ? p.stepPast : ''}`}>
+                    <span className={p.stepName}>{f.name}</span>
+                    <span className={p.stepTick} />
+                  </li>
+                ))}
+              </ol>
+            )}
+          </div>
         </div>
       </div>
 
