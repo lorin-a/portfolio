@@ -382,7 +382,8 @@
 }
 .stakesCol { gap: 0.6rem; }
 .stakeRow { display: grid; grid-template-columns: auto 1fr; gap: 0.55rem; align-items: baseline; }
-.stakeFig { font-family: var(--font-heading); font-variation-settings: 'SOFT' 60, 'WONK' 0; font-weight: 500; font-size: clamp(1.15rem, 1.05rem + 0.4vw, 1.35rem); line-height: 1.3; letter-spacing: -0.01em; color: var(--bs-accent); }
+/* demoted from serif display accent to quiet inline bold — a stake, not an infographic (N19) */
+.stakeFig { font-family: var(--font-body); font-weight: 700; font-size: clamp(0.86rem, 0.83rem + 0.18vw, 0.95rem); line-height: 1.4; letter-spacing: 0; color: var(--color-ink); font-variant-numeric: tabular-nums; }
 .stakeText { font-family: var(--font-body); font-size: clamp(0.86rem, 0.83rem + 0.18vw, 0.95rem); line-height: 1.4; color: var(--color-ink-light); text-wrap: pretty; }
 .stakeSource { margin: 0.5rem 0 0; font-family: var(--font-body); font-size: 0.78rem; line-height: 1.5; color: var(--color-ink-faint); text-wrap: pretty; }
 .stakeSource b { color: var(--bs-teal-soft); font-weight: 600; }
