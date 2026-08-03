@@ -149,31 +149,35 @@
   width: 100%; max-width: 92rem; margin: 0 auto;
   padding: clamp(2.2rem, 5vw, 3.6rem) var(--bs-pad);
 }
-.ariaCopy { position: relative; display: grid; align-content: center; }
+.ariaCopy { position: relative; }
 .ariaName {
-  margin: 0 0 clamp(1.2rem, 3vh, 2rem);
+  margin: 0;
   font-family: var(--font-heading); font-variation-settings: 'SOFT' 60, 'WONK' 0; font-weight: 400;
   font-size: clamp(2rem, 1.5rem + 1.8vw, 3rem); line-height: 1.05;
   letter-spacing: -0.018em; color: var(--color-ink); text-wrap: balance;
 }
-/* the beats stack in one place and swap — the whole point of the pin is that
-   the argument advances without the composition moving */
+/* THE BEATS FILL IN — they hold their places from the start and each arrives as
+   you reach it, rather than swapping in and out of one slot. Swapping cost the
+   reader the line they had just read, and made the outgoing text slide down
+   through the incoming text sliding up — the stutter. The space every beat will
+   occupy is reserved from the first frame, so nothing on the page ever moves. */
+.ariaCopy { display: grid; align-content: center; gap: clamp(1rem, 2.5vh, 1.6rem); }
 .ariaPinned .ariaBeat {
-  grid-area: 1 / 1; align-self: start;
-  opacity: 0; visibility: hidden; transform: translateY(18px);
-  transition: opacity 520ms var(--ease-out), transform 620ms var(--ease-out), visibility 0s linear 620ms;
+  opacity: 0; transform: translateY(14px);
+  transition: opacity 620ms var(--ease-out), transform 620ms var(--ease-out);
 }
-.ariaPinned .ariaBeat.beatOn {
-  opacity: 1; visibility: visible; transform: none;
-  transition-delay: 0s, 0s, 0s;
-}
-.ariaPinned .ariaCopy { grid-template-rows: auto auto 1fr auto; }
-.ariaPinned .ariaBeat { grid-row: 3; grid-column: 1; }
+/* already read: it stays legible, it just stops competing */
+.ariaPinned .ariaBeat.beatIn { opacity: 0.5; transform: none; }
+.ariaPinned .ariaBeat.beatOn { opacity: 1; transform: none; }
 .ariaKicker {
-  margin: 0 0 0.5rem; padding-top: 0.65rem; border-top: 2px solid var(--bs-teal);
+  margin: 0 0 0.5rem; padding-top: 0.65rem;
+  border-top: 1px solid var(--bs-rule);
   font-family: var(--font-body); font-weight: 700; font-size: 0.7rem;
   letter-spacing: 0.13em; text-transform: uppercase; color: var(--bs-teal-soft);
+  transition: border-color 500ms var(--ease-out), border-width 0s;
 }
+/* the live beat is the one carrying the teal rule — that is the isolation */
+.beatOn .ariaKicker { border-top: 2px solid var(--bs-teal); }
 .ariaLede {
   margin: 0; max-width: 42ch;
   font-family: var(--font-body); font-size: clamp(1rem, 0.96rem + 0.25vw, 1.1rem);
@@ -187,7 +191,7 @@
   font-size: clamp(1.15rem, 1rem + 0.7vw, 1.5rem); line-height: 1.35;
   color: var(--color-ink); text-wrap: pretty;
 }
-.ariaDots { display: flex; gap: 0.5rem; margin: clamp(1.4rem, 4vh, 2.4rem) 0 0; padding: 0; list-style: none; }
+.ariaDots { display: flex; gap: 0.5rem; margin: clamp(0.4rem, 1.5vh, 0.9rem) 0 0; padding: 0; list-style: none; }
 .ariaDots li {
   width: 1.4rem; height: 2px; background: var(--bs-rule);
   transition: width 400ms var(--ease-out), background 400ms var(--ease-out);
@@ -251,11 +255,12 @@
   .bookPhone { width: min(70vw, 260px); }
 }
 
-/* unpinned: the three beats simply stack and are all readable */
-.aria:not(.ariaPinned) .ariaBeat + .ariaBeat { margin-top: clamp(1.4rem, 4vw, 2.2rem); }
+/* unpinned: the same stack, every beat at full strength */
+.aria:not(.ariaPinned) .beatOn .ariaKicker { border-top: 2px solid var(--bs-teal); }
 
 @media (prefers-reduced-motion: reduce) {
   .rise { opacity: 1; transform: none; transition: none; }
+  .ariaBeat { opacity: 1 !important; transform: none !important; transition: none; }
   .copy { position: static; }
   .ariaAnnot { opacity: 1; }
   .leader { transform: scaleX(1); transition: none; }

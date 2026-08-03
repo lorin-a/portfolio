@@ -189,11 +189,19 @@ function Aria({ f, i, total }) {
               </p>
               <h3 className={p.ariaName}>{f.name}</h3>
 
+              {/* THE BEATS FILL IN — they do not swap. Swapping meant the reader
+                  lost the line they had just read and could not glance back, and
+                  it made the outgoing text slide down past the incoming text
+                  sliding up, which is the stutter she saw. Now the three beats
+                  hold their places from the start, each arrives as you reach it
+                  and then stays, and the isolation comes from emphasis instead
+                  of from hiding. Nothing is ever removed from the page. */}
               {beats.map((b, n) => (
                 <div
                   key={b.key}
-                  className={`${p.ariaBeat} ${!pinned || n === active ? p.beatOn : ''}`}
-                  aria-hidden={pinned && n !== active ? 'true' : undefined}
+                  className={`${p.ariaBeat} ${
+                    !pinned || n === active ? p.beatOn : n < active ? p.beatIn : ''
+                  }`}
                 >
                   <p className={p.ariaKicker}>{b.kicker}</p>
                   {b.body}
