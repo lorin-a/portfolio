@@ -179,11 +179,16 @@
   transition: grid-template-rows 620ms var(--ease-out), opacity 520ms var(--ease-out);
 }
 .ariaBody > div { min-height: 0; }
-/* still to come: the label holds its place, quietly, and the body is closed */
+/* still to come: the label holds its place and the body is closed. The label
+   keeps its full strength — it was dimmed to 45%, which put it at 1.9:1, and a
+   clue you cannot read is not a clue. The closed body and the hairline rule are
+   what say "not yet". */
 .ariaPinned .beatNext .ariaBody { grid-template-rows: 0fr; opacity: 0; }
-.ariaPinned .beatNext .ariaKicker { opacity: 0.45; }
-/* already read: legible, no longer competing */
-.ariaPinned .beatIn { opacity: 0.62; }
+/* The tiers recede by COLOUR, not by opacity: dimming already-legible text to
+   62% lands it at 2.8:1, under the AA floor. So the read beats hold the body
+   tone and the LIVE beat steps up to full ink instead — the same hierarchy
+   (13.4:1 against 7.1:1), with every tier readable. */
+.ariaPinned .beatOn .ariaLede { color: var(--color-ink); }
 /* live: the teal rule is the isolation */
 .ariaPinned .beatOn .ariaKicker,
 .aria:not(.ariaPinned) .ariaKicker { border-top: 2px solid var(--bs-teal); }
