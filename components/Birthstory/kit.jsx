@@ -222,7 +222,7 @@ export function Split({ text, flip = false, children }) {
    context photos ride it in the identity's teal-ink duotone (shadows take the
    teal, highlights stay paper); real project evidence can ride it true-color
    with duo=false. ── */
-export function Bleed({ src, alt = '', cap, byline, duo = true, focus, tall = false }) {
+export function Bleed({ src, alt = '', cap, byline, duo = false, focus, tall = false }) {
   return (
     <figure className={`${s.bleed} ${s.up}`}>
       <div className={`${s.bleedArt} ${duo ? s.bleedDuo : ''} ${tall ? s.bleedTall : ''}`}>

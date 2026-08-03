@@ -176,7 +176,6 @@ export default function SecFeatures() {
             {f.context && (
               <Figure
                 photo
-                duo
                 tag="the why"
                 className={styles.whyFig}
                 src={f.context.photo.src}

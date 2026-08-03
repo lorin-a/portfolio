@@ -5,6 +5,37 @@
 > Standing rule (2026-07-05): no feedback note lives only in a conversation. Each one is logged
 > here + as a harness task the instant it's sent, and closed only when done or explicitly deferred.
 
+### ★ THE UNIFY PLAN — Birth Story parent route (owned by Claude, 2026-08-03, N21)
+
+Her mandate: make the whole page match the simple/elegant/balanced flow of **Interface→Outcome**
+(the sidebar-scrolly annotated-device look, "content + content together"); the rest is "sooo much
+information and text"; ALL duotone → normal; radically simplify, balance show/tell, unify
+flow+features+styles. Senior plan:
+
+**TARGET SYSTEM (one grammar, taken from the Interface deep-dives):**
+1. **The deep-dive grid** — a strong artifact + SHORT flanking margin annotations (the look she
+   loves), heading + one short lede. Every product AND process moment adopts it.
+2. **One annotation language** — the margin note (label + 1–2 lines) + the teal-rule "move".
+   RETIRE: the MY THINKING pill, dark gradient boxes, bordered cards, dotted leaders, chat bubbles
+   (except the one real group-text artifact).
+3. **Real-tone photography** everywhere. ✅ DONE (Bleed default flipped, all `duo` removed).
+4. **Whitespace over borders** — kill bordered cards (Myana card, IA questionnaire card, FeatureWall boxes).
+5. **Radically less text** — long prose → short lede + margins; progressive disclosure for depth.
+6. **Fewer dark bands** — reserve dark for one moment, cut the light/dark flicker.
+7. **Demote stats** (80/65/3×) — one quiet line, not an infographic column.
+
+**SEQUENCE (one chapter at a time, verified eyes-on, her copy verbatim, committed per chapter):**
+- ✅ GLOBAL duotone → real-tone.
+- ✅ Research (02) — synthesis unified to one typographic progression (N20).
+- ▸ Brief (01) — demote stats; borderless Myana card; tighten required/provided band.
+- ▸ Architecture (03) — borderless questionnaire artifact; before/after on the deep-dive grid; cut prose.
+- ▸ Iteration (04) — one screen + one feedback per round, on the one annotation style.
+- KEEP Interface (04) + Outcome (06) — they are the model.
+- ▸ Identity/Voice + Brand (05) — deep-dive grid + one annotation style; borderless.
+- FINAL — /impeccable layout grid gate per chapter, global voice-audit, reduced-motion/a11y, length check (25k px → tighter guided scroll).
+
+---
+
 ### 2026-08-03 — Direction reset (new Claude account; deck dropped, template focus)
 
 *Context: Lorin was signed out of her prior Claude account; this Claude is the one going forward.

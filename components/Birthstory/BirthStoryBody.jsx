@@ -78,7 +78,7 @@ function Brief() {
       <Bleed
         src={birth.src}
         byline={birth.byline}
-        alt="A parent rests cheek to cheek with a swaddled newborn in the hours just after birth, in teal-ink duotone."
+        alt="A parent rests cheek to cheek with a swaddled newborn in the hours just after birth."
         cap="A parent and newborn in the hours after birth."
         focus="center 42%"
       />
