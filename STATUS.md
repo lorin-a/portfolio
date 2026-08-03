@@ -16,9 +16,19 @@ stats demoted · ✅ chapter titles fixed (ghost numeral removed, flush-left) ·
 export, so inside the site's own phone frame the Book finale shows a frame within a frame. More
 visible now that the act is on a dark ground. Needs a re-export from Figma, screen only.
 
-**▶ WAITING ON HER:** pick a layout at **`/projects/birthstory-care-pod/layouts`** (A / B / C / D, or a
-hybrid). That pick becomes the universal grammar for every chapter, and the lab route gets deleted.
-Do not propagate anything to the process half until she picks — that is the mistake N30 corrected.
+**★ THE UNIVERSAL GRAMMAR IS SETTLED (N31, `384a4f6`) — THE ROW + ONE EARNED ARIA.**
+**THE ROW** is the workhorse and every chapter uses it: contained in the page column, copy left with
+the column sticky beside its artifact, artifact large on the right in the gradient stage. (This is
+`SecIteration`'s `Round` — the recipe she was pointing at from the start.)
+**THE ARIA** is reserved and used once per act: a pinned moment whose beats are genuinely different
+KINDS of content (the ask → the research quote → the feature). Callouts with dotted leaders live in
+the aria and nowhere else; in a row the same notes read in the copy column.
+
+**▶ NEXT:** propagate the ROW to the process half — Brief (01), Research (02), Architecture (03),
+Iteration (already on it), Identity (04). One chapter at a time, her copy verbatim, eyes-on,
+committed per chapter. Consider ONE aria for the process half — the 4→0 IA collapse is the candidate
+(the ask → what testing said → what shipped). Her eyes on the product act first.
+**The lab route stays until she blesses the synthesis, then gets deleted.**
 
 **Process-unify — pass one shipped (`0ffbef1`):** the SURFACES are unified. Every chapter's asides
 now speak one language (teal rule + uppercase label + note); the three coloured chips, the Myana
