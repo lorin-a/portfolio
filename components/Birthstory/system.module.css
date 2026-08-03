@@ -300,13 +300,22 @@
 
 /* friction — admits the open question. Her voice too, so it wears the
    thinking lilac and the dotted rule. */
-.friction { margin: 0.7rem 0 0; max-width: 40rem; display: grid; gap: 0.7rem; }
+.friction {
+  margin: 0.7rem 0 0; max-width: 40rem; display: grid; gap: 0.7rem;
+  padding-top: 0.8rem; border-top: 2px solid var(--bs-teal);
+}
 .frictionText { margin: 0; font-family: var(--font-body); font-size: 0.95rem; line-height: 1.6; color: var(--color-ink-light); text-wrap: pretty; }
 .frictionText b { font-weight: 700; color: var(--bs-accent); font-style: normal; }
+/* ONE ANNOTATION LANGUAGE (the unify pass): the three margin voices — my
+   thinking, a parent said, still open — used to wear three filled chips in three
+   different colours, which is three furnitures doing one job. They now share the
+   page's single record-layer grammar: a teal rule, an uppercase label, the note
+   beneath. The voice is carried by the label's own words and by the setting of
+   the text (italic display for a quote, roman body for reasoning), not by a
+   coloured pill. */
 .frictionTag {
-  padding: 0.18rem 0.6rem; border-radius: 3px;
-  background: var(--bs-think); color: var(--bs-teal);
-  font-family: var(--font-body); font-weight: 700; font-size: 0.72rem; letter-spacing: 0.06em; text-transform: uppercase;
+  font-family: var(--font-body); font-weight: 700; font-size: 0.72rem;
+  letter-spacing: 0.13em; text-transform: uppercase; color: var(--bs-teal-soft);
 }
 
 /* ── the two margin voices, DE-CARDED: a labeled rule instead of a box. The
@@ -314,12 +323,14 @@
    that runs to the column edge — the specimen-label grammar — so the voices
    read woven into the grid, not floated on white cards. The dotted rule stays
    her hand's idiom; the record keeps solid rules. ── */
-.insight { margin: 0.7rem 0 0; max-width: 40rem; display: grid; gap: 0.8rem; }
+.insight {
+  margin: 0.7rem 0 0; max-width: 40rem; display: grid; gap: 0.55rem;
+  padding-top: 0.8rem; border-top: 2px solid var(--bs-teal);
+}
 .insightRule { display: flex; align-items: center; }
 .insightTag {
-  padding: 0.18rem 0.6rem; border-radius: 3px;
-  background: var(--bs-think); color: var(--bs-teal);
-  font-family: var(--font-body); font-weight: 700; font-size: 0.72rem; letter-spacing: 0.06em; text-transform: uppercase;
+  font-family: var(--font-body); font-weight: 700; font-size: 0.72rem;
+  letter-spacing: 0.13em; text-transform: uppercase; color: var(--bs-teal-soft);
 }
 /* body sans, not Fraunces — Fraunces is reserved for titles, headers, and
    quotes (Lorin's call). The dotted border + tag carry the "my thinking" cue. */
@@ -335,12 +346,14 @@
 
 /* standalone tester callout — the crit voice, de-carded to the same labeled
    rule (solid peri hairline; the peri chip keeps the voice→color mapping) */
-.testerNote { margin: 0.7rem 0 0; max-width: 32rem; display: grid; gap: 0.8rem; }
+.testerNote {
+  margin: 0.7rem 0 0; max-width: 32rem; display: grid; gap: 0.55rem;
+  padding-top: 0.8rem; border-top: 2px solid var(--bs-teal);
+}
 .testerRule { display: flex; align-items: center; }
 .testerKicker {
-  padding: 0.18rem 0.6rem; border-radius: 3px;
-  background: var(--bs-crit); color: var(--bs-teal);
-  font-family: var(--font-body); font-weight: 700; font-size: 0.72rem; letter-spacing: 0.06em; text-transform: uppercase;
+  font-family: var(--font-body); font-weight: 700; font-size: 0.72rem;
+  letter-spacing: 0.13em; text-transform: uppercase; color: var(--bs-teal-soft);
 }
 .testerQuote {
   margin: 0; font-family: var(--font-heading); font-variation-settings: 'SOFT' 60, 'WONK' 0; font-style: italic; font-weight: 400;
