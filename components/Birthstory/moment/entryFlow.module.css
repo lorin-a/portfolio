@@ -1,0 +1,201 @@
+/* ============================================================================
+   Moment study 02 — "The entry."
+   First screen test of the artifact-led grammar: the artifact is the content,
+   text is a caption, motion is only the product's own behavior. Quiet paper
+   ground; two devices end composed (instant home + the pod one tap away).
+   ============================================================================ */
+
+.stage {
+  --teal: #1A434D;
+  --teal-deep: #16323A;
+  --teal-soft: #466F7B;
+  --mist: #eef1f0;
+  position: relative;
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: grid;
+  align-content: center;
+  background: #FAFAFA;
+  padding: clamp(3.5rem, 9vh, 6rem) clamp(1.5rem, 5vw, 6rem);
+  overflow: hidden;
+}
+
+.kicker {
+  grid-column: 1 / -1;
+  margin: 0 0 clamp(1.6rem, 4vh, 3rem);
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--teal-soft);
+}
+
+.grid {
+  position: relative;
+  max-width: 68rem;
+  margin: 0 auto;
+  width: 100%;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: clamp(3rem, 7vw, 6.5rem);
+  align-items: center;
+}
+
+/* ── the caption (heard → built) ── */
+.caption {
+  display: grid;
+  gap: clamp(1.8rem, 4vh, 2.6rem);
+  max-width: 26rem;
+}
+
+.tag {
+  margin: 0 0 0.55rem;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--teal-soft);
+}
+
+.quote {
+  margin: 0;
+  padding: 0 0 0 1.1rem;
+  border-left: 2px solid var(--teal-soft);
+}
+.quote p {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-variation-settings: 'SOFT' 60, 'WONK' 0;
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(1.05rem, 0.95rem + 0.5vw, 1.35rem);
+  line-height: 1.45;
+  color: var(--teal);
+  text-wrap: pretty;
+}
+
+.claim {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-variation-settings: 'SOFT' 50, 'WONK' 0;
+  font-weight: 550;
+  font-size: clamp(1.35rem, 1.1rem + 1.2vw, 2.05rem);
+  line-height: 1.28;
+  color: var(--color-ink, var(--teal-deep));
+  text-wrap: balance;
+}
+
+/* ── the artifact (two devices, composed) ── */
+.deviceStack {
+  position: relative;
+  /* width capped against viewport height so the composed scene, tab bar
+     included, always fits one viewport (the screen test is judged whole) */
+  width: min(clamp(300px, 33vw, 420px), calc((100vh - 18rem) / 1.75));
+  width: min(clamp(300px, 33vw, 420px), calc((100dvh - 18rem) / 1.75));
+  /* reserve height for the offset pod so the stage never jumps */
+  padding-bottom: 6%;
+}
+
+.device {
+  margin: 0;
+  width: 80%;
+  border-radius: clamp(18px, 2.2vw, 30px);
+  overflow: hidden;
+  box-shadow:
+    0 30px 60px -30px rgba(22, 50, 58, 0.45),
+    0 0 0 1px rgba(22, 50, 58, 0.06);
+  background: var(--teal-deep);
+  position: relative;
+}
+.device img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.devicePod {
+  position: absolute;
+  left: 56%;
+  top: 12%;
+  width: 54%;
+  box-shadow:
+    0 34px 70px -28px rgba(22, 50, 58, 0.55),
+    0 0 0 1px rgba(22, 50, 58, 0.08);
+}
+
+/* the one tap: a quiet ring over the loved-ones tab icon */
+.ring {
+  position: absolute;
+  left: 27.5%;
+  top: 94.3%;
+  width: 38px;
+  height: 38px;
+  transform: translate(-50%, -50%);
+  border: 2px solid var(--teal-soft);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+/* ── replay (hidden when motion is reduced; the scene is already composed) ── */
+.replay {
+  position: absolute;
+  right: clamp(1.5rem, 5vw, 6rem);
+  bottom: clamp(1.2rem, 3vh, 2rem);
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0.6rem 1.1rem;
+  border: 1px solid rgba(70, 111, 123, 0.4);
+  border-radius: 999px;
+  background: transparent;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--teal-soft);
+  cursor: pointer;
+  transition: border-color 300ms var(--ease-out), color 300ms var(--ease-out);
+}
+.replay:focus-visible {
+  outline: 2px solid var(--teal);
+  outline-offset: 3px;
+}
+@media (hover: hover) {
+  .replay:hover {
+    border-color: var(--teal);
+    color: var(--teal);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .replay {
+    display: none;
+  }
+}
+
+/* ── narrow ── */
+@media (max-width: 720px) {
+  .stage {
+    align-content: start;
+    padding-top: clamp(4.5rem, 12vh, 6rem);
+  }
+  .grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2.4rem;
+    justify-items: start;
+  }
+  .caption {
+    max-width: 100%;
+  }
+  .deviceStack {
+    width: min(78vw, 340px);
+    justify-self: center;
+  }
+  .replay {
+    position: static;
+    justify-self: end;
+    margin-top: 1.6rem;
+  }
+}
