@@ -45,30 +45,31 @@ export default function FourToZero() {
     gsap.set(q('[data-z="landingCap"]'), { autoAlpha: 0 })
 
     /* the questions arrive — the wall a tired parent met */
-    tl.to(pills, { autoAlpha: 1, y: 0, duration: 0.5, stagger: 0.12 }, 0)
-    tl.to(q('[data-z="label"]'), { autoAlpha: 1, duration: 0.4 }, 0.4)
+    tl.to(pills, { autoAlpha: 1, y: 0, duration: 0.4, stagger: 0.08 }, 0)
+    tl.to(q('[data-z="label"]'), { autoAlpha: 1, duration: 0.3 }, 0.3)
 
-    /* strike and remove, one by one, gently speeding up */
-    const gaps = [1.4, 1.15, 0.95, 0.8]
-    let t = 1.6
+    /* strike and remove, one by one, gently speeding up — the accelerando
+       compressed for a fast scroller (F25): same shape, shorter breaths */
+    const gaps = [0.85, 0.72, 0.6, 0.5]
+    let t = 1.0
     QUESTIONS.forEach((_, i) => {
-      tl.to(strikes[i], { scaleX: 1, duration: 0.32, ease: 'power1.inOut' }, t)
-      tl.to(pills[i], { autoAlpha: 0, y: 10, duration: 0.45, ease: 'power1.in' }, t + 0.4)
+      tl.to(strikes[i], { scaleX: 1, duration: 0.26, ease: 'power1.inOut' }, t)
+      tl.to(pills[i], { autoAlpha: 0, y: 8, duration: 0.35, ease: 'power1.in' }, t + 0.3)
       /* the counter ticks: old digit lifts away, the next settles in */
-      tl.to(digits[i], { autoAlpha: 0, yPercent: -40, duration: 0.3, ease: 'power1.in' }, t + 0.42)
-      tl.to(digits[i + 1], { autoAlpha: 1, yPercent: 0, duration: 0.38 }, t + 0.55)
+      tl.to(digits[i], { autoAlpha: 0, yPercent: -40, duration: 0.24, ease: 'power1.in' }, t + 0.32)
+      tl.to(digits[i + 1], { autoAlpha: 1, yPercent: 0, duration: 0.3 }, t + 0.42)
       t += gaps[i]
     })
 
     /* what shipped lands: nothing to answer before beginning */
-    tl.to(q('[data-z="zero"]'), { scale: 1.06, duration: 0.5, ease: 'sine.inOut', yoyo: true, repeat: 1 }, t + 0.1)
-    tl.to(q('[data-z="landing"]'), { autoAlpha: 1, y: 0, scale: 1, duration: 0.7 }, t + 0.5)
-    tl.to(q('[data-z="landingCap"]'), { autoAlpha: 1, duration: 0.6 }, t + 1.0)
+    tl.to(q('[data-z="zero"]'), { scale: 1.06, duration: 0.4, ease: 'sine.inOut', yoyo: true, repeat: 1 }, t + 0.05)
+    tl.to(q('[data-z="landing"]'), { autoAlpha: 1, y: 0, scale: 1, duration: 0.5 }, t + 0.35)
+    tl.to(q('[data-z="landingCap"]'), { autoAlpha: 1, duration: 0.4 }, t + 0.65)
 
     tlRef.current = tl
     const io = new IntersectionObserver(([e]) => {
       if (e.isIntersecting) { tl.play(); io.disconnect() }
-    }, { threshold: 0.45 })
+    }, { threshold: 0.35 })
     io.observe(root)
     return () => { io.disconnect(); tl.kill() }
   }, [])

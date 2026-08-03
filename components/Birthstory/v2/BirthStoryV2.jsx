@@ -32,7 +32,7 @@ function VoiceFrame() {
           “None of our births went according to plan and they were traumatizing, and it doesn’t get
           discussed enough.”
         </blockquote>
-        <p className={`${s.voiceWho} ${s.up}`} style={{ '--d': '140ms' }}>From the family interviews · verbatim</p>
+        <p className={`${s.voiceWho} ${s.up}`} style={{ '--d': '80ms' }}>From the family interviews · verbatim</p>
       </div>
       <p className={s.voiceByline}>Photo · {birth.byline} / Pexels</p>
     </section>
@@ -45,7 +45,7 @@ export default function BirthStoryV2() {
     <div className={s.v2}>
       {/* ── F2 · THE ASK ── */}
       <Frame id="brief" kicker="01 · The brief">
-        <h2 className={`${s.claim} ${s.claimLong} ${s.voice} ${s.up}`} style={{ '--d': '80ms' }}>
+        <h2 className={`${s.claim} ${s.claimLong} ${s.voice} ${s.up}`} style={{ '--d': '40ms' }}>
           Pitch a concept that helps parents <b>document and reflect</b> on their birth experience.
         </h2>
         <div className={s.stakes}>
@@ -54,16 +54,16 @@ export default function BirthStoryV2() {
             ['65%', 'happen after delivery'],
             ['3×', 'the risk for Black mothers'],
           ].map(([fig, label], i) => (
-            <div key={fig} className={`${s.stake} ${s.up}`} style={{ '--d': `${160 + i * 110}ms` }}>
+            <div key={fig} className={`${s.stake} ${s.up}`} style={{ '--d': `${90 + i * 60}ms` }}>
               <span className={s.stakeFig}>{fig}</span>
               <p className={s.stakeLabel}>{label}</p>
             </div>
           ))}
         </div>
-        <p className={`${s.stakeSrc} ${s.up}`} style={{ '--d': '460ms' }}>Figures from the project brief.</p>
+        <p className={`${s.stakeSrc} ${s.up}`} style={{ '--d': '250ms' }}>Figures from the project brief.</p>
         {/* F19 — the hiring-manager metadata, structured, on the fast plane
             (content carried verbatim from the V1 Overview) */}
-        <dl className={`${s.meta} ${s.up}`} style={{ '--d': '540ms' }}>
+        <dl className={`${s.meta} ${s.up}`} style={{ '--d': '290ms' }}>
           {[
             ['Role', <>My partner Michael and I co-led research and information architecture. I led UX/UI, visual identity, and UX writing.</>],
             ['Context', <>6-week graduate studio at Carnegie Mellon, taught by the founders of <a href="https://dezudio.com/" target="_blank" rel="noopener noreferrer">Dezudio</a>, Myana’s design partner</>],
@@ -122,7 +122,7 @@ export default function BirthStoryV2() {
 
       {/* ── F7 · THE TURN ── */}
       <Frame id="architecture" kicker="04 · The architecture">
-        <h2 className={`${s.claim} ${s.claimLong} ${s.voice} ${s.up}`} style={{ '--d': '80ms' }}>
+        <h2 className={`${s.claim} ${s.claimLong} ${s.voice} ${s.up}`} style={{ '--d': '40ms' }}>
           The user flow was <b>make-or-break</b>: it decides how a parent spends their few precious
           free moments.
         </h2>
@@ -130,7 +130,7 @@ export default function BirthStoryV2() {
         <div className={s.turnStage}>
           <FourToZero />
         </div>
-        <p className={`${s.shift} ${s.up}`} style={{ '--d': '440ms' }}>
+        <p className={`${s.shift} ${s.up}`} style={{ '--d': '240ms' }}>
           Think-aloud testing drove the most significant shift in our approach: from a sequenced
           entry to an <b>immediate</b> one, opening directly into notes on a timeline.
         </p>
@@ -138,7 +138,7 @@ export default function BirthStoryV2() {
 
       {/* ── F8 · THREE ROUNDS ── */}
       <Frame id="iteration" kicker="05 · Three rounds" className={s.roundsFrame}>
-        <h2 className={`${s.claim} ${s.voice} ${s.up}`} style={{ '--d': '80ms' }}>
+        <h2 className={`${s.claim} ${s.voice} ${s.up}`} style={{ '--d': '40ms' }}>
           Each round made the app <b>simpler</b>.
         </h2>
         <div className={s.rounds}>
@@ -146,7 +146,7 @@ export default function BirthStoryV2() {
             <div className={s.roundCopy}>
               <p className={s.roundWhen}>Version 1 · Week 3</p>
               <p className={s.roundChange}>The first version tried to do everything. It was disorienting.</p>
-              <p className={s.roundVoice}>Too many menus, too many buttons; the first build tried to do everything.</p>
+              <p className={s.roundVoice}>“Too many buttons and options. Too many menus.”</p>
             </div>
             <div className={s.roundStage}>
               <div className={s.shotOne}>
@@ -159,9 +159,9 @@ export default function BirthStoryV2() {
               <p className={s.roundWhen}>Version 2 · Week 4</p>
               <p className={s.roundChange}>
                 For the second version I consolidated everything into one filterable notes section.
-                Clearer, but still too many options.
+                Clearer, but still too many options, and the copy drew a flag.
               </p>
-              <p className={s.roundVoice}>The word ‘reclaim’ made the app feel braced for trauma.</p>
+              <p className={s.roundVoice}>“Assuming there’s a trauma, you shouldn’t call it that.”</p>
             </div>
             <div className={s.roundStage}>
               <Phone src="/images/birthstory/evolution/screens/v2-1.png" alt="V2 splash screen." cap="V2 splash" />
@@ -200,14 +200,14 @@ export default function BirthStoryV2() {
 
       {/* ── F9 · THE PRODUCT — the sustained teal world ── */}
       <Frame id="product" tone="dark" kicker="06 · The product" className={s.productFrame} threshold={0.06}>
-        <h2 className={`${s.claim} ${s.voice} ${s.up}`} style={{ '--d': '80ms' }}>
+        <h2 className={`${s.claim} ${s.voice} ${s.up}`} style={{ '--d': '40ms' }}>
           Birth is unpredictable, so the app is deliberately <b>simple</b>.
         </h2>
-        <p className={`${s.line} ${s.up}`} style={{ '--d': '160ms' }}>
+        <p className={`${s.line} ${s.up}`} style={{ '--d': '90ms' }}>
           None of these screens are flat mockups: I rebuilt the wireframes as working prototypes.
         </p>
 
-        <div className={`${s.prio} ${s.up}`} style={{ '--d': '240ms' }}>
+        <div className={`${s.prio} ${s.up}`} style={{ '--d': '130ms' }}>
           <p className={s.prioLine}>The research kept telling me to leave things out.</p>
           <span className={`${s.chip} ${s.chipKept}`}><span className={s.chipTag}>kept</span>sharing</span>
           <span className={`${s.chip} ${s.chipKept}`}><span className={s.chipTag}>kept</span>keepsake book</span>
@@ -216,16 +216,16 @@ export default function BirthStoryV2() {
           <span className={`${s.chip} ${s.chipCut}`}>birth plan</span>
         </div>
 
-        <div className={`${s.wallWrap} ${s.up}`} style={{ '--d': '320ms' }}>
+        <div className={`${s.wallWrap} ${s.up}`} style={{ '--d': '170ms' }}>
           <FeatureWall tone="dark" />
         </div>
 
         <div className={s.feature}>
           <div className={s.featureCopy}>
             <h3 className={`${s.featureName} ${s.up}`}>Documentation</h3>
-            <p className={`${s.featureClaim} ${s.up}`} style={{ '--d': '90ms' }}>Calm by default: entries stay closed until you open one.</p>
+            <p className={`${s.featureClaim} ${s.up}`} style={{ '--d': '50ms' }}>Calm by default: entries stay closed until you open one.</p>
           </div>
-          <div className={`${s.featureMedia} ${s.up}`} style={{ '--d': '200ms' }}>
+          <div className={`${s.featureMedia} ${s.up}`} style={{ '--d': '110ms' }}>
             <DocReveal />
           </div>
         </div>
@@ -233,13 +233,13 @@ export default function BirthStoryV2() {
         <div className={`${s.feature} ${s.featureFlip}`}>
           <div className={s.featureCopy}>
             <h3 className={`${s.featureName} ${s.up}`}>Care Pod</h3>
-            <p className={`${s.featureClaim} ${s.up}`} style={{ '--d': '90ms' }}>You don’t carry it: one person you designate sends the updates.</p>
-            <p className={`${s.featureLine} ${s.up}`} style={{ '--d': '170ms' }}>
+            <p className={`${s.featureClaim} ${s.up}`} style={{ '--d': '50ms' }}>You don’t carry it: one person you designate sends the updates.</p>
+            <p className={`${s.featureLine} ${s.up}`} style={{ '--d': '100ms' }}>
               The idea came out of a single interview: a parent told me someone in her circle
               remembered a detail about her child’s birth that she had lost.
             </p>
           </div>
-          <div className={`${s.featureMedia} ${s.up}`} style={{ '--d': '200ms' }}>
+          <div className={`${s.featureMedia} ${s.up}`} style={{ '--d': '110ms' }}>
             <CarePodFlow />
           </div>
         </div>
@@ -247,9 +247,9 @@ export default function BirthStoryV2() {
         <div className={s.feature}>
           <div className={s.featureCopy}>
             <h3 className={`${s.featureName} ${s.up}`}>Reflection</h3>
-            <p className={`${s.featureClaim} ${s.up}`} style={{ '--d': '90ms' }}>No blank page: the deck deals a prompt, and you tag how it felt.</p>
+            <p className={`${s.featureClaim} ${s.up}`} style={{ '--d': '50ms' }}>No blank page: the deck deals a prompt, and you tag how it felt.</p>
           </div>
-          <div className={`${s.featureMedia} ${s.up}`} style={{ '--d': '200ms' }}>
+          <div className={`${s.featureMedia} ${s.up}`} style={{ '--d': '110ms' }}>
             <JournalFlow />
           </div>
         </div>
@@ -257,10 +257,10 @@ export default function BirthStoryV2() {
         <div className={`${s.feature} ${s.featureFlip}`}>
           <div className={s.featureCopy}>
             <h3 className={`${s.featureName} ${s.up}`}>Search</h3>
-            <p className={`${s.featureClaim} ${s.up}`} style={{ '--d': '90ms' }}>A swipe from anywhere; filter by feeling.</p>
-            <p className={`${s.featureLine} ${s.up}`} style={{ '--d': '170ms' }}>This is the one feature nobody asked for.</p>
+            <p className={`${s.featureClaim} ${s.up}`} style={{ '--d': '50ms' }}>A swipe from anywhere; filter by feeling.</p>
+            <p className={`${s.featureLine} ${s.up}`} style={{ '--d': '100ms' }}>This is the one feature nobody asked for.</p>
           </div>
-          <div className={`${s.featureMedia} ${s.up}`} style={{ '--d': '200ms' }}>
+          <div className={`${s.featureMedia} ${s.up}`} style={{ '--d': '110ms' }}>
             <SearchReveal />
           </div>
         </div>
@@ -268,13 +268,13 @@ export default function BirthStoryV2() {
         <div className={s.feature}>
           <div className={s.featureCopy}>
             <h3 className={`${s.featureName} ${s.up}`}>The Book</h3>
-            <p className={`${s.featureClaim} ${s.up}`} style={{ '--d': '90ms' }}>It can leave the app: a printed book, or a free PDF.</p>
-            <p className={`${s.featureLine} ${s.up}`} style={{ '--d': '170ms' }}>
+            <p className={`${s.featureClaim} ${s.up}`} style={{ '--d': '50ms' }}>It can leave the app: a printed book, or a free PDF.</p>
+            <p className={`${s.featureLine} ${s.up}`} style={{ '--d': '100ms' }}>
               A parent told me she wouldn’t trust an app with something this precious unless she knew
               it couldn’t disappear.
             </p>
           </div>
-          <div className={`${s.featureMedia} ${s.up}`} style={{ '--d': '200ms' }}>
+          <div className={`${s.featureMedia} ${s.up}`} style={{ '--d': '110ms' }}>
             <div className={s.bookRow}>
               <Phone src="/images/birthstory/bs-book-order.png" alt="The Birth Story Book screen: order a printed keepsake or download a PDF." cap="Order a keepsake, or download a PDF." capClass={`${s.shotCap} ${s.bookCap}`} />
               <Phone src="/images/birthstory/bs-book-curate.png" alt="A timeline of entries with Drag Content to Curate Your Story, open to collaborators." cap="Curate from what’s already there, together." capClass={`${s.shotCap} ${s.bookCap}`} />
@@ -285,25 +285,25 @@ export default function BirthStoryV2() {
 
       {/* ── F10 · THE IDENTITY ── */}
       <Frame id="identity" kicker="07 · The identity">
-        <h2 className={`${s.claim} ${s.voice} ${s.up}`} style={{ '--d': '80ms' }}>
+        <h2 className={`${s.claim} ${s.voice} ${s.up}`} style={{ '--d': '40ms' }}>
           Calm, emotionally intelligent, and deliberately <b>non-clinical</b>.
         </h2>
-        <div className={`${s.wordmarkBand} ${s.up}`} style={{ '--d': '180ms' }}>
+        <div className={`${s.wordmarkBand} ${s.up}`} style={{ '--d': '100ms' }}>
           <img src="/images/birthstory/wordmark-birthstory.svg" alt="Birth Story wordmark, set in Terfens." width="267" height="54" draggable="false" />
           <p className={s.gradStops}><span>blush</span><span>→</span><span>periwinkle</span><span>→</span><span>teal</span></p>
         </div>
         <div className={s.identityGrid}>
           <div>
-            <p className={`${s.identityWhy} ${s.up}`} style={{ '--d': '260ms' }}>
+            <p className={`${s.identityWhy} ${s.up}`} style={{ '--d': '140ms' }}>
               “I chose a lighter pink into a darker teal because it let me hold two things at once: a
               gender spectrum, and the emotional range of the day itself.”
             </p>
-            <div className={`${s.typeRow} ${s.up}`} style={{ '--d': '340ms' }}>
+            <div className={`${s.typeRow} ${s.up}`} style={{ '--d': '190ms' }}>
               <span><b>Terfens</b> titles</span>
               <span><b>Gotham</b> everything else</span>
             </div>
           </div>
-          <figure className={`${s.board} ${s.up}`} style={{ '--d': '300ms' }}>
+          <figure className={`${s.board} ${s.up}`} style={{ '--d': '160ms' }}>
             <img
               src="/images/birthstory/moodboard.png"
               alt="The Birth Story moodboard: Georgia O’Keeffe florals, lunar and gradient imagery, and wellness apps with orbiting members and keepsake books."
@@ -319,21 +319,21 @@ export default function BirthStoryV2() {
 
       {/* ── F11 · THE OUTCOME ── */}
       <Frame id="outcome" kicker="08 · The outcome">
-        <blockquote className={`${s.outcomeQuote} ${s.up}`} style={{ '--d': '80ms' }}>
+        <blockquote className={`${s.outcomeQuote} ${s.up}`} style={{ '--d': '40ms' }}>
           “I wish this could be real right now!”
         </blockquote>
-        <p className={`${s.outcomeWho} ${s.up}`} style={{ '--d': '160ms' }}>Sarah Burns, MSW, LSW · client</p>
+        <p className={`${s.outcomeWho} ${s.up}`} style={{ '--d': '90ms' }}>Sarah Burns, MSW, LSW · client</p>
         <div className={s.outcomeGrid}>
           <div>
-            <h2 className={`${s.claim} ${s.claimLong} ${s.up}`} style={{ '--d': '220ms', fontSize: 'clamp(1.5rem, 1.2rem + 1.3vw, 2.3rem)' }}>
+            <h2 className={`${s.claim} ${s.claimLong} ${s.outcomeClaimSm} ${s.up}`} style={{ '--d': '120ms' }}>
               The client loved it, and it still isn’t getting built.
             </h2>
-            <p className={`${s.line} ${s.up}`} style={{ '--d': '300ms' }}>
+            <p className={`${s.line} ${s.up}`} style={{ '--d': '160ms' }}>
               When we presented, the client had almost nothing to change. There’s no real signal the
               app will get built, but it gave the concept a real starting point.
             </p>
           </div>
-          <figure className={`${s.outcomeFig} ${s.up}`} style={{ '--d': '260ms' }}>
+          <figure className={`${s.outcomeFig} ${s.up}`} style={{ '--d': '140ms' }}>
             <img
               src={cloudImg('IMG_3012', 1600)}
               alt="The studio team standing together in front of the projector screen, with our client Sarah Burns smiling on the video call behind them."
@@ -356,11 +356,11 @@ export default function BirthStoryV2() {
             I’m a big dreamer. I try to do everything first, then narrow and narrow until I get to
             the heart of it.
           </p>
-          <p className={`${s.codaSub} ${s.up}`} style={{ '--d': '120ms' }}>
+          <p className={`${s.codaSub} ${s.up}`} style={{ '--d': '70ms' }}>
             Designing something and then being able to build it myself is the direction I’m headed.
             The working prototypes on this page are that proof.
           </p>
-          <div className={`${s.codaActions} ${s.up}`} style={{ '--d': '220ms' }}>
+          <div className={`${s.codaActions} ${s.up}`} style={{ '--d': '120ms' }}>
             <a className={s.codaCta} href="mailto:lorinanderberg1@gmail.com">Get in touch</a>
             <a className={s.codaAlt} href="/">See more work</a>
           </div>

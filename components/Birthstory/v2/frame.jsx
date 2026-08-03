@@ -21,7 +21,7 @@ export function useSeen(threshold = 0.2) {
   return [ref, seen]
 }
 
-export function Frame({ id, tone = 'paper', kicker, threshold = 0.18, className = '', children }) {
+export function Frame({ id, tone = 'paper', kicker, threshold = 0.12, className = '', children }) {
   const [ref, seen] = useSeen(threshold)
   return (
     <section ref={ref} id={id} className={`${s.frame} ${s[tone] || ''} ${seen ? s.in : ''} ${className}`}>

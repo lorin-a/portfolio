@@ -26,7 +26,7 @@ function Step({ tag, className = '', children }) {
 /* the "my thinking" register — her first-person judgment, labeled */
 function Think({ children }) {
   return (
-    <div className={`${s.think} ${s.up}`} style={{ '--d': '140ms' }}>
+    <div className={`${s.think} ${s.up}`} style={{ '--d': '80ms' }}>
       <p className={s.thinkTag}>my thinking</p>
       <p className={s.thinkText}>{children}</p>
     </div>
@@ -80,9 +80,9 @@ export default function DeepPlane() {
       <section ref={gateRef} className={`${s.frame} ${s.gate} ${gateSeen ? s.in : ''}`} aria-label="Part two, behind the work">
         <div className={s.inner}>
           <span className={`${s.gateStem} ${s.up}`} aria-hidden="true" />
-          <p className={`${s.kicker} ${s.gateKicker} ${s.up}`} style={{ '--d': '100ms' }}>Part two</p>
-          <h2 className={`${s.claim} ${s.gateClaim} ${s.up}`} style={{ '--d': '180ms' }}>Behind the work</h2>
-          <p className={`${s.line} ${s.gateLine} ${s.up}`} style={{ '--d': '280ms' }}>
+          <p className={`${s.kicker} ${s.gateKicker} ${s.up}`} style={{ '--d': '60ms' }}>Part two</p>
+          <h2 className={`${s.claim} ${s.gateClaim} ${s.up}`} style={{ '--d': '100ms' }}>Behind the work</h2>
+          <p className={`${s.line} ${s.gateLine} ${s.up}`} style={{ '--d': '150ms' }}>
             The story is told above. This is how it was made: one decision taken all the way down,
             then every screen of every round, the words, and the pitch.
           </p>
@@ -91,7 +91,7 @@ export default function DeepPlane() {
 
       {/* ── 09 · THE DEEP CORE — the entry-flow decision, to the bottom ── */}
       <Frame id="core" kicker="09 · One decision, all the way down" className={s.deep} threshold={0.06}>
-        <h2 className={`${s.claim} ${s.claimLong} ${s.voice} ${s.up}`} style={{ '--d': '80ms' }}>
+        <h2 className={`${s.claim} ${s.claimLong} ${s.voice} ${s.up}`} style={{ '--d': '40ms' }}>
           Capacity rises over time, so the app had to meet <b>three different moments</b>, not one.
         </h2>
 
@@ -113,7 +113,7 @@ export default function DeepPlane() {
                 iteration, built the design around events on a timeline.
               </Think>
             </div>
-            <aside className={`${s.moments} ${s.up}`} style={{ '--d': '200ms' }} aria-label="How they said they would use it">
+            <aside className={`${s.moments} ${s.up}`} style={{ '--d': '110ms' }} aria-label="How they said they would use it">
               <p className={s.stepTag}>how they’d use it</p>
               <div className={s.moment}>
                 <p className={s.momentWhen}>Early, in the fog</p>
@@ -147,7 +147,7 @@ export default function DeepPlane() {
                 breath.
               </Think>
             </div>
-            <figure className={`${s.iaFig} ${s.up}`} style={{ '--d': '200ms' }}>
+            <figure className={`${s.iaFig} ${s.up}`} style={{ '--d': '110ms' }}>
               <IaV1 />
               <figcaption className={s.cap}>
                 ia-v1 · a branching questionnaire that asked conditional questions before any entry.
@@ -164,7 +164,7 @@ export default function DeepPlane() {
               testing (TAP) with parents our client connected us with, and changed direction based on
               what we heard.
             </p>
-            <figure className={`${s.tapFig} ${s.up}`} style={{ '--d': '160ms' }}>
+            <figure className={`${s.tapFig} ${s.up}`} style={{ '--d': '90ms' }}>
               <img
                 src="https://res.cloudinary.com/dc17mvdyv/image/upload/f_auto,q_auto,w_1300/v1782679668/UX_Interview.jpg"
                 alt="A think-aloud walkthrough over Zoom, with two facilitators on the right and the parent tile blurred for privacy on the left."
@@ -200,7 +200,7 @@ export default function DeepPlane() {
             </figcaption>
           </figure>
           <div className={s.moves}>
-            <div className={`${s.move} ${s.up}`} style={{ '--d': '120ms' }}>
+            <div className={`${s.move} ${s.up}`} style={{ '--d': '70ms' }}>
                 <h3 className={s.moveName}>Open into the task</h3>
                 <p className={s.moveText}>
                   Rather than layer features, we embedded customization and options inside a simple
@@ -209,7 +209,7 @@ export default function DeepPlane() {
                   a timeline of their documentation. The rest can be explored another time.
                 </p>
               </div>
-              <div className={`${s.move} ${s.up}`} style={{ '--d': '220ms' }}>
+              <div className={`${s.move} ${s.up}`} style={{ '--d': '120ms' }}>
                 <h3 className={s.moveName}>Unify, don’t fragment</h3>
                 <p className={s.moveText}>
                   We also stopped splitting the data up. The brief asked for four kinds of capture,
@@ -219,7 +219,7 @@ export default function DeepPlane() {
                 </p>
               </div>
             </div>
-          <figure className={`${s.stripFig} ${s.up}`} style={{ '--d': '200ms' }}>
+          <figure className={`${s.stripFig} ${s.up}`} style={{ '--d': '110ms' }}>
             <div className={s.stripStack}>
               <img src="/images/birthstory/evolution/flows/onboarding-v1.png" alt="The version 1 onboarding flow: a walkthrough that asks the parent questions before any entry." loading="lazy" draggable="false" />
               <img src="/images/birthstory/evolution/flows/onboarding-v2.png" alt="The version 2 onboarding flow: a welcome screen and a swipe-through tour of four features." loading="lazy" draggable="false" />
@@ -270,7 +270,7 @@ export default function DeepPlane() {
 
       {/* ── 11 · THE WORDS — the rename, before and after ── */}
       <Frame id="words" kicker="11 · The words" className={s.deep}>
-        <h2 className={`${s.claim} ${s.claimLong} ${s.voice} ${s.up}`} style={{ '--d': '80ms' }}>
+        <h2 className={`${s.claim} ${s.claimLong} ${s.voice} ${s.up}`} style={{ '--d': '40ms' }}>
           The copy is trauma-informed without <b>assuming</b> trauma.
         </h2>
         <div className={s.wordsGrid}>
@@ -282,26 +282,26 @@ export default function DeepPlane() {
               hard parts, missing how much a birth can also be about connection. I didn’t want the
               words to decide the experience for anyone.
             </p>
-            <p className={`${s.deepProse} ${s.up}`} style={{ '--d': '100ms' }}>
+            <p className={`${s.deepProse} ${s.up}`} style={{ '--d': '60ms' }}>
               So I rewrote toward connection and left room for people to bring their own tone. Same
               for “Find strength &amp; support” as a feature name: it positioned the new mother in a
               negative light, when in fact most are empowered by doing an amazing and hard thing. It
               became the Care Pod.
             </p>
-            <p className={`${s.deepProse} ${s.up}`} style={{ '--d': '200ms' }}>
+            <p className={`${s.deepProse} ${s.up}`} style={{ '--d': '110ms' }}>
               The next thing I’d do is balance the reflection prompts so they reach for joy as
               readily as they make room for distress.
             </p>
           </div>
           <div className={s.wordsPanel}>
-            <div className={`${s.saidWrap} ${s.up}`} style={{ '--d': '160ms' }}>
+            <div className={`${s.saidWrap} ${s.up}`} style={{ '--d': '90ms' }}>
               <p className={s.stepTag}>a parent said</p>
               <p className={s.heard}>
                 “Assuming there’s a trauma, you shouldn’t call it that. I appreciate the
                 acknowledgement, but it feels like an implied negative.”
               </p>
             </div>
-            <div className={`${s.revs} ${s.up}`} style={{ '--d': '280ms' }}>
+            <div className={`${s.revs} ${s.up}`} style={{ '--d': '150ms' }}>
               <p className={s.stepTag}>the rewrites</p>
               <div className={s.rev}>
                 <p className={s.revDraft}>“Reclaim your narrative.”</p>

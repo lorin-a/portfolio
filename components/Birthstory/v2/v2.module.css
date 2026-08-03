@@ -22,7 +22,8 @@
 }
 
 /* ── frame shell — Pearl-scale breathing: the gaps are part of the design ── */
-.frame { padding: clamp(6rem, 17vh, 13rem) 0; }
+.frame { padding: clamp(6rem, 17vh, 13rem) 0; scroll-margin-top: 4.5rem; }
+.v2 ::selection { background: rgba(177, 193, 244, 0.55); color: var(--teal-deep); }
 .inner { max-width: 92rem; margin: 0 auto; padding: 0 var(--pad); }
 .paper { background: var(--paper); }
 .white { background: #fff; }
@@ -32,8 +33,12 @@
   margin: 0 0 clamp(1.6rem, 3.5vw, 2.6rem);
   font-family: var(--font-body); font-weight: 700; font-size: 0.75rem;
   letter-spacing: 0.2em; text-transform: uppercase; color: var(--teal-soft);
+  font-variant-numeric: tabular-nums;
 }
+/* the spine tick — the page's dotted-thread grammar, one small mark per frame */
+.kicker::after { content: ''; display: block; width: 2.2rem; margin-top: 0.7rem; border-top: 2px dotted var(--teal-soft); }
 .dark .kicker { color: rgba(255, 255, 255, 0.6); }
+.dark .kicker::after { border-top-color: rgba(255, 255, 255, 0.38); }
 
 /* ── the type tiers ── */
 .claim {
@@ -48,7 +53,9 @@
 /* the voiced chapter line — her voice in italic display serif (the Pearl move) */
 .voice { font-style: italic; font-weight: 380; }
 .voice b { font-style: italic; }
-.dark .claim, .dark .claim b { color: #fff; }
+.dark .claim { color: #fff; }
+/* emphasis must survive the dark ground — periwinkle carries what teal does on paper */
+.dark .claim b { color: var(--peri); }
 .line {
   margin: clamp(1rem, 2.4vw, 1.6rem) 0 0; max-width: 52ch;
   font-family: var(--font-body); font-size: clamp(1rem, 0.95rem + 0.3vw, 1.14rem);
@@ -62,8 +69,9 @@
 .dark .cap { color: rgba(255, 255, 255, 0.55); }
 .byline { letter-spacing: 0.04em; }
 
-/* ── reveal ── */
-.up { opacity: 0; transform: translateY(26px); transition: opacity 800ms var(--ease-out), transform 800ms var(--ease-out); transition-delay: var(--d, 0ms); }
+/* ── reveal — tuned for a fast scroller (F25): short travel, quick arrival,
+   soft landing via the ease. A reveal must finish inside the scroll. ── */
+.up { opacity: 0; transform: translateY(16px); transition: opacity 480ms var(--ease-out), transform 480ms var(--ease-out); transition-delay: var(--d, 0ms); }
 .in .up { opacity: 1; transform: none; }
 @media (prefers-reduced-motion: reduce) { .up { opacity: 1; transform: none; transition: none; } }
 
@@ -346,6 +354,8 @@
   color: var(--color-ink); text-wrap: balance;
 }
 .outcomeWho { margin: 1.2rem 0 0; font-family: var(--font-body); font-weight: 600; font-size: 0.78rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--teal-soft); }
+/* the outcome's second claim sits under the huge quote — quieter tier */
+.outcomeClaimSm { font-size: clamp(1.5rem, 1.2rem + 1.3vw, 2.3rem); }
 .outcomeGrid {
   display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
   gap: clamp(2.4rem, 6vw, 5rem); align-items: center;
@@ -397,7 +407,13 @@
 /* the threshold — the visible reason for the register switch */
 .gate { padding: clamp(6rem, 15vh, 11rem) 0 clamp(2.5rem, 6vh, 4rem); text-align: center; }
 .gateStem { display: block; width: 0; height: clamp(2.4rem, 6vh, 4rem); margin: 0 auto clamp(1.6rem, 3.5vh, 2.4rem); border-left: 2px dotted var(--teal-soft); }
+/* the stem draws down instead of fading — the register switch made visible */
+.gate .gateStem { opacity: 0; transform: scaleY(0); transform-origin: top center; transition: opacity 300ms var(--ease-out), transform 650ms var(--ease-out); }
+.gate.in .gateStem { opacity: 1; transform: scaleY(1); }
+@media (prefers-reduced-motion: reduce) { .gate .gateStem { opacity: 1; transform: none; transition: none; } }
 .gateKicker { margin-bottom: 1.1rem; }
+/* the stem is the gate's mark; no second tick under its kicker */
+.gateKicker::after { display: none; }
 .gateClaim { margin: 0 auto; }
 .gateLine { margin-left: auto; margin-right: auto; max-width: 52ch; }
 
@@ -438,7 +454,7 @@
 .iaFig { margin: 0; display: grid; gap: 0.7rem; }
 .iaFigWide { max-width: 58rem; }
 .tapFig { margin: 0; display: grid; gap: 0.7rem; align-content: start; }
-.tapFig img { width: 100%; height: auto; display: block; border-radius: 4px; box-shadow: 0 28px 56px -34px rgba(26, 67, 77, 0.5); }
+.tapFig img { width: 100%; height: auto; display: block; border-radius: 4px; box-shadow: 0 32px 64px -36px rgba(26, 67, 77, 0.5); }
 .stripFig { margin: clamp(2.6rem, 6vw, 4rem) 0 0; display: grid; gap: 0.8rem; }
 .stripStack { display: grid; gap: clamp(0.8rem, 2vw, 1.2rem); }
 .stripStack img { width: 100%; height: auto; display: block; border: 1px solid rgba(26, 67, 77, 0.14); border-radius: 4px; background: #fff; }

@@ -69,8 +69,8 @@ export default function BuiltFromWords({ embedded = false }) {
       gsap.set(q('[data-m="spark"]'), { autoAlpha: 0 })
 
       /* the stage settles */
-      tl.to(q('[data-m="device"]'), { autoAlpha: 1, y: 0, duration: 0.9 }, 0)
-      tl.to(q('[data-m="chatHead"]'), { autoAlpha: 1, y: 0, duration: 0.5 }, 0.2)
+      tl.to(q('[data-m="device"]'), { autoAlpha: 1, y: 0, duration: 0.6 }, 0)
+      tl.to(q('[data-m="chatHead"]'), { autoAlpha: 1, y: 0, duration: 0.4 }, 0.12)
 
       /* a spark lifts from a bubble and lands as product */
       const stageRect = () => stage.getBoundingClientRect()
@@ -85,14 +85,14 @@ export default function BuiltFromWords({ embedded = false }) {
           const endY = b.top - sr.top + b.height / 2 - 12
           gsap.set(sparkEl, { x: startX, y: startY, scale: 0.7 })
           gsap.timeline()
-            .to(sparkEl, { autoAlpha: 1, scale: 1, duration: 0.18 })
+            .to(sparkEl, { autoAlpha: 1, scale: 1, duration: 0.14 })
             .to(sparkEl, {
               keyframes: [
-                { x: (startX + endX) / 2, y: Math.min(startY, endY) - 46, duration: 0.42, ease: 'power1.out' },
-                { x: endX, y: endY, duration: 0.42, ease: 'power1.in' },
+                { x: (startX + endX) / 2, y: Math.min(startY, endY) - 46, duration: 0.3, ease: 'power1.out' },
+                { x: endX, y: endY, duration: 0.3, ease: 'power1.in' },
               ],
             })
-            .to(sparkEl, { autoAlpha: 0, scale: 0.6, duration: 0.16 }, '-=0.05')
+            .to(sparkEl, { autoAlpha: 0, scale: 0.6, duration: 0.12 }, '-=0.05')
             .call(onLand)
         }, null, tlPos)
       }
@@ -104,38 +104,41 @@ export default function BuiltFromWords({ embedded = false }) {
 
       const landings = [
         () => { // ask 1 → the first timeline entry
-          gsap.to(q('[data-m="entry1"]'), { autoAlpha: 1, y: 0, scale: 1, duration: 0.45 })
+          gsap.to(q('[data-m="entry1"]'), { autoAlpha: 1, y: 0, scale: 1, duration: 0.35 })
         },
         () => { // ask 2 → the feeling: emotion dots + the second entry
-          gsap.to(q('[data-m="dot"]'), { autoAlpha: 1, scale: 1, duration: 0.35, stagger: 0.09, ease: 'power3.out' })
-          gsap.to(q('[data-m="entry2"]'), { autoAlpha: 1, y: 0, scale: 1, duration: 0.45, delay: 0.15 })
+          gsap.to(q('[data-m="dot"]'), { autoAlpha: 1, scale: 1, duration: 0.3, stagger: 0.07, ease: 'power3.out' })
+          gsap.to(q('[data-m="entry2"]'), { autoAlpha: 1, y: 0, scale: 1, duration: 0.35, delay: 0.1 })
         },
         () => { // ask 3 → the nav assembles; the Care Pod heart lands last, the one bounce
-          gsap.to(q('[data-m="navbar"]'), { autoAlpha: 1, y: 0, scale: 1, duration: 0.45 })
-          gsap.to(q('[data-m="navicon"]:not([data-heart])'), { autoAlpha: 1, scale: 1, duration: 0.35, stagger: 0.08, delay: 0.2 })
-          gsap.to(q('[data-heart]'), { autoAlpha: 1, scale: 1, duration: 0.55, delay: 0.65, ease: 'back.out(2.4)' })
+          gsap.to(q('[data-m="navbar"]'), { autoAlpha: 1, y: 0, scale: 1, duration: 0.35 })
+          gsap.to(q('[data-m="navicon"]:not([data-heart])'), { autoAlpha: 1, scale: 1, duration: 0.3, stagger: 0.06, delay: 0.15 })
+          gsap.to(q('[data-heart]'), { autoAlpha: 1, scale: 1, duration: 0.45, delay: 0.45, ease: 'back.out(2.4)' })
         },
       ]
 
+      /* the cadence, compressed for a fast scroller (F25): the chat and the
+         phone play in parallel — a spark can still be landing while the next
+         voice starts typing. Nothing waits its turn that doesn't have to. */
       ASKS.forEach((_, i) => {
-        const t0 = 0.9 + i * 2.1
-        tl.to(typings[i], { autoAlpha: 1, duration: 0.2 }, t0)
-        tl.to(typings[i], { autoAlpha: 0, duration: 0.18 }, t0 + 0.85)
-        tl.to(msgs[i], { autoAlpha: 1, y: 0, duration: 0.5 }, t0 + 0.95)
-        flySpark(t0 + 1.5, sparks[i], msgs[i], device, landings[i])
+        const t0 = 0.5 + i * 1.2
+        tl.to(typings[i], { autoAlpha: 1, duration: 0.16 }, t0)
+        tl.to(typings[i], { autoAlpha: 0, duration: 0.14 }, t0 + 0.5)
+        tl.to(msgs[i], { autoAlpha: 1, y: 0, duration: 0.4 }, t0 + 0.58)
+        flySpark(t0 + 0.9, sparks[i], msgs[i], device, landings[i])
       })
 
-      /* the sister's verbatim — weightier, slower */
-      const tQ = 0.9 + 3 * 2.1
-      tl.to(typings[3], { autoAlpha: 1, duration: 0.2 }, tQ)
-      tl.to(typings[3], { autoAlpha: 0, duration: 0.18 }, tQ + 1.15)
-      tl.to(q('[data-m="quote"]'), { autoAlpha: 1, y: 0, duration: 0.8, ease: 'power1.out' }, tQ + 1.25)
+      /* the sister's verbatim — still the weightiest beat, no longer the slowest */
+      const tQ = 0.5 + 3 * 1.2
+      tl.to(typings[3], { autoAlpha: 1, duration: 0.16 }, tQ)
+      tl.to(typings[3], { autoAlpha: 0, duration: 0.14 }, tQ + 0.7)
+      tl.to(q('[data-m="quote"]'), { autoAlpha: 1, y: 0, duration: 0.6, ease: 'power1.out' }, tQ + 0.78)
 
       /* the app completes, warms, and breathes */
-      tl.to(q('[data-m="apphead"], [data-m="newentry"]'), { autoAlpha: 1, y: 0, scale: 1, duration: 0.5 }, tQ + 2.1)
-      tl.to(q('[data-m="veil"]'), { opacity: 1, duration: 1.5, ease: 'sine.inOut' }, tQ + 2.3)
-      tl.to(device, { scale: 1.012, duration: 1.2, ease: 'sine.inOut', yoyo: true, repeat: 1 }, tQ + 2.6)
-      tl.to(q('[data-m="caption"]'), { autoAlpha: 1, y: 0, duration: 0.8 }, tQ + 2.8)
+      tl.to(q('[data-m="apphead"], [data-m="newentry"]'), { autoAlpha: 1, y: 0, scale: 1, duration: 0.4 }, tQ + 1.3)
+      tl.to(q('[data-m="veil"]'), { opacity: 1, duration: 1.1, ease: 'sine.inOut' }, tQ + 1.45)
+      tl.to(device, { scale: 1.012, duration: 0.9, ease: 'sine.inOut', yoyo: true, repeat: 1 }, tQ + 1.6)
+      tl.to(q('[data-m="caption"]'), { autoAlpha: 1, y: 0, duration: 0.5 }, tQ + 1.7)
 
       return tl
     }
@@ -143,7 +146,7 @@ export default function BuiltFromWords({ embedded = false }) {
     tlRef.current = build()
     const io = new IntersectionObserver(([e]) => {
       if (e.isIntersecting) { tlRef.current?.play(); io.disconnect() }
-    }, { threshold: 0.45 })
+    }, { threshold: 0.3 })
     io.observe(stage)
     return () => { io.disconnect(); tlRef.current?.kill() }
   }, [])
