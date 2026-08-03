@@ -238,10 +238,9 @@ function Research() {
         <Figure
           tag="context"
           photo
-          duo
           src={feeding.src}
           byline={feeding.byline}
-          alt="A mother holds her newborn skin to skin in a hospital bed, her eyes closed, in teal-ink duotone."
+          alt="A mother holds her newborn skin to skin in a hospital bed, her eyes closed."
           cap="A parent and newborn in the first hours after birth."
         />
       </Split>
