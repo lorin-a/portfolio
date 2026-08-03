@@ -16,11 +16,16 @@ stats demoted · ✅ chapter titles fixed (ghost numeral removed, flush-left) ·
 export, so inside the site's own phone frame the Book finale shows a frame within a frame. More
 visible now that the act is on a dark ground. Needs a re-export from Figma, screen only.
 
-**NEXT MOVE:** the **process-unify** — Brief (01), Research (02), Architecture (03), Iteration,
-Identity (04) onto the ONE deep-dive grammar (strong artifact + short flanking margin annotations;
-kill the bordered cards, the MY THINKING pill, the dark gradient boxes). One chapter at a time, her
-copy verbatim, verified eyes-on, committed per chapter. Start with Brief (the Myana bordered card +
-the required/provided band are the visible offenders at the act-two seam).
+**Process-unify — pass one shipped (`0ffbef1`):** the SURFACES are unified. Every chapter's asides
+now speak one language (teal rule + uppercase label + note); the three coloured chips, the Myana
+card, the Identity gradient panel, and the revisions plate are all retired. No copy touched.
+
+**NEXT MOVE:** process-unify pass two — the LAYOUTS. Surfaces agree now, but the chapters still sit
+on different grids (Research's synth is a 3-col progression, Architecture's confront is a centred
+before/after, Iteration is copy-left/stage-right). Bring them onto the one deep-dive grid: strong
+artifact + short flanking margin annotations, heading + one short lede. One chapter at a time,
+her copy verbatim, verified eyes-on, committed per chapter. **Wants her eyes on the pinned product
+act first** — that's the thing she asked to be tried again.
 
 **Map:** the full plan = `★ THE UNIFY PLAN` below · craft-bar study + THE THESIS (verbatim) =
 memory `DECISIONS.md` · dev server on **:3001** · Playwright MCP browser locked → playwright-core fallback.
