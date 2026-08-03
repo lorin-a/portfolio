@@ -99,12 +99,11 @@ export function FieldSection({ id, num, crumb, when, alt = false, wide = false, 
             {when && <span className={s.fWhen}>{when}</span>}
           </header>
         )}
-        {/* the chapter opener — the Statement recipe: an oversized ghosted
-            numeral (wayfinding made visible) with the chapter's thesis hanging
-            asymmetric across the columns at true display scale */}
+        {/* the chapter opener — the thesis, flush-left and unadorned (the giant
+            ghosted numeral was flashy and forced an off-balance indent; the
+            chapter is already numbered by the sticky nav and the eyebrow) */}
         {statement && (
           <div className={`${s.openerStage} ${sub ? s.openerSub : ''}`}>
-            {!sub && num && <span className={`${s.ghostNum} ${s.up}`} aria-hidden="true">{num}</span>}
             <St className={`${s.statement} ${statementLong ? s.statementLong : ''} ${sub ? s.statementSub : ''} ${s.up}`} style={{ '--d': '90ms' }}>
               {statement}
             </St>

@@ -181,22 +181,12 @@
   padding: clamp(2.6rem, 6vw, 4.6rem) 0 clamp(1.2rem, 2.6vw, 2rem);
   margin-bottom: clamp(1.6rem, 3.5vw, 2.6rem);
 }
-.ghostNum {
-  position: absolute; left: -0.04em; top: 50%; transform: translateY(-50%);
-  font-family: var(--font-heading); font-variation-settings: 'SOFT' 60, 'WONK' 0;
-  font-weight: 380; font-size: clamp(7.5rem, 5.5rem + 9vw, 13rem); line-height: 0.8;
-  letter-spacing: -0.02em;
-  /* the numeral wears the chapter's gradient stop with real presence —
-     ghosted, but felt at a squint (decorative + aria-hidden, no AA duty) */
-  color: color-mix(in srgb, var(--ch, var(--bs-teal)) var(--ch-ink, 38%), transparent);
-  user-select: none; pointer-events: none;
-}
 .statement {
   position: relative; z-index: 1;
-  margin: 0 0 0 clamp(3.5rem, 22%, 14rem); max-width: 18ch;
+  margin: 0; max-width: 20ch;
   font-family: var(--font-heading); font-variation-settings: 'SOFT' 60, 'WONK' 0;
-  font-weight: 360; font-size: clamp(2.4rem, 1.65rem + 3.4vw, 4.5rem);
-  line-height: 1.05; letter-spacing: -0.018em;
+  font-weight: 380; font-size: clamp(2.2rem, 1.6rem + 2.8vw, 3.8rem);
+  line-height: 1.08; letter-spacing: -0.016em;
   color: var(--color-ink); text-wrap: balance;
 }
 .statement b { font-weight: 460; color: var(--bs-accent); font-style: normal; }

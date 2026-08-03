@@ -5,6 +5,13 @@
 > Standing rule (2026-07-05): no feedback note lives only in a conversation. Each one is logged
 > here + as a harness task the instant it's sent, and closed only when done or explicitly deferred.
 
+### 2026-08-03 — later notes (N22–N23)
+
+| # | Note (her words, condensed) | Status |
+|---|---|---|
+| N22 | "improve these titles that I hate, they are too flashy, no big letter, looks unbalanced" (screenshot of a chapter statement with the giant ghosted numeral) | ✅ FIXED globally — removed the oversized ghosted chapter numeral (`.ghostNum`) + the ~22% indent it forced; every chapter statement is now flush-left, balanced, one tier smaller. The sticky nav + eyebrow already number the chapters. Verified 1440, stylelint clean, zero overflow/errors |
+| N23 | "put the product section below the hero so its two fully immersive and differentiated parts then the process — but the process section needs to look MUCH more unified as a flow/content design" | 🔨 THE NEXT MAJOR MOVE (restructure): reorder to **Hero → PRODUCT (immersive, differentiated) → PROCESS (unified) → Outcome**. Currently product/Interface sits at 04 (mid-process); move it up right after the hero as the second immersive block. The whole process half (Brief/Research/Architecture/Iteration/Identity) then unifies on the ONE grammar (the unify plan below). This is a page-order restructure + the process-unify — the big remaining work |
+
 ### ★ THE UNIFY PLAN — Birth Story parent route (owned by Claude, 2026-08-03, N21)
 
 Her mandate: make the whole page match the simple/elegant/balanced flow of **Interface→Outcome**
