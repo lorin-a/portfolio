@@ -2,47 +2,58 @@
 
 ## ▶ RESUME HERE (2026-08-03)
 
-**What we're doing:** unifying the Birth Story case study — the **rich version at the PARENT route**
-`/projects/birthstory-care-pod` (`BirthStoryBody` + `Sec*.jsx`). The `/v2`, `/case`, `/story`,
-`/moment-*` routes are abandoned exploration — **refine the parent route, do not rebuild.** Governing
-rule: **depth = content (her copy verbatim, never paraphrase) · simplicity = pacing (presentation).**
+**What we're doing:** unifying the Birth Story case study at the PARENT route
+`/projects/birthstory-care-pod` (`BirthStoryBody` + `ProductAct` + `Sec*.jsx`). The `/v2`, `/case`,
+`/story`, `/moment-*` routes are abandoned exploration — **refine the parent route, do not rebuild.**
+Governing rule: **depth = content (her copy verbatim, never paraphrase) · simplicity = pacing.**
 
-**Shipped this session:** ✅ all duotones → real-tone (global) · ✅ Research synthesis unified · ✅ Brief
-stats demoted · ✅ chapter titles fixed (ghost numeral removed, flush-left) · ✅ the unify plan written ·
-✅ **THE RESTRUCTURE** (`b7c4c44`) — two acts, the product immersive up top (N23/N24/N25) ·
-✅ **THE PINNED PRODUCT ACT** (`6743fef`) — dark ground, anchored beats, step rail (N26).
+### ★ THE UNIVERSAL GRAMMAR — settled, and the whole point of the session
+
+Three shapes, and only three. Every chapter on the page gets built from these.
+
+1. **THE ROW** — the workhorse. Contained in the page column, copy column left with
+   `position: sticky` beside its artifact, artifact large on the right in the gradient stage.
+   This is `SecIteration`'s `Round`, which is what she was pointing at all along.
+2. **THE ARIA** — reserved, **once per act**. A pinned moment whose beats are genuinely different
+   KINDS of content: *the ask → the research quote → the feature*. Her condition, and it is what
+   earns taking the scroll — five product features pinned in a row was five of the same thing.
+   Callouts with dotted leaders live in the aria and nowhere else (it is the only place the
+   artifact is big and alone enough for a leader to point at a region); in a row those same notes
+   read in the copy column.
+3. **THE OUTLINE REVEAL** — the aria's reveal logic, and reusable anywhere a section has parts the
+   reader should see coming. All the labels are visible from the first frame; only each BODY
+   expands as you reach it. Never reserve invisible space — it reads as broken, and blank space
+   cannot signal that more is coming. The upcoming labels are the clue.
+
+**Shipped this session:** ✅ duotones → real-tone · ✅ Research synthesis unified · ✅ chapter titles
+fixed · ✅ **the two-act restructure** (`b7c4c44`) — product up top, unnumbered; process 01–05 ·
+✅ **process-unify pass one** (`0ffbef1`) — one annotation language page-wide, the coloured chips,
+Myana card, Identity gradient panel and revisions plate all retired, no copy touched ·
+✅ **the layout lab** (`ed3cbcd`) at `/projects/birthstory-care-pod/layouts` — four candidate flows
+built to be scrolled; she picked A + C · ✅ **the grammar** (`384a4f6`, `f078623`, `cbbda36`) — the
+product act rebuilt as four rows + the Care Pod aria, filling in its outline.
+
+**▶ NEXT MOVE:** **her eyes on the product act first** — it was rebuilt three times this session and
+she has not seen the final shape. Then propagate **THE ROW** to the process half: Brief (01),
+Research (02), Architecture (03), Identity (04). Iteration is already on it. One chapter at a time,
+her copy verbatim, verified eyes-on, committed per chapter.
+
+**Then:** consider ONE aria for the process half — the 4→0 IA collapse is the candidate, it already
+has the three-beat shape (the ask → what testing said → what shipped). **Delete the `/layouts` route
+once she blesses the grammar.**
+
+**Open for her (asked, not yet answered):** the aria is Care Pod only, because it is the one feature
+with three genuinely different kinds of content. If she wants every feature to have it instead, the
+cost is inventing text to fill the other four — her call.
 
 **⚠︎ Known asset gap (not a code bug):** `bs-book-curate.png` has a device bezel baked into the
-export, so inside the site's own phone frame the Book finale shows a frame within a frame. More
-visible now that the act is on a dark ground. Needs a re-export from Figma, screen only.
+export, so inside the site's own phone frame the Book row shows a frame within a frame. Needs a
+re-export from Figma, screen only.
 
-**★ THE UNIVERSAL GRAMMAR IS SETTLED (N31, `384a4f6`) — THE ROW + ONE EARNED ARIA.**
-**THE ROW** is the workhorse and every chapter uses it: contained in the page column, copy left with
-the column sticky beside its artifact, artifact large on the right in the gradient stage. (This is
-`SecIteration`'s `Round` — the recipe she was pointing at from the start.)
-**THE ARIA** is reserved and used once per act: a pinned moment whose beats are genuinely different
-KINDS of content (the ask → the research quote → the feature). Callouts with dotted leaders live in
-the aria and nowhere else; in a row the same notes read in the copy column.
-
-**▶ NEXT:** propagate the ROW to the process half — Brief (01), Research (02), Architecture (03),
-Iteration (already on it), Identity (04). One chapter at a time, her copy verbatim, eyes-on,
-committed per chapter. Consider ONE aria for the process half — the 4→0 IA collapse is the candidate
-(the ask → what testing said → what shipped). Her eyes on the product act first.
-**The lab route stays until she blesses the synthesis, then gets deleted.**
-
-**Process-unify — pass one shipped (`0ffbef1`):** the SURFACES are unified. Every chapter's asides
-now speak one language (teal rule + uppercase label + note); the three coloured chips, the Myana
-card, the Identity gradient panel, and the revisions plate are all retired. No copy touched.
-
-**NEXT MOVE:** process-unify pass two — the LAYOUTS. Surfaces agree now, but the chapters still sit
-on different grids (Research's synth is a 3-col progression, Architecture's confront is a centred
-before/after, Iteration is copy-left/stage-right). Bring them onto the one deep-dive grid: strong
-artifact + short flanking margin annotations, heading + one short lede. One chapter at a time,
-her copy verbatim, verified eyes-on, committed per chapter. **Wants her eyes on the pinned product
-act first** — that's the thing she asked to be tried again.
-
-**Map:** the full plan = `★ THE UNIFY PLAN` below · craft-bar study + THE THESIS (verbatim) =
-memory `DECISIONS.md` · dev server on **:3001** · Playwright MCP browser locked → playwright-core fallback.
+**Map:** every note she has sent = the `⟢ OPEN NOTES LEDGER` below (N1–N33) · craft-bar study +
+THE THESIS (verbatim) = memory `DECISIONS.md` · dev server on **:3001** · for eyes-on verification
+see memory `eyes-on-browser-setup.md` (Playwright MCP is locked; use `playwright-core` +
+`channel: 'chrome'` from the scratchpad).
 
 ---
 
