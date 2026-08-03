@@ -53,14 +53,17 @@ export default function BirthStorySpine({ sections }) {
   return (
     <nav className={`${styles.spine} ${active ? '' : styles.hidden}`} aria-label="Case study sections" aria-hidden={active ? undefined : 'true'}>
       <ol className={styles.list}>
-        {sections.map((s, i) => (
+        {sections.map((s) => (
           <li key={s.id} className={styles.item}>
             <button
-              className={`${styles.node} ${active === s.id ? styles.on : ''}`}
+              className={`${styles.node} ${active === s.id ? styles.on : ''} ${s.num ? '' : styles.unnumbered}`}
               onClick={() => jump(s.id)}
               aria-current={active === s.id ? 'true' : undefined}
             >
-              <span className={styles.num} aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+              {/* the product act is deliberately unnumbered — the numerals belong
+                  to the process chapters, which is what makes the two acts read
+                  as different registers rather than one long sequence */}
+              {s.num && <span className={styles.num} aria-hidden="true">{s.num}</span>}
               <span className={styles.label}>{s.label}</span>
             </button>
           </li>

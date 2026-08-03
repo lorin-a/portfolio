@@ -58,7 +58,10 @@
 
 /* compact: drop labels, keep numbers as a stepper, when the row gets tight */
 @media (max-width: 820px) {
-  .label { display: none; }
+  /* the unnumbered product node has no numeral to fall back on, so it keeps its
+     label — otherwise the first stop in the stepper is an empty tap target */
+  .node:not(.unnumbered) .label { display: none; }
+  .unnumbered .label { font-size: 0.7rem; letter-spacing: 0.08em; }
   .num { font-size: 0.74rem; }
   .list { gap: 0.2rem; }
   .node { padding-inline: 0.55rem; } /* number-only nodes still need a 44px-wide thumb target */

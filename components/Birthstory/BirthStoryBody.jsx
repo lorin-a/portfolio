@@ -2,23 +2,24 @@
 
 import { FieldSection, Prose, SubBlock, Split, Figure, Bleed, TesterNote, Insight, sys } from './kit'
 import { birthPhoto, cloudImg } from '@/lib/cloudinary'
-import FeatureWall from './FeatureWall'
+import ProductAct from './ProductAct'
 import SecArchitecture from './SecArchitecture'
 import SecIteration from './SecIteration'
-import SecFeatures from './SecFeatures'
 import SecBrand from './SecBrand'
 import BirthStorySpine from './BirthStorySpine'
 import b from './BirthStoryBody.module.css'
 
-/* six chapters; three of them fold a second beat under a subhead (see the `ids`
-   they cover), so the spine stays calm without dropping any part of the story */
+/* Two acts (N23). The product happens once, up top, unnumbered — a different
+   register. The process follows as five numbered chapters, two of which fold a
+   second beat under a subhead (see the `ids` they cover), so the spine stays
+   calm without dropping any part of the story. */
 const SPINE = [
-  { id: 'brief', label: 'Brief', ids: ['brief', 'overture'] },
-  { id: 'research', label: 'Research', ids: ['research'] },
-  { id: 'architecture', label: 'Architecture', ids: ['architecture', 'iteration'] },
-  { id: 'features', label: 'Interface', ids: ['features'] },
-  { id: 'voice', label: 'Identity', ids: ['voice', 'brand'] },
-  { id: 'outcome', label: 'Outcome', ids: ['outcome', 'close'] },
+  { id: 'product', label: 'The product', ids: ['product', 'product-1', 'product-2', 'product-3', 'product-4', 'product-5'] },
+  { id: 'brief', label: 'Brief', num: '01', ids: ['brief'] },
+  { id: 'research', label: 'Research', num: '02', ids: ['research'] },
+  { id: 'architecture', label: 'Architecture', num: '03', ids: ['architecture', 'iteration'] },
+  { id: 'voice', label: 'Identity', num: '04', ids: ['voice', 'brand'] },
+  { id: 'outcome', label: 'Outcome', num: '05', ids: ['outcome', 'close'] },
 ]
 
 /* Overview — the at-a-glance masthead a hiring manager reads first. An editorial
@@ -46,23 +47,10 @@ function Overview() {
   )
 }
 
-/* the product overture — her Round 4 pick: one viewport after the Brief showing
-   WHAT we made (the four-ways-in wall on the app's own surface), so a skimmer
-   holds the product while walking the process. The orienting line is her
-   sentence, relocated verbatim from the Interface chapter (not duplicated). */
-function Overture() {
-  return (
-    <section id="overture" className={b.overture} aria-label="The product at a glance">
-      <div className={b.overtureInner}>
-        <header className={b.overtureHead}>
-          <p className={b.overtureKicker}>The product · in 30 seconds</p>
-          <p className={b.overtureLine}>It opens into documenting and reaches everything else in a tap or two.</p>
-        </header>
-        <FeatureWall tone="dark" />
-      </div>
-    </section>
-  )
-}
+/* the four-screen overture wall is retired (N25). It was the product told thin,
+   ahead of the product told deep — the same story twice. The product now happens
+   ONCE, in ProductAct, directly under the metadata; its orienting line ("It opens
+   into documenting…") moved there verbatim. */
 
 function Brief() {
   const birth = birthPhoto('fog', 2400, { grayscale: true }) // Saul Siguenza — exhausted parent + newborn, full-bleed duotone
@@ -482,14 +470,16 @@ function Close() {
 export default function BirthStoryBody() {
   return (
     <div className={sys.case}>
+      {/* act one — the metadata masthead, then the product, immersive (N24/N25) */}
       <Overview />
+      {/* the spine sticks from here down, so it tracks BOTH acts */}
       <BirthStorySpine sections={SPINE} />
+      <ProductAct />
+      {/* act two — the process, numbered */}
       <Brief />
-      <Overture />
       <Research />
       <SecArchitecture />
       <SecIteration />
-      <SecFeatures />
       <Voice />
       <SecBrand />
       <Outcome />

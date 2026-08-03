@@ -88,6 +88,38 @@ export default function SecArchitecture() {
           </p>
         </div>
       </div>
+
+      {/* the scoping decision, relocated here from the old Interface chapter
+          (N25) — the product act shows WHAT got built; deciding which of the
+          five optional features survived is structural judgment, so it belongs
+          with the other structural moves. */}
+      <div className={a.prioritize}>
+        <Prose>
+          Three areas were required: information gathering, meaning-making, and onboarding. The five
+          optional features were where the real design judgment lived.
+        </Prose>
+        <div className={`${a.prioCard} ${sys.up}`}>
+          <div className={a.prioLead}>
+            <p className={a.prioKicker}>Prioritization · five optional features on the table</p>
+            {/* story headline — provisional, from Lorin's own prose; her copy pass finalizes */}
+            <p className={a.prioStory}>The research kept telling me to leave things out.</p>
+          </div>
+          <div className={a.prioCells}>
+            <div className={a.prioCell}>
+              <span className={a.prioFigRow}><span className={a.prioFig}>2</span><span className={a.prioLabel}>kept</span></span>
+              <span className={a.prioNames}>sharing · keepsake book</span>
+            </div>
+            <div className={a.prioCell}>
+              <span className={a.prioFigRow}><span className={a.prioFig}>1</span><span className={a.prioLabel}>added</span></span>
+              <span className={`${a.prioNames} ${a.prioAdded}`}>search · for the brain fog every parent named</span>
+            </div>
+            <div className={a.prioCell}>
+              <span className={a.prioFigRow}><span className={a.prioFig}>2</span><span className={a.prioLabel}>cut</span></span>
+              <span className={`${a.prioNames} ${a.prioCut}`}>trackers · birth plan</span>
+            </div>
+          </div>
+        </div>
+      </div>
     </FieldSection>
   )
 }
