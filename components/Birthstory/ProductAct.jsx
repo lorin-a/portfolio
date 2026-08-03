@@ -121,17 +121,14 @@ function Media({ f, live }) {
 /* the act's one context photograph, released from the pin to close the act */
 const why = FEATURES.find((f) => f.context)?.context
 
-function Annot({ a, side }) {
-  return (
-    <div className={`${p.annot} ${side === 'l' ? p.annotL : p.annotR}`} style={{ '--mt': a.mt }}>
-      <p className={p.annotLabel}>{a.label}</p>
-      <p className={p.annotText}>{a.text}</p>
-      <span className={p.leader} aria-hidden="true" />
-    </div>
-  )
-}
+/* the reading column and the stage, one beat's worth.
 
-/* the reading column and the stage, one beat's worth */
+   The notes used to flank the device inside the dark plane, which left the two
+   planes badly out of balance: a dense artifact beside a heading and a single
+   paragraph. They read in the reading column now — same annotation language as
+   the rest of the page — and the artifact holds its plane alone. That also
+   makes the grammar replicable: any artifact fits the right plane, but flanking
+   dotted leaders only ever worked for a phone screen. */
 function Beat({ f, i, total, state }) {
   const live = state === 'live'
   return (
@@ -145,14 +142,20 @@ function Beat({ f, i, total, state }) {
         <h3 className={p.name}>{f.name}</h3>
         <p className={p.role}>{f.role}</p>
         <p className={p.lede}>{f.prose}</p>
+        <div className={p.notes}>
+          {[f.annots.l, f.annots.r].map((a) => (
+            <div key={a.label} className={p.note}>
+              <p className={p.noteLabel}>{a.label}</p>
+              <p className={p.noteText}>{a.text}</p>
+            </div>
+          ))}
+        </div>
       </div>
 
       <div className={`${p.plate} ${p[state]}`} aria-hidden={live ? undefined : 'true'}>
-        <Annot a={f.annots.l} side="l" />
         <div className={`${p.art} ${f.kind === 'book' ? p.artWide : ''}`}>
           <Media f={f} live={live} />
         </div>
-        <Annot a={f.annots.r} side="r" />
       </div>
     </>
   )
@@ -203,24 +206,32 @@ export default function ProductAct() {
 
   return (
     <div className={p.act}>
+      {/* the opener is the same two planes, unpinned — the act announces itself
+          in the grammar it then runs on. The context photograph fills the dark
+          plane, which is a better home for it than the band it used to close on. */}
       <header ref={headRef} id="product" className={`${p.actHead} ${headOn ? p.on : ''}`}>
-        <div className={p.actHeadInner}>
-          {/* a title spread, not a stack: the thesis holds the left, the two
-              orienting lines hold the right, so the opener uses the page's full
-              measure instead of hanging off its left edge */}
+        <div className={p.actCopy}>
+          <span className={p.actRule} aria-hidden="true" />
           <h2 className={`${p.statement} ${p.rise}`}>
             Birth is unpredictable, so the app is deliberately <b>simple</b>.
           </h2>
-          <div className={p.actAside}>
-            <p className={`${p.actLede} ${p.rise}`} style={{ '--d': '90ms' }}>
-              It opens into documenting and reaches everything else in a tap or two.
-            </p>
-            <p className={`${p.actNote} ${p.rise}`} style={{ '--d': '180ms' }}>
-              None of the screens below are flat mockups: I rebuilt the wireframes as working prototypes,
-              so what you’re seeing is the real interaction.
-            </p>
-          </div>
+          <p className={`${p.actLede} ${p.rise}`} style={{ '--d': '90ms' }}>
+            It opens into documenting and reaches everything else in a tap or two.
+          </p>
+          <p className={`${p.actNote} ${p.rise}`} style={{ '--d': '180ms' }}>
+            None of the screens below are flat mockups: I rebuilt the wireframes as working prototypes,
+            so what you’re seeing is the real interaction.
+          </p>
         </div>
+        {why && (
+          <figure className={p.actArt}>
+            <img src={why.photo.src} alt={why.alt} loading="lazy" draggable="false" />
+            <figcaption>
+              {why.cap}
+              <span className={p.byline}>{`Photo · ${why.photo.byline} / Pexels`}</span>
+            </figcaption>
+          </figure>
+        )}
       </header>
 
       <div
@@ -253,17 +264,6 @@ export default function ProductAct() {
         </div>
       </div>
 
-      {/* the one context photograph in the act — Care Pod's why, released from
-          the pin so it can run wide as the act's closing image */}
-      {why && (
-        <figure id="product-close" className={p.why}>
-          <img src={why.photo.src} alt={why.alt} loading="lazy" draggable="false" />
-          <figcaption>
-            {why.cap}
-            <span className={p.byline}>{`Photo · ${why.photo.byline} / Pexels`}</span>
-          </figcaption>
-        </figure>
-      )}
     </div>
   )
 }

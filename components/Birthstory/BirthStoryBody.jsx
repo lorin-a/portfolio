@@ -14,7 +14,7 @@ import b from './BirthStoryBody.module.css'
    second beat under a subhead (see the `ids` they cover), so the spine stays
    calm without dropping any part of the story. */
 const SPINE = [
-  { id: 'product', label: 'The product', ids: ['product', 'product-1', 'product-2', 'product-3', 'product-4', 'product-5', 'product-close'] },
+  { id: 'product', label: 'The product', ids: ['product', 'product-1', 'product-2', 'product-3', 'product-4', 'product-5'] },
   { id: 'brief', label: 'Brief', num: '01', ids: ['brief'] },
   { id: 'research', label: 'Research', num: '02', ids: ['research'] },
   { id: 'architecture', label: 'Architecture', num: '03', ids: ['architecture', 'iteration'] },
