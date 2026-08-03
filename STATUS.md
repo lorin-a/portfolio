@@ -8,11 +8,14 @@
 rule: **depth = content (her copy verbatim, never paraphrase) · simplicity = pacing (presentation).**
 
 **Shipped this session:** ✅ all duotones → real-tone (global) · ✅ Research synthesis unified · ✅ Brief
-stats demoted · ✅ chapter titles fixed (ghost numeral removed, flush-left) · ✅ the unify plan written.
+stats demoted · ✅ chapter titles fixed (ghost numeral removed, flush-left) · ✅ the unify plan written ·
+✅ **THE RESTRUCTURE** (`b7c4c44`) — two acts, the product immersive up top (N23/N24/N25).
 
-**NEXT MOVE (N23):** the big **restructure** — reorder to `Hero → PRODUCT (immersive, up top) →
-PROCESS (unified) → Outcome`, then unify the process half (Brief/Research/Architecture/Iteration/
-Identity) on the one grammar. Do it one chapter at a time, verified eyes-on, committed per chapter.
+**NEXT MOVE:** the **process-unify** — Brief (01), Research (02), Architecture (03), Iteration,
+Identity (04) onto the ONE deep-dive grammar (strong artifact + short flanking margin annotations;
+kill the bordered cards, the MY THINKING pill, the dark gradient boxes). One chapter at a time, her
+copy verbatim, verified eyes-on, committed per chapter. Start with Brief (the Myana bordered card +
+the required/provided band are the visible offenders at the act-two seam).
 
 **Map:** the full plan = `★ THE UNIFY PLAN` below · craft-bar study + THE THESIS (verbatim) =
 memory `DECISIONS.md` · dev server on **:3001** · Playwright MCP browser locked → playwright-core fallback.
@@ -29,10 +32,10 @@ memory `DECISIONS.md` · dev server on **:3001** · Playwright MCP browser locke
 | # | Note (her words, condensed) | Status |
 |---|---|---|
 | N22 | "improve these titles that I hate, they are too flashy, no big letter, looks unbalanced" (screenshot of a chapter statement with the giant ghosted numeral) | ✅ FIXED globally — removed the oversized ghosted chapter numeral (`.ghostNum`) + the ~22% indent it forced; every chapter statement is now flush-left, balanced, one tier smaller. The sticky nav + eyebrow already number the chapters. Verified 1440, stylelint clean, zero overflow/errors |
-| N23 | "put the product section below the hero so its two fully immersive and differentiated parts then the process — but the process section needs to look MUCH more unified as a flow/content design" | 🔨 THE NEXT MAJOR MOVE (restructure): reorder to **Hero → PRODUCT (immersive, differentiated) → PROCESS (unified) → Outcome**. Currently product/Interface sits at 04 (mid-process); move it up right after the hero as the second immersive block. The whole process half (Brief/Research/Architecture/Iteration/Identity) then unifies on the ONE grammar (the unify plan below). This is a page-order restructure + the process-unify — the big remaining work |
+| N23 | "put the product section below the hero so its two fully immersive and differentiated parts then the process — but the process section needs to look MUCH more unified as a flow/content design" | 🟡 HALF DONE. ✅ **The restructure shipped** (`b7c4c44`): page now reads Hero → metadata → **PRODUCT** (act one, unnumbered, five full-viewport annotated stages) → **PROCESS** (01 Brief · 02 Research · 03 Architecture · 04 Identity · 05 Outcome) → Outcome/close. The two acts are differentiated by register: light identity-gradient ground + centred artifacts up top, flat paper + flush-left chapters below. ▸ **STILL OWED: the process-unify** — Brief/Research/Architecture/Iteration/Identity onto the one deep-dive grammar (see the unify plan) |
 
 | N24 | "maybe the order is Hero → meta data → product preview" | 🔨 ACCEPTED into the N23 restructure — the Overview metadata block moves to sit directly under the hero as the masthead, product act follows it. Hiring-manager read order; also closes F19 ("I miss the metadata because that is more what hiring managers want to see") |
-| N25 | "For product preview maybe instead of one small horizontal line with 4 screens side by side it could be scroll trigger full screen annotation views of each feature (with rebuilds adding animation where possible). See inspiration from my Presentation file (I have slides for each feature that can help with copy)" + screenshot of the deck's Care Pod slide (device flanked by dotted-leader annotations: Updates / Message Board) | 🔨 BUILDING. My counter-call, taken: **not a preview + a repeat — one product act.** The 4-screen `FeatureWall` overture is retired and the whole Interface chapter moves up under the metadata as ~full-viewport annotated feature stages (Documentation · Care Pod · Reflection · Search · The Book), each on the deck idiom she screenshotted, scroll-triggered, with the existing working prototypes (DocReveal / CarePodFlow / JournalFlow / SearchReveal) as the animation. Source deck for annotation copy: `~/Desktop/Portfolio/July 2025/Birth Story Presentation2.pdf` |
+| N25 | "For product preview maybe instead of one small horizontal line with 4 screens side by side it could be scroll trigger full screen annotation views of each feature (with rebuilds adding animation where possible). See inspiration from my Presentation file (I have slides for each feature that can help with copy)" + screenshot of the deck's Care Pod slide (device flanked by dotted-leader annotations: Updates / Message Board) | 🔨 BUILDING. My counter-call, taken: **not a preview + a repeat — one product act.** The 4-screen `FeatureWall` overture is retired and the whole Interface chapter moves up under the metadata as ~full-viewport annotated feature stages (Documentation · Care Pod · Reflection · Search · The Book), each on the deck idiom she screenshotted, scroll-triggered, with the existing working prototypes (DocReveal / CarePodFlow / JournalFlow / SearchReveal) as the animation. Source deck for annotation copy: `~/Desktop/Portfolio/July 2025/Birth Story Presentation2.pdf` — checked; the deck's annotations are v1-era and describe the earlier wireframes, so the site's shipped annotations (which are insights, not descriptions) were kept. Flag if the deck language should govern instead. ✅ SHIPPED `b7c4c44`, verified 1440 + 390 |
 
 ### ★ THE UNIFY PLAN — Birth Story parent route (owned by Claude, 2026-08-03, N21)
 
