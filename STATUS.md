@@ -1,5 +1,24 @@
 # Project Status
 
+## ▶ RESUME HERE (2026-08-03)
+
+**What we're doing:** unifying the Birth Story case study — the **rich version at the PARENT route**
+`/projects/birthstory-care-pod` (`BirthStoryBody` + `Sec*.jsx`). The `/v2`, `/case`, `/story`,
+`/moment-*` routes are abandoned exploration — **refine the parent route, do not rebuild.** Governing
+rule: **depth = content (her copy verbatim, never paraphrase) · simplicity = pacing (presentation).**
+
+**Shipped this session:** ✅ all duotones → real-tone (global) · ✅ Research synthesis unified · ✅ Brief
+stats demoted · ✅ chapter titles fixed (ghost numeral removed, flush-left) · ✅ the unify plan written.
+
+**NEXT MOVE (N23):** the big **restructure** — reorder to `Hero → PRODUCT (immersive, up top) →
+PROCESS (unified) → Outcome`, then unify the process half (Brief/Research/Architecture/Iteration/
+Identity) on the one grammar. Do it one chapter at a time, verified eyes-on, committed per chapter.
+
+**Map:** the full plan = `★ THE UNIFY PLAN` below · craft-bar study + THE THESIS (verbatim) =
+memory `DECISIONS.md` · dev server on **:3001** · Playwright MCP browser locked → playwright-core fallback.
+
+---
+
 ## ⟢ OPEN NOTES LEDGER — Birth Story (live; every note Lorin sends lands here the moment it arrives)
 
 > Standing rule (2026-07-05): no feedback note lives only in a conversation. Each one is logged
