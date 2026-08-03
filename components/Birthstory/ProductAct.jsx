@@ -189,30 +189,27 @@ function Aria({ f, i, total }) {
               </p>
               <h3 className={p.ariaName}>{f.name}</h3>
 
-              {/* THE BEATS FILL IN — they do not swap. Swapping meant the reader
-                  lost the line they had just read and could not glance back, and
-                  it made the outgoing text slide down past the incoming text
-                  sliding up, which is the stutter she saw. Now the three beats
-                  hold their places from the start, each arrives as you reach it
-                  and then stays, and the isolation comes from emphasis instead
-                  of from hiding. Nothing is ever removed from the page. */}
+              {/* THE OUTLINE FILLS IN.
+
+                  Reserving invisible space traded a jump for a void — it read as
+                  broken, and blank space cannot signal that more is coming. So
+                  all three labels are present from the first frame: the reader
+                  sees the shape of the argument immediately, and only the BODY
+                  of each beat expands as they reach it. The upcoming labels are
+                  the clue, which is the job the dots were failing to do, so the
+                  dots are gone. Nothing already read is ever removed or moved. */}
               {beats.map((b, n) => (
                 <div
                   key={b.key}
                   className={`${p.ariaBeat} ${
-                    !pinned || n === active ? p.beatOn : n < active ? p.beatIn : ''
+                    !pinned || n === active ? p.beatOn : n < active ? p.beatIn : p.beatNext
                   }`}
                 >
                   <p className={p.ariaKicker}>{b.kicker}</p>
-                  {b.body}
+                  <div className={p.ariaBody}><div>{b.body}</div></div>
                 </div>
               ))}
 
-              {pinned && (
-                <ol className={p.ariaDots} aria-hidden="true">
-                  {beats.map((b, n) => <li key={b.key} className={n === active ? p.dotOn : ''} />)}
-                </ol>
-              )}
             </div>
 
             {/* the callouts belong here and only here: the device is big and

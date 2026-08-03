@@ -151,33 +151,45 @@
 }
 .ariaCopy { position: relative; }
 .ariaName {
-  margin: 0;
+  margin: 0 0 clamp(0.4rem, 1.2vh, 0.8rem);
   font-family: var(--font-heading); font-variation-settings: 'SOFT' 60, 'WONK' 0; font-weight: 400;
   font-size: clamp(2rem, 1.5rem + 1.8vw, 3rem); line-height: 1.05;
   letter-spacing: -0.018em; color: var(--color-ink); text-wrap: balance;
 }
-/* THE BEATS FILL IN — they hold their places from the start and each arrives as
-   you reach it, rather than swapping in and out of one slot. Swapping cost the
-   reader the line they had just read, and made the outgoing text slide down
-   through the incoming text sliding up — the stutter. The space every beat will
-   occupy is reserved from the first frame, so nothing on the page ever moves. */
-.ariaCopy { display: grid; align-content: center; gap: clamp(1rem, 2.5vh, 1.6rem); }
-.ariaPinned .ariaBeat {
-  opacity: 0; transform: translateY(14px);
-  transition: opacity 620ms var(--ease-out), transform 620ms var(--ease-out);
-}
-/* already read: it stays legible, it just stops competing */
-.ariaPinned .ariaBeat.beatIn { opacity: 0.5; transform: none; }
-.ariaPinned .ariaBeat.beatOn { opacity: 1; transform: none; }
+/* THE OUTLINE FILLS IN.
+
+   Reserving invisible space traded a jump for a void: it read as broken, and
+   blank space cannot signal that more is coming. So every LABEL is present from
+   the first frame — the reader sees the shape of the argument at once — and only
+   the BODY of each beat expands as they reach it. The upcoming labels are the
+   clue. The column is top-anchored, so nothing already read ever moves; the
+   labels below simply travel down as the bodies above open. */
+.ariaCopy { display: grid; align-content: start; gap: clamp(0.9rem, 2.2vh, 1.4rem); }
 .ariaKicker {
-  margin: 0 0 0.5rem; padding-top: 0.65rem;
+  margin: 0; padding-top: 0.65rem;
   border-top: 1px solid var(--bs-rule);
   font-family: var(--font-body); font-weight: 700; font-size: 0.7rem;
   letter-spacing: 0.13em; text-transform: uppercase; color: var(--bs-teal-soft);
-  transition: border-color 500ms var(--ease-out), border-width 0s;
+  transition: border-color 450ms var(--ease-out), opacity 450ms var(--ease-out);
 }
-/* the live beat is the one carrying the teal rule — that is the isolation */
-.beatOn .ariaKicker { border-top: 2px solid var(--bs-teal); }
+/* the body opens on its own row: 0fr → 1fr animates height without a magic
+   max-height number, so the timing is the same for a two-line beat and a six */
+.ariaBody {
+  display: grid; grid-template-rows: 1fr; overflow: hidden;
+  transition: grid-template-rows 620ms var(--ease-out), opacity 520ms var(--ease-out);
+}
+.ariaBody > div { min-height: 0; }
+/* still to come: the label holds its place, quietly, and the body is closed */
+.ariaPinned .beatNext .ariaBody { grid-template-rows: 0fr; opacity: 0; }
+.ariaPinned .beatNext .ariaKicker { opacity: 0.45; }
+/* already read: legible, no longer competing */
+.ariaPinned .beatIn { opacity: 0.62; }
+/* live: the teal rule is the isolation */
+.ariaPinned .beatOn .ariaKicker,
+.aria:not(.ariaPinned) .ariaKicker { border-top: 2px solid var(--bs-teal); }
+.ariaBeat { transition: opacity 450ms var(--ease-out); }
+/* the body's own top margin lives here so the closed state can collapse fully */
+.ariaBody > div > * { margin-top: 0.5rem; }
 .ariaLede {
   margin: 0; max-width: 42ch;
   font-family: var(--font-body); font-size: clamp(1rem, 0.96rem + 0.25vw, 1.1rem);
@@ -191,13 +203,6 @@
   font-size: clamp(1.15rem, 1rem + 0.7vw, 1.5rem); line-height: 1.35;
   color: var(--color-ink); text-wrap: pretty;
 }
-.ariaDots { display: flex; gap: 0.5rem; margin: clamp(0.4rem, 1.5vh, 0.9rem) 0 0; padding: 0; list-style: none; }
-.ariaDots li {
-  width: 1.4rem; height: 2px; background: var(--bs-rule);
-  transition: width 400ms var(--ease-out), background 400ms var(--ease-out);
-}
-.dotOn { width: 2.4rem; background: var(--bs-teal); }
-
 .ariaStage {
   align-self: stretch; display: grid;
   grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
@@ -231,6 +236,19 @@
 .annotOn .leader { transform: scaleX(1); transition-delay: 420ms; }
 .ariaStage figcaption { display: none; }
 
+/* short viewports: the aria's three beats have to clear the nav and the spine
+   inside one screen. Measured — at 800px tall the fully-open column was 657px
+   against 650px of frame, so the type and the gaps step down rather than spill. */
+@media (min-width: 1001px) and (max-height: 900px) {
+  .ariaFrame { padding-block: clamp(1.2rem, 3vw, 2rem); }
+  .ariaName { font-size: clamp(1.7rem, 1.3rem + 1.2vw, 2.2rem); margin-bottom: 0.2rem; }
+  .ariaCopy { gap: 0.7rem; }
+  .ariaKicker { padding-top: 0.5rem; }
+  .ariaBody > div > * { margin-top: 0.35rem; }
+  .ariaLede { font-size: 0.97rem; line-height: 1.5; }
+  .ariaQuote { font-size: clamp(1.05rem, 0.95rem + 0.4vw, 1.25rem); line-height: 1.3; }
+}
+
 /* ── narrow + reduced motion: no pin, no stick, nothing hidden ───────────── */
 
 @media (max-width: 1000px) {
@@ -255,12 +273,14 @@
   .bookPhone { width: min(70vw, 260px); }
 }
 
-/* unpinned: the same stack, every beat at full strength */
-.aria:not(.ariaPinned) .beatOn .ariaKicker { border-top: 2px solid var(--bs-teal); }
+/* unpinned: every beat open and at full strength */
+.aria:not(.ariaPinned) .ariaBody { grid-template-rows: 1fr; opacity: 1; }
 
 @media (prefers-reduced-motion: reduce) {
   .rise { opacity: 1; transform: none; transition: none; }
-  .ariaBeat { opacity: 1 !important; transform: none !important; transition: none; }
+  .ariaBeat { opacity: 1; transition: none; }
+  .ariaKicker { opacity: 1; border-top: 2px solid var(--bs-teal); }
+  .ariaBody { grid-template-rows: 1fr; opacity: 1; transition: none; }
   .copy { position: static; }
   .ariaAnnot { opacity: 1; }
   .leader { transform: scaleX(1); transition: none; }
