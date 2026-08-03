@@ -1,0 +1,302 @@
+/* ============================================================================
+   THE STORY SPINE — Birth Story told in the product's own time.
+   The page borrows the app's design language: its timeline (line + nodes)
+   becomes the page spine; its palette arc (cream before/after, deep teal
+   during) sets each beat's register. Show = the artifact + story line.
+   Tell = the margin voice. One calm settle per beat.
+   ============================================================================ */
+
+.page {
+  --teal: #1A434D;
+  --teal-deep: #16323A;
+  --teal-soft: #466F7B;
+  --cream: #FFF9F4;
+  --paper: #FBF9F6;
+  --thread: rgba(26, 67, 77, 0.28);
+  background: var(--paper);
+  color: var(--color-ink, #16323A);
+}
+
+/* ── the opening ── */
+.hero {
+  max-width: 62rem;
+  margin: 0 auto;
+  padding: clamp(7rem, 16vh, 11rem) clamp(1.5rem, 5vw, 6rem) clamp(4rem, 9vh, 6rem);
+}
+.heroKicker {
+  margin: 0 0 1.4rem;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--teal-soft);
+}
+.thesis {
+  margin: 0;
+  max-width: 24ch;
+  font-family: var(--font-heading);
+  font-variation-settings: 'SOFT' 50, 'WONK' 0;
+  font-weight: 560;
+  font-size: clamp(1.7rem, 1.2rem + 2.4vw, 3.1rem);
+  line-height: 1.22;
+  text-wrap: balance;
+  color: var(--teal-deep);
+}
+.heroSub {
+  margin: 1.6rem 0 0;
+  max-width: 44ch;
+  font-family: var(--font-body);
+  font-size: clamp(0.98rem, 0.92rem + 0.3vw, 1.12rem);
+  line-height: 1.55;
+  color: var(--teal-soft);
+  text-wrap: pretty;
+}
+
+/* ── the thread: the app's timeline at page scale ── */
+.thread {
+  position: relative;
+}
+
+/* ── a beat: kicker / story line / artifact / margin — identical bones ── */
+.beat {
+  position: relative;
+  padding: clamp(3.5rem, 9vh, 6rem) clamp(1.5rem, 5vw, 6rem);
+}
+.beatInner {
+  position: relative;
+  max-width: 62rem;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) clamp(13rem, 22vw, 17rem);
+  column-gap: clamp(2.5rem, 5vw, 4.5rem);
+  row-gap: clamp(1.6rem, 4vh, 2.6rem);
+  padding-left: clamp(1.6rem, 3vw, 2.6rem);
+}
+/* the line, drawn beat by beat (kept inside each beat so registers can shift) */
+.beatInner::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.35rem;
+  bottom: calc(clamp(3.5rem, 9vh, 6rem) * -1);
+  width: 1px;
+  background: var(--thread);
+}
+.beat:last-child .beatInner::before {
+  bottom: 0;
+}
+
+.kicker {
+  grid-column: 1 / -1;
+  position: relative;
+  margin: 0;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--teal-soft);
+}
+.nodeDot {
+  position: absolute;
+  left: calc(clamp(1.6rem, 3vw, 2.6rem) * -1);
+  top: 50%;
+  width: 9px;
+  height: 9px;
+  transform: translate(-4px, -50%);
+  border-radius: 50%;
+  background: var(--paper);
+  border: 1.5px solid var(--teal-soft);
+}
+
+.line {
+  grid-column: 1;
+  margin: 0;
+  max-width: 26ch;
+  font-family: var(--font-heading);
+  font-variation-settings: 'SOFT' 50, 'WONK' 0;
+  font-weight: 550;
+  font-size: clamp(1.35rem, 1.05rem + 1.4vw, 2.15rem);
+  line-height: 1.28;
+  text-wrap: balance;
+  color: var(--teal-deep);
+}
+.lineQuiet {
+  font-style: italic;
+  font-weight: 480;
+}
+
+/* ── the margin voice ── */
+.margin {
+  grid-column: 2;
+  grid-row: 2 / span 2;
+  align-self: start;
+  display: grid;
+  gap: 1.4rem;
+  padding-top: 0.4rem;
+}
+.marginItem {
+  border-left: 2px solid var(--thread);
+  padding-left: 1rem;
+}
+.marginTag {
+  margin: 0 0 0.35rem;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 0.64rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--teal-soft);
+}
+.marginText {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 0.88rem;
+  line-height: 1.55;
+  color: var(--teal);
+  text-wrap: pretty;
+}
+
+/* ── the artifacts ── */
+.shot {
+  margin: 0;
+  width: clamp(230px, 24vw, 310px);
+  border-radius: clamp(18px, 2vw, 26px);
+  overflow: hidden;
+  background: var(--teal-deep);
+  box-shadow:
+    0 30px 60px -30px rgba(22, 50, 58, 0.4),
+    0 0 0 1px rgba(22, 50, 58, 0.06);
+}
+.shot img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.shotPair {
+  grid-column: 1;
+  position: relative;
+  width: min(100%, clamp(320px, 36vw, 470px));
+  padding-bottom: 5%;
+}
+.shotPair .shot {
+  width: 68%;
+}
+.shotPair .shotOffset {
+  position: absolute;
+  left: 46%;
+  top: 10%;
+  width: 60%;
+  box-shadow:
+    0 34px 70px -28px rgba(22, 50, 58, 0.5),
+    0 0 0 1px rgba(22, 50, 58, 0.08);
+}
+.shotCenter {
+  grid-column: 1;
+  justify-self: center;
+}
+.shotLarge {
+  grid-column: 1;
+  justify-self: center;
+  width: clamp(270px, 28vw, 360px);
+}
+
+/* ── the dark register: during, the app's own night ── */
+.dark {
+  background: var(--teal-deep);
+  --thread: rgba(251, 249, 246, 0.3);
+}
+.dark .kicker,
+.dark .marginTag {
+  color: #9FBCC6;
+}
+.dark .line {
+  color: #FBF9F6;
+}
+.dark .marginText {
+  color: #D9E4E8;
+}
+.dark .nodeDot {
+  background: var(--teal-deep);
+  border-color: #9FBCC6;
+}
+.dark .shot {
+  box-shadow:
+    0 34px 70px -26px rgba(0, 0, 0, 0.55),
+    0 0 0 1px rgba(251, 249, 246, 0.1);
+}
+
+/* ── the record ── */
+.ledger {
+  grid-column: 1 / -1;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(1.6rem, 3.5vw, 2.8rem) clamp(2rem, 4vw, 3.5rem);
+}
+.ledger dt {
+  margin: 0 0 0.4rem;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 0.64rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--teal-soft);
+}
+.ledger dd {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 0.92rem;
+  line-height: 1.5;
+  color: var(--teal);
+  text-wrap: pretty;
+}
+.deepLink {
+  grid-column: 1 / -1;
+  margin: 0.6rem 0 0;
+  font-family: var(--font-body);
+  font-size: 0.92rem;
+}
+.deepLink a {
+  color: var(--teal);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color 300ms var(--ease-out);
+}
+.deepLink a:focus-visible {
+  outline: 2px solid var(--teal);
+  outline-offset: 3px;
+}
+@media (hover: hover) {
+  .deepLink a:hover {
+    color: var(--teal-soft);
+  }
+}
+
+/* ── narrow ── */
+@media (max-width: 820px) {
+  .beatInner {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .margin {
+    grid-column: 1;
+    grid-row: auto;
+    max-width: 30rem;
+  }
+  .shotPair {
+    width: min(88vw, 420px);
+  }
+  .shotCenter,
+  .shotLarge {
+    justify-self: start;
+  }
+  .ledger {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 480px) {
+  .ledger {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
