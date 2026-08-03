@@ -1,6 +1,7 @@
 'use client'
 
-import { useSeen, Figure, sys } from './kit'
+import { useEffect, useRef, useState } from 'react'
+import { useSeen, sys } from './kit'
 import { birthPhoto } from '@/lib/cloudinary'
 import CarePodFlow from './CarePodFlow'
 import JournalFlow from './JournalFlow'
@@ -9,21 +10,23 @@ import SearchReveal from './SearchReveal'
 import p from './ProductAct.module.css'
 
 /* ============================================================================
-   THE PRODUCT — the first of the page's two acts, sitting directly under the
-   hero and the metadata (N23/N24/N25).
+   THE PRODUCT — act one, pinned.
 
-   It replaces two things that used to say the product twice: the four-screen
-   overture wall after the Brief, and the Interface chapter buried at 04. Now
-   the product happens ONCE, immersively, before any process is told.
+   The first pass laid five identically-composed stages end to end and let them
+   scroll past each other. Lorin's read (N26): "not unified or clean or locked…
+   missing something." She was right — nothing persisted, so nothing anchored.
 
-   The grammar is Lorin's own client-deck slide: one artifact centered, two
-   short annotations flanking it on dotted leaders, one feature per screen.
-   Each stage holds a viewport and reveals on its own arrival — the artifact
-   settles, the leaders draw out, the notes land. The screens are the working
-   prototypes, so the motion inside them is the product's real behavior.
+   This version pins. One frame holds for the whole act while the beats change
+   inside it: the device stays exactly where it is and the screen changes within
+   it, the reading column crossfades, the flanking notes restagger and redraw
+   their leaders. Scroll advances beats rather than moving the composition, so
+   there is always something to read without chasing it up the page.
 
-   The act is deliberately unnumbered: the process half keeps the numerals, so
-   the two halves read as different registers rather than one long sequence.
+   The ground is the app's own teal — the darker surface she missed when the
+   overture was retired.
+
+   Reduced motion drops the pin entirely and renders the five features as a
+   plain stacked list, every beat visible at once.
    ============================================================================ */
 
 const FEATURES = [
@@ -32,8 +35,8 @@ const FEATURES = [
     role: 'The core feature · all information-gathering, unified',
     kind: 'doc',
     annots: {
-      l: { label: 'One timeline', text: 'Medical, contextual, narrative, and feelings in one place — a birth isn’t lived in separate files.', mt: '15rem' },
-      r: { label: 'Calm by default', text: 'Entries stay closed until you open one, so a tired parent meets a surface, not a wall of clinical detail.', mt: '7.5rem' },
+      l: { label: 'One timeline', text: 'Medical, contextual, narrative, and feelings in one place — a birth isn’t lived in separate files.', mt: '9rem' },
+      r: { label: 'Calm by default', text: 'Entries stay closed until you open one, so a tired parent meets a surface, not a wall of clinical detail.', mt: '3.5rem' },
     },
     prose: <>Parents told me they wanted to land on the main task, so that’s what the app does. Even if nothing else gets used, there’s a timeline of whatever they or a loved one managed to add.</>,
   },
@@ -42,8 +45,8 @@ const FEATURES = [
     role: 'The heart of the concept · the optional sharing and partner-participation features',
     kind: 'carepod',
     annots: {
-      l: { label: 'You don’t carry it', text: 'One person you designate sends the updates, photos, and voice memos — not the laboring parent.', mt: '5.5rem' },
-      r: { label: 'Nothing is lost', text: 'Loved ones reply, and it all saves into the story: the detail you’d have forgotten, kept.', mt: '13rem' },
+      l: { label: 'You don’t carry it', text: 'One person you designate sends the updates, photos, and voice memos — not the laboring parent.', mt: '3rem' },
+      r: { label: 'Nothing is lost', text: 'Loved ones reply, and it all saves into the story: the detail you’d have forgotten, kept.', mt: '8rem' },
     },
     prose: <>The idea came out of a single interview. A parent told me someone in her circle remembered a detail about her child’s birth that she had lost, and wished she’d asked everyone around her to add what they remembered while it was fresh. That became Care Pod: one support person sends out updates, photos, and voice memos, loved ones reply with messages and voice notes, and all of it saves into the Birth Story, so the whole story of who was there and how loved that child was stays in one place.</>,
     context: {
@@ -58,8 +61,8 @@ const FEATURES = [
     role: 'The processing and nudge requirements',
     kind: 'journal',
     annots: {
-      l: { label: 'No blank page', text: 'The deck deals a prompt, because the parents who don’t already journal don’t know where to start.', mt: '5rem' },
-      r: { label: 'Tag how it felt', text: 'So a memory can be found later by its emotion, not only its date.', mt: '12rem' },
+      l: { label: 'No blank page', text: 'The deck deals a prompt, because the parents who don’t already journal don’t know where to start.', mt: '3rem' },
+      r: { label: 'Tag how it felt', text: 'So a memory can be found later by its emotion, not only its date.', mt: '7.5rem' },
     },
     prose: <>Every parent wanted to reflect, whether their birth was traumatic or not, but the ones who don’t already journal often don’t know where to start. So instead of a blank page, the journal hands them gentle prompts: a letter to a past self, the needs that are hard to name, the senses worth keeping.</>,
     cap: 'The deck deals a prompt; you write, and tag how it felt.',
@@ -69,8 +72,8 @@ const FEATURES = [
     role: 'Not required · my addition, for cognitive load',
     kind: 'search',
     annots: {
-      l: { label: 'A swipe from anywhere', text: 'Reachable over any screen, so brain fog never means digging through the app for one memory.', mt: '9rem' },
-      r: { label: 'Filter by feeling', text: 'A parent recalls a memory by how it felt, not when it was logged.', mt: '4rem' },
+      l: { label: 'A swipe from anywhere', text: 'Reachable over any screen, so brain fog never means digging through the app for one memory.', mt: '5.5rem' },
+      r: { label: 'Filter by feeling', text: 'A parent recalls a memory by how it felt, not when it was logged.', mt: '2.5rem' },
     },
     prose: <>This is the one feature nobody asked for. As the entries pile up, I didn’t want anyone digging through the whole app to find one memory.</>,
     cap: 'Swipe it in from the edge; filter by feeling, category, or keyword.',
@@ -80,117 +83,128 @@ const FEATURES = [
     role: 'The optional baby book',
     kind: 'book',
     annots: {
-      l: { label: 'It can leave the app', text: 'The whole record as a book or a free PDF — no one trusts something this precious to a screen that could vanish.', mt: '7rem' },
-      r: { label: 'Curated together', text: 'Built from what’s already there, open to the people who were part of it.', mt: '7rem' },
+      l: { label: 'It can leave the app', text: 'The whole record as a book or a free PDF — no one trusts something this precious to a screen that could vanish.', mt: '4rem' },
+      r: { label: 'Curated together', text: 'Built from what’s already there, open to the people who were part of it.', mt: '4rem' },
     },
     prose: <>We took the book seriously the moment a parent told me she wouldn’t trust an app with something this precious unless she knew it couldn’t disappear.</>,
     shots: [
-      ['/images/birthstory/bs-book-order.png', 'The Birth Story Book screen: order a printed keepsake or download a PDF.', 'Order a keepsake, or download a PDF.'],
-      ['/images/birthstory/bs-book-curate.png', 'A timeline of entries with “Drag Content to Curate Your Story”, open to collaborators.', 'Curate from what’s already there, together.'],
+      ['/images/birthstory/bs-book-order.png', 'The Birth Story Book screen: order a printed keepsake or download a PDF.'],
+      ['/images/birthstory/bs-book-curate.png', 'A timeline of entries with “Drag Content to Curate Your Story”, open to collaborators.'],
     ],
   },
 ]
 
-function Screen({ src, alt, cap }) {
-  return (
-    <figure className={p.screen}>
-      <span className={sys.phone} style={{ width: '100%' }}>
-        <span className={sys.phoneNotch} aria-hidden="true" />
-        <span className={sys.phoneScreen}><img src={src} alt={alt} loading="lazy" draggable="false" /></span>
-      </span>
-      <figcaption className={p.screenCap}>{cap}</figcaption>
-    </figure>
-  )
-}
-
-function Media({ f }) {
-  if (f.kind === 'doc') return <DocReveal cap="Entries stay closed until you open one; the medical detail lives a tap away." />
+/* the media components each draw their own device at the width the stage sets,
+   so crossfading between them reads as the screen changing inside a frame that
+   never moves — the device is the act's anchor */
+function Media({ f, live }) {
+  if (f.kind === 'doc') return <DocReveal cap={f.cap} />
   if (f.kind === 'carepod') return <CarePodFlow cap={f.cap} />
   if (f.kind === 'journal') return <JournalFlow cap={f.cap} />
   if (f.kind === 'search') return <SearchReveal cap={f.cap} />
+  /* no inline width here: the pair is sized by .bookPair in CSS, and an inline
+     width:100% on a flex item would resolve against an auto-width container and
+     blow the whole plate out */
   if (f.kind === 'book') return (
     <div className={p.bookPair}>
-      {f.shots.map(([src, alt, cap]) => <Screen key={cap} src={src} alt={alt} cap={cap} />)}
+      {f.shots.map(([src, alt]) => (
+        <span key={src} className={`${sys.phone} ${p.bookPhone}`}>
+          <span className={sys.phoneNotch} aria-hidden="true" />
+          <span className={sys.phoneScreen}><img src={src} alt={live ? alt : ''} loading="lazy" draggable="false" /></span>
+        </span>
+      ))}
     </div>
   )
   return null
 }
 
-/* one feature, one viewport. Reveal is local to the stage (its own observer),
-   so each feature lands as you reach it rather than all five firing at once. */
-function Stage({ f, i, total }) {
-  const [ref, on] = useSeen(0.25)
-  const wide = f.kind === 'book'
+/* the act's one context photograph, released from the pin to close the act */
+const why = FEATURES.find((f) => f.context)?.context
+
+function Annot({ a, side }) {
   return (
-    /* each stage is also a spine target: the act as a whole is far too tall for
-       an IntersectionObserver ratio to ever resolve, so the progress bar tracks
-       the stages and maps them all back to the one "product" node */
-    <section ref={ref} id={`product-${i + 1}`} className={`${p.stage} ${on ? p.on : ''}`} aria-label={f.name}>
-      <div className={p.stageInner}>
-        {/* the slide label — compact and centred, so the artifact is the mass on
-            the stage and the type never leaves an empty quadrant beside it */}
-        <header className={p.head}>
-          <p className={`${p.folio} ${p.rise}`}>
-            <span className={p.folioNum}>{String(i + 1).padStart(2, '0')}</span>
-            <span className={p.folioOf}>{`of ${String(total).padStart(2, '0')}`}</span>
-          </p>
-          <h3 className={`${p.name} ${p.rise}`} style={{ '--d': '60ms' }}>{f.name}</h3>
-          <p className={`${p.role} ${p.rise}`} style={{ '--d': '120ms' }}>{f.role}</p>
-        </header>
+    <div className={`${p.annot} ${side === 'l' ? p.annotL : p.annotR}`} style={{ '--mt': a.mt }}>
+      <p className={p.annotLabel}>{a.label}</p>
+      <p className={p.annotText}>{a.text}</p>
+      <span className={p.leader} aria-hidden="true" />
+    </div>
+  )
+}
 
-        {/* the deck composition: the artifact centered, a short note either side
-            riding a dotted leader that draws toward the region it describes.
-            Below 900px the notes fold under the artifact as a stacked pair. */}
-        <div className={`${p.compose} ${wide ? p.composeWide : ''}`}>
-          <div className={`${p.annot} ${p.annotL}`} style={{ '--mt': f.annots.l.mt }}>
-            <p className={sys.annotLabel}>{f.annots.l.label}</p>
-            <p className={sys.annotText}>{f.annots.l.text}</p>
-            <span className={p.leader} aria-hidden="true" />
-          </div>
-
-          <div className={`${p.art} ${wide ? p.artWide : ''}`}>
-            <Media f={f} />
-          </div>
-
-          <div className={`${p.annot} ${p.annotR}`} style={{ '--mt': f.annots.r.mt }}>
-            <p className={sys.annotLabel}>{f.annots.r.label}</p>
-            <p className={sys.annotText}>{f.annots.r.text}</p>
-            <span className={p.leader} aria-hidden="true" />
-          </div>
-        </div>
-
-        {/* show first, then tell — the reasoning lands under the artifact it
-            explains, at a reading measure, never as a wall beside it */}
-        <footer className={p.foot}>
-          <p className={`${p.lede} ${p.rise}`} style={{ '--d': '120ms' }}>{f.prose}</p>
-          {f.context && (
-            <div className={`${p.why} ${p.rise}`} style={{ '--d': '200ms' }}>
-              <Figure
-                photo
-                tag="the why"
-                src={f.context.photo.src}
-                byline={f.context.photo.byline}
-                alt={f.context.alt}
-                cap={f.context.cap}
-              />
-            </div>
-          )}
-        </footer>
+/* the reading column and the stage, one beat's worth */
+function Beat({ f, i, total, state }) {
+  const live = state === 'live'
+  return (
+    <>
+      <div className={`${p.copy} ${p[state]}`} aria-hidden={live ? undefined : 'true'}>
+        <p className={p.folio}>
+          <span className={p.folioNum}>{String(i + 1).padStart(2, '0')}</span>
+          <span className={p.folioRule} aria-hidden="true" />
+          <span className={p.folioOf}>{`of ${String(total).padStart(2, '0')}`}</span>
+        </p>
+        <h3 className={p.name}>{f.name}</h3>
+        <p className={p.role}>{f.role}</p>
+        <p className={p.lede}>{f.prose}</p>
       </div>
-    </section>
+
+      <div className={`${p.plate} ${p[state]}`} aria-hidden={live ? undefined : 'true'}>
+        <Annot a={f.annots.l} side="l" />
+        <div className={`${p.art} ${f.kind === 'book' ? p.artWide : ''}`}>
+          <Media f={f} live={live} />
+        </div>
+        <Annot a={f.annots.r} side="r" />
+      </div>
+    </>
   )
 }
 
 export default function ProductAct() {
-  /* the observer rides the opener, not the act: the act runs several thousand
-     pixels tall, so no fraction of it is ever visible enough to trip a ratio */
-  const [ref, on] = useSeen(0.3)
+  const [headRef, headOn] = useSeen(0.3)
+  const trackRef = useRef(null)
+  const [active, setActive] = useState(0)
+  const [pinned, setPinned] = useState(true)
+
+  useEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) { setPinned(false); return }
+    const mq = window.matchMedia('(max-width: 1000px)')
+    const apply = () => setPinned(!mq.matches)
+    apply()
+    mq.addEventListener('change', apply)
+    return () => mq.removeEventListener('change', apply)
+  }, [])
+
+  /* which beat is live: read the track's own progress rather than observing five
+     elements, so the step is deterministic and can't land between beats */
+  useEffect(() => {
+    if (!pinned) return
+    const el = trackRef.current
+    if (!el) return
+    let frame = 0
+    const measure = () => {
+      frame = 0
+      const r = el.getBoundingClientRect()
+      const travel = r.height - window.innerHeight
+      if (travel <= 0) return
+      const progress = Math.min(Math.max(-r.top / travel, 0), 0.9999)
+      setActive(Math.floor(progress * FEATURES.length))
+    }
+    const onScroll = () => { if (!frame) frame = requestAnimationFrame(measure) }
+    measure()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    window.addEventListener('resize', onScroll)
+    return () => {
+      window.removeEventListener('scroll', onScroll)
+      window.removeEventListener('resize', onScroll)
+      if (frame) cancelAnimationFrame(frame)
+    }
+  }, [pinned])
+
+  const stateOf = (i) => (!pinned || i === active ? 'live' : i < active ? 'past' : 'next')
+
   return (
     <div className={p.act}>
-      <header ref={ref} id="product" className={`${p.actHead} ${on ? p.on : ''}`}>
+      <header ref={headRef} id="product" className={`${p.actHead} ${headOn ? p.on : ''}`}>
         <div className={p.actHeadInner}>
-          {/* no crumb: the sticky spine names this act directly above, and the
-              rule alone opens it — the label would have read twice in 140px */}
           <span className={p.actRule} aria-hidden="true" />
           {/* her thesis for the interface, and the orienting line relocated
               verbatim from the retired overture — both her words */}
@@ -207,7 +221,46 @@ export default function ProductAct() {
         </div>
       </header>
 
-      {FEATURES.map((f, i) => <Stage key={f.name} f={f} i={i} total={FEATURES.length} />)}
+      <div
+        ref={trackRef}
+        className={`${p.track} ${pinned ? p.trackPinned : ''}`}
+        style={pinned ? { height: `${FEATURES.length * 105}vh` } : undefined}
+      >
+        <div className={p.sticky}>
+          <div className={p.frame}>
+            {FEATURES.map((f, i) => (
+              <section key={f.name} id={`product-${i + 1}`} className={p.beat} aria-label={f.name}>
+                <Beat f={f} i={i} total={FEATURES.length} state={stateOf(i)} />
+              </section>
+            ))}
+          </div>
+
+          {/* the act's own step marker — five ticks, the live one filled. The
+              anchor that tells you where you are inside the pin. */}
+          {pinned && (
+            <ol className={p.steps} aria-hidden="true">
+              {FEATURES.map((f, i) => (
+                <li key={f.name} className={`${p.step} ${i === active ? p.stepOn : ''} ${i < active ? p.stepPast : ''}`}>
+                  <span className={p.stepTick} />
+                  <span className={p.stepName}>{f.name}</span>
+                </li>
+              ))}
+            </ol>
+          )}
+        </div>
+      </div>
+
+      {/* the one context photograph in the act — Care Pod's why, released from
+          the pin so it can run wide as the act's closing image */}
+      {why && (
+        <figure id="product-close" className={p.why}>
+          <img src={why.photo.src} alt={why.alt} loading="lazy" draggable="false" />
+          <figcaption>
+            {why.cap}
+            <span className={p.byline}>{`Photo · ${why.photo.byline} / Pexels`}</span>
+          </figcaption>
+        </figure>
+      )}
     </div>
   )
 }

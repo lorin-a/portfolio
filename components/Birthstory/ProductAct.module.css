@@ -1,198 +1,249 @@
-/* THE PRODUCT — act one. One feature per viewport, on the client-deck idiom:
-   the artifact centered, two short notes flanking it on dotted leaders.
+/* THE PRODUCT — act one, pinned, on the app's own dark ground.
 
-   The act carries the identity gradient under a heavy paper veil, so the whole
-   product half reads as one continuous surface — differentiated from the flat
-   paper of the process half without resorting to a dark band. No cards, no
-   borders: whitespace does the separating. */
+   One frame holds for the whole act. Scroll advances the beat inside it: the
+   device stays put and the screen changes within it, the reading column swaps,
+   the flanking notes restagger and redraw their leaders. Nothing moves past you,
+   so there is always something anchored to read.
+
+   Reduced motion (and anything under 1000px) drops the pin: the beats become a
+   plain stacked list with every feature visible at once. */
 
 .act {
-  padding-bottom: clamp(2rem, 6vh, 4.5rem);
-  background:
-    linear-gradient(rgba(250, 250, 250, 0.9), rgba(250, 250, 250, 0.9)),
-    linear-gradient(155deg, #E7C3C8 0%, #B9C2EC 46%, #1A434D 100%);
+  --ink: #f7f4ee;
+  --ink-soft: rgba(247, 244, 238, 0.74);
+  --ink-faint: rgba(247, 244, 238, 0.42);
+  --rose: #e7c3c8;
+  --peri: #b9c2ec;
+  --hair: rgba(247, 244, 238, 0.16);
+  --stick: 9.4rem; /* the fixed nav (6rem) + the sticky chapter spine */
+  background: linear-gradient(168deg, #1f4750 0%, #1a434d 55%, #16323a 100%);
+  color: var(--ink);
 }
 
 /* ── the act's opener ── */
 
 .actHead {
-  padding: clamp(4rem, 11vh, 8rem) var(--bs-pad) clamp(2rem, 5vh, 3.5rem);
-  scroll-margin-top: 9.75rem; /* clear the fixed nav + sticky progress bar */
+  padding: clamp(4rem, 11vh, 8rem) var(--bs-pad) clamp(2.4rem, 6vh, 4rem);
+  scroll-margin-top: 9.75rem;
 }
 .actHeadInner { max-width: 92rem; margin: 0 auto; }
 .actRule {
   display: block; height: 0;
   margin-bottom: clamp(1.6rem, 3.5vw, 2.6rem);
-  border-top: 2px solid var(--bs-teal);
+  border-top: 2px solid var(--rose);
 }
-/* the act's thesis, at the same display scale as a process chapter statement —
-   so the two acts read as peers, not as a header and a subhead */
 .statement {
   margin: 0; max-width: 24ch;
   font-family: var(--font-heading); font-variation-settings: 'SOFT' 60, 'WONK' 0;
   font-weight: 380; font-size: clamp(2.2rem, 1.6rem + 2.8vw, 3.8rem);
   line-height: 1.08; letter-spacing: -0.016em;
-  color: var(--color-ink); text-wrap: balance;
+  color: var(--ink); text-wrap: balance;
 }
-.statement b { font-weight: 460; color: var(--bs-accent); font-style: normal; }
+.statement b { font-weight: 460; color: var(--rose); font-style: normal; }
 .actLede {
   margin: clamp(1.1rem, 2.4vw, 1.6rem) 0 0; max-width: 38ch;
   font-family: var(--font-body); font-size: clamp(1.1rem, 1rem + 0.5vw, 1.35rem);
-  line-height: 1.5; color: var(--color-ink); text-wrap: pretty;
+  line-height: 1.5; color: var(--ink); text-wrap: pretty;
 }
 .actNote {
   margin: clamp(0.8rem, 1.8vw, 1.1rem) 0 0; max-width: 52ch;
   font-family: var(--font-body); font-size: clamp(0.95rem, 0.92rem + 0.2vw, 1.05rem);
-  line-height: 1.6; color: var(--color-ink-light); text-wrap: pretty;
+  line-height: 1.6; color: var(--ink-soft); text-wrap: pretty;
 }
-
-/* ── one feature, one viewport ── */
-
-.stage {
-  min-height: 100vh;
-  min-height: 100svh;
-  display: grid; align-content: center;
-  /* tight: a 700px device, its two notes and the label have to coexist inside a
-     900px laptop viewport once the nav and the sticky spine take their ~90px */
-  padding: clamp(2rem, 5vh, 3.5rem) var(--bs-pad);
-}
-.stageInner {
-  width: 100%; max-width: 92rem; margin: 0 auto;
-  display: grid; gap: clamp(1.4rem, 3vh, 2.4rem);
-}
-
-/* the slide label — folio, name, one line of role, centred over the artifact.
-   Deliberately compact: on a full-viewport stage a large left-aligned text mass
-   beside a centred artifact leaves an empty quadrant, so the type steps back and
-   the artifact carries the stage. */
-.head { display: grid; justify-items: center; text-align: center; gap: 0.4rem; }
-.folio {
-  margin: 0 0 0.5rem; display: flex; align-items: baseline; gap: 0.5rem;
-  font-family: var(--font-body); font-size: 0.72rem; font-weight: 700;
-  letter-spacing: 0.14em; text-transform: uppercase; font-variant-numeric: tabular-nums;
-}
-.folioNum { color: var(--bs-accent); }
-.folioOf { color: var(--bs-teal-soft); font-weight: 600; }
-.name {
-  margin: 0;
-  font-family: var(--font-heading); font-variation-settings: 'SOFT' 60, 'WONK' 0; font-weight: 400;
-  font-size: clamp(1.7rem, 1.3rem + 1.6vw, 2.6rem); line-height: 1.14;
-  letter-spacing: -0.014em; color: var(--color-ink); text-wrap: balance;
-}
-.role {
-  margin: 0; max-width: 46ch;
-  font-family: var(--font-body); font-weight: 600;
-  font-size: clamp(1.05rem, 1rem + 0.35vw, 1.18rem);
-  line-height: 1.45; letter-spacing: 0.01em; color: var(--bs-teal-soft); text-wrap: balance;
-}
-
-/* the reasoning, under the artifact it explains — show first, then tell */
-.foot { display: grid; justify-items: center; gap: clamp(1.4rem, 3vh, 2.2rem); }
-/* the block centres on the stage, but the text itself stays flush-left — five
-   centred lines of reasoning is a rag no amount of balancing rescues */
-.lede {
-  margin: 0; max-width: 62ch; text-align: left;
-  font-family: var(--font-body); font-size: clamp(1rem, 0.95rem + 0.28vw, 1.14rem);
-  line-height: 1.6; color: var(--color-ink-light); text-wrap: pretty;
-}
-/* the one stage that carries a context photograph (Care Pod) — the loop broken
-   on purpose, so five viewports don't run one identical recipe */
-.why { width: 100%; max-width: 42rem; }
-
-/* ── the deck composition ── */
-
-.compose {
-  display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
-  align-items: start; justify-items: center;
-  gap: clamp(1rem, 2.4vw, 2rem); width: 100%;
-}
-/* the device runs ~2.15:1, so its width sets the stage's height — held where a
-   1440×900 viewport still shows the whole screen with its two notes */
-.art { width: clamp(280px, 22vw, 330px); }
-.artWide { width: auto; }
-.bookPair {
-  display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-start;
-  gap: clamp(1rem, 2.5vw, 2.2rem);
-}
-.bookPair .screen { width: clamp(190px, 16vw, 250px); }
-.screen { margin: 0; display: grid; gap: 0.6rem; }
-.screenCap {
-  font-family: var(--font-body); font-size: 0.82rem; line-height: 1.45;
-  color: var(--color-ink-light); text-wrap: balance;
-}
-
-.annot { width: min(15rem, 100%); display: grid; gap: 0.3rem; align-content: start; margin-top: var(--mt, 6rem); }
-.annotL { justify-self: end; text-align: right; }
-.annotR { justify-self: start; }
-/* the leader draws toward the artifact once the stage arrives */
-.leader {
-  display: block; height: 0; margin-top: 0.5rem;
-  border-top: 2px dotted var(--bs-teal-soft);
-  transform: scaleX(0); transform-origin: right;
-  transition: transform var(--motion-slow) var(--ease-out);
-}
-.annotR .leader { transform-origin: left; }
-.on .leader { transform: scaleX(1); transition-delay: 520ms; }
-
-/* at desktop the annotations carry the caption's content — don't say it twice */
-@media (min-width: 901px) {
-  .compose figcaption { display: none; }
-  .bookPair figcaption { display: revert; }
-}
-
-/* ── reveal ── */
-
 .rise {
   opacity: 0; transform: translateY(22px);
   transition: opacity 700ms var(--ease-out), transform 700ms var(--ease-out);
   transition-delay: var(--d, 0ms);
 }
 .on .rise { opacity: 1; transform: none; }
-.art, .artWide {
-  opacity: 0; transform: translateY(28px);
-  transition: opacity var(--motion-slow) var(--ease-out), transform var(--motion-slow) var(--ease-out);
-  transition-delay: 220ms;
-}
-.on .art, .on .artWide { opacity: 1; transform: none; }
-.annot {
-  opacity: 0;
-  transition: opacity 700ms var(--ease-out);
-  transition-delay: 420ms;
-}
-.on .annot { opacity: 1; }
 
-/* ── narrower ── */
+/* ── the pinned track ── */
 
-@media (max-width: 1180px) {
-  .annot { width: min(13rem, 100%); margin-top: calc(var(--mt, 6rem) * 0.7); }
+.trackPinned { position: relative; }
+.trackPinned .sticky {
+  position: sticky; top: var(--stick);
+  height: calc(100svh - var(--stick));
+  padding: 0 var(--bs-pad) clamp(1rem, 2.5vh, 1.8rem);
 }
-@media (max-width: 900px) {
-  /* the flanking notes fold under the artifact as a stacked pair; the media
-     caption comes back, so nothing is lost on a small screen */
-  .compose { grid-template-columns: minmax(0, 1fr); justify-items: stretch; gap: clamp(1.4rem, 4vw, 2rem); }
-  .head { justify-items: start; text-align: left; }
-  .lede { text-align: left; }
-  .foot { justify-items: start; }
-  .art { width: min(82vw, 340px); justify-self: center; }
-  .artWide { width: 100%; }
-  .annot {
-    width: 100%; max-width: 46ch; margin-top: 0; justify-self: start; text-align: left;
-    padding-top: 0.9rem; border-top: 2px dotted var(--bs-teal-soft);
-  }
-  .annotL { justify-self: start; text-align: left; }
-  .leader { display: none; }
-  /* the artifact leads; the notes follow it */
-  .art, .artWide { order: -1; }
-  .bookPair .screen { width: min(38vw, 240px); }
+.frame { position: relative; width: 100%; max-width: 92rem; height: 100%; margin: 0 auto; }
+
+/* every beat occupies the same frame; only one is live at a time */
+/* the reading column and the device share a top edge — centring both left the
+   frame's top-left corner empty while the device towered beside it */
+.trackPinned .beat {
+  position: absolute; inset: 0 0 3.2rem;
+  display: grid; grid-template-columns: minmax(0, 24rem) minmax(0, 1fr);
+  align-items: start; gap: clamp(1.5rem, 3vw, 3rem);
+  padding-top: clamp(1rem, 3vh, 2.2rem);
 }
-@media (max-width: 520px) {
-  .art { width: min(78vw, 320px); }
-  .bookPair { gap: clamp(1.4rem, 6vw, 2rem); }
-  .bookPair .screen { width: min(70vw, 280px); }
-  .stage { min-height: 0; padding-block: clamp(2.6rem, 8vh, 4rem); }
+
+/* ── the reading column ── */
+
+.copy { display: grid; align-content: start; gap: 0.5rem; max-width: 42ch; }
+.folio {
+  margin: 0 0 0.4rem; display: flex; align-items: center; gap: 0.7rem;
+  font-family: var(--font-body); font-size: 0.72rem; font-weight: 700;
+  letter-spacing: 0.16em; text-transform: uppercase; font-variant-numeric: tabular-nums;
 }
+.folioNum { color: var(--rose); }
+.folioRule { flex: 0 0 2.2rem; height: 0; border-top: 1px solid var(--hair); }
+.folioOf { color: var(--ink-faint); font-weight: 600; }
+.name {
+  margin: 0;
+  font-family: var(--font-heading); font-variation-settings: 'SOFT' 60, 'WONK' 0; font-weight: 400;
+  font-size: clamp(2rem, 1.5rem + 1.9vw, 3.1rem); line-height: 1.06;
+  letter-spacing: -0.018em; color: var(--ink); text-wrap: balance;
+}
+.role {
+  margin: 0.15rem 0 0;
+  font-family: var(--font-body); font-weight: 600;
+  font-size: clamp(0.98rem, 0.94rem + 0.3vw, 1.1rem);
+  line-height: 1.4; letter-spacing: 0.01em; color: var(--peri); text-wrap: pretty;
+}
+.lede {
+  margin: 0.7rem 0 0;
+  font-family: var(--font-body); font-size: clamp(0.98rem, 0.94rem + 0.25vw, 1.08rem);
+  line-height: 1.62; color: var(--ink-soft); text-wrap: pretty;
+}
+
+/* ── the plate: the device, flanked ── */
+
+.plate {
+  display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: start; justify-items: center; align-content: start;
+  gap: clamp(0.8rem, 1.8vw, 1.6rem); height: 100%;
+}
+/* the device is height-bound, not width-bound: it has to clear the nav, the
+   spine and the step rail inside one viewport, whatever the viewport is */
+.art { width: min(300px, calc((100svh - 18.5rem) / 2.16)); align-self: start; }
+/* the finale runs two screens instead of one — the deliberate break in the loop */
+.artWide { width: auto; max-width: 100%; }
+.bookPair { display: flex; align-items: start; gap: clamp(0.8rem, 1.6vw, 1.4rem); }
+.bookPhone { flex: 0 0 auto; width: min(228px, calc((100svh - 18.5rem) / 2.16)); }
+
+/* the notes hang from the top of the device, aimed at the region each describes */
+.annot { width: min(14rem, 100%); display: grid; gap: 0.28rem; align-content: start; margin-top: var(--mt, 4rem); }
+.annotL { justify-self: end; text-align: right; }
+.annotR { justify-self: start; }
+.annotLabel {
+  margin: 0 0 0.2rem; font-family: var(--font-body); font-weight: 700;
+  font-size: 0.9rem; line-height: 1.3; color: var(--rose);
+}
+.annotText {
+  margin: 0; font-family: var(--font-body); font-size: 0.84rem;
+  line-height: 1.5; color: var(--ink-soft); text-wrap: pretty;
+}
+.leader {
+  display: block; height: 0; margin-top: 0.5rem;
+  border-top: 2px dotted rgba(247, 244, 238, 0.34);
+  transform: scaleX(0); transform-origin: right;
+  transition: transform var(--motion-slow) var(--ease-out);
+}
+.annotR .leader { transform-origin: left; }
+
+/* the media components caption themselves; inside the pin the flanking notes
+   carry the reasoning, so the caption would say it a second time */
+.trackPinned .plate figcaption { display: none; }
+
+/* ── beat states ── */
+
+.trackPinned .copy,
+.trackPinned .plate {
+  transition:
+    opacity 620ms var(--ease-out),
+    transform 720ms var(--ease-out),
+    visibility 0s linear 720ms;
+}
+.trackPinned .next, .trackPinned .past { opacity: 0; visibility: hidden; pointer-events: none; }
+.trackPinned .next.copy { transform: translateY(30px); }
+.trackPinned .past.copy { transform: translateY(-30px); }
+.trackPinned .next.plate { transform: translateY(26px) scale(0.975); }
+.trackPinned .past.plate { transform: translateY(-26px) scale(0.975); }
+.trackPinned .live {
+  opacity: 1; visibility: visible; transform: none;
+  transition-delay: 0s, 0s, 0s;
+}
+/* the beat's own choreography — the column builds, then the notes land and
+   their leaders draw toward the screen */
+.trackPinned .live.copy > * { animation: beatIn 720ms var(--ease-out) both; }
+.trackPinned .live.copy > :nth-child(1) { animation-delay: 60ms; }
+.trackPinned .live.copy > :nth-child(2) { animation-delay: 130ms; }
+.trackPinned .live.copy > :nth-child(3) { animation-delay: 200ms; }
+.trackPinned .live.copy > :nth-child(4) { animation-delay: 280ms; }
+.trackPinned .live.plate .annotL { animation: beatIn 720ms var(--ease-out) 260ms both; }
+.trackPinned .live.plate .annotR { animation: beatIn 720ms var(--ease-out) 380ms both; }
+/* the feature's name wipes rather than fades — the one beat of real character
+   in the transition, and the reason a beat change reads as a turn of the page */
+.trackPinned .live.copy > .name {
+  animation: nameWipe 780ms var(--ease-out) 110ms both;
+}
+.trackPinned .live .leader { transform: scaleX(1); transition-delay: 640ms; }
+@keyframes beatIn {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes nameWipe {
+  from { opacity: 0; clip-path: inset(0 100% 0 0); transform: translateY(10px); }
+  to { opacity: 1; clip-path: inset(0 0 0 0); transform: none; }
+}
+
+/* ── the step rail: where you are inside the pin ── */
+
+.steps {
+  position: absolute; left: var(--bs-pad); right: var(--bs-pad); bottom: clamp(0.6rem, 2vh, 1.4rem);
+  display: flex; gap: clamp(0.9rem, 2.4vw, 2.2rem); align-items: center;
+  margin: 0 auto; padding: 0; max-width: 92rem; list-style: none;
+}
+.step { display: grid; gap: 0.45rem; flex: 1 1 0; min-width: 0; }
+.stepTick { display: block; height: 2px; background: var(--hair); transition: background 500ms var(--ease-out); }
+.stepName {
+  font-family: var(--font-body); font-size: 0.68rem; font-weight: 700;
+  letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-faint);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  transition: color 500ms var(--ease-out);
+}
+.stepPast .stepTick { background: rgba(247, 244, 238, 0.4); }
+.stepOn .stepTick { background: var(--rose); }
+.stepOn .stepName { color: var(--ink); }
+
+/* ── the act's closing image ── */
+
+.why { margin: 0; padding: 0 var(--bs-pad) clamp(3rem, 8vh, 5.5rem); }
+.why img {
+  display: block; width: 100%; max-width: 92rem; margin: 0 auto;
+  aspect-ratio: 21 / 8; object-fit: cover; object-position: center 40%; border-radius: 3px;
+}
+.why figcaption {
+  max-width: 92rem; margin: 0.85rem auto 0;
+  font-family: var(--font-body); font-size: 0.86rem; line-height: 1.5;
+  color: var(--ink-soft); text-wrap: pretty;
+}
+.byline { display: block; margin-top: 0.2rem; font-size: 0.76rem; color: var(--ink-faint); }
+
+/* ── unpinned: reduced motion, and every narrow viewport ── */
+
+.track:not(.trackPinned) .beat {
+  display: grid; gap: clamp(1.2rem, 4vw, 2rem);
+  max-width: 92rem; margin: 0 auto;
+  padding: clamp(2.6rem, 8vh, 4.5rem) var(--bs-pad);
+}
+.track:not(.trackPinned) .beat + .beat { border-top: 1px solid var(--hair); }
+.track:not(.trackPinned) .copy { max-width: 60ch; }
+.track:not(.trackPinned) .plate { grid-template-columns: minmax(0, 1fr); height: auto; gap: clamp(1.2rem, 4vw, 1.8rem); }
+.track:not(.trackPinned) .art { width: min(78vw, 300px); justify-self: center; }
+.track:not(.trackPinned) .artWide { width: 100%; }
+.track:not(.trackPinned) .bookPair { justify-content: center; }
+.track:not(.trackPinned) .bookPhone { width: min(38vw, 210px); }
+.track:not(.trackPinned) .annot {
+  width: 100%; max-width: 46ch; margin-top: 0; justify-self: start; text-align: left;
+  padding-top: 0.85rem; border-top: 2px dotted rgba(247, 244, 238, 0.34);
+}
+.track:not(.trackPinned) .leader { display: none; }
+.track:not(.trackPinned) .art,
+.track:not(.trackPinned) .artWide { order: -1; }
+.track:not(.trackPinned) .why img { aspect-ratio: 3 / 2; }
 
 @media (prefers-reduced-motion: reduce) {
-  .rise, .art, .artWide, .annot { opacity: 1; transform: none; transition: none; }
+  .rise { opacity: 1; transform: none; transition: none; }
   .leader { transform: scaleX(1); transition: none; }
 }
