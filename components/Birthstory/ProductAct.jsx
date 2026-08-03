@@ -236,16 +236,15 @@ export default function ProductAct() {
               </section>
             ))}
 
-            {/* the act's index — a vertical rail down the right edge, where the
-                composition was leaving dead space. Vertical on purpose: the page
-                already carries a horizontal chapter spine at the top, and a
-                second horizontal bar at the foot read as a duplicate of it. */}
+            {/* the act's index — left-aligned at the foot of the reading plane,
+                anchored so it holds still while the beats change above it. It
+                lives with the words, not over the product. */}
             {pinned && (
               <ol className={p.steps} aria-hidden="true">
                 {FEATURES.map((f, i) => (
                   <li key={f.name} className={`${p.step} ${i === active ? p.stepOn : ''} ${i < active ? p.stepPast : ''}`}>
-                    <span className={p.stepName}>{f.name}</span>
                     <span className={p.stepTick} />
+                    <span className={p.stepName}>{f.name}</span>
                   </li>
                 ))}
               </ol>

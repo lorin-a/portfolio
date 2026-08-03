@@ -11,7 +11,7 @@
 .act {
   --ink: #f7f4ee;
   --ink-soft: rgba(247, 244, 238, 0.74);
-  --ink-faint: rgba(247, 244, 238, 0.42);
+  --ink-faint: rgba(247, 244, 238, 0.62); /* 4.7:1 on the ground — AA, measured */
   /* ONE accent, and it is not pink (her call): the brand periwinkle carries
      every label, numeral, rule and emphasis in the act. The rose stop stays in
      the identity gradient elsewhere; it is out of the type entirely here. */
@@ -68,31 +68,45 @@
 
 /* ── the pinned track ── */
 
-.trackPinned { position: relative; }
+/* TWO PLANES (her call): the words and the index hold a light plane on the
+   left, the product holds the dark plane on the right. The split runs edge to
+   edge — painting it as one hard-stop gradient on the sticky frame keeps it
+   perfectly registered with the grid column that sits on top of it, which a
+   max-width inner wrapper could not do. */
+.trackPinned { position: relative; --split: 42%; }
 .trackPinned .sticky {
   position: sticky; top: var(--stick);
   height: calc(100svh - var(--stick));
-  padding: 0 var(--bs-pad) clamp(1rem, 2.5vh, 1.8rem);
+  background: linear-gradient(90deg, var(--bs-paper) 0 var(--split), transparent var(--split));
 }
-.frame { position: relative; width: 100%; max-width: 100rem; height: 100%; margin: 0 auto; }
+.frame { position: relative; width: 100%; height: 100%; }
 
 /* every beat occupies the same frame; only one is live at a time */
 /* the reading column and the device share a top edge — centring both left the
    frame's top-left corner empty while the device towered beside it */
 .trackPinned .beat {
   position: absolute; inset: 0;
-  display: grid; grid-template-columns: minmax(0, 26rem) minmax(0, 1fr);
-  /* the two columns share a top edge, and the pair centres in the frame — top
-     alignment alone left a lake of dead space under the composition on a tall
-     display */
+  display: grid; grid-template-columns: var(--split) minmax(0, 1fr);
+  /* the columns are the planes: whatever splits the background splits the grid */
   align-items: stretch; align-content: center;
-  gap: clamp(1.5rem, 3vw, 3.5rem);
-  padding-right: var(--rail, 0rem);
 }
 
 /* ── the reading column ── */
 
-.copy { display: grid; align-content: center; gap: 0.5rem; max-width: 42ch; height: 100%; }
+/* the reading plane. Its foot is reserved for the index, which is anchored
+   there and must not be pushed around by a long lede. */
+.copy {
+  display: grid; align-content: center; gap: 0.5rem; height: 100%;
+  padding: 0 clamp(1.5rem, 3vw, 3.5rem) 8rem var(--bs-pad);
+}
+.copy > * { max-width: 42ch; }
+.trackPinned .copy { color: var(--color-ink); }
+.trackPinned .folioNum { color: var(--bs-teal-soft); }
+.trackPinned .folioOf { color: var(--color-ink-faint); }
+.trackPinned .folioRule { border-top-color: var(--bs-rule); }
+.trackPinned .name { color: var(--color-ink); }
+.trackPinned .role { color: var(--bs-teal-soft); }
+.trackPinned .lede { color: var(--color-ink-light); }
 .folio {
   margin: 0 0 0.4rem; display: flex; align-items: center; gap: 0.7rem;
   font-family: var(--font-body); font-size: 0.72rem; font-weight: 700;
@@ -124,18 +138,19 @@
 .plate {
   display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
   align-items: start; justify-items: center; align-content: center;
-  gap: clamp(0.9rem, 2vw, 2rem); height: 100%;
+  gap: clamp(0.7rem, 1.6vw, 1.6rem); height: 100%;
+  padding: 0 var(--bs-pad) 0 clamp(1.2rem, 2.5vw, 2.6rem);
 }
 /* the device is height-bound, not width-bound: it has to clear the nav, the
    spine and the step rail inside one viewport, whatever the viewport is */
-.art { width: min(370px, calc((100svh - 16rem) / 2.16)); align-self: start; }
+.art { width: min(360px, calc((100svh - 16rem) / 2.16)); align-self: start; }
 /* the finale runs two screens instead of one — the deliberate break in the loop */
 .artWide { width: auto; max-width: 100%; }
 .bookPair { display: flex; align-items: start; gap: clamp(0.8rem, 1.6vw, 1.4rem); }
 .bookPhone { flex: 0 0 auto; width: min(270px, calc((100svh - 16rem) / 2.16)); }
 
 /* the notes hang from the top of the device, aimed at the region each describes */
-.annot { width: min(15rem, 100%); display: grid; gap: 0.28rem; align-content: start; margin-top: var(--mt, 4rem); }
+.annot { width: min(14rem, 100%); display: grid; gap: 0.28rem; align-content: start; margin-top: var(--mt, 4rem); }
 .annotL { justify-self: end; text-align: right; }
 .annotR { justify-self: start; }
 .annotLabel {
@@ -200,40 +215,31 @@
   to { opacity: 1; clip-path: inset(0 0 0 0); transform: none; }
 }
 
-/* ── the step rail: where you are inside the pin ── */
+/* ── the index: where you are inside the pin ── */
 
+/* the index sits with the words, anchored to the foot of the reading plane so
+   it holds still while the beats change above it */
 .steps {
-  position: absolute; right: 0; top: 50%; transform: translateY(-50%);
-  display: grid; gap: clamp(1rem, 2.2vh, 1.6rem);
-  margin: 0; padding: 0; list-style: none;
+  position: absolute; left: var(--bs-pad); bottom: clamp(1.4rem, 4vh, 2.8rem);
+  display: grid; gap: 0.5rem; margin: 0; padding: 0; list-style: none;
 }
 .step {
-  display: grid; grid-template-columns: auto 2.4rem; align-items: center;
-  gap: 0.7rem; justify-items: end;
+  display: grid; grid-template-columns: 2.2rem auto; align-items: center;
+  gap: 0.85rem; justify-items: start;
 }
 .stepTick {
-  display: block; width: 1.4rem; height: 2px; justify-self: start;
-  background: var(--hair);
+  display: block; width: 1.1rem; height: 2px; background: var(--bs-rule);
   transition: width 500ms var(--ease-out), background 500ms var(--ease-out);
 }
 .stepName {
-  font-family: var(--font-body); font-size: 0.66rem; font-weight: 700;
-  letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-faint);
-  white-space: nowrap; text-align: right;
-  transition: color 500ms var(--ease-out);
+  font-family: var(--font-body); font-size: 0.68rem; font-weight: 700;
+  letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-ink-faint);
+  white-space: nowrap; transition: color 500ms var(--ease-out);
 }
-.stepPast .stepTick { background: rgba(247, 244, 238, 0.38); }
-.stepOn .stepTick { width: 2.4rem; background: var(--accent); }
-.stepOn .stepName { color: var(--ink); }
-/* the rail rides its own gutter, never the composition's space — and only where
-   there is genuinely room for it. Below 1500px it goes entirely: the "02 — OF 05"
-   folio in the reading column already counts the beats, and a row of orphaned
-   ticks was worse wayfinding than none. */
-.steps { display: none; }
-@media (min-width: 1500px) {
-  .trackPinned .beat { --rail: 12rem; }
-  .steps { display: grid; }
-}
+.stepPast .stepTick { background: var(--bs-teal-soft); }
+.stepOn .stepTick { width: 2.2rem; background: var(--bs-teal); }
+.stepOn .stepName { color: var(--color-ink); }
+@media (max-width: 1180px) { .steps { display: none; } }
 
 /* ── the act's closing image ── */
 
@@ -268,6 +274,10 @@
   padding-top: 0.85rem; border-top: 2px dotted rgba(247, 244, 238, 0.38);
 }
 .track:not(.trackPinned) .leader { display: none; }
+/* the media components caption themselves with the page's light-ground ink,
+   which is unreadable on the act's dark plane — the unpinned state is the only
+   place those captions show */
+.track:not(.trackPinned) figcaption { color: var(--ink-soft); }
 .track:not(.trackPinned) .art,
 .track:not(.trackPinned) .artWide { order: -1; }
 .track:not(.trackPinned) .why img { aspect-ratio: 3 / 2; }
