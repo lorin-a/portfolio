@@ -10,42 +10,42 @@ import SearchReveal from './SearchReveal'
 import p from './ProductAct.module.css'
 
 /* ============================================================================
-   THE PRODUCT — act one, pinned.
+   THE PRODUCT — act one, and the page's universal grammar (N31).
 
-   The first pass laid five identically-composed stages end to end and let them
-   scroll past each other. Lorin's read (N26): "not unified or clean or locked…
-   missing something." She was right — nothing persisted, so nothing anchored.
+   TWO SHAPES, and only two:
 
-   This version pins. One frame holds for the whole act while the beats change
-   inside it: the device stays exactly where it is and the screen changes within
-   it, the reading column crossfades, the flanking notes restagger and redraw
-   their leaders. Scroll advances beats rather than moving the composition, so
-   there is always something to read without chasing it up the page.
+   THE ROW is the workhorse. Contained in the page column, copy on the left with
+   the column sticking beside its artifact, the artifact large on the right. It
+   is the Iteration recipe, which is what Lorin was pointing at all along. Every
+   feature and every process beat on the page uses it.
 
-   The ground is the app's own teal — the darker surface she missed when the
-   overture was retired.
+   THE ARIA is reserved. A pinned, viewport-held moment used ONCE, and only
+   where the beats are genuinely different KINDS of content — her condition:
+   "3 would only work if each scroll TRULY earned a moment of isolation such as
+   the ask, the research (a quote), the feature." Five product features pinned in
+   a row is five of the same thing, which is exactly why it read as unearned.
+   Care Pod is the one moment that carries that argument, and it already carries
+   it in her own prose, so the aria's three beats are her sentences, split at
+   their own boundaries and not rewritten.
 
-   Reduced motion drops the pin entirely and renders the five features as a
-   plain stacked list, every beat visible at once.
+   Callouts with leaders ride the aria's device, where the artifact is big and
+   isolated enough to have regions worth pointing at. In a row the same notes
+   read in the copy column instead.
    ============================================================================ */
 
-/* the media components each draw their own device at the width the stage sets,
-   so crossfading between them reads as the screen changing inside a frame that
-   never moves — the device is the act's anchor */
-function Media({ f, live }) {
+const ARIA_KIND = 'carepod' // the one feature that earns the pin
+
+function Media({ f }) {
   if (f.kind === 'doc') return <DocReveal cap={f.cap} />
   if (f.kind === 'carepod') return <CarePodFlow cap={f.cap} />
   if (f.kind === 'journal') return <JournalFlow cap={f.cap} />
   if (f.kind === 'search') return <SearchReveal cap={f.cap} />
-  /* no inline width here: the pair is sized by .bookPair in CSS, and an inline
-     width:100% on a flex item would resolve against an auto-width container and
-     blow the whole plate out */
   if (f.kind === 'book') return (
     <div className={p.bookPair}>
       {f.shots.map(([src, alt]) => (
         <span key={src} className={`${sys.phone} ${p.bookPhone}`}>
           <span className={sys.phoneNotch} aria-hidden="true" />
-          <span className={sys.phoneScreen}><img src={src} alt={live ? alt : ''} loading="lazy" draggable="false" /></span>
+          <span className={sys.phoneScreen}><img src={src} alt={alt} loading="lazy" draggable="false" /></span>
         </span>
       ))}
     </div>
@@ -53,31 +53,27 @@ function Media({ f, live }) {
   return null
 }
 
-/* the act's one context photograph, released from the pin to close the act */
-const why = FEATURES.find((f) => f.context)?.context
+/* ── THE ROW ─────────────────────────────────────────────────────────────── */
 
-/* the reading column and the stage, one beat's worth.
-
-   The notes used to flank the device inside the dark plane, which left the two
-   planes badly out of balance: a dense artifact beside a heading and a single
-   paragraph. They read in the reading column now — same annotation language as
-   the rest of the page — and the artifact holds its plane alone. That also
-   makes the grammar replicable: any artifact fits the right plane, but flanking
-   dotted leaders only ever worked for a phone screen. */
-function Beat({ f, i, total, state }) {
-  const live = state === 'live'
+function Row({ f, i, total }) {
+  const [ref, on] = useSeen(0.15)
   return (
-    <>
-      <div className={`${p.copy} ${p[state]}`} aria-hidden={live ? undefined : 'true'}>
+    <section
+      ref={ref}
+      id={`product-${i + 1}`}
+      className={`${p.row} ${on ? p.on : ''}`}
+      aria-label={f.name}
+    >
+      <div className={p.copy}>
         <p className={p.folio}>
           <span className={p.folioNum}>{String(i + 1).padStart(2, '0')}</span>
           <span className={p.folioRule} aria-hidden="true" />
           <span className={p.folioOf}>{`of ${String(total).padStart(2, '0')}`}</span>
         </p>
-        <h3 className={p.name}>{f.name}</h3>
-        <p className={p.role}>{f.role}</p>
-        <p className={p.lede}>{f.prose}</p>
-        <div className={p.notes}>
+        <h3 className={`${p.name} ${p.rise}`}>{f.name}</h3>
+        <p className={`${p.role} ${p.rise}`} style={{ '--d': '70ms' }}>{f.role}</p>
+        <p className={`${p.lede} ${p.rise}`} style={{ '--d': '140ms' }}>{f.prose}</p>
+        <div className={`${p.notes} ${p.rise}`} style={{ '--d': '210ms' }}>
           {[f.annots.l, f.annots.r].map((a) => (
             <div key={a.label} className={p.note}>
               <p className={p.noteLabel}>{a.label}</p>
@@ -87,20 +83,57 @@ function Beat({ f, i, total, state }) {
         </div>
       </div>
 
-      <div className={`${p.plate} ${p[state]}`} aria-hidden={live ? undefined : 'true'}>
+      <div className={`${p.stage} ${p.rise}`} style={{ '--d': '120ms' }}>
         <div className={`${p.art} ${f.kind === 'book' ? p.artWide : ''}`}>
-          <Media f={f} live={live} />
+          <Media f={f} />
         </div>
       </div>
-    </>
+    </section>
   )
 }
 
-export default function ProductAct() {
-  const [headRef, headOn] = useSeen(0.3)
+/* ── THE ARIA ────────────────────────────────────────────────────────────── */
+
+/* the three beats, every word hers — the role line from the brief, and the two
+   halves of her Care Pod paragraph split at their own sentence boundaries */
+function ariaBeats(f) {
+  return [
+    {
+      key: 'ask',
+      kicker: 'The ask',
+      /* her role line, verbatim — no surgery on her wording to make it fit */
+      body: <p className={p.ariaLede}>{f.role}</p>,
+    },
+    {
+      key: 'heard',
+      kicker: 'What one parent said',
+      body: (
+        <p className={p.ariaQuote}>
+          A parent told me someone in her circle remembered a detail about her child’s birth that she
+          had lost, and wished she’d asked everyone around her to add what they remembered while it
+          was fresh.
+        </p>
+      ),
+    },
+    {
+      key: 'built',
+      kicker: 'What we built',
+      body: (
+        <p className={p.ariaLede}>
+          That became Care Pod: one support person sends out updates, photos, and voice memos, loved
+          ones reply with messages and voice notes, and all of it saves into the Birth Story, so the
+          whole story of who was there and how loved that child was stays in one place.
+        </p>
+      ),
+    },
+  ]
+}
+
+function Aria({ f, i, total }) {
   const trackRef = useRef(null)
   const [active, setActive] = useState(0)
   const [pinned, setPinned] = useState(true)
+  const beats = ariaBeats(f)
 
   useEffect(() => {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) { setPinned(false); return }
@@ -111,8 +144,6 @@ export default function ProductAct() {
     return () => mq.removeEventListener('change', apply)
   }, [])
 
-  /* which beat is live: read the track's own progress rather than observing five
-     elements, so the step is deterministic and can't land between beats */
   useEffect(() => {
     if (!pinned) return
     const el = trackRef.current
@@ -124,7 +155,7 @@ export default function ProductAct() {
       const travel = r.height - window.innerHeight
       if (travel <= 0) return
       const progress = Math.min(Math.max(-r.top / travel, 0), 0.9999)
-      setActive(Math.floor(progress * FEATURES.length))
+      setActive(Math.floor(progress * beats.length))
     }
     const onScroll = () => { if (!frame) frame = requestAnimationFrame(measure) }
     measure()
@@ -135,31 +166,96 @@ export default function ProductAct() {
       window.removeEventListener('resize', onScroll)
       if (frame) cancelAnimationFrame(frame)
     }
-  }, [pinned])
-
-  const stateOf = (i) => (!pinned || i === active ? 'live' : i < active ? 'past' : 'next')
+  }, [pinned, beats.length])
 
   return (
+    <section
+      id={`product-${i + 1}`}
+      className={`${p.aria} ${pinned ? p.ariaPinned : ''}`}
+      aria-label={f.name}
+    >
+      <div
+        ref={trackRef}
+        className={p.ariaTrack}
+        style={pinned ? { height: `${beats.length * 100 + 30}vh` } : undefined}
+      >
+        <div className={p.ariaSticky}>
+          <div className={p.ariaFrame}>
+            <div className={p.ariaCopy}>
+              <p className={p.folio}>
+                <span className={p.folioNum}>{String(i + 1).padStart(2, '0')}</span>
+                <span className={p.folioRule} aria-hidden="true" />
+                <span className={p.folioOf}>{`of ${String(total).padStart(2, '0')}`}</span>
+              </p>
+              <h3 className={p.ariaName}>{f.name}</h3>
+
+              {beats.map((b, n) => (
+                <div
+                  key={b.key}
+                  className={`${p.ariaBeat} ${!pinned || n === active ? p.beatOn : ''}`}
+                  aria-hidden={pinned && n !== active ? 'true' : undefined}
+                >
+                  <p className={p.ariaKicker}>{b.kicker}</p>
+                  {b.body}
+                </div>
+              ))}
+
+              {pinned && (
+                <ol className={p.ariaDots} aria-hidden="true">
+                  {beats.map((b, n) => <li key={b.key} className={n === active ? p.dotOn : ''} />)}
+                </ol>
+              )}
+            </div>
+
+            {/* the callouts belong here and only here: the device is big and
+                alone, so a leader can actually point at the region it names.
+                They arrive on the last beat, once the feature has been built. */}
+            <div className={p.ariaStage}>
+              <div className={`${p.ariaAnnot} ${p.annotL} ${!pinned || active === beats.length - 1 ? p.annotOn : ''}`}>
+                <p className={p.noteLabel}>{f.annots.l.label}</p>
+                <p className={p.noteText}>{f.annots.l.text}</p>
+                <span className={p.leader} aria-hidden="true" />
+              </div>
+              <div className={p.ariaArt}><Media f={f} /></div>
+              <div className={`${p.ariaAnnot} ${p.annotR} ${!pinned || active === beats.length - 1 ? p.annotOn : ''}`}>
+                <p className={p.noteLabel}>{f.annots.r.label}</p>
+                <p className={p.noteText}>{f.annots.r.text}</p>
+                <span className={p.leader} aria-hidden="true" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+/* ── the act ─────────────────────────────────────────────────────────────── */
+
+const why = FEATURES.find((f) => f.context)?.context
+
+export default function ProductAct() {
+  const [headRef, headOn] = useSeen(0.25)
+  return (
     <div className={p.act}>
-      {/* the opener is the same two planes, unpinned — the act announces itself
-          in the grammar it then runs on. The context photograph fills the dark
-          plane, which is a better home for it than the band it used to close on. */}
-      <header ref={headRef} id="product" className={`${p.actHead} ${headOn ? p.on : ''}`}>
-        <div className={p.actCopy}>
-          <span className={p.actRule} aria-hidden="true" />
+      {/* the opener is a row too — same containment, same two columns, so the
+          act announces itself in the grammar it then runs on */}
+      <header ref={headRef} id="product" className={`${p.head} ${headOn ? p.on : ''}`}>
+        <div className={p.headCopy}>
+          <span className={p.headRule} aria-hidden="true" />
           <h2 className={`${p.statement} ${p.rise}`}>
             Birth is unpredictable, so the app is deliberately <b>simple</b>.
           </h2>
-          <p className={`${p.actLede} ${p.rise}`} style={{ '--d': '90ms' }}>
+          <p className={`${p.headLede} ${p.rise}`} style={{ '--d': '90ms' }}>
             It opens into documenting and reaches everything else in a tap or two.
           </p>
-          <p className={`${p.actNote} ${p.rise}`} style={{ '--d': '180ms' }}>
+          <p className={`${p.headNote} ${p.rise}`} style={{ '--d': '180ms' }}>
             None of the screens below are flat mockups: I rebuilt the wireframes as working prototypes,
             so what you’re seeing is the real interaction.
           </p>
         </div>
         {why && (
-          <figure className={p.actArt}>
+          <figure className={`${p.headArt} ${p.rise}`} style={{ '--d': '140ms' }}>
             <img src={why.photo.src} alt={why.alt} loading="lazy" draggable="false" />
             <figcaption>
               {why.cap}
@@ -169,36 +265,11 @@ export default function ProductAct() {
         )}
       </header>
 
-      <div
-        ref={trackRef}
-        className={`${p.track} ${pinned ? p.trackPinned : ''}`}
-        style={pinned ? { height: `${FEATURES.length * 105}vh` } : undefined}
-      >
-        <div className={p.sticky}>
-          <div className={p.frame}>
-            {FEATURES.map((f, i) => (
-              <section key={f.name} id={`product-${i + 1}`} className={p.beat} aria-label={f.name}>
-                <Beat f={f} i={i} total={FEATURES.length} state={stateOf(i)} />
-              </section>
-            ))}
-
-            {/* the act's index — left-aligned at the foot of the reading plane,
-                anchored so it holds still while the beats change above it. It
-                lives with the words, not over the product. */}
-            {pinned && (
-              <ol className={p.steps} aria-hidden="true">
-                {FEATURES.map((f, i) => (
-                  <li key={f.name} className={`${p.step} ${i === active ? p.stepOn : ''} ${i < active ? p.stepPast : ''}`}>
-                    <span className={p.stepTick} />
-                    <span className={p.stepName}>{f.name}</span>
-                  </li>
-                ))}
-              </ol>
-            )}
-          </div>
-        </div>
-      </div>
-
+      {FEATURES.map((f, i) =>
+        f.kind === ARIA_KIND
+          ? <Aria key={f.name} f={f} i={i} total={FEATURES.length} />
+          : <Row key={f.name} f={f} i={i} total={FEATURES.length} />
+      )}
     </div>
   )
 }
