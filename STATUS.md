@@ -15,18 +15,18 @@ three rejected passes.
    `docs/deck-system/research/hm-rubrics-formats.md` and the **Question Map** in
    `docs/DECK_SYSTEM.md` before proposing structure.
 2. **THE RUBRIC ORDER.** Decision rationale (the why) · role clarity (ambiguity is a stated
-   *disqualifier*) · impact with evidence. **Process ranks FOURTH**, "as evidence of thinking, not
-   documentation volume." The #2 failure mode everywhere is *process dump / over-contextualizing*.
+   *disqualifier*) · impact with evidence. **Process ranks FOURTH**, “as evidence of thinking, not
+   documentation volume.” The #2 failure mode everywhere is *process dump / over-contextualizing*.
    Cold open = the punchline, Q7 first.
 3. **OUTCOME IS THE VISUAL SPEC (N44):** `statement · one paragraph · one voice · one artifact,
    big`. When a section feels "crowded," **count its micro-labels and hairline rules** against
-   Outcome's (4 and 1) before redesigning anything. Repetition reads as calm; designing for variety
+   Outcome’s (4 and 1) before redesigning anything. Repetition reads as calm; designing for variety
    IS the crowding.
 4. **THE SILHOUETTE TEST (N40)** — cover the words; if the shape still says nothing, it is a
    paragraph in a costume. Run it on INHERITED components, not only new ones.
 5. **THE MEASURE** — one 12-column grid (`sys.measure` + `.colsReading` / `.colsArtifact` /
    `.colsFull` / `.colsInset` / `.colsProse`). Every shape is a SPAN against it.
-6. **Her lead grant (N38/N45):** curation, order, format AND content selection are Claude's call —
+6. **Her lead grant (N38/N45):** curation, order, format AND content selection are Claude’s call —
    she has said explicitly to change anything, including retiring her own earlier ideas. **The words
    are always hers**: restructure and cut freely, never paraphrase; mark `[LORIN TO WRITE]` instead.
 7. **No full-bleed images (N39).** Gradient and teal grounds for the exhale moments.
@@ -51,18 +51,18 @@ three rejected passes.
 ### ▶ NEXT MOVE — Q3, HER ROLE
 
 **Rank 2 on the rubric and a named disqualifier**, currently one row inside a six-row metadata
-block: *"My partner Michael and I co-led research and information architecture. I led UX/UI, visual
-identity, and UX writing."* Good, honest sentence doing quiet work in a list. It needs to be
+block: *“My partner Michael and I co-led research and information architecture. I led UX/UI, visual
+identity, and UX writing.”* Good, honest sentence doing quiet work in a list. It needs to be
 prominent and unmissable.
 
 **Then, in rubric order — not chapter order:**
 1. **03 Iteration** — the evidence-became-decisions beat (rank 4, and #1 for UXR specifically).
    Still 10 labels: three rounds each carrying two labelled voice-tracks under three *different*
-   names, and Round 1's quote sits inside the stage while Rounds 2–3 put it in the column. One
+   names, and Round 1’s quote sits inside the stage while Rounds 2–3 put it in the column. One
    convention, three times. Contain the crit-wall bleed (N39) while there.
-2. **Q6 + Q8** — what went wrong, what she'd do differently. Both exist, both buried. Her research
+2. **Q6 + Q8** — what went wrong, what she’d do differently. Both exist, both buried. Her research
    marks these **mandatory, never cut** — perfect-project narratives read as not credible.
-3. **The "reclaim" beat** in 04 Identity — the clearest evidence of research changing her mind.
+3. **The “reclaim” beat** in 04 Identity — the clearest evidence of research changing her mind.
 4. **One finishing pass page-wide**, then **delete the `/layouts` route**.
 
 **⚠︎ Hers, not mine:** `bs-book-curate.png` has a device bezel baked into the export, so the Book
