@@ -271,6 +271,12 @@
    max-content child widens the track and every section child rides past
    the viewport on mobile */
 .flow { display: grid; grid-template-columns: minmax(0, 1fr); gap: clamp(2.2rem, 4.5vw, 3.8rem); }
+/* globals.css sets `section { padding: var(--space-lg) 0 }`, so every bare
+   <section> inside a chapter inherited 64px of vertical padding that stacked on
+   top of this gap — it cost ~190px between Brief's bands and another 128px
+   between its two graphics before being caught. .flow owns the chapter's
+   vertical rhythm; its children do not get to add to it. */
+.flow > section { padding-block: 0; }
 
 /* question — curiosity first */
 .askBlock { display: grid; gap: 0.7rem; max-width: 40rem; }

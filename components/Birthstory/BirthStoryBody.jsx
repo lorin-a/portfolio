@@ -1,7 +1,7 @@
 'use client'
 
 import { FieldSection, Prose, SubBlock, Split, Figure, TesterNote, Insight, sys } from './kit'
-import { birthPhoto, cloudImg } from '@/lib/cloudinary'
+import { cloudImg } from '@/lib/cloudinary'
 import ProductAct from './ProductAct'
 import SecArchitecture from './SecArchitecture'
 import SecIteration from './SecIteration'
@@ -202,8 +202,43 @@ function Brief() {
   )
 }
 
+/* ── THE THREE MOMENTS ──────────────────────────────────────────────────────
+   This was buried in a bordered aside beside the chat card, which is where the
+   chapter's own CLAIM was hiding: the statement says capacity rises over time
+   and the app had to meet three moments, and this is the evidence for exactly
+   that. Claim and proof were separated by an artifact; they belong together.
+
+   Drawn so the shape carries it — three beats on one time axis with a capacity
+   bar that grows a third, two thirds, whole. Cover the words and it still says
+   "it rises." Her phases and her wording, untouched. */
+const MOMENTS = [
+  ['Early, in the fog', 'Select-one answers, a few taps at a time.'],
+  ['Later, once it lifts', 'Free-form journaling, at their own pace.'],
+  ['In the end', 'A keepsake book of the whole story.'],
+]
+
+function ThreeMoments() {
+  return (
+    <section className={`${sys.measure} ${b.momentsWrap} ${sys.up}`} aria-labelledby="research-moments">
+      <div className={sys.colsFull}>
+        <p className={b.specLabel} id="research-moments">How they’d use it</p>
+        <ol className={b.moments}>
+          {MOMENTS.map(([when, what], i) => (
+            <li key={when} className={b.moment}>
+              <span className={b.momentBar} aria-hidden="true">
+                <span className={b.momentFill} style={{ '--grow': `${((i + 1) / 3) * 100}%` }} />
+              </span>
+              <span className={b.momentWhen}>{when}</span>
+              <span className={b.momentWhat}>{what}</span>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </section>
+  )
+}
+
 function Research() {
-  const feeding = birthPhoto('feeding', 1400) // Craig Adderley — mother + newborn skin to skin, hospital (natively B&W)
   return (
     /* the statement is the chapter's CLAIM, not its setup — her strongest
        research finding (formerly buried at the foot of the aside) leads;
@@ -217,23 +252,39 @@ function Research() {
       {/* Round 4 trail cuts: the second context photo and the inline quote cut —
           the group-chat artifact below is this chapter's hero evidence and
           carries the family voices itself */}
-      <div className={sys.headCluster}>
-        <Prose>
-          This was a design sprint on a concept already built on extensive research, so our work
-          focused on concept iteration.
-        </Prose>
-        <Prose>
-          Before we built anything, I researched blogs and existing products and ran information
-          interviews with family to get familiar with the subject: my three sisters, my mom, and my
-          friend with a toddler.
-        </Prose>
-      </div>
+      {/* THE ROW. Her words and her reasoning hold the reading column; the
+          group call — this chapter's hero evidence, and an artifact she
+          authored — holds the artifact plane. The second stock photograph is
+          cut: it was the page's second licensed Pexels image, it sat in a
+          chapter that has real artifacts of her own, and a Split spent half its
+          width on decoration. Cutting it is what lets her thinking sit with the
+          research it came from. */}
+      <div className={`${sys.measure} ${b.researchRow}`}>
+        <div className={`${sys.colsReading} ${b.researchRead} ${sys.up}`}>
+          <Prose>
+            This was a design sprint on a concept already built on extensive research, so our work
+            focused on concept iteration.
+          </Prose>
+          <Prose>
+            Before we built anything, I researched blogs and existing products and ran information
+            interviews with family to get familiar with the subject: my three sisters, my mom, and my
+            friend with a toddler.
+          </Prose>
+          <Insight>
+            My thinking was rooted in my close family members’ traumatic experiences, which led me to a
+            trauma-informed approach. I wanted the right balance between the individual feat of giving
+            birth and the collective experience around it, with an interaction matched to a new parent’s
+            capacity. So I left medical documentation optional and, by the final iteration, built the
+            design around events on a timeline.
+          </Insight>
+        </div>
 
-      {/* the group call, as the group text it basically was — the casual,
-          personal research made legible. Incoming = their asks (summarized);
-          the marked bubble = one sister's words, verbatim. The rigor note keeps
-          the claim honest: nothing here is dressed up as data it isn't. */}
-      <div className={`${b.researchTalk} ${sys.up}`}>
+        {/* the group call, as the group text it basically was — the casual,
+            personal research made legible. Incoming = their asks (summarized);
+            the marked bubble = one sister's words, verbatim. The rigor note
+            keeps the claim honest: nothing here is dressed up as data it
+            isn't. */}
+        <div className={`${sys.colsArtifact} ${sys.up}`}>
         <figure className={b.chatCard}>
           <figcaption className={b.chatHead}>
             <span className={b.chatDot} aria-hidden="true" />
@@ -250,39 +301,11 @@ function Research() {
           </div>
           <p className={b.chatNote}>their asks, summarized · the quote, verbatim</p>
         </figure>
-
-        <aside className={b.talkAside}>
-          <p className={b.specLabel}>How they’d use it</p>
-          <ol className={b.usePhases}>
-            <li><span className={b.usePhaseWhen}>Early, in the fog</span><span className={b.usePhaseWhat}>Select-one answers, a few taps at a time.</span></li>
-            <li><span className={b.usePhaseWhen}>Later, once it lifts</span><span className={b.usePhaseWhat}>Free-form journaling, at their own pace.</span></li>
-            <li><span className={b.usePhaseWhen}>In the end</span><span className={b.usePhaseWhat}>A keepsake book of the whole story.</span></li>
-          </ol>
-        </aside>
+        </div>
       </div>
 
-      {/* the chapter's deliberate column break — media left, her thinking right */}
-      <Split
-        flip
-        text={
-          <Insight>
-            My thinking was rooted in my close family members’ traumatic experiences, which led me to a
-            trauma-informed approach. I wanted the right balance between the individual feat of giving
-            birth and the collective experience around it, with an interaction matched to a new parent’s
-            capacity. So I left medical documentation optional and, by the final iteration, built the
-            design around events on a timeline.
-          </Insight>
-        }
-      >
-        <Figure
-          tag="context"
-          photo
-          src={feeding.src}
-          byline={feeding.byline}
-          alt="A mother holds her newborn skin to skin in a hospital bed, her eyes closed."
-          cap="A parent and newborn in the first hours after birth."
-        />
-      </Split>
+      {/* the chapter's claim, finally sitting next to its evidence */}
+      <ThreeMoments />
 
       {/* synthesis — information design, not a table: each tester voice is
           SPEECH (the chat grammar), it travels a dotted thread carrying what it

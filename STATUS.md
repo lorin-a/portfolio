@@ -243,6 +243,35 @@ Third instance of the same root cause, now worth remembering: `globals.css` sets
 padding. It cost 190px between the first build's bands and another 128px between the two
 graphics. **Any new component built as a `<section>` must zero its own padding-block.**
 
+### ✅ 02 RESEARCH — first pass shipped 2026-08-04
+
+**The curation call that mattered:** the chapter's CLAIM and its EVIDENCE were separated by an
+artifact. The statement says *"Capacity rises over time, so the app had to meet three different
+moments, not one"* — and the proof of exactly that was tucked into a bordered aside beside the
+chat card, styled as a minor list. Promoted to its own component, **THE THREE MOMENTS**: three
+beats on one time axis with a capacity bar that grows a third, two thirds, whole. Cover the
+words and the staircase still says *it rises.* Her phases and wording untouched.
+
+**Cut:** the second licensed Pexels photograph. It was the page's second stock image, it sat in
+a chapter that has real artifacts of her own, and a `<Split>` was spending half its width on
+decoration. Cutting it is what let her thinking sit in the reading column beside the research
+it came from, instead of floating in its own band.
+
+**THE ROW:** her words and reasoning left, the group call right — an artifact she authored, and
+this chapter's hero evidence. Replaces the ad-hoc `1.05fr / 0.95fr` pairing with the measure.
+
+**THE SECTION-PADDING BUG, FIXED AT THE SOURCE.** Rather than patch it a fourth time,
+`.flow > section { padding-block: 0 }` now neutralises the `globals.css` rule for every chapter
+child. `.flow` owns the chapter's vertical rhythm; its children do not get to add to it. That
+alone took another 244px out of Research.
+
+2714px → **2286px** at 1440. Verified 1440 · 1998 · 390, zero overflow, zero console errors.
+
+**Not yet done in this chapter, and honestly flagged:** the synthesis matrix is still on its own
+bespoke widths rather than declared as the measure's SPREAD, and the chapter has not had a full
+top-to-bottom eyes-on read at her bar — only its individual blocks were verified. Both are the
+next pass.
+
 ### BUILD ORDER
 
 **Phase 0** — the 12-column measure in `system.module.css`.
