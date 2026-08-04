@@ -88,31 +88,48 @@
    the part of the architecture each one produced, and the fourth (the "reclaim"
    copy finding) already lived verbatim in the Identity chapter. */
 
-/* ── THE SCOPING DECISION ─────────────────────────────────────────────────
-   Kept / added / cut, as a ruled ledger rather than a card: teal top rule,
-   hairline-divided cells, a closing hairline. It opens on her own sentence
-   about what the core still gives a parent who never goes deeper, and the
-   tally below is the evidence. Its old lead paragraph is gone — Brief already
-   draws "three required, five optional" as blocks. */
-.scope {
-  display: grid; gap: clamp(0.9rem, 2vw, 1.3rem);
-  padding-top: clamp(1.6rem, 4vw, 2.6rem); border-top: 1px solid var(--bs-rule);
-}
-.scopeCard {
+/* ── THE RECORD ───────────────────────────────────────────────────────────
+   THE SUBTRACTION PASS. Everything that is a record rather than the story
+   gathers here, below the argument, and is set to LOOK secondary: one label
+   for the whole block instead of one per object, no display type, no teal
+   rules between tiers. The chapter above it is then free to be four things —
+   statement, paragraph, voice, artifact — which is all Outcome ever was. */
+.record {
   --pad: clamp(1.2rem, 2.4vw, 1.6rem);
-  border-top: 2px solid var(--bs-teal);
-  border-bottom: 1px solid var(--bs-hairline);
+  display: grid; gap: clamp(1.4rem, 3vw, 2.2rem);
+  padding-top: clamp(2rem, 4.5vw, 3rem);
+  border-top: 1px solid var(--bs-hairline);
 }
-.scopeLead {
-  display: grid; gap: 0.55rem;
-  padding: clamp(1.1rem, 2.2vw, 1.5rem) 0 clamp(1.1rem, 2.2vw, 1.4rem);
+.recordHead {
+  margin: 0; font-family: var(--font-body); font-weight: 700; font-size: 0.72rem;
+  letter-spacing: 0.16em; text-transform: uppercase; color: var(--bs-teal-soft);
 }
-.scopeStory {
-  margin: 0; max-width: 46ch;
-  font-family: var(--font-heading); font-variation-settings: 'SOFT' 60, 'WONK' 0; font-weight: 400;
-  font-size: clamp(1.25rem, 1.1rem + 0.7vw, 1.7rem); line-height: 1.26; letter-spacing: -0.012em;
+.recordScope { display: grid; gap: clamp(0.8rem, 1.8vw, 1.1rem); }
+.recordLine {
+  margin: 0; max-width: 62ch;
+  font-family: var(--font-body); font-size: 0.95rem; line-height: 1.6;
   color: var(--color-ink); text-wrap: pretty;
 }
+/* the principles, as plain type. No 2×2, no ruled "sharpened by testing" tier,
+   no numerals — her sentences already say testing taught her, which was the
+   only thing that tier was there to mark. */
+.recordList {
+  margin: 0; padding: 0; list-style: none;
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(1.2rem, 2.6vw, 1.8rem) clamp(2.5rem, 5vw, 4.5rem);
+}
+.recordItem { display: grid; gap: 0.3rem; align-content: start; max-width: 40ch; }
+.recordName {
+  margin: 0; font-family: var(--font-body); font-weight: 700; font-size: 0.95rem;
+  line-height: 1.4; color: var(--color-ink); text-wrap: balance;
+}
+.recordWhy, .recordTaught {
+  margin: 0; font-family: var(--font-body); font-size: 0.9rem; line-height: 1.55;
+  color: var(--color-ink-light); text-wrap: pretty;
+}
+.recordTaught { font-style: italic; }
+@media (max-width: 700px) { .recordList { grid-template-columns: 1fr; } }
+
 .scopeCells { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--bs-hairline); }
 .scopeCell { display: grid; gap: 0.35rem; align-content: start; padding: var(--pad) var(--pad) var(--pad) 0; }
 .scopeCell + .scopeCell { padding-left: var(--pad); border-left: 1px solid var(--bs-hairline); }
@@ -457,6 +474,16 @@
    pairing was one of the nine ad-hoc proportions the measure replaces. */
 .researchRow { row-gap: clamp(2rem, 5vh, 3rem); align-items: start; }
 .researchRead { display: grid; gap: clamp(1.1rem, 2.6vh, 1.6rem); align-content: start; }
+/* her research finding, closing the column. It gets weight from SIZE, not from
+   a label and a rule above it — one step up from the prose it follows, which is
+   how a reader knows it is the conclusion without being told. */
+.researchClose {
+  margin: 0.2rem 0 0; max-width: 30ch;
+  font-family: var(--font-heading); font-variation-settings: 'SOFT' 60, 'WONK' 0;
+  font-weight: 400; font-size: clamp(1.2rem, 1.05rem + 0.6vw, 1.55rem); line-height: 1.24;
+  letter-spacing: -0.012em; color: var(--color-ink); text-wrap: pretty;
+}
+.researchClose b { font-weight: 460; color: var(--bs-accent); }
 
 /* ── THE THREE MOMENTS ─────────────────────────────────────────────────────
    The chapter's claim is that capacity RISES, so the bars rise: a third, two
@@ -489,36 +516,48 @@
 }
 
 
-.chatCard {
-  margin: 0; --pad: clamp(1.1rem, 2.2vw, 1.5rem);
-  padding: var(--pad); background: #fff; border-radius: 16px;
-  box-shadow: 0 1px 2px rgba(26, 67, 77, 0.06), 0 18px 40px -22px rgba(26, 67, 77, 0.28), 0 0 0 1px var(--bs-hairline);
+/* ── THE VOICE PLANE ──────────────────────────────────────────────────────
+   THE CHAT CARD IS RETIRED. It was a group text simulated in JSX — bubbles, a
+   header, a provenance note, a shadowed card — standing in for research that
+   really happened over a real call. A drawn interface is not an artifact; it is
+   a prop, and it put the best sentence in the chapter inside a 1.2rem bubble.
+
+   What replaces it is what research actually leaves behind: a person's words.
+   One verbatim quote at display scale, its attribution, and under a single
+   hairline the asks that came out of the same conversation. No card, no
+   bubbles, no shadow. The type is the whole design. */
+.voicePlane { display: grid; align-content: start; gap: clamp(1.4rem, 3vw, 2rem); }
+.bigQuote {
+  margin: 0; display: grid; gap: clamp(0.9rem, 2vw, 1.3rem);
+  padding-left: clamp(1rem, 2.2vw, 1.6rem);
+  border-left: 2px solid var(--bs-accent);
 }
-.chatHead {
-  display: flex; align-items: center; gap: 0.5rem;
-  margin: 0 0 0.9rem; padding-bottom: 0.7rem; border-bottom: 1px solid var(--bs-hairline);
-  font-family: var(--font-body); font-weight: 700; font-size: 0.7rem;
-  letter-spacing: 0.1em; text-transform: uppercase; color: var(--bs-teal-soft);
-  text-wrap: pretty;
-}
-.chatDot { width: 0.5rem; height: 0.5rem; border-radius: 50%; background: var(--bs-accent); flex: none; }
-.chatBody { display: flex; flex-direction: column; gap: 0.55rem; }
-.chatIn, .chatVerbatim { margin: 0; max-width: 90%; padding: 0.65rem 0.9rem; text-wrap: pretty; }
-.chatIn {
-  align-self: flex-start; background: var(--bs-mist, #eef1f0); border-radius: 16px 16px 16px 5px;
-  font-family: var(--font-body); font-size: 0.9rem; line-height: 1.45; color: var(--color-ink);
-}
-/* the verbatim bubble — her sister's actual words, given weight: the accent
-   ground + display face so the one real quote reads as the emotional anchor */
-.chatVerbatim {
-  align-self: flex-end; background: var(--bs-accent); color: var(--color-cream);
-  border-radius: 16px 16px 5px 16px;
+.bigQuote p {
+  margin: 0; max-width: 22ch;
   font-family: var(--font-heading); font-variation-settings: 'SOFT' 60, 'WONK' 0;
-  font-style: italic; font-weight: 400; font-size: 1rem; line-height: 1.4; max-width: 94%;
+  font-weight: 400; font-size: clamp(1.7rem, 1.2rem + 1.9vw, 2.9rem); line-height: 1.14;
+  letter-spacing: -0.016em; color: var(--color-ink); text-wrap: pretty;
 }
-.chatNote {
-  margin: 0.85rem 0 0; font-family: var(--font-body); font-size: 0.64rem;
-  letter-spacing: 0.1em; text-transform: uppercase; color: var(--bs-teal-soft); text-align: right;
+.bigQuote cite {
+  font-style: normal;
+  font-family: var(--font-body); font-weight: 700; font-size: 0.74rem;
+  letter-spacing: 0.13em; text-transform: uppercase; color: var(--bs-teal-soft);
+}
+/* the asks: three lines and one rule. The rule frames them as a different kind
+   of statement, which is the job a label was doing before. */
+.asks {
+  margin: 0; padding: clamp(1.2rem, 2.6vw, 1.8rem) 0 0; list-style: none;
+  display: grid; gap: 0.7rem; max-width: 52ch;
+  border-top: 1px solid var(--bs-rule);
+}
+.asks li {
+  font-family: var(--font-body); font-size: clamp(1rem, 0.96rem + 0.2vw, 1.1rem);
+  line-height: 1.5; color: var(--color-ink); text-wrap: pretty;
+}
+.asksNote {
+  margin: 0; max-width: 52ch;
+  font-family: var(--font-body); font-size: 0.85rem; line-height: 1.5;
+  color: var(--color-ink-light); text-wrap: pretty;
 }
 
 /* .talkAside / .usePhases retired — the three moments are their own

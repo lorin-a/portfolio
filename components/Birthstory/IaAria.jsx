@@ -62,8 +62,9 @@ const BEATS = [
    gone — the diagram is what was learned. */
 const V1_FINDINGS = [
   {
+    /* no attribution label and no move line: the quote points at the drawing
+       it is about, and a tester's voice does not need to be introduced as one */
     heard: 'Onboarding is nice, but too many buttons and options. Too many menus.',
-    who: 'think-aloud testing, on the version above',
   },
 ]
 
@@ -100,7 +101,6 @@ function Findings({ notes, innerRef }) {
           <span className={a.stem} aria-hidden="true" />
           <p className={a.heard}>{`“${n.heard}”`}</p>
           {n.did && <p className={a.did}>{n.did}</p>}
-          {n.who && <p className={a.who}>{n.who}</p>}
         </div>
       ))}
     </div>
@@ -116,7 +116,6 @@ export default function IaAria() {
   const artRefs = useRef([])
   const noteRefs = useRef([])
   const plateRefs = useRef([])
-  const tagRefs = useRef([])
   const [fit, setFit] = useState([{ s: 1, h: 0 }, { s: 1, h: 0 }])
 
   /* the pin is an enhancement: it only ever switches ON, so the static
@@ -147,14 +146,13 @@ export default function IaAria() {
         const art = artRefs.current[i]
         const nh = art ? art.offsetHeight : 0
         const plate = plateRefs.current[i]
-        /* everything in the plate that is NOT the drawing has to come out of
-           the budget first — the tag, the findings row, and the two row gaps
-           between the three of them. Leaving the tag and the gaps out is what
-           clipped the first version's findings off the foot of the frame. */
+        /* everything in the plate that is NOT the drawing comes out of the
+           budget first — now just the findings row and the one gap above it,
+           since the tag is gone. Leaving these out is what clipped the first
+           version's findings off the foot of the frame. */
         const gap = plate ? parseFloat(getComputedStyle(plate).rowGap) || 0 : 0
-        const tagH = tagRefs.current[i] ? tagRefs.current[i].offsetHeight : 0
         const notesH = noteRefs.current[i] ? noteRefs.current[i].offsetHeight : 0
-        const avail = stH - notesH - tagH - gap * 2 - 4
+        const avail = stH - notesH - gap - 4
         if (!nh || avail <= 0) return { s: 1, h: 0 }
         const s = Math.round(Math.min(1, avail / nh) * 1000) / 1000
         return { s, h: Math.round(nh * s) }
@@ -206,9 +204,12 @@ export default function IaAria() {
   const v1State = !pinned ? '' : beat === 0 ? a.on : beat === 1 ? a.ghost : a.off
   const finalState = !pinned ? '' : beat === 2 ? a.on : a.off
 
-  const plate = (i, tag, diagram, notes, state) => (
+  /* THE SUBTRACTION PASS: the plate tags are gone. "ia-v1 · the branching
+     questionnaire" sat directly under the label THE FIRST ANSWER and said the
+     same thing twice, which is the crowding in miniature — a caption for an
+     object the sentence above already named. */
+  const plate = (i, diagram, notes, state) => (
     <div className={`${a.plate} ${state}`} style={{ '--s': fit[i].s }} ref={(el) => { plateRefs.current[i] = el }}>
-      <p className={a.plateTag} ref={(el) => { tagRefs.current[i] = el }}>{tag}</p>
       <div className={a.artBox} style={pinned && fit[i].h ? { height: `${fit[i].h}px` } : undefined}>
         <div className={a.art} ref={(el) => { artRefs.current[i] = el }}>{diagram}</div>
       </div>
@@ -250,7 +251,7 @@ export default function IaAria() {
             </ol>
 
             <div className={a.stage} ref={stageRef}>
-              {plate(0, 'ia-v1 · the branching questionnaire', <IaV1 compact />, V1_FINDINGS, v1State)}
+              {plate(0, <IaV1 compact />, V1_FINDINGS, v1State)}
 
               {/* the turn — the count lands on the version it killed, which is
                   still faintly there behind it. The 4 is countable in the panel
@@ -260,7 +261,7 @@ export default function IaAria() {
                 <p className={a.turnLabel}>questions before the first entry</p>
               </div>
 
-              {plate(1, 'ia-final · five tabs, one button, nothing to answer first', <IaFinal compact />, FINAL_FINDINGS, finalState)}
+              {plate(1, <IaFinal compact />, FINAL_FINDINGS, finalState)}
             </div>
 
           </div>

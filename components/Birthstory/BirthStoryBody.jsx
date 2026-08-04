@@ -1,6 +1,6 @@
 'use client'
 
-import { FieldSection, Prose, SubBlock, Split, Figure, TesterNote, Insight, sys } from './kit'
+import { FieldSection, Prose, SubBlock, Split, Figure, TesterNote, sys } from './kit'
 import { cloudImg } from '@/lib/cloudinary'
 import ProductAct from './ProductAct'
 import IaAria from './IaAria'
@@ -208,68 +208,36 @@ function Brief() {
   )
 }
 
-/* ── THE THREE MOMENTS ──────────────────────────────────────────────────────
-   This was buried in a bordered aside beside the chat card, which is where the
-   chapter's own CLAIM was hiding: the statement says capacity rises over time
-   and the app had to meet three moments, and this is the evidence for exactly
-   that. Claim and proof were separated by an artifact; they belong together.
+/* ── THE RECORD ─────────────────────────────────────────────────────────────
+   THE SUBTRACTION PASS (2026-08-04). Her note: the process half reads complex
+   and crowded next to Outcome and Identity, which feel spacious and calm.
 
-   Drawn so the shape carries it — three beats on one time axis with a capacity
-   bar that grows a third, two thirds, whole. Cover the words and it still says
-   "it rises." Her phases and her wording, untouched. */
-const MOMENTS = [
-  ['Early, in the fog', 'Select-one answers, a few taps at a time.'],
-  ['Later, once it lifts', 'Free-form journaling, at their own pace.'],
-  ['In the end', 'A keepsake book of the whole story.'],
-]
+   Measured, the crowding is not text and it is not layout — the calm chapters
+   and the crowded ones use the SAME components. It is that every object
+   announces itself. Research & Architecture carried 24 uppercase micro-labels,
+   each on its own hairline; Outcome carries 4. A page of labelled tiers reads
+   as a form to fill in, which is precisely what her own copy criticises the
+   first build for being.
 
-/* (b.momentsWrap had no rule behind it and was printing a literal "undefined"
-   class into the DOM — dropped) */
-function ThreeMoments() {
+   So Outcome is the spec, and it is four elements:
+
+       statement · one paragraph · one voice · one artifact, big
+
+   Everything that is a RECORD rather than the story leaves the narrative and
+   gathers here, at the chapter's foot, set quiet and small: the scoping tally
+   and the design principles. Nothing is lost — it stops competing. This block
+   is the seed of a page-wide record; Brief's stakes and spec, and Iteration's
+   "what I couldn't test," join it when those chapters take the same pass. */
+function TheRecord() {
   return (
-    <section className={`${sys.measure} ${sys.up}`} aria-labelledby="research-moments">
-      <div className={sys.colsFull}>
-        <p className={b.specLabel}>How they’d use it</p>
-        {/* her Research chapter statement, demoted from an h2 to the lede of
-            the one graphic that proves it. The merge left the chapter with a
-            single thesis, and this sentence was never really the chapter's — it
-            was this staircase's caption all along. Verbatim. */}
-        <h3 className={b.momentsClaim} id="research-moments">
-          Capacity rises over time, so the app had to meet <b>three different moments</b>, not one.
-        </h3>
-        <ol className={b.moments}>
-          {MOMENTS.map(([when, what], i) => (
-            <li key={when} className={b.moment}>
-              <span className={b.momentBar} aria-hidden="true">
-                <span className={b.momentFill} style={{ '--grow': `${((i + 1) / 3) * 100}%` }} />
-              </span>
-              <span className={b.momentWhen}>{when}</span>
-              <span className={b.momentWhat}>{what}</span>
-            </li>
-          ))}
-        </ol>
-      </div>
-    </section>
-  )
-}
+    <section className={b.record} aria-labelledby="research-record">
+      <p className={b.recordHead} id="research-record">The record</p>
 
-/* ── THE SCOPING DECISION ───────────────────────────────────────────────────
-   Relocated here from Architecture, minus its lead paragraph, which restated
-   Brief's SPEC almost word for word ("Three areas were required…"). Brief
-   already draws that as three solid blocks against five hollow ones; this is
-   the payoff, so it opens on her own sentence about what the core had to do
-   and lets the tally be the evidence. */
-function Scoping() {
-  return (
-    <section className={b.scope} aria-labelledby="research-scope">
-      <div className={`${b.scopeCard} ${sys.up}`}>
-        <div className={b.scopeLead}>
-          <p className={b.specLabel} id="research-scope">Prioritization · five optional features on the table</p>
-          <p className={b.scopeStory}>
-            If a parent never leaves the home page, they still get the use case they wanted most, a
-            timeline of their documentation. The rest can be explored another time.
-          </p>
-        </div>
+      <div className={b.recordScope}>
+        <p className={b.recordLine}>
+          If a parent never leaves the home page, they still get the use case they wanted most, a
+          timeline of their documentation. The rest can be explored another time.
+        </p>
         <div className={b.scopeCells}>
           <div className={b.scopeCell}>
             <span className={b.scopeFigRow}><span className={b.scopeFig}>2</span><span className={b.scopeLabel}>kept</span></span>
@@ -285,6 +253,40 @@ function Scoping() {
           </div>
         </div>
       </div>
+
+      {/* the four principles, set as plain type. The 2×2 with its ruled
+          "sharpened by testing" tier was a good graphic and it is still one
+          object too many for a chapter whose job is an argument; her
+          distinction (L3) survives in the sentences themselves, which say
+          testing taught her. */}
+      <ul className={b.recordList}>
+        {[
+          {
+            name: 'Compassionate, not clinical',
+            why: 'A birth lives inside cold clinical systems; the tool that holds it shouldn’t feel like one.',
+          },
+          {
+            name: 'Integrate facts and feelings',
+            why: 'The brief split capture four ways, but a birth isn’t lived in parts, so one timeline holds them together.',
+          },
+          {
+            name: 'Does not disorient',
+            why: 'A parent recovering on little sleep can’t afford a maze.',
+            taught: 'My first two builds did the opposite of what they meant to; testing taught me what disorienting really meant.',
+          },
+          {
+            name: 'Trauma-informed, not trauma-assuming',
+            why: 'Careful with pain, without deciding a parent’s experience for them.',
+            taught: 'My first copy assumed trauma; a parent showed me the words shouldn’t choose the tone.',
+          },
+        ].map((p) => (
+          <li key={p.name} className={b.recordItem}>
+            <h3 className={b.recordName}>{p.name}</h3>
+            <p className={b.recordWhy}>{p.why}</p>
+            {p.taught && <p className={b.recordTaught}>{p.taught}</p>}
+          </li>
+        ))}
+      </ul>
     </section>
   )
 }
@@ -320,16 +322,14 @@ function ResearchArchitecture() {
       statement={<>New parents recovering from birth have limited capacity, which made the introduction, onboarding, and user flow <b>make-or-break</b>: they decide how a parent spends their few precious free moments.</>}
       statementLong
     >
-      {/* Round 4 trail cuts: the second context photo and the inline quote cut —
-          the group-chat artifact below is this chapter's hero evidence and
-          carries the family voices itself */}
-      {/* THE ROW. Her words and her reasoning hold the reading column; the
-          group call — this chapter's hero evidence, and an artifact she
-          authored — holds the artifact plane. The second stock photograph is
-          cut: it was the page's second licensed Pexels image, it sat in a
-          chapter that has real artifacts of her own, and a Split spent half its
-          width on decoration. Cutting it is what lets her thinking sit with the
-          research it came from. */}
+      {/* ONE VOICE. Her three paragraphs run as continuous prose: the lilac
+          MY THINKING chip and its dotted rule are gone from this chapter. That
+          device earns its place where her reasoning has to be told apart from a
+          tester's — here the whole column is hers, so the label was announcing
+          something the reader already knew. Her Research statement lands as the
+          column's last line, which is where it belongs now that the merge left
+          the chapter one thesis. Every word verbatim; nothing merged, nothing
+          rewritten. */}
       <div className={`${sys.measure} ${b.researchRow}`}>
         <div className={`${sys.colsReading} ${b.researchRead} ${sys.up}`}>
           <Prose>
@@ -341,100 +341,69 @@ function ResearchArchitecture() {
             interviews with family to get familiar with the subject: my three sisters, my mom, and my
             friend with a toddler.
           </Prose>
-          <Insight>
+          <Prose>
             My thinking was rooted in my close family members’ traumatic experiences, which led me to a
             trauma-informed approach. I wanted the right balance between the individual feat of giving
             birth and the collective experience around it, with an interaction matched to a new parent’s
             capacity. So I left medical documentation optional and, by the final iteration, built the
             design around events on a timeline.
-          </Insight>
+          </Prose>
+          <p className={`${b.researchClose} ${sys.up}`}>
+            Capacity rises over time, so the app had to meet <b>three different moments</b>, not one.
+          </p>
         </div>
 
-        {/* the group call, as the group text it basically was — the casual,
-            personal research made legible. Incoming = their asks (summarized);
-            the marked bubble = one sister's words, verbatim. The rigor note
-            keeps the claim honest: nothing here is dressed up as data it
-            isn't. */}
-        <div className={`${sys.colsArtifact} ${sys.up}`}>
-        <figure className={b.chatCard}>
-          <figcaption className={b.chatHead}>
-            <span className={b.chatDot} aria-hidden="true" />
-            the group call · my three sisters, my mom, a friend with a toddler
-          </figcaption>
-          <div className={b.chatBody}>
-            <p className={b.chatIn}>Less medical documentation. More photos, and an outline of what actually happened.</p>
-            <p className={b.chatIn}>Recognition for doing something this amazing and this hard.</p>
-            <p className={b.chatIn}>A space that doesn’t assume a “normal” birth: other people’s stories, resources.</p>
-            <p className={b.chatVerbatim}>
-              “None of our births went according to plan and they were traumatizing, and it doesn’t get
-              discussed enough.”
+        {/* THE VOICE IS THE ARTIFACT.
+
+            What stood here was a chat card: a group text simulated in JSX,
+            with bubbles and a header and a provenance note. It was a designed
+            prop dressed as evidence — text in boxes doing an impression of a
+            screenshot — and the single best sentence in the chapter was inside
+            it at 1.2rem.
+
+            Research does not need a fake interface to prove it happened. It
+            needs the thing a person actually said, at the size it deserves.
+            So the plane holds one verbatim quote at display scale, its
+            attribution, and beneath a hairline the three asks that came out of
+            the same conversation. No card, no bubbles, no chrome — the words
+            and one rule. */}
+        <div className={`${sys.colsArtifact} ${b.voicePlane} ${sys.up}`}>
+          <blockquote className={b.bigQuote}>
+            <p>
+              None of our births went according to plan and they were traumatizing, and it doesn’t get
+              discussed enough.
             </p>
-          </div>
-          <p className={b.chatNote}>their asks, summarized · the quote, verbatim</p>
-        </figure>
+            <cite>One of my sisters · the quote verbatim</cite>
+          </blockquote>
+          <ul className={b.asks}>
+            <li>Less medical documentation. More photos, and an outline of what actually happened.</li>
+            <li>Recognition for doing something this amazing and this hard.</li>
+            <li>A space that doesn’t assume a “normal” birth: other people’s stories, resources.</li>
+          </ul>
+          <p className={b.asksNote}>
+            What my three sisters, my mom, and a friend with a toddler asked for, summarized.
+          </p>
         </div>
       </div>
 
-      {/* the claim, sitting next to its evidence */}
-      <ThreeMoments />
-
-      {/* THE ARIA — the 4 → 0 collapse. This is where the research findings
-          land: the twelve-cell "what we heard, what we did" grid is retired,
-          and its rows now hang on the two diagrams as annotations, each
-          registered to the part of the architecture it argued into existence.
-          The "reclaim" row is not among them by design — that finding is about
-          copy, and the Identity chapter already carries it verbatim, with the
-          parent's own words and the draft → rewrite pair. */}
+      {/* THE ONE ARTIFACT — the 4 → 0 collapse, and the chapter's whole reason
+          to exist. The research findings hang on it as annotations; the
+          twelve-cell grid they used to live in is retired. The "reclaim" row is
+          not among them by design — that finding is about copy, and Identity
+          already carries it verbatim with the parent's own words. */}
       <IaAria />
 
-      {/* what the architecture left out */}
-      <Scoping />
+      {/* CUT IN THE SUBTRACTION PASS, and logged so it can come back:
+          THE THREE MOMENTS. It was a good graphic — three bars rising a third,
+          two thirds, whole — but it argued a SECOND claim (capacity rises, so
+          the app meets three moments) inside a chapter whose thesis is that
+          limited capacity made the flow make-or-break. Her sentence survives as
+          the reading column's last line above. The three phases themselves
+          (early in the fog · later once it lifts · in the end) describe how the
+          PRODUCT is used over time, so they belong to the product act, not to
+          the architecture. Parked, not deleted. */}
 
-      {/* design principles — four CLAIMS, set as type (the studio's Saffer
-          model: pithy, specific, differentiating). No numerals (they'd collide
-          with the chapter wayfinding), no rules, no boxes: the names carry the
-          weight, one quiet line each beneath. Copy hers to bless. */}
-      <section className={`${b.values} ${sys.up}`}>
-        <p className={b.valuesHead}>Design principles</p>
-        <ul className={b.valuesList}>
-          {[
-            {
-              name: 'Compassionate, not clinical',
-              why: 'A birth lives inside cold clinical systems; the tool that holds it shouldn’t feel like one.',
-            },
-            {
-              name: 'Integrate facts and feelings',
-              why: 'The brief split capture four ways, but a birth isn’t lived in parts, so one timeline holds them together.',
-            },
-            {
-              name: 'Does not disorient',
-              why: 'A parent recovering on little sleep can’t afford a maze.',
-              taught: 'My first two builds did the opposite of what they meant to; testing taught me what disorienting really meant.',
-            },
-            {
-              name: 'Trauma-informed, not trauma-assuming',
-              why: 'Careful with pain, without deciding a parent’s experience for them.',
-              taught: 'My first copy assumed trauma; a parent showed me the words shouldn’t choose the tone.',
-            },
-          ].map((p) => (
-            <li key={p.name} className={`${b.principle} ${p.taught ? b.principleSharpened : ''}`}>
-              <h3 className={b.principleName}>{p.name}</h3>
-              <p className={b.principleWhy}>{p.why}</p>
-              {/* the two that testing rewrote carry a marked third tier, so the
-                  block's SHAPE says "four claims, two of them revised" before a
-                  word of it is read. Her standing note (L3): she can't claim she
-                  applied these, only that they evolved through feedback — this
-                  is that distinction, drawn. */}
-              {p.taught && (
-                <p className={b.principleEvolved}>
-                  <span className={b.principleTag}>sharpened by testing</span>
-                  {p.taught}
-                </p>
-              )}
-            </li>
-          ))}
-        </ul>
-      </section>
+      <TheRecord />
     </FieldSection>
   )
 }
