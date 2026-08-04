@@ -168,3 +168,36 @@ The case study may use it as the organizing lens; whether to own the retrospecti
 explicitly (e.g. one line in reflection) is her call. Seed already present in her Q4 answer:
 "this is a shared experience for many… some features like journaling should be private for the
 individual or couple, others should be shared."
+
+---
+
+## Q7 — THE COUNTERFACTUAL / IMPACT ANSWER — her words, verbatim (2026-08-04)
+
+The Question Map's Q7 ("What changed because of this work?" — Liu's counterfactual: *what is
+true about the world today that wouldn't be true if your research didn't exist?*) has been the
+case study's weakest beat since the research pass in July, flagged in `docs/DECK_SYSTEM.md` as
+`[LORIN TO WRITE]`. It is also the highest-weighted item on the hiring-manager rubric (rank 3,
+"the strongest seniority discriminator"). Asked directly, she answered:
+
+> maybe its the thesis that if we did not learn about the importance of the collective
+> experience of the birth as well as the individual we may have missed a crucial aspect of the
+> ecosystem
+
+**Why this is the right answer and not a hedge:** it is a claim about what the research FOUND,
+not about how the work was received. The client quote ("I wish this could be real right now!")
+is reception; this is impact. For concept work — where there are no shipped metrics — an
+authored counterfactual is explicitly allowed by the rubric research; "no answer" is not.
+
+**The evidence for it is already on the page, and it is measurable.** The brief listed
+*Sharing* and *Partner Participation* as two of five OPTIONAL features. The research is what
+moved the collective from optional to structural: in the shipped IA, **Care Pod is one of five
+primary tabs** — and the ia-final diagram proves it at a glance. So the counterfactual is not
+rhetorical: without the research, the app is a private documentation-and-reflection tool for the
+birth parent alone, and Care Pod does not exist.
+
+Direct line to [[THE THESIS]] above — "birth is both an individual and shared experience and…
+the two are intertwined." Q7 is that thesis stated as a consequence.
+
+**⚠︎ STATUS: raw, hers to shape.** The sentence above is her thinking aloud, not final copy.
+It must not be paraphrased into Claude's voice. Either it ships close to verbatim, or she writes
+the shaped version. `[LORIN TO WRITE — the one-sentence form she wants on the page.]`
