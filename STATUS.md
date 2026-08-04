@@ -272,6 +272,48 @@ bespoke widths rather than declared as the measure's SPREAD, and the chapter has
 top-to-bottom eyes-on read at her bar — only its individual blocks were verified. Both are the
 next pass.
 
+### N42 — Research rejected, and the merge that answers it
+
+> "research is ALL text and lines…boring blocks, too much to see, not enough design should we
+> be thinking about research and IA as one category?" (2026-08-04)
+
+**She is right, and the failure is specific: the silhouette test was written as a gate and then
+applied only to the NEW components, not to the inherited ones.** Audited honestly, Research is
+~95% type. The two things called "artifacts" in the inventory — the group-call chat card and
+the heard→learned→did synthesis matrix — are both *text arranged in boxes*. **Cover the words
+on the synthesis matrix and you see an empty 4×3 grid. It says nothing.** It fails the gate.
+The three moments and the group call pass; the matrix and the principles do not.
+
+**AND THE MERGE IS THE ANSWER — her instinct is correct, for a reason worth writing down.**
+Research has almost no visual artifacts of its own (2, both typographic). Architecture has the
+page's two highest-craft objects: the measured, live-rendered IA v1 and IA final diagrams.
+Meanwhile the synthesis matrix's "what we DID" column and Architecture's "what SHIPPED" are the
+same claim told twice — once as a text grid, once as a diagram. **Merged, the research findings
+stop needing their own furniture and become annotations on the diagrams that already prove
+them.** The text dies and the drawing carries it. That is the fix for "all text and lines," and
+no amount of restyling the matrix would have achieved it.
+
+**THE MERGED CHAPTER — 02 Research & Architecture**
+1. The claim — capacity rises, three moments (the graphic KEEPS, it passes)
+2. The evidence — the group call (KEEPS, her authored artifact)
+3. **THE ARIA** — the 4→0 collapse, already the named candidate: IA v1 → the turn → what
+   shipped. Three genuinely different kinds of content, and the page's best drawing.
+4. The heard→learned→did rows RETIRED as a standalone grid; the four "did" claims become
+   annotations hung on the two diagrams.
+5. Principles close it.
+
+**The merge is also a CUT, which is the point** — the matrix's 12 text cells collapse into
+diagram annotations, and Architecture's own prose (the "shift" panel, the two "moves" cards,
+the scoping paragraph) is largely redundant with what the diagrams show. Merging without
+cutting would just make one very long chapter; the cut is what makes it work.
+
+**IT ALSO FIXES THE NUMBERING AND THE DEMOTION.** New spine: 01 Brief · 02 Research &
+Architecture · **03 Iteration** · 04 Identity · 05 Outcome. Iteration — the chapter with NINE
+artifacts, the most evidence of her actual work on the page — stops being an unnumbered
+subsection. That was already logged as a structural bug; the merge frees the number.
+
+🔨 **NEXT BUILD.**
+
 ### BUILD ORDER
 
 **Phase 0** — the 12-column measure in `system.module.css`.
