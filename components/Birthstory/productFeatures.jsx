@@ -31,7 +31,6 @@ export const FEATURES = [
       alt: 'A partner cradles a newborn while an older sibling leans in close to see.',
       cap: 'Birth doesn’t happen to the mother alone; the people there, and those waiting to hear, each hold a piece of the story.',
     },
-    cap: 'One update goes out; their replies come back into the story.',
   },
   {
     name: 'Reflection',
@@ -42,7 +41,6 @@ export const FEATURES = [
       r: { label: 'Tag how it felt', text: 'So a memory can be found later by its emotion, not only its date.', mt: '7.5rem' },
     },
     prose: <>Every parent wanted to reflect, whether their birth was traumatic or not, but the ones who don’t already journal often don’t know where to start. So instead of a blank page, the journal hands them gentle prompts: a letter to a past self, the needs that are hard to name, the senses worth keeping.</>,
-    cap: 'The deck deals a prompt; you write, and tag how it felt.',
   },
   {
     name: 'Search',
@@ -53,7 +51,6 @@ export const FEATURES = [
       r: { label: 'Filter by feeling', text: 'A parent recalls a memory by how it felt, not when it was logged.', mt: '2.5rem' },
     },
     prose: <>This is the one feature nobody asked for. As the entries pile up, I didn’t want anyone digging through the whole app to find one memory.</>,
-    cap: 'Swipe it in from the edge; filter by feeling, category, or keyword.',
   },
   {
     name: 'The Book',
