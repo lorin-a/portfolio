@@ -76,11 +76,6 @@ const FINAL_FINDINGS = [
     heard: 'Timeline is a must; journaling is unique to everyone.',
     did: 'The timeline is the home; journaling is there when you want it.',
   },
-  {
-    col: 3,
-    heard: 'Big yes to voice recording; medical reflection is valuable but may not need its own category.',
-    did: 'Voice memos and medical notes land on the one tagged timeline.',
-  },
 ]
 
 /* the beat boundaries as a share of the pinned travel — the last beat holds

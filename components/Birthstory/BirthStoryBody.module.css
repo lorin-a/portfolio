@@ -579,3 +579,15 @@
 .specSubList li { position: relative; padding-left: 1rem; font-size: 0.9rem; line-height: 1.45; color: var(--color-ink); }
 .specSubList li::before { content: '–'; position: absolute; left: 0; top: 0; width: auto; height: auto; background: none; border-radius: 0; color: var(--bs-teal-soft); }
 @media (max-width: 820px) { .specSubList { grid-template-columns: 1fr 1fr; } }
+
+/* the proof line under the chapter's claim — one step down from the statement,
+   one step up from the prose, so it reads as the evidence for the sentence
+   above it rather than as the start of the body copy */
+.proof {
+  margin: 0 0 clamp(1.6rem, 3.5vw, 2.4rem); max-width: 46ch;
+  padding-left: clamp(0.9rem, 2vw, 1.3rem);
+  border-left: 2px solid var(--bs-accent);
+  font-family: var(--font-body); font-size: clamp(1.02rem, 0.96rem + 0.3vw, 1.18rem);
+  line-height: 1.55; color: var(--color-ink); text-wrap: pretty;
+}
+.proof b { font-weight: 700; color: var(--bs-accent); }

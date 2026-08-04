@@ -12,17 +12,16 @@ import b from './BirthStoryBody.module.css'
 /* Two acts (N23). The product happens once, up top, unnumbered — a different
    register. The process follows as five numbered chapters.
 
-   THE SPINE AFTER THE MERGE (N43). Research and Architecture were one argument
-   told twice — findings as a text grid, then the same findings as a drawing —
-   so they are one chapter now, and the freed number goes to Iteration, which
-   holds nine artifacts and had been running as an unnumbered subsection under
-   Architecture. That also settles the live bug where Voice was authored 05 and
-   Outcome 06 while this spine relabelled them 04 and 05: the numbers now agree
-   in both places. */
+   THE SPINE AFTER THE EDITORIAL CUT (N45). Brief is gone — it was the
+   assignment she was handed, not her work, and nothing in her hiring-manager
+   research asks for it. Research and Architecture are two chapters again: the
+   N43 merge existed because Research had no artifact of its own, and the cut
+   dissolved that premise — the artifact turned out to be the voice. Each
+   chapter is now one statement and one thing. */
 const SPINE = [
   { id: 'product', label: 'The product', ids: ['product', 'product-1', 'product-2', 'product-3', 'product-4', 'product-5'] },
-  { id: 'brief', label: 'Brief', num: '01', ids: ['brief'] },
-  { id: 'research', label: 'Research & Architecture', num: '02', ids: ['research'] },
+  { id: 'research', label: 'Research', num: '01', ids: ['research'] },
+  { id: 'architecture', label: 'Architecture', num: '02', ids: ['architecture'] },
   { id: 'iteration', label: 'Iteration', num: '03', ids: ['iteration'] },
   { id: 'voice', label: 'Identity', num: '04', ids: ['voice', 'brand'] },
   { id: 'outcome', label: 'Outcome', num: '05', ids: ['outcome', 'close'] },
@@ -34,6 +33,7 @@ const SPINE = [
 function Overview() {
   const meta = [
     ['Role', 'My partner Michael and I co-led research and information architecture. I led UX/UI, visual identity, and UX writing.'],
+    ['Brief', 'Pitch a concept for Myana’s companion micro-app that helps parents document and reflect on their birth experience.'],
     ['Context', <>6-week graduate studio at Carnegie Mellon, taught by the founders of <a href="https://dezudio.com/" target="_blank" rel="noopener noreferrer">Dezudio</a>, Myana’s design partner</>],
     ['Client', <><a href="https://apps.apple.com/us/app/myana-pa/id6752866138" target="_blank" rel="noopener noreferrer">Myana</a>, a maternal-health platform co-developed by researchers at the University of Pittsburgh</>],
     ['Method', '5 parent interviews, 3 think-aloud protocols (TAP), 3 wireframe rounds'],
@@ -58,284 +58,64 @@ function Overview() {
    ONCE, in ProductAct, directly under the metadata; its orienting line ("It opens
    into documenting…") moved there verbatim. */
 
-/* ── THE STAKES ─────────────────────────────────────────────────────────────
-   Two of these figures are shares of the same whole, so they share one 0–100
-   track and can be read against each other. The third is a ratio, not a share —
-   plotting it on the same track would be a lie about the scale — so it sits
-   below as the comparison it actually is, one bar against three. Her figures and
-   her source line, verbatim. */
-const SHARES = [
-  { pct: 80, text: 'of U.S. maternal deaths are preventable' },
-  { pct: 65, text: 'happen after delivery' },
-]
-
-function Stakes() {
-  return (
-    <section aria-labelledby="brief-stakes">
-      <div>
-        <p className={b.specLabel} id="brief-stakes">The stakes</p>
-        <div className={b.stakeChart}>
-          {SHARES.map((s) => (
-            <div className={b.stakeShare} key={s.pct}>
-              <span className={b.stakeFig}>{s.pct}%</span>
-              <span className={b.stakeTrack} aria-hidden="true">
-                <span className={b.stakeFill} style={{ '--pct': `${s.pct}%` }} />
-              </span>
-              <span className={b.stakeText}>{s.text}</span>
-            </div>
-          ))}
-          <div className={b.stakeRatio}>
-            <span className={b.stakeFig}>3×</span>
-            <span className={b.stakeBars} aria-hidden="true">
-              <span className={b.stakeUnit} />
-              <span className={`${b.stakeUnit} ${b.stakeUnitThree}`} />
-            </span>
-            <span className={b.stakeText}>the risk for Black mothers</span>
-          </div>
-        </div>
-        <p className={b.stakeSource}>A dangerous, under-supported window. <b>Figures from the project brief.</b></p>
-      </div>
-    </section>
-  )
-}
-
-/* ── THE SPEC ───────────────────────────────────────────────────────────────
-   Both tracks measure the same total width; only the subdivision differs. Three
-   solid blocks against five hollow ones reads, before a single word of it is
-   read, as three things to solve and five to choose among. Her wording
-   throughout — the required areas keep their names and their one-line
-   definitions, the optional features keep theirs. */
-const REQUIRED = [
-  ['Information gathering', 'Medical info, contextual info, the birth narrative, and feelings.'],
-  ['Meaning making', 'Processing through positive retelling, without re-traumatizing.'],
-  ['App administration', 'Profile and onboarding, plus nudges that prompt capture.'],
-]
-const OPTIONAL = ['Baby Book', 'Trackers', 'Birth Plan', 'Sharing', 'Partner Participation']
-
-function Spec() {
-  return (
-    <section aria-label="What the brief required and provided">
-      <div className={b.specTrack}>
-        <p className={b.specLabel}>Required</p>
-        <ul className={b.specSolid}>
-          {REQUIRED.map(([name, def]) => (
-            <li key={name}>
-              <b>{name}</b>
-              <span>{def}</span>
-            </li>
-          ))}
-        </ul>
-      </div>
-      <div className={b.specTrack}>
-        <p className={b.specLabel}>Provided</p>
-        <ul className={b.specHollow}>
-          {OPTIONAL.map((name) => <li key={name}>{name}</li>)}
-        </ul>
-        <p className={b.specGiven}>The name, Birth Story, and the core concept.</p>
-      </div>
-    </section>
-  )
-}
-
-function Brief() {
-  return (
-    <FieldSection
-      id="brief" num="01" crumb="brief" when="Week 1" wide
-      arc="#DBADAD"
-      statement={<>Pitch a concept for Myana’s companion micro-app that helps parents <b>document and reflect</b> on their birth experience.</>}
-      statementLong
-    >
-      {/* ONE SHEET, not four stacked bands.
-
-          The first build made this a sequence — block, gap, block, gap — and a
-          sequence has to be fed. With this little content that meant inflating
-          it to fill the bands, which is exactly what she caught: "stretching out
-          sparse content and trying to make it interesting."
-
-          But a brief is not a sequence. It is a DOCUMENT you take in at once.
-          So the chapter is one composed sheet on the established row geometry:
-          the words left, and the brief itself — the spec and the stakes — as the
-          artifact on the right. Everything visible together, read in about ten
-          seconds, and then out of the way so the actual work starts at Research.
-          The artifact for the one chapter that contains none of her work is the
-          ask she was handed. */}
-      <div className={`${sys.measure} ${b.briefSheet}`}>
-        <div className={`${sys.colsReading} ${b.briefRead} ${sys.up}`}>
-          <Prose>
-            Myana already supports parents through pregnancy and postpartum. Its researchers saw that
-            the birth itself still went undocumented and unprocessed, and brought that gap to our
-            graduate studio to conceptualize.
-          </Prose>
-          <a
-            className={b.myanaRef}
-            href="https://apps.apple.com/us/app/myana-pa/id6752866138"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <img className={b.myanaIcon} src="/images/birthstory/myana-icon.jpg" alt="" loading="lazy" draggable="false" />
-            <span className={b.myanaText}>
-              <span className={b.myanaTag}>The app it companions</span>
-              <span className={b.myanaName}>Myana <span className={b.myanaLink}>View on the App Store&nbsp;↗</span></span>
-            </span>
-          </a>
-
-          {/* Round 4 trail cuts: the night-nanny elaboration and closing line
-              demoted out (her standing cut-not-paraphrase permission); the
-              review photo cut — the Outcome chapter carries the stronger
-              final-review shot with the client quote */}
-          <div className={b.briefConnection}>
-          <SubBlock label="My connection">
-            <Prose>
-              Supporting mothers is personal for me. I come from a matriarchal family that has a history
-              of complicated births. While interviewing my family members, I understood for the first
-              time how traumatic their experiences were.
-            </Prose>
-          </SubBlock>
-          </div>
-        </div>
-
-        {/* THE ARTIFACT PLANE — the brief itself. THE SPEC is what she was
-            handed: three obligations against five choices, both tracks the same
-            total width so the subdivision IS the information, which also sets up
-            Architecture's kept / added / cut. THE STAKES is why any of it
-            matters, drawn as the proportions the figures actually are. */}
-        <div className={`${sys.colsArtifact} ${b.briefDoc} ${sys.up}`}>
-          <Spec />
-          <Stakes />
-        </div>
-      </div>
-    </FieldSection>
-  )
-}
-
-/* ── THE RECORD ─────────────────────────────────────────────────────────────
-   THE SUBTRACTION PASS (2026-08-04). Her note: the process half reads complex
-   and crowded next to Outcome and Identity, which feel spacious and calm.
-
-   Measured, the crowding is not text and it is not layout — the calm chapters
-   and the crowded ones use the SAME components. It is that every object
-   announces itself. Research & Architecture carried 24 uppercase micro-labels,
-   each on its own hairline; Outcome carries 4. A page of labelled tiers reads
-   as a form to fill in, which is precisely what her own copy criticises the
-   first build for being.
-
-   So Outcome is the spec, and it is four elements:
-
-       statement · one paragraph · one voice · one artifact, big
-
-   Everything that is a RECORD rather than the story leaves the narrative and
-   gathers here, at the chapter's foot, set quiet and small: the scoping tally
-   and the design principles. Nothing is lost — it stops competing. This block
-   is the seed of a page-wide record; Brief's stakes and spec, and Iteration's
-   "what I couldn't test," join it when those chapters take the same pass. */
-function TheRecord() {
-  return (
-    <section className={b.record} aria-labelledby="research-record">
-      <p className={b.recordHead} id="research-record">The record</p>
-
-      <div className={b.recordScope}>
-        <p className={b.recordLine}>
-          If a parent never leaves the home page, they still get the use case they wanted most, a
-          timeline of their documentation. The rest can be explored another time.
-        </p>
-        <div className={b.scopeCells}>
-          <div className={b.scopeCell}>
-            <span className={b.scopeFigRow}><span className={b.scopeFig}>2</span><span className={b.scopeLabel}>kept</span></span>
-            <span className={b.scopeNames}>sharing · keepsake book</span>
-          </div>
-          <div className={b.scopeCell}>
-            <span className={b.scopeFigRow}><span className={b.scopeFig}>1</span><span className={b.scopeLabel}>added</span></span>
-            <span className={`${b.scopeNames} ${b.scopeAdded}`}>search · for the brain fog every parent named</span>
-          </div>
-          <div className={b.scopeCell}>
-            <span className={b.scopeFigRow}><span className={b.scopeFig}>2</span><span className={b.scopeLabel}>cut</span></span>
-            <span className={`${b.scopeNames} ${b.scopeCut}`}>trackers · birth plan</span>
-          </div>
-        </div>
-      </div>
-
-      {/* the four principles, set as plain type. The 2×2 with its ruled
-          "sharpened by testing" tier was a good graphic and it is still one
-          object too many for a chapter whose job is an argument; her
-          distinction (L3) survives in the sentences themselves, which say
-          testing taught her. */}
-      <ul className={b.recordList}>
-        {[
-          {
-            name: 'Compassionate, not clinical',
-            why: 'A birth lives inside cold clinical systems; the tool that holds it shouldn’t feel like one.',
-          },
-          {
-            name: 'Integrate facts and feelings',
-            why: 'The brief split capture four ways, but a birth isn’t lived in parts, so one timeline holds them together.',
-          },
-          {
-            name: 'Does not disorient',
-            why: 'A parent recovering on little sleep can’t afford a maze.',
-            taught: 'My first two builds did the opposite of what they meant to; testing taught me what disorienting really meant.',
-          },
-          {
-            name: 'Trauma-informed, not trauma-assuming',
-            why: 'Careful with pain, without deciding a parent’s experience for them.',
-            taught: 'My first copy assumed trauma; a parent showed me the words shouldn’t choose the tone.',
-          },
-        ].map((p) => (
-          <li key={p.name} className={b.recordItem}>
-            <h3 className={b.recordName}>{p.name}</h3>
-            <p className={b.recordWhy}>{p.why}</p>
-            {p.taught && <p className={b.recordTaught}>{p.taught}</p>}
-          </li>
-        ))}
-      </ul>
-    </section>
-  )
-}
-
 /* ════════════════════════════════════════════════════════════════════════════
-   02 — RESEARCH & ARCHITECTURE. One chapter, because it was always one
-   argument (N42/N43).
+   THE PROCESS HALF, REBUILT ON HER OWN HIRING-MANAGER RESEARCH (N45).
 
-   Research had almost no artifacts of its own: its two "artifacts" were text in
-   boxes, and the twelve-cell synthesis grid said nothing at all with the words
-   covered. Architecture holds the page's two best-drawn objects. And the grid's
-   "what we did" column and Architecture's "what shipped" were the same claim
-   told twice — once as text, once as a diagram. Merged, the findings stop
-   needing their own furniture and become annotations on the drawings that
-   already prove them: the text dies and the drawing carries it.
+   Three passes at this stretch were rejected. The fourth stopped designing and
+   went and read `docs/deck-system/research/hm-rubrics-formats.md` and the
+   Question Map in `docs/DECK_SYSTEM.md` — her own research, collected in July.
 
-   The merge is also a CUT, which is the point. Retired here: the synthesis
-   grid, the "shift" panel (its sentence is now an aria beat), both "moves"
-   cards (the shipped diagram shows what they describe), and the scoping lead
-   paragraph (Brief already draws it).
+   What it says, in weight order: decision rationale (the WHY) · role clarity
+   (ambiguity is a stated disqualifier) · impact with evidence (the strongest
+   seniority discriminator). PROCESS RANKS FOURTH, and only "as evidence of
+   thinking, not documentation volume." The #2 failure mode across every source
+   is "process dump / over-contextualizing / slow wind-up." Screening is two to
+   three minutes per portfolio, some under one.
 
-   The chapter reads: her research → the claim it produced → the architecture
-   that claim forced, as the aria → what got scoped out → the principles.
+   And her own approved deck spec says the cold open is the punchline — Q7
+   first. So the process half now opens on the answer instead of arriving at it
+   eleven thousand pixels down.
+
+   CUT ENTIRELY, because nothing in her research asks for any of it: the Brief
+   chapter (the assignment she was handed, not her work — its one useful line is
+   now a metadata row), THE STAKES (80/65/3× — figures from the brief, and a
+   stat panel is how every student case study opens), THE SPEC (required vs
+   provided), the SCOPING tally, and the four DESIGN PRINCIPLES (claims, not
+   evidence). All recoverable from git; all logged in STATUS.
    ════════════════════════════════════════════════════════════════════════════ */
-function ResearchArchitecture() {
+
+/* ── 01 · THE FINDING — the punchline, first ─────────────────────────────────
+   Q7 is the highest-weighted item on the rubric and had been the case study's
+   weakest beat since July, sitting in the docs as [LORIN TO WRITE]. This is her
+   answer, verbatim (2026-08-04), with only the "maybe it's the thesis that"
+   hedge trimmed at her instruction and a comma added to a long conditional.
+
+   It earns the opening because it is a claim about what the research FOUND,
+   not about how the work was received — and the evidence for it is measurable:
+   the brief listed Sharing and Partner Participation as two of five OPTIONAL
+   features, and the shipped architecture made Care Pod one of five primary
+   tabs. The ia-final diagram in the next chapter proves it at a glance, which
+   is why the proof is annotated there rather than restated here. */
+function Finding() {
   return (
-    /* Architecture's thesis becomes the merged chapter's, because it is the one
-       that spans both halves: a research finding with a structural consequence.
-       Research's own statement moves down onto the graphic that proves it. */
     <FieldSection
-      id="research" num="02" crumb="research & architecture" when="Weeks 2–3" alt wide
-      arc="#B1C1F4"
-      statement={<>New parents recovering from birth have limited capacity, which made the introduction, onboarding, and user flow <b>make-or-break</b>: they decide how a parent spends their few precious free moments.</>}
+      id="research" num="01" crumb="research" when="Weeks 1–2" wide
+      arc="#DBADAD"
+      statement={<>If we did not learn about the importance of the <b>collective experience</b> of the birth as well as the individual, we may have missed a crucial aspect of the ecosystem.</>}
       statementLong
     >
-      {/* ONE VOICE. Her three paragraphs run as continuous prose: the lilac
-          MY THINKING chip and its dotted rule are gone from this chapter. That
-          device earns its place where her reasoning has to be told apart from a
-          tester's — here the whole column is hers, so the label was announcing
-          something the reader already knew. Her Research statement lands as the
-          column's last line, which is where it belongs now that the merge left
-          the chapter one thesis. Every word verbatim; nothing merged, nothing
-          rewritten. */}
+      {/* THE EVIDENCE, DIRECTLY UNDER THE CLAIM. Her Q7 answer is not
+          rhetorical and it does not need a graphic — the promotion IS the
+          impact, and it can be stated in one line and then proved by the
+          shipped architecture in the next chapter. Both halves are facts
+          already on the page: the brief's optional list, and ia-final's tabs. */}
+      <p className={`${b.proof} ${sys.up}`}>
+        The brief listed <b>sharing</b> and <b>partner participation</b> as two of five optional
+        features. Care Pod shipped as one of five tabs.
+      </p>
+
       <div className={`${sys.measure} ${b.researchRow}`}>
         <div className={`${sys.colsReading} ${b.researchRead} ${sys.up}`}>
-          <Prose>
-            This was a design sprint on a concept already built on extensive research, so our work
-            focused on concept iteration.
-          </Prose>
           <Prose>
             Before we built anything, I researched blogs and existing products and ran information
             interviews with family to get familiar with the subject: my three sisters, my mom, and my
@@ -348,25 +128,20 @@ function ResearchArchitecture() {
             capacity. So I left medical documentation optional and, by the final iteration, built the
             design around events on a timeline.
           </Prose>
-          <p className={`${b.researchClose} ${sys.up}`}>
-            Capacity rises over time, so the app had to meet <b>three different moments</b>, not one.
-          </p>
+          {/* her stake in it — the only thing kept from the retired Brief. It is
+              rank 9 on the rubric ("the flavor of you") and it is why she is
+              credible on this subject at all. */}
+          <Prose>
+            Supporting mothers is personal for me. I come from a matriarchal family that has a history
+            of complicated births. While interviewing my family members, I understood for the first
+            time how traumatic their experiences were.
+          </Prose>
         </div>
 
-        {/* THE VOICE IS THE ARTIFACT.
-
-            What stood here was a chat card: a group text simulated in JSX,
-            with bubbles and a header and a provenance note. It was a designed
-            prop dressed as evidence — text in boxes doing an impression of a
-            screenshot — and the single best sentence in the chapter was inside
-            it at 1.2rem.
-
-            Research does not need a fake interface to prove it happened. It
-            needs the thing a person actually said, at the size it deserves.
-            So the plane holds one verbatim quote at display scale, its
-            attribution, and beneath a hairline the three asks that came out of
-            the same conversation. No card, no bubbles, no chrome — the words
-            and one rule. */}
+        {/* THE VOICE IS THE ARTIFACT. What stood here was a group text simulated
+            in JSX — a drawn interface standing in for research that happened on
+            a real call. A prop, not an artifact. What research actually leaves
+            behind is a person's words, at the size they deserve. */}
         <div className={`${sys.colsArtifact} ${b.voicePlane} ${sys.up}`}>
           <blockquote className={b.bigQuote}>
             <p>
@@ -385,25 +160,24 @@ function ResearchArchitecture() {
           </p>
         </div>
       </div>
+    </FieldSection>
+  )
+}
 
-      {/* THE ONE ARTIFACT — the 4 → 0 collapse, and the chapter's whole reason
-          to exist. The research findings hang on it as annotations; the
-          twelve-cell grid they used to live in is retired. The "reclaim" row is
-          not among them by design — that finding is about copy, and Identity
-          already carries it verbatim with the parent's own words. */}
+/* ── 02 · ARCHITECTURE — the proof she acts on research ──────────────────────
+   One statement, one artifact. Q4 (why this approach, what did you reject) and
+   Q5 (how evidence became decisions) are ranks 1 and 4 on the rubric, and this
+   single object answers both: a rejected first version, the count, and what
+   shipped, with the tester findings hung on the columns they produced. */
+function Architecture() {
+  return (
+    <FieldSection
+      id="architecture" num="02" crumb="information architecture" when="Week 3" alt wide
+      arc="#B1C1F4"
+      statement={<>New parents recovering from birth have limited capacity, which made the introduction, onboarding, and user flow <b>make-or-break</b>: they decide how a parent spends their few precious free moments.</>}
+      statementLong
+    >
       <IaAria />
-
-      {/* CUT IN THE SUBTRACTION PASS, and logged so it can come back:
-          THE THREE MOMENTS. It was a good graphic — three bars rising a third,
-          two thirds, whole — but it argued a SECOND claim (capacity rises, so
-          the app meets three moments) inside a chapter whose thesis is that
-          limited capacity made the flow make-or-break. Her sentence survives as
-          the reading column's last line above. The three phases themselves
-          (early in the fog · later once it lifts · in the end) describe how the
-          PRODUCT is used over time, so they belong to the product act, not to
-          the architecture. Parked, not deleted. */}
-
-      <TheRecord />
     </FieldSection>
   )
 }
@@ -570,9 +344,9 @@ export default function BirthStoryBody() {
       {/* the spine sticks from here down, so it tracks BOTH acts */}
       <BirthStorySpine sections={SPINE} />
       <ProductAct />
-      {/* act two — the process, numbered */}
-      <Brief />
-      <ResearchArchitecture />
+      {/* act two — the process, punchline first (N45) */}
+      <Finding />
+      <Architecture />
       <SecIteration />
       <Voice />
       <SecBrand />
