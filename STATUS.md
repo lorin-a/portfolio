@@ -462,6 +462,77 @@ the one to watch: three rounds each carrying two labelled voice-tracks in three 
 (MY THINKING · THE FEEDBACK · WHAT I COULDN'T TEST), and Round 1's quote sits inside the stage while
 Rounds 2–3 put it in the column. One convention, applied three times.
 
+### N45 — "SCRAP IT" → the process half rebuilt on her own hiring-manager research
+
+> **"Im sorry to say but I HATE this. We need to absolutely scrap and start over and consider what
+> is worth showing and how."** Then: **"I am with you AND lets think about what a hiring manager
+> wants to see/know about my process."** Then Q7, and the call: **the collective opens it.**
+
+**The lesson, and it cost three rejected passes.** N43 merged, N44 subtracted, and both were
+answers to *presentation*. The problem was never presentation — it was that nobody had decided
+what belonged on the page. The fourth attempt stopped designing and read her own research:
+`docs/deck-system/research/hm-rubrics-formats.md` + the Question Map in `docs/DECK_SYSTEM.md`,
+collected July 2026 and **never once applied to the site.**
+
+**What it says.** In weight order: **decision rationale (the why) · role clarity (ambiguity is a
+stated disqualifier) · impact with evidence (the strongest seniority discriminator).** Process
+ranks **fourth**, and only "as evidence of thinking, not documentation volume." The #2 failure mode
+across every source is *"process dump / over-contextualizing / slow wind-up."* Screening is **2–3
+minutes per portfolio, some under one** — against a 20,000px page. And her own approved deck spec
+(2026-07-03) says slide one is the punchline, **Q7 first**.
+
+**The audit against her eight questions:** Q4 and Q5 answered strongly (the 4→0 aria closes the
+most-cited UXR gap). Q1 over-answered. Q3 answered but buried in a metadata row. **Q7 was the
+gap** — flagged as the weakest beat in her own doc since July, sitting as `[LORIN TO WRITE]`, and
+the highest-weighted item on the rubric.
+
+**✅ Q7 ANSWERED (2026-08-04), her words, saved verbatim to
+`docs/case-study-editorial/BIRTHSTORY-interview.md`:**
+
+> "if we did not learn about the importance of the collective experience of the birth as well as
+> the individual we may have missed a crucial aspect of the ecosystem"
+
+Her call: **the collective opens the case study**, and this sentence ships close to verbatim — the
+"maybe it's the thesis that" hedge trimmed at her instruction, a comma added to a long conditional,
+nothing else touched. It beats the client quote because it is a claim about what the research
+FOUND, not how the work was received. **And the evidence is a fact, not rhetoric:** the brief listed
+*Sharing* and *Partner Participation* as two of five OPTIONAL features; Care Pod shipped as one of
+five primary tabs. The promotion is the impact.
+
+**✅ SHIPPED (`f009eb8`):**
+- **01 THE FINDING** — her Q7 sentence as the chapter statement, one line of evidence beneath it,
+  then her research, her stake, and one voice (her sister, verbatim, at display scale). **3
+  micro-labels, 2 rules** — fewer than Outcome, the chapter she called calm.
+- **02 ARCHITECTURE** — one statement, one artifact: the 4→0 aria. Q4 and Q5 answered by a single
+  object.
+- **The N43 merge is undone.** It existed because Research had no artifact of its own; the
+  editorial cut dissolved that premise — the artifact turned out to be the voice.
+
+**CUT, because nothing in her research asks for it** (all recoverable from git):
+| Cut | Why |
+|---|---|
+| The entire **Brief** chapter | The assignment she was handed, not her work. Its one useful line is now a metadata row — *"context capped at one beat"* |
+| **THE STAKES** (80% / 65% / 3×) | Figures from the brief, and a stat panel is how every student case study opens |
+| **THE SPEC** (required vs provided) | Same — the ask, not the work |
+| **The scoping tally** (2 kept / 1 added / 2 cut) | On no rubric anywhere in her research. Also had an unresolved factual gap (five on the table, four accounted for) |
+| **The four design principles** | Claims, not evidence. On no rubric |
+| THE THREE MOMENTS · the synthesis grid · the chat card | Retired in N43/N44; see those entries |
+
+Research + Architecture **5,465px → 3,665px**; page 20,164 → 19,437. Zero overflow at 1440 · 1440×800 ·
+390 · reduced motion, zero console errors, stylelint clean.
+
+**▶ OWED NEXT, in rubric order — not chapter order:**
+1. **Q3, role.** Rank 2 and a named disqualifier, currently one row in a six-row metadata block. It
+   needs to be prominent and unmissable.
+2. **03 Iteration** — the evidence-became-decisions beat, and still 10 labels: three rounds each
+   carrying two labelled voice-tracks under three *different* labels, with Round 1's quote inside
+   the stage while Rounds 2–3 put it in the column. One convention, three times.
+3. **Q6 + Q8** — what went wrong, and what she'd do differently. Both exist but are scattered and
+   buried; her research says these are **mandatory, never cut**, because perfect-project narratives
+   read as not credible.
+4. **The Voice/"reclaim" beat** — the third of the three things worth showing, and the clearest
+   evidence of research changing her mind.
+
 ### BUILD ORDER
 
 **Phase 0** — the 12-column measure in `system.module.css`.
