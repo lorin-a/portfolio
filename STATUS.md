@@ -394,6 +394,74 @@ subsection. That was already logged as a structural bug; the merge frees the num
 
 **⚠︎ One deliberate departure from N36, flagged so she can overrule it.** N36 says the motion belongs to the artifact, not the type — so in the aria the live beat's sentence cross-fades as the drawing changes. The reasoning: there, a demo ran its own timed sequence against static text and the two competed. Here the drawing and the sentence change on the same scroll gesture, and a sentence describing the drawing would be describing the wrong picture if it stayed. All three sentences are in the document at all times, and off the pin they simply read in order. If she wants zero type movement, the fix is to show all three at once in the band.
 
+### N44 — "this feels complex and crowded" → THE SUBTRACTION PASS (2026-08-04)
+
+> "I'm really not thrilled with the brief to iteration section… Perhaps I cut it altogether OR we
+> simplify radically. The other sections feel spacious, calm, intuitive. This feels complex and
+> crowded." Then, when I came back with a new structural system: **"are you sure the answer is not
+> even simpler than this?"** And then: **"you are still trying to work with my content as is — I
+> want you to take FULL control and change ANYTHING about it. we dont have to do chat thats an
+> older idea. what MAKES SENSE?"**
+
+**THE DIAGNOSIS, MEASURED.** It was not text and it was not layout — the calm chapters and the
+crowded ones use the SAME components (Outcome, Identity and Iteration's rounds are all copy-left /
+artifact-right). The difference is only how much each object announces itself:
+
+| Chapter | micro-labels | rules |
+|---|---|---|
+| Outcome (*"spacious, calm"*) | **4** | 1 |
+| Brief | 7 | 1 |
+| Identity | 8 | 4 |
+| Iteration | 10 | 6 |
+| **Research & Architecture** | **24** | **70** |
+
+A page where every object wears a small uppercase label on a hairline reads as a form to fill in —
+which is exactly what her own copy criticises the first build for being (*"a form at the front desk
+while you're still catching your breath"*). The case study had become the thing the product was
+designed not to be.
+
+**Two mistakes of mine, named.** (1) I answered a crowding complaint by designing a NEW SYSTEM — a
+weekly timeline, a fusion, a three-variant lab — when the page already contained the answer. That is
+the failure mode written into her CLAUDE.md: benchmark first, name the smallest delta. She caught it
+in one line. (2) The curation plan I wrote optimised for VARIETY (*"no chapter leads with the shape
+the one before it led with"*). Variety is the crowding. The product act is calm because it has two
+shapes repeated five times.
+
+**THE SPEC IS OUTCOME, and it is four elements:**
+
+> **statement · one paragraph · one voice · one artifact, big**
+
+**✅ SHIPPED on 02 (`0a2e3f1`) — no layout rebuilt, no artifact lost:**
+
+- **The chat card is retired.** It was a group text *simulated in JSX* — bubbles, header, provenance
+  note, shadowed card — standing in for research that happened on a real call. A drawn interface is
+  not an artifact, it is a prop, and it had the best sentence in the chapter sitting inside a 1.2rem
+  bubble. **What research leaves behind is a person's words**, so the plane now holds one verbatim
+  quote at display scale, its attribution, and the asks from the same conversation under one
+  hairline. No card, no bubbles, no shadow.
+- **The MY THINKING chip is gone from this chapter** — the whole column is her voice, so the label
+  announced what the reader already knew. (The device stays where her voice needs telling apart from
+  a tester's; hers to restore here if she disagrees.)
+- **The aria's plate tags are gone** — "ia-v1 · the branching questionnaire" sat directly under the
+  label THE FIRST ANSWER and said it twice. So is the tester attribution label.
+- **THE THREE MOMENTS is cut, and parked not deleted.** A good graphic, but it argued a SECOND claim
+  inside a chapter that already has a thesis. Her sentence survives as the reading column's close.
+  The three phases (early in the fog · later once it lifts · in the end) describe how the PRODUCT is
+  used over time — they belong to the product act.
+- **THE RECORD.** The scoping tally and the design principles stop competing with the argument and
+  gather at the chapter's foot, quiet and small, under one label instead of one each. This is the
+  seed of a page-wide record: Brief's stakes and spec, and Iteration's "what I couldn't test," join
+  it when those chapters take the same pass.
+
+**24 labels → 16**, of which five are the diagram's own tab names and three are the aria's beat
+structure: **three pieces of furniture remain.** Chapter 4,982px → 4,504px. Zero overflow at 1440
+and 390, zero console errors, stylelint clean.
+
+**▶ OWED NEXT — the same pass on Brief (7 labels), Iteration (10) and Identity (8).** Iteration is
+the one to watch: three rounds each carrying two labelled voice-tracks in three different labels
+(MY THINKING · THE FEEDBACK · WHAT I COULDN'T TEST), and Round 1's quote sits inside the stage while
+Rounds 2–3 put it in the column. One convention, applied three times.
+
 ### BUILD ORDER
 
 **Phase 0** — the 12-column measure in `system.module.css`.
