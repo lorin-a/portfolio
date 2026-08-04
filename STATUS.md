@@ -218,6 +218,31 @@ its statement but is fairly even below it; and the two graphics are Brief-local
 until a second chapter needs them, at which point Spec and Stakes get promoted
 into `kit.jsx` as shared components.
 
+### N41 — her verdict on the first Brief, and the reformat
+
+> "It looks like we are stretching out sparse content and trying to make it interesting. There
+> must be a better way to format this. it does not need to be this long either." (2026-08-04)
+
+✅ **SHIPPED — and the diagnosis was a format error, not a decoration one.** The first build
+made Brief a SEQUENCE: block, gap, block, gap, block. A sequence has to be fed, and with this
+little content that meant inflating each band to fill it — exactly what she saw.
+
+**But a brief is not a sequence, it is a DOCUMENT you take in at once.** So the chapter is now
+ONE composed sheet on the established row geometry: the words left (the setup · who asked ·
+her own stake in it), and the brief itself — THE SPEC and THE STAKES — as the artifact plane
+on the right. Everything visible together, read in about ten seconds, then out of the way so
+the real work starts at Research. **The artifact for the one chapter containing none of her
+work is the ask she was handed** — which also means Brief now obeys the page grammar instead
+of needing a fourth shape.
+
+**1830px → 1398px → 961px at 1440**, with the two graphics kept. Nothing of hers was cut in
+this pass; it is the same content composed rather than stacked.
+
+Third instance of the same root cause, now worth remembering: `globals.css` sets
+`section { padding: var(--space-lg) 0 }`, so ANY bare `<section>` inherits 64px of vertical
+padding. It cost 190px between the first build's bands and another 128px between the two
+graphics. **Any new component built as a `<section>` must zero its own padding-block.**
+
 ### BUILD ORDER
 
 **Phase 0** — the 12-column measure in `system.module.css`.

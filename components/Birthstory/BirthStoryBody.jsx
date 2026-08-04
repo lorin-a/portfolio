@@ -65,9 +65,8 @@ const SHARES = [
 
 function Stakes() {
   return (
-    <section className={`${sys.measure} ${b.briefBlock}`} aria-labelledby="brief-stakes">
-      {/* cols 1–7, with 8–12 left empty on purpose — the progression's span */}
-      <div className={`${sys.colsProse} ${sys.up}`}>
+    <section aria-labelledby="brief-stakes">
+      <div>
         <p className={b.specLabel} id="brief-stakes">The stakes</p>
         <div className={b.stakeChart}>
           {SHARES.map((s) => (
@@ -109,26 +108,24 @@ const OPTIONAL = ['Baby Book', 'Trackers', 'Birth Plan', 'Sharing', 'Partner Par
 
 function Spec() {
   return (
-    <section className={`${sys.measure} ${b.briefBlock}`} aria-label="What the brief required and provided">
-      <div className={`${sys.colsFull} ${sys.up}`}>
-        <div className={b.specTrack}>
-          <p className={b.specLabel}>Required</p>
-          <ul className={b.specSolid}>
-            {REQUIRED.map(([name, def]) => (
-              <li key={name}>
-                <b>{name}</b>
-                <span>{def}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-        <div className={b.specTrack}>
-          <p className={b.specLabel}>Provided</p>
-          <ul className={b.specHollow}>
-            {OPTIONAL.map((name) => <li key={name}>{name}</li>)}
-          </ul>
-          <p className={b.specGiven}>The name, Birth Story, and the core concept.</p>
-        </div>
+    <section aria-label="What the brief required and provided">
+      <div className={b.specTrack}>
+        <p className={b.specLabel}>Required</p>
+        <ul className={b.specSolid}>
+          {REQUIRED.map(([name, def]) => (
+            <li key={name}>
+              <b>{name}</b>
+              <span>{def}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div className={b.specTrack}>
+        <p className={b.specLabel}>Provided</p>
+        <ul className={b.specHollow}>
+          {OPTIONAL.map((name) => <li key={name}>{name}</li>)}
+        </ul>
+        <p className={b.specGiven}>The name, Birth Story, and the core concept.</p>
       </div>
     </section>
   )
@@ -142,13 +139,22 @@ function Brief() {
       statement={<>Pitch a concept for Myana’s companion micro-app that helps parents <b>document and reflect</b> on their birth experience.</>}
       statementLong
     >
-      {/* WHO ASKED. The full-bleed stock photograph that used to open the
-          chapter is gone: she does not want full bleeds, and it was a licensed
-          Pexels image carrying the one chapter that contains none of her own
-          work. The Myana reference loses its border and becomes an inline
-          attribution — a card around a link was furniture, not information. */}
-      <div className={`${sys.measure} ${b.briefBlock}`}>
-        <div className={`${sys.colsProse} ${sys.up}`}>
+      {/* ONE SHEET, not four stacked bands.
+
+          The first build made this a sequence — block, gap, block, gap — and a
+          sequence has to be fed. With this little content that meant inflating
+          it to fill the bands, which is exactly what she caught: "stretching out
+          sparse content and trying to make it interesting."
+
+          But a brief is not a sequence. It is a DOCUMENT you take in at once.
+          So the chapter is one composed sheet on the established row geometry:
+          the words left, and the brief itself — the spec and the stakes — as the
+          artifact on the right. Everything visible together, read in about ten
+          seconds, and then out of the way so the actual work starts at Research.
+          The artifact for the one chapter that contains none of her work is the
+          ask she was handed. */}
+      <div className={`${sys.measure} ${b.briefSheet}`}>
+        <div className={`${sys.colsReading} ${b.briefRead} ${sys.up}`}>
           <Prose>
             Myana already supports parents through pregnancy and postpartum. Its researchers saw that
             the birth itself still went undocumented and unprocessed, and brought that gap to our
@@ -166,36 +172,32 @@ function Brief() {
               <span className={b.myanaName}>Myana <span className={b.myanaLink}>View on the App Store&nbsp;↗</span></span>
             </span>
           </a>
+
+          {/* Round 4 trail cuts: the night-nanny elaboration and closing line
+              demoted out (her standing cut-not-paraphrase permission); the
+              review photo cut — the Outcome chapter carries the stronger
+              final-review shot with the client quote */}
+          <div className={b.briefConnection}>
+          <SubBlock label="My connection">
+            <Prose>
+              Supporting mothers is personal for me. I come from a matriarchal family that has a history
+              of complicated births. While interviewing my family members, I understood for the first
+              time how traumatic their experiences were.
+            </Prose>
+          </SubBlock>
+          </div>
+        </div>
+
+        {/* THE ARTIFACT PLANE — the brief itself. THE SPEC is what she was
+            handed: three obligations against five choices, both tracks the same
+            total width so the subdivision IS the information, which also sets up
+            Architecture's kept / added / cut. THE STAKES is why any of it
+            matters, drawn as the proportions the figures actually are. */}
+        <div className={`${sys.colsArtifact} ${b.briefDoc} ${sys.up}`}>
+          <Spec />
+          <Stakes />
         </div>
       </div>
-
-      {/* THE STAKES — the reason the brief exists, so it comes before the brief
-          itself. Three figures that used to sit as a stat column now read as
-          what they are: proportions. Cover the words and the shape still says
-          "most of it is preventable, most of it happens after," which is the
-          whole argument for a product that lives in the days after a birth.
-          Deliberately sober — thin rules, small type, one colour. The subject
-          is people dying. */}
-      <Stakes />
-
-      {/* THE SPEC — what she was handed. Three obligations against five
-          choices, both tracks measuring the same total width, so the
-          subdivision IS the information: fewer and heavier on top, more and
-          lighter below. It also sets up Architecture's kept / added / cut,
-          which is the payoff for the choosing this chapter only poses. */}
-      <Spec />
-
-      {/* Round 4 trail cuts: the night-nanny elaboration and closing line
-          demoted out (her standing cut-not-paraphrase permission); the review
-          photo cut — the Outcome chapter carries the stronger final-review
-          shot with the client quote */}
-      <SubBlock label="My connection">
-        <Prose>
-          Supporting mothers is personal for me. I come from a matriarchal family that has a history
-          of complicated births. While interviewing my family members, I understood for the first
-          time how traumatic their experiences were.
-        </Prose>
-      </SubBlock>
     </FieldSection>
   )
 }
