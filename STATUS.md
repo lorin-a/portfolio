@@ -36,7 +36,20 @@ content (her copy verbatim, never paraphrase) · simplicity = pacing.**
   (it is the chapter's own claim), cut the second stock photo, put the group call in a real row.
   **Then rejected by her** — see the next move.
 
-### ▶ NEXT MOVE — MERGE RESEARCH + ARCHITECTURE INTO ONE CHAPTER (N42)
+### ▶ NEXT MOVE — 03 ITERATION (contain the crit-wall bleed), THEN 04 IDENTITY
+
+02 Research & Architecture is merged, cut and shipped (N43 below — including the
+silhouette verdicts on every block, and the two things in it that are hers to call:
+the 71-word Insight in the research row, and the scoping tally's unclassified fifth
+feature). The spine now reads 01 Brief · 02 Research & Architecture · 03 Iteration ·
+04 Identity · 05 Outcome, and the numbers agree with the bar for the first time.
+
+Next: **03 Iteration** — nine artifacts, the most evidence of her actual work on the
+page, now a numbered chapter for the first time. Contain the crit-wall bleed (N39).
+Then 04 Identity (spread-led) → 05 Outcome → one finishing pass page-wide. **Delete
+the `/layouts` route** once the grammar is proven.
+
+### ✅ DONE — MERGE RESEARCH + ARCHITECTURE INTO ONE CHAPTER (N42)
 
 Her call, and it is right. Research is ~95% type; its “artifacts” are text in boxes. Architecture
 holds the page's two best drawings. **The synthesis matrix's “what we did” column and
@@ -323,6 +336,63 @@ artifacts, the most evidence of her actual work on the page — stops being an u
 subsection. That was already logged as a structural bug; the merge frees the number.
 
 🔨 **NEXT BUILD.**
+
+### N43 — the merge brief (2026-08-04, her session-opening batch)
+
+> "merge Research and Architecture into one chapter (02), so the research findings become
+> annotations on the two IA diagrams instead of a grid of text cells. Build the 4→0 collapse as the
+> aria, cut the redundant prose, and renumber the spine so Iteration finally gets its own chapter."
+>
+> Plus two judgment calls she carried in herself: **"The merge only works if it's also a cut.** If
+> the synthesis grid survives as a block and Architecture keeps its 'shift' panel and 'moves' cards,
+> you'll get one very long chapter instead of one good one." And: **"I rejected Research because it
+> failed a standard I'd written myself three messages earlier. The same risk applies to
+> Architecture — its two diagrams are genuinely strong, which makes it easy to leave the prose
+> around them unexamined. Worth asking me to run the silhouette test on every block of that merged
+> chapter before I call it done, not just the new ones."**
+
+| # | Item | Status |
+|---|---|---|
+| N43a | Merge Research + Architecture into one chapter 02 | ✅ **SHIPPED.** One `FieldSection id="research" num="02"`, crumb *research & architecture*, Weeks 2–3. Architecture's thesis becomes the chapter's (it is the one that spans both halves: a research finding with a structural consequence). Research's own statement demotes from h2 to the lede of THE THREE MOMENTS — the graphic that proves it, and what it was really the caption for all along. `SecArchitecture.jsx` + `.module.css` deleted |
+| N43b | Findings become annotations on the diagrams; the synthesis grid retired | ✅ **SHIPPED.** The 12-cell heard→learned→did grid is gone. Row 1's tester line hangs on **ia-v1** (the version it killed). Rows 3 and 4 hang on **ia-final**, each with a rule exactly one diagram-column wide and a dotted stem rising into the tab it produced — Home and New Note. Row 2 (the "reclaim" copy finding) is deliberately not among them: it is a copy finding, and 04 Identity already carries it with the parent's verbatim quote and the draft → rewrite pair. The middle "learned" tier is cut throughout — the diagram is what was learned |
+| N43c | The 4→0 collapse built as the aria | ✅ **SHIPPED** — `IaAria.jsx`. A band of words across the top (the drawing is wide, so 28rem of words beside it was the wrong frame), the drawing full width beneath. Three beats: the first answer → what it actually did → what shipped. **What moves is the drawing:** v1 recedes, a wash of paper carries the count onto it, the shipped tree arrives in its place. All three labels hold full ink from frame one so the argument's shape is legible before it is read (N33/N34). Track 285vh. Unpins entirely under reduced motion and below 1000px, with both diagrams and all three beats fully visible |
+| N43d | Cut the redundant prose (shift panel · moves cards · scoping paragraph) | ✅ **SHIPPED** — full cut list below, so any of it can be restored |
+| N43e | Renumber the spine — 03 Iteration gets its own chapter | ✅ **SHIPPED.** 01 Brief · 02 Research & Architecture · **03 Iteration** · 04 Identity · 05 Outcome. Iteration is no longer a `sub`; it carries `num="03"` and its own Weeks 3–5 stamp. Voice 05→04 and Outcome 06→05 in the authoring, so the numbers finally agree with the bar. Gradient stops redistributed across five: blush → peri → dusk → sage → slate |
+| N43f | Silhouette test run on EVERY block of the merged chapter, inherited ones included | ✅ **RUN — 7 pass, 2 flagged** (below). She was right that the risk was the inherited prose: the two flags are both on blocks I did not build this session |
+
+**THE CUT LIST — everything removed, and where it went.** Logged because it is her prose:
+
+| Cut | Where it lives now |
+|---|---|
+| The synthesis grid's four "learned" lines | **Gone.** Provisional copy from L6/L8; the diagram is what was learned |
+| Synthesis row 2 (*Why "reclaim"?*) | 04 Identity, in her own prose + the parent's verbatim quote |
+| Architecture's "the shift" panel | Verbatim, as the aria's third beat |
+| Move card 1, "Open into the task" | Its last two sentences (*If a parent never leaves the home page…*) now LEAD the scoping ledger, replacing a provisional headline I had written. Its opening sentence about embedding options inside a simple core is **cut** — the shipped diagram draws exactly that |
+| Move card 2, "Unify, don't fragment" | **Cut.** The New Note annotation carries the what; 03 Iteration already carries the why in her words (Round 2: *"I consolidated everything into one filterable notes section"*) |
+| The scoping lead paragraph (*Three areas were required…*) | **Cut** — 01 Brief already draws it as three solid blocks against five hollow ones |
+| The provisional headline *"The research kept telling me to leave things out."* | **Replaced** by her verbatim sentence above |
+
+**THE SILHOUETTE VERDICTS** — cover the words; does the shape still say something?
+
+| Block | Verdict |
+|---|---|
+| Chapter statement | Exempt — a thesis is prose by definition |
+| The research row (her prose + MY THINKING) | ⚠️ **Weak.** A reading column with one labelled aside. It is her voice, which the standard exempts, but the Insight runs **71 words** against the ~60-word budget — the longest prose block left in the chapter. Hers to keep or trim |
+| The group call | ✅ Three bubbles left, one filled dark right — *a conversation, and one voice mattered more* |
+| The three moments | ✅ A staircase — *it rises.* Still the cleanest graphic in the chapter |
+| The aria's band | ✅ Three markers on a rule, one lit — *a three-step sequence, and you are here* |
+| The aria's plates | ✅ A dense branching web → a huge numeral → a clean five-column tree. *Complicated became simple*, with no words at all. This is the chapter |
+| The aria's findings | ✅ Two short rules under two named columns, stems rising into them — *these parts came from somewhere* |
+| The scoping ledger | ⚠️ **Weak, plus a factual gap.** The shape says "a set sorted three ways, some struck out," but it never shows the five AS five. And the kicker claims *five optional features on the table* while kept (2) + cut (2) accounts for four — **Partner Participation is unclassified.** It plausibly became the Care Pod, but that is a fact about her project, not a call I should make. **Hers.** Once she says, this can be redrawn as the five hollow blocks from Brief's SPEC resolving one by one, which would pass properly and pay Brief off visibly |
+| Design principles | ✅ **Earned it this pass.** Four blocks in a 2×2, two carrying an extra tier on a periwinkle rule — *four claims, two of them revised by testing.* As four plain text blocks it failed |
+
+**TWO BUGS THE MERGE EXPOSED, both fixed:**
+1. **The chapter spine blanked on any tall chapter.** It ran on `IntersectionObserver` with `threshold: [0.15, …]`; a 5,477px chapter can only fill ~0.11 of a viewport shrunk by the rootMargin, so it never crossed the threshold, no callback ever fired, and the bar hid itself. Iteration was already failing this way and had been masked by sharing a node with a short section. Rewritten to measure **visible pixels** in the reading band — no thresholds, and it cannot be outgrown. Verified against all seven tracked sections.
+2. **The pinned frame measured zero.** `align-content: center` on the sticky grid made its row content-sized, so the frame's `height: 100%` had nothing to resolve against and the stage's `minmax(0, 1fr)` came back 0 — the drawing had no height to be fitted into.
+
+**Measured, not eyeballed:** 1440×900 · 1440×800 · 1998×1200 · 390×844 · reduced motion. Zero x-overflow at every width, zero console errors (one pre-existing SVG clip-path hydration warning, unrelated), stylelint clean. The first diagram renders at **scale 1.0** at 1440×900 and 0.88 at 1440×800 — the laptop case is the real case, so the band, the findings row and the diagram's own padding all give up height before the drawing gives up legibility. Chapter height **4,982px** at 1440: about what Research + Architecture were together, but roughly half of it is now one held frame with a drawing in it rather than blocks of text.
+
+**⚠︎ One deliberate departure from N36, flagged so she can overrule it.** N36 says the motion belongs to the artifact, not the type — so in the aria the live beat's sentence cross-fades as the drawing changes. The reasoning: there, a demo ran its own timed sequence against static text and the two competed. Here the drawing and the sentence change on the same scroll gesture, and a sentence describing the drawing would be describing the wrong picture if it stayed. All three sentences are in the document at all times, and off the pin they simply read in order. If she wants zero type movement, the fix is to show all three at once in the band.
 
 ### BUILD ORDER
 

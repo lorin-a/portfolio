@@ -12,32 +12,56 @@ import styles from './BirthStorySpine.module.css'
 
 export default function BirthStorySpine({ sections }) {
   const [active, setActive] = useState(null) // the active NODE id
-  const ratios = useRef({})
-  const idToNode = useRef({})
 
+  /* MEASURED IN PIXELS, NOT RATIOS.
+
+     This used to run on an IntersectionObserver with `threshold: [0.15, …]`,
+     which silently fails on a tall section: a chapter 5,477px tall can only
+     ever fill ~0.11 of a viewport shrunk by the rootMargin, so it never crosses
+     0.15, no callback ever fires, and the whole spine hides itself. Merging
+     Research and Architecture made chapter 02 exactly that tall and blanked the
+     bar for a fifth of the page — Iteration was already failing the same way
+     and had been masked by sharing a node with a short section.
+
+     A ratio also punishes a long chapter for being long. Visible PIXELS inside
+     the reading band is the honest measure, it needs no thresholds, and it
+     cannot be outgrown. */
   useEffect(() => {
-    // a node can cover several DOM sections (e.g. Structure = architecture +
-    // iteration); observe every covered section and map it back to its node
+    // a node can cover several DOM sections (e.g. Identity = voice + brand);
+    // track every covered section and resolve it back to its node
     const map = {}
     sections.forEach((s) => (s.ids || [s.id]).forEach((sid) => { map[sid] = s.id }))
-    idToNode.current = map
-    const els = Object.keys(map).map((id) => document.getElementById(id)).filter(Boolean)
-    if (!els.length) return
+    const ids = Object.keys(map)
+    if (!ids.length) return
 
-    const obs = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((e) => { ratios.current[e.target.id] = e.isIntersecting ? e.intersectionRatio : 0 })
-        // the most-visible tracked section wins; resolve it to its node
-        let best = null, top = 0
-        for (const [id, r] of Object.entries(ratios.current)) {
-          if (r > top) { top = r; best = id }
-        }
-        setActive(best ? idToNode.current[best] : null)
-      },
-      { threshold: [0.15, 0.4, 0.7], rootMargin: '-10% 0px -25% 0px' }
-    )
-    els.forEach((el) => obs.observe(el))
-    return () => obs.disconnect()
+    let frame = 0
+    const read = () => {
+      frame = 0
+      const vh = window.innerHeight
+      // the band a reader is actually reading in: clear of the chrome at the
+      // top, short of the fold at the foot (what the old rootMargin meant)
+      const bandTop = vh * 0.1
+      const bandBottom = vh * 0.75
+      let best = null
+      let most = 0
+      for (const sid of ids) {
+        const el = document.getElementById(sid)
+        if (!el) continue
+        const r = el.getBoundingClientRect()
+        const visible = Math.min(r.bottom, bandBottom) - Math.max(r.top, bandTop)
+        if (visible > most) { most = visible; best = map[sid] }
+      }
+      setActive(most > 0 ? best : null)
+    }
+    const onScroll = () => { if (!frame) frame = requestAnimationFrame(read) }
+    read()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    window.addEventListener('resize', onScroll)
+    return () => {
+      window.removeEventListener('scroll', onScroll)
+      window.removeEventListener('resize', onScroll)
+      if (frame) cancelAnimationFrame(frame)
+    }
   }, [sections])
 
   const jump = (id) => {

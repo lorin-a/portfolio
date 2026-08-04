@@ -5,9 +5,15 @@ import { cloudImg } from '@/lib/cloudinary'
 import CritStage from './CritStage'
 import styles from './SecIteration.module.css'
 
-/* 04 — Iteration. Documented across three rounds of real wireframe testing: each
+/* 03 — Iteration. Documented across three rounds of real wireframe testing: each
    round removed options the last one had added. The screens run big beside the
-   change and the tester quote that drove it. */
+   change and the tester quote that drove it.
+
+   IT IS A CHAPTER NOW (N43). It had been authored as an unnumbered `sub` beat
+   under Architecture while holding nine artifacts — seven wireframe screens,
+   the think-aloud photograph and the crit wall — which is the most evidence of
+   her actual work anywhere on the page. Merging Research and Architecture freed
+   the number it should have had all along. */
 
 const ROUNDS = [
   {
@@ -96,11 +102,11 @@ function Round({ label, change, quote, who, kicker, summary, crit, shots, note, 
 }
 
 export default function SecIteration() {
-  // no section-level week stamp — the three version markers below are the
-  // one canonical timeline (V1 · Week 3 → V3 · Week 5)
+  // the chapter stamp is the span; the three version markers below stay the
+  // canonical timeline inside it (V1 · Week 3 → V3 · Week 5)
   return (
     <FieldSection
-      id="iteration" crumb="iteration" alt wide sub arc="#6D8F99"
+      id="iteration" num="03" crumb="iteration" when="Weeks 3–5" alt wide arc="#9DA3BF"
       statement={<>Each round made the app <b>simpler</b>.</>}
     >
       <Split

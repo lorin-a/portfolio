@@ -37,9 +37,12 @@ const TABS = [
   { icon: 'search', label: 'Search', screens: ['Search'] },
 ]
 
-export function IaFinal() {
+/* compact = the aria's dressing: the panel loses its card shadow and half its
+   padding, because inside a pinned frame the drawing is already the subject and
+   every pixel of height it gives back is a pixel the labels keep at full size */
+export function IaFinal({ compact = false }) {
   return (
-    <div className={`${d.panel} ${d.final}`}>
+    <div className={`${d.panel} ${d.final} ${compact ? d.compact : ''}`}>
       <ol className={d.cols}>
         {TABS.map((t) => (
           <li key={t.label} className={`${d.col} ${t.center ? d.colCenter : ''}`}>
@@ -74,7 +77,7 @@ const GROUPS = [
   { q: 'What other details do you want to remember about this moment?', items: ['Notes', 'Images', 'Voice Recording'] },
 ]
 
-export function IaV1() {
+export function IaV1({ compact = false }) {
   const wrapRef = useRef(null)
   const answerRefs = useRef([])
   const destRefs = useRef([])
@@ -85,17 +88,24 @@ export function IaV1() {
       const wrap = wrapRef.current
       if (!wrap) return
       const wb = wrap.getBoundingClientRect()
-      if (wb.width < 560) { setLines([]); return } // stacked layout: no fan
+      /* the aria scales this whole panel with a transform, so every rect comes
+         back multiplied. offsetWidth is the untransformed LAYOUT width, which
+         gives both the honest breakpoint test and the factor to divide the
+         path coordinates by — the SVG draws in the scaled subtree's own units,
+         so feeding it scaled numbers would scale it twice. */
+      const layoutW = wrap.offsetWidth || wb.width
+      const sc = layoutW ? wb.width / layoutW : 1
+      if (layoutW < 560) { setLines([]); return } // stacked layout: no fan
       const next = EDGES.map(([a, t]) => {
         const ae = answerRefs.current[a]
         const te = destRefs.current[t]
         if (!ae || !te) return null
         const ab = ae.getBoundingClientRect()
         const tb = te.getBoundingClientRect()
-        const x1 = ab.right - wb.left
-        const y1 = ab.top + ab.height / 2 - wb.top
-        const x2 = tb.left - wb.left
-        const y2 = tb.top + tb.height / 2 - wb.top
+        const x1 = (ab.right - wb.left) / sc
+        const y1 = (ab.top + ab.height / 2 - wb.top) / sc
+        const x2 = (tb.left - wb.left) / sc
+        const y2 = (tb.top + tb.height / 2 - wb.top) / sc
         const dx = Math.max(28, (x2 - x1) * 0.45)
         return `M ${x1} ${y1} C ${x1 + dx} ${y1}, ${x2 - dx} ${y2}, ${x2} ${y2}`
       }).filter(Boolean)
@@ -110,7 +120,7 @@ export function IaV1() {
   }, [])
 
   return (
-    <div className={`${d.panel} ${d.v1}`}>
+    <div className={`${d.panel} ${d.v1} ${compact ? d.compact : ''}`}>
       <div className={d.branch} ref={wrapRef}>
         <svg className={d.fan} aria-hidden="true" preserveAspectRatio="none">
           {lines.map((p, i) => <path key={i} d={p} />)}

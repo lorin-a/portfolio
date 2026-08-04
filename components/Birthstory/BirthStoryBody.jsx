@@ -3,21 +3,27 @@
 import { FieldSection, Prose, SubBlock, Split, Figure, TesterNote, Insight, sys } from './kit'
 import { cloudImg } from '@/lib/cloudinary'
 import ProductAct from './ProductAct'
-import SecArchitecture from './SecArchitecture'
+import IaAria from './IaAria'
 import SecIteration from './SecIteration'
 import SecBrand from './SecBrand'
 import BirthStorySpine from './BirthStorySpine'
 import b from './BirthStoryBody.module.css'
 
 /* Two acts (N23). The product happens once, up top, unnumbered — a different
-   register. The process follows as five numbered chapters, two of which fold a
-   second beat under a subhead (see the `ids` they cover), so the spine stays
-   calm without dropping any part of the story. */
+   register. The process follows as five numbered chapters.
+
+   THE SPINE AFTER THE MERGE (N43). Research and Architecture were one argument
+   told twice — findings as a text grid, then the same findings as a drawing —
+   so they are one chapter now, and the freed number goes to Iteration, which
+   holds nine artifacts and had been running as an unnumbered subsection under
+   Architecture. That also settles the live bug where Voice was authored 05 and
+   Outcome 06 while this spine relabelled them 04 and 05: the numbers now agree
+   in both places. */
 const SPINE = [
   { id: 'product', label: 'The product', ids: ['product', 'product-1', 'product-2', 'product-3', 'product-4', 'product-5'] },
   { id: 'brief', label: 'Brief', num: '01', ids: ['brief'] },
-  { id: 'research', label: 'Research', num: '02', ids: ['research'] },
-  { id: 'architecture', label: 'Architecture', num: '03', ids: ['architecture', 'iteration'] },
+  { id: 'research', label: 'Research & Architecture', num: '02', ids: ['research'] },
+  { id: 'iteration', label: 'Iteration', num: '03', ids: ['iteration'] },
   { id: 'voice', label: 'Identity', num: '04', ids: ['voice', 'brand'] },
   { id: 'outcome', label: 'Outcome', num: '05', ids: ['outcome', 'close'] },
 ]
@@ -217,11 +223,20 @@ const MOMENTS = [
   ['In the end', 'A keepsake book of the whole story.'],
 ]
 
+/* (b.momentsWrap had no rule behind it and was printing a literal "undefined"
+   class into the DOM — dropped) */
 function ThreeMoments() {
   return (
-    <section className={`${sys.measure} ${b.momentsWrap} ${sys.up}`} aria-labelledby="research-moments">
+    <section className={`${sys.measure} ${sys.up}`} aria-labelledby="research-moments">
       <div className={sys.colsFull}>
-        <p className={b.specLabel} id="research-moments">How they’d use it</p>
+        <p className={b.specLabel}>How they’d use it</p>
+        {/* her Research chapter statement, demoted from an h2 to the lede of
+            the one graphic that proves it. The merge left the chapter with a
+            single thesis, and this sentence was never really the chapter's — it
+            was this staircase's caption all along. Verbatim. */}
+        <h3 className={b.momentsClaim} id="research-moments">
+          Capacity rises over time, so the app had to meet <b>three different moments</b>, not one.
+        </h3>
         <ol className={b.moments}>
           {MOMENTS.map(([when, what], i) => (
             <li key={when} className={b.moment}>
@@ -238,15 +253,71 @@ function ThreeMoments() {
   )
 }
 
-function Research() {
+/* ── THE SCOPING DECISION ───────────────────────────────────────────────────
+   Relocated here from Architecture, minus its lead paragraph, which restated
+   Brief's SPEC almost word for word ("Three areas were required…"). Brief
+   already draws that as three solid blocks against five hollow ones; this is
+   the payoff, so it opens on her own sentence about what the core had to do
+   and lets the tally be the evidence. */
+function Scoping() {
   return (
-    /* the statement is the chapter's CLAIM, not its setup — her strongest
-       research finding (formerly buried at the foot of the aside) leads;
-       the design-sprint context demotes to the opening prose */
+    <section className={b.scope} aria-labelledby="research-scope">
+      <div className={`${b.scopeCard} ${sys.up}`}>
+        <div className={b.scopeLead}>
+          <p className={b.specLabel} id="research-scope">Prioritization · five optional features on the table</p>
+          <p className={b.scopeStory}>
+            If a parent never leaves the home page, they still get the use case they wanted most, a
+            timeline of their documentation. The rest can be explored another time.
+          </p>
+        </div>
+        <div className={b.scopeCells}>
+          <div className={b.scopeCell}>
+            <span className={b.scopeFigRow}><span className={b.scopeFig}>2</span><span className={b.scopeLabel}>kept</span></span>
+            <span className={b.scopeNames}>sharing · keepsake book</span>
+          </div>
+          <div className={b.scopeCell}>
+            <span className={b.scopeFigRow}><span className={b.scopeFig}>1</span><span className={b.scopeLabel}>added</span></span>
+            <span className={`${b.scopeNames} ${b.scopeAdded}`}>search · for the brain fog every parent named</span>
+          </div>
+          <div className={b.scopeCell}>
+            <span className={b.scopeFigRow}><span className={b.scopeFig}>2</span><span className={b.scopeLabel}>cut</span></span>
+            <span className={`${b.scopeNames} ${b.scopeCut}`}>trackers · birth plan</span>
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+/* ════════════════════════════════════════════════════════════════════════════
+   02 — RESEARCH & ARCHITECTURE. One chapter, because it was always one
+   argument (N42/N43).
+
+   Research had almost no artifacts of its own: its two "artifacts" were text in
+   boxes, and the twelve-cell synthesis grid said nothing at all with the words
+   covered. Architecture holds the page's two best-drawn objects. And the grid's
+   "what we did" column and Architecture's "what shipped" were the same claim
+   told twice — once as text, once as a diagram. Merged, the findings stop
+   needing their own furniture and become annotations on the drawings that
+   already prove them: the text dies and the drawing carries it.
+
+   The merge is also a CUT, which is the point. Retired here: the synthesis
+   grid, the "shift" panel (its sentence is now an aria beat), both "moves"
+   cards (the shipped diagram shows what they describe), and the scoping lead
+   paragraph (Brief already draws it).
+
+   The chapter reads: her research → the claim it produced → the architecture
+   that claim forced, as the aria → what got scoped out → the principles.
+   ════════════════════════════════════════════════════════════════════════════ */
+function ResearchArchitecture() {
+  return (
+    /* Architecture's thesis becomes the merged chapter's, because it is the one
+       that spans both halves: a research finding with a structural consequence.
+       Research's own statement moves down onto the graphic that proves it. */
     <FieldSection
-      id="research" num="02" crumb="research" when="Week 2" alt wide
+      id="research" num="02" crumb="research & architecture" when="Weeks 2–3" alt wide
       arc="#B1C1F4"
-      statement={<>Capacity rises over time, so the app had to meet <b>three different moments</b>, not one.</>}
+      statement={<>New parents recovering from birth have limited capacity, which made the introduction, onboarding, and user flow <b>make-or-break</b>: they decide how a parent spends their few precious free moments.</>}
       statementLong
     >
       {/* Round 4 trail cuts: the second context photo and the inline quote cut —
@@ -304,49 +375,20 @@ function Research() {
         </div>
       </div>
 
-      {/* the chapter's claim, finally sitting next to its evidence */}
+      {/* the claim, sitting next to its evidence */}
       <ThreeMoments />
 
-      {/* synthesis — information design, not a table: each tester voice is
-          SPEECH (the chat grammar), it travels a dotted thread carrying what it
-          taught, and lands as the move we made, rendered on the app's own dark
-          surface. At a squint: voices in, product out. Copy hers to bless. */}
-      <section className={`${b.synth} ${sys.up}`}>
-        <p className={b.synthHead}>What we heard, what we did</p>
-        <div className={b.synthFlows}>
-          {[
-            {
-              heard: 'Onboarding is nice, but too many buttons and options. Too many menus.',
-              learned: 'Cognitive load was the enemy, not missing features.',
-              did: 'Open straight into notes on a timeline; everything else a tap away.',
-            },
-            {
-              heard: 'Why “reclaim”? Compassionate copy may be signaling a negative experience.',
-              learned: 'The words shouldn’t decide the experience for anyone.',
-              did: 'Care-centered copy; “Find strength & support” became the Care Pod.',
-            },
-            {
-              heard: 'Timeline is a must; journaling is unique to everyone.',
-              learned: 'Some needs are core, others are personal.',
-              did: 'The timeline is the home; journaling is there when you want it.',
-            },
-            {
-              heard: 'Big yes to voice recording; medical reflection is valuable but may not need its own category.',
-              learned: 'Capture has to fit full hands, and one place beats many.',
-              did: 'Voice memos and medical notes land on the one tagged timeline.',
-            },
-          ].map((r) => (
-            <div key={r.heard} className={b.synthFlow}>
-              <p className={b.synthHeard}>{`“${r.heard}”`}</p>
-              <div className={b.synthThread}>
-                <p className={b.synthLearned}>{r.learned}</p>
-                <span className={b.synthLeader} aria-hidden="true" />
-              </div>
-              <p className={b.synthDid}>{r.did}</p>
-            </div>
-          ))}
-        </div>
-      </section>
+      {/* THE ARIA — the 4 → 0 collapse. This is where the research findings
+          land: the twelve-cell "what we heard, what we did" grid is retired,
+          and its rows now hang on the two diagrams as annotations, each
+          registered to the part of the architecture it argued into existence.
+          The "reclaim" row is not among them by design — that finding is about
+          copy, and the Identity chapter already carries it verbatim, with the
+          parent's own words and the draft → rewrite pair. */}
+      <IaAria />
+
+      {/* what the architecture left out */}
+      <Scoping />
 
       {/* design principles — four CLAIMS, set as type (the studio's Saffer
           model: pithy, specific, differentiating). No numerals (they'd collide
@@ -375,10 +417,20 @@ function Research() {
               taught: 'My first copy assumed trauma; a parent showed me the words shouldn’t choose the tone.',
             },
           ].map((p) => (
-            <li key={p.name} className={b.principle}>
+            <li key={p.name} className={`${b.principle} ${p.taught ? b.principleSharpened : ''}`}>
               <h3 className={b.principleName}>{p.name}</h3>
               <p className={b.principleWhy}>{p.why}</p>
-              {p.taught && <p className={b.principleEvolved}>{p.taught}</p>}
+              {/* the two that testing rewrote carry a marked third tier, so the
+                  block's SHAPE says "four claims, two of them revised" before a
+                  word of it is read. Her standing note (L3): she can't claim she
+                  applied these, only that they evolved through feedback — this
+                  is that distinction, drawn. */}
+              {p.taught && (
+                <p className={b.principleEvolved}>
+                  <span className={b.principleTag}>sharpened by testing</span>
+                  {p.taught}
+                </p>
+              )}
             </li>
           ))}
         </ul>
@@ -390,8 +442,8 @@ function Research() {
 function Voice() {
   return (
     <FieldSection
-      id="voice" num="05" crumb="ux writing" when="Week 5" alt wide
-      arc="#9DA3BF"
+      id="voice" num="04" crumb="ux writing" when="Week 5" alt wide
+      arc="#6D8F99"
       statement={<>The copy is trauma-informed without <b>assuming</b> trauma.</>}
     >
       <Split
@@ -460,7 +512,7 @@ function Voice() {
 function Outcome() {
   return (
     <FieldSection
-      id="outcome" num="06" crumb="outcome" when="Week 6" alt wide
+      id="outcome" num="05" crumb="outcome" when="Week 6" alt wide
       arc="#3E5E6A" arcInk="30%"
       statement={<>The client loved it, and it still isn’t getting built.</>}
     >
@@ -551,8 +603,7 @@ export default function BirthStoryBody() {
       <ProductAct />
       {/* act two — the process, numbered */}
       <Brief />
-      <Research />
-      <SecArchitecture />
+      <ResearchArchitecture />
       <SecIteration />
       <Voice />
       <SecBrand />
