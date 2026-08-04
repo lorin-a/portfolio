@@ -1,59 +1,69 @@
 # Project Status
 
-## ▶ RESUME HERE (2026-08-03)
+## ▶ RESUME HERE (2026-08-04)
 
-**What we're doing:** unifying the Birth Story case study at the PARENT route
-`/projects/birthstory-care-pod` (`BirthStoryBody` + `ProductAct` + `Sec*.jsx`). The `/v2`, `/case`,
-`/story`, `/moment-*` routes are abandoned exploration — **refine the parent route, do not rebuild.**
-Governing rule: **depth = content (her copy verbatim, never paraphrase) · simplicity = pacing.**
+**What we're doing:** putting the Birth Story case study's PROCESS half onto one page-wide
+grammar at the parent route `/projects/birthstory-care-pod`. The product act up top is
+**blessed and done** — refine the parent route, never rebuild. Governing rule: **depth =
+content (her copy verbatim, never paraphrase) · simplicity = pacing.**
 
-### ★ THE UNIVERSAL GRAMMAR — settled, and the whole point of the session
+### ★ THE STANDARDS THAT NOW GOVERN
 
-Three shapes, and only three. Every chapter on the page gets built from these.
+1. **THE SILHOUETTE TEST (N40)** — cover the words; if the shape still says nothing, it is a
+   paragraph in a costume and it goes back. Run it on INHERITED components, not only new ones.
+   That mistake is what got Research rejected.
+2. **Content with STRUCTURE becomes a component** (a set, sequence, comparison, proportion,
+   before/after). A single claim, or her voice doing something only prose can do, stays as
+   short type. Budget: no prose block over ~60 words survives the test above.
+3. **THE MEASURE** — one 12-column grid (`sys.measure` + `.colsReading` / `.colsArtifact` /
+   `.colsFull` / `.colsInset` / `.colsProse`). Every shape is a SPAN against it.
+4. **Her lead grant (N38):** curation, order and format are Claude's call. **The words are
+   always hers** — restructure freely, never paraphrase; mark `[LORIN TO WRITE]` instead.
+5. **No full-bleed images (N39).** Gradient and teal grounds for the exhale moments.
 
-1. **THE ROW** — the workhorse. Contained in the page column, copy column left with
-   `position: sticky` beside its artifact, artifact large on the right in the gradient stage.
-   This is `SecIteration`'s `Round`, which is what she was pointing at all along.
-2. **THE ARIA** — reserved, **once per act**. A pinned moment whose beats are genuinely different
-   KINDS of content: *the ask → the research quote → the feature*. Her condition, and it is what
-   earns taking the scroll — five product features pinned in a row was five of the same thing.
-   Callouts with dotted leaders live in the aria and nowhere else (it is the only place the
-   artifact is big and alone enough for a leader to point at a region); in a row those same notes
-   read in the copy column.
-3. **THE OUTLINE REVEAL** — the aria's reveal logic, and reusable anywhere a section has parts the
-   reader should see coming. All the labels are visible from the first frame; only each BODY
-   expands as you reach it. Never reserve invisible space — it reads as broken, and blank space
-   cannot signal that more is coming. The upcoming labels are the clue.
+### ✅ SHIPPED THIS SESSION
 
-**Shipped this session:** ✅ duotones → real-tone · ✅ Research synthesis unified · ✅ chapter titles
-fixed · ✅ **the two-act restructure** (`b7c4c44`) — product up top, unnumbered; process 01–05 ·
-✅ **process-unify pass one** (`0ffbef1`) — one annotation language page-wide, the coloured chips,
-Myana card, Identity gradient panel and revisions plate all retired, no copy touched ·
-✅ **the layout lab** (`ed3cbcd`) at `/projects/birthstory-care-pod/layouts` — four candidate flows
-built to be scrolled; she picked A + C · ✅ **the grammar** (`384a4f6`, `f078623`, `cbbda36`) — the
-product act rebuilt as four rows + the Care Pod aria, filling in its outline.
+- **Product act reviewed and closed out (N34, N37)** — her verdict: *“much happier… the overall
+  is good.”* Fixed the chapter spine slicing every row's heading mid-glyph (`e32d130`), brought
+  the aria's outline reveal above the AA floor, stripped ALL text animation so motion belongs to
+  the demo alone (N36, `b7dec77`), and cut the duplicate device captions so every row reads one
+  shape (`d89b676`).
+- **THE MEASURE + 01 BRIEF** (`cd06138`, `4018a3e`) — Brief rebuilt twice. The winning move:
+  **a brief is a DOCUMENT you take in at once, not a sequence of bands.** One composed sheet,
+  words left and the brief itself (THE SPEC + THE STAKES) as the artifact plane right.
+  1830px → **961px**, nothing of hers cut.
+- **02 RESEARCH first pass** (`dfbb4ff`) — promoted THE THREE MOMENTS out of a buried aside
+  (it is the chapter's own claim), cut the second stock photo, put the group call in a real row.
+  **Then rejected by her** — see the next move.
 
-**▶ NEXT MOVE:** **her eyes on the product act first** — it was rebuilt three times this session and
-she has not seen the final shape. Then propagate **THE ROW** to the process half: Brief (01),
-Research (02), Architecture (03), Identity (04). Iteration is already on it. One chapter at a time,
-her copy verbatim, verified eyes-on, committed per chapter.
+### ▶ NEXT MOVE — MERGE RESEARCH + ARCHITECTURE INTO ONE CHAPTER (N42)
 
-**Then:** consider ONE aria for the process half — the 4→0 IA collapse is the candidate, it already
-has the three-beat shape (the ask → what testing said → what shipped). **Delete the `/layouts` route
-once she blesses the grammar.**
+Her call, and it is right. Research is ~95% type; its “artifacts” are text in boxes. Architecture
+holds the page's two best drawings. **The synthesis matrix's “what we did” column and
+Architecture's “what shipped” are the same claim told twice** — once as a 12-cell text grid, once
+as a diagram. Merged, the findings become ANNOTATIONS on the drawings that already prove them:
+the text dies and the drawing carries it.
 
-**Open for her (asked, not yet answered):** the aria is Care Pod only, because it is the one feature
-with three genuinely different kinds of content. If she wants every feature to have it instead, the
-cost is inventing text to fill the other four — her call.
+The merged **02 Research & Architecture**: the three moments (keeps) → the group call (keeps) →
+**THE ARIA**, the 4→0 collapse (IA v1 → the turn → what shipped), the process half's one earned
+pin → principles close it. **The merge is also a CUT** — retire the synthesis grid, and
+Architecture’s “shift” panel, two “moves” cards and scoping paragraph are redundant with the
+diagrams. Merging without cutting just makes one very long chapter.
 
-**⚠︎ Known asset gap (not a code bug):** `bs-book-curate.png` has a device bezel baked into the
-export, so inside the site's own phone frame the Book row shows a frame within a frame. Needs a
-re-export from Figma, screen only.
+**It frees a chapter number:** new spine = 01 Brief · 02 Research & Architecture · **03
+Iteration** · 04 Identity · 05 Outcome. Iteration holds NINE artifacts, the most evidence of her
+actual work on the page, and is currently an unnumbered subsection. Also fixes the live bug where
+Voice is authored `num="05"` / Outcome `num="06"` while the spine relabels them 04 and 05.
 
-**Map:** every note she has sent = the `⟢ OPEN NOTES LEDGER` below (N1–N33) · craft-bar study +
-THE THESIS (verbatim) = memory `DECISIONS.md` · dev server on **:3001** · for eyes-on verification
-see memory `eyes-on-browser-setup.md` (Playwright MCP is locked; use `playwright-core` +
-`channel: 'chrome'` from the scratchpad).
+**Then:** 03 Iteration (contain the crit-wall bleed) → 04 Identity (spread-led) → 05 Outcome →
+one finishing pass page-wide. **Delete the `/layouts` route** once the grammar is proven.
+
+**⚠︎ Hers, not mine:** `bs-book-curate.png` has a device bezel baked into the export, so the Book
+row shows a frame within a frame. Needs a screen-only re-export from Figma.
+
+**Map:** every note she has sent = the `⟢ OPEN NOTES LEDGER` below (N1–N42) · the full curation
+plan + component set = `★ THE CURATION PLAN` below · dev server on **:3001** · eyes-on
+verification + the layout tripwires that cost real time = project memory.
 
 ---
 
