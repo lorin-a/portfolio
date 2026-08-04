@@ -85,6 +85,104 @@ see memory `eyes-on-browser-setup.md` (Playwright MCP is locked; use `playwright
 | N36 | "i think its too much to have demo animation and text animation, leave the animation to the product feature not the text" (2026-08-03) | ✅ SHIPPED. Only one thing in the act was animating type — the Care Pod aria — so the scope was tight: the rows' copy was already static. **The aria's argument now sits still.** All three beats are composed and final from the first frame, both callouts and their leaders are drawn from the first frame, and every transition in the column is deleted rather than disabled (the `0fr→1fr` body opener, the beat opacity tiers, the leader's `scaleX` draw, the scroll listener and the `active` state that drove them all). The prototype inside the frame keeps its own timed sequence, and it is now the only thing moving. **The pin survives with one job:** hold the frame steady so the demo can play without the page sliding out from under it. Track cut from `beats × 100 + 30`vh (330) to a flat 170vh, since it no longer has text beats to pace — that is ~840–1120px of dwell depending on viewport, about one screen. Verified pinned-window measurements at 1998×1200, 1440×900, 1440×800: heading holds the same y across the whole travel, nothing rides under the chrome, the fully-open column never spills the frame (528px against 650px at the 800px-tall worst case). Reduced motion and <1000px unchanged, zero overflow, zero console errors, stylelint clean | ✅ SHIPPED |
 | ⚠︎ | **The consequence of N36, named so she can judge it** — the aria's claim to "earning the scroll" (N31) rested on the three beats being revealed in sequence as genuinely different KINDS of content. With the type static, the aria is structurally a ROW that is held longer and carries callouts. Its justification now rests entirely on the Care Pod demo being worth the dwell. That may well be right — it is the concept's heart and the only feature with a real multi-state prototype — but if the held frame reads as dead air rather than isolation, the honest next move is to drop the pin and let Care Pod be the fifth row, with the callouts as its distinction | 🟡 HER CALL |
 | N37 | **Her verdict on the product act (2026-08-04): "I am feeling much happier with the product section. It needs work but the overall is good."** Asked whether to perfect it now or move on | 📌 **THE ACT IS BLESSED AT THE STRUCTURAL LEVEL** — after three rebuilds, the shape holds. Call taken: **move on to the process half.** The remaining product items are all content-level, not primitive-level (the two primitive bugs were fixed in `e32d130`), and the grammar has only been proven against phone screens — until a row has carried a diagram, a wireframe set and a before/after, "perfect" is premature. Perfecting a template on one act and then discovering it does not survive the other four is the loop to avoid. Remaining act items stay logged in N35 and get one finishing pass once the whole page is on the grammar |
+| N38 | "I hate when there are huge blocks of boring text if information can be portrayed graphicly with components i much prefer that its visual language that is easy for the mind to comprehend quickly." + **full creative lead granted**: "don't just take what I have and shove it together use your judgement and discernment to help me clarify what belongs, how it should look, what order it should be in. Be the pro here and i am just providing the preferences and all content for you to curate and discern" (2026-08-04) | 🔨 **THE MANDATE. Curation is mine; the words stay hers.** Restructure, reorder, cut, and reformat freely — but the inviolable holds: no paraphrasing her prose into my voice. Where a component needs a label that does not exist yet, it is marked `[LORIN TO WRITE]` with a specific prompt, never invented. Plan below |
+| N39 | Also 2026-08-04: **"I don't love full bleed images"** · likes **gradient backgrounds and teal backgrounds** · colour-block decision deferred | 🔨 TAKEN. Exactly two full-bleeds exist: the Brief stock photo (`<Bleed>`, 100vw) and the Iteration crit-wall whiteboard (`<Bleed tall>`, 100vw × up to 780px). **The Brief bleed is cut outright** — it is a licensed Pexels stock photo carrying a chapter that contains none of her own work. **The crit wall is contained**, not bled: it is genuinely her artifact and worth showing at width, just not edge to edge. Gradient + teal become the grounds for the exhale moments, which is already the product act's stage vocabulary — it ties the halves without the process half copying the product half. This also answers the N29 open question (light vs dark process plane): neither, the exhales carry the colour and the rows stay on paper |
+
+---
+
+## ★ THE CURATION PLAN — the process half (settled 2026-08-04, under the N38 lead)
+
+### The finding that reset the plan
+
+A full content inventory of all six process chapters was run before assigning any layout.
+**01 Brief contains zero artifacts of her own.** Its only image is a licensed Pexels stock
+photo. The plan given an hour earlier — Brief as three ROWS, copy left / artifact right —
+had nothing to put in the right plane, and would have meant inventing decorative images to
+fill it. Caught by reading, not by building. Artifact counts, ranked: **Iteration 9**
+(7 wireframe screens + the Zoom think-aloud photo + the crit wall) · **Brand 4** (wordmark
+SVG, 10-chip palette, type specimen, moodboard) · **Architecture 2** (the two bespoke
+measured IA diagrams — lowest count, highest craft, and a true before/after pair) ·
+**Research 2** (the group-call chat card and the heard→learned→did matrix, both authored in
+JSX rather than imported) · **Outcome 1** · **Voice 1**, typographic only · **Brief 0**.
+
+### The rule that decides text vs component
+
+Not everything becomes a graphic — that is how a page fills with decorative charts. The test:
+
+> **If the content has STRUCTURE — a set, a sequence, a comparison, a proportion, a
+> before/after — it becomes a component. If it is a single claim or her voice doing something
+> only prose can do, it stays as type, and short.**
+
+Prose survives in exactly three places: the chapter statement, her personal connection, and a
+verbatim quote. Everything else on this page that is currently a paragraph is structured
+information wearing prose, and converts. Working budget: **no prose block over ~60 words
+survives** unless it passes the test above.
+
+### THE COMPONENT SET — six, and all six already exist latent in the page
+
+Consolidation, not invention. Each replaces a class of prose and is reused across chapters,
+which is what makes the page read as one system instead of nine.
+
+1. **THE LEDGER** — hairline-separated rows, label + one line. Generalised from the Research
+   synthesis progression already built at N20. Replaces: Required/Provided, the colophon,
+   the overview metadata.
+2. **THE SPEC** — what was handed to her against what she had to invent. A two-track
+   comparison. Serves Brief's ask band and Architecture's kept/added/cut.
+3. **THE TURN** — before → hinge → after. Architecture's `4 → 0 questions` already is this;
+   generalised, it serves any before/after on the page.
+4. **THE CONTACT SHEET** — a set of screens on one baseline with mono captions. Iteration's
+   two 3-up strips; the 21 wireframes on disk of which only 7 are currently used.
+5. **THE SPECIMEN** — a made thing shown at true scale with its meta. Palette, wordmark,
+   type, moodboard, the draft→rewrite copy pairs.
+6. **THE VOICE** — a verbatim quote set as speech. Tester notes, the client quote, the sister
+   quote in the group call.
+
+### THE MEASURE — prerequisite, not cleanup
+
+One 12-column grid at the 92rem sheet, defined once in `system.module.css`. The page
+currently runs nine different proportions (`1.05fr/0.95fr`, `1.1fr/.85fr/1fr`, `27rem/1fr`,
+`28rem/1fr`, `repeat(3,1fr)`…) — one per section, which is mechanically what "no grid" means
+and the cause of the newspaper feeling named since F9. Every shape then becomes a SPAN
+against that one measure, which is what makes alternative layouts complementary rather than
+invented: **ROW** = copy 1–4 · empty 5 · artifact 6–12 · **SPREAD** = artifact 1–12, lede on
+1–4 above · **PROGRESSION** = type 1–7, 8–12 deliberately empty · **INSET** = artifact 3–10.
+Per GRID.md: the grid is made visible at the edges (folio numerals, the chapter footer rule)
+and those edges align to the same columns in every chapter.
+
+### THE SHAPE PER CHAPTER
+
+| Ch | Shape | Why |
+|---|---|---|
+| 01 Brief | **PROGRESSION** + THE SPEC | Zero artifacts. Type is the artifact. It becomes the intake breath before the work starts |
+| 02 Research | ROW + one **SPREAD** | Chat card is a row; the heard→learned→did matrix is 3 columns and takes the spread |
+| 03 Architecture | **ARIA** (the one earned pin of the process half) | The 4→0 collapse: first version → the turn → what shipped. Three genuinely different kinds of content, already sitting there |
+| 04 Iteration | 3 × ROW + one **SPREAD** | Already on the row recipe she pointed at. The crit wall is its exhale, contained not bled |
+| 05 Identity | **SPREAD**-led | Four specimens; moodboard and the 10-chip palette want width. Voice's draft→rewrite pairs are a progression |
+| 06 Outcome | **ROW** | One photo, short, closes quiet |
+
+Read down: progression → row → aria → row → spread → row. No chapter leads with the shape the
+one before it led with, and the exhales are spaced. **That is the answer to "it will feel
+repetitive" — not alternation for its own sake, but each chapter getting the shape its content
+already has.**
+
+### TWO STRUCTURAL BUGS THE INVENTORY EXPOSED
+
+- **Iteration is demoted.** It is authored as a `sub` FieldSection under Architecture with no
+  number of its own — and it is the chapter with the MOST evidence of her work (9 artifacts).
+  The richest proof on the page is currently a subsection. It should be its own numbered
+  chapter.
+- **The numbering disagrees with itself.** Voice is authored `num="05"` and Outcome `num="06"`,
+  but the spine relabels them 04 and 05. One of the two is wrong on screen.
+
+### BUILD ORDER
+
+**Phase 0** — the 12-column measure in `system.module.css`.
+**Phase 1** — the six components, built once, against the measure.
+**Phase 2** — chapter by chapter, **starting with 01 Brief**. Brief is the worst case: zero
+artifacts, the most prose, and the chapter a hiring manager reads first. If the system can
+make Brief good it can carry anything; building the artifact-rich chapters first would flatter
+the system without testing it. Verified eyes-on and committed per chapter.
+
 | ▸ | **THE GRAMMAR TO PROPAGATE (from N29)** — this is now the page-wide layout, and the remaining process-unify work is to put Brief / Research / Architecture / Iteration / Identity on it: **sticky reading column left (folio · heading · role · lede · labeled notes), artifact plane right, index anchored at the foot of the reading plane.** Her stated trade: slightly less immersion, in exchange for one balanced layout the whole page can use. Open question for her: whether the process half keeps a LIGHT right plane (so tone still differentiates the two acts) or goes dark like the product | 🔨 NEXT |
 
 Her mandate: make the whole page match the simple/elegant/balanced flow of **Interface→Outcome**
