@@ -33,6 +33,7 @@
   --bs-think-line: rgba(157, 163, 191, 0.55);
   --bs-wide: 76rem;
   --bs-pad: clamp(1.5rem, 5vw, 6rem);
+  --bs-gutter: clamp(1.2rem, 2.4vw, 3.2rem);
 
   /* SILENT GROUND — bright, hue-neutral near-white (gallery white). Every tinted
      ground read wrong (drab grey / yellow greige / juvenile pink-blue / clinical
@@ -157,6 +158,50 @@
 .sheet { max-width: 60rem; margin: 0 auto; }
 /* wide sheet for split sections — lets the media column run to the right edge */
 .sheetWide { max-width: 92rem; }
+
+/* ── THE MEASURE ───────────────────────────────────────────────────────────
+   ONE twelve-column grid for the whole case study. Every shape on the page is a
+   SPAN against it, which is what makes alternative layouts read as a family
+   instead of nine sections each inventing its own proportion — the page ran
+   1.05fr/0.95fr here, 1.1fr/.85fr/1fr there, 27rem/1fr, 28rem/1fr,
+   repeat(3,1fr), which is mechanically what "no grid" means and the cause of
+   the newspaper feeling (F9).
+
+     ROW          copy 1–4 · column 5 left empty on purpose · artifact 6–12
+     SPREAD       artifact 1–12, its lede on 1–4 above it
+     PROGRESSION  type 1–7, columns 8–12 deliberately empty
+     INSET        artifact 3–10
+
+   The column falls out at ~4.7rem, so ROW's copy column measures ~28rem — which
+   is exactly what the product act already uses. The measure DESCRIBES what is
+   there rather than moving it; that is why it can be adopted a chapter at a time
+   without the shipped act shifting a pixel. */
+.measure {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--bs-gutter);
+  /* width:100% is load-bearing. As a grid item, `margin-inline:auto` alone makes
+     the box shrink-to-fit its content instead of stretching, which collapsed the
+     twelve columns to 28px each and pushed the whole block off the page's left
+     axis. */
+  width: 100%; max-width: 92rem; margin-inline: auto;
+  /* globals.css sets `section { padding: var(--space-lg) 0 }`, so any bare
+     <section> carrying the measure inherits 64px of vertical padding that then
+     stacks on top of .flow's own gap. Vertical rhythm belongs to .flow. */
+  padding-block: 0;
+}
+/* named by role, not by number — a span that means something survives a
+   redesign, and `.colsReading` tells you why it is four columns wide */
+.colsReading { grid-column: 1 / 5; }
+.colsArtifact { grid-column: 6 / 13; }
+.colsFull { grid-column: 1 / 13; }
+.colsInset { grid-column: 3 / 11; }
+.colsProse { grid-column: 1 / 8; }
+
+@media (max-width: 1000px) {
+  .measure { grid-template-columns: minmax(0, 1fr); }
+  .colsReading, .colsArtifact, .colsFull, .colsInset, .colsProse { grid-column: 1 / -1; }
+}
 
 /* the meta tier — the record layer at the grid edges: crumb top-left, week
    folio top-right, one hairline making the grid's top edge visible. The chapter

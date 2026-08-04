@@ -118,10 +118,13 @@ verbatim quote. Everything else on this page that is currently a paragraph is st
 information wearing prose, and converts. Working budget: **no prose block over ~60 words
 survives** unless it passes the test above.
 
+| N40 | "simply separating text into columns is not always enough to make it interesting, it then becomes a block of lines and text which is equally boring and space consuming" (2026-08-04) | 🔨 **THE SILHOUETTE TEST — now a gate every component must pass, not a preference.** She is pre-empting the exact failure of the progression idea: eight hairline rows of label-plus-line is a table, and a table is a wall with more rules in it. Separation is not information design. **The test: cover the words. Does the block still say something?** If the shape carries no meaning without its text, it is a paragraph in a costume and it goes back. What makes a component pass is that the FORM encodes the content — proportion shown as proportion, a set of five shown as five, a choice shown as chosen-versus-not, before/after shown at the same scale so the difference is the message. Corollaries, from GRID.md: ≥3:1 scale contrast where it matters, deliberate asymmetry rather than even fill, and never the same rhythm twice down a chapter |
+
 ### THE COMPONENT SET — six, and all six already exist latent in the page
 
 Consolidation, not invention. Each replaces a class of prose and is reused across chapters,
-which is what makes the page read as one system instead of nine.
+which is what makes the page read as one system instead of nine. **Every one of them must pass
+the N40 silhouette test before it ships: cover the words, and the shape must still say something.**
 
 1. **THE LEDGER** — hairline-separated rows, label + one line. Generalised from the Research
    synthesis progression already built at N20. Replaces: Required/Provided, the colophon,
@@ -173,6 +176,47 @@ already has.**
   chapter.
 - **The numbering disagrees with itself.** Voice is authored `num="05"` and Outcome `num="06"`,
   but the spine relabels them 04 and 05. One of the two is wrong on screen.
+
+### ✅ PHASE 0 + 01 BRIEF — SHIPPED 2026-08-04
+
+**The measure** is in `system.module.css` as `.measure` + role-named spans
+(`.colsReading` `.colsArtifact` `.colsFull` `.colsInset` `.colsProse`). It
+DESCRIBES the shipped product act rather than moving it — the row's copy column
+already measured ~28rem, which is cols 1–4 of this grid — so it can be adopted a
+chapter at a time without the blessed act shifting a pixel.
+
+**Two real bugs found by measuring rather than looking**, both of which would
+have poisoned every chapter that adopted the measure:
+1. `margin-inline: auto` on a GRID ITEM makes the box shrink-to-fit instead of
+   stretching. The twelve columns collapsed to 28px each and the whole block sat
+   290px off the page's left axis. Fixed with an explicit `width: 100%`.
+2. `app/globals.css` sets `section { padding: var(--space-lg) 0 }`, so any bare
+   `<section>` carrying the measure inherited 64px of vertical padding that then
+   stacked on `.flow`'s own gap — ~190px of dead paper between blocks. The
+   measure now zeroes its own padding-block; vertical rhythm belongs to `.flow`.
+
+**01 Brief** rebuilt as PROGRESSION + THE SPEC. Cut: the full-bleed Pexels
+photograph (N39), the bordered Myana card (now an inline attribution — a card
+around a hyperlink is furniture, not information), and the 3-column ask band.
+Built: **THE STAKES**, where three figures that were a stat column are drawn as
+what they are — the two shares on one shared 0–100 track so they read against
+each other and against the whole, the ratio held OFF that track as one bar
+against three, because plotting a ratio on a percentage scale is a lie about the
+scale. Sober treatment throughout: 2px rules, small type, one colour, no fill
+animation — the subject is people dying. And **THE SPEC**, two tracks of equal
+total width where only the subdivision differs, so three solid blocks over five
+hollow ones says "three to solve, five to choose among" before a word is read.
+It also plants Architecture's kept/added/cut as the payoff for a choosing this
+chapter only poses. Her copy 100% verbatim; nothing written.
+
+Chapter height 1830px → **1398px** at 1440 with two graphics ADDED. Verified
+1440 · 1998 · 390, zero overflow, zero console errors, stylelint clean.
+
+**Refinements deliberately left for her eyes first:** the five hollow Provided
+blocks rag 2/2/1 at 390 and leave an orphan; the chapter has real hierarchy at
+its statement but is fairly even below it; and the two graphics are Brief-local
+until a second chapter needs them, at which point Spec and Stakes get promoted
+into `kit.jsx` as shared components.
 
 ### BUILD ORDER
 

@@ -1,6 +1,6 @@
 'use client'
 
-import { FieldSection, Prose, SubBlock, Split, Figure, Bleed, TesterNote, Insight, sys } from './kit'
+import { FieldSection, Prose, SubBlock, Split, Figure, TesterNote, Insight, sys } from './kit'
 import { birthPhoto, cloudImg } from '@/lib/cloudinary'
 import ProductAct from './ProductAct'
 import SecArchitecture from './SecArchitecture'
@@ -52,8 +52,89 @@ function Overview() {
    ONCE, in ProductAct, directly under the metadata; its orienting line ("It opens
    into documenting…") moved there verbatim. */
 
+/* ── THE STAKES ─────────────────────────────────────────────────────────────
+   Two of these figures are shares of the same whole, so they share one 0–100
+   track and can be read against each other. The third is a ratio, not a share —
+   plotting it on the same track would be a lie about the scale — so it sits
+   below as the comparison it actually is, one bar against three. Her figures and
+   her source line, verbatim. */
+const SHARES = [
+  { pct: 80, text: 'of U.S. maternal deaths are preventable' },
+  { pct: 65, text: 'happen after delivery' },
+]
+
+function Stakes() {
+  return (
+    <section className={`${sys.measure} ${b.briefBlock}`} aria-labelledby="brief-stakes">
+      {/* cols 1–7, with 8–12 left empty on purpose — the progression's span */}
+      <div className={`${sys.colsProse} ${sys.up}`}>
+        <p className={b.specLabel} id="brief-stakes">The stakes</p>
+        <div className={b.stakeChart}>
+          {SHARES.map((s) => (
+            <div className={b.stakeShare} key={s.pct}>
+              <span className={b.stakeFig}>{s.pct}%</span>
+              <span className={b.stakeTrack} aria-hidden="true">
+                <span className={b.stakeFill} style={{ '--pct': `${s.pct}%` }} />
+              </span>
+              <span className={b.stakeText}>{s.text}</span>
+            </div>
+          ))}
+          <div className={b.stakeRatio}>
+            <span className={b.stakeFig}>3×</span>
+            <span className={b.stakeBars} aria-hidden="true">
+              <span className={b.stakeUnit} />
+              <span className={`${b.stakeUnit} ${b.stakeUnitThree}`} />
+            </span>
+            <span className={b.stakeText}>the risk for Black mothers</span>
+          </div>
+        </div>
+        <p className={b.stakeSource}>A dangerous, under-supported window. <b>Figures from the project brief.</b></p>
+      </div>
+    </section>
+  )
+}
+
+/* ── THE SPEC ───────────────────────────────────────────────────────────────
+   Both tracks measure the same total width; only the subdivision differs. Three
+   solid blocks against five hollow ones reads, before a single word of it is
+   read, as three things to solve and five to choose among. Her wording
+   throughout — the required areas keep their names and their one-line
+   definitions, the optional features keep theirs. */
+const REQUIRED = [
+  ['Information gathering', 'Medical info, contextual info, the birth narrative, and feelings.'],
+  ['Meaning making', 'Processing through positive retelling, without re-traumatizing.'],
+  ['App administration', 'Profile and onboarding, plus nudges that prompt capture.'],
+]
+const OPTIONAL = ['Baby Book', 'Trackers', 'Birth Plan', 'Sharing', 'Partner Participation']
+
+function Spec() {
+  return (
+    <section className={`${sys.measure} ${b.briefBlock}`} aria-label="What the brief required and provided">
+      <div className={`${sys.colsFull} ${sys.up}`}>
+        <div className={b.specTrack}>
+          <p className={b.specLabel}>Required</p>
+          <ul className={b.specSolid}>
+            {REQUIRED.map(([name, def]) => (
+              <li key={name}>
+                <b>{name}</b>
+                <span>{def}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div className={b.specTrack}>
+          <p className={b.specLabel}>Provided</p>
+          <ul className={b.specHollow}>
+            {OPTIONAL.map((name) => <li key={name}>{name}</li>)}
+          </ul>
+          <p className={b.specGiven}>The name, Birth Story, and the core concept.</p>
+        </div>
+      </div>
+    </section>
+  )
+}
+
 function Brief() {
-  const birth = birthPhoto('fog', 2400, { grayscale: true }) // Saul Siguenza — exhausted parent + newborn, full-bleed duotone
   return (
     <FieldSection
       id="brief" num="01" crumb="brief" when="Week 1" wide
@@ -61,80 +142,48 @@ function Brief() {
       statement={<>Pitch a concept for Myana’s companion micro-app that helps parents <b>document and reflect</b> on their birth experience.</>}
       statementLong
     >
-      {/* the chapter opens cinematic — the context photo runs edge to edge in
-          the identity's teal-ink duotone (the squint layer) */}
-      <Bleed
-        src={birth.src}
-        byline={birth.byline}
-        alt="A parent rests cheek to cheek with a swaddled newborn in the hours just after birth."
-        cap="A parent and newborn in the hours after birth."
-        focus="center 42%"
-      />
-
-      <Split
-        text={
+      {/* WHO ASKED. The full-bleed stock photograph that used to open the
+          chapter is gone: she does not want full bleeds, and it was a licensed
+          Pexels image carrying the one chapter that contains none of her own
+          work. The Myana reference loses its border and becomes an inline
+          attribution — a card around a link was furniture, not information. */}
+      <div className={`${sys.measure} ${b.briefBlock}`}>
+        <div className={`${sys.colsProse} ${sys.up}`}>
           <Prose>
             Myana already supports parents through pregnancy and postpartum. Its researchers saw that
             the birth itself still went undocumented and unprocessed, and brought that gap to our
             graduate studio to conceptualize.
           </Prose>
-        }
-      >
-        <a
-          className={`${b.myanaRef} ${sys.up}`}
-          href="https://apps.apple.com/us/app/myana-pa/id6752866138"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <span className={b.myanaTag}>The app it companions</span>
-          <span className={b.myanaMain}>
-            <img className={b.myanaIcon} src="/images/birthstory/myana-icon.jpg" alt="Myana app icon" loading="lazy" draggable="false" />
+          <a
+            className={b.myanaRef}
+            href="https://apps.apple.com/us/app/myana-pa/id6752866138"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <img className={b.myanaIcon} src="/images/birthstory/myana-icon.jpg" alt="" loading="lazy" draggable="false" />
             <span className={b.myanaText}>
-              <span className={b.myanaName}>Myana</span>
-              <span className={b.myanaDesc}>Postpartum and parenting support from the University of Pittsburgh.</span>
+              <span className={b.myanaTag}>The app it companions</span>
+              <span className={b.myanaName}>Myana <span className={b.myanaLink}>View on the App Store&nbsp;↗</span></span>
             </span>
-          </span>
-          <span className={b.myanaLink}>View on the App Store ↗</span>
-        </a>
-      </Split>
-
-      <div className={`${b.askBand} ${sys.up}`}>
-        <div className={b.askCols}>
-          {/* Required + Provided pulled from the course ask documents (the
-              requirements spreadsheet + project brief), in their terms */}
-          <div className={b.askCol}>
-            <p className={b.specLabel}>Required</p>
-            <ul className={b.specList}>
-              <li><b>Information gathering.</b> Medical info, contextual info, the birth narrative, and feelings.</li>
-              <li><b>Meaning making.</b> Processing through positive retelling, without re-traumatizing.</li>
-              <li><b>App administration.</b> Profile and onboarding, plus nudges that prompt capture.</li>
-            </ul>
-          </div>
-          <div className={b.askCol}>
-            <p className={b.specLabel}>Provided</p>
-            <ul className={b.specList}>
-              <li>The name, Birth Story, and the core concept.</li>
-              <li>
-                Five optional features to choose from:
-                <ul className={b.specSubList}>
-                  <li>Baby Book</li>
-                  <li>Trackers</li>
-                  <li>Birth Plan</li>
-                  <li>Sharing</li>
-                  <li>Partner Participation</li>
-                </ul>
-              </li>
-            </ul>
-          </div>
-          <div className={`${b.askCol} ${b.stakesCol}`}>
-            <p className={b.specLabel}>The stakes</p>
-            <div className={b.stakeRow}><span className={b.stakeFig}>80%</span><span className={b.stakeText}>of U.S. maternal deaths are preventable</span></div>
-            <div className={b.stakeRow}><span className={b.stakeFig}>65%</span><span className={b.stakeText}>happen after delivery</span></div>
-            <div className={b.stakeRow}><span className={b.stakeFig}>3×</span><span className={b.stakeText}>the risk for Black mothers</span></div>
-            <p className={b.stakeSource}>A dangerous, under-supported window. <b>Figures from the project brief.</b></p>
-          </div>
+          </a>
         </div>
       </div>
+
+      {/* THE STAKES — the reason the brief exists, so it comes before the brief
+          itself. Three figures that used to sit as a stat column now read as
+          what they are: proportions. Cover the words and the shape still says
+          "most of it is preventable, most of it happens after," which is the
+          whole argument for a product that lives in the days after a birth.
+          Deliberately sober — thin rules, small type, one colour. The subject
+          is people dying. */}
+      <Stakes />
+
+      {/* THE SPEC — what she was handed. Three obligations against five
+          choices, both tracks measuring the same total width, so the
+          subdivision IS the information: fewer and heavier on top, more and
+          lighter below. It also sets up Architecture's kept / added / cut,
+          which is the payoff for the choosing this chapter only poses. */}
+      <Spec />
 
       {/* Round 4 trail cuts: the night-nanny elaboration and closing line
           demoted out (her standing cut-not-paraphrase permission); the review
