@@ -2,79 +2,73 @@
 
 ## ▶ RESUME HERE (2026-08-04)
 
-**What we're doing:** putting the Birth Story case study's PROCESS half onto one page-wide
-grammar at the parent route `/projects/birthstory-care-pod`. The product act up top is
-**blessed and done** — refine the parent route, never rebuild. Governing rule: **depth =
-content (her copy verbatim, never paraphrase) · simplicity = pacing.**
+**What we're doing:** the Birth Story case study at `/projects/birthstory-care-pod`. The product
+act up top is **blessed and done** — refine, never rebuild. The PROCESS half is being rebuilt
+**punchline-first against her own hiring-manager research**, which is the correction that ended
+three rejected passes.
 
 ### ★ THE STANDARDS THAT NOW GOVERN
 
-1. **THE SILHOUETTE TEST (N40)** — cover the words; if the shape still says nothing, it is a
-   paragraph in a costume and it goes back. Run it on INHERITED components, not only new ones.
-   That mistake is what got Research rejected.
-2. **Content with STRUCTURE becomes a component** (a set, sequence, comparison, proportion,
-   before/after). A single claim, or her voice doing something only prose can do, stays as
-   short type. Budget: no prose block over ~60 words survives the test above.
-3. **THE MEASURE** — one 12-column grid (`sys.measure` + `.colsReading` / `.colsArtifact` /
+1. **THE EDITORIAL QUESTION COMES FIRST (N45).** Before any layout: what is worth showing? Three
+   passes were rejected because each answered a *presentation* problem when the real problem was
+   that too much was on the page. **Her research settles it** — read
+   `docs/deck-system/research/hm-rubrics-formats.md` and the **Question Map** in
+   `docs/DECK_SYSTEM.md` before proposing structure.
+2. **THE RUBRIC ORDER.** Decision rationale (the why) · role clarity (ambiguity is a stated
+   *disqualifier*) · impact with evidence. **Process ranks FOURTH**, "as evidence of thinking, not
+   documentation volume." The #2 failure mode everywhere is *process dump / over-contextualizing*.
+   Cold open = the punchline, Q7 first.
+3. **OUTCOME IS THE VISUAL SPEC (N44):** `statement · one paragraph · one voice · one artifact,
+   big`. When a section feels "crowded," **count its micro-labels and hairline rules** against
+   Outcome's (4 and 1) before redesigning anything. Repetition reads as calm; designing for variety
+   IS the crowding.
+4. **THE SILHOUETTE TEST (N40)** — cover the words; if the shape still says nothing, it is a
+   paragraph in a costume. Run it on INHERITED components, not only new ones.
+5. **THE MEASURE** — one 12-column grid (`sys.measure` + `.colsReading` / `.colsArtifact` /
    `.colsFull` / `.colsInset` / `.colsProse`). Every shape is a SPAN against it.
-4. **Her lead grant (N38):** curation, order and format are Claude's call. **The words are
-   always hers** — restructure freely, never paraphrase; mark `[LORIN TO WRITE]` instead.
-5. **No full-bleed images (N39).** Gradient and teal grounds for the exhale moments.
+6. **Her lead grant (N38/N45):** curation, order, format AND content selection are Claude's call —
+   she has said explicitly to change anything, including retiring her own earlier ideas. **The words
+   are always hers**: restructure and cut freely, never paraphrase; mark `[LORIN TO WRITE]` instead.
+7. **No full-bleed images (N39).** Gradient and teal grounds for the exhale moments.
 
 ### ✅ SHIPPED THIS SESSION
 
-- **Product act reviewed and closed out (N34, N37)** — her verdict: *“much happier… the overall
-  is good.”* Fixed the chapter spine slicing every row's heading mid-glyph (`e32d130`), brought
-  the aria's outline reveal above the AA floor, stripped ALL text animation so motion belongs to
-  the demo alone (N36, `b7dec77`), and cut the duplicate device captions so every row reads one
-  shape (`d89b676`).
-- **THE MEASURE + 01 BRIEF** (`cd06138`, `4018a3e`) — Brief rebuilt twice. The winning move:
-  **a brief is a DOCUMENT you take in at once, not a sequence of bands.** One composed sheet,
-  words left and the brief itself (THE SPEC + THE STAKES) as the artifact plane right.
-  1830px → **961px**, nothing of hers cut.
-- **02 RESEARCH first pass** (`dfbb4ff`) — promoted THE THREE MOMENTS out of a buried aside
-  (it is the chapter's own claim), cut the second stock photo, put the group call in a real row.
-  **Then rejected by her** — see the next move.
+- **02 merged, then subtracted, then scrapped and rebuilt** (`7113f5b` → `0a2e3f1` → `f009eb8`).
+  The only pass that landed was the last one, and only because it stopped designing and read her
+  research. Full account in **N43 · N44 · N45** below.
+- **Q7 ANSWERED** (`bc9ddc6`) — the impact beat, owed since July and the highest-weighted item on
+  the rubric. Her words, verbatim, in `docs/case-study-editorial/BIRTHSTORY-interview.md`.
+- **01 THE FINDING** — the process half now opens on her Q7 sentence, with the evidence beneath it
+  (the brief called sharing and partner participation optional; Care Pod shipped as one of five
+  tabs). 3 micro-labels, 2 rules — fewer than Outcome.
+- **02 ARCHITECTURE** — one statement, one artifact: the 4→0 collapse aria, built this session.
+- **CUT:** the whole Brief chapter, the stat panel, the spec, the scoping tally, the design
+  principles, the synthesis grid, the three moments, and the simulated chat card.
+- **Two real bugs fixed:** the chapter spine blanked on any chapter taller than ~3,900px
+  (unreachable observer thresholds — now measures visible pixels), and a sticky frame whose stage
+  measured zero height.
 
-### ▶ NEXT MOVE — 03 ITERATION (contain the crit-wall bleed), THEN 04 IDENTITY
+### ▶ NEXT MOVE — Q3, HER ROLE
 
-02 Research & Architecture is merged, cut and shipped (N43 below — including the
-silhouette verdicts on every block, and the two things in it that are hers to call:
-the 71-word Insight in the research row, and the scoping tally's unclassified fifth
-feature). The spine now reads 01 Brief · 02 Research & Architecture · 03 Iteration ·
-04 Identity · 05 Outcome, and the numbers agree with the bar for the first time.
+**Rank 2 on the rubric and a named disqualifier**, currently one row inside a six-row metadata
+block: *"My partner Michael and I co-led research and information architecture. I led UX/UI, visual
+identity, and UX writing."* Good, honest sentence doing quiet work in a list. It needs to be
+prominent and unmissable.
 
-Next: **03 Iteration** — nine artifacts, the most evidence of her actual work on the
-page, now a numbered chapter for the first time. Contain the crit-wall bleed (N39).
-Then 04 Identity (spread-led) → 05 Outcome → one finishing pass page-wide. **Delete
-the `/layouts` route** once the grammar is proven.
-
-### ✅ DONE — MERGE RESEARCH + ARCHITECTURE INTO ONE CHAPTER (N42)
-
-Her call, and it is right. Research is ~95% type; its “artifacts” are text in boxes. Architecture
-holds the page's two best drawings. **The synthesis matrix's “what we did” column and
-Architecture's “what shipped” are the same claim told twice** — once as a 12-cell text grid, once
-as a diagram. Merged, the findings become ANNOTATIONS on the drawings that already prove them:
-the text dies and the drawing carries it.
-
-The merged **02 Research & Architecture**: the three moments (keeps) → the group call (keeps) →
-**THE ARIA**, the 4→0 collapse (IA v1 → the turn → what shipped), the process half's one earned
-pin → principles close it. **The merge is also a CUT** — retire the synthesis grid, and
-Architecture’s “shift” panel, two “moves” cards and scoping paragraph are redundant with the
-diagrams. Merging without cutting just makes one very long chapter.
-
-**It frees a chapter number:** new spine = 01 Brief · 02 Research & Architecture · **03
-Iteration** · 04 Identity · 05 Outcome. Iteration holds NINE artifacts, the most evidence of her
-actual work on the page, and is currently an unnumbered subsection. Also fixes the live bug where
-Voice is authored `num="05"` / Outcome `num="06"` while the spine relabels them 04 and 05.
-
-**Then:** 03 Iteration (contain the crit-wall bleed) → 04 Identity (spread-led) → 05 Outcome →
-one finishing pass page-wide. **Delete the `/layouts` route** once the grammar is proven.
+**Then, in rubric order — not chapter order:**
+1. **03 Iteration** — the evidence-became-decisions beat (rank 4, and #1 for UXR specifically).
+   Still 10 labels: three rounds each carrying two labelled voice-tracks under three *different*
+   names, and Round 1's quote sits inside the stage while Rounds 2–3 put it in the column. One
+   convention, three times. Contain the crit-wall bleed (N39) while there.
+2. **Q6 + Q8** — what went wrong, what she'd do differently. Both exist, both buried. Her research
+   marks these **mandatory, never cut** — perfect-project narratives read as not credible.
+3. **The "reclaim" beat** in 04 Identity — the clearest evidence of research changing her mind.
+4. **One finishing pass page-wide**, then **delete the `/layouts` route**.
 
 **⚠︎ Hers, not mine:** `bs-book-curate.png` has a device bezel baked into the export, so the Book
 row shows a frame within a frame. Needs a screen-only re-export from Figma.
 
-**Map:** every note she has sent = the `⟢ OPEN NOTES LEDGER` below (N1–N42) · the full curation
+**Map:** every note she has sent = the `⟢ OPEN NOTES LEDGER` below (N1–N45) · the full curation
 plan + component set = `★ THE CURATION PLAN` below · dev server on **:3001** · eyes-on
 verification + the layout tripwires that cost real time = project memory.
 
