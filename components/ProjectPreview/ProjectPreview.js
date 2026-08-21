@@ -334,7 +334,7 @@ export default function ProjectPreview({
               <path className={styles.c3} d="M14.5 10V14.5H10" />
               <path className={styles.c4} d="M1.5 10V14.5H6" />
             </svg>
-            See the full project
+            Open project
           </button>
         )}
         {href && !comingSoon && !canExpand && (

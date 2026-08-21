@@ -1,7 +1,7 @@
 'use client'
 
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
-import { gsap } from '@/lib/gsap'
+import { gsap, ScrollTrigger } from '@/lib/gsap'
 import styles from './ProjectSheet.module.css'
 
 /**
@@ -28,42 +28,56 @@ import styles from './ProjectSheet.module.css'
    shape is continuous across the expand. */
 const BODY_RADIUS = 16
 const VB_W = 1600
-/* Tab height as a fraction of width. FileStack: 64 tall in a 1600-wide
-   viewBox at 3 slots = one slot's width x 0.12, i.e. 0.04 of the whole. */
-const TAB_H_RATIO = 0.04
-const TAB_GAP = 40        /* clears two junction sweeps, as her slot padding does */
-const TAB_PAD_X = 22
-const TAB_RAD = 14
-const TAB_JOIN = 16
+/* Side tabs: a fixed band each, stacked down the left edge. Fixed rather
+   than viewport-scaled — at 2000px a width-scaled tab grew to 76px tall,
+   which is what made a row of them read as teeth. */
+const TAB_H = 54
+const TAB_TOP = 96        /* clears the body's top corner radius */
+const TAB_GAP = 18        /* also caps the junction sweeps between neighbours */
+const TAB_PAD_X = 20
+const TAB_RAD = 12
+const TAB_JOIN = 14
 /* Below this the tab row can't hold three labels. */
 const NARROW = 720
 
 const lerp = (a, b, t) => a + (b - a) * t
 
-/** One body, N tabs on top. Tabs must be ordered left to right. */
-function folderPath(W, H, tabs, r, flushBottom) {
-  const bodyTop = Math.max(...tabs.map(t => t.h), 0)
+/**
+ * One body with N tabs down its LEFT edge — the folder turned on its side,
+ * the way index dividers sit in a binder.
+ *
+ * Three tabs along the top edge read as teeth: three tall shapes in a row
+ * with deep junction sweeps between them is a comb, not a folder. Down the
+ * side they read as what they are, a contents list, and the top edge is
+ * freed for the close control and the site nav behind it.
+ *
+ * Drawn clockwise from the body's top-left. `tabs` must be ordered top to
+ * bottom; the left edge is traversed upward, so they are consumed in
+ * reverse.
+ */
+function folderPath(W, H, bodyLeft, tabs, r, flushBottom) {
   const br = flushBottom ? 0 : r
-  const d = [`M ${r} ${bodyTop}`]
-  tabs.forEach(t => {
-    const top = bodyTop - t.h
+  const d = [`M ${bodyLeft + r} 0`, `L ${W - r} 0`, `Q ${W} 0 ${W} ${r}`]
+  d.push(
+    `L ${W} ${H - br}`,
+    br ? `Q ${W} ${H} ${W - br} ${H}` : `L ${W} ${H}`,
+    `L ${bodyLeft + br} ${H}`,
+    br ? `Q ${bodyLeft} ${H} ${bodyLeft} ${H - br}` : `L ${bodyLeft} ${H}`,
+  )
+  ;[...tabs].reverse().forEach(t => {
+    const x = bodyLeft - t.w          /* outer edge of the tab */
     d.push(
-      `L ${t.l - t.j} ${bodyTop}`,
-      `Q ${t.l} ${bodyTop} ${t.l} ${bodyTop - t.j}`,
-      `L ${t.l} ${top + t.rad}`,
-      `Q ${t.l} ${top} ${t.l + t.rad} ${top}`,
-      `L ${t.r - t.rad} ${top}`,
-      `Q ${t.r} ${top} ${t.r} ${top + t.rad}`,
-      `L ${t.r} ${bodyTop - t.j}`,
-      `Q ${t.r} ${bodyTop} ${t.r + t.j} ${bodyTop}`,
+      `L ${bodyLeft} ${t.b + t.j}`,
+      `Q ${bodyLeft} ${t.b} ${bodyLeft - t.j} ${t.b}`,
+      `L ${x + t.rad} ${t.b}`,
+      `Q ${x} ${t.b} ${x} ${t.b - t.rad}`,
+      `L ${x} ${t.t + t.rad}`,
+      `Q ${x} ${t.t} ${x + t.rad} ${t.t}`,
+      `L ${bodyLeft - t.j} ${t.t}`,
+      `Q ${bodyLeft} ${t.t} ${bodyLeft} ${t.t - t.j}`,
     )
   })
-  d.push(
-    `L ${W - r} ${bodyTop}`, `Q ${W} ${bodyTop} ${W} ${bodyTop + r}`,
-    `L ${W} ${H - br}`, br ? `Q ${W} ${H} ${W - br} ${H}` : `L ${W} ${H}`,
-    `L ${br} ${H}`, br ? `Q 0 ${H} 0 ${H - br}` : `L 0 ${H}`,
-    `L 0 ${bodyTop + r}`, `Q 0 ${bodyTop} ${r} ${bodyTop}`, 'Z',
-  )
+  d.push(`L ${bodyLeft} ${r}`, `Q ${bodyLeft} 0 ${bodyLeft + r} 0`, 'Z')
   return d.join(' ')
 }
 
@@ -111,7 +125,7 @@ export default function ProjectSheet({
   /* Inset — sides and top only. The folder runs off the bottom edge, so
      the reading area isn't cut short by a gap under a scrolling region. */
   const insetRect = () => {
-    const sx = Math.max(20, Math.min(56, window.innerWidth * 0.035))
+    const sx = Math.max(16, Math.min(40, window.innerWidth * 0.022))
     const sy = Math.max(16, Math.min(40, window.innerHeight * 0.03))
     return {
       left: sx, top: sy,
@@ -128,85 +142,73 @@ export default function ProjectSheet({
   }, [])
 
   /**
-   * Natural tab widths, measured from the rendered labels.
+   * Tab column width, measured from the widest label, and each tab's
+   * vertical band. One shared width so the outer edge is a straight line —
+   * ragged tabs would read as an accident.
    *
-   * Below NARROW the labels are hidden by CSS and the tabs carry only
-   * their numeral — three full labels lay out ~780px wide, which put two
-   * of the three off a phone screen entirely.
+   * Below NARROW the labels are hidden by CSS and the tabs keep only their
+   * numeral, so the column collapses to a slim gutter.
    */
   const measureTabs = useCallback(W => {
-    const row = tabsRef.current
-    if (!row) return
-    const kids = [...row.children]
+    const col = tabsRef.current
+    if (!col) return
+    const kids = [...col.children]
     kids.forEach(b => { b.style.width = ''; b.style.height = '' })
-    const { left, right } = contentBox(W)
     const narrow = W <= NARROW
-    const gap = narrow ? 14 : TAB_GAP
-    let x = left
-    targetsRef.current = kids.map(b => {
-      const natural = Math.ceil(b.scrollWidth) + TAB_PAD_X * 2
-      /* Never let the row exceed the content column. */
-      const cap = (right - left - gap * (kids.length - 1)) / kids.length
-      const w = narrow ? Math.max(52, Math.min(natural, cap)) : natural
-      const t = { l: x, r: x + w }
-      x += w + gap
-      return t
-    })
-  }, [contentBox])
+    const widest = Math.max(...kids.map(b => Math.ceil(b.scrollWidth)))
+    const w = narrow ? 46 : Math.min(widest + TAB_PAD_X * 2, Math.round(W * 0.22))
+    let y = TAB_TOP
+    targetsRef.current = {
+      w,
+      bands: kids.map(() => {
+        const band = { t: y, b: y + TAB_H }
+        y += TAB_H + TAB_GAP
+        return band
+      }),
+    }
+  }, [])
 
   /**
    * @param t 0 = the folder as it sits in the stack, 1 = fully open.
    */
-  const paint = useCallback((t, W, H, originSlots, activeIndex) => {
+  const paint = useCallback((t, W, H) => {
     const targets = targetsRef.current
     if (!targets || !svgRef.current) return
-    const tabH = W * TAB_H_RATIO
 
-    const tabs = targets.map((target, i) => {
-      /* Only the active tab exists at t=0; siblings grow out of their own
-         slots, so the folder visibly sprouts the rest of its tabs. */
-      const grown = i === activeIndex ? 1 : t
-      const s = originSlots[i]
-      const mid = (s.l + s.r) / 2
-      const l0 = lerp(mid, s.l, grown) * W
-      const r0 = lerp(mid, s.r, grown) * W
-      const l = lerp(l0, target.l, t)
-      const r = lerp(r0, target.r, t)
-      const h = tabH * grown
-      /* Radii must fit the tab, or the path folds back through itself. */
-      const half = Math.max(0, (r - l) / 2.5)
+    /* The tabs sprout from the body's edge as the sheet lands. The origin
+       folder's own tab sits on the TOP edge, so there is no honest lerp
+       between the two topologies — the rect FLIP carries the continuity
+       and the side tabs grow out of the edge they belong to. */
+    const colW = targets.w * t
+    const bodyLeft = colW
+    const tabs = targets.bands.map(band => {
+      const h = band.b - band.t
+      const w = Math.max(0, colW)
+      const fit = Math.min(TAB_RAD, w / 2.5, h / 2.5)
       return {
-        l, r, h,
-        rad: Math.min(lerp(s.rad * W, TAB_RAD, t) * grown, half, h / 2),
-        j: Math.min(lerp(s.j * W, TAB_JOIN, t) * grown, half, h * 0.4),
+        t: band.t, b: band.b, w,
+        rad: fit,
+        j: Math.min(TAB_JOIN, w / 2, TAB_GAP / 2, h * 0.4),
       }
     })
-    /* Neighbouring junction sweeps share the gap between them. */
-    for (let i = 0; i < tabs.length - 1; i++) {
-      const cap = Math.max(0, (tabs[i + 1].l - tabs[i].r) / 2)
-      tabs[i].j = Math.min(tabs[i].j, cap)
-      tabs[i + 1].j = Math.min(tabs[i + 1].j, cap)
-    }
 
     const r = lerp(BODY_RADIUS * (W / VB_W), 20, t)
-    const d = folderPath(W, H, tabs, r, t > 0.5)
+    const d = folderPath(W, H, bodyLeft, tabs, r, t > 0.5)
     svgRef.current.setAttribute('viewBox', `0 0 ${W} ${H}`)
     fillRef.current.setAttribute('d', d)
     strokeRef.current.setAttribute('d', d)
 
-    tabsRef.current.style.height = `${tabH}px`
-    bodyRef.current.style.top = `${tabH}px`
-    if (closeRef.current) {
-      closeRef.current.style.top = `${tabH + 38}px`
-      closeRef.current.style.right = `${W - contentBox(W).right}px`
-    }
+    tabsRef.current.style.width = `${colW}px`
+    bodyRef.current.style.left = `${bodyLeft}px`
+    if (closeRef.current) closeRef.current.style.opacity = t > 0.9 ? '' : '0'
     ;[...tabsRef.current.children].forEach((b, i) => {
-      b.style.left = `${tabs[i].l}px`
-      b.style.width = `${tabs[i].r - tabs[i].l}px`
-      b.style.height = `${tabs[i].h}px`
-      b.style.opacity = i === activeIndex ? '' : String(t)
+      const band = targets.bands[i]
+      b.style.top = `${band.t}px`
+      b.style.height = `${band.b - band.t}px`
+      b.style.width = `${colW}px`
+      b.style.opacity = String(t)
     })
-  }, [contentBox])
+  }, [])
 
   /* ── open / close ─────────────────────────────────────── */
   useLayoutEffect(() => {
@@ -214,9 +216,7 @@ export default function ProjectSheet({
     const sheet = sheetRef.current
     const origin = getOrigin?.()
     const from = origin?.el?.getBoundingClientRect()
-    const activeIndex = origin?.index ?? 0
-    const slots = origin?.slots || []
-    if (!sheet || !from || !slots.length) return
+    if (!sheet || !from) return
 
     const to = insetRect()
     const setRect = r => {
@@ -233,13 +233,13 @@ export default function ProjectSheet({
     const land = () => { setLanded(true); closeRef.current?.focus() }
 
     if (prefersReduced()) {
-      paint(1, to.width, to.height, slots, activeIndex)
+      paint(1, to.width, to.height)
       land()
       return
     }
 
     setRect(from)
-    paint(0, from.width, from.height, slots, activeIndex)
+    paint(0, from.width, from.height)
 
     const state = { t: 0, w: from.width, h: from.height, x: from.left, y: from.top }
     const tween = gsap.to(state, {
@@ -248,7 +248,7 @@ export default function ProjectSheet({
       ease: 'power1.inOut',
       onUpdate: () => {
         setRect({ left: state.x, top: state.y, width: state.w, height: state.h })
-        paint(state.t, state.w, state.h, slots, activeIndex)
+        paint(state.t, state.w, state.h)
       },
       onComplete: land,
     })
@@ -259,8 +259,6 @@ export default function ProjectSheet({
     const sheet = sheetRef.current
     const origin = getOrigin?.()
     const to = origin?.el?.getBoundingClientRect()
-    const activeIndex = origin?.index ?? 0
-    const slots = origin?.slots || []
     setLanded(false)
 
     if (!sheet || !to || prefersReduced()) { onClose?.(); return }
@@ -276,7 +274,7 @@ export default function ProjectSheet({
         sheet.style.top = `${state.y}px`
         sheet.style.width = `${state.w}px`
         sheet.style.height = `${state.h}px`
-        paint(state.t, state.w, state.h, slots, activeIndex)
+        paint(state.t, state.w, state.h)
       },
       onComplete: () => onClose?.(),
     })
@@ -295,11 +293,31 @@ export default function ProjectSheet({
       if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus() }
       else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus() }
     }
-    const prev = document.body.style.overflow
+    /* THE SCROLL LOCK NEEDS BOTH HALVES.
+     *
+     * 1. The homepage runs `ScrollTrigger.normalizeScroll(true)` (set in
+     *    HeroScatter). That intercepts wheel and touch at the document and
+     *    drives the page programmatically, which both steals the wheel
+     *    before it can reach this sheet AND scrolls straight past
+     *    `overflow: hidden`. It has to be suspended while the sheet is up.
+     * 2. globals.css sets `overflow-x: clip` on html, and a root whose
+     *    overflow is not fully `visible` stops propagating the body's
+     *    overflow to the viewport — so locking `body` alone does nothing.
+     *    Lock the root.
+     */
+    const normalizer = ScrollTrigger.normalizeScroll()
+    normalizer?.disable()
+
+    const root = document.documentElement
+    const prevRoot = root.style.overflow
+    const prevBody = document.body.style.overflow
+    root.style.overflow = 'hidden'
     document.body.style.overflow = 'hidden'
     document.addEventListener('keydown', onKey, true)
     return () => {
-      document.body.style.overflow = prev
+      normalizer?.enable()
+      root.style.overflow = prevRoot
+      document.body.style.overflow = prevBody
       document.removeEventListener('keydown', onKey, true)
     }
   }, [open, requestClose])
@@ -327,7 +345,7 @@ export default function ProjectSheet({
       sheet.style.left = `${r.left}px`; sheet.style.top = `${r.top}px`
       sheet.style.width = `${r.width}px`; sheet.style.height = `${r.height}px`
       measureTabs(r.width)
-      paint(1, r.width, r.height, origin?.slots || [], origin?.index ?? 0)
+      paint(1, r.width, r.height)
     }
     window.addEventListener('resize', onResize)
     return () => window.removeEventListener('resize', onResize)

@@ -13,7 +13,7 @@
   /* Above the site nav (100), below the skip link (1000), which must stay
      reachable. */
   z-index: 400;
-  background: rgba(20, 19, 17, 0.45);
+  background: rgba(20, 19, 17, 0.72);
   opacity: 0;
   transition: opacity var(--motion-medium) var(--ease-in-out);
 }
@@ -49,7 +49,7 @@
 }
 
 /* ===========================================
-   TABS — the folder's own tabs, and the sheet's section nav. Absolutely
+   TABS — down the LEFT edge, the folder turned on its side. Absolutely
    positioned because their bounds are driven by the same numbers that
    draw the silhouette; CSS layout can't be allowed to disagree with the
    path.
@@ -59,25 +59,20 @@
   position: absolute;
   top: 0;
   left: 0;
-  right: 0;
+  bottom: 0;
   z-index: 3;
-  opacity: 0;
-  transition: opacity var(--motion-fast) var(--ease-out);
-}
-
-.sheet[data-landed='true'] .tabs {
-  opacity: 1;
 }
 
 .tab {
   position: absolute;
-  top: 0;
+  left: 0;
   display: inline-flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 9px;
   box-sizing: border-box;
-  padding: 0 12px;
+  /* Extra right padding keeps the label off the body edge the tab meets. */
+  padding: 0 18px 0 20px;
   background: transparent;
   border: 0;
   cursor: pointer;
@@ -90,6 +85,7 @@
   opacity: 0.5;
   white-space: nowrap;
   overflow: hidden;
+  text-align: left;
   transition: opacity 320ms var(--ease-out);
 }
 
@@ -117,13 +113,16 @@
 }
 
 /* ===========================================
-   CLOSE — registered to the content column's right edge, level with the
-   masthead, so it reads as part of the document rather than floating.
+   CLOSE — the sheet's own top-right corner, where an overlay's close
+   lives. Registered to the content column it read as adrift in the
+   middle of the screen.
    =========================================== */
 
 .close {
   position: absolute;
   z-index: 4;
+  top: 22px;
+  right: 22px;
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
@@ -194,7 +193,7 @@
 
 .body {
   position: absolute;
-  left: 0;
+  top: 0;
   right: 0;
   bottom: 0;
   overflow-y: auto;
@@ -491,6 +490,7 @@
 
   .tab {
     gap: 0;
+    justify-content: center;
     padding: 0 6px;
   }
 }

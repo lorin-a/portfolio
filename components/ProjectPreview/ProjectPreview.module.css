@@ -375,6 +375,11 @@
    =========================================== */
 
 .expand {
+  /* The text column is a flex column, so a stretched child ran the full
+     column width — 560px for a 20-character label. */
+  align-self: flex-start;
+  width: fit-content;
+  margin-top: var(--space-sm);
   display: inline-flex;
   align-items: center;
   gap: 0.55rem;
@@ -385,7 +390,7 @@
   border: 1.5px solid var(--color-ink);
   border-radius: var(--radius-pill);
   font-family: var(--font-body);
-  font-size: 0.75rem;
+  font-size: 0.8125rem;
   font-weight: 600;
   letter-spacing: 0.06em;
   text-transform: uppercase;
