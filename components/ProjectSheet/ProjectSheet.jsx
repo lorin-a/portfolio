@@ -7,78 +7,68 @@ import styles from './ProjectSheet.module.css'
 /**
  * ProjectSheet — the folder, opened.
  *
- * The stack's active card grows into a single folder that carries a tab
- * for every contribution. Those tabs are the sheet's section nav: they
- * scroll to their section and follow the reader's position, so the tabs
- * you grazed with become the tabs you navigate depth with.
+ * A tab is identity, not navigation. On a real folder it exists so you can
+ * find the folder while it is filed among others, and it carries the
+ * folder's name. One folder has one tab. Several tabs mean several
+ * dividers, which is to say several documents — which is why every
+ * multi-tab version of this read wrong: along the top edge they made a
+ * comb, down the side they made three files sharing one body. The sections
+ * are a contents list, and a contents list is not a tab.
  *
- * Geometry is FileStack's, generalised. `buildSilhouettePath` draws one
- * tab at a fixed x-slot; `folderPath` here draws N tabs at arbitrary
- * bounds, in real pixel space rather than a stretched viewBox — a
- * 1600x1100 viewBox scaled to screen aspect pulls every corner radius
- * and the tab height out of true.
+ * So: one tab, carrying the project's name, and the sections live as a
+ * sticky contents strip inside the body.
+ *
+ * One tab is also what makes the expansion honest. The card in the stack
+ * has one tab and the opened folder has one tab, so the silhouette
+ * genuinely morphs — same topology at both ends, every number lerped.
+ *
+ * Geometry is FileStack's, in real pixel space rather than a stretched
+ * viewBox: a 1600x1100 viewBox scaled to screen aspect pulls every corner
+ * radius and the tab height out of true.
  *
  * The sheet is INSET, not full-bleed. A folder that fills the whole
- * viewport has no room to be a folder: its tabs collide with the top
- * edge and its outline hugs the browser chrome, which reads as a
- * rendering fault rather than an object lifted out of the stack.
+ * viewport has no room to be a folder — its tab collides with the top edge
+ * and its outline hugs the browser chrome, which reads as a rendering
+ * fault rather than an object lifted out of the stack.
  */
 
-/* Body radius and tab proportion carried over from FileStack so the
-   shape is continuous across the expand. */
 const BODY_RADIUS = 16
 const VB_W = 1600
-/* Side tabs: a fixed band each, stacked down the left edge. Fixed rather
-   than viewport-scaled — at 2000px a width-scaled tab grew to 76px tall,
-   which is what made a row of them read as teeth. */
-const TAB_H = 54
-const TAB_TOP = 96        /* clears the body's top corner radius */
-const TAB_GAP = 18        /* also caps the junction sweeps between neighbours */
-const TAB_PAD_X = 20
+/* FileStack's tab is 64 tall in an 1100-tall viewBox. */
+const CARD_TAB_RATIO = 64 / 1100
+
+const TAB_H = 52
+const TAB_PAD_X = 24
 const TAB_RAD = 12
 const TAB_JOIN = 14
-/* Below this the tab row can't hold three labels. */
 const NARROW = 720
 
 const lerp = (a, b, t) => a + (b - a) * t
 
-/**
- * One body with N tabs down its LEFT edge — the folder turned on its side,
- * the way index dividers sit in a binder.
- *
- * Three tabs along the top edge read as teeth: three tall shapes in a row
- * with deep junction sweeps between them is a comb, not a folder. Down the
- * side they read as what they are, a contents list, and the top edge is
- * freed for the close control and the site nav behind it.
- *
- * Drawn clockwise from the body's top-left. `tabs` must be ordered top to
- * bottom; the left edge is traversed upward, so they are consumed in
- * reverse.
- */
-function folderPath(W, H, bodyLeft, tabs, r, flushBottom) {
+/** One body, one tab. Drawn clockwise from the tab's top-left. */
+function folderPath(W, H, tab, r, flushBottom) {
   const br = flushBottom ? 0 : r
-  const d = [`M ${bodyLeft + r} 0`, `L ${W - r} 0`, `Q ${W} 0 ${W} ${r}`]
-  d.push(
+  const { l, right, h, rad, j } = tab
+  return [
+    `M ${l + rad} 0`,
+    `L ${right - rad} 0`,
+    `Q ${right} 0 ${right} ${rad}`,
+    `L ${right} ${h - j}`,
+    `Q ${right} ${h} ${right + j} ${h}`,
+    `L ${W - r} ${h}`,
+    `Q ${W} ${h} ${W} ${h + r}`,
     `L ${W} ${H - br}`,
     br ? `Q ${W} ${H} ${W - br} ${H}` : `L ${W} ${H}`,
-    `L ${bodyLeft + br} ${H}`,
-    br ? `Q ${bodyLeft} ${H} ${bodyLeft} ${H - br}` : `L ${bodyLeft} ${H}`,
-  )
-  ;[...tabs].reverse().forEach(t => {
-    const x = bodyLeft - t.w          /* outer edge of the tab */
-    d.push(
-      `L ${bodyLeft} ${t.b + t.j}`,
-      `Q ${bodyLeft} ${t.b} ${bodyLeft - t.j} ${t.b}`,
-      `L ${x + t.rad} ${t.b}`,
-      `Q ${x} ${t.b} ${x} ${t.b - t.rad}`,
-      `L ${x} ${t.t + t.rad}`,
-      `Q ${x} ${t.t} ${x + t.rad} ${t.t}`,
-      `L ${bodyLeft - t.j} ${t.t}`,
-      `Q ${bodyLeft} ${t.t} ${bodyLeft} ${t.t - t.j}`,
-    )
-  })
-  d.push(`L ${bodyLeft} ${r}`, `Q ${bodyLeft} 0 ${bodyLeft + r} 0`, 'Z')
-  return d.join(' ')
+    `L ${br} ${H}`,
+    br ? `Q 0 ${H} 0 ${H - br}` : `L 0 ${H}`,
+    `L 0 ${h + r}`,
+    `Q 0 ${h} ${r} ${h}`,
+    `L ${l - j} ${h}`,
+    `Q ${l} ${h} ${l} ${h - j}`,
+    `L ${l} ${rad}`,
+    `Q ${l} 0 ${l + rad} 0`,
+    'Z',
+  ].join(' ')
 }
 
 function ExpandCorners({ inward = false }) {
@@ -100,6 +90,7 @@ export default function ProjectSheet({
   num,
   title,
   tagline,
+  tabLabel,
   facets = [],
   meta = [],
   statements = [],
@@ -110,20 +101,22 @@ export default function ProjectSheet({
   const svgRef = useRef(null)
   const fillRef = useRef(null)
   const strokeRef = useRef(null)
-  const tabsRef = useRef(null)
+  const tabRef = useRef(null)
   const bodyRef = useRef(null)
   const closeRef = useRef(null)
-  const targetsRef = useRef(null)
+  const tabWRef = useRef(0)
   const sectionsRef = useRef([])
   const [landed, setLanded] = useState(false)
   const [current, setCurrent] = useState(0)
+
+  const label = tabLabel || title
 
   const prefersReduced = () =>
     typeof window !== 'undefined' &&
     window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
-  /* Inset — sides and top only. The folder runs off the bottom edge, so
-     the reading area isn't cut short by a gap under a scrolling region. */
+  /* Sides and top only. The folder runs off the bottom edge, so the reading
+     area isn't cut short by a gap under a scrolling region. */
   const insetRect = () => {
     const sx = Math.max(16, Math.min(40, window.innerWidth * 0.022))
     const sy = Math.max(16, Math.min(40, window.innerHeight * 0.03))
@@ -134,89 +127,62 @@ export default function ProjectSheet({
     }
   }
 
-  /* Content column, so the tabs sit above the text rather than adrift. */
-  const contentBox = useCallback(W => {
+  /* The tab hangs off the content column's left edge, not the sheet's, so
+     it registers to the type below it instead of floating at the corner. */
+  const tabLeft = useCallback(W => {
     const col = Math.min(1024, W)
     const pad = Math.max(24, Math.min(48, W * 0.04))
-    return { left: (W - col) / 2 + pad, right: (W + col) / 2 - pad }
+    return Math.max(28, (W - col) / 2 + pad)
   }, [])
 
-  /**
-   * Tab column width, measured from the widest label, and each tab's
-   * vertical band. One shared width so the outer edge is a straight line —
-   * ragged tabs would read as an accident.
-   *
-   * Below NARROW the labels are hidden by CSS and the tabs keep only their
-   * numeral, so the column collapses to a slim gutter.
-   */
-  const measureTabs = useCallback(W => {
-    const col = tabsRef.current
-    if (!col) return
-    const kids = [...col.children]
-    kids.forEach(b => { b.style.width = ''; b.style.height = '' })
-    const narrow = W <= NARROW
-    const widest = Math.max(...kids.map(b => Math.ceil(b.scrollWidth)))
-    const w = narrow ? 46 : Math.min(widest + TAB_PAD_X * 2, Math.round(W * 0.22))
-    let y = TAB_TOP
-    targetsRef.current = {
-      w,
-      bands: kids.map(() => {
-        const band = { t: y, b: y + TAB_H }
-        y += TAB_H + TAB_GAP
-        return band
-      }),
+  /** Natural tab width, measured from its label once the sheet is shown. */
+  const measureTab = useCallback(W => {
+    const el = tabRef.current
+    if (!el) return
+    el.style.width = ''
+    el.style.height = ''
+    const natural = Math.ceil(el.scrollWidth) + TAB_PAD_X * 2
+    tabWRef.current = Math.max(120, Math.min(natural, Math.round(W * 0.42)))
+  }, [])
+
+  /** @param t 0 = the card as it sits in the stack, 1 = fully open. */
+  const paint = useCallback((t, W, H, slot) => {
+    if (!svgRef.current || !slot) return
+
+    const tabH = lerp(H * CARD_TAB_RATIO, TAB_H, t)
+    const x0 = tabLeft(W)
+    const l = lerp(slot.l * W, x0, t)
+    const right = lerp(slot.r * W, x0 + tabWRef.current, t)
+    /* Radii must fit the tab, or the path folds back through itself. */
+    const half = Math.max(0, (right - l) / 2.5)
+    const tab = {
+      l, right, h: tabH,
+      rad: Math.min(lerp(slot.rad * W, TAB_RAD, t), half, tabH / 2),
+      j: Math.min(lerp(slot.j * W, TAB_JOIN, t), half, tabH * 0.45),
     }
-  }, [])
-
-  /**
-   * @param t 0 = the folder as it sits in the stack, 1 = fully open.
-   */
-  const paint = useCallback((t, W, H) => {
-    const targets = targetsRef.current
-    if (!targets || !svgRef.current) return
-
-    /* The tabs sprout from the body's edge as the sheet lands. The origin
-       folder's own tab sits on the TOP edge, so there is no honest lerp
-       between the two topologies — the rect FLIP carries the continuity
-       and the side tabs grow out of the edge they belong to. */
-    const colW = targets.w * t
-    const bodyLeft = colW
-    const tabs = targets.bands.map(band => {
-      const h = band.b - band.t
-      const w = Math.max(0, colW)
-      const fit = Math.min(TAB_RAD, w / 2.5, h / 2.5)
-      return {
-        t: band.t, b: band.b, w,
-        rad: fit,
-        j: Math.min(TAB_JOIN, w / 2, TAB_GAP / 2, h * 0.4),
-      }
-    })
 
     const r = lerp(BODY_RADIUS * (W / VB_W), 20, t)
-    const d = folderPath(W, H, bodyLeft, tabs, r, t > 0.5)
+    const d = folderPath(W, H, tab, r, t > 0.5)
     svgRef.current.setAttribute('viewBox', `0 0 ${W} ${H}`)
     fillRef.current.setAttribute('d', d)
     strokeRef.current.setAttribute('d', d)
 
-    tabsRef.current.style.width = `${colW}px`
-    bodyRef.current.style.left = `${bodyLeft}px`
-    if (closeRef.current) closeRef.current.style.opacity = t > 0.9 ? '' : '0'
-    ;[...tabsRef.current.children].forEach((b, i) => {
-      const band = targets.bands[i]
-      b.style.top = `${band.t}px`
-      b.style.height = `${band.b - band.t}px`
-      b.style.width = `${colW}px`
-      b.style.opacity = String(t)
-    })
-  }, [])
+    const el = tabRef.current
+    el.style.left = `${l}px`
+    el.style.width = `${right - l}px`
+    el.style.height = `${tabH}px`
+    bodyRef.current.style.top = `${tabH}px`
+    if (closeRef.current) closeRef.current.style.opacity = t > 0.85 ? '' : '0'
+  }, [tabLeft])
 
-  /* ── open / close ─────────────────────────────────────── */
+  /* ── open ─────────────────────────────────────────────── */
   useLayoutEffect(() => {
     if (!open) return
     const sheet = sheetRef.current
     const origin = getOrigin?.()
     const from = origin?.el?.getBoundingClientRect()
-    if (!sheet || !from) return
+    const slot = origin?.slots?.[origin.index ?? 0]
+    if (!sheet || !from || !slot) return
 
     const to = insetRect()
     const setRect = r => {
@@ -226,20 +192,21 @@ export default function ProjectSheet({
       sheet.style.height = `${r.height}px`
     }
 
-    /* Measure at final size — labels report 0 while the sheet is hidden. */
+    /* Measure at final size — the label reports 0 while the sheet is
+       hidden, which silently produced a tab narrower than it was tall. */
     setRect(to)
-    measureTabs(to.width)
+    measureTab(to.width)
 
     const land = () => { setLanded(true); closeRef.current?.focus() }
 
     if (prefersReduced()) {
-      paint(1, to.width, to.height)
+      paint(1, to.width, to.height, slot)
       land()
       return
     }
 
     setRect(from)
-    paint(0, from.width, from.height)
+    paint(0, from.width, from.height, slot)
 
     const state = { t: 0, w: from.width, h: from.height, x: from.left, y: from.top }
     const tween = gsap.to(state, {
@@ -248,20 +215,21 @@ export default function ProjectSheet({
       ease: 'power1.inOut',
       onUpdate: () => {
         setRect({ left: state.x, top: state.y, width: state.w, height: state.h })
-        paint(state.t, state.w, state.h)
+        paint(state.t, state.w, state.h, slot)
       },
       onComplete: land,
     })
     return () => tween.kill()
-  }, [open, getOrigin, measureTabs, paint])
+  }, [open, getOrigin, measureTab, paint])
 
   const requestClose = useCallback(() => {
     const sheet = sheetRef.current
     const origin = getOrigin?.()
     const to = origin?.el?.getBoundingClientRect()
+    const slot = origin?.slots?.[origin.index ?? 0]
     setLanded(false)
 
-    if (!sheet || !to || prefersReduced()) { onClose?.(); return }
+    if (!sheet || !to || !slot || prefersReduced()) { onClose?.(); return }
 
     const from = insetRect()
     const state = { t: 1, w: from.width, h: from.height, x: from.left, y: from.top }
@@ -274,13 +242,13 @@ export default function ProjectSheet({
         sheet.style.top = `${state.y}px`
         sheet.style.width = `${state.w}px`
         sheet.style.height = `${state.h}px`
-        paint(state.t, state.w, state.h)
+        paint(state.t, state.w, state.h, slot)
       },
       onComplete: () => onClose?.(),
     })
   }, [getOrigin, onClose, paint])
 
-  /* Escape, scroll lock, and focus containment. */
+  /* Escape, scroll lock, focus containment. */
   useEffect(() => {
     if (!open) return
     const onKey = e => {
@@ -293,6 +261,7 @@ export default function ProjectSheet({
       if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus() }
       else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus() }
     }
+
     /* THE SCROLL LOCK NEEDS BOTH HALVES.
      *
      * 1. The homepage runs `ScrollTrigger.normalizeScroll(true)` (set in
@@ -303,7 +272,6 @@ export default function ProjectSheet({
      * 2. globals.css sets `overflow-x: clip` on html, and a root whose
      *    overflow is not fully `visible` stops propagating the body's
      *    overflow to the viewport — so locking `body` alone does nothing.
-     *    Lock the root.
      */
     const normalizer = ScrollTrigger.normalizeScroll()
     normalizer?.disable()
@@ -322,15 +290,15 @@ export default function ProjectSheet({
     }
   }, [open, requestClose])
 
-  /* The tab follows the reader — without this the tabs still read as a
-     flip-between rather than as sections of one document. */
+  /* The contents strip follows the reader. Without this it reads as a menu
+     you clicked rather than a place you are. */
   useEffect(() => {
     if (!open || !landed) return
     const obs = new IntersectionObserver(entries => {
       entries.forEach(e => {
         if (e.isIntersecting) setCurrent(Number(e.target.dataset.index))
       })
-    }, { root: bodyRef.current, rootMargin: '0px 0px -65% 0px', threshold: 0 })
+    }, { root: bodyRef.current, rootMargin: '0px 0px -70% 0px', threshold: 0 })
     sectionsRef.current.filter(Boolean).forEach(el => obs.observe(el))
     return () => obs.disconnect()
   }, [open, landed])
@@ -339,17 +307,18 @@ export default function ProjectSheet({
     if (!open) return
     const onResize = () => {
       const origin = getOrigin?.()
+      const slot = origin?.slots?.[origin.index ?? 0]
       const r = insetRect()
       const sheet = sheetRef.current
-      if (!sheet) return
+      if (!sheet || !slot) return
       sheet.style.left = `${r.left}px`; sheet.style.top = `${r.top}px`
       sheet.style.width = `${r.width}px`; sheet.style.height = `${r.height}px`
-      measureTabs(r.width)
-      paint(1, r.width, r.height)
+      measureTab(r.width)
+      paint(1, r.width, r.height, slot)
     }
     window.addEventListener('resize', onResize)
     return () => window.removeEventListener('resize', onResize)
-  }, [open, getOrigin, measureTabs, paint])
+  }, [open, getOrigin, measureTab, paint])
 
   if (!open) return null
 
@@ -371,26 +340,10 @@ export default function ProjectSheet({
           <path ref={strokeRef} className={styles.frameStroke} vectorEffect="non-scaling-stroke" />
         </svg>
 
-        <div ref={tabsRef} className={styles.tabs} role="tablist" aria-label={`${title} sections`}>
-          {facets.map((f, i) => (
-            <button
-              key={f.label}
-              type="button"
-              role="tab"
-              aria-selected={i === current}
-              className={styles.tab}
-              onClick={() => {
-                setCurrent(i)
-                sectionsRef.current[i]?.scrollIntoView({
-                  behavior: prefersReduced() ? 'auto' : 'smooth',
-                  block: 'start',
-                })
-              }}
-            >
-              <span className={styles.tabNum}>{String(i + 1).padStart(2, '0')}</span>
-              <span className={styles.tabLabel}>{f.label}</span>
-            </button>
-          ))}
+        {/* The folder's own tab. Identity, not a control — it names the
+            folder the way a tab on a filed folder does. */}
+        <div ref={tabRef} className={styles.folderTab} aria-hidden="true">
+          <span className={styles.folderTabText}>{label}</span>
         </div>
 
         <button ref={closeRef} type="button" className={styles.close} onClick={requestClose}>
@@ -411,10 +364,6 @@ export default function ProjectSheet({
                 {meta.map(([k, v]) => (
                   <div key={k}>
                     <dt>{k}</dt>
-                    {/* No "Lorin to write" badge here — with four fields and
-                        four statements it fired eight times on one screen.
-                        The quiet tone carries it; the statements keep the
-                        explicit marker. */}
                     <dd className={v.todo ? styles.todo : undefined}>{v.todo || v}</dd>
                   </div>
                 ))}
@@ -433,6 +382,31 @@ export default function ProjectSheet({
                   </section>
                 ))}
               </div>
+            )}
+
+            {/* Contents. Sticks to the top of the reading area once the work
+                starts, so you always know which section you are in. */}
+            {facets.length > 1 && (
+              <nav className={styles.contents} aria-label={`${title} contents`}>
+                {facets.map((f, i) => (
+                  <button
+                    key={f.label}
+                    type="button"
+                    className={styles.contentsItem}
+                    aria-current={i === current ? 'true' : undefined}
+                    onClick={() => {
+                      setCurrent(i)
+                      sectionsRef.current[i]?.scrollIntoView({
+                        behavior: prefersReduced() ? 'auto' : 'smooth',
+                        block: 'start',
+                      })
+                    }}
+                  >
+                    <span className={styles.contentsNum}>{String(i + 1).padStart(2, '0')}</span>
+                    <span className={styles.contentsLabel}>{f.label}</span>
+                  </button>
+                ))}
+              </nav>
             )}
 
             {facets.map((f, i) => {

@@ -49,67 +49,41 @@
 }
 
 /* ===========================================
-   TABS — down the LEFT edge, the folder turned on its side. Absolutely
-   positioned because their bounds are driven by the same numbers that
-   draw the silhouette; CSS layout can't be allowed to disagree with the
-   path.
+   THE TAB — identity, not navigation. It names the folder the way a tab
+   on a filed folder does. Absolutely positioned because its bounds come
+   from the same numbers that draw the silhouette; CSS layout can't be
+   allowed to disagree with the path.
    =========================================== */
 
-.tabs {
+.folderTab {
   position: absolute;
   top: 0;
-  left: 0;
-  bottom: 0;
   z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  padding: 0 16px;
+  pointer-events: none;
+  overflow: hidden;
+  opacity: 0;
+  transition: opacity var(--motion-fast) var(--ease-out);
 }
 
-.tab {
-  position: absolute;
-  left: 0;
-  display: inline-flex;
-  align-items: center;
-  justify-content: flex-start;
-  gap: 9px;
-  box-sizing: border-box;
-  /* Extra right padding keeps the label off the body edge the tab meets. */
-  padding: 0 18px 0 20px;
-  background: transparent;
-  border: 0;
-  cursor: pointer;
+.sheet[data-landed='true'] .folderTab {
+  opacity: 1;
+}
+
+.folderTabText {
   font-family: var(--font-body);
-  font-size: 14px;
-  font-weight: 500;
-  letter-spacing: 0.06em;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--color-ink);
-  opacity: 0.5;
   white-space: nowrap;
   overflow: hidden;
-  text-align: left;
-  transition: opacity 320ms var(--ease-out);
-}
-
-.tab[aria-selected='true'] {
-  opacity: 1;
-  font-weight: 600;
-}
-
-@media (hover: hover) {
-  .tab:hover {
-    opacity: 0.8;
-  }
-}
-
-.tab:focus-visible {
-  outline: 2px solid var(--color-ink);
-  outline-offset: -5px;
-  border-radius: var(--radius-sm);
-}
-
-.tabNum {
-  font-variant-numeric: tabular-nums;
-  font-weight: 500;
-  opacity: 0.65;
+  text-overflow: ellipsis;
 }
 
 /* ===========================================
@@ -193,7 +167,7 @@
 
 .body {
   position: absolute;
-  top: 0;
+  left: 0;
   right: 0;
   bottom: 0;
   overflow-y: auto;
@@ -333,7 +307,7 @@
 /* ── the work ─────────────────────────────── */
 
 .facet {
-  padding-top: 3.5rem;
+  padding-top: 2.5rem;
   scroll-margin-top: 1rem;
 }
 
@@ -451,6 +425,67 @@
 }
 
 /* ===========================================
+   CONTENTS — the sections. A list, not tabs. Sticks to the top of the
+   reading area once the work begins so you always know where you are.
+   =========================================== */
+
+.contents {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 2rem;
+  margin-top: 1.5rem;
+  padding: 0.9rem 0;
+  background: var(--color-cream);
+  border-top: 1.5px solid var(--color-ink);
+  border-bottom: 1px solid var(--color-border-soft, rgba(44, 44, 44, 0.14));
+}
+
+.contentsItem {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  min-height: 44px;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--color-ink);
+  opacity: 0.45;
+  transition: opacity var(--motion-fast) var(--ease-out);
+}
+
+.contentsItem[aria-current='true'] {
+  opacity: 1;
+  font-weight: 700;
+}
+
+@media (hover: hover) {
+  .contentsItem:hover {
+    opacity: 0.8;
+  }
+}
+
+.contentsItem:focus-visible {
+  outline: 2px solid var(--color-ink);
+  outline-offset: 4px;
+  border-radius: var(--radius-sm);
+}
+
+.contentsNum {
+  font-variant-numeric: tabular-nums;
+  opacity: 0.6;
+  font-weight: 500;
+}
+
+/* ===========================================
    NARROW — the folder's tab row can't hold three labels, so the tabs
    become a plain scrolling nav and the silhouette keeps a single tab.
    =========================================== */
@@ -469,10 +504,11 @@
 @media (prefers-reduced-motion: reduce) {
   .scrim,
   .sheet,
-  .tabs,
+  .folderTab,
   .body,
   .close,
-  .tab,
+  .contents,
+  .contentsItem,
   .close .c1,
   .close .c2,
   .close .c3,
@@ -484,13 +520,15 @@
 /* Narrow: the tabs keep their numerals only. The section headings in the
    body carry the names, so nothing is lost and all three stay reachable. */
 @media (max-width: 720px) {
-  .tabLabel {
+  .contents {
+    gap: 0 1.25rem;
+  }
+
+  .contentsLabel {
     display: none;
   }
 
-  .tab {
-    gap: 0;
-    justify-content: center;
-    padding: 0 6px;
+  .contentsItem {
+    font-size: 0.9375rem;
   }
 }
