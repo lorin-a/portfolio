@@ -142,6 +142,8 @@ export default function FileStack({
   contributions = [],
   pillVariant = 'weave',
   href,
+  /** Receives { getActiveCard, getActiveIndex, getSlots } for ProjectSheet. */
+  stackApiRef,
 }) {
   const cardCount = Math.max(2, Math.min(slides.length, contributions.length, 15))
   const cards = slides.slice(0, cardCount).map((slide, i) => {
@@ -200,6 +202,28 @@ export default function FileStack({
     (i, active) => (i - active + cardCount) % cardCount,
     [cardCount]
   )
+
+  /* Hand the active card and the tab-slot geometry outward so ProjectSheet
+     can grow this exact folder into the opened one. Slots are normalised to
+     the viewBox width, so the sheet can express them in real pixels at any
+     size. */
+  useEffect(() => {
+    if (!stackApiRef) return
+    stackApiRef.current = {
+      getActiveCard: () => cardRefs.current[activeIndex],
+      getActiveIndex: () => activeIndex,
+      getSlots: () =>
+        Array.from({ length: cardCount }, (_, i) => {
+          const b = tabBounds(i, cardCount)
+          return {
+            l: b.tabL / VB_W,
+            r: b.tabR / VB_W,
+            rad: b.tabRad / VB_W,
+            j: b.junctionRad / VB_W,
+          }
+        }),
+    }
+  }, [activeIndex, cardCount, stackApiRef])
 
   /* On mount, pause every video except the initially active one so
      non-active tabs aren't silently looping in the background. */

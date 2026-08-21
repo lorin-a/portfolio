@@ -1,0 +1,496 @@
+/* ===========================================
+   PROJECT SHEET — the folder, opened.
+
+   Outline aesthetic carried from FileStack: a page-coloured fill and a
+   non-scaling hairline stroke. The sheet is inset on the sides and top
+   and runs off the bottom edge, so it reads as one folder lifted out of
+   the stack onto a ground rather than a rectangle hugging the browser.
+   =========================================== */
+
+.scrim {
+  position: fixed;
+  inset: 0;
+  /* Above the site nav (100), below the skip link (1000), which must stay
+     reachable. */
+  z-index: 400;
+  background: rgba(20, 19, 17, 0.45);
+  opacity: 0;
+  transition: opacity var(--motion-medium) var(--ease-in-out);
+}
+
+.scrim[data-on='true'] {
+  opacity: 1;
+}
+
+.sheet {
+  position: fixed;
+  z-index: 500;
+  will-change: left, top, width, height;
+}
+
+.frame {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.frameFill {
+  fill: var(--color-cream);
+}
+
+.frameStroke {
+  fill: none;
+  stroke: var(--color-ink);
+  stroke-width: 2.25;
+  stroke-linejoin: round;
+}
+
+/* ===========================================
+   TABS — the folder's own tabs, and the sheet's section nav. Absolutely
+   positioned because their bounds are driven by the same numbers that
+   draw the silhouette; CSS layout can't be allowed to disagree with the
+   path.
+   =========================================== */
+
+.tabs {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 3;
+  opacity: 0;
+  transition: opacity var(--motion-fast) var(--ease-out);
+}
+
+.sheet[data-landed='true'] .tabs {
+  opacity: 1;
+}
+
+.tab {
+  position: absolute;
+  top: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  box-sizing: border-box;
+  padding: 0 12px;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-ink);
+  opacity: 0.5;
+  white-space: nowrap;
+  overflow: hidden;
+  transition: opacity 320ms var(--ease-out);
+}
+
+.tab[aria-selected='true'] {
+  opacity: 1;
+  font-weight: 600;
+}
+
+@media (hover: hover) {
+  .tab:hover {
+    opacity: 0.8;
+  }
+}
+
+.tab:focus-visible {
+  outline: 2px solid var(--color-ink);
+  outline-offset: -5px;
+  border-radius: var(--radius-sm);
+}
+
+.tabNum {
+  font-variant-numeric: tabular-nums;
+  font-weight: 500;
+  opacity: 0.65;
+}
+
+/* ===========================================
+   CLOSE — registered to the content column's right edge, level with the
+   masthead, so it reads as part of the document rather than floating.
+   =========================================== */
+
+.close {
+  position: absolute;
+  z-index: 4;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 44px;
+  padding: 0.4rem 0.85rem;
+  background: var(--color-cream);
+  color: var(--color-ink);
+  border: 1.5px solid var(--color-ink);
+  border-radius: var(--radius-pill);
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  opacity: 0;
+  transition:
+    opacity var(--motion-fast) var(--ease-out),
+    background var(--motion-fast) var(--ease-out),
+    color var(--motion-fast) var(--ease-out);
+}
+
+.sheet[data-landed='true'] .close {
+  opacity: 1;
+}
+
+.close svg {
+  width: 14px;
+  height: 14px;
+  display: block;
+  overflow: visible;
+}
+
+.close .c1,
+.close .c2,
+.close .c3,
+.close .c4 {
+  transition: transform var(--motion-fast) var(--ease-out);
+}
+
+@media (hover: hover) {
+  .close:hover {
+    background: var(--color-ink);
+    color: var(--color-cream);
+  }
+
+  .close:hover .c1 { transform: translate(2px, 2px); }
+  .close:hover .c2 { transform: translate(-2px, 2px); }
+  .close:hover .c3 { transform: translate(-2px, -2px); }
+  .close:hover .c4 { transform: translate(2px, -2px); }
+}
+
+.close:focus-visible {
+  outline: 2px solid var(--color-ink);
+  outline-offset: 3px;
+}
+
+.esc {
+  border: 1px solid currentColor;
+  border-radius: var(--radius-xs);
+  padding: 0.05rem 0.3rem;
+  opacity: 0.6;
+}
+
+/* ===========================================
+   BODY
+   =========================================== */
+
+.body {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  opacity: 0;
+  transition: opacity var(--motion-fast) var(--ease-out);
+}
+
+.sheet[data-landed='true'] .body {
+  opacity: 1;
+}
+
+.inner {
+  max-width: 64rem;
+  margin: 0 auto;
+  padding: 2.5rem clamp(1.5rem, 4vw, 3rem) 5rem;
+}
+
+.masthead {
+  min-height: 5.5rem;
+}
+
+.num {
+  display: block;
+  font-family: var(--font-heading);
+  font-size: clamp(14px, 1.5vw, 20px);
+  font-weight: 340;
+  font-variation-settings: 'SOFT' 100, 'WONK' 1;
+  color: var(--color-ink-faint);
+  margin-bottom: var(--space-xs);
+}
+
+.title {
+  font-family: var(--font-heading);
+  font-size: clamp(28px, 4vw, 56px);
+  font-weight: 200;
+  font-variation-settings: 'SOFT' 100, 'WONK' 1;
+  line-height: 1.05;
+  color: var(--color-ink);
+  margin: 0 0 var(--space-xs);
+  text-wrap: balance;
+}
+
+.tagline {
+  font-family: var(--font-heading);
+  font-size: clamp(16px, 2vw, 24px);
+  font-weight: 300;
+  font-style: italic;
+  font-variation-settings: 'SOFT' 100, 'WONK' 1;
+  color: var(--color-ink);
+  line-height: 1.3;
+  margin: 0;
+  text-wrap: pretty;
+}
+
+/* ── metadata ─────────────────────────────── */
+
+.meta {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+  gap: 0 2rem;
+  margin: 2rem 0 0;
+  border-top: 1.5px solid var(--color-ink);
+}
+
+.meta div {
+  padding: 0.9rem 0 1rem;
+}
+
+.meta dt {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--color-ink-faint);
+  font-weight: 700;
+}
+
+.meta dd {
+  margin: 0.3rem 0 0;
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
+  color: var(--color-ink-light);
+  text-wrap: pretty;
+}
+
+/* ── the four statements ──────────────────── */
+
+.statements {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 3rem;
+  margin-top: 0.5rem;
+}
+
+.statement {
+  padding: 1.6rem 0 1.7rem;
+  border-top: 1px solid var(--color-border-soft, rgba(44, 44, 44, 0.14));
+}
+
+.statementLabel {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-sage);
+  font-weight: 700;
+  margin: 0 0 0.55rem;
+}
+
+.statementBody {
+  font-family: var(--font-heading);
+  font-size: clamp(1.125rem, 1.35vw, 1.3125rem);
+  font-variation-settings: 'SOFT' 100, 'WONK' 0;
+  line-height: 1.5;
+  color: var(--color-ink);
+  margin: 0;
+  text-wrap: pretty;
+}
+
+/* Unwritten copy. Deliberately quiet — a placeholder is not a warning. */
+.todo {
+  color: var(--color-ink-faint);
+}
+
+.todo b {
+  display: block;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  opacity: 0.75;
+  margin-bottom: 0.35rem;
+}
+
+/* ── the work ─────────────────────────────── */
+
+.facet {
+  padding-top: 3.5rem;
+  scroll-margin-top: 1rem;
+}
+
+.facetHead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1.5px solid var(--color-ink);
+  margin-bottom: 1.5rem;
+}
+
+.facetHead h3 {
+  font-family: var(--font-heading);
+  font-size: clamp(20px, 2vw, 26px);
+  font-weight: 300;
+  font-variation-settings: 'SOFT' 100, 'WONK' 1;
+  color: var(--color-ink);
+  margin: 0;
+}
+
+.count {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-ink-faint);
+  white-space: nowrap;
+}
+
+.lead {
+  margin: 0 0 1.5rem;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(13rem, 1fr));
+  gap: 1.25rem;
+}
+
+.grid figure {
+  margin: 0;
+}
+
+.mediaBox {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  background: var(--color-cream-dark);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.grid .mediaBox {
+  aspect-ratio: 4 / 3;
+}
+
+.media {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.mediaGated {
+  transform: scale(1.04);
+  filter: blur(4px) saturate(0.95);
+}
+
+.gatedNote {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-ink-faint);
+  margin: 0.5rem 0 0;
+}
+
+.facet figcaption {
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  color: var(--color-ink-light);
+  margin-top: 0.55rem;
+  text-wrap: pretty;
+}
+
+.deeper {
+  margin-top: 3.5rem;
+  padding-top: 1.25rem;
+  border-top: 1.5px solid var(--color-ink);
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.deeperLabel {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-ink-faint);
+  font-weight: 700;
+}
+
+.deeper a {
+  font-family: var(--font-heading);
+  font-size: clamp(16px, 1.5vw, 20px);
+  font-weight: 300;
+  font-style: italic;
+  font-variation-settings: 'SOFT' 100, 'WONK' 1;
+  color: var(--color-ink);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+/* ===========================================
+   NARROW — the folder's tab row can't hold three labels, so the tabs
+   become a plain scrolling nav and the silhouette keeps a single tab.
+   =========================================== */
+
+@media (max-width: 720px) {
+  .statements {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .inner {
+    padding-top: 2rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scrim,
+  .sheet,
+  .tabs,
+  .body,
+  .close,
+  .tab,
+  .close .c1,
+  .close .c2,
+  .close .c3,
+  .close .c4 {
+    transition: none;
+  }
+}
+
+/* Narrow: the tabs keep their numerals only. The section headings in the
+   body carry the names, so nothing is lost and all three stay reachable. */
+@media (max-width: 720px) {
+  .tabLabel {
+    display: none;
+  }
+
+  .tab {
+    gap: 0;
+    padding: 0 6px;
+  }
+}
