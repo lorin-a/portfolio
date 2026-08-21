@@ -132,27 +132,28 @@
   .sheetSvg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
   .sheetFill { fill: var(--cream); } .sheetStroke { fill: none; stroke: var(--ink); stroke-width: 2.25; stroke-linejoin: round; }
 
-  .sheetTabs { position: absolute; top: 0; left: 0; right: 0; z-index: 3; display: flex; opacity: 0;
+  .sheetTabs { position: absolute; top: 0; left: 0; right: 0; z-index: 3; opacity: 0;
     transition: opacity var(--fast) var(--ease-out); }
   .sheet[data-landed="true"] .sheetTabs { opacity: 1; }
   .sheetTab {
-    flex: 1; background: transparent; border: 0; cursor: pointer;
-    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
-    font-family: var(--sans); font-size: 13px; font-weight: 500; letter-spacing: 0.06em;
-    text-transform: uppercase; color: var(--ink); opacity: 0.55;
-    transition: opacity 320ms var(--ease-out); padding: 0 12px;
+    position: absolute; top: 0; background: transparent; border: 0; cursor: pointer;
+    display: inline-flex; align-items: center; justify-content: center; gap: 9px;
+    font-family: var(--sans); font-size: 14px; font-weight: 500; letter-spacing: 0.06em;
+    text-transform: uppercase; color: var(--ink); opacity: 0.5;
+    white-space: nowrap; overflow: hidden; box-sizing: border-box;
+    transition: opacity 320ms var(--ease-out);
   }
   .sheetTab[aria-selected="true"] { opacity: 1; font-weight: 600; }
-  .sheetTab:hover { opacity: 0.85; }
-  .sheetTab:focus-visible { outline: 2px solid var(--ink); outline-offset: -4px; border-radius: 4px; }
-  .sheetTab .ti { font-variant-numeric: tabular-nums; opacity: 0.7; font-weight: 500; }
+  .sheetTab:hover { opacity: 0.8; }
+  .sheetTab:focus-visible { outline: 2px solid var(--ink); outline-offset: -5px; border-radius: 4px; }
+  .sheetTab .ti { font-variant-numeric: tabular-nums; opacity: 0.65; font-weight: 500; }
 
   .collapse {
-    position: absolute; z-index: 4; right: clamp(16px,2.2vw,30px);
+    position: absolute; z-index: 4;
     display: inline-flex; align-items: center; gap: 0.5rem; min-height: 44px;
     padding: 0.4rem 0.85rem; background: var(--cream); color: var(--ink);
     border: 1.5px solid var(--ink); border-radius: 9999px;
-    font-family: var(--sans); font-size: 0.6875rem; font-weight: 600;
+    font-family: var(--sans); font-size: 0.75rem; font-weight: 600;
     letter-spacing: 0.06em; text-transform: uppercase; cursor: pointer; opacity: 0;
     transition: opacity var(--fast) var(--ease-out), background var(--fast) var(--ease-out), color var(--fast) var(--ease-out);
   }
@@ -174,28 +175,29 @@
   .mastSlot { opacity: 0; }
   .sheet[data-copyLanded="true"] .mastSlot { opacity: 1; }
 
-  .meta { display: grid; grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr)); gap: 0 1.5rem;
-    margin-top: 1.75rem; border-top: 1.5px solid var(--ink); border-bottom: 1px solid var(--rule); }
-  .meta div { padding: 0.85rem 0; }
-  .meta dt { font-size: 0.625rem; letter-spacing: 0.13em; text-transform: uppercase; color: var(--ink-faint); font-weight: 700; }
-  .meta dd { margin: 0.25rem 0 0; font-size: 0.875rem; color: var(--ink-light); }
+  .meta { display: grid; grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr)); gap: 0 2rem;
+    margin-top: 2rem; border-top: 1.5px solid var(--ink); }
+  .meta div { padding: 0.9rem 0 1rem; }
+  .meta dt { font-size: 0.6875rem; letter-spacing: 0.13em; text-transform: uppercase; color: var(--ink-faint); font-weight: 700; }
+  .meta dd { margin: 0.3rem 0 0; font-size: 0.9375rem; color: var(--ink-light); }
 
   /* four statements — 2 × 2, not a wall */
-  .statements { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 0; margin-top: 2.5rem; }
-  @media (max-width: 720px) { .statements { grid-template-columns: 1fr; } }
-  .st { padding: 1.5rem 2rem 1.5rem 0; border-top: 1px solid var(--rule); }
-  .st:nth-child(odd) { padding-right: 2.5rem; }
-  .stLabel { font-size: 0.625rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--sage); font-weight: 700; margin: 0 0 0.5rem; }
-  .st p.body { font-family: var(--serif); font-size: 1.0625rem; line-height: 1.5; margin: 0; text-wrap: pretty; }
-  .todo { color: var(--ink-faint); font-style: italic; border-left: 2px solid var(--terracotta); padding-left: 0.85rem; }
-  .todo b { display: block; font-family: var(--sans); font-style: normal; font-weight: 700; font-size: 0.5625rem;
-    letter-spacing: 0.1em; text-transform: uppercase; color: var(--terracotta); margin-bottom: 0.25rem; }
+  .statements { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 0 3rem; margin-top: 0.5rem; }
+  @media (max-width: 720px) { .statements { grid-template-columns: 1fr; gap: 0; } }
+  .st { padding: 1.6rem 0 1.7rem; border-top: 1px solid var(--rule); }
+  .stLabel { font-size: 0.6875rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--sage); font-weight: 700; margin: 0 0 0.55rem; }
+  .st p.body { font-family: var(--serif); font-size: clamp(1.125rem, 1.35vw, 1.3125rem); line-height: 1.5; margin: 0; text-wrap: pretty; }
+  .todo { color: var(--ink-faint); }
+  .todo b { display: block; font-family: var(--sans); font-weight: 700; font-size: 0.625rem;
+    letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-faint); opacity: 0.75;
+    margin-bottom: 0.35rem; }
+  .meta .todo { font-size: 0.9375rem; }
 
   .facet { padding-top: 3.5rem; scroll-margin-top: 1rem; }
   .facetHead { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem;
     padding-bottom: 0.5rem; border-bottom: 1.5px solid var(--ink); margin-bottom: 1.5rem; }
-  .facetHead h4 { font-family: var(--serif); font-size: 1.375rem; margin: 0; font-weight: 600; }
-  .facetHead .count { font-size: 0.625rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-faint); }
+  .facetHead h4 { font-family: var(--serif); font-size: 1.5rem; margin: 0; font-weight: 600; }
+  .facetHead .count { font-size: 0.6875rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-faint); }
   .leadFig { margin: 0 0 1.5rem; }
   .leadFig .box { aspect-ratio: 16/9; }
   .bts { display: grid; grid-template-columns: repeat(auto-fill, minmax(13rem,1fr)); gap: 1.25rem; }
@@ -210,7 +212,7 @@
     content: ""; position: absolute; left: 50%; top: 50%; transform: translate(-40%,-50%); z-index: 1;
     border-left: 11px solid var(--ink); border-top: 7px solid transparent; border-bottom: 7px solid transparent; opacity: 0.5;
   }
-  figcaption { font-size: 0.8125rem; color: var(--ink-light); margin-top: 0.5rem; text-wrap: pretty; }
+  figcaption { font-size: 0.875rem; color: var(--ink-light); margin-top: 0.55rem; text-wrap: pretty; }
   .deeper { margin-top: 3.5rem; padding-top: 1.25rem; border-top: 1.5px solid var(--ink); display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap; }
   .deeper a { color: var(--sage); font-weight: 600; font-size: 0.9375rem; }
 
@@ -484,26 +486,53 @@
     return { l: b.tabL / VB_W, r: b.tabR / VB_W, rad: b.tabRad / VB_W, j: b.junctionRad / VB_W }
   })
 
+  /* Final tab bounds: real tab widths from their labels, laid left to right
+     above the content column. Three equal thirds made the top edge 96% tab,
+     so what read were the gaps between them, not the tabs. */
+  let TARGET = null
+  const contentBox = W => {
+    const col = Math.min(1024, W)
+    const pad = Math.max(24, Math.min(48, W * 0.04))
+    return { left: (W - col) / 2 + pad, right: (W + col) / 2 - pad }
+  }
+  function measureTargets(W) {
+    const { left } = contentBox(W)
+    const gap = 10, padX = 22
+    let x = left
+    TARGET = [...sheetTabs.children].map(btn => {
+      const w = Math.ceil(btn.scrollWidth) + padX * 2
+      const t = { l: x, r: x + w }
+      x += w + gap
+      return t
+    })
+  }
+
   function paintSheet(t, W, H) {
     const tabH = W * 0.04
+    if (!TARGET) measureTargets(W)
     const tabs = SLOTS.map((s, i) => {
       const grown = i === active ? 1 : t          /* siblings grow in; active holds */
       const mid = (s.l + s.r) / 2
-      return {
-        l: lerp(mid, s.l, grown) * W, r: lerp(mid, s.r, grown) * W,
-        h: tabH * grown, rad: s.rad * W * grown, j: s.j * W * grown,
-      }
+      /* slot bounds at t=0, real tab bounds at t=1 */
+      const l0 = lerp(mid, s.l, grown) * W, r0 = lerp(mid, s.r, grown) * W
+      const l = lerp(l0, TARGET[i].l, t), r = lerp(r0, TARGET[i].r, t)
+      return { l, r, h: tabH * grown, rad: lerp(s.rad * W, 14, t) * grown, j: lerp(s.j * W, 16, t) * grown }
     })
-    const r = BODY_RADIUS * (W / VB_W) * 1.6
+    const r = lerp(BODY_RADIUS * (W / VB_W), 20, t)
     const d = folderPath(W, H, tabs, r)
     sheetSvg.setAttribute('viewBox', `0 0 ${W} ${H}`)
     sheetFill.setAttribute('d', d); sheetStroke.setAttribute('d', d)
     sheetTabs.style.height = tabH + 'px'
     sheetBody.style.top = tabH + 'px'
-    collapseBtn.style.top = (tabH + 18) + 'px'
-    SLOTS.forEach((s, i) => {
+    collapseBtn.style.top = (tabH + 38) + 'px'
+    collapseBtn.style.right = (W - contentBox(W).right) + 'px'
+    tabs.forEach((tb, i) => {
       const btn = sheetTabs.children[i]
-      if (btn) { btn.style.opacity = i === active ? '' : String(t) }
+      if (!btn) return
+      btn.style.left = tb.l + 'px'
+      btn.style.width = (tb.r - tb.l) + 'px'
+      btn.style.height = tb.h + 'px'
+      btn.style.opacity = i === active ? '' : String(t)
     })
   }
 
@@ -518,10 +547,15 @@
         .scrollIntoView({ behavior: reduce.matches ? 'auto' : 'smooth', block: 'start' }))
       sheetTabs.append(b)
     })
+    /* measure the tabs' natural widths once, before any width is set on them */
+    TARGET = null
+    ;[...sheetTabs.children].forEach(b => { b.style.width = ''; b.style.height = '' })
+    measureTargets(innerWidth)
+
     const meta = document.getElementById('meta'); meta.replaceChildren()
     META.forEach(([k, prompt]) => {
       const d = document.createElement('div')
-      d.innerHTML = `<dt>${k}</dt><dd class="todo" style="border-left-width:2px;padding-left:0.6rem;font-size:0.8125rem;">${prompt}</dd>`
+      d.innerHTML = `<dt>${k}</dt><dd class="todo">${prompt}</dd>`
       meta.append(d)
     })
     const st = document.getElementById('statements'); st.replaceChildren()
@@ -633,5 +667,7 @@
   collapseBtn.addEventListener('click', close)
   document.addEventListener('keydown', e => { if (e.key === 'Escape' && sheet.hasAttribute('data-open')) close() })
   addEventListener('resize', () => { if (sheet.hasAttribute('data-open')) {
+    ;[...sheetTabs.children].forEach(b => { b.style.width = ''; b.style.height = '' })
+    measureTargets(innerWidth)
     setRect({ top:0, left:0, width:innerWidth, height:innerHeight }); paintSheet(1, innerWidth, innerHeight) } })
 </script>
