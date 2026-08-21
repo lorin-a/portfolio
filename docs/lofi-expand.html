@@ -1,0 +1,637 @@
+<title>Folder expand — lo-fi</title>
+<style>
+  :root {
+    --cream: #FBF9F6; --cream-dark: #F0ECE4; --ink: #2C2C2C;
+    --ink-light: #5A5550; --ink-faint: #7A7570; --sage: #5E6D52;
+    --terracotta: #956058;
+    --rule: rgba(44,44,44,0.14); --rule-soft: rgba(44,44,44,0.08); --shade: #E4DFD6;
+    --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+    --ease-in-out: cubic-bezier(0.42, 0, 0.58, 1);
+    --fast: 300ms; --medium: 600ms;
+    --serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+    --sans: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --cream:#252525; --cream-dark:#333; --ink:#E9E9E9; --ink-light:#B0B0B0;
+      --ink-faint:#888; --sage:#8A9B6E; --terracotta:#F79C7E;
+      --rule:rgba(233,233,233,0.18); --rule-soft:rgba(233,233,233,0.09); --shade:#3A3A3A; }
+  }
+  :root[data-theme="dark"] { --cream:#252525; --cream-dark:#333; --ink:#E9E9E9; --ink-light:#B0B0B0;
+    --ink-faint:#888; --sage:#8A9B6E; --terracotta:#F79C7E;
+    --rule:rgba(233,233,233,0.18); --rule-soft:rgba(233,233,233,0.09); --shade:#3A3A3A; }
+  :root[data-theme="light"] { --cream:#FBF9F6; --cream-dark:#F0ECE4; --ink:#2C2C2C; --ink-light:#5A5550;
+    --ink-faint:#7A7570; --sage:#5E6D52; --terracotta:#956058;
+    --rule:rgba(44,44,44,0.14); --rule-soft:rgba(44,44,44,0.08); --shade:#E4DFD6; }
+
+  body { background: var(--cream); color: var(--ink); font-family: var(--sans); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+  .wrap { max-width: 1200px; margin: 0 auto; padding: 3rem 2rem 6rem; }
+  .kicker { font-size: 0.6875rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-faint); font-weight: 600; }
+  .note { max-width: 62ch; color: var(--ink-light); font-size: 0.9375rem; text-wrap: pretty; }
+  .note strong { color: var(--ink); font-weight: 600; }
+  .frameLabel { display: flex; align-items: baseline; gap: 0.75rem; padding-bottom: 0.5rem; margin: 3.5rem 0 1.5rem; border-bottom: 1px solid var(--rule); }
+  .frameLabel h2 { font-family: var(--serif); font-size: 1.0625rem; font-weight: 600; margin: 0; }
+
+  .row { display: grid; grid-template-columns: minmax(0,19rem) minmax(0,1fr); gap: 3rem; align-items: center; }
+  @media (max-width: 900px) { .row { grid-template-columns: 1fr; gap: 2rem; } }
+
+  /* the copy block — this is the element that flies into the sheet */
+  .copyBlock { transition: opacity 200ms var(--ease-out); }
+  .copyBlock .num { font-size: 0.75rem; letter-spacing: 0.1em; color: var(--sage); font-weight: 700; font-variant-numeric: tabular-nums; display: block; }
+  .copyBlock h3 { font-family: var(--serif); font-size: clamp(2rem,4vw,2.75rem); line-height: 1.1; margin: 0.35rem 0 0.5rem; font-weight: 600; text-wrap: balance; }
+  .copyBlock .tagline { font-family: var(--serif); font-style: italic; color: var(--sage); font-size: 1.125rem; margin: 0; }
+  .desc { color: var(--ink-light); font-size: 0.9375rem; margin: 0.9rem 0 0; text-wrap: pretty; }
+
+  .expandWrap { margin-top: 1.5rem; }
+  .expand {
+    display: inline-flex; align-items: center; gap: 0.55rem; min-height: 44px;
+    padding: 0.55rem 1rem; background: transparent; color: var(--ink);
+    border: 1.5px solid var(--ink); border-radius: 9999px;
+    font-family: var(--sans); font-size: 0.75rem; font-weight: 600;
+    letter-spacing: 0.06em; text-transform: uppercase; cursor: pointer;
+    transition: background var(--fast) var(--ease-out), color var(--fast) var(--ease-out);
+  }
+  .expand svg, .collapse svg { width: 14px; height: 14px; display: block; overflow: visible; }
+  .cor { transition: transform var(--fast) var(--ease-out); }
+  @media (hover: hover) {
+    .expand:hover { background: var(--ink); color: var(--cream); }
+    .expand:hover .c1 { transform: translate(-2px,-2px); } .expand:hover .c2 { transform: translate(2px,-2px); }
+    .expand:hover .c3 { transform: translate(2px,2px); } .expand:hover .c4 { transform: translate(-2px,2px); }
+  }
+  .expand:focus-visible, .collapse:focus-visible { outline: 2px solid var(--sage); outline-offset: 3px; }
+
+  /* ══ THE STACK — replica ═════════════════════════════════ */
+  .stack {
+    position: relative; width: 100%; max-width: 88%; margin-inline: auto;
+    aspect-ratio: 1600 / 1100; pointer-events: none;
+    perspective: 1600px; perspective-origin: 50% 8%; transform-style: preserve-3d;
+    --tab-portion: 5.82%; --matte-inset: clamp(20px, 2.6vw, 36px);
+  }
+  .card {
+    position: absolute; inset: 0; pointer-events: none; transform-style: preserve-3d;
+    backface-visibility: hidden; will-change: transform, opacity;
+    filter: drop-shadow(0 6px 14px rgba(0,0,0,0.32));
+    transition: filter 360ms var(--ease-out), transform 550ms var(--ease-in-out), opacity 550ms var(--ease-in-out);
+  }
+  .card[data-active="true"] { filter: drop-shadow(0 14px 28px rgba(0,0,0,0.5)); }
+  .card[data-entering="true"] { transition: none; }
+  .silhouette { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+  .silhouetteFill { fill: var(--cream); pointer-events: none; }
+  .silhouetteStroke { fill: none; stroke: var(--ink); stroke-width: 1.5; stroke-linejoin: round; opacity: 0.4;
+    transition: stroke-width 320ms var(--ease-out), opacity 320ms var(--ease-out); }
+  .card[data-active="true"] .silhouetteStroke { stroke-width: 2.25; opacity: 1; }
+  .tabHit {
+    position: absolute; top: 0;
+    left: calc(100% / var(--slot-count) * var(--slot-i) + (100% / var(--slot-count)) * 0.02);
+    width: calc(100% / var(--slot-count) * 0.96); box-sizing: border-box;
+    height: calc(var(--tab-portion) + 8px + var(--depth-strip, 0px));
+    padding: 0 12px calc(8px + var(--depth-strip, 0px));
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    background: transparent; border: 0; font-family: var(--sans); font-size: 13px;
+    font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink);
+    opacity: 0.7; white-space: nowrap; overflow: hidden; cursor: pointer;
+    pointer-events: auto; z-index: 4; transition: opacity 320ms var(--ease-out);
+  }
+  .card[data-active="true"] .tabHit { opacity: 1; font-weight: 600; }
+  @media (hover: hover) { .card:not([data-active="true"]) .tabHit:hover { opacity: 0.8; } }
+  .tabHit:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; border-radius: 4px; }
+  .tabIndex { font-variant-numeric: tabular-nums; font-weight: 500; opacity: 0.7; }
+  .matte {
+    position: absolute; top: calc(var(--tab-portion) + var(--matte-inset));
+    left: var(--matte-inset); right: var(--matte-inset);
+    aspect-ratio: 16/9; border-radius: 6px; overflow: hidden; pointer-events: none;
+    background: var(--shade); display: grid; place-content: center; text-align: center; padding: 1.25rem;
+    opacity: 0; transition: opacity 550ms var(--ease-out);
+  }
+  .card[data-active="true"] .matte { opacity: 1; }
+  .matte .ph { color: var(--ink-faint); font-size: 0.8125rem; max-width: 32ch; margin: 0; }
+  .phn { display: block; font-size: 0.625rem; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 0.4rem; }
+  .gatedScrim { position: absolute; inset: 0; display: grid; place-content: center; gap: 0.25rem;
+    text-align: center; background: rgba(20,19,17,0.55); color: #FBF9F6; backdrop-filter: blur(4px); }
+  .gatedScrim b { font-size: 0.6875rem; letter-spacing: 0.12em; text-transform: uppercase; }
+  .gatedScrim span { font-size: 0.75rem; opacity: 0.85; }
+  .galleryNav { position: absolute; bottom: calc(var(--matte-inset) * 0.5);
+    left: var(--matte-inset); right: var(--matte-inset); height: 28px;
+    display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+    pointer-events: none; opacity: 0; transition: opacity 550ms var(--ease-out); }
+  .card[data-active="true"] .galleryNav { opacity: 1; }
+  .card[data-active="true"] .galleryNav > * { pointer-events: auto; }
+  .gDot { width: 6px; height: 6px; border-radius: 50%; background: transparent; border: 1.5px solid var(--ink); opacity: 0.4; padding: 0; cursor: pointer; }
+  .gDot[data-on="true"] { background: var(--ink); opacity: 1; }
+  .gArrow { background: transparent; border: 0; color: var(--ink); opacity: 0.5; cursor: pointer; display: grid; place-content: center; width: 24px; height: 24px; }
+  .gArrow:hover { opacity: 1; } .gArrow svg { width: 16px; height: 16px; }
+
+  /* ══ THE SHEET — one folder, three tabs ══════════════════ */
+  .scrim { position: fixed; inset: 0; background: rgba(20,19,17,0.45); opacity: 0; pointer-events: none; z-index: 40; transition: opacity var(--medium) var(--ease-in-out); }
+  .scrim[data-on="true"] { opacity: 1; }
+  .sheet {
+    position: fixed; z-index: 50; display: none;
+    transition: top var(--medium) var(--ease-in-out), left var(--medium) var(--ease-in-out),
+                width var(--medium) var(--ease-in-out), height var(--medium) var(--ease-in-out);
+  }
+  .sheet[data-open] { display: block; }
+  .sheetSvg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+  .sheetFill { fill: var(--cream); } .sheetStroke { fill: none; stroke: var(--ink); stroke-width: 2.25; stroke-linejoin: round; }
+
+  .sheetTabs { position: absolute; top: 0; left: 0; right: 0; z-index: 3; display: flex; opacity: 0;
+    transition: opacity var(--fast) var(--ease-out); }
+  .sheet[data-landed="true"] .sheetTabs { opacity: 1; }
+  .sheetTab {
+    flex: 1; background: transparent; border: 0; cursor: pointer;
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    font-family: var(--sans); font-size: 13px; font-weight: 500; letter-spacing: 0.06em;
+    text-transform: uppercase; color: var(--ink); opacity: 0.55;
+    transition: opacity 320ms var(--ease-out); padding: 0 12px;
+  }
+  .sheetTab[aria-selected="true"] { opacity: 1; font-weight: 600; }
+  .sheetTab:hover { opacity: 0.85; }
+  .sheetTab:focus-visible { outline: 2px solid var(--ink); outline-offset: -4px; border-radius: 4px; }
+  .sheetTab .ti { font-variant-numeric: tabular-nums; opacity: 0.7; font-weight: 500; }
+
+  .collapse {
+    position: absolute; z-index: 4; right: clamp(16px,2.2vw,30px);
+    display: inline-flex; align-items: center; gap: 0.5rem; min-height: 44px;
+    padding: 0.4rem 0.85rem; background: var(--cream); color: var(--ink);
+    border: 1.5px solid var(--ink); border-radius: 9999px;
+    font-family: var(--sans); font-size: 0.6875rem; font-weight: 600;
+    letter-spacing: 0.06em; text-transform: uppercase; cursor: pointer; opacity: 0;
+    transition: opacity var(--fast) var(--ease-out), background var(--fast) var(--ease-out), color var(--fast) var(--ease-out);
+  }
+  .sheet[data-landed="true"] .collapse { opacity: 1; }
+  @media (hover: hover) {
+    .collapse:hover { background: var(--ink); color: var(--cream); }
+    .collapse:hover .c1 { transform: translate(2px,2px); } .collapse:hover .c2 { transform: translate(-2px,2px); }
+    .collapse:hover .c3 { transform: translate(-2px,-2px); } .collapse:hover .c4 { transform: translate(2px,-2px); }
+  }
+  .esc { border: 1px solid currentColor; border-radius: 3px; padding: 0.05rem 0.3rem; opacity: 0.6; }
+
+  .sheetBody { position: absolute; left: 0; right: 0; bottom: 0; overflow-y: auto; opacity: 0;
+    transition: opacity var(--fast) var(--ease-out); }
+  .sheet[data-landed="true"] .sheetBody { opacity: 1; }
+  .sheetInner { max-width: 64rem; margin: 0 auto; padding: 2.5rem clamp(1.5rem,4vw,3rem) 5rem; }
+
+  /* masthead — the flown-in copy sits here */
+  .masthead { min-height: 5.5rem; }
+  .mastSlot { opacity: 0; }
+  .sheet[data-copyLanded="true"] .mastSlot { opacity: 1; }
+
+  .meta { display: grid; grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr)); gap: 0 1.5rem;
+    margin-top: 1.75rem; border-top: 1.5px solid var(--ink); border-bottom: 1px solid var(--rule); }
+  .meta div { padding: 0.85rem 0; }
+  .meta dt { font-size: 0.625rem; letter-spacing: 0.13em; text-transform: uppercase; color: var(--ink-faint); font-weight: 700; }
+  .meta dd { margin: 0.25rem 0 0; font-size: 0.875rem; color: var(--ink-light); }
+
+  /* four statements — 2 × 2, not a wall */
+  .statements { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 0; margin-top: 2.5rem; }
+  @media (max-width: 720px) { .statements { grid-template-columns: 1fr; } }
+  .st { padding: 1.5rem 2rem 1.5rem 0; border-top: 1px solid var(--rule); }
+  .st:nth-child(odd) { padding-right: 2.5rem; }
+  .stLabel { font-size: 0.625rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--sage); font-weight: 700; margin: 0 0 0.5rem; }
+  .st p.body { font-family: var(--serif); font-size: 1.0625rem; line-height: 1.5; margin: 0; text-wrap: pretty; }
+  .todo { color: var(--ink-faint); font-style: italic; border-left: 2px solid var(--terracotta); padding-left: 0.85rem; }
+  .todo b { display: block; font-family: var(--sans); font-style: normal; font-weight: 700; font-size: 0.5625rem;
+    letter-spacing: 0.1em; text-transform: uppercase; color: var(--terracotta); margin-bottom: 0.25rem; }
+
+  .facet { padding-top: 3.5rem; scroll-margin-top: 1rem; }
+  .facetHead { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem;
+    padding-bottom: 0.5rem; border-bottom: 1.5px solid var(--ink); margin-bottom: 1.5rem; }
+  .facetHead h4 { font-family: var(--serif); font-size: 1.375rem; margin: 0; font-weight: 600; }
+  .facetHead .count { font-size: 0.625rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-faint); }
+  .leadFig { margin: 0 0 1.5rem; }
+  .leadFig .box { aspect-ratio: 16/9; }
+  .bts { display: grid; grid-template-columns: repeat(auto-fill, minmax(13rem,1fr)); gap: 1.25rem; }
+  figure { margin: 0; }
+  .box { background: var(--shade); border-radius: 6px; display: grid; place-content: center; padding: 1rem; text-align: center; position: relative; aspect-ratio: 4/3; }
+  .box span { font-size: 0.75rem; color: var(--ink-faint); }
+  .box[data-video="true"]::after {
+    content: ""; position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%);
+    width: 44px; height: 44px; border: 1.5px solid var(--ink); border-radius: 50%; opacity: 0.5;
+  }
+  .box[data-video="true"]::before {
+    content: ""; position: absolute; left: 50%; top: 50%; transform: translate(-40%,-50%); z-index: 1;
+    border-left: 11px solid var(--ink); border-top: 7px solid transparent; border-bottom: 7px solid transparent; opacity: 0.5;
+  }
+  figcaption { font-size: 0.8125rem; color: var(--ink-light); margin-top: 0.5rem; text-wrap: pretty; }
+  .deeper { margin-top: 3.5rem; padding-top: 1.25rem; border-top: 1.5px solid var(--ink); display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap; }
+  .deeper a { color: var(--sage); font-weight: 600; font-size: 0.9375rem; }
+
+  /* the flying copy block */
+  .flyer { position: fixed; z-index: 60; pointer-events: none; opacity: 0; transform-origin: top left; }
+  .flyer[data-on="true"] { opacity: 1; }
+
+  .legend dl { margin: 0; border-top: 1px solid var(--rule); }
+  .legend > dl > div { display: grid; grid-template-columns: minmax(0,11rem) minmax(0,1fr); gap: 1.5rem; padding: 1rem 0; border-bottom: 1px solid var(--rule-soft); }
+  @media (max-width: 640px) { .legend > dl > div { grid-template-columns: 1fr; gap: 0.35rem; } }
+  .legend dt { font-size: 0.6875rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-faint); font-weight: 700; padding-top: 0.15rem; }
+  .legend dd { margin: 0; color: var(--ink-light); font-size: 0.9375rem; text-wrap: pretty; }
+  .legend dd strong { color: var(--ink); font-weight: 600; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .card, .sheet, .scrim, .sheetBody, .sheetTabs, .collapse, .matte, .galleryNav,
+    .expand, .cor, .silhouetteStroke, .flyer, .copyBlock, .mastSlot { transition: none !important; }
+  }
+</style>
+
+<div class="wrap">
+  <p class="kicker">Lo-fi prototype · folder expand</p>
+  <p class="note" style="margin-top:0.5rem;">
+    Grey blocks stand in for media, and the display face stands in for Fraunces. Everything else runs on
+    the project’s real tokens and <code>FileStack</code>’s real geometry.
+    <strong>Click “See the full project.”</strong> Escape closes.
+  </p>
+
+  <div class="frameLabel"><span class="kicker">01</span><h2>The graze, unchanged</h2></div>
+
+  <div class="row">
+    <div>
+      <div class="copyBlock" id="copyBlock">
+        <span class="num">01</span>
+        <h3>Groundswell</h3>
+        <p class="tagline">Making Space to Restore, Together</p>
+      </div>
+      <p class="desc">A multi-scale design ecology built to support the complex emotional reality of oncology care. Co-designed with healthcare workers.</p>
+      <div class="expandWrap">
+        <button class="expand" id="expandBtn" aria-expanded="false">
+          <svg viewBox="0 0 16 16" fill="none" aria-hidden="true" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path class="cor c1" d="M6 1.5H1.5V6"/><path class="cor c2" d="M10 1.5H14.5V6"/>
+            <path class="cor c3" d="M14.5 10V14.5H10"/><path class="cor c4" d="M1.5 10V14.5H6"/>
+          </svg>
+          See the full project
+        </button>
+      </div>
+    </div>
+    <div class="stack" id="stack" role="tablist" aria-label="Project files"></div>
+  </div>
+
+  <div class="frameLabel"><span class="kicker">02</span><h2>Your seven notes, and what each one changed</h2></div>
+  <div class="legend">
+    <dl>
+      <div><dt>Button overlap</dt><dd>Moved under the copy. It was floating over the stack’s lower right, which is exactly where the receded cards’ depth strip rides through. Under the text it is constant and never collides.</dd></div>
+      <div><dt>Lost folder shape</dt><dd><strong>Two causes.</strong> The sheet reused the 1600 × 1100 viewBox with <code>preserveAspectRatio="none"</code>, so at screen aspect every radius and the tab height stretched out of true. It now builds its path in <strong>real pixel space</strong>, recomputed each frame. And a tab widened to full width is a header bar, not a tab.</dd></div>
+      <div><dt>The expanded view</dt><dd><strong>It is one folder carrying all three tabs.</strong> You opened the stack and got a single document whose tabs are its sections. During the expand the sibling tabs grow from nothing at their own slots, so the folder visibly sprouts them.</dd></div>
+      <div><dt>Tabs, not flipping</dt><dd>They scroll to sections, and <strong>the active tab now follows your scroll position</strong>. The last build already scrolled, but nothing reflected where you were, so it still read as a flip. Three tabs on one body is what makes them read as sections of one thing.</dd></div>
+      <div><dt>The text moves</dt><dd>The number, title and tagline fly from their homepage position into the masthead on the same 600ms curve as the frame, and fly back on close.</dd></div>
+      <div><dt>Less text up top</dt><dd>The masthead is the flown-in identity plus a metadata row, and the four statements are a 2 × 2 hairline grid instead of a vertical stack. Work starts within one screen.</dd></div>
+      <div><dt>The balance</dt><dd>Identity → metadata → four statements → three sections, each opening on one large lead artifact with supporting stills beneath. First pass; the ratio is the thing to judge.</dd></div>
+    </dl>
+  </div>
+</div>
+
+<div class="scrim" id="scrim"></div>
+<div class="flyer" id="flyer" aria-hidden="true"></div>
+
+<div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sheetTitle">
+  <svg class="sheetSvg" id="sheetSvg" preserveAspectRatio="none" aria-hidden="true">
+    <path class="sheetFill" id="sheetFill"/><path class="sheetStroke" id="sheetStroke" vector-effect="non-scaling-stroke"/>
+  </svg>
+  <div class="sheetTabs" id="sheetTabs" role="tablist" aria-label="Sections"></div>
+  <button class="collapse" id="collapseBtn">
+    <svg viewBox="0 0 16 16" fill="none" aria-hidden="true" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <path class="cor c1" d="M1.5 5.5H6V1"/><path class="cor c2" d="M14.5 5.5H10V1"/>
+      <path class="cor c3" d="M14.5 10.5H10V15"/><path class="cor c4" d="M1.5 10.5H6V15"/>
+    </svg>
+    Close <span class="esc">esc</span>
+  </button>
+  <div class="sheetBody" id="sheetBody">
+    <div class="sheetInner">
+      <div class="masthead">
+        <div class="mastSlot" id="mastSlot">
+          <span class="num" style="font-size:0.75rem;letter-spacing:0.1em;color:var(--sage);font-weight:700;display:block;">01</span>
+          <h3 id="sheetTitle" style="font-family:var(--serif);font-size:clamp(2rem,4vw,2.75rem);line-height:1.1;margin:0.35rem 0 0.5rem;font-weight:600;">Groundswell</h3>
+          <p style="font-family:var(--serif);font-style:italic;color:var(--sage);font-size:1.125rem;margin:0;">Making Space to Restore, Together</p>
+        </div>
+      </div>
+      <dl class="meta" id="meta"></dl>
+      <div class="statements" id="statements"></div>
+      <div id="facets"></div>
+      <div class="deeper">
+        <span class="kicker">Go further</span>
+        <a href="#">Read the full Groundswell case study</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  /* ══ stack geometry — verbatim from FileStack.js ═════════ */
+  const VB_W = 1600, VB_TAB_H = 64, VB_H = 1036 + VB_TAB_H
+  const BODY_RADIUS = 16, TAB_PAD_PCT = 0.04
+  const Z_STEP = 70, Y_STEP = 26, SCALE_STEP = 0.03, ACTIVE_LIFT = 90, LIFT_OVERSHOOT = 30
+
+  function tabBounds(slotIndex, slotCount) {
+    const slotW = VB_W / slotCount, tabPad = slotW * TAB_PAD_PCT
+    const tabRadRaw = Math.min(18, Math.max(8, slotW * 0.04))
+    const junctionRad = Math.min(20, Math.max(10, VB_TAB_H * 0.32))
+    const minLeft = BODY_RADIUS + junctionRad + 4, maxRight = VB_W - BODY_RADIUS - junctionRad - 4
+    const tabL = Math.max(slotW * slotIndex + tabPad, minLeft)
+    const tabR = Math.min(slotW * (slotIndex + 1) - tabPad, maxRight)
+    return { tabL, tabR, tabRad: Math.min(tabRadRaw, (tabR - tabL) / 2.5), junctionRad }
+  }
+  function pathFrom(b) {
+    const { tabL, tabR, tabRad, junctionRad } = b, r = BODY_RADIUS
+    return [`M ${tabL+tabRad} 0`,`L ${tabR-tabRad} 0`,`Q ${tabR} 0 ${tabR} ${tabRad}`,
+      `L ${tabR} ${VB_TAB_H-junctionRad}`,`Q ${tabR} ${VB_TAB_H} ${tabR+junctionRad} ${VB_TAB_H}`,
+      `L ${VB_W-r} ${VB_TAB_H}`,`Q ${VB_W} ${VB_TAB_H} ${VB_W} ${VB_TAB_H+r}`,`L ${VB_W} ${VB_H-r}`,
+      `Q ${VB_W} ${VB_H} ${VB_W-r} ${VB_H}`,`L ${r} ${VB_H}`,`Q 0 ${VB_H} 0 ${VB_H-r}`,
+      `L 0 ${VB_TAB_H+r}`,`Q 0 ${VB_TAB_H} ${r} ${VB_TAB_H}`,`L ${tabL-junctionRad} ${VB_TAB_H}`,
+      `Q ${tabL} ${VB_TAB_H} ${tabL} ${VB_TAB_H-junctionRad}`,`L ${tabL} ${tabRad}`,
+      `Q ${tabL} 0 ${tabL+tabRad} 0`,'Z'].join(' ')
+  }
+  const restPoseFor = d => ({ y: -d*Y_STEP, z: d===0 ? ACTIVE_LIFT : -(d)*Z_STEP,
+    scale: 1 - d*SCALE_STEP, alpha: d===0 ? 1 : Math.max(0.78, 1 - d*0.08), rotationX: 0 })
+  const poseCss = p => `translate3d(0, ${p.y}px, ${p.z}px) scale(${p.scale}) rotateX(${p.rotationX}deg)`
+
+  /* ══ the sheet's folder path — N tabs, real pixel space ══ */
+  function folderPath(W, H, tabs, r) {
+    const bodyTop = Math.max(...tabs.map(t => t.h))
+    const p = [`M ${r} ${bodyTop}`]
+    tabs.forEach(t => {
+      const top = bodyTop - t.h
+      p.push(`L ${t.l - t.j} ${bodyTop}`, `Q ${t.l} ${bodyTop} ${t.l} ${bodyTop - t.j}`,
+             `L ${t.l} ${top + t.rad}`, `Q ${t.l} ${top} ${t.l + t.rad} ${top}`,
+             `L ${t.r - t.rad} ${top}`, `Q ${t.r} ${top} ${t.r} ${top + t.rad}`,
+             `L ${t.r} ${bodyTop - t.j}`, `Q ${t.r} ${bodyTop} ${t.r + t.j} ${bodyTop}`)
+    })
+    p.push(`L ${W - r} ${bodyTop}`, `Q ${W} ${bodyTop} ${W} ${bodyTop + r}`,
+           `L ${W} ${H - r}`, `Q ${W} ${H} ${W - r} ${H}`, `L ${r} ${H}`, `Q 0 ${H} 0 ${H - r}`,
+           `L 0 ${bodyTop + r}`, `Q 0 ${bodyTop} ${r} ${bodyTop}`, 'Z')
+    return p.join(' ')
+  }
+
+  /* ══ content ═════════════════════════════════════════════ */
+  const FACETS = [
+    { label: 'Experience Design',
+      lead: { alt: 'Walkthrough of the Groundswell installation', video: true },
+      images: ['Groundswell installation in hospital corridor','Groundswell art wall','Groundswell pod detail','Groundswell pod detail, second view'] },
+    { label: 'Data Visualization', gated: true, gatedLabel: 'Confidential', gatedNote: 'Available on request',
+      lead: { alt: 'Groundswell data platform, protected preview', video: true },
+      images: ['Groundswell pod data view, protected preview'] },
+    { label: 'Copywriting',
+      lead: { alt: 'Groundswell copywriting mockup' },
+      images: ['Groundswell copywriting mockup, second view','Groundswell care-through-books detail'] },
+  ]
+  const galleryOf = f => [f.lead, ...f.images.map(alt => ({ alt }))]
+  const META = [
+    ['Role', 'What you led, in three or four words'],
+    ['Team', 'Who you built it with'],
+    ['Timeline', 'Season and year'],
+    ['Context', 'Client, studio, or course'],
+  ]
+  const STATEMENTS = [
+    { label: 'What it proved', prompt: 'What is true in that hospital now that would not be true if this work had not happened?' },
+    { label: 'My role', prompt: 'What you specifically did, and what your collaborators did. “I” and “we,” both explicit.' },
+    { label: 'The decision', prompt: 'One decision a non-designer would miss, and why you made it.' },
+    { label: 'What I’d change', prompt: 'One thing that did not work, and what you would do differently.' },
+  ]
+
+  const N = FACETS.length
+  let active = 0
+  const gallery = FACETS.map(() => 0)
+  const stack = document.getElementById('stack')
+  stack.style.setProperty('--slot-count', N)
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)')
+  const depthOf = (i, a) => (i - a + N) % N
+
+  FACETS.forEach((f, i) => {
+    const card = document.createElement('div')
+    card.className = 'card'; card.style.setProperty('--slot-i', i)
+    const d = pathFrom(tabBounds(i, N))
+    card.innerHTML =
+      `<svg class="silhouette" viewBox="0 0 ${VB_W} ${VB_H}" preserveAspectRatio="none" aria-hidden="true">` +
+      `<path class="silhouetteFill" d="${d}"/><path class="silhouetteStroke" d="${d}" vector-effect="non-scaling-stroke"/></svg>` +
+      `<button type="button" role="tab" class="tabHit" title="${f.label}">` +
+      `<span class="tabIndex">${String(i+1).padStart(2,'0')}</span><span>${f.label}</span></button>` +
+      `<div class="matte" role="tabpanel"></div><div class="galleryNav"></div>`
+    stack.append(card)
+    card.querySelector('.tabHit').addEventListener('click', () => setActive(i))
+  })
+  const cards = [...stack.querySelectorAll('.card')]
+
+  function paintMatte(i) {
+    const f = FACETS[i], g = galleryOf(f), card = cards[i]
+    const matte = card.querySelector('.matte'); matte.replaceChildren()
+    const p = document.createElement('p'); p.className = 'ph'
+    p.innerHTML = `<span class="phn">${f.label} · ${gallery[i]+1} of ${g.length}</span>${g[gallery[i]].alt}`
+    matte.append(p)
+    if (f.gated) {
+      const s = document.createElement('div'); s.className = 'gatedScrim'
+      s.innerHTML = `<b>${f.gatedLabel}</b><span>${f.gatedNote}</span>`; matte.append(s)
+    }
+    const nav = card.querySelector('.galleryNav'); nav.replaceChildren()
+    if (g.length > 1) {
+      const arrow = (dir, d) => {
+        const b = document.createElement('button'); b.className = 'gArrow'; b.type = 'button'
+        b.setAttribute('aria-label', dir < 0 ? 'Previous image' : 'Next image')
+        b.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="${d}"/></svg>`
+        b.addEventListener('click', () => { gallery[i] = (gallery[i]+dir+g.length)%g.length; paintMatte(i) })
+        return b
+      }
+      nav.append(arrow(-1,'M14 6 L8 12 L14 18'))
+      g.forEach((_, j) => {
+        const dot = document.createElement('button'); dot.className = 'gDot'; dot.type = 'button'
+        dot.dataset.on = String(j === gallery[i]); dot.setAttribute('aria-label', `Image ${j+1}`)
+        dot.addEventListener('click', () => { gallery[i] = j; paintMatte(i) })
+        nav.append(dot)
+      })
+      nav.append(arrow(1,'M10 6 L16 12 L10 18'))
+    }
+  }
+
+  function applyPoses(overshoot) {
+    cards.forEach((c, i) => {
+      const d = depthOf(i, active), isA = i === active
+      c.dataset.active = String(isA)
+      c.style.setProperty('--depth-strip', `${d*Y_STEP}px`)
+      c.style.zIndex = isA ? N+5 : N-d
+      const t = c.querySelector('.tabHit')
+      t.setAttribute('aria-selected', String(isA)); t.tabIndex = isA ? 0 : -1
+      const p = (i === overshoot)
+        ? { y:-8, z:ACTIVE_LIFT+LIFT_OVERSHOOT, scale:1.022, rotationX:-2, alpha:1 }
+        : restPoseFor(d)
+      c.style.transform = poseCss(p); c.style.opacity = p.alpha
+    })
+  }
+  function setActive(i) {
+    if (i === active) return
+    active = i; paintMatte(i)
+    if (reduce.matches) return applyPoses(null)
+    applyPoses(i); setTimeout(() => applyPoses(null), 300)
+  }
+
+  FACETS.forEach((_, i) => paintMatte(i))
+  cards.forEach(c => { c.dataset.entering = 'true'
+    c.style.transform = 'translate3d(0,100px,-300px) scale(0.92) rotateX(5deg)'; c.style.opacity = '0' })
+  requestAnimationFrame(() => {
+    if (reduce.matches) { cards.forEach(c => c.dataset.entering='false'); return applyPoses(null) }
+    cards.map((c,i)=>({c,i,d:depthOf(i,active)})).sort((a,b)=>b.d-a.d).forEach((it,k) => {
+      setTimeout(() => { it.c.dataset.entering = 'false'
+        const p = restPoseFor(it.d); it.c.style.transform = poseCss(p); it.c.style.opacity = p.alpha }, 180 + k*130)
+    })
+  })
+
+  /* ══ expand / collapse ═══════════════════════════════════ */
+  const sheet = document.getElementById('sheet'), scrim = document.getElementById('scrim')
+  const expandBtn = document.getElementById('expandBtn'), collapseBtn = document.getElementById('collapseBtn')
+  const sheetSvg = document.getElementById('sheetSvg')
+  const sheetFill = document.getElementById('sheetFill'), sheetStroke = document.getElementById('sheetStroke')
+  const sheetTabs = document.getElementById('sheetTabs'), sheetBody = document.getElementById('sheetBody')
+  const copyBlock = document.getElementById('copyBlock'), flyer = document.getElementById('flyer')
+  const lerp = (a,b,t) => a + (b-a)*t
+  const easeInOut = x => x < 0.5 ? 2*x*x : 1 - Math.pow(-2*x+2, 2)/2
+
+  /* tab slot fractions, shared by both states so the tabs travel true */
+  const SLOTS = FACETS.map((_, i) => {
+    const b = tabBounds(i, N)
+    return { l: b.tabL / VB_W, r: b.tabR / VB_W, rad: b.tabRad / VB_W, j: b.junctionRad / VB_W }
+  })
+
+  function paintSheet(t, W, H) {
+    const tabH = W * 0.04
+    const tabs = SLOTS.map((s, i) => {
+      const grown = i === active ? 1 : t          /* siblings grow in; active holds */
+      const mid = (s.l + s.r) / 2
+      return {
+        l: lerp(mid, s.l, grown) * W, r: lerp(mid, s.r, grown) * W,
+        h: tabH * grown, rad: s.rad * W * grown, j: s.j * W * grown,
+      }
+    })
+    const r = BODY_RADIUS * (W / VB_W) * 1.6
+    const d = folderPath(W, H, tabs, r)
+    sheetSvg.setAttribute('viewBox', `0 0 ${W} ${H}`)
+    sheetFill.setAttribute('d', d); sheetStroke.setAttribute('d', d)
+    sheetTabs.style.height = tabH + 'px'
+    sheetBody.style.top = tabH + 'px'
+    collapseBtn.style.top = (tabH + 18) + 'px'
+    SLOTS.forEach((s, i) => {
+      const btn = sheetTabs.children[i]
+      if (btn) { btn.style.opacity = i === active ? '' : String(t) }
+    })
+  }
+
+  function buildSheet() {
+    sheetTabs.replaceChildren()
+    FACETS.forEach((f, i) => {
+      const b = document.createElement('button')
+      b.className = 'sheetTab'; b.type = 'button'; b.setAttribute('role','tab')
+      b.setAttribute('aria-selected', String(i === active))
+      b.innerHTML = `<span class="ti">${String(i+1).padStart(2,'0')}</span>${f.label}`
+      b.addEventListener('click', () => document.getElementById('facet-'+i)
+        .scrollIntoView({ behavior: reduce.matches ? 'auto' : 'smooth', block: 'start' }))
+      sheetTabs.append(b)
+    })
+    const meta = document.getElementById('meta'); meta.replaceChildren()
+    META.forEach(([k, prompt]) => {
+      const d = document.createElement('div')
+      d.innerHTML = `<dt>${k}</dt><dd class="todo" style="border-left-width:2px;padding-left:0.6rem;font-size:0.8125rem;">${prompt}</dd>`
+      meta.append(d)
+    })
+    const st = document.getElementById('statements'); st.replaceChildren()
+    STATEMENTS.forEach(s => {
+      const d = document.createElement('div'); d.className = 'st'
+      d.innerHTML = `<p class="stLabel">${s.label}</p><p class="body todo"><b>Lorin to write</b>${s.prompt}</p>`
+      st.append(d)
+    })
+    const host = document.getElementById('facets'); host.replaceChildren()
+    FACETS.forEach((f, i) => {
+      const sec = document.createElement('section'); sec.className = 'facet'; sec.id = 'facet-'+i
+      const rest = f.images.map(alt =>
+        `<figure><div class="box"><span>${alt}</span></div><figcaption>${alt}</figcaption></figure>`).join('')
+      sec.innerHTML =
+        `<div class="facetHead"><h4>${f.label}</h4><span class="count">${f.images.length+1} items${f.gated?' · '+f.gatedLabel:''}</span></div>` +
+        `<figure class="leadFig"><div class="box" data-video="${!!f.lead.video}"><span>${f.lead.alt}</span></div>` +
+        `<figcaption>${f.lead.alt}</figcaption></figure><div class="bts">${rest}</div>`
+      host.append(sec)
+    })
+    /* scroll-spy — the tab follows where you are */
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (!e.isIntersecting) return
+        const i = Number(e.target.id.split('-')[1])
+        ;[...sheetTabs.children].forEach((b, j) => b.setAttribute('aria-selected', String(j === i)))
+      })
+    }, { root: sheetBody, rootMargin: '0px 0px -65% 0px', threshold: 0 })
+    FACETS.forEach((_, i) => obs.observe(document.getElementById('facet-'+i)))
+  }
+
+  const setRect = r => { sheet.style.top = r.top+'px'; sheet.style.left = r.left+'px'
+    sheet.style.width = r.width+'px'; sheet.style.height = r.height+'px' }
+
+  function flyCopy(from, to, back) {
+    flyer.replaceChildren(copyBlock.cloneNode(true))
+    flyer.firstChild.removeAttribute('id')
+    flyer.style.width = from.width + 'px'
+    flyer.style.left = from.left + 'px'; flyer.style.top = from.top + 'px'
+    flyer.dataset.on = 'true'
+    copyBlock.style.opacity = '0'
+    if (reduce.matches) { flyer.dataset.on = 'false'; if (back) copyBlock.style.opacity = ''; return }
+    flyer.style.transition = 'none'
+    requestAnimationFrame(() => {
+      flyer.style.transition = `left var(--medium) var(--ease-in-out), top var(--medium) var(--ease-in-out), width var(--medium) var(--ease-in-out)`
+      flyer.style.left = to.left + 'px'; flyer.style.top = to.top + 'px'; flyer.style.width = to.width + 'px'
+    })
+    setTimeout(() => { flyer.dataset.on = 'false'; if (back) copyBlock.style.opacity = '' }, 620)
+  }
+
+  function open() {
+    const r = cards[active].getBoundingClientRect()
+    buildSheet()
+    /* measure the masthead's landing rect at final size, before animating */
+    sheet.setAttribute('data-open',''); sheet.dataset.landed = 'false'; sheet.dataset.copylanded = 'false'
+    setRect({ top:0, left:0, width:innerWidth, height:innerHeight })
+    paintSheet(1, innerWidth, innerHeight)
+    const target = document.getElementById('mastSlot').getBoundingClientRect()
+    const from = copyBlock.getBoundingClientRect()
+
+    setRect(r); paintSheet(0, r.width, r.height)
+    scrim.dataset.on = 'true'; scrim.style.pointerEvents = 'auto'
+    expandBtn.setAttribute('aria-expanded','true')
+    document.body.style.overflow = 'hidden'
+
+    const land = () => { sheet.dataset.landed = 'true'; sheet.dataset.copylanded = 'true'
+      collapseBtn.focus(); sheetBody.scrollTop = 0 }
+
+    if (reduce.matches) { setRect({top:0,left:0,width:innerWidth,height:innerHeight})
+      paintSheet(1, innerWidth, innerHeight); land(); return }
+
+    flyCopy(from, target, false)
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      setRect({ top:0, left:0, width:innerWidth, height:innerHeight })
+      const t0 = performance.now()
+      const step = now => {
+        const raw = Math.min(1, (now - t0) / 600), e = easeInOut(raw)
+        paintSheet(e, lerp(r.width, innerWidth, e), lerp(r.height, innerHeight, e))
+        if (raw < 1) requestAnimationFrame(step)
+      }
+      requestAnimationFrame(step)
+      setTimeout(land, 620)
+    }))
+  }
+
+  function close() {
+    const r = cards[active].getBoundingClientRect()
+    const from = document.getElementById('mastSlot').getBoundingClientRect()
+    sheet.dataset.landed = 'false'; sheet.dataset.copylanded = 'false'
+    scrim.dataset.on = 'false'; scrim.style.pointerEvents = 'none'
+    expandBtn.setAttribute('aria-expanded','false')
+    document.body.style.overflow = ''
+    const done = () => { sheet.removeAttribute('data-open'); expandBtn.focus() }
+    if (reduce.matches) { copyBlock.style.opacity = ''; done(); return }
+    flyCopy(from, copyBlock.getBoundingClientRect(), true)
+    requestAnimationFrame(() => {
+      setRect(r)
+      const t0 = performance.now(), W0 = innerWidth, H0 = innerHeight
+      const step = now => {
+        const raw = Math.min(1, (now - t0) / 600), e = easeInOut(raw)
+        paintSheet(1 - e, lerp(W0, r.width, e), lerp(H0, r.height, e))
+        if (raw < 1) requestAnimationFrame(step)
+      }
+      requestAnimationFrame(step)
+      setTimeout(done, 620)
+    })
+  }
+
+  expandBtn.addEventListener('click', open)
+  collapseBtn.addEventListener('click', close)
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && sheet.hasAttribute('data-open')) close() })
+  addEventListener('resize', () => { if (sheet.hasAttribute('data-open')) {
+    setRect({ top:0, left:0, width:innerWidth, height:innerHeight }); paintSheet(1, innerWidth, innerHeight) } })
+</script>
