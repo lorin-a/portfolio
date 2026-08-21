@@ -1,6 +1,33 @@
 # Project Status
 
-## ▶ RESUME HERE (2026-08-04)
+## ▶ RESUME HERE (2026-08-21)
+
+**What we're doing: THE FOLDER EXPAND**, on branch **`feat/folder-expand`** (not pushed). Her
+direction: **no in-depth case studies for now — lean into the folder motif.** The homepage graze
+stays exactly as it is; clicking **“Open project”** grows the active folder card into
+`components/ProjectSheet/` — an inset folder with one tab, a masthead, metadata, four
+punchline-first statements, and the contribution galleries.
+
+**Her open question is the one to answer first: does the one-tab folder read right?** Dev server
+`npm run dev -- -p 3005` (3001 was occupied), scroll to Groundswell, click Open project.
+
+**The principle that ended four failed tab designs — do not relitigate it:** *a tab is identity,
+not navigation.* One folder, one tab, carrying the project name. Sections are a contents list,
+not tabs. Full reasoning in project memory `DECISIONS.md → A tab is identity`.
+
+**Two gotchas that cost real time, now in project memory `REFERENCE.md`:** any overlay on the
+homepage needs a **two-part scroll lock** (`normalizeScroll` steals the wheel *and*
+`overflow-x: clip` on html kills body→viewport overflow propagation), and **never measure an
+element inside a `display: none` subtree** — `scrollWidth` returns 0 and the failure is silent.
+
+**Next after her verdict, in order:** the copy-fly (N47f) · the intercepting modal route for a
+shareable URL and a working back button · the statements-versus-work balance (N47g) · real
+metadata values (all `[LORIN TO WRITE]`) · lift the dark-mode folder fill off the page ground ·
+delete the superseded `docs/lofi-expand.html`.
+
+---
+
+## ▶ ALSO LIVE — Birth Story (unchanged this session)
 
 **What we're doing:** the Birth Story case study at `/projects/birthstory-care-pod`. The product
 act up top is **blessed and done** — refine, never rebuild. The PROCESS half is being rebuilt
