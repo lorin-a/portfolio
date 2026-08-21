@@ -497,7 +497,9 @@
   }
   function measureTargets(W) {
     const { left } = contentBox(W)
-    const gap = 10, padX = 22
+    /* Gap must clear two junction sweeps (2 × 16) or they collide into a V —
+       her own slot padding is sized the same way against junctionRad 20. */
+    const gap = 40, padX = 22
     let x = left
     TARGET = [...sheetTabs.children].map(btn => {
       const w = Math.ceil(btn.scrollWidth) + padX * 2
@@ -516,8 +518,22 @@
       /* slot bounds at t=0, real tab bounds at t=1 */
       const l0 = lerp(mid, s.l, grown) * W, r0 = lerp(mid, s.r, grown) * W
       const l = lerp(l0, TARGET[i].l, t), r = lerp(r0, TARGET[i].r, t)
-      return { l, r, h: tabH * grown, rad: lerp(s.rad * W, 14, t) * grown, j: lerp(s.j * W, 16, t) * grown }
+      const h = tabH * grown
+      /* clamp both radii to the tab's own width, or the path crosses itself
+         and the junction sweeps spike below the body line */
+      const half = Math.max(0, (r - l) / 2.5)
+      const rad = Math.min(lerp(s.rad * W, 14, t) * grown, half, h / 2)
+      const j = Math.min(lerp(s.j * W, 16, t) * grown, half, h * 0.4)
+      return { l, r, h, rad, j }
     })
+    /* Adjacent junction sweeps must not overlap, or they dip below the body
+       line as a V between neighbouring tabs. Each gets at most half the gap. */
+    for (let i = 0; i < tabs.length - 1; i++) {
+      const gap = tabs[i + 1].l - tabs[i].r
+      const cap = Math.max(0, gap / 2)
+      tabs[i].j = Math.min(tabs[i].j, cap)
+      tabs[i + 1].j = Math.min(tabs[i + 1].j, cap)
+    }
     const r = lerp(BODY_RADIUS * (W / VB_W), 20, t)
     const d = folderPath(W, H, tabs, r)
     sheetSvg.setAttribute('viewBox', `0 0 ${W} ${H}`)
@@ -547,10 +563,7 @@
         .scrollIntoView({ behavior: reduce.matches ? 'auto' : 'smooth', block: 'start' }))
       sheetTabs.append(b)
     })
-    /* measure the tabs' natural widths once, before any width is set on them */
-    TARGET = null
-    ;[...sheetTabs.children].forEach(b => { b.style.width = ''; b.style.height = '' })
-    measureTargets(innerWidth)
+    TARGET = null   /* measured in open(), once the sheet is actually displayed */
 
     const meta = document.getElementById('meta'); meta.replaceChildren()
     META.forEach(([k, prompt]) => {
@@ -611,6 +624,10 @@
     /* measure the masthead's landing rect at final size, before animating */
     sheet.setAttribute('data-open',''); sheet.dataset.landed = 'false'; sheet.dataset.copylanded = 'false'
     setRect({ top:0, left:0, width:innerWidth, height:innerHeight })
+    /* measure now — the sheet is displayed, so the tabs report real widths.
+       Measuring inside buildSheet returned 0 for every label (display:none). */
+    ;[...sheetTabs.children].forEach(b => { b.style.width = ''; b.style.height = '' })
+    measureTargets(innerWidth)
     paintSheet(1, innerWidth, innerHeight)
     const target = document.getElementById('mastSlot').getBoundingClientRect()
     const from = copyBlock.getBoundingClientRect()
