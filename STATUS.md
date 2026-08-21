@@ -567,6 +567,14 @@ flow+features+styles. Senior plan:
 
 ---
 
+### 2026-08-21 — N46, a direction proposal (hers, unbuilt — logged the moment it landed)
+
+| # | Note (her words) | Status |
+|---|---|---|
+| N46 | "Maybe we do not make any in depth case studies just yet. What if we lean into the 'folder' motif more? There could be some way that when a person clicks in to see more about the project, the folder file becomes full screen and contained within it is the overview of the project with minimal text and meta data? I could then provide more in-depth stuff later as needed. My thinking is that it is more manageable, can be done quickly, gets me a peek into my work without needing to perfectly explain every step along the way." | 🟡 **PROPOSED — awaiting her call.** My read, in full, is in the ledger note below. Short form: **the container is right and her own research backs it** (screening is 2–3 minutes per portfolio, some under one; "the live site is for screening, the deck is for the interview" — Ali‑Hasan; "process‑heavy portfolios are dated" — Scott). **The content spec is the part to correct:** *overview + metadata* answers rubric ranks 5–7 and skips 1–3 (decision rationale · role clarity · impact with evidence), and her research names over‑contextualizing as the #2 failure mode. The folder should open on the **punchline**, not the overview — roughly 200 words in four fixed slots: what it proved (Q7) · her role, unmissable · one decision and why · what she'd change. Same effort as an overview, a much stronger read. **Birth Story is the exception** — blessed, nearly finished, and the one deep artifact that keeps the rest from reading as a gallery. One deep core, the rest stated crisply, which is her own F24 call from 2026‑07‑10, arrived at again from the other side. **Ceiling to know:** `FileStack` divides its tab row by `slotCount`, so the motif holds to about 5 or 6 folders and no more; breadth still wants the All‑Work bento |
+
+---
+
 ### 2026-08-03 — Direction reset (new Claude account; deck dropped, template focus)
 
 *Context: Lorin was signed out of her prior Claude account; this Claude is the one going forward.
