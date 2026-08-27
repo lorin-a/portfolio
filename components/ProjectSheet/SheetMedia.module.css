@@ -1,0 +1,198 @@
+/* Media inside the folder sheet. Tokens only — see DESIGN_SPEC §5/§6. */
+
+.box {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-sm);
+  background: var(--color-cream-dark);
+}
+
+.media {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.boxGated .media {
+  filter: blur(4px);
+}
+
+/* ── Lead artifact ───────────────────────────────────────────────── */
+
+.lead {
+  margin: 0 0 var(--space-xs);
+}
+
+.lead figcaption,
+.stills figcaption {
+  margin-top: 0.75rem;
+  font-family: var(--font-body);
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  color: var(--color-ink-light);
+  text-wrap: pretty;
+}
+
+/* ── Supporting stills ───────────────────────────────────────────── */
+
+.stills {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
+  gap: 1.25rem;
+  margin-top: 1.25rem;
+}
+
+.stills figure {
+  margin: 0;
+}
+
+/* ── Audio: the poem ─────────────────────────────────────────────── */
+
+.audio {
+  margin: 0;
+  padding: 1.25rem 1.5rem 1.5rem;
+  border: 1px solid var(--color-ink-faint);
+  border-radius: var(--radius-sm);
+}
+
+.audioHead {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.audioKind {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-sage);
+}
+
+.audioTitle {
+  font-family: var(--font-heading);
+  font-size: 1.125rem;
+  color: var(--color-ink);
+}
+
+.audioEl {
+  width: 100%;
+  height: 40px;
+}
+
+/* ── Reflection cards: the gallery ───────────────────────────────── */
+
+.gallery {
+  margin-top: 1.5rem;
+}
+
+.galleryNote {
+  margin: 0 0 1rem;
+  font-family: var(--font-body);
+  font-size: 0.8125rem;
+  color: var(--color-ink-light);
+}
+
+.cards {
+  display: grid;
+  /* Deterministic column count so the set never orphans a card onto a row
+     of its own. Four across at width, two on narrow. */
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.25rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (min-width: 900px) {
+  .cards {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.card {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  text-align: left;
+  /* 44px minimum target is satisfied by the card's own height. */
+}
+
+.cardInner {
+  position: relative;
+  display: block;
+  aspect-ratio: 3 / 4;
+  /* No overflow/clip here: any overflow other than `visible` forces
+     transform-style back to flat, which silently kills
+     backface-visibility and shows the FRONT mirrored instead of the back.
+     Clip on the faces instead. */
+  transform-style: preserve-3d;
+  transition: transform var(--motion-medium) var(--ease-in-out);
+}
+
+.card[data-back='true'] .cardInner {
+  transform: rotateY(180deg);
+}
+
+.cardFace {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: var(--radius-sm);
+  backface-visibility: hidden;
+}
+
+.cardBack {
+  transform: rotateY(180deg);
+}
+
+.cardLabel {
+  display: block;
+  margin-top: 0.625rem;
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-ink-light);
+}
+
+.card:focus-visible {
+  outline: 2px solid var(--color-sage);
+  outline-offset: 4px;
+  border-radius: var(--radius-xs);
+}
+
+@media (hover: hover) {
+  .card:hover .cardLabel {
+    color: var(--color-ink);
+  }
+}
+
+/* Reduced motion: the flip still has to WORK, because the back of the card
+   carries the exercise. Swap the faces with no rotation. */
+@media (prefers-reduced-motion: reduce) {
+  .cardInner {
+    transform: none !important;
+    transition: none;
+  }
+
+  .cardFace {
+    backface-visibility: visible;
+  }
+
+  .cardBack {
+    transform: none;
+    opacity: 0;
+  }
+
+  .card[data-back='true'] .cardBack {
+    opacity: 1;
+  }
+}

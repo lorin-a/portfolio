@@ -49,6 +49,8 @@ export default function ProjectPreview({
   /** 'carousel' (default) | 'atmospheric' | 'file' */
   cardVariant = 'carousel',
   /** Sheet content. Both default to prompts so nothing is invented. */
+  /* New sheet content shape; falls through to statements when absent. */
+  sheet = null,
   statements = DEFAULT_STATEMENTS,
   meta = DEFAULT_META,
 }) {
@@ -360,6 +362,7 @@ export default function ProjectPreview({
           num={num}
           title={title}
           tagline={tagline}
+          sheet={sheet}
           facets={contributions}
           meta={meta}
           statements={statements}

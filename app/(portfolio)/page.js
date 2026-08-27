@@ -1,4 +1,5 @@
 import Hero from '@/components/Hero/HeroScatter'
+import groundswellSheet from '@/content/sheets/groundswell'
 import ProjectPreview from '@/components/ProjectPreview/ProjectPreview'
 import AboutSection from '@/components/AboutSection/AboutSection'
 import { cloudImg, cloudVideo, HOME_IMAGES, HOME_VIDEOS, GS_IMAGES, GS_VIDEOS, WHELM_IMAGES, WHELM_VIDEOS } from '@/lib/cloudinary'
@@ -60,6 +61,7 @@ export default function Home() {
             { src: cloudVideo(GS_VIDEOS['gs-walkthrough-video'], 1200), type: 'video', alt: 'Groundswell walkthrough' },
             { src: cloudImg(GS_IMAGES['gs-ctb-email'], 1200), type: 'image', alt: 'Groundswell care-through-books email in use' },
           ]}
+          sheet={groundswellSheet}
           cardVariant="file"
           // Privacy hold (2026-06-24): the /projects/groundswell case study is
           // sealed (reproduces licensed "Blue Garden" artwork). CTA points to

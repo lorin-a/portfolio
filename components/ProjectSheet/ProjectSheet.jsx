@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { gsap, ScrollTrigger } from '@/lib/gsap'
+import SheetContent from './SheetContent'
 import styles from './ProjectSheet.module.css'
 
 /**
@@ -91,6 +92,9 @@ export default function ProjectSheet({
   title,
   tagline,
   tabLabel,
+  /* New content shape: frame + components + close. When absent the
+     sheet falls back to the original facets/statements body. */
+  sheet = null,
   facets = [],
   meta = [],
   statements = [],
@@ -353,102 +357,16 @@ export default function ProjectSheet({
 
         <div ref={bodyRef} className={styles.body}>
           <div className={styles.inner}>
-            <header className={styles.masthead}>
-              <span className={styles.num}>{num}</span>
-              <h2 id={titleId} className={styles.title}>{title}</h2>
-              {tagline && <p className={styles.tagline}>{tagline}</p>}
-            </header>
-
-            {meta.length > 0 && (
-              <dl className={styles.meta}>
-                {meta.map(([k, v]) => (
-                  <div key={k}>
-                    <dt>{k}</dt>
-                    <dd className={v.todo ? styles.todo : undefined}>{v.todo || v}</dd>
-                  </div>
-                ))}
-              </dl>
+            {sheet ? (
+              <SheetContent sheet={sheet} num={num} title={title}
+                tagline={tagline} titleId={titleId} />
+            ) : (
+              <LegacyContent num={num} title={title} tagline={tagline}
+                titleId={titleId} meta={meta} statements={statements}
+                facets={facets} current={current} setCurrent={setCurrent}
+                sectionsRef={sectionsRef} prefersReduced={prefersReduced}
+                styles={styles} />
             )}
-
-            {statements.length > 0 && (
-              <div className={styles.statements}>
-                {statements.map(s => (
-                  <section key={s.label} className={styles.statement}>
-                    <h3 className={styles.statementLabel}>{s.label}</h3>
-                    <p className={s.todo ? `${styles.statementBody} ${styles.todo}` : styles.statementBody}>
-                      {s.todo && <b>Lorin to write</b>}
-                      {s.todo || s.body}
-                    </p>
-                  </section>
-                ))}
-              </div>
-            )}
-
-            {/* Contents. Sticks to the top of the reading area once the work
-                starts, so you always know which section you are in. */}
-            {facets.length > 1 && (
-              <nav className={styles.contents} aria-label={`${title} contents`}>
-                {facets.map((f, i) => (
-                  <button
-                    key={f.label}
-                    type="button"
-                    className={styles.contentsItem}
-                    aria-current={i === current ? 'true' : undefined}
-                    onClick={() => {
-                      setCurrent(i)
-                      sectionsRef.current[i]?.scrollIntoView({
-                        behavior: prefersReduced() ? 'auto' : 'smooth',
-                        block: 'start',
-                      })
-                    }}
-                  >
-                    <span className={styles.contentsNum}>{String(i + 1).padStart(2, '0')}</span>
-                    <span className={styles.contentsLabel}>{f.label}</span>
-                  </button>
-                ))}
-              </nav>
-            )}
-
-            {facets.map((f, i) => {
-              const items = f.gallery || []
-              const [lead, ...rest] = items
-              return (
-                <section
-                  key={f.label}
-                  ref={el => { sectionsRef.current[i] = el }}
-                  data-index={i}
-                  className={styles.facet}
-                >
-                  <div className={styles.facetHead}>
-                    <h3>{f.label}</h3>
-                    <span className={styles.count}>
-                      {items.length} {items.length === 1 ? 'item' : 'items'}
-                      {f.gated && ` · ${f.gatedLabel || 'Confidential'}`}
-                    </span>
-                  </div>
-
-                  {lead && (
-                    <figure className={styles.lead}>
-                      <Media item={lead} gated={f.gated} />
-                      {f.gated && <p className={styles.gatedNote}>{f.gatedNote || 'Available on request'}</p>}
-                      {lead.alt && <figcaption>{lead.alt}</figcaption>}
-                    </figure>
-                  )}
-
-                  {rest.length > 0 && (
-                    <div className={styles.grid}>
-                      {rest.map((item, j) => (
-                        <figure key={j}>
-                          <Media item={item} gated={f.gated} />
-                          {item.alt && <figcaption>{item.alt}</figcaption>}
-                        </figure>
-                      ))}
-                    </div>
-                  )}
-                </section>
-              )
-            })}
-
             {href && (
               <div className={styles.deeper}>
                 <span className={styles.deeperLabel}>Go further</span>
@@ -473,5 +391,114 @@ function Media({ item, gated }) {
         <img src={item.src} alt={item.alt || ''} className={cls} loading="lazy" />
       )}
     </div>
+  )
+}
+
+
+/**
+ * The original body: metadata, four statements, and the contribution
+ * facets. Still in use by every project that has no `sheet` content yet.
+ */
+function LegacyContent({ num, title, tagline, titleId, meta, statements,
+  facets, current, setCurrent, sectionsRef, prefersReduced }) {
+  return (
+    <>
+          <header className={styles.masthead}>
+            <span className={styles.num}>{num}</span>
+            <h2 id={titleId} className={styles.title}>{title}</h2>
+            {tagline && <p className={styles.tagline}>{tagline}</p>}
+          </header>
+
+          {meta.length > 0 && (
+            <dl className={styles.meta}>
+              {meta.map(([k, v]) => (
+                <div key={k}>
+                  <dt>{k}</dt>
+                  <dd className={v.todo ? styles.todo : undefined}>{v.todo || v}</dd>
+                </div>
+              ))}
+            </dl>
+          )}
+
+          {statements.length > 0 && (
+            <div className={styles.statements}>
+              {statements.map(s => (
+                <section key={s.label} className={styles.statement}>
+                  <h3 className={styles.statementLabel}>{s.label}</h3>
+                  <p className={s.todo ? `${styles.statementBody} ${styles.todo}` : styles.statementBody}>
+                    {s.todo && <b>Lorin to write</b>}
+                    {s.todo || s.body}
+                  </p>
+                </section>
+              ))}
+            </div>
+          )}
+
+          {/* Contents. Sticks to the top of the reading area once the work
+              starts, so you always know which section you are in. */}
+          {facets.length > 1 && (
+            <nav className={styles.contents} aria-label={`${title} contents`}>
+              {facets.map((f, i) => (
+                <button
+                  key={f.label}
+                  type="button"
+                  className={styles.contentsItem}
+                  aria-current={i === current ? 'true' : undefined}
+                  onClick={() => {
+                    setCurrent(i)
+                    sectionsRef.current[i]?.scrollIntoView({
+                      behavior: prefersReduced() ? 'auto' : 'smooth',
+                      block: 'start',
+                    })
+                  }}
+                >
+                  <span className={styles.contentsNum}>{String(i + 1).padStart(2, '0')}</span>
+                  <span className={styles.contentsLabel}>{f.label}</span>
+                </button>
+              ))}
+            </nav>
+          )}
+
+          {facets.map((f, i) => {
+            const items = f.gallery || []
+            const [lead, ...rest] = items
+            return (
+              <section
+                key={f.label}
+                ref={el => { sectionsRef.current[i] = el }}
+                data-index={i}
+                className={styles.facet}
+              >
+                <div className={styles.facetHead}>
+                  <h3>{f.label}</h3>
+                  <span className={styles.count}>
+                    {items.length} {items.length === 1 ? 'item' : 'items'}
+                    {f.gated && ` · ${f.gatedLabel || 'Confidential'}`}
+                  </span>
+                </div>
+
+                {lead && (
+                  <figure className={styles.lead}>
+                    <Media item={lead} gated={f.gated} />
+                    {f.gated && <p className={styles.gatedNote}>{f.gatedNote || 'Available on request'}</p>}
+                    {lead.alt && <figcaption>{lead.alt}</figcaption>}
+                  </figure>
+                )}
+
+                {rest.length > 0 && (
+                  <div className={styles.grid}>
+                    {rest.map((item, j) => (
+                      <figure key={j}>
+                        <Media item={item} gated={f.gated} />
+                        {item.alt && <figcaption>{item.alt}</figcaption>}
+                      </figure>
+                    ))}
+                  </div>
+                )}
+              </section>
+            )
+          })}
+
+    </>
   )
 }
