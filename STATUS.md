@@ -1,55 +1,59 @@
 # Project Status
 
-## ▶ RESUME HERE (2026-08-27)
+## ▶ RESUME HERE (2026-08-27, session close)
 
-**What we're doing: THE FOLDER SHEET COPY**, on branch **`feat/folder-expand`** (282 commits
-ahead of `origin/main`; nothing pushed since 2026-07-05). The one-tab folder is **settled and
-blessed** — do not relitigate it. What is open is **what the copy inside it should be**, and
-**N51c/N51d in the ledger below is the brief.**
+**What we're doing: THE FOLDER SHEET**, on `feat/folder-expand`. The one-tab folder is
+**settled — do not relitigate it.** The copy question is settled too. What is open is **her
+eyes on the rebuilt sheet.**
 
-**Her spec, verbatim, for the sheet copy:** *"the components of a project, what the research told
-us and why it was built and its outcomes, perhaps biggest lessons or takeaways."* This supersedes
-the four statements now in `ProjectPreview.js:13` (what it proved · my role · the decision · what
-I'd change). **Why those were wrong:** they map onto Q7/Q3/Q4/Q8 of the Question Map, which is a
-*deck* spine for a 45-minute spoken panel — and her own research says *"the live site is for
-screening, the deck is for the interview."* The interview rubric was imported into the screening
-surface.
+**Look at it first:** `npm run dev -- -p 3005`, scroll to Groundswell, click **Open project.**
 
-**The material fact that sizes the work:** the sheet is already live for **all six** homepage
-projects (every one runs `cardVariant="file"`), with **65 media items already wired**. Missing is
-**48 short text fields**. The container is done; the contents are empty. Groundswell's can be
-assembled from her **verbatim** rehearsal answers at `docs/deck-system/rehearsal/groundswell-answers.md`
-— **no re-interview.**
+### ✅ Shipped this session
 
-**Agreed order of operations (hers):** (1) Groundswell's fields · (2) the layout and motion pass
-against real words · (3) repoint `Go further` (all six hrefs currently send viewers to Medium,
-away from her own site) · (4) the other five projects · (5) the push decision.
+- **The sheet rebuilt** (`2b5e8ea`): frame → five components → close. Sections are the
+  **components**, not her contribution facets. **Media form follows what each component IS** —
+  video where motion is the content, photography where the object is, **audio for the poem**
+  (which already existed and needed wiring, not building), a **gallery** for the reflection
+  cards where the flip is content because the back carries the somatic exercise. First
+  artifact moved from **1969 px** down the reading area to **1162 px**. Verified 1440 · 390 ·
+  reduced motion: no overflow, no failed requests, no console errors, no type under the 12 px
+  floor, 44 px targets, flip works by click and keyboard. Stylelint clean.
+- **Her copy preserved with receipts** (`ceed480`, `cdfb184`) at `content/sheets/groundswell.js`
+  — every field traceable to her copy batch or a numbered rehearsal answer, nothing rephrased.
+- **The visibility gate** (`b291290`): thirteen routes were verified live at **200** on
+  lorin.work. `middleware.js` now runs two fail-closed Basic-auth gates — the Groundswell
+  LEGAL hold, and a new EDITORIAL `SITE_HOLD_PASSWORD` sealing everything but `/`.
+- **Safety**: a private mirror **`lorin-a/portfolio-private` now holds all 18 branches**, plus
+  a verified all-refs bundle at `~/portfolio-backups/`.
 
-**VISIBILITY — shipped but NOT YET IN EFFECT (`b291290`).** Only the homepage should be public.
-Thirteen routes were verified live at **200** on lorin.work (`/about`, `/design-system`,
-`/projects/whelm`, and ten markdown project pages). `middleware.js` now seals everything but `/`
-behind Basic auth, extending the existing Groundswell legal gate rather than replacing it; both
-gates fail closed. **This does nothing until `main` is updated and `SITE_HOLD_PASSWORD` is set in
-Vercel** — see N51b.
+### ▶ Next move
 
-**STILL OWED, from her hands:** the **private mirror** (`gh repo create` is blocked by the
-permission classifier — she runs it, then `git push private --all`). Local insurance already
-exists: a verified all-refs bundle at `~/portfolio-backups/`.
+**Her verdict on the rebuilt sheet.** Then, in order: **(1)** the 4-vs-5 component count —
+she wrote "4 core components" and named five; the dashboard reads as the reporting layer
+above the four. **(2)** The `[LORIN TO WRITE]` Timeline metadata (dates). **(3) The IRB
+question, and it gates anything public**: the six-scale survey results are UPMC clinician
+data, not the design team's usage data — **her own flag** — so confirm with the partners
+before it ships. **(4)** The gate is committed but **NOT in effect**: it needs a cherry-pick
+of `b291290` onto `main` (tested clean in a throwaway worktree, one file, sheet absent) plus
+`SITE_HOLD_PASSWORD` set in Vercel. **(5)** Repoint `Go further` — all six hrefs still send
+viewers to Medium, away from her own site.
 
-**The motion defects found eyes-on 2026-08-27, all still open:** the expand plays as an **empty
-outline inflating** (at 60 ms the card's photo and label are already deleted; the scrim is bound
-to `landed` so the darkening arrives *after* the growth finishes — nothing travels); the sheet
-fill and the page ground are the **identical** `rgb(37,37,37)`, so the folder is a hairline on
-its own background; the nav bleeds through the scrim beside the tab; and the first artifact sits
-**818 px** down an **821 px** reading area at 1440 (**1343 px** at 390), so the opening screen
-contains none of the work.
+### Still open, unchanged
 
-**Two gotchas that cost real time, now in project memory `REFERENCE.md`:** any overlay on the
-homepage needs a **two-part scroll lock** (`normalizeScroll` steals the wheel *and*
-`overflow-x: clip` on html kills body→viewport overflow propagation), and **never measure an
-element inside a `display: none` subtree** — `scrollWidth` returns 0 and the failure is silent.
-**A third, from this session:** an **em dash in a `WWW-Authenticate` realm 500s** in the edge
-runtime — HTTP header values are ASCII only.
+The expand still plays as an **empty outline inflating** — at 60 ms the card's photo and label
+are already deleted, and the scrim is bound to `landed` so the darkening arrives *after* the
+growth finishes. Nothing travels. The sheet fill and the page ground are the identical
+`rgb(37,37,37)`. The nav bleeds through the scrim beside the tab. `docs/lofi-expand.html` is
+superseded; delete once the route lands.
+
+### Gotchas from this session (full detail in project memory `REFERENCE.md`)
+
+**Any `overflow` other than `visible` on a 3D flip container forces `transform-style` flat,
+killing `backface-visibility`** — the card showed its FRONT mirrored, and every DOM value
+measured correct, so only a screenshot catches it. **An em dash in a `WWW-Authenticate` realm
+500s** in the edge runtime; header values are ASCII. **A 1.8 GB repo will not push in one
+shot** — push `main` first, then each branch as a delta. **ESLint is not configured**;
+`npm run lint` opens an interactive prompt, so the `lint-component.sh` hook cannot be running.
 
 ---
 
@@ -687,6 +691,13 @@ flow+features+styles. Senior plan:
 **▸ AND THE DEPTH EXIT POINTS OFF-SITE.** All six `href` values go to Medium articles or a CMU magazine piece, so today every "Go further" sends a hiring manager away from lorin.work to a class blog post — while Birth Story, the one real case study she has built, is the destination of nothing. Repointing it is what reconciles N46's flat folder tier with the locked three-star strategy: folders are the default tier for all six, Birth Story is the one deep exit.
 
 **▸ AGREED ORDER OF OPERATIONS (hers, this session):** (1) Groundswell's fields, assembled from her verbatim rehearsal answers at `docs/deck-system/rehearsal/groundswell-answers.md` — Q7 part 2, Q3 + follow-up, Q2/Q6 follow-up, Q8 map onto the slots, so **no re-interview**. (2) The layout and motion pass against real words. (3) Repoint `Go further`. (4) The other five projects. (5) The push decision.
+
+| N51e | "I am not feeling strong about these as the main categories… I think we should workshop what someone getting the gist of a project wants and needs to know." → then her own copy batch, and: *"the components of a project, what the research told us and why it was built and its outcomes, perhaps biggest lessons or takeaways"* | ✅ **SHIPPED (`2b5e8ea`).** Sheet rebuilt to **frame → five components → close**. Sections are the **components**, not her contribution facets — someone getting the gist needs to know what the thing IS, and "Experience Design" is a category of her labor, not an orientation. Her copy is preserved with a per-field receipt at `content/sheets/groundswell.js`; nothing rephrased |
+| N51f | "I have photos of all of them. I would like some of the media to be videos and some photos maybe even a gallery." | ✅ **The rule that answers it: MEDIA FORM FOLLOWS WHAT THE COMPONENT IS**, so the mix has a reason rather than being variety for its own sake. Video where motion is the content (the wall filling, the walk through the pod, the dashboard moving) · photography where the object is (the pod, the CTB email) · audio where the medium is sound · a gallery where there is a genuine SET. **This rule travels to the other five projects**, which matters more than the one decision |
+| N51g | "In previous versions of my portfolio… we did have the poem embedded is that no longer true?" | ✅ **Still true — nothing was lost.** `gs-poem-remember_psyfok` is live on Cloudinary, and `AudioPlayer` + `useSharedAudio` already coordinate single-play across every wired player. It needed **wiring, not building**, and is now the Mindfulness Library's lead because the medium is sound. (`gs-card-flip` is mapped in `lib/cloudinary.js` but 404s — do not reference it) |
+| N51h | "My role was: generative research, content copywriting, project management, fundraising (securing over $30k in donations), data visalization and build of the data dashboard" · "lets credit that I led the data dashbaord production and design" | ✅ **Taken as authoritative** over anything assembled from the rehearsal answers. Her rehearsal line *"I did not own any specific component"* is kept beside it: **she owned FUNCTIONS, not COMPONENTS**, and naming that distinction is what makes a five-item role list read as credible rather than as a claim over a team's work. **The dashboard is the stated exception**, which is also the argument for treating it as the reporting layer above the four interventions rather than a fifth one. Role clarity now sits in three places: the metadata row, a "my part" line inside each component next to the proof, and the full narrative at the close |
+
+**▸ THE DIAGNOSIS BEHIND N51e, and it generalises.** The four rejected statements map onto Q7/Q3/Q4/Q8 of the **Question Map** — a *deck* spine built for a 45-minute spoken panel. Her own research draws the line: *"the live site is for screening, the deck is for the interview"* (Ali-Hasan). **The rubric tells you what a hiring manager EVALUATES in an interview; it does not tell you what a screener needs in 90 seconds.** Do not import one into the other again. Full reasoning in project memory `DECISIONS.md → screening is not the interview`.
 
 **▸ THE SEVEN-WEEK GAP.** `feat/folder-expand` is **282 commits ahead of `origin/main`; nothing has been pushed since 2026-07-05.** `ProjectSheet` is on no remote at all. `origin/birthstory-round2` **is** on the public repo (`lorin-a/portfolio` is PUBLIC), so that source has been readable since July — hers to decide whether it comes down once the private mirror exists.
 
