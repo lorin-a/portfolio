@@ -1,29 +1,55 @@
 # Project Status
 
-## ▶ RESUME HERE (2026-08-21)
+## ▶ RESUME HERE (2026-08-27)
 
-**What we're doing: THE FOLDER EXPAND**, on branch **`feat/folder-expand`** (not pushed). Her
-direction: **no in-depth case studies for now — lean into the folder motif.** The homepage graze
-stays exactly as it is; clicking **“Open project”** grows the active folder card into
-`components/ProjectSheet/` — an inset folder with one tab, a masthead, metadata, four
-punchline-first statements, and the contribution galleries.
+**What we're doing: THE FOLDER SHEET COPY**, on branch **`feat/folder-expand`** (282 commits
+ahead of `origin/main`; nothing pushed since 2026-07-05). The one-tab folder is **settled and
+blessed** — do not relitigate it. What is open is **what the copy inside it should be**, and
+**N51c/N51d in the ledger below is the brief.**
 
-**Her open question is the one to answer first: does the one-tab folder read right?** Dev server
-`npm run dev -- -p 3005` (3001 was occupied), scroll to Groundswell, click Open project.
+**Her spec, verbatim, for the sheet copy:** *"the components of a project, what the research told
+us and why it was built and its outcomes, perhaps biggest lessons or takeaways."* This supersedes
+the four statements now in `ProjectPreview.js:13` (what it proved · my role · the decision · what
+I'd change). **Why those were wrong:** they map onto Q7/Q3/Q4/Q8 of the Question Map, which is a
+*deck* spine for a 45-minute spoken panel — and her own research says *"the live site is for
+screening, the deck is for the interview."* The interview rubric was imported into the screening
+surface.
 
-**The principle that ended four failed tab designs — do not relitigate it:** *a tab is identity,
-not navigation.* One folder, one tab, carrying the project name. Sections are a contents list,
-not tabs. Full reasoning in project memory `DECISIONS.md → A tab is identity`.
+**The material fact that sizes the work:** the sheet is already live for **all six** homepage
+projects (every one runs `cardVariant="file"`), with **65 media items already wired**. Missing is
+**48 short text fields**. The container is done; the contents are empty. Groundswell's can be
+assembled from her **verbatim** rehearsal answers at `docs/deck-system/rehearsal/groundswell-answers.md`
+— **no re-interview.**
+
+**Agreed order of operations (hers):** (1) Groundswell's fields · (2) the layout and motion pass
+against real words · (3) repoint `Go further` (all six hrefs currently send viewers to Medium,
+away from her own site) · (4) the other five projects · (5) the push decision.
+
+**VISIBILITY — shipped but NOT YET IN EFFECT (`b291290`).** Only the homepage should be public.
+Thirteen routes were verified live at **200** on lorin.work (`/about`, `/design-system`,
+`/projects/whelm`, and ten markdown project pages). `middleware.js` now seals everything but `/`
+behind Basic auth, extending the existing Groundswell legal gate rather than replacing it; both
+gates fail closed. **This does nothing until `main` is updated and `SITE_HOLD_PASSWORD` is set in
+Vercel** — see N51b.
+
+**STILL OWED, from her hands:** the **private mirror** (`gh repo create` is blocked by the
+permission classifier — she runs it, then `git push private --all`). Local insurance already
+exists: a verified all-refs bundle at `~/portfolio-backups/`.
+
+**The motion defects found eyes-on 2026-08-27, all still open:** the expand plays as an **empty
+outline inflating** (at 60 ms the card's photo and label are already deleted; the scrim is bound
+to `landed` so the darkening arrives *after* the growth finishes — nothing travels); the sheet
+fill and the page ground are the **identical** `rgb(37,37,37)`, so the folder is a hairline on
+its own background; the nav bleeds through the scrim beside the tab; and the first artifact sits
+**818 px** down an **821 px** reading area at 1440 (**1343 px** at 390), so the opening screen
+contains none of the work.
 
 **Two gotchas that cost real time, now in project memory `REFERENCE.md`:** any overlay on the
 homepage needs a **two-part scroll lock** (`normalizeScroll` steals the wheel *and*
 `overflow-x: clip` on html kills body→viewport overflow propagation), and **never measure an
 element inside a `display: none` subtree** — `scrollWidth` returns 0 and the failure is silent.
-
-**Next after her verdict, in order:** the copy-fly (N47f) · the intercepting modal route for a
-shareable URL and a working back button · the statements-versus-work balance (N47g) · real
-metadata values (all `[LORIN TO WRITE]`) · lift the dark-mode folder fill off the page ground ·
-delete the superseded `docs/lofi-expand.html`.
+**A third, from this session:** an **em dash in a `WWW-Authenticate` realm 500s** in the edge
+runtime — HTTP header values are ASCII only.
 
 ---
 
@@ -644,7 +670,26 @@ flow+features+styles. Senior plan:
 
 **Verified 1998 · 1440 · 1440 light · 390 · reduced motion:** tab 190 × 52 landing on the content column at every width, sheet scrolls while the page holds still, Escape closes and restores both the root overflow and `normalizeScroll`, zero horizontal overflow, no new console errors. Commits `ee33788` → `d483135` on `feat/folder-expand`.
 
+
 **▸ STILL OWED:** (1) **the copy-fly (N47f)** — proven in the lo-fi, not ported; needs the two components to share a ref. (2) **The intercepting modal route** for a shareable URL and a working back button. (3) **Her judgement on the balance (N47g)** — the four statements still take more room than they earn before any work appears. (4) Real metadata values (role/team/timeline/context are `[LORIN TO WRITE]`; they are nowhere in the repo). (5) In dark mode the folder fill and the page ground are both `#252525`, so the folder barely separates from its ground even with the scrim at 0.72 — the fill probably needs to lift a step. (6) `docs/lofi-expand.html` is superseded; delete once the route lands.
+
+### 2026-08-27 — N51, the visibility hold and the copy reckoning
+
+| # | Note (her words) | Status |
+|---|---|---|
+| N51a | "I am not ready for the folder sheet or birthstory case study to be live but they can be committed for safety just not visible to the public." | 🔨 **HALF DONE.** Local insurance shipped: a verified `git bundle` of every ref at `~/portfolio-backups/` (1.9 GB, complete history, no blob over 50 MB so a remote push will take it). The **private mirror still needs her hands** — `gh repo create` is blocked by the permission classifier. Visibility half shipped as `b291290`, below |
+| N51b | "only the home page is live at this point for public to see" | ✅ **SHIPPED (`b291290`), pending a push to `main` to take effect.** The audit found far more public than anyone thought — verified live with real status codes, not assumed: `/about`, `/design-system`, `/projects/whelm` and **ten markdown project pages** (birthstory, bridging-the-gap, cuba-creatives, groundswell, heirloom, homi, mindfulnest, seeds-of-transformation, somebuddy, transition-design) all returned **200 on lorin.work**. Only the Groundswell routes were sealed (401, the June legal hold). The fix **extends that existing gate** rather than inventing a second mechanism: two Basic-auth gates, each with its own password and its own reason — `GROUNDSWELL_GATE_PASSWORD` (legal: Blue Garden is licensed for physical use only) and `SITE_HOLD_PASSWORD` (editorial). **Both fail closed**, so an unset variable locks rather than opens. Nothing is deleted; the build stays reachable with the password. **Two gotchas the build caught:** an em dash in the `WWW-Authenticate` realm 500s in the edge runtime (headers are ASCII), and the matcher must exclude every media extension in `/public` or the homepage loses its assets — verified by a full-page scroll at 1440 with **zero failed requests and zero console errors** |
+| N51c | "I am not feeling strong about these as the main categories for copy: what it proved · my role · the decision · what I'd change… I do still want it to answer viewer's question but I think we should workshop what someone getting the gist of a project wants and needs to know. How to balance brevity with depth." | 🔨 **Workshop open — her direction below is the brief.** The diagnosis that stands: those four map onto Q7/Q3/Q4/Q8 of the **Question Map**, which is a *deck* spine built for a 45-minute spoken panel. Her own research draws the line — *"the live site is for screening, the deck is for the interview"* (Ali-Hasan). The interview rubric was imported into the screening surface, which is the error. Three consequences: all four slots are retrospective so **the gist itself is missing**; "what I'd change" spends a scarce slot on a liability and gives away the strongest *live* answer (Zhuo's signature question); and four equal blocks in a 2×2 have **no punchline**, against a unanimous results-first consensus (*"don't make me wait too long to get to the punch line"* — Evnin) |
+| N51d | "it can be a little more than this proposal some of that depth will come naturally as I need to explain the components of a project, what the research told us and why it was built and its outcomes, perhaps biggest lessons or takeaways" | 🟡 **HER SPEC — supersedes my three-line proposal.** She is naming five beats: **the components of a project · what the research told us · why it was built · its outcomes · biggest lessons or takeaways.** Read as a diagnosis: the three-line version was too thin, and the depth is not a burden to be minimised because *explaining the components is the work itself*. The structural answer is that this copy does not all live in one block — the per-section explanation rides **with each facet**, and only the frame (why it was built, outcome) and the closing takeaway sit as standalone statements |
+
+**▸ THE MATERIAL FINDING behind all of it — the folder sheet is not a Groundswell feature.** All six homepage projects already run `cardVariant="file"` with contributions defined, and `ProjectSheet` takes `facets={contributions}`, so the sheet is live for every one of them. **65 media items are already wired** (Groundswell 10 with one gated facet · BirthStory 13 · Whelm 11 · SomeBuddy 12 · Transition Design 7 · Bridging 12). What is missing is **48 short text fields** — four statements and four metadata rows per project. The container is done; the contents are empty.
+
+**▸ AND THE DEPTH EXIT POINTS OFF-SITE.** All six `href` values go to Medium articles or a CMU magazine piece, so today every "Go further" sends a hiring manager away from lorin.work to a class blog post — while Birth Story, the one real case study she has built, is the destination of nothing. Repointing it is what reconciles N46's flat folder tier with the locked three-star strategy: folders are the default tier for all six, Birth Story is the one deep exit.
+
+**▸ AGREED ORDER OF OPERATIONS (hers, this session):** (1) Groundswell's fields, assembled from her verbatim rehearsal answers at `docs/deck-system/rehearsal/groundswell-answers.md` — Q7 part 2, Q3 + follow-up, Q2/Q6 follow-up, Q8 map onto the slots, so **no re-interview**. (2) The layout and motion pass against real words. (3) Repoint `Go further`. (4) The other five projects. (5) The push decision.
+
+**▸ THE SEVEN-WEEK GAP.** `feat/folder-expand` is **282 commits ahead of `origin/main`; nothing has been pushed since 2026-07-05.** `ProjectSheet` is on no remote at all. `origin/birthstory-round2` **is** on the public repo (`lorin-a/portfolio` is PUBLIC), so that source has been readable since July — hers to decide whether it comes down once the private mirror exists.
+
 
 ---
 
