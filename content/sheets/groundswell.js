@@ -21,7 +21,9 @@ export const groundswell = {
     'All scales aside from perceived support from leadership improved throughout the study, indicating a core problem around institutional trust and support from administration.',
 
   meta: [
-    ['Role', 'Brand, copy, workshop facilitation, data visualization'],
+    /* Her own words, 2026-08-27, and authoritative over anything assembled
+       from the rehearsal answers. */
+    ['Role', 'Generative research, content copywriting, project management, fundraising, data visualization'],
     ['Team', 'Carnegie Mellon School of Design, with UPMC and Pitt partners'],
     ['Timeline', { todo: 'The 15-week CARES course, then the 9-month pilot. Dates?' }],
     ['Context', 'UPMC Magee-Womens Cancer Services'],
@@ -36,10 +38,13 @@ export const groundswell = {
     research:
       'A lit review, shadowing with AEIOU and contextual inquiry, and interviews across roles from front desk to nurse manager to chemo nurse. Affinity mapping and tetrahedron analysis synthesized it into one thesis: care worker wellbeing is neglected from patient care standards. The grief workshop went further. It revealed core insights that staff need permission (from peers, who will cover their workload, and higher-ups, that there will not be repercussions) and acknowledgement (of the emotional toll of the work, that they did the best they could).',
 
-    /* Rehearsal Q3, selected. The last line is the one that makes the rest
-       credible; it is the answer to the disqualifier question. */
+    /* Her role, 2026-08-27, in her words and authoritative. The closing line
+       is rehearsal Q3 and it is kept deliberately: she owned FUNCTIONS, not
+       COMPONENTS, and saying so is what makes the list above credible rather
+       than a claim over a team's work. The two statements are not in tension
+       once the distinction is named. */
     role:
-      'During the CARES course I was an equal participant in research but I did lead team structure and organization of files and documentation. When it came to developing the Groundswell brand, I led that research and copywriting. I found the name after doing a lot of research on nature metaphors and oncology symbolism. I drafted workshop scripts and led facilitation of the grief workshop, and specifically drafted it to be trauma-informed and responsive so as not to be extractive in collecting emotional data. During the pilot I was remote in NYC, so I led copy drafting and budget documentation, and I secured donations and partnerships. I applied my knowledge of somatic bodywork to draft the reflection cards. Once the study was running, I led data visualization of the collected data. We all participated in collective feedback, strategizing, prototyping, but I did not own any specific component.',
+      'Generative research, content copywriting, project management, fundraising (securing over $30k in donations), and the data visualization and build of the data dashboard. I found the Groundswell name after doing a lot of research on nature metaphors and oncology symbolism. I drafted workshop scripts and led facilitation of the grief workshop, and specifically drafted it to be trauma-informed and responsive so as not to be extractive in collecting emotional data. I applied my knowledge of somatic bodywork to draft the reflection cards. We all participated in collective feedback, strategizing, prototyping, but I did not own any specific component.',
 
     /* Her copy 2026-08-27, verbatim. */
     partners:
@@ -53,18 +58,44 @@ export const groundswell = {
   components: [
     {
       key: 'garden',
+      /* Motion IS the content: a wall fills up over months. A still can
+         show the object but not the accumulation. */
+      media: {
+        lead:    { type: 'video', key: 'gs-intro-artwall', alt: 'The Groundswell Garden art wall filling with anonymous contributions.' },
+        stills:  ['gs-artwall', 'gs-artwall-detail-01', 'gs-artwall-detail-02', 'gs-artwall-detail-03'],
+      },
       name: 'Groundswell Garden Community Art Wall',
       body: 'The Groundswell Garden is a community art wall where the emotional realities of oncology work can be witnessed, shared, and honored. Through guided prompts that explore the complex spectrum of grief, healthcare staff and the broader community anonymously contribute messages of support, creating a living tapestry of human stories at the heart of cancer care.',
       mine: 'I led the brand research and copywriting, including the guided prompts.',
     },
     {
       key: 'pod',
+      /* Spatial: you have to move through it. Walkthrough leads, then the
+         object and its details, plus the facade she had to redesign when
+         admin required doors. */
+      media: {
+        lead:    { type: 'video', key: 'gs-walkthrough-video', alt: 'Walkthrough of the Groundswell Restorative Pod.' },
+        stills:  ['gs-pod', 'gs-pod-detail-01', 'gs-pod-detail-02', 'gs-pod-detail-03', 'gs-making-facade'],
+      },
       name: 'Groundswell Restorative Pod',
       body: 'A dedicated space for staff to process emotions, decompress, and recognize restoration as essential to care work. Designed for ease and impact, it offers calming visuals, guided meditations, reflection cards, and hands-on mindfulness tools that turn even a brief break into meaningful support.',
       mine: 'I secured the donations and partnerships that built it: NookPod, finger labyrinths, wood working, Schlage locks, density sensor hardware and software, and a meditation teacher partner.',
     },
     {
       key: 'library',
+      /* The medium is SOUND, so the lead is a player, not a picture. The
+         AudioPlayer + useSharedAudio already exist and coordinate pausing
+         across players - this is her poem request, already built.
+         The reflection cards are a SET, so they are the gallery: nine
+         emotions, front and back. */
+      media: {
+        lead:     { type: 'audio', key: 'gs-poem-remember', title: 'The Groundswell poem' },
+        also:     [{ type: 'audio', key: 'gs-meditation-home', title: 'Guided meditation' },
+                   { type: 'video', key: 'New_Meditations', alt: 'The meditation library.' },
+                   { type: 'video', key: 'gs-qr-library', alt: 'Scanning into the mindfulness library.' }],
+        gallery:  { kind: 'cards', faces: 'front-and-back',
+                    emotions: ['welcome', 'embrace', 'numb', 'present', 'angry', 'grateful', 'exhausted', 'joyful', 'invisible'] },
+      },
       name: 'Groundswell Mindfulness Library',
       body: 'A digital library of mindfulness resources including guided meditations of varying lengths, the Groundswell poem, and calming instrumentals. Groundswell Reflection Cards are part of the library: a deck of guided reflection cards designed to help healthcare staff identify and process the complex emotions of caregiving work. Each card offers emotional validation, simple somatic exercises for nervous system regulation, and conversation starters for meaningful dialogue about well-being.',
       mine: 'I applied my knowledge of somatic bodywork to draft the reflection cards, and set up the recorded meditations and instrumentals.',
@@ -74,12 +105,23 @@ export const groundswell = {
     },
     {
       key: 'ctb',
+      /* A document. Motion adds nothing; the copy is the artifact. */
+      media: {
+        lead:    { type: 'image', key: 'gs-ctb-email', alt: 'The redesigned Ceased to Breathe email template.' },
+        stills:  ['gs-ctb-detail-01', 'gs-ctb-detail-02', 'gs-ctb-detail-03'],
+      },
       name: 'Ceased to Breathe (CTB) Email Template',
       body: 'The updated Ceased to Breathe (CTB) email template builds upon the firm foundation of existing staff-led support initiatives for patient death notifications by softening the emotional tone of delivering devastating news. The addition of empathetic language and comforting visuals creates a communal space where the emotional realities of oncology work can be acknowledged, shared, and honored by recognizing both the professional and personal impact of patient loss.',
       mine: 'I led the copy drafting.',
     },
     {
       key: 'dashboard',
+      /* Interactive, so video is the honest way to show it. Gated: real
+         patient care data behind the blur (GatedOverlay). */
+      media: {
+        lead:    { type: 'video', key: 'gs-display-view', alt: 'The Groundswell data dashboard.' },
+        also:    [{ type: 'video', key: 'gs-pod-data', alt: 'Pod usage data over the study.' }],
+      },
       name: 'The data dashboard',
       body: 'An interactive platform that translated the data collected from each component into an immersive storytelling experience that translated lived experience into actionable metrics. It combined qualitative and quantitative findings in one place, showcasing the importance of telling a well-rounded story.',
       mine: 'I led the data visualization of the collected data.',
