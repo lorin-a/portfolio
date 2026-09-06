@@ -26,9 +26,22 @@ eyes on the rebuilt sheet.**
 - **Safety**: a private mirror **`lorin-a/portfolio-private` now holds all 18 branches**, plus
   a verified all-refs bundle at `~/portfolio-backups/`.
 
+### ⟢ OPEN NOTES LEDGER — Folder sheet (2026-09-06, her verdict on the rebuilt sheet)
+
+> **"I am VERY happy with this draft. I think it can be tightened up but overall very nice
+> work."** The sheet's shape is blessed; the notes below are the tightening pass.
+
+| # | Note (her words) | Status |
+|---|---|---|
+| FS1 | "I would like to see a page break line below the meta data" | 🔨 |
+| FS2 | "a less generic/obviously AI callout design for my 'what I did' moments" | 🔨 |
+| FS3 | "the flip cards to be a better and true to size with rounded corners design AND just show two side by side that are contrasting emotions" | 🔨 |
+| FS4 | "the read the article section to be more visual and official looking, a link does not excite me or catch my eye, make it look polished and official like its special and was featured in this publication type of thing. gives it credibility" | 🔨 |
+| FS5 | "Then we can work on copy" | ⏭ QUEUED — after FS1–FS4 land |
+
 ### ▶ Next move
 
-**Her verdict on the rebuilt sheet.** Then, in order: **(1)** the 4-vs-5 component count —
+**Work FS1–FS4 above, then her copy pass (FS5).** Superseded: ~~her verdict on the rebuilt sheet~~ — delivered 2026-09-06, see ledger. Then, in order: **(1)** the 4-vs-5 component count —
 she wrote "4 core components" and named five; the dashboard reads as the reporting layer
 above the four. **(2)** The `[LORIN TO WRITE]` Timeline metadata (dates). **(3) The IRB
 question, and it gates anything public**: the six-scale survey results are UPMC clinician
