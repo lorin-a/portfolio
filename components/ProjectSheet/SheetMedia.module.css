@@ -1,12 +1,14 @@
-/* Media inside the folder sheet. Tokens only — see DESIGN_SPEC §5/§6. */
+/* Media inside the folder sheet, on THE SHEET SYSTEM (see .inner in
+   ProjectSheet.module.css). One radius, one media gap, one rule, the
+   shared type steps. */
 
 .box {
   position: relative;
   display: block;
   overflow: hidden;
-  /* radius-lg clips square exports to card corners; no background, so a
-     mockup with baked transparent corners (the CTB browser frame) shows
-     the sheet's own ground instead of an off-black box behind it. */
+  /* One radius for every artifact; no backing fill, so exports with
+     baked transparent corners (the CTB browser frame) show the sheet's
+     own ground. */
   border-radius: var(--radius-lg);
   background: none;
 }
@@ -47,46 +49,36 @@
 /* ── Lead artifact ───────────────────────────────────────────────── */
 
 .lead {
-  margin: 0 0 var(--space-xs);
+  margin: 0;
 }
 
 .lead figcaption,
 .stills figcaption {
-  margin-top: 0.875rem;
+  margin-top: var(--flow-1);
   font-family: var(--font-heading);
   font-style: italic;
-  font-size: 0.9375rem;
+  font-size: var(--step-small);
   line-height: 1.5;
   color: var(--color-ink);
   text-wrap: pretty;
 }
 
-/* ── Supporting stills ───────────────────────────────────────────── */
+/* ── Supporting stills: a pair on the one split, one shared height ── */
 
 .stills {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 1.25rem;
-  margin-top: 1.75rem;
+  gap: var(--gap-media);
+  margin-top: var(--flow-2);
 }
 
 @media (min-width: 700px) {
   .stills {
-    grid-template-columns: 1.6fr 1fr;
+    grid-template-columns: var(--split);
   }
 
-  .stillsFlip {
-    grid-template-columns: 1fr 1.6fr;
-  }
-}
-
-/* A pair shares one baseline: one row height, two widths, so the wide
-   still reads landscape and the narrow one near-square — and their top
-   AND bottom edges land on the same gridlines. A lone still keeps its
-   own proportions. */
-@media (min-width: 700px) {
   .stills:has(> figure:nth-child(2)) .box {
-    height: clamp(16rem, 26vw, 24rem);
+    height: clamp(16rem, 24vw, 22rem);
   }
 
   .stills:has(> figure:nth-child(2)) .media {
@@ -103,21 +95,21 @@
 
 .audio {
   margin: 0;
-  padding: 1.25rem 1.5rem 1.5rem;
-  border: 1px solid var(--color-ink);
+  padding: var(--flow-2);
+  border: var(--rule);
   border-radius: var(--radius-lg);
 }
 
 .audioHead {
   display: flex;
   align-items: baseline;
-  gap: 0.75rem;
-  margin-bottom: 1rem;
+  gap: var(--flow-1);
+  margin-bottom: var(--flow-2);
 }
 
 .audioKind {
   font-family: var(--font-body);
-  font-size: 0.75rem;
+  font-size: var(--step-label);
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -126,7 +118,7 @@
 
 .audioTitle {
   font-family: var(--font-heading);
-  font-size: 1.125rem;
+  font-size: var(--step-body);
   color: var(--color-ink);
 }
 
@@ -135,35 +127,26 @@
   height: 40px;
 }
 
-/* ── Reflection cards: the gallery ───────────────────────────────── */
+/* ── Reflection cards: three, equal, true proportions ────────────── */
 
 .gallery {
-  margin-top: 1.5rem;
+  margin-top: var(--flow-2);
 }
 
 .galleryNote {
-  margin: 0 0 1rem;
+  margin: 0 0 var(--flow-1);
   font-family: var(--font-body);
-  font-size: 0.8125rem;
+  font-size: var(--step-small);
   color: var(--color-ink);
 }
 
 .cards {
   display: grid;
-  /* Three cards across the full section width (her note 2026-09-06):
-     the deck's range, shown at the scale of the other artifacts. */
   grid-template-columns: repeat(3, 1fr);
-  gap: clamp(1rem, 2.5vw, 2rem);
+  gap: var(--gap-media);
   margin: 0;
-  padding: 0 0 2rem;
+  padding: 0;
   list-style: none;
-}
-
-/* Dealt, not gridded: the middle card sits lower in the hand. */
-@media (min-width: 700px) {
-  .cards li:nth-child(2) {
-    transform: translateY(2rem);
-  }
 }
 
 .card {
@@ -180,8 +163,7 @@
 .cardInner {
   position: relative;
   display: block;
-  /* The deck's true proportions (the exports are 600×967). The old 3/4
-     box cropped ~17% off every face, including the footer of the backs. */
+  /* The deck's true proportions (the exports are 600×967). */
   aspect-ratio: 600 / 967;
   /* No overflow/clip here: any overflow other than `visible` forces
      transform-style back to flat, which silently kills
@@ -201,8 +183,6 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  /* Card-corner rounding at this scale, and a shadow so the row reads
-     as physical objects lying on the sheet. */
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-md);
   backface-visibility: hidden;
@@ -215,10 +195,10 @@
 
 .cardLabel {
   display: block;
-  margin-top: 0.625rem;
+  margin-top: var(--flow-1);
   font-family: var(--font-body);
-  font-size: 0.75rem;
-  letter-spacing: 0.06em;
+  font-size: var(--step-label);
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--color-ink);
 }
@@ -231,11 +211,11 @@
 
 @media (hover: hover) {
   .card:hover .cardInner {
-    transform: translateY(-8px);
+    transform: translateY(-4px);
   }
 
   .card[data-back='true']:hover .cardInner {
-    transform: rotateY(180deg) translateY(-8px);
+    transform: rotateY(180deg) translateY(-4px);
   }
 
   .card:hover .cardFace {
@@ -265,18 +245,19 @@
   }
 }
 
-/* ── Behind the scenes: the team, at the bottom ─────────────────────── */
+/* ── Behind the scenes: one calm grid ────────────────────────────── */
 
 .bts {
-  margin-top: 3.5rem;
-  padding-top: 1.5rem;
-  border-top: 1px solid var(--color-ink);
+  margin-top: var(--flow-4);
+  padding-top: var(--flow-2);
+  border-top: var(--rule);
 }
 
 .btsHead {
-  margin: 0 0 1.25rem;
+  display: block;
+  margin: 0 0 var(--flow-2);
   font-family: var(--font-body);
-  font-size: 0.75rem;
+  font-size: var(--step-label);
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -286,29 +267,15 @@
 .btsGrid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 1rem;
+  gap: var(--gap-media);
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
-/* Two hero frames lead, the rest read as the contact-sheet row beneath —
-   a composed spread instead of an even grid. */
 @media (min-width: 900px) {
   .btsGrid {
-    grid-template-columns: repeat(6, 1fr);
-  }
-
-  .btsGrid li:nth-child(-n+2) {
-    grid-column: span 3;
-  }
-
-  .btsGrid li:nth-child(n+3) {
-    grid-column: span 2;
-  }
-
-  .btsGrid li:nth-child(-n+2) .btsBox {
-    aspect-ratio: 3 / 2;
+    grid-template-columns: repeat(4, 1fr);
   }
 }
 
@@ -321,4 +288,11 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+  transition: transform var(--motion-medium) var(--ease-out);
+}
+
+@media (hover: hover) {
+  .zoom:hover .btsImg {
+    transform: scale(1.02);
+  }
 }

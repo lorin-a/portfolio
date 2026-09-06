@@ -136,17 +136,16 @@ export const groundswell = {
      rewrite in the copy pass. */
   bts: {
     title: 'Behind the scenes',
-    /* The first two are the hero frames of the composed spread; the rest
-       read as the contact-sheet row, chronological. */
+    /* Chronological: making → playtests → workshops → the finale. */
     images: [
       { key: 'gs-making-build-01',     alt: 'A teammate celebrates beside the pod mid-build.' },
-      { key: 'gs-finale',              alt: 'A hug in front of the art wall at the finale.' },
       { key: 'gs-making-build-04',     alt: 'The team lays out a printed mural panel.' },
       { key: 'gs-making-install-01',   alt: 'Installing the pod’s painted facade.' },
       { key: 'gs-playtest-01',         alt: 'Setting up the playtest table.' },
       { key: 'gs-playtest-03',         alt: 'A staff member smiles beside the pod during playtesting.' },
       { key: 'gs-workshop-flower-01',  alt: 'Making paper flowers at the workshop table.' },
       { key: 'gs-workshop-coats-01',   alt: 'Two teammates with a basket of paper flowers.' },
+      { key: 'gs-finale',              alt: 'A hug in front of the art wall at the finale.' },
     ],
   },
 

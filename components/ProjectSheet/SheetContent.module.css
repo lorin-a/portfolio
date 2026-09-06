@@ -1,114 +1,104 @@
-/* The folder sheet body. Tokens only — DESIGN_SPEC §2/§3/§5/§6.
+/* The folder sheet body, on THE SHEET SYSTEM (defined on .inner in
+   ProjectSheet.module.css): six type steps, one grid split, one rule,
+   one label recipe, four rhythm values. No component invents a value.
    Type floor is 12px; the project's stylelint rejects anything smaller. */
 
-.masthead {
-  margin-bottom: 3rem;
-}
+/* ── The one label recipe — every label on the sheet is this ─────── */
 
-@media (min-width: 900px) {
-  .masthead {
-    display: grid;
-    grid-template-columns: 1.15fr 1fr;
-    gap: 4rem;
-    align-items: end;
-  }
-
-  /* The claim sits beside the title rather than beneath it, so the first
-     screen carries both without spending vertical space twice. */
-  .outcome {
-    align-self: end;
-    margin-top: 0;
-  }
-}
-
-.num {
+.outcomeLabel,
+.mineLabel,
+.frameBlock h3,
+.closeBlock h3,
+.lesson h3,
+.meta dt,
+.num,
+.componentNum {
   display: block;
+  margin: 0 0 var(--flow-1);
   font-family: var(--font-body);
-  font-size: 0.875rem;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  color: var(--color-sage);
-  font-variant-numeric: tabular-nums;
-}
-
-.title {
-  margin: 0.625rem 0 0;
-  font-family: var(--font-heading);
-  font-size: clamp(2.75rem, 5.2vw, 4.5rem);
-  line-height: 1.02;
-  color: var(--color-ink);
-  text-wrap: balance;
-}
-
-.tagline {
-  margin: 0.5rem 0 0;
-  font-family: var(--font-heading);
-  font-style: italic;
-  font-size: clamp(1.125rem, 1.6vw, 1.5rem);
-  color: var(--color-ink);
-  text-wrap: pretty;
-}
-
-/* The outcome, early. A labeled claim in the serif — the finding gets the
-   editorial voice, not a bordered aside. */
-.outcome {
-  max-width: 44ch;
-  margin: 1.5rem 0 0;
-}
-
-.outcomeLabel {
-  display: block;
-  margin-bottom: 0.625rem;
-  font-family: var(--font-body);
-  font-size: 0.75rem;
+  font-size: var(--step-label);
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--color-sage);
 }
 
-.outcomeBody {
+/* ── Masthead: the cover spread, on the one split ────────────────── */
+
+.masthead {
+  margin-bottom: var(--flow-3);
+}
+
+@media (min-width: 900px) {
+  .masthead {
+    display: grid;
+    grid-template-columns: var(--split);
+    gap: var(--gap-col);
+    align-items: end;
+  }
+
+  .outcome {
+    margin-top: 0;
+  }
+}
+
+.num {
+  font-variant-numeric: tabular-nums;
+}
+
+.title {
   margin: 0;
   font-family: var(--font-heading);
-  font-size: clamp(1.25rem, 1.8vw, 1.625rem);
-  line-height: 1.42;
+  font-size: var(--step-display);
+  line-height: 1.05;
+  color: var(--color-ink);
+  text-wrap: balance;
+}
+
+.tagline {
+  margin: var(--flow-1) 0 0;
+  font-family: var(--font-heading);
+  font-style: italic;
+  font-size: var(--step-editorial);
   color: var(--color-ink);
   text-wrap: pretty;
 }
 
-/* ── Metadata: one hairline row ──────────────────────────────────── */
+.outcome {
+  max-width: 44ch;
+  margin: var(--flow-2) 0 0;
+}
+
+.outcomeBody {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: var(--step-editorial);
+  line-height: 1.5;
+  color: var(--color-ink);
+  text-wrap: pretty;
+}
+
+/* ── Metadata strip ──────────────────────────────────────────────── */
 
 .meta {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(180px, 100%), 1fr));
-  gap: 1.5rem;
-  margin: 0 0 2.5rem;
-  padding-top: 1.25rem;
-  padding-bottom: 1.75rem;
-  /* The page breaks: every structural rule on the sheet is the same
-     1px ink line (her note 2026-09-06 — no mixed weights, no grey). */
-  border-top: 1px solid var(--color-ink);
-  border-bottom: 1px solid var(--color-ink);
+  gap: var(--flow-2);
+  margin: 0 0 var(--flow-3);
+  padding-block: var(--flow-2);
+  border-top: var(--rule);
+  border-bottom: var(--rule);
 }
 
 .meta div {
   min-width: 0;
 }
 
-.meta dt {
-  font-family: var(--font-body);
-  font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--color-sage);
-}
-
 .meta dd {
-  margin: 0.375rem 0 0;
+  margin: 0;
   font-family: var(--font-body);
-  font-size: 0.9375rem;
-  line-height: 1.5;
+  font-size: var(--step-small);
+  line-height: 1.6;
   color: var(--color-ink);
   text-wrap: pretty;
 }
@@ -120,7 +110,7 @@
 
 .todo b {
   display: block;
-  font-size: 0.75rem;
+  font-size: var(--step-label);
   font-style: normal;
   font-weight: 600;
   letter-spacing: 0.08em;
@@ -128,39 +118,37 @@
   color: var(--color-sage);
 }
 
-/* ── Frame ───────────────────────────────────────────────────────── */
+/* ── Frame: the lede and the evidence, on the one split ──────────── */
 
 .frame {
-  margin-bottom: 4.5rem;
+  margin-bottom: var(--flow-4);
 }
 
-/* At width the frame runs two columns, so the opening does not stack into
-   a tall wall of prose before any work appears. */
 @media (min-width: 900px) {
   .frame {
     display: grid;
-    grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
-    gap: 4rem;
+    grid-template-columns: var(--split);
+    gap: var(--gap-col);
     align-items: start;
   }
 }
 
 .frameCol > * + * {
-  margin-top: 2rem;
+  margin-top: var(--flow-2);
 }
 
 .why {
   max-width: 44ch;
   margin: 0;
   font-family: var(--font-heading);
-  font-size: clamp(1.375rem, 2.2vw, 1.875rem);
-  line-height: 1.45;
+  font-size: var(--step-editorial);
+  line-height: 1.5;
   color: var(--color-ink);
   text-wrap: pretty;
 }
 
 .frameBlock {
-  margin-top: 2rem;
+  margin-top: var(--flow-2);
 }
 
 @media (min-width: 900px) {
@@ -169,82 +157,40 @@
   }
 }
 
-.frameBlock h3 {
-  margin: 0 0 0.625rem;
-  font-family: var(--font-body);
-  font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--color-sage);
-}
-
 .frameBlock p {
   margin: 0;
   font-family: var(--font-body);
-  font-size: 1rem;
-  line-height: 1.65;
+  font-size: var(--step-body);
+  line-height: 1.7;
   color: var(--color-ink);
   text-wrap: pretty;
 }
 
-.partners {
-  margin: 2rem 0 0;
-  font-family: var(--font-body);
-  font-size: 0.8125rem;
-  line-height: 1.6;
-  color: var(--color-ink);
-  text-wrap: pretty;
-}
-
-.credit {
-  margin: 0.75rem 0 0;
-  font-family: var(--font-body);
-  font-size: 0.8125rem;
-  line-height: 1.6;
-  color: var(--color-ink);
-}
-
-/* ── Components ──────────────────────────────────────────────────── */
+/* ── Components: identical anatomy, every time ───────────────────── */
 
 .component {
-  margin-bottom: 5.5rem;
-  padding-top: 1.75rem;
-  border-top: 1px solid var(--color-ink);
+  margin-bottom: var(--flow-4);
+  padding-top: var(--flow-2);
+  border-top: var(--rule);
 }
 
 .componentHead {
-  position: relative;
   display: flex;
   align-items: baseline;
-  gap: 1rem;
-  margin-bottom: 1.75rem;
+  gap: var(--flow-1);
+  margin-bottom: var(--flow-2);
 }
 
 .componentNum {
-  font-family: var(--font-body);
-  font-size: 0.9375rem;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  color: var(--color-sage);
+  margin: 0;
   font-variant-numeric: tabular-nums;
-}
-
-/* At width the folio hangs in the margin, so every title shares one hard
-   left axis and the numerals read as a rail down the sheet. */
-@media (min-width: 1100px) {
-  .componentNum {
-    position: absolute;
-    left: -3.25rem;
-    top: 0.4em;
-  }
 }
 
 .componentHead h3 {
   margin: 0;
   font-family: var(--font-heading);
-  font-size: clamp(1.75rem, 3.1vw, 2.75rem);
-  line-height: 1.08;
+  font-size: var(--step-heading);
+  line-height: 1.15;
   color: var(--color-ink);
   text-wrap: balance;
 }
@@ -252,34 +198,35 @@
 .gated {
   margin-left: auto;
   padding: 0.25rem 0.625rem;
-  border: 1px solid var(--color-ink);
+  border: var(--rule);
   border-radius: var(--radius-pill);
   font-family: var(--font-body);
-  font-size: 0.75rem;
-  letter-spacing: 0.06em;
+  font-size: var(--step-label);
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--color-ink);
   white-space: nowrap;
 }
 
+/* The text zone: description and her signature, on the one split. */
 .componentText {
-  margin-top: 1.5rem;
+  margin-top: var(--flow-2);
 }
 
 @media (min-width: 900px) {
   .componentText {
     display: grid;
-    grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr);
-    gap: 3.5rem;
+    grid-template-columns: var(--split);
+    gap: var(--gap-col);
     align-items: start;
   }
 }
 
 .componentBody {
   max-width: 62ch;
-  margin: 0 0 0.875rem;
+  margin: 0 0 var(--flow-2);
   font-family: var(--font-body);
-  font-size: 1.0625rem;
+  font-size: var(--step-body);
   line-height: 1.7;
   color: var(--color-ink);
   text-wrap: pretty;
@@ -291,76 +238,45 @@
   }
 }
 
-/* Her contribution, beside the evidence rather than as one claim up top.
-   Set as a signed annotation: her phrase as the label, the line itself in
-   the site's italic serif voice. The register shift does the separating —
-   no colored bar. */
+/* Her contribution: the editorial serif carries it — the same step as
+   the lede, the outcome, and the lesson. One voice, four moments. */
 .mine {
   max-width: 56ch;
-  margin: 1.5rem 0 0;
-}
-
-@media (min-width: 900px) {
-  .mine {
-    margin-top: 0.375rem;
-  }
-}
-
-.mineLabel {
-  display: flex;
-  align-items: center;
-  gap: 0.625rem;
-  margin-bottom: 0.5rem;
-  font-family: var(--font-body);
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--color-sage);
-}
-
-/* The signature stroke: a short sage rule opens the line, so the moment
-   registers from across the room without a callout box. */
-.mineLabel::before {
-  content: '';
-  width: 2rem;
-  height: 2px;
-  flex: none;
-  background: var(--color-sage);
+  margin: 0;
 }
 
 .mineBody {
   display: block;
   font-family: var(--font-heading);
   font-style: italic;
-  font-size: clamp(1.125rem, 1.5vw, 1.3125rem);
+  font-size: var(--step-editorial);
   line-height: 1.5;
   color: var(--color-ink);
   text-wrap: pretty;
 }
 
-/* ── Close ───────────────────────────────────────────────────────── */
+/* ── Close: the evidence pair, the lesson, the colophon ──────────── */
 
 .close {
-  padding-top: 2rem;
-  border-top: 1px solid var(--color-ink);
+  padding-top: var(--flow-2);
+  border-top: var(--rule);
 }
 
 .closeGrid {
-  margin-bottom: 3rem;
+  margin-bottom: var(--flow-3);
 }
 
 @media (min-width: 900px) {
   .closeGrid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 4rem;
+    grid-template-columns: var(--split);
+    gap: var(--gap-col);
   }
 }
 
 .closeBlock {
-  max-width: 68ch;
-  margin-bottom: 2.5rem;
+  max-width: 62ch;
+  margin-bottom: var(--flow-2);
 }
 
 @media (min-width: 900px) {
@@ -369,55 +285,51 @@
   }
 }
 
-/* The strongest thing in the corpus gets a reading moment: the serif, a
-   centered measure, air on both sides. */
-.lesson {
-  max-width: 42rem;
-  margin: 4.5rem auto 4rem;
+.closeBlock p {
+  margin: 0 0 1rem;
+  font-family: var(--font-body);
+  font-size: var(--step-body);
+  line-height: 1.7;
+  color: var(--color-ink);
+  text-wrap: pretty;
 }
 
-.lesson h3 {
-  margin: 0 0 1.25rem;
-  font-family: var(--font-body);
-  font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  text-align: center;
-  color: var(--color-sage);
+/* The strongest thing in the corpus, in the editorial voice, on the
+   sheet's own left axis. */
+.lesson {
+  max-width: 52ch;
+  margin: var(--flow-3) 0;
 }
 
 .lesson p {
   margin: 0;
   font-family: var(--font-heading);
-  font-size: clamp(1.1875rem, 1.7vw, 1.4375rem);
+  font-size: var(--step-editorial);
   line-height: 1.55;
   color: var(--color-ink);
   text-wrap: pretty;
 }
 
 .colophon {
-  padding-top: 1.5rem;
-  border-top: 1px solid var(--color-ink);
+  padding-top: var(--flow-2);
+  border-top: var(--rule);
 }
 
-.closeBlock h3 {
-  margin: 0 0 0.75rem;
+.partners {
+  margin: 0;
   font-family: var(--font-body);
-  font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--color-sage);
-}
-
-.closeBlock p {
-  margin: 0 0 1rem;
-  font-family: var(--font-body);
-  font-size: 1rem;
-  line-height: 1.65;
+  font-size: var(--step-small);
+  line-height: 1.6;
   color: var(--color-ink);
   text-wrap: pretty;
+}
+
+.credit {
+  margin: var(--flow-1) 0 0;
+  font-family: var(--font-body);
+  font-size: var(--step-small);
+  line-height: 1.6;
+  color: var(--color-ink);
 }
 
 @media (prefers-reduced-motion: reduce) {

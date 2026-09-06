@@ -158,13 +158,12 @@ export function SheetLead({ item, gated, onImage }) {
   )
 }
 
-/** Supporting stills beneath the lead. `flip` mirrors the asymmetric
-    split so the rhythm alternates component to component. */
-export function SheetStills({ keys = [], gated, onImage, flip = false }) {
+/** Supporting stills beneath the lead: a pair on the system's split. */
+export function SheetStills({ keys = [], gated, onImage }) {
   const items = keys.map((k) => ({ k, src: img(k, 1200) })).filter((i) => i.src)
   if (!items.length) return null
   return (
-    <div className={flip ? `${styles.stills} ${styles.stillsFlip}` : styles.stills}>
+    <div className={styles.stills}>
       {items.map(({ k, src }) => (
         <figure key={k}>
           <ZoomableImage imageKey={k} src={src} alt=""

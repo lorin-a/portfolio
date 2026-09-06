@@ -169,8 +169,7 @@ export default function SheetContent({ sheet, num, title, tagline, titleId }) {
               : <SheetLead key={item.key} item={item} gated={c.gated} onImage={openImage} />
           )}
           {c.media?.stills && (
-            <SheetStills keys={c.media.stills} gated={c.gated} onImage={openImage}
-              flip={i % 2 === 1} />
+            <SheetStills keys={c.media.stills} gated={c.gated} onImage={openImage} />
           )}
           {c.media?.gallery && <SheetCardGallery gallery={c.media.gallery} />}
         </section>
