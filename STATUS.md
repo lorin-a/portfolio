@@ -69,9 +69,11 @@ Run against GRID.md's pre-ship gate. What changed, and why:
   the press preview breathes with its block.
 - ⚠ "The outcome" label is new furniture (grammar-matched to the other labels) — hers to veto.
 
+| FS17 | "I am disappointed with the lack of design authority this pass gave, it hardly looks better or different or more sophisticated. If any rules or mindsets are holding you back from WOWing me, remove them and take another pass at making this look like a professional, experienced designer" (2026-09-06) | 🔨 THE BOLD PASS — composition-level, not refinement-level |
+
 ### ▶ Next move
 
-**Her verdict on the FS6–FS16 batch + the finesse pass, then FS5: her copy pass on the sheet.** FS1–FS4 shipped and verified 1440 · 390 · reduced motion (zero overflow, zero new console errors, flip works by click and keyboard, stylelint clean on the sheet files). Superseded: ~~her verdict on the rebuilt sheet~~ — delivered 2026-09-06, see ledger. Then, in order: **(1)** the 4-vs-5 component count —
+**Her verdict on the bold pass (FS17), then FS5: her copy pass on the sheet.** FS1–FS4 shipped and verified 1440 · 390 · reduced motion (zero overflow, zero new console errors, flip works by click and keyboard, stylelint clean on the sheet files). Superseded: ~~her verdict on the rebuilt sheet~~ — delivered 2026-09-06, see ledger. Then, in order: **(1)** the 4-vs-5 component count —
 she wrote "4 core components" and named five; the dashboard reads as the reporting layer
 above the four. **(2)** The `[LORIN TO WRITE]` Timeline metadata (dates). **(3) The IRB
 question, and it gates anything public**: the six-scale survey results are UPMC clinician
