@@ -193,11 +193,10 @@
   --step-label: 0.75rem;                        /* every label + folio  */
   --step-small: 0.9375rem;                      /* captions, meta, notes */
   --step-body: 1.0625rem;                       /* body prose            */
-  --step-editorial: 1.3125rem;                  /* THE serif voice: lede,
-                                                   outcome, annotation,
-                                                   lesson                */
+  --step-statement: 1.5rem;                     /* the two serif moments:
+                                                   the outcome + lesson  */
   --step-heading: clamp(1.625rem, 2.2vw, 2rem); /* component titles      */
-  --step-display: clamp(2.5rem, 4.5vw, 3.5rem); /* the cover title       */
+  --step-display: clamp(2.75rem, 5vw, 4rem);    /* the cover title       */
   --split: 1.55fr 1fr;                          /* the one column split  */
   --gap-col: 3rem;                              /* column gutter         */
   --gap-media: 1rem;                            /* media grids           */
@@ -497,7 +496,7 @@
   margin: var(--flow-2) auto 0;
   font-family: var(--font-heading);
   font-style: italic;
-  font-size: var(--step-editorial);
+  font-size: var(--step-statement);
   line-height: 1.45;
   color: var(--color-ink);
   text-wrap: balance;

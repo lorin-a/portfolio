@@ -95,20 +95,11 @@ export default function SheetContent({ sheet, num, title, tagline, titleId }) {
 
   return (
     <div ref={rootRef}>
+      {/* The cover: the title alone. One thing to look at. */}
       <header className={styles.masthead} data-reveal="0">
-        <div className={styles.identity}>
-          <span className={styles.num}>{num}</span>
-          <h2 id={titleId} className={styles.title}>{title}</h2>
-          {tagline && <p className={styles.tagline}>{tagline}</p>}
-        </div>
-        {/* The punchline, early — a labeled claim in the serif, not a
-            bordered aside. */}
-        {outcome && (
-          <div className={styles.outcome}>
-            <span className={styles.outcomeLabel}>The outcome</span>
-            <p className={styles.outcomeBody}>{outcome}</p>
-          </div>
-        )}
+        <span className={styles.num}>{num}</span>
+        <h2 id={titleId} className={styles.title}>{title}</h2>
+        {tagline && <p className={styles.tagline}>{tagline}</p>}
       </header>
 
       {meta.length > 0 && (
@@ -125,16 +116,23 @@ export default function SheetContent({ sheet, num, title, tagline, titleId }) {
         </dl>
       )}
 
-      <div className={styles.frame} data-reveal="2">
-        {frame.why && <p className={styles.why}>{frame.why}</p>}
-        <div className={styles.frameCol}>
-          {frame.research && (
-            <section className={styles.frameBlock}>
-              <h3>What the research told us</h3>
-              <p>{frame.research}</p>
-            </section>
-          )}
+      {/* The punchline: the one statement between the cover and the work. */}
+      {outcome && (
+        <div className={styles.statement} data-reveal="2">
+          <span className={styles.statementLabel}>The outcome</span>
+          <p className={styles.statementBody}>{outcome}</p>
         </div>
+      )}
+
+      {/* One reading column, top to bottom. */}
+      <div className={styles.frame} data-reveal="3">
+        {frame.why && <p className={styles.why}>{frame.why}</p>}
+        {frame.research && (
+          <section className={styles.frameBlock}>
+            <h3>What the research told us</h3>
+            <p>{frame.research}</p>
+          </section>
+        )}
       </div>
 
       {components.map((c, i) => (
@@ -150,18 +148,13 @@ export default function SheetContent({ sheet, num, title, tagline, titleId }) {
             <SheetLead item={c.media.lead} gated={c.gated} onImage={openImage} />
           )}
 
-          {/* Words left, her signature right: the description and the
-              annotation share a line instead of stacking into a column of
-              text with a dead right half. */}
-          <div className={styles.componentText}>
-            <p className={styles.componentBody}>{c.body}</p>
-            {c.mine && (
-              <p className={styles.mine}>
-                <span className={styles.mineLabel}>What I did</span>
-                <span className={styles.mineBody}>{c.mine}</span>
-              </p>
-            )}
-          </div>
+          <p className={styles.componentBody}>{c.body}</p>
+          {c.mine && (
+            <p className={styles.mine}>
+              <span className={styles.mineLabel}>What I did</span>
+              <span className={styles.mineBody}>{c.mine}</span>
+            </p>
+          )}
 
           {c.media?.also?.map((item) =>
             item.type === 'audio'
@@ -176,24 +169,19 @@ export default function SheetContent({ sheet, num, title, tagline, titleId }) {
       ))}
 
       <section className={styles.close} data-reveal="0">
-        {/* The evidence pair reads side by side; the lesson gets the
-            finale it is — a reading moment in the serif, on its own
-            centered measure. */}
-        <div className={styles.closeGrid}>
-          {close.outcomes && (
-            <div className={styles.closeBlock}>
-              <h3>What changed</h3>
-              <p>{close.outcomes}</p>
-              {close.qualitative && <p>{close.qualitative}</p>}
-            </div>
-          )}
-          {frame.role && (
-            <div className={styles.closeBlock}>
-              <h3>My role, in full</h3>
-              <p>{frame.role}</p>
-            </div>
-          )}
-        </div>
+        {close.outcomes && (
+          <div className={styles.closeBlock}>
+            <h3>What changed</h3>
+            <p>{close.outcomes}</p>
+            {close.qualitative && <p>{close.qualitative}</p>}
+          </div>
+        )}
+        {frame.role && (
+          <div className={styles.closeBlock}>
+            <h3>My role, in full</h3>
+            <p>{frame.role}</p>
+          </div>
+        )}
         {close.takeaway && (
           <div className={styles.lesson}>
             <h3>The biggest lesson</h3>

@@ -5,7 +5,7 @@
 
 /* ── The one label recipe — every label on the sheet is this ─────── */
 
-.outcomeLabel,
+.statementLabel,
 .mineLabel,
 .frameBlock h3,
 .closeBlock h3,
@@ -23,23 +23,10 @@
   color: var(--color-sage);
 }
 
-/* ── Masthead: the cover spread, on the one split ────────────────── */
+/* ── Masthead: the cover — the title alone ───────────────────────── */
 
 .masthead {
   margin-bottom: var(--flow-3);
-}
-
-@media (min-width: 900px) {
-  .masthead {
-    display: grid;
-    grid-template-columns: var(--split);
-    gap: var(--gap-col);
-    align-items: end;
-  }
-
-  .outcome {
-    margin-top: 0;
-  }
 }
 
 .num {
@@ -59,20 +46,22 @@
   margin: var(--flow-1) 0 0;
   font-family: var(--font-heading);
   font-style: italic;
-  font-size: var(--step-editorial);
+  font-size: var(--step-statement);
   color: var(--color-ink);
   text-wrap: pretty;
 }
 
-.outcome {
-  max-width: 44ch;
-  margin: var(--flow-2) 0 0;
+/* ── The statement: the one serif moment between cover and work ──── */
+
+.statement {
+  max-width: 52ch;
+  margin: 0 0 var(--flow-4);
 }
 
-.outcomeBody {
+.statementBody {
   margin: 0;
   font-family: var(--font-heading);
-  font-size: var(--step-editorial);
+  font-size: var(--step-statement);
   line-height: 1.5;
   color: var(--color-ink);
   text-wrap: pretty;
@@ -118,31 +107,18 @@
   color: var(--color-sage);
 }
 
-/* ── Frame: the lede and the evidence, on the one split ──────────── */
+/* ── Frame: one reading column ───────────────────────────────────── */
 
 .frame {
+  max-width: 62ch;
   margin-bottom: var(--flow-4);
 }
 
-@media (min-width: 900px) {
-  .frame {
-    display: grid;
-    grid-template-columns: var(--split);
-    gap: var(--gap-col);
-    align-items: start;
-  }
-}
-
-.frameCol > * + * {
-  margin-top: var(--flow-2);
-}
-
 .why {
-  max-width: 44ch;
   margin: 0;
-  font-family: var(--font-heading);
-  font-size: var(--step-editorial);
-  line-height: 1.5;
+  font-family: var(--font-body);
+  font-size: var(--step-body);
+  line-height: 1.7;
   color: var(--color-ink);
   text-wrap: pretty;
 }
@@ -208,23 +184,9 @@
   white-space: nowrap;
 }
 
-/* The text zone: description and her signature, on the one split. */
-.componentText {
-  margin-top: var(--flow-2);
-}
-
-@media (min-width: 900px) {
-  .componentText {
-    display: grid;
-    grid-template-columns: var(--split);
-    gap: var(--gap-col);
-    align-items: start;
-  }
-}
-
 .componentBody {
   max-width: 62ch;
-  margin: 0 0 var(--flow-2);
+  margin: var(--flow-2) 0 0;
   font-family: var(--font-body);
   font-size: var(--step-body);
   line-height: 1.7;
@@ -232,57 +194,33 @@
   text-wrap: pretty;
 }
 
-@media (min-width: 900px) {
-  .componentBody {
-    margin-bottom: 0;
-  }
-}
-
-/* Her contribution: the editorial serif carries it — the same step as
-   the lede, the outcome, and the lesson. One voice, four moments. */
+/* Her contribution: quiet but unmistakable — the label plus the italic
+   serif, in the reading flow, right after the description it signs. */
 .mine {
   max-width: 56ch;
-  margin: 0;
+  margin: var(--flow-2) 0 0;
 }
 
 .mineBody {
   display: block;
   font-family: var(--font-heading);
   font-style: italic;
-  font-size: var(--step-editorial);
-  line-height: 1.5;
+  font-size: var(--step-body);
+  line-height: 1.6;
   color: var(--color-ink);
   text-wrap: pretty;
 }
 
-/* ── Close: the evidence pair, the lesson, the colophon ──────────── */
+/* ── Close: one reading column, then the lesson, then the colophon ─ */
 
 .close {
   padding-top: var(--flow-2);
   border-top: var(--rule);
 }
 
-.closeGrid {
-  margin-bottom: var(--flow-3);
-}
-
-@media (min-width: 900px) {
-  .closeGrid {
-    display: grid;
-    grid-template-columns: var(--split);
-    gap: var(--gap-col);
-  }
-}
-
 .closeBlock {
   max-width: 62ch;
-  margin-bottom: var(--flow-2);
-}
-
-@media (min-width: 900px) {
-  .closeBlock {
-    margin-bottom: 0;
-  }
+  margin-bottom: var(--flow-3);
 }
 
 .closeBlock p {
@@ -304,7 +242,7 @@
 .lesson p {
   margin: 0;
   font-family: var(--font-heading);
-  font-size: var(--step-editorial);
+  font-size: var(--step-statement);
   line-height: 1.55;
   color: var(--color-ink);
   text-wrap: pretty;
