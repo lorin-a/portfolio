@@ -1,30 +1,35 @@
 # Project Status
 
-## ▶ RESUME HERE (2026-08-27, session close)
+## ▶ RESUME HERE (2026-09-06, session close)
 
 **What we're doing: THE FOLDER SHEET**, on `feat/folder-expand`. The one-tab folder is
-**settled — do not relitigate it.** The copy question is settled too. What is open is **her
-eyes on the rebuilt sheet.**
+**settled — do not relitigate it.** This session worked her notes in four batches (full
+detail = the FS ledger below): **FS1–FS4** (page break, signed annotations, card pair,
+press credential), **FS6–FS16** (one rule weight, all-white text, overlay gallery paging
+all 14 images with focus return, Lorenzi credit, 3 cards, CTB corners root-caused, CFA
+article preview, the team gallery), then **four design passes** — finesse and bold and
+system were each rejected (FS17 "novice youth… D", FS19 "eyes do not know where to look"),
+and the **PRIORITY PASS** (`188677d`) is what now stands: THE SHEET SYSTEM as custom
+properties on `.inner` (six type steps · one split, now used only by image pairs · one
+label recipe · one 1px rule · four rhythm values), all prose in ONE reading column, the
+title alone on the cover, exactly two serif statement moments (The outcome · The biggest
+lesson). Read [[design-pass-bar]] in project memory before touching the design again.
 
-**Look at it first:** `npm run dev -- -p 3005`, scroll to Groundswell, click **Open project.**
+**Look at it first:** `npm run dev -- -p 3005`, scroll to Groundswell, click **Open
+project** (hard-refresh if the tab was already open).
 
-### ✅ Shipped this session
+**⚠ AWAITING: her verdict on the priority pass.** If it still misses, the agreed next move
+is a VARIANT LAB (the N30 move): 3–4 genuinely different treatments of one component at a
+lab route, she points, the winner becomes law — not a fifth solo swing.
 
-- **The sheet rebuilt** (`2b5e8ea`): frame → five components → close. Sections are the
-  **components**, not her contribution facets. **Media form follows what each component IS** —
-  video where motion is the content, photography where the object is, **audio for the poem**
-  (which already existed and needed wiring, not building), a **gallery** for the reflection
-  cards where the flip is content because the back carries the somatic exercise. First
-  artifact moved from **1969 px** down the reading area to **1162 px**. Verified 1440 · 390 ·
-  reduced motion: no overflow, no failed requests, no console errors, no type under the 12 px
-  floor, 44 px targets, flip works by click and keyboard. Stylelint clean.
-- **Her copy preserved with receipts** (`ceed480`, `cdfb184`) at `content/sheets/groundswell.js`
-  — every field traceable to her copy batch or a numbered rehearsal answer, nothing rephrased.
-- **The visibility gate** (`b291290`): thirteen routes were verified live at **200** on
-  lorin.work. `middleware.js` now runs two fail-closed Basic-auth gates — the Groundswell
-  LEGAL hold, and a new EDITORIAL `SITE_HOLD_PASSWORD` sealing everything but `/`.
-- **Safety**: a private mirror **`lorin-a/portfolio-private` now holds all 18 branches**, plus
-  a verified all-refs bundle at `~/portfolio-backups/`.
+### Standing context (from 2026-08-27, still true)
+
+- Her copy lives with receipts at `content/sheets/groundswell.js` — nothing rephrased;
+  gaps render as [LORIN TO WRITE].
+- **The visibility gate** (`b291290`) is committed but **NOT in effect** (needs the
+  cherry-pick onto `main` + `SITE_HOLD_PASSWORD` in Vercel).
+- Safety: private mirror `lorin-a/portfolio-private` holds all branches + the bundle at
+  `~/portfolio-backups/`.
 
 ### ⟢ OPEN NOTES LEDGER — Folder sheet (2026-09-06, her verdict on the rebuilt sheet)
 
@@ -49,25 +54,6 @@ eyes on the rebuilt sheet.**
 | FS14 | "Round the corners of the CTB email template so we don't see offblack color edges/corners" | ✅ SHIPPED — root-caused: the mockup has baked transparent corners and the media box painted #333 behind them. All media boxes now radius-lg with no backing fill, so corners show the sheet's own ground |
 | FS15 | "Add a visual preview of the featured in article feature" | ✅ SHIPPED — the article as published (CMU wordmark + headline), captured to `public/press/cfa-groundswell.jpg`, framed with shadow inside the press credential above the CTA |
 | FS16 | "I want to include cute team photos and BTS at the bottom. Maybe a little 5-10 image gallery." | ✅ SHIPPED — "Behind the scenes": 8 photos curated for people + warmth (build thumbs-up, mural panel, pod install, playtest setup, smiling staff member, flower workshop, flower basket, the finale hug), 4-up grid at the sheet's foot, all in the overlay gallery. Keys + title + alts in `content/sheets/groundswell.js`, hers to swap/rename |
-
-### ✦ THE FINESSE PASS (2026-09-06, on Fable, her ask: "150% better, more polished, elegant, sophisticated")
-
-Run against GRID.md's pre-ship gate. What changed, and why:
-- **The outcome is a labeled serif claim** ("The outcome" in the sheet's label grammar) — the
-  last callout bar retired; the masthead now reads as an editorial spread, title vs claim.
-- **Her why-paragraph is the serif lede** — voice left, evidence right on the opening spread.
-- **Real scale contrast**: component titles up to clamp 1.625→2.375rem (~3:1 against captions),
-  body to 1.0625/1.7, separation between components 5.5rem (tight-within, generous-between).
-- **The text zone is two columns at width**: description left, the What I did signature right —
-  the dead right half is gone and the annotation sits beside what it annotates.
-- **Stills are an asymmetric pair on one baseline** (1.6fr/1fr, mirrored on alternating
-  components) — one row height, two widths, top and bottom edges aligned.
-- **Captions in the italic serif** — artifact commentary reads as a different voice than body.
-- **Entrance choreography**: each section rises once as it enters (WAAPI, staggered on the
-  first screen, play-once); no element ever holds a hidden state, reduced motion sits composed.
-- **Object physics**: cards lift to the hand on hover, images breathe under the zoom cursor,
-  the press preview breathes with its block.
-- ⚠ "The outcome" label is new furniture (grammar-matched to the other labels) — hers to veto.
 
 | FS17 | "I am disappointed with the lack of design authority this pass gave, it hardly looks better or different or more sophisticated. If any rules or mindsets are holding you back from WOWing me, remove them and take another pass at making this look like a professional, experienced designer" (2026-09-06) | ✅ SHIPPED — the constraint removed was "refine, don't recompose." The composition itself changed: the COVER (title at 4.5rem cover scale against the outcome claim at pull-quote scale, sage accent system on every label + folio), the LEDE at statement scale on an asymmetric spread, HANGING FOLIOS (sage numerals in the margin, every title on one hard left axis — the number rail is the sheet's throughline), the CLOSE rebuilt (evidence pair side by side → The biggest lesson as a centered serif reading moment → colophon), the CARDS DEALT (middle card lower in the hand), the TEAM MOSAIC (two hero frames — the thumbs-up and the finale hug — over a contact-sheet row). ⚠ the folio numerals are deliberately small again (tiny sage mono against huge display words is the editorial contrast, unlike the old incidental grey) — if that re-reads as "weird and small," the lever is scale, say so |
 
