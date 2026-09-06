@@ -29,7 +29,7 @@
 
 @media (hover: hover) {
   .zoom:hover .media {
-    opacity: 0.92;
+    transform: scale(1.02);
   }
 }
 
@@ -37,6 +37,7 @@
   display: block;
   width: 100%;
   height: auto;
+  transition: transform var(--motion-medium) var(--ease-out);
 }
 
 .boxGated .media {
@@ -51,9 +52,10 @@
 
 .lead figcaption,
 .stills figcaption {
-  margin-top: 0.75rem;
-  font-family: var(--font-body);
-  font-size: 0.8125rem;
+  margin-top: 0.875rem;
+  font-family: var(--font-heading);
+  font-style: italic;
+  font-size: 0.9375rem;
   line-height: 1.5;
   color: var(--color-ink);
   text-wrap: pretty;
@@ -63,9 +65,34 @@
 
 .stills {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
+  grid-template-columns: 1fr;
   gap: 1.25rem;
-  margin-top: 1.25rem;
+  margin-top: 1.75rem;
+}
+
+@media (min-width: 700px) {
+  .stills {
+    grid-template-columns: 1.6fr 1fr;
+  }
+
+  .stillsFlip {
+    grid-template-columns: 1fr 1.6fr;
+  }
+}
+
+/* A pair shares one baseline: one row height, two widths, so the wide
+   still reads landscape and the narrow one near-square — and their top
+   AND bottom edges land on the same gridlines. A lone still keeps its
+   own proportions. */
+@media (min-width: 700px) {
+  .stills:has(> figure:nth-child(2)) .box {
+    height: clamp(16rem, 26vw, 24rem);
+  }
+
+  .stills:has(> figure:nth-child(2)) .media {
+    height: 100%;
+    object-fit: cover;
+  }
 }
 
 .stills figure {
@@ -167,11 +194,12 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  /* Card-corner rounding at this scale, and a shadow so the pair reads
+  /* Card-corner rounding at this scale, and a shadow so the row reads
      as physical objects lying on the sheet. */
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-md);
   backface-visibility: hidden;
+  transition: box-shadow var(--motion-fast) var(--ease-out);
 }
 
 .cardBack {
@@ -195,8 +223,16 @@
 }
 
 @media (hover: hover) {
-  .card:hover .cardLabel {
-    color: var(--color-ink);
+  .card:hover .cardInner {
+    transform: translateY(-8px);
+  }
+
+  .card[data-back='true']:hover .cardInner {
+    transform: rotateY(180deg) translateY(-8px);
+  }
+
+  .card:hover .cardFace {
+    box-shadow: var(--shadow-lg);
   }
 }
 

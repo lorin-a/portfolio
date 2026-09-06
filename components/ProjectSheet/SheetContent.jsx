@@ -1,9 +1,40 @@
 'use client'
 
-import { useMemo, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import Lightbox from '@/components/Lightbox/Lightbox'
 import { SheetLead, SheetStills, SheetAudio, SheetCardGallery, SheetBts, sheetImg } from './SheetMedia'
 import styles from './SheetContent.module.css'
+
+/**
+ * Entrance choreography: each section composes itself once as it enters the
+ * viewport — a short rise, played via WAAPI so no element ever holds a
+ * hidden state (kill JS or prefer reduced motion and everything simply sits
+ * composed). `data-reveal` carries a stagger step for the sections already
+ * on screen when the folder lands.
+ */
+function useSheetReveal(rootRef) {
+  useEffect(() => {
+    const root = rootRef.current
+    if (!root || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((en) => {
+        if (!en.isIntersecting) return
+        io.unobserve(en.target)
+        en.target.animate(
+          [{ opacity: 0, transform: 'translateY(14px)' }, { opacity: 1, transform: 'none' }],
+          {
+            duration: 550,
+            delay: (Number(en.target.dataset.reveal) || 0) * 80,
+            easing: 'cubic-bezier(0.22, 1, 0.36, 1)',
+            fill: 'backwards',
+          }
+        )
+      })
+    }, { threshold: 0.12 })
+    root.querySelectorAll('[data-reveal]').forEach((el) => io.observe(el))
+    return () => io.disconnect()
+  }, [rootRef])
+}
 
 /**
  * The folder sheet's body: FRAME, then the COMPONENTS, then the CLOSE.
@@ -59,20 +90,29 @@ export default function SheetContent({ sheet, num, title, tagline, titleId }) {
     openerRef.current?.focus({ preventScroll: true })
   }
 
+  const rootRef = useRef(null)
+  useSheetReveal(rootRef)
+
   return (
-    <>
-      <header className={styles.masthead}>
+    <div ref={rootRef}>
+      <header className={styles.masthead} data-reveal="0">
         <div className={styles.identity}>
           <span className={styles.num}>{num}</span>
           <h2 id={titleId} className={styles.title}>{title}</h2>
           {tagline && <p className={styles.tagline}>{tagline}</p>}
         </div>
-        {/* The punchline, early. */}
-        {outcome && <p className={styles.outcome}>{outcome}</p>}
+        {/* The punchline, early — a labeled claim in the serif, not a
+            bordered aside. */}
+        {outcome && (
+          <div className={styles.outcome}>
+            <span className={styles.outcomeLabel}>The outcome</span>
+            <p className={styles.outcomeBody}>{outcome}</p>
+          </div>
+        )}
       </header>
 
       {meta.length > 0 && (
-        <dl className={styles.meta}>
+        <dl className={styles.meta} data-reveal="1">
           {meta.map(([k, v]) => (
             <div key={k}>
               <dt>{k}</dt>
@@ -85,7 +125,7 @@ export default function SheetContent({ sheet, num, title, tagline, titleId }) {
         </dl>
       )}
 
-      <div className={styles.frame}>
+      <div className={styles.frame} data-reveal="2">
         {frame.why && <p className={styles.why}>{frame.why}</p>}
         <div className={styles.frameCol}>
           {frame.research && (
@@ -98,7 +138,7 @@ export default function SheetContent({ sheet, num, title, tagline, titleId }) {
       </div>
 
       {components.map((c, i) => (
-        <section key={c.key} className={styles.component}>
+        <section key={c.key} className={styles.component} data-reveal="0">
           <div className={styles.componentHead}>
             <span className={styles.componentNum}>{String(i + 1).padStart(2, '0')}</span>
             <h3>{c.name}</h3>
@@ -110,13 +150,18 @@ export default function SheetContent({ sheet, num, title, tagline, titleId }) {
             <SheetLead item={c.media.lead} gated={c.gated} onImage={openImage} />
           )}
 
-          <p className={styles.componentBody}>{c.body}</p>
-          {c.mine && (
-            <p className={styles.mine}>
-              <span className={styles.mineLabel}>What I did</span>
-              <span className={styles.mineBody}>{c.mine}</span>
-            </p>
-          )}
+          {/* Words left, her signature right: the description and the
+              annotation share a line instead of stacking into a column of
+              text with a dead right half. */}
+          <div className={styles.componentText}>
+            <p className={styles.componentBody}>{c.body}</p>
+            {c.mine && (
+              <p className={styles.mine}>
+                <span className={styles.mineLabel}>What I did</span>
+                <span className={styles.mineBody}>{c.mine}</span>
+              </p>
+            )}
+          </div>
 
           {c.media?.also?.map((item) =>
             item.type === 'audio'
@@ -124,13 +169,14 @@ export default function SheetContent({ sheet, num, title, tagline, titleId }) {
               : <SheetLead key={item.key} item={item} gated={c.gated} onImage={openImage} />
           )}
           {c.media?.stills && (
-            <SheetStills keys={c.media.stills} gated={c.gated} onImage={openImage} />
+            <SheetStills keys={c.media.stills} gated={c.gated} onImage={openImage}
+              flip={i % 2 === 1} />
           )}
           {c.media?.gallery && <SheetCardGallery gallery={c.media.gallery} />}
         </section>
       ))}
 
-      <section className={styles.close}>
+      <section className={styles.close} data-reveal="0">
         {close.outcomes && (
           <div className={styles.closeBlock}>
             <h3>What changed</h3>
@@ -166,6 +212,6 @@ export default function SheetContent({ sheet, num, title, tagline, titleId }) {
           onNext={() => setLightboxAt((lightboxAt + 1) % images.length)}
         />
       )}
-    </>
+    </div>
   )
 }

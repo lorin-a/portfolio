@@ -2,7 +2,7 @@
    Type floor is 12px; the project's stylelint rejects anything smaller. */
 
 .masthead {
-  margin-bottom: 2.5rem;
+  margin-bottom: 3rem;
 }
 
 @media (min-width: 900px) {
@@ -47,16 +47,29 @@
   text-wrap: pretty;
 }
 
-/* The outcome, early. Set apart so it reads as the claim, not as more
-   description. */
+/* The outcome, early. A labeled claim in the serif — the finding gets the
+   editorial voice, not a bordered aside. */
 .outcome {
-  max-width: 46ch;
+  max-width: 44ch;
   margin: 1.5rem 0 0;
-  padding-left: 1rem;
-  border-left: 2px solid var(--color-sage);
+}
+
+.outcomeLabel {
+  display: block;
+  margin-bottom: 0.625rem;
   font-family: var(--font-body);
-  font-size: 1rem;
-  line-height: 1.6;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-sage);
+}
+
+.outcomeBody {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: clamp(1.125rem, 1.6vw, 1.4375rem);
+  line-height: 1.45;
   color: var(--color-ink);
   text-wrap: pretty;
 }
@@ -116,7 +129,7 @@
 /* ── Frame ───────────────────────────────────────────────────────── */
 
 .frame {
-  margin-bottom: 3.5rem;
+  margin-bottom: 4.5rem;
 }
 
 /* At width the frame runs two columns, so the opening does not stack into
@@ -135,11 +148,11 @@
 }
 
 .why {
-  max-width: 52ch;
+  max-width: 48ch;
   margin: 0;
-  font-family: var(--font-body);
-  font-size: clamp(1.0625rem, 1.3vw, 1.1875rem);
-  line-height: 1.65;
+  font-family: var(--font-heading);
+  font-size: clamp(1.1875rem, 1.7vw, 1.4375rem);
+  line-height: 1.55;
   color: var(--color-ink);
   text-wrap: pretty;
 }
@@ -193,16 +206,16 @@
 /* ── Components ──────────────────────────────────────────────────── */
 
 .component {
-  margin-bottom: 4rem;
-  padding-top: 1.5rem;
+  margin-bottom: 5.5rem;
+  padding-top: 1.75rem;
   border-top: 1px solid var(--color-ink);
 }
 
 .componentHead {
   display: flex;
   align-items: baseline;
-  gap: 0.875rem;
-  margin-bottom: 1rem;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
 }
 
 .componentNum {
@@ -210,13 +223,14 @@
   font-size: clamp(1.25rem, 1.9vw, 1.625rem);
   line-height: 1;
   color: var(--color-ink);
+  font-variant-numeric: tabular-nums;
 }
 
 .componentHead h3 {
   margin: 0;
   font-family: var(--font-heading);
-  font-size: clamp(1.375rem, 2.2vw, 1.875rem);
-  line-height: 1.2;
+  font-size: clamp(1.625rem, 2.6vw, 2.375rem);
+  line-height: 1.12;
   color: var(--color-ink);
   text-wrap: balance;
 }
@@ -234,14 +248,33 @@
   white-space: nowrap;
 }
 
+.componentText {
+  margin-top: 1.5rem;
+}
+
+@media (min-width: 900px) {
+  .componentText {
+    display: grid;
+    grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr);
+    gap: 3.5rem;
+    align-items: start;
+  }
+}
+
 .componentBody {
-  max-width: 64ch;
+  max-width: 62ch;
   margin: 0 0 0.875rem;
   font-family: var(--font-body);
-  font-size: 1rem;
-  line-height: 1.65;
+  font-size: 1.0625rem;
+  line-height: 1.7;
   color: var(--color-ink);
   text-wrap: pretty;
+}
+
+@media (min-width: 900px) {
+  .componentBody {
+    margin-bottom: 0;
+  }
 }
 
 /* Her contribution, beside the evidence rather than as one claim up top.
@@ -250,7 +283,13 @@
    no colored bar. */
 .mine {
   max-width: 56ch;
-  margin: 1.5rem 0 2rem;
+  margin: 1.5rem 0 0;
+}
+
+@media (min-width: 900px) {
+  .mine {
+    margin-top: 0.375rem;
+  }
 }
 
 .mineLabel {

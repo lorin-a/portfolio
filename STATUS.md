@@ -50,9 +50,28 @@ eyes on the rebuilt sheet.**
 | FS15 | "Add a visual preview of the featured in article feature" | ✅ SHIPPED — the article as published (CMU wordmark + headline), captured to `public/press/cfa-groundswell.jpg`, framed with shadow inside the press credential above the CTA |
 | FS16 | "I want to include cute team photos and BTS at the bottom. Maybe a little 5-10 image gallery." | ✅ SHIPPED — "Behind the scenes": 8 photos curated for people + warmth (build thumbs-up, mural panel, pod install, playtest setup, smiling staff member, flower workshop, flower basket, the finale hug), 4-up grid at the sheet's foot, all in the overlay gallery. Keys + title + alts in `content/sheets/groundswell.js`, hers to swap/rename |
 
+### ✦ THE FINESSE PASS (2026-09-06, on Fable, her ask: "150% better, more polished, elegant, sophisticated")
+
+Run against GRID.md's pre-ship gate. What changed, and why:
+- **The outcome is a labeled serif claim** ("The outcome" in the sheet's label grammar) — the
+  last callout bar retired; the masthead now reads as an editorial spread, title vs claim.
+- **Her why-paragraph is the serif lede** — voice left, evidence right on the opening spread.
+- **Real scale contrast**: component titles up to clamp 1.625→2.375rem (~3:1 against captions),
+  body to 1.0625/1.7, separation between components 5.5rem (tight-within, generous-between).
+- **The text zone is two columns at width**: description left, the What I did signature right —
+  the dead right half is gone and the annotation sits beside what it annotates.
+- **Stills are an asymmetric pair on one baseline** (1.6fr/1fr, mirrored on alternating
+  components) — one row height, two widths, top and bottom edges aligned.
+- **Captions in the italic serif** — artifact commentary reads as a different voice than body.
+- **Entrance choreography**: each section rises once as it enters (WAAPI, staggered on the
+  first screen, play-once); no element ever holds a hidden state, reduced motion sits composed.
+- **Object physics**: cards lift to the hand on hover, images breathe under the zoom cursor,
+  the press preview breathes with its block.
+- ⚠ "The outcome" label is new furniture (grammar-matched to the other labels) — hers to veto.
+
 ### ▶ Next move
 
-**Her verdict on the FS6–FS16 batch, then FS5: her copy pass on the sheet.** FS1–FS4 shipped and verified 1440 · 390 · reduced motion (zero overflow, zero new console errors, flip works by click and keyboard, stylelint clean on the sheet files). Superseded: ~~her verdict on the rebuilt sheet~~ — delivered 2026-09-06, see ledger. Then, in order: **(1)** the 4-vs-5 component count —
+**Her verdict on the FS6–FS16 batch + the finesse pass, then FS5: her copy pass on the sheet.** FS1–FS4 shipped and verified 1440 · 390 · reduced motion (zero overflow, zero new console errors, flip works by click and keyboard, stylelint clean on the sheet files). Superseded: ~~her verdict on the rebuilt sheet~~ — delivered 2026-09-06, see ledger. Then, in order: **(1)** the 4-vs-5 component count —
 she wrote "4 core components" and named five; the dashboard reads as the reporting layer
 above the four. **(2)** The `[LORIN TO WRITE]` Timeline metadata (dates). **(3) The IRB
 question, and it gates anything public**: the six-scale survey results are UPMC clinician
