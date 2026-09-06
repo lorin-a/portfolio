@@ -155,8 +155,15 @@
   grid-template-columns: repeat(3, 1fr);
   gap: clamp(1rem, 2.5vw, 2rem);
   margin: 0;
-  padding: 0;
+  padding: 0 0 2rem;
   list-style: none;
+}
+
+/* Dealt, not gridded: the middle card sits lower in the hand. */
+@media (min-width: 700px) {
+  .cards li:nth-child(2) {
+    transform: translateY(2rem);
+  }
 }
 
 .card {
@@ -285,9 +292,23 @@
   list-style: none;
 }
 
+/* Two hero frames lead, the rest read as the contact-sheet row beneath —
+   a composed spread instead of an even grid. */
 @media (min-width: 900px) {
   .btsGrid {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(6, 1fr);
+  }
+
+  .btsGrid li:nth-child(-n+2) {
+    grid-column: span 3;
+  }
+
+  .btsGrid li:nth-child(n+3) {
+    grid-column: span 2;
+  }
+
+  .btsGrid li:nth-child(-n+2) .btsBox {
+    aspect-ratio: 3 / 2;
   }
 }
 

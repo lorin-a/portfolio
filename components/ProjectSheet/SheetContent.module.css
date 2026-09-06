@@ -8,8 +8,8 @@
 @media (min-width: 900px) {
   .masthead {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 3rem;
+    grid-template-columns: 1.15fr 1fr;
+    gap: 4rem;
     align-items: end;
   }
 
@@ -25,15 +25,17 @@
   display: block;
   font-family: var(--font-body);
   font-size: 0.875rem;
-  letter-spacing: 0.08em;
-  color: var(--color-ink);
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: var(--color-sage);
+  font-variant-numeric: tabular-nums;
 }
 
 .title {
-  margin: 0.5rem 0 0;
+  margin: 0.625rem 0 0;
   font-family: var(--font-heading);
-  font-size: clamp(2.25rem, 4vw, 3.5rem);
-  line-height: 1.05;
+  font-size: clamp(2.75rem, 5.2vw, 4.5rem);
+  line-height: 1.02;
   color: var(--color-ink);
   text-wrap: balance;
 }
@@ -68,8 +70,8 @@
 .outcomeBody {
   margin: 0;
   font-family: var(--font-heading);
-  font-size: clamp(1.125rem, 1.6vw, 1.4375rem);
-  line-height: 1.45;
+  font-size: clamp(1.25rem, 1.8vw, 1.625rem);
+  line-height: 1.42;
   color: var(--color-ink);
   text-wrap: pretty;
 }
@@ -99,7 +101,7 @@
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--color-ink);
+  color: var(--color-sage);
 }
 
 .meta dd {
@@ -137,8 +139,8 @@
 @media (min-width: 900px) {
   .frame {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 3rem;
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+    gap: 4rem;
     align-items: start;
   }
 }
@@ -148,11 +150,11 @@
 }
 
 .why {
-  max-width: 48ch;
+  max-width: 44ch;
   margin: 0;
   font-family: var(--font-heading);
-  font-size: clamp(1.1875rem, 1.7vw, 1.4375rem);
-  line-height: 1.55;
+  font-size: clamp(1.375rem, 2.2vw, 1.875rem);
+  line-height: 1.45;
   color: var(--color-ink);
   text-wrap: pretty;
 }
@@ -212,25 +214,37 @@
 }
 
 .componentHead {
+  position: relative;
   display: flex;
   align-items: baseline;
   gap: 1rem;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.75rem;
 }
 
 .componentNum {
-  font-family: var(--font-heading);
-  font-size: clamp(1.25rem, 1.9vw, 1.625rem);
-  line-height: 1;
-  color: var(--color-ink);
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--color-sage);
   font-variant-numeric: tabular-nums;
+}
+
+/* At width the folio hangs in the margin, so every title shares one hard
+   left axis and the numerals read as a rail down the sheet. */
+@media (min-width: 1100px) {
+  .componentNum {
+    position: absolute;
+    left: -3.25rem;
+    top: 0.4em;
+  }
 }
 
 .componentHead h3 {
   margin: 0;
   font-family: var(--font-heading);
-  font-size: clamp(1.625rem, 2.6vw, 2.375rem);
-  line-height: 1.12;
+  font-size: clamp(1.75rem, 3.1vw, 2.75rem);
+  line-height: 1.08;
   color: var(--color-ink);
   text-wrap: balance;
 }
@@ -332,9 +346,59 @@
   border-top: 1px solid var(--color-ink);
 }
 
+.closeGrid {
+  margin-bottom: 3rem;
+}
+
+@media (min-width: 900px) {
+  .closeGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+  }
+}
+
 .closeBlock {
   max-width: 68ch;
   margin-bottom: 2.5rem;
+}
+
+@media (min-width: 900px) {
+  .closeBlock {
+    margin-bottom: 0;
+  }
+}
+
+/* The strongest thing in the corpus gets a reading moment: the serif, a
+   centered measure, air on both sides. */
+.lesson {
+  max-width: 42rem;
+  margin: 4.5rem auto 4rem;
+}
+
+.lesson h3 {
+  margin: 0 0 1.25rem;
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-align: center;
+  color: var(--color-sage);
+}
+
+.lesson p {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: clamp(1.1875rem, 1.7vw, 1.4375rem);
+  line-height: 1.55;
+  color: var(--color-ink);
+  text-wrap: pretty;
+}
+
+.colophon {
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--color-ink);
 }
 
 .closeBlock h3 {

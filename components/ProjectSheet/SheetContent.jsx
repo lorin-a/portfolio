@@ -177,27 +177,34 @@ export default function SheetContent({ sheet, num, title, tagline, titleId }) {
       ))}
 
       <section className={styles.close} data-reveal="0">
-        {close.outcomes && (
-          <div className={styles.closeBlock}>
-            <h3>What changed</h3>
-            <p>{close.outcomes}</p>
-            {close.qualitative && <p>{close.qualitative}</p>}
-          </div>
-        )}
-        {frame.role && (
-          <div className={styles.closeBlock}>
-            <h3>My role, in full</h3>
-            <p>{frame.role}</p>
-          </div>
-        )}
+        {/* The evidence pair reads side by side; the lesson gets the
+            finale it is — a reading moment in the serif, on its own
+            centered measure. */}
+        <div className={styles.closeGrid}>
+          {close.outcomes && (
+            <div className={styles.closeBlock}>
+              <h3>What changed</h3>
+              <p>{close.outcomes}</p>
+              {close.qualitative && <p>{close.qualitative}</p>}
+            </div>
+          )}
+          {frame.role && (
+            <div className={styles.closeBlock}>
+              <h3>My role, in full</h3>
+              <p>{frame.role}</p>
+            </div>
+          )}
+        </div>
         {close.takeaway && (
-          <div className={styles.closeBlock}>
+          <div className={styles.lesson}>
             <h3>The biggest lesson</h3>
             <p>{close.takeaway}</p>
           </div>
         )}
-        {frame.partners && <p className={styles.partners}>{frame.partners}</p>}
-        {credit && <p className={styles.credit}>{credit}</p>}
+        <div className={styles.colophon}>
+          {frame.partners && <p className={styles.partners}>{frame.partners}</p>}
+          {credit && <p className={styles.credit}>{credit}</p>}
+        </div>
       </section>
 
       {bts && <SheetBts bts={bts} onImage={openImage} />}
