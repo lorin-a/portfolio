@@ -38,21 +38,21 @@ eyes on the rebuilt sheet.**
 | FS3 | "the flip cards to be a better and true to size with rounded corners design AND just show two side by side that are contrasting emotions" | ✅ SHIPPED — two cards, joyful against heartbroken (any other pair is a one-line swap in `content/sheets/groundswell.js`), at the deck's true 600×967 proportions (the old 3/4 box was cropping ~17% off every face, including the backs' Groundswell footer), radius-lg corners + shadow-md so they read as objects on the sheet. Click + keyboard flip re-verified |
 | FS4 | "the read the article section to be more visual and official looking… featured in this publication type of thing. gives it credibility" | ✅ SHIPPED — a press credential: newspaper-masthead double rules, "As featured in" eyebrow, **College of Fine Arts** set large with the Carnegie Mellon University line, the article cited by its real title, pill CTA that fills on hover; the whole block is the link (new tab). Data-driven (`press` prop) so other projects keep the plain "Go further" link |
 | FS5 | "Then we can work on copy" | ⏭ QUEUED — after the FS6–FS16 batch |
-| FS6 | "the page break lines have unequal weights they should be the same" (2026-09-06, batch 2) | 🔨 |
-| FS7 | "I prefer all white no grey text" | 🔨 sheet-scoped: grey text tiers (ink-light/ink-faint) move to full ink; sage labels stay |
-| FS8 | "the what I did sections are too plain and easy to miss" | 🔨 |
-| FS9 | "The numbering of the sections feels weird and small" | 🔨 |
-| FS10 | "Lead with image/video before context or do title then image then description" | 🔨 taking the second option: title, image, description |
-| FS11 | "Make images clickable into overlay gallery view, if they click next/previous they go through all of the project images in the folder BUT when they exist their cursor position remains the same as when they opened it" | 🔨 |
-| FS12 | "We need to credit Kevin Lorenzi photography" | 🔨 |
-| FS13 | "Make the reflection cards full height/width of the section if that looks too big make it 3 cards" | 🔨 |
-| FS14 | "Round the corners of the CTB email template so we don't see offblack color edges/corners" | 🔨 |
-| FS15 | "Add a visual preview of the featured in article feature" | 🔨 |
-| FS16 | "I want to include cute team photos and BTS at the bottom. Maybe a little 5-10 image gallery." | 🔨 |
+| FS6 | "the page break lines have unequal weights they should be the same" (2026-09-06, batch 2) | ✅ SHIPPED — every structural rule on the sheet is one 1px ink line (meta top+bottom, components, close, BTS, Go further, the audio frame). The press block's double rule stays: it is the masthead motif of that credential, not a page break — flag if it should match too |
+| FS7 | "I prefer all white no grey text" | ✅ SHIPPED, sheet-scoped — every ink-light/ink-faint text tier in the sheet moved to full ink (num, tagline, meta labels, captions, card labels, partners, press lines). Sage labels stay sage. Measured zero grey text elements at 1440/390/reduced motion |
+| FS8 | "the what I did sections are too plain and easy to miss" | ✅ SHIPPED — the annotation steps forward: a 2rem sage signature stroke opens the label, the line itself now clamp(1.125→1.3125rem) italic serif at full ink |
+| FS9 | "The numbering of the sections feels weird and small" | ✅ SHIPPED — component numerals set in the heading serif at clamp(1.25→1.625rem), full ink, on the title's baseline |
+| FS10 | "Lead with image/video before context or do title then image then description" | ✅ SHIPPED — took the second option: every component reads title → artifact → description → What I did → supporting media |
+| FS11 | "Make images clickable into overlay gallery view… go through all of the project images in the folder BUT when they exit their cursor position remains the same" | ✅ SHIPPED — every public image opens the existing Lightbox; prev/next/arrow keys page all 14 folder images in reading order (components + BTS); ESC closes only the overlay (the sheet's ESC handler now yields); the sheet never scrolls and focus returns to the exact image they left from. Gated dashboard media is excluded — it is confidential |
+| FS12 | "We need to credit Kevin Lorenzi photography" | ✅ SHIPPED — "Photography by Kevin Lorenzi." at the foot of the close, beside the partners line. Wording + placement hers to adjust; also flag WHICH photos are his if the credit should be per-image |
+| FS13 | "Make the reflection cards full height/width of the section if that looks too big make it 3 cards" | ✅ SHIPPED as 3 — two at full width would run ~570×920px each, past poster scale, so her fallback governs: joyful · exhausted · heartbroken across the full section width, true proportions |
+| FS14 | "Round the corners of the CTB email template so we don't see offblack color edges/corners" | ✅ SHIPPED — root-caused: the mockup has baked transparent corners and the media box painted #333 behind them. All media boxes now radius-lg with no backing fill, so corners show the sheet's own ground |
+| FS15 | "Add a visual preview of the featured in article feature" | ✅ SHIPPED — the article as published (CMU wordmark + headline), captured to `public/press/cfa-groundswell.jpg`, framed with shadow inside the press credential above the CTA |
+| FS16 | "I want to include cute team photos and BTS at the bottom. Maybe a little 5-10 image gallery." | ✅ SHIPPED — "Behind the scenes": 8 photos curated for people + warmth (build thumbs-up, mural panel, pod install, playtest setup, smiling staff member, flower workshop, flower basket, the finale hug), 4-up grid at the sheet's foot, all in the overlay gallery. Keys + title + alts in `content/sheets/groundswell.js`, hers to swap/rename |
 
 ### ▶ Next move
 
-**FS5: her copy pass on the sheet.** FS1–FS4 shipped and verified 1440 · 390 · reduced motion (zero overflow, zero new console errors, flip works by click and keyboard, stylelint clean on the sheet files). Superseded: ~~her verdict on the rebuilt sheet~~ — delivered 2026-09-06, see ledger. Then, in order: **(1)** the 4-vs-5 component count —
+**Her verdict on the FS6–FS16 batch, then FS5: her copy pass on the sheet.** FS1–FS4 shipped and verified 1440 · 390 · reduced motion (zero overflow, zero new console errors, flip works by click and keyboard, stylelint clean on the sheet files). Superseded: ~~her verdict on the rebuilt sheet~~ — delivered 2026-09-06, see ledger. Then, in order: **(1)** the 4-vs-5 component count —
 she wrote "4 core components" and named five; the dashboard reads as the reporting layer
 above the four. **(2)** The `[LORIN TO WRITE]` Timeline metadata (dates). **(3) The IRB
 question, and it gates anything public**: the six-scale survey results are UPMC clinician

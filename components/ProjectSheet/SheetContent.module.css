@@ -26,7 +26,7 @@
   font-family: var(--font-body);
   font-size: 0.875rem;
   letter-spacing: 0.08em;
-  color: var(--color-ink-light);
+  color: var(--color-ink);
 }
 
 .title {
@@ -43,7 +43,7 @@
   font-family: var(--font-heading);
   font-style: italic;
   font-size: clamp(1.125rem, 1.6vw, 1.5rem);
-  color: var(--color-ink-light);
+  color: var(--color-ink);
   text-wrap: pretty;
 }
 
@@ -70,11 +70,10 @@
   margin: 0 0 2.5rem;
   padding-top: 1.25rem;
   padding-bottom: 1.75rem;
-  border-top: 1px solid var(--color-ink-faint);
-  /* The page break: front-matter ends here, the document begins. The
-     heavier ink rule marks major breaks sheet-wide (.deeper, .contents);
-     the hairline above stays minor. */
-  border-bottom: 1.5px solid var(--color-ink);
+  /* The page breaks: every structural rule on the sheet is the same
+     1px ink line (her note 2026-09-06 — no mixed weights, no grey). */
+  border-top: 1px solid var(--color-ink);
+  border-bottom: 1px solid var(--color-ink);
 }
 
 .meta div {
@@ -87,7 +86,7 @@
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--color-ink-light);
+  color: var(--color-ink);
 }
 
 .meta dd {
@@ -100,7 +99,7 @@
 }
 
 .todo {
-  color: var(--color-ink-light);
+  color: var(--color-ink);
   font-style: italic;
 }
 
@@ -179,8 +178,16 @@
   font-family: var(--font-body);
   font-size: 0.8125rem;
   line-height: 1.6;
-  color: var(--color-ink-light);
+  color: var(--color-ink);
   text-wrap: pretty;
+}
+
+.credit {
+  margin: 0.75rem 0 0;
+  font-family: var(--font-body);
+  font-size: 0.8125rem;
+  line-height: 1.6;
+  color: var(--color-ink);
 }
 
 /* ── Components ──────────────────────────────────────────────────── */
@@ -188,7 +195,7 @@
 .component {
   margin-bottom: 4rem;
   padding-top: 1.5rem;
-  border-top: 1px solid var(--color-ink-faint);
+  border-top: 1px solid var(--color-ink);
 }
 
 .componentHead {
@@ -199,10 +206,10 @@
 }
 
 .componentNum {
-  font-family: var(--font-body);
-  font-size: 0.8125rem;
-  letter-spacing: 0.08em;
-  color: var(--color-ink-light);
+  font-family: var(--font-heading);
+  font-size: clamp(1.25rem, 1.9vw, 1.625rem);
+  line-height: 1;
+  color: var(--color-ink);
 }
 
 .componentHead h3 {
@@ -217,13 +224,13 @@
 .gated {
   margin-left: auto;
   padding: 0.25rem 0.625rem;
-  border: 1px solid var(--color-ink-faint);
+  border: 1px solid var(--color-ink);
   border-radius: var(--radius-pill);
   font-family: var(--font-body);
   font-size: 0.75rem;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--color-ink-light);
+  color: var(--color-ink);
   white-space: nowrap;
 }
 
@@ -243,26 +250,38 @@
    no colored bar. */
 .mine {
   max-width: 56ch;
-  margin: 0.25rem 0 1.75rem;
+  margin: 1.5rem 0 2rem;
 }
 
 .mineLabel {
-  display: block;
-  margin-bottom: 0.375rem;
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  margin-bottom: 0.5rem;
   font-family: var(--font-body);
   font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.08em;
+  font-weight: 700;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--color-sage);
+}
+
+/* The signature stroke: a short sage rule opens the line, so the moment
+   registers from across the room without a callout box. */
+.mineLabel::before {
+  content: '';
+  width: 2rem;
+  height: 2px;
+  flex: none;
+  background: var(--color-sage);
 }
 
 .mineBody {
   display: block;
   font-family: var(--font-heading);
   font-style: italic;
-  font-size: 1.0625rem;
-  line-height: 1.55;
+  font-size: clamp(1.125rem, 1.5vw, 1.3125rem);
+  line-height: 1.5;
   color: var(--color-ink);
   text-wrap: pretty;
 }
@@ -271,7 +290,7 @@
 
 .close {
   padding-top: 2rem;
-  border-top: 1px solid var(--color-ink-faint);
+  border-top: 1px solid var(--color-ink);
 }
 
 .closeBlock {

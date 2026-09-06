@@ -2,9 +2,35 @@
 
 .box {
   position: relative;
+  display: block;
   overflow: hidden;
-  border-radius: var(--radius-sm);
-  background: var(--color-cream-dark);
+  /* radius-lg clips square exports to card corners; no background, so a
+     mockup with baked transparent corners (the CTB browser frame) shows
+     the sheet's own ground instead of an off-black box behind it. */
+  border-radius: var(--radius-lg);
+  background: none;
+}
+
+/* One clickable image: the whole artifact is the button. */
+.zoom {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: zoom-in;
+  border-radius: var(--radius-lg);
+}
+
+.zoom:focus-visible {
+  outline: 2px solid var(--color-sage);
+  outline-offset: 4px;
+}
+
+@media (hover: hover) {
+  .zoom:hover .media {
+    opacity: 0.92;
+  }
 }
 
 .media {
@@ -29,7 +55,7 @@
   font-family: var(--font-body);
   font-size: 0.8125rem;
   line-height: 1.5;
-  color: var(--color-ink-light);
+  color: var(--color-ink);
   text-wrap: pretty;
 }
 
@@ -51,8 +77,8 @@
 .audio {
   margin: 0;
   padding: 1.25rem 1.5rem 1.5rem;
-  border: 1px solid var(--color-ink-faint);
-  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-ink);
+  border-radius: var(--radius-lg);
 }
 
 .audioHead {
@@ -92,16 +118,15 @@
   margin: 0 0 1rem;
   font-family: var(--font-body);
   font-size: 0.8125rem;
-  color: var(--color-ink-light);
+  color: var(--color-ink);
 }
 
 .cards {
   display: grid;
-  /* Two cards, side by side at every width. Capped so each renders near
-     the physical card's size instead of inflating to fill the sheet. */
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1.5rem;
-  max-width: 34rem;
+  /* Three cards across the full section width (her note 2026-09-06):
+     the deck's range, shown at the scale of the other artifacts. */
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(1rem, 2.5vw, 2rem);
   margin: 0;
   padding: 0;
   list-style: none;
@@ -160,7 +185,7 @@
   font-size: 0.75rem;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--color-ink-light);
+  color: var(--color-ink);
 }
 
 .card:focus-visible {
@@ -195,4 +220,48 @@
   .card[data-back='true'] .cardBack {
     opacity: 1;
   }
+}
+
+/* ── Behind the scenes: the team, at the bottom ─────────────────────── */
+
+.bts {
+  margin-top: 3.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--color-ink);
+}
+
+.btsHead {
+  margin: 0 0 1.25rem;
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-sage);
+}
+
+.btsGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (min-width: 900px) {
+  .btsGrid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.btsBox {
+  aspect-ratio: 4 / 3;
+}
+
+.btsImg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }

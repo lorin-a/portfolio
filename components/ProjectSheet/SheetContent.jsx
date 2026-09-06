@@ -1,6 +1,8 @@
 'use client'
 
-import { SheetLead, SheetStills, SheetAudio, SheetCardGallery } from './SheetMedia'
+import { useMemo, useRef, useState } from 'react'
+import Lightbox from '@/components/Lightbox/Lightbox'
+import { SheetLead, SheetStills, SheetAudio, SheetCardGallery, SheetBts, sheetImg } from './SheetMedia'
 import styles from './SheetContent.module.css'
 
 /**
@@ -12,17 +14,50 @@ import styles from './SheetContent.module.css'
  * masthead so the punchline lands on the first screen rather than after the
  * evidence, and the work starts immediately after.
  *
- * Depth lives beside the artifact it belongs to. Each component carries its
- * own short explanation and a "my part" line, which answers the role
+ * Each component reads title → artifact → description, so the work leads
+ * and the words follow it. Depth lives beside the artifact it belongs to:
+ * every component carries its own "what I did" line, which answers the role
  * question more credibly than one general claim up top could, and puts it
  * next to the proof.
  *
- * Media form follows what each component IS: video where motion is the
- * content, photography where the object is, audio where the medium is
- * sound, a gallery where there is a set.
+ * Every public image opens into one shared overlay gallery (the Lightbox),
+ * paging through all of the folder's images in reading order. Closing it
+ * returns focus — and the reader's place — to the image they left from.
+ * Gated media never enters the gallery.
  */
 export default function SheetContent({ sheet, num, title, tagline, titleId }) {
-  const { outcome, meta = [], frame = {}, components = [], close = {} } = sheet
+  const { outcome, meta = [], frame = {}, components = [], close = {}, bts, credit } = sheet
+
+  /* The folder's images, flat and in reading order, for the overlay. */
+  const images = useMemo(() => {
+    const list = []
+    const push = (key, alt) => {
+      const src = sheetImg(key, 1800)
+      if (src) list.push({ key, alt: alt || '', src })
+    }
+    components.forEach((c) => {
+      if (c.gated) return
+      if (c.media?.lead?.type === 'image') push(c.media.lead.key, c.media.lead.alt)
+      c.media?.also?.forEach((i) => { if (i.type === 'image') push(i.key, i.alt) })
+      c.media?.stills?.forEach((k) => push(k))
+    })
+    bts?.images?.forEach((i) => push(i.key, i.alt))
+    return list
+  }, [components, bts])
+
+  const [lightboxAt, setLightboxAt] = useState(-1)
+  const openerRef = useRef(null)
+
+  const openImage = (key, el) => {
+    openerRef.current = el
+    setLightboxAt(images.findIndex((i) => i.key === key))
+  }
+  const closeImage = () => {
+    setLightboxAt(-1)
+    /* The reader's place is sacred: the sheet never scrolled, and focus
+       goes back to the exact image they left from. */
+    openerRef.current?.focus({ preventScroll: true })
+  }
 
   return (
     <>
@@ -70,6 +105,11 @@ export default function SheetContent({ sheet, num, title, tagline, titleId }) {
             {c.gated && <span className={styles.gated}>Confidential</span>}
           </div>
 
+          {/* The artifact leads; the words follow it. */}
+          {c.media?.lead && (
+            <SheetLead item={c.media.lead} gated={c.gated} onImage={openImage} />
+          )}
+
           <p className={styles.componentBody}>{c.body}</p>
           {c.mine && (
             <p className={styles.mine}>
@@ -78,13 +118,14 @@ export default function SheetContent({ sheet, num, title, tagline, titleId }) {
             </p>
           )}
 
-          {c.media?.lead && <SheetLead item={c.media.lead} gated={c.gated} />}
           {c.media?.also?.map((item) =>
             item.type === 'audio'
               ? <SheetAudio key={item.key} item={item} />
-              : <SheetLead key={item.key} item={item} gated={c.gated} />
+              : <SheetLead key={item.key} item={item} gated={c.gated} onImage={openImage} />
           )}
-          {c.media?.stills && <SheetStills keys={c.media.stills} gated={c.gated} />}
+          {c.media?.stills && (
+            <SheetStills keys={c.media.stills} gated={c.gated} onImage={openImage} />
+          )}
           {c.media?.gallery && <SheetCardGallery gallery={c.media.gallery} />}
         </section>
       ))}
@@ -110,7 +151,21 @@ export default function SheetContent({ sheet, num, title, tagline, titleId }) {
           </div>
         )}
         {frame.partners && <p className={styles.partners}>{frame.partners}</p>}
+        {credit && <p className={styles.credit}>{credit}</p>}
       </section>
+
+      {bts && <SheetBts bts={bts} onImage={openImage} />}
+
+      {lightboxAt >= 0 && images[lightboxAt] && (
+        <Lightbox
+          src={images[lightboxAt].src}
+          alt={images[lightboxAt].alt}
+          counter={`${lightboxAt + 1} of ${images.length}`}
+          onClose={closeImage}
+          onPrev={() => setLightboxAt((lightboxAt - 1 + images.length) % images.length)}
+          onNext={() => setLightboxAt((lightboxAt + 1) % images.length)}
+        />
+      )}
     </>
   )
 }

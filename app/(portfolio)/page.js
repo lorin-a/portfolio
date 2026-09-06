@@ -75,6 +75,8 @@ export default function Home() {
             publisher: 'Carnegie Mellon University',
             publication: 'College of Fine Arts',
             title: 'Groundswell: Designing Systems of Care for Those Who Care',
+            preview: '/press/cfa-groundswell.jpg',
+            previewAlt: 'The College of Fine Arts feature on Groundswell, as published.',
           }}
         />
 

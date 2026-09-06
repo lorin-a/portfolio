@@ -261,6 +261,9 @@ export default function ProjectSheet({
   useEffect(() => {
     if (!open) return
     const onKey = e => {
+      /* An image lightbox opened from the sheet owns its own keys — ESC
+         closes IT, not the sheet, and its focus stays its business. */
+      if (e.target instanceof Element && e.target.closest('[aria-label="Image lightbox"]')) return
       if (e.key === 'Escape') { e.stopPropagation(); requestClose(); return }
       if (e.key !== 'Tab') return
       const f = sheetRef.current?.querySelectorAll(
@@ -387,6 +390,11 @@ export default function ProjectSheet({
                   <span className={styles.pressPublisher}>{press.publisher}</span>
                 )}
                 <span className={styles.pressTitle}>“{press.title}”</span>
+                {press.preview && (
+                  <span className={styles.pressPreview}>
+                    <img src={press.preview} alt={press.previewAlt || ''} loading="lazy" />
+                  </span>
+                )}
                 <span className={styles.pressCta}>
                   {hrefLabel || 'Read the feature'} <span aria-hidden="true">↗</span>
                 </span>

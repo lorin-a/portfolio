@@ -86,15 +86,15 @@ export const groundswell = {
       /* The medium is SOUND, so the lead is a player, not a picture. The
          AudioPlayer + useSharedAudio already exist and coordinate pausing
          across players - this is her poem request, already built.
-         The reflection cards show as a contrasting pair (her note,
-         2026-09-06): one from each pole of the deck's emotional range, at
-         the cards' true proportions. Joyful against heartbroken is the
-         project's own duality; any other pair is a one-line swap here. */
+         The reflection cards show as a contrasting row (her notes
+         2026-09-06: full section width; three if two reads too big): the
+         deck's poles plus its most workaday state between them, at the
+         cards' true proportions. Any other set is a one-line swap here. */
       media: {
         lead:     { type: 'audio', key: 'gs-poem-remember', title: 'The Groundswell poem' },
         also:     [{ type: 'video', key: 'New_Meditations', alt: 'The meditation library.' }],
         gallery:  { kind: 'cards', faces: 'front-and-back',
-                    emotions: ['joyful', 'heartbroken'] },
+                    emotions: ['joyful', 'exhausted', 'heartbroken'] },
       },
       name: 'Groundswell Mindfulness Library',
       body: 'A digital library of mindfulness resources including guided meditations of varying lengths, the Groundswell poem, and calming instrumentals. Groundswell Reflection Cards are part of the library: a deck of guided reflection cards designed to help healthcare staff identify and process the complex emotions of caregiving work. Each card offers emotional validation, simple somatic exercises for nervous system regulation, and conversation starters for meaningful dialogue about well-being.',
@@ -128,6 +128,30 @@ export const groundswell = {
       gated: true,
     },
   ],
+
+  /* Her note 2026-09-06: "cute team photos and BTS at the bottom… a little
+     5-10 image gallery." Curated from the making / playtest / workshop /
+     finale sets for people and warmth — swap keys freely (the full menu is
+     GS_IMAGES in lib/cloudinary.js). Title and alts are furniture, hers to
+     rewrite in the copy pass. */
+  bts: {
+    title: 'Behind the scenes',
+    images: [
+      { key: 'gs-making-build-01',     alt: 'A teammate celebrates beside the pod mid-build.' },
+      { key: 'gs-making-build-04',     alt: 'The team lays out a printed mural panel.' },
+      { key: 'gs-making-install-01',   alt: 'Installing the pod’s painted facade.' },
+      { key: 'gs-playtest-01',         alt: 'Setting up the playtest table.' },
+      { key: 'gs-playtest-03',         alt: 'A staff member smiles beside the pod during playtesting.' },
+      { key: 'gs-workshop-flower-01',  alt: 'Making paper flowers at the workshop table.' },
+      { key: 'gs-workshop-coats-01',   alt: 'Two teammates with a basket of paper flowers.' },
+      { key: 'gs-finale',              alt: 'A hug in front of the art wall at the finale.' },
+    ],
+  },
+
+  /* Her note 2026-09-06: "We need to credit Kevin Lorenzi photography."
+     Rendered at the foot of the close, beside the partners line. Exact
+     wording hers to adjust. */
+  credit: 'Photography by Kevin Lorenzi.',
 
   close: {
     /* Her copy 2026-08-27 for the measures; rehearsal Q7 part 2 for the

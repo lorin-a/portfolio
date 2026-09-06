@@ -242,7 +242,7 @@
   font-size: 0.75rem;
   letter-spacing: 0.13em;
   text-transform: uppercase;
-  color: var(--color-ink-faint);
+  color: var(--color-ink);
   font-weight: 700;
 }
 
@@ -397,7 +397,7 @@
 .deeper {
   margin-top: 3.5rem;
   padding-top: 1.25rem;
-  border-top: 1.5px solid var(--color-ink);
+  border-top: 1px solid var(--color-ink);
   display: flex;
   align-items: baseline;
   gap: 0.75rem;
@@ -409,7 +409,7 @@
   font-size: 0.75rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--color-ink-faint);
+  color: var(--color-ink);
   font-weight: 700;
 }
 
@@ -447,7 +447,7 @@
   font-weight: 600;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--color-ink-light);
+  color: var(--color-ink);
 }
 
 .pressMasthead {
@@ -467,7 +467,7 @@
   font-size: 0.8125rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--color-ink-light);
+  color: var(--color-ink);
 }
 
 .pressTitle {
@@ -480,6 +480,21 @@
   line-height: 1.45;
   color: var(--color-ink);
   text-wrap: balance;
+}
+
+.pressPreview {
+  display: block;
+  max-width: 40rem;
+  margin: 1.75rem auto 0;
+  overflow: hidden;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+}
+
+.pressPreview img {
+  display: block;
+  width: 100%;
+  height: auto;
 }
 
 .pressCta {
@@ -503,7 +518,22 @@
 }
 
 @media (hover: hover) {
-  .press:hover .pressCta {
+  .press:hover .pressPreview {
+  display: block;
+  max-width: 40rem;
+  margin: 1.75rem auto 0;
+  overflow: hidden;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+}
+
+.pressPreview img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.pressCta {
     background: var(--color-ink);
     color: var(--color-cream);
   }

@@ -12,6 +12,35 @@ const img = (k, w) => (GS_IMAGES[k] ? cloudImg(GS_IMAGES[k], w) : null)
 const vid = (k, w) => (GS_VIDEOS[k] ? cloudVideo(GS_VIDEOS[k], w) : null)
 const aud = (k) => (GS_AUDIO[k] ? cloudAudio(GS_AUDIO[k]) : null)
 
+/** Exported for the sheet's lightbox registry. */
+export const sheetImg = img
+
+/**
+ * One clickable image: opens the sheet's overlay gallery. Videos and gated
+ * media never get this wrapper — only images, and only public ones.
+ */
+function ZoomableImage({ imageKey, src, alt, onImage }) {
+  if (!onImage) {
+    return (
+      <div className={styles.box}>
+        <img src={src} alt={alt || ''} className={styles.media} loading="lazy" />
+      </div>
+    )
+  }
+  return (
+    <button
+      type="button"
+      className={styles.zoom}
+      onClick={(e) => onImage(imageKey, e.currentTarget)}
+      aria-label={alt ? `View larger: ${alt}` : 'View larger image'}
+    >
+      <span className={styles.box}>
+        <img src={src} alt="" className={styles.media} loading="lazy" />
+      </span>
+    </button>
+  )
+}
+
 /**
  * The poem, as a player rather than a picture.
  *
@@ -42,13 +71,14 @@ export function SheetAudio({ item }) {
 }
 
 /**
- * The reflection cards, as a contrasting pair.
+ * The reflection cards, as a contrasting row.
  *
- * Nine emotions exist; two are shown, one from each pole of the deck's
- * range, at the cards' true proportions. Each card carries a front and a
- * back, and the back is where the somatic exercise and the conversation
- * starter live, so the flip is the content and not an effect. Click or
- * Enter flips. Reduced motion swaps faces without the rotation.
+ * Nine emotions exist; three are shown across the section's full width,
+ * spanning the deck's range, at the cards' true proportions. Each card
+ * carries a front and a back, and the back is where the somatic exercise
+ * and the conversation starter live, so the flip is the content and not an
+ * effect. Click or Enter flips. Reduced motion swaps faces without the
+ * rotation.
  */
 export function SheetCardGallery({ gallery }) {
   const [flipped, setFlipped] = useState(() => new Set())
@@ -63,8 +93,8 @@ export function SheetCardGallery({ gallery }) {
   const cards = gallery.emotions
     .map((name) => ({
       name,
-      front: GS_CARDS[`${name}-front`] && cloudImg(GS_CARDS[`${name}-front`], 600),
-      back: GS_CARDS[`${name}-back`] && cloudImg(GS_CARDS[`${name}-back`], 600),
+      front: GS_CARDS[`${name}-front`] && cloudImg(GS_CARDS[`${name}-front`], 800),
+      back: GS_CARDS[`${name}-back`] && cloudImg(GS_CARDS[`${name}-back`], 800),
     }))
     .filter((c) => c.front)
 
@@ -73,7 +103,7 @@ export function SheetCardGallery({ gallery }) {
   return (
     <div className={styles.gallery}>
       <p className={styles.galleryNote}>
-        Two of nine cards. Turn one over for the somatic exercise.
+        Three of nine cards. Turn one over for the somatic exercise.
       </p>
       <ul className={styles.cards}>
         {cards.map((card) => {
@@ -106,7 +136,7 @@ export function SheetCardGallery({ gallery }) {
 }
 
 /** One lead artifact: video, image, or the audio player. */
-export function SheetLead({ item, gated }) {
+export function SheetLead({ item, gated, onImage }) {
   if (item.type === 'audio') return <SheetAudio item={item} />
 
   const src = item.type === 'video' ? vid(item.key, 1400) : img(item.key, 1400)
@@ -114,32 +144,66 @@ export function SheetLead({ item, gated }) {
 
   return (
     <figure className={styles.lead}>
-      <div className={gated ? `${styles.box} ${styles.boxGated}` : styles.box}>
-        {item.type === 'video' ? (
+      {item.type === 'video' ? (
+        <div className={gated ? `${styles.box} ${styles.boxGated}` : styles.box}>
           <video src={src} muted loop playsInline preload="metadata"
             autoPlay aria-label={item.alt} className={styles.media} />
-        ) : (
-          <img src={src} alt={item.alt || ''} className={styles.media} loading="lazy" />
-        )}
-      </div>
+        </div>
+      ) : (
+        <ZoomableImage imageKey={item.key} src={src} alt={item.alt}
+          onImage={gated ? null : onImage} />
+      )}
       {item.alt && <figcaption>{item.alt}</figcaption>}
     </figure>
   )
 }
 
 /** Supporting stills beneath the lead. */
-export function SheetStills({ keys = [], gated }) {
+export function SheetStills({ keys = [], gated, onImage }) {
   const items = keys.map((k) => ({ k, src: img(k, 800) })).filter((i) => i.src)
   if (!items.length) return null
   return (
     <div className={styles.stills}>
       {items.map(({ k, src }) => (
         <figure key={k}>
-          <div className={gated ? `${styles.box} ${styles.boxGated}` : styles.box}>
-            <img src={src} alt="" className={styles.media} loading="lazy" />
-          </div>
+          <ZoomableImage imageKey={k} src={src} alt=""
+            onImage={gated ? null : onImage} />
         </figure>
       ))}
     </div>
+  )
+}
+
+/**
+ * The team, at the bottom: the making, the playtests, the workshops, the
+ * finale. A small grid, every photo opening into the same overlay gallery
+ * as the rest of the sheet.
+ */
+export function SheetBts({ bts, onImage }) {
+  const items = (bts.images || [])
+    .map((i) => ({ ...i, src: img(i.key, 700) }))
+    .filter((i) => i.src)
+  if (!items.length) return null
+
+  return (
+    <section className={styles.bts}>
+      <h3 className={styles.btsHead}>{bts.title}</h3>
+      <ul className={styles.btsGrid}>
+        {items.map((i) => (
+          <li key={i.key}>
+            <button
+              type="button"
+              className={styles.zoom}
+              onClick={(e) => onImage?.(i.key, e.currentTarget)}
+              aria-label={`View larger: ${i.alt}`}
+            >
+              <span className={`${styles.box} ${styles.btsBox}`}>
+                <img src={i.src} alt="" className={styles.btsImg} loading="lazy" />
+              </span>
+            </button>
+          </li>
+        ))}
+      </ul>
+    </section>
   )
 }
