@@ -97,19 +97,14 @@
 
 .cards {
   display: grid;
-  /* Deterministic column count so the set never orphans a card onto a row
-     of its own. Four across at width, two on narrow. */
+  /* Two cards, side by side at every width. Capped so each renders near
+     the physical card's size instead of inflating to fill the sheet. */
   grid-template-columns: repeat(2, 1fr);
-  gap: 1.25rem;
+  gap: 1.5rem;
+  max-width: 34rem;
   margin: 0;
   padding: 0;
   list-style: none;
-}
-
-@media (min-width: 900px) {
-  .cards {
-    grid-template-columns: repeat(4, 1fr);
-  }
 }
 
 .card {
@@ -126,7 +121,9 @@
 .cardInner {
   position: relative;
   display: block;
-  aspect-ratio: 3 / 4;
+  /* The deck's true proportions (the exports are 600×967). The old 3/4
+     box cropped ~17% off every face, including the footer of the backs. */
+  aspect-ratio: 600 / 967;
   /* No overflow/clip here: any overflow other than `visible` forces
      transform-style back to flat, which silently kills
      backface-visibility and shows the FRONT mirrored instead of the back.
@@ -145,7 +142,10 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border-radius: var(--radius-sm);
+  /* Card-corner rounding at this scale, and a shadow so the pair reads
+     as physical objects lying on the sheet. */
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
   backface-visibility: hidden;
 }
 

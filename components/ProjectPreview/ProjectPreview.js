@@ -46,6 +46,9 @@ export default function ProjectPreview({
   pillVariant = 'weave', mediaSrc, mediaType = 'image', mediaAlt = '',
   mediaSequence = [],
   href, external = false, ctaLabel, comingSoon = false, flip = false,
+  /* Press citation ({ publisher, publication, title }) when the href is a
+     real editorial feature — the sheet sets it as a credential. */
+  press = null,
   /** 'carousel' (default) | 'atmospheric' | 'file' */
   cardVariant = 'carousel',
   /** Sheet content. Both default to prompts so nothing is invented. */
@@ -368,6 +371,8 @@ export default function ProjectPreview({
           statements={statements}
           href={comingSoon ? null : href}
           hrefLabel={ctaLabel}
+          press={press}
+          external={external}
         />
       )}
     </section>

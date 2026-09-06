@@ -33,15 +33,15 @@ eyes on the rebuilt sheet.**
 
 | # | Note (her words) | Status |
 |---|---|---|
-| FS1 | "I would like to see a page break line below the meta data" | 🔨 |
-| FS2 | "a less generic/obviously AI callout design for my 'what I did' moments" | 🔨 |
-| FS3 | "the flip cards to be a better and true to size with rounded corners design AND just show two side by side that are contrasting emotions" | 🔨 |
-| FS4 | "the read the article section to be more visual and official looking, a link does not excite me or catch my eye, make it look polished and official like its special and was featured in this publication type of thing. gives it credibility" | 🔨 |
-| FS5 | "Then we can work on copy" | ⏭ QUEUED — after FS1–FS4 land |
+| FS1 | "I would like to see a page break line below the meta data" | ✅ SHIPPED — 1.5px ink rule closes the front-matter below the metadata, matching the sheet's major-break vocabulary (.deeper, .contents); the hairline above stays minor |
+| FS2 | "a less generic/obviously AI callout design for my 'what I did' moments" | ✅ SHIPPED — the sage left-border callout (the AI tell, and identical to the outcome's treatment) is gone; each line is now a signed annotation: her phrase "What I did" as a small-caps sage label, the line itself in the site's italic serif voice at full ink |
+| FS3 | "the flip cards to be a better and true to size with rounded corners design AND just show two side by side that are contrasting emotions" | ✅ SHIPPED — two cards, joyful against heartbroken (any other pair is a one-line swap in `content/sheets/groundswell.js`), at the deck's true 600×967 proportions (the old 3/4 box was cropping ~17% off every face, including the backs' Groundswell footer), radius-lg corners + shadow-md so they read as objects on the sheet. Click + keyboard flip re-verified |
+| FS4 | "the read the article section to be more visual and official looking… featured in this publication type of thing. gives it credibility" | ✅ SHIPPED — a press credential: newspaper-masthead double rules, "As featured in" eyebrow, **College of Fine Arts** set large with the Carnegie Mellon University line, the article cited by its real title, pill CTA that fills on hover; the whole block is the link (new tab). Data-driven (`press` prop) so other projects keep the plain "Go further" link |
+| FS5 | "Then we can work on copy" | ⏭ **NEXT — her copy pass on the sheet** |
 
 ### ▶ Next move
 
-**Work FS1–FS4 above, then her copy pass (FS5).** Superseded: ~~her verdict on the rebuilt sheet~~ — delivered 2026-09-06, see ledger. Then, in order: **(1)** the 4-vs-5 component count —
+**FS5: her copy pass on the sheet.** FS1–FS4 shipped and verified 1440 · 390 · reduced motion (zero overflow, zero new console errors, flip works by click and keyboard, stylelint clean on the sheet files). Superseded: ~~her verdict on the rebuilt sheet~~ — delivered 2026-09-06, see ledger. Then, in order: **(1)** the 4-vs-5 component count —
 she wrote "4 core components" and named five; the dashboard reads as the reporting layer
 above the four. **(2)** The `[LORIN TO WRITE]` Timeline metadata (dates). **(3) The IRB
 question, and it gates anything public**: the six-scale survey results are UPMC clinician

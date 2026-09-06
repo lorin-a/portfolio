@@ -71,7 +71,12 @@ export default function SheetContent({ sheet, num, title, tagline, titleId }) {
           </div>
 
           <p className={styles.componentBody}>{c.body}</p>
-          {c.mine && <p className={styles.mine}>{c.mine}</p>}
+          {c.mine && (
+            <p className={styles.mine}>
+              <span className={styles.mineLabel}>What I did</span>
+              <span className={styles.mineBody}>{c.mine}</span>
+            </p>
+          )}
 
           {c.media?.lead && <SheetLead item={c.media.lead} gated={c.gated} />}
           {c.media?.also?.map((item) =>

@@ -100,6 +100,11 @@ export default function ProjectSheet({
   statements = [],
   href,
   hrefLabel,
+  /* Press citation for an href that is a real editorial feature: the
+     block renders as a publication credit instead of a bare link.
+     Shape: { publisher, publication, title }. */
+  press = null,
+  external = false,
 }) {
   const sheetRef = useRef(null)
   const svgRef = useRef(null)
@@ -367,12 +372,31 @@ export default function ProjectSheet({
                 sectionsRef={sectionsRef} prefersReduced={prefersReduced}
                 styles={styles} />
             )}
-            {href && (
+            {href && press ? (
+              /* A featured piece is a credential, so it is set as one:
+                 masthead double rules, the publication named large, the
+                 article cited by title. The whole block is the link. */
+              <a
+                className={styles.press}
+                href={href}
+                {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+              >
+                <span className={styles.pressEyebrow}>As featured in</span>
+                <span className={styles.pressMasthead}>{press.publication}</span>
+                {press.publisher && (
+                  <span className={styles.pressPublisher}>{press.publisher}</span>
+                )}
+                <span className={styles.pressTitle}>“{press.title}”</span>
+                <span className={styles.pressCta}>
+                  {hrefLabel || 'Read the feature'} <span aria-hidden="true">↗</span>
+                </span>
+              </a>
+            ) : href ? (
               <div className={styles.deeper}>
                 <span className={styles.deeperLabel}>Go further</span>
                 <a href={href}>{hrefLabel || `Read the full ${title} case study`}</a>
               </div>
-            )}
+            ) : null}
           </div>
         </div>
       </div>

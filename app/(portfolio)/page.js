@@ -71,6 +71,11 @@ export default function Home() {
           href="https://cfa.cmu.edu/magazine/groundswell-designing-systems-care-those-who-care"
           external
           ctaLabel="Read the feature"
+          press={{
+            publisher: 'Carnegie Mellon University',
+            publication: 'College of Fine Arts',
+            title: 'Groundswell: Designing Systems of Care for Those Who Care',
+          }}
         />
 
         <ProjectPreview

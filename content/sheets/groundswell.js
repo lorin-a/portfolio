@@ -86,13 +86,15 @@ export const groundswell = {
       /* The medium is SOUND, so the lead is a player, not a picture. The
          AudioPlayer + useSharedAudio already exist and coordinate pausing
          across players - this is her poem request, already built.
-         The reflection cards are a SET, so they are the gallery: nine
-         emotions, front and back. */
+         The reflection cards show as a contrasting pair (her note,
+         2026-09-06): one from each pole of the deck's emotional range, at
+         the cards' true proportions. Joyful against heartbroken is the
+         project's own duality; any other pair is a one-line swap here. */
       media: {
         lead:     { type: 'audio', key: 'gs-poem-remember', title: 'The Groundswell poem' },
         also:     [{ type: 'video', key: 'New_Meditations', alt: 'The meditation library.' }],
         gallery:  { kind: 'cards', faces: 'front-and-back',
-                    emotions: ['grateful', 'joyful', 'exhausted', 'invisible'] },
+                    emotions: ['joyful', 'heartbroken'] },
       },
       name: 'Groundswell Mindfulness Library',
       body: 'A digital library of mindfulness resources including guided meditations of varying lengths, the Groundswell poem, and calming instrumentals. Groundswell Reflection Cards are part of the library: a deck of guided reflection cards designed to help healthcare staff identify and process the complex emotions of caregiving work. Each card offers emotional validation, simple somatic exercises for nervous system regulation, and conversation starters for meaningful dialogue about well-being.',

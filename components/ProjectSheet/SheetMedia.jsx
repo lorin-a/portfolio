@@ -42,9 +42,10 @@ export function SheetAudio({ item }) {
 }
 
 /**
- * The reflection cards, as a set.
+ * The reflection cards, as a contrasting pair.
  *
- * Nine emotions exist; four are shown. Each card carries a front and a
+ * Nine emotions exist; two are shown, one from each pole of the deck's
+ * range, at the cards' true proportions. Each card carries a front and a
  * back, and the back is where the somatic exercise and the conversation
  * starter live, so the flip is the content and not an effect. Click or
  * Enter flips. Reduced motion swaps faces without the rotation.
@@ -72,7 +73,7 @@ export function SheetCardGallery({ gallery }) {
   return (
     <div className={styles.gallery}>
       <p className={styles.galleryNote}>
-        Four of nine cards. Turn one over for the somatic exercise.
+        Two of nine cards. Turn one over for the somatic exercise.
       </p>
       <ul className={styles.cards}>
         {cards.map((card) => {
