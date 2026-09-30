@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from 'react'
 import Lightbox from '@/components/Lightbox/Lightbox'
-import { SheetStage, SheetCardGallery, slidesFor, sheetImg } from './SheetMedia'
+import { SheetStage, SheetCardGallery, SheetAudioBars, slidesFor, sheetImg } from './SheetMedia'
 import SheetCover from './SheetCover'
 import styles from './SheetContent.module.css'
 import paper from './Paper.module.css'
@@ -130,7 +130,6 @@ export default function SheetContent({ sheet, num, title, tagline, titleId }) {
 
       {components.map((c, i) => {
         const slides = slidesFor(c.media)
-        const poem = c.media?.poem || [c.media?.lead, ...(c.media?.also || [])].find((m) => m?.type === 'audio')
         const phone = c.media?.phone
         return (
           <section key={c.key} id={`sheet-${c.key}`} className={styles.component} data-reveal="0">
@@ -151,6 +150,7 @@ export default function SheetContent({ sheet, num, title, tagline, titleId }) {
                     </p>
                   </div>
                 )}
+                {c.media?.listen && <SheetAudioBars items={c.media.listen} />}
               </div>
             </div>
 
@@ -162,9 +162,9 @@ export default function SheetContent({ sheet, num, title, tagline, titleId }) {
             {/* The deck: the phone (the digital library, with the poem
                 playing inside it) and the reflection cards, one row of
                 objects across the whole component. */}
-            {(c.media?.gallery || poem || phone) && (
+            {(c.media?.gallery || phone) && (
               <div className={styles.band}>
-                <SheetCardGallery gallery={c.media?.gallery} poem={poem} phone={phone} />
+                <SheetCardGallery gallery={c.media?.gallery} phone={phone} />
               </div>
             )}
           </section>

@@ -177,206 +177,8 @@
   transition: opacity var(--motion-medium) var(--ease-out);
 }
 
-.phone[data-playing] .screenVideo {
-  opacity: 0;
-}
 
-/* While the poem plays the screen's own ground matches the words view, so
-   its faded edges dissolve into paper rather than into black. */
-.phone[data-playing] .screen {
-  background: #f6ede9;
-}
 
-/* The poem's words, shown while it plays, scrolling with the recording. */
-.lyrics {
-  position: absolute;
-  inset: 0;
-  padding: 16cqi 9cqi 36cqi;
-  overflow-y: auto;
-  scrollbar-width: none;
-  background: #f6ede9;
-  color: #3d3748;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity var(--motion-medium) var(--ease-out);
-  mask-image: linear-gradient(to bottom, transparent, #000 12%, #000 72%, transparent 88%);
-  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 12%, #000 72%, transparent 88%);
-}
-
-.lyrics::-webkit-scrollbar {
-  display: none;
-}
-
-.phone[data-playing] .lyrics {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-.lyricsOpener {
-  margin: 0 0 1em;
-  font-family: var(--font-heading);
-  font-size: max(1.125rem, 10cqi);
-  font-weight: 300;
-  font-style: italic;
-  line-height: 1.15;
-}
-
-.lyricsStanza {
-  margin: 0 0 1em;
-  font-family: var(--font-heading);
-  font-size: max(0.875rem, 7cqi);
-  font-weight: 300;
-  line-height: 1.5;
-}
-
-/* The mini-player, the way the phone's own now-playing bar sits. */
-.mini {
-  position: absolute;
-  left: 4cqi;
-  right: 4cqi;
-  bottom: 5cqi;
-  display: flex;
-  align-items: center;
-  gap: 2cqi;
-  padding: 1.5cqi 4cqi 1.5cqi 1.5cqi;
-  border-radius: 8cqi;
-  background: rgba(255, 255, 255, 0.86);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.18);
-  color: #3d3748;
-}
-
-.miniPlay {
-  position: relative;
-  flex: none;
-  display: grid;
-  place-items: center;
-  width: 44px;
-  height: 44px;
-  padding: 0;
-  border: 0;
-  background: none;
-  cursor: pointer;
-}
-
-.miniDisc {
-  display: grid;
-  place-items: center;
-  width: 38px;
-  height: 38px;
-  border-radius: 50%;
-  background: #3d3748;
-  color: #fff;
-  transition: transform var(--motion-fast) var(--ease-out);
-}
-
-.miniDisc svg {
-  width: 18px;
-  height: 18px;
-  fill: currentColor;
-}
-
-/* At rest, one slow ring breathes out from the play button: the one
-   moving invitation on the phone, gone the moment the poem plays. */
-.miniPlay::after {
-  content: '';
-  position: absolute;
-  inset: 3px;
-  border-radius: 50%;
-  border: 1.5px solid #3d3748;
-  animation: breathe 2.8s var(--ease-out) infinite;
-  pointer-events: none;
-}
-
-.phone[data-playing] .miniPlay::after {
-  animation: none;
-  opacity: 0;
-}
-
-@keyframes breathe {
-  0% { transform: scale(1); opacity: 0.55; }
-  70%, 100% { transform: scale(1.4); opacity: 0; }
-}
-
-@media (hover: hover) {
-  .miniPlay:hover .miniDisc {
-    transform: scale(1.06);
-  }
-}
-
-.miniPlay:focus-visible {
-  outline: 2px solid #3d3748;
-  outline-offset: 1px;
-  border-radius: 50%;
-}
-
-.miniMeta {
-  flex: 1;
-  min-width: 0;
-}
-
-.miniTitle {
-  display: block;
-  overflow: hidden;
-  font-family: var(--font-heading);
-  font-size: 0.875rem;
-  font-style: italic;
-  font-variant-numeric: tabular-nums;
-  line-height: 1.2;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-}
-
-.miniSeek {
-  --pct: 0%;
-  display: block;
-  width: 100%;
-  height: 24px;
-  margin: 0;
-  background: none;
-  cursor: pointer;
-  appearance: none;
-  -webkit-appearance: none;
-}
-
-.miniSeek::-webkit-slider-runnable-track {
-  height: 2px;
-  background: linear-gradient(to right, #3d3748 var(--pct), rgba(61, 55, 72, 0.25) var(--pct));
-}
-
-.miniSeek::-moz-range-track {
-  height: 2px;
-  background: rgba(61, 55, 72, 0.25);
-}
-
-.miniSeek::-moz-range-progress {
-  height: 2px;
-  background: #3d3748;
-}
-
-.miniSeek::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  width: 10px;
-  height: 10px;
-  margin-top: -4px;
-  border: 0;
-  border-radius: 50%;
-  background: #3d3748;
-}
-
-.miniSeek::-moz-range-thumb {
-  width: 10px;
-  height: 10px;
-  border: 0;
-  border-radius: 50%;
-  background: #3d3748;
-}
-
-.miniSeek:focus-visible {
-  outline: 2px solid #3d3748;
-  outline-offset: 2px;
-}
 
 .poemCredit {
   display: block;
@@ -451,8 +253,19 @@
     overflow: visible;
   }
 
+  /* Desktop: every card fills its column; the phone takes the height a
+     card has (600:967) at its own 9:19.5, i.e. 74.4% of a column. */
   .deckItem {
     justify-self: center;
+    width: 100%;
+  }
+
+  .deckItem[data-kind='card'] {
+    width: 100%;
+  }
+
+  .deckItem[data-kind='phone'] {
+    width: 74.4%;
   }
 
   .galleryNote {
@@ -549,16 +362,6 @@
     animation: none;
   }
 
-  .miniPlay::after {
-    animation: none;
-    opacity: 0;
-  }
-
-  .screenVideo,
-  .lyrics {
-    transition: none;
-  }
-
   .cardInner {
     transform: none !important;
     transition: none;
@@ -575,5 +378,226 @@
 
   .card[data-back='true'] .cardBack {
     opacity: 1;
+  }
+}
+
+/* ══ The turn-over cue and the one-time hint (FS144) ═════════════════ */
+
+.cardCaption {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.25rem 0.75rem;
+}
+
+.turnCue {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-family: var(--font-body);
+  font-size: var(--step-label);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-sage);
+}
+
+.turnCue svg {
+  width: 14px;
+  height: 14px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+@keyframes hintTurn {
+  0%, 100% { transform: rotateY(0); }
+  45% { transform: rotateY(-28deg); }
+}
+
+.deck[data-hint] .card:not([data-back='true']) .cardInner {
+  animation: hintTurn 1.4s var(--ease-in-out);
+}
+
+/* ══ AUDIO BARS (FS144) ══════════════════════════════════════════════ */
+
+/* The seek bar: a native range, restyled (keyboard and screen readers
+   come for free). */
+.seek {
+  --pct: 0%;
+  display: block;
+  width: 100%;
+  height: 44px;
+  margin: 0;
+  background: none;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.seek::-webkit-slider-runnable-track {
+  height: 2px;
+  background: linear-gradient(
+    to right,
+    var(--color-ink) var(--pct),
+    color-mix(in srgb, var(--color-ink) 22%, transparent) var(--pct)
+  );
+}
+
+.seek::-moz-range-track {
+  height: 2px;
+  background: color-mix(in srgb, var(--color-ink) 22%, transparent);
+}
+
+.seek::-moz-range-progress {
+  height: 2px;
+  background: var(--color-ink);
+}
+
+.seek::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 12px;
+  height: 12px;
+  margin-top: -5px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--color-ink);
+}
+
+.seek::-moz-range-thumb {
+  width: 12px;
+  height: 12px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--color-ink);
+}
+
+.seek:focus-visible {
+  outline: 2px solid var(--color-sage);
+  outline-offset: 2px;
+}
+
+.audioBars {
+  display: grid;
+  gap: 0.75rem;
+  margin-top: var(--flow-3);
+}
+
+.barsLabel {
+  font-family: var(--font-body);
+  font-size: var(--step-label);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-sage);
+}
+
+.audioBar {
+  display: flex;
+  align-items: center;
+  gap: 0.875rem;
+  padding: 0.75rem 1rem 0.75rem 0.75rem;
+  border-radius: 3px;
+  background:
+    linear-gradient(135deg,
+      rgba(197, 207, 166, 0.16) 5%,
+      rgba(199, 170, 209, 0.13) 45%,
+      rgba(247, 156, 126, 0.11) 88%),
+    rgba(28, 26, 30, 0.35);
+  box-shadow:
+    inset 0 0 0 1px rgba(244, 241, 236, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22);
+}
+
+.barPlay {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: var(--color-ink);
+  color: var(--color-cream);
+  cursor: pointer;
+  transition: transform var(--motion-fast) var(--ease-out);
+}
+
+.barPlay svg {
+  width: 18px;
+  height: 18px;
+  fill: currentColor;
+}
+
+@media (hover: hover) {
+  .barPlay:hover {
+    transform: scale(1.06);
+  }
+}
+
+.barPlay:focus-visible {
+  outline: 2px solid var(--color-sage);
+  outline-offset: 3px;
+}
+
+.barMeta {
+  flex: 1;
+  min-width: 0;
+}
+
+.barTitle {
+  display: block;
+  font-family: var(--font-heading);
+  font-size: var(--step-small);
+  line-height: 1.3;
+  color: var(--color-ink);
+}
+
+.barKind {
+  display: block;
+  font-family: var(--font-body);
+  font-size: var(--step-label);
+  line-height: 1.4;
+  color: var(--color-sage);
+}
+
+.barTrack {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.barTrack .seek {
+  flex: 1;
+  height: 32px;   /* with the 44px play button, the row is the target */
+}
+
+.barTime {
+  flex: none;
+  font-family: var(--font-body);
+  font-size: var(--step-label);
+  font-variant-numeric: tabular-nums;
+  color: var(--color-ink);
+}
+
+.barsCredit {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--step-label);
+  line-height: 1.5;
+  color: var(--color-ink);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .deck[data-hint] .card .cardInner {
+    animation: none;
+  }
+
+  .barPlay {
+    transition: none;
   }
 }

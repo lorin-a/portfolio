@@ -239,13 +239,22 @@ export const groundswell = {
           { type: 'video', key: 'gs-new-meditations', blur: true, alt: 'The mindfulness library in the data dashboard: listens for each meditation.' },
         ],
         phone:    { key: 'gs-qr-library', alt: 'Scrolling the Groundswell digital library on a phone.' },
-        poem:     { type: 'audio', key: 'gs-poem-remember', title: 'The Groundswell poem' },
+        /* FS144: the two recordings, as plain players in the text column
+           (no longer inside the phone, which showed more than staff saw). */
+        listen:   [
+          { key: 'gs-poem-remember',   title: 'Remember',                kind: 'The Groundswell poem' },
+          { key: 'gs-meditation-home', title: 'Coming Home to Yourself', kind: 'Guided meditation' },
+        ],
         /* Her note FS50: the two most-used cards, grateful and exhausted,
            show the dichotomy. They flank the phone: the library holds
            both ends of the feeling. */
         gallery:  { kind: 'cards', faces: 'front-and-back',
-                    emotions: ['grateful', 'exhausted'],
-                    note: 'The two most-used cards: grateful and exhausted. Turn one over for the somatic exercise.' },
+                    /* FS144: four cards, the lighter emotions left of the
+                       phone and the heavier right, so the row reads as a
+                       spectrum; grateful and exhausted (the most used) sit
+                       nearest the phone. */
+                    emotions: ['joyful', 'grateful', 'exhausted', 'heartbroken'],
+                    note: 'Four of the nine reflection cards. Turn one over for its somatic exercise.' },
       },
       name: 'Groundswell Mindfulness Library',
       body: 'A digital library of mindfulness resources including guided meditations of varying lengths, the Groundswell poem, and calming instrumentals. Groundswell Reflection Cards are part of the library: a deck of guided reflection cards designed to help healthcare staff identify and process the complex emotions of caregiving work. Each card offers emotional validation, simple somatic exercises for nervous system regulation, and conversation starters for meaningful dialogue about well-being.',

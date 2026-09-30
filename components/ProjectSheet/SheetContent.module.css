@@ -95,7 +95,8 @@
 
   .work {
     grid-column: span 8;
-  }
+  align-content: start;   /* the gallery frame never stretches to the rail's height */
+}
 }
 
 .rail {
