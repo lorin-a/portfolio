@@ -94,11 +94,10 @@ export default function SheetContent({ sheet, num, title, tagline, titleId }) {
 
   return (
     <div ref={rootRef}>
-      {/* THE COVER — the place itself, full bleed and in full colour, with a
-          watercolor wash in the project's own colour rising over its foot
-          to carry the name and facts (her notes FS46, FS48). */}
-      <header className={`${styles.cover} ${sheet.hero ? styles.coverImage : ''}`} data-reveal="0"
-        style={sheet.band ? { '--band': sheet.band } : undefined}>
+      {/* THE COVER — the place itself, full bleed and in full colour,
+          dissolving through a real painted edge into the folder's ground,
+          where the name and facts sit (her notes FS46, FS49). */}
+      <header className={`${styles.cover} ${sheet.hero ? styles.coverImage : ''}`} data-reveal="0">
         {sheet.hero && (
           <div className={styles.coverMedia}>
             <SheetHero item={sheet.hero} onImage={openImage} />

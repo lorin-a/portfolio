@@ -120,14 +120,14 @@
 
 /* The device is the size container for everything inside it. Its OWN
    padding and radius can't use cqi (an element's own properties resolve
-   against its ancestor's container), so they are percentages: padding
-   against the column (1.8% of the device = 1.34% of the column), radius
-   as an ellipse (15% of the width, which is 6.92% of the 9:19.5 height). */
+   against its ancestor's container), so they are percentages of its item,
+   which is exactly the device's width: padding 1.8%, radius as an ellipse
+   (15% of the width, which is 6.92% of the 9:19.5 height). */
 .device {
   container-type: inline-size;
-  width: 74.4%;
+  width: 100%;
   aspect-ratio: 9 / 19.5;
-  padding: 1.34%;
+  padding: 1.8%;
   border-radius: 15% / 6.92%;
   background: var(--color-device-bezel);
   box-shadow: var(--shadow-md);
@@ -370,7 +370,7 @@
 }
 
 .galleryNote {
-  margin: 0;
+  margin: 0 0 var(--flow-2);
   font-family: var(--font-body);
   font-size: var(--step-label);
   font-weight: 600;
@@ -379,25 +379,18 @@
   color: var(--color-sage);
 }
 
-/* THE DECK — one row on desktop: the poem card and the three reflection
-   cards, equal widths across the whole component (3 · 3 · 3 · 3 on the
-   twelve-column grid, sharing its gutter). The cards' list sits on a
-   subgrid so every card lands on the same columns as the poem.
-   Phones: the poem card full width, then the cards as a swipeable row,
-   the same gesture as the filmstrip, so no card is left alone on a line. */
+/* THE DECK — a triptych (her note FS50): grateful, the phone, exhausted.
+   All three objects share one height (--obj-h); widths follow from each
+   object's own proportions (cards 600:967, the phone 9:19.5), and each is
+   centred in its third of the component, 4 · 4 · 4 on the grid. Phones:
+   the same three as a swipeable row. */
 .deck {
-  --deck: 4;
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: var(--flow-2) var(--gap-col);
-}
-
-.cards {
+  --deck: 3;
+  --obj-h: clamp(21rem, 34vw, 30rem);
   display: flex;
   gap: var(--gap-media);
   margin: 0 calc(var(--gutter) * -1);
   padding: 0 var(--gutter) 0.5rem;
-  list-style: none;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
   scroll-padding-inline: var(--gutter);
@@ -405,55 +398,44 @@
   overscroll-behavior-x: contain;
 }
 
-.cards::-webkit-scrollbar {
+.deck::-webkit-scrollbar {
   display: none;
 }
 
-.cards > li {
-  flex: 0 0 58%;
+.deckItem {
+  flex: none;
   scroll-snap-align: start;
 }
 
-@media (max-width: 699px) {
-  .device {
-    width: 62%;
-  }
+.deckItem[data-kind='card'] {
+  width: calc(var(--obj-h) * 600 / 967);
+}
+
+.deckItem[data-kind='phone'] {
+  width: calc(var(--obj-h) * 9 / 19.5);
 }
 
 @media (min-width: 700px) {
   .deck {
-    grid-template-columns: repeat(var(--deck), minmax(0, 1fr));
-  }
-
-  .cards {
     display: grid;
-    grid-column: 1 / -1;
-    grid-template-columns: subgrid;
+    grid-template-columns: repeat(var(--deck), minmax(0, 1fr));
     gap: var(--gap-col);
     margin: 0;
     padding: 0;
     overflow: visible;
   }
 
-  .deck[data-poem] .cards {
-    grid-column: 2 / -1;
+  .deckItem {
+    justify-self: center;
   }
 
-  /* The note heads the cards only: row one over the cards' columns, the
-     phone and the cards both on row two, so their tops stay level. */
-  .deck .galleryNote {
-    grid-column: 1 / -1;
-    grid-row: 1;
-    margin: 0;
+  .galleryNote {
+    text-align: center;
   }
 
-  .deck[data-poem] .galleryNote {
-    grid-column: 2 / -1;
-  }
-
-  .deck > .phone,
-  .deck > .cards {
-    grid-row: 2;
+  .deckItem .cardCaption,
+  .deckItem .phone figcaption {
+    text-align: center;
   }
 }
 

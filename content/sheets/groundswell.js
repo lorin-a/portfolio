@@ -20,11 +20,6 @@ export const groundswell = {
   outcome:
     'All scales aside from perceived support from leadership improved throughout the study, indicating a core problem around institutional trust and support from administration.',
 
-  /* The cover's watercolor band colour: Groundswell's own brand purple,
-     the wash colour its intro already uses (#554E65). Each project sets
-     its own. */
-  band: '#554E65',
-
   /* The cover image. Image choice, not copy. */
   hero: { key: 'gs-hero', alt: 'A clinician walks past the Groundswell Garden and the Restorative Pod in the hallway.' },
 
@@ -138,8 +133,12 @@ export const groundswell = {
         ],
         phone:    { key: 'gs-qr-library', alt: 'Scrolling the Groundswell digital library on a phone.' },
         poem:     { type: 'audio', key: 'gs-poem-remember', title: 'The Groundswell poem' },
+        /* Her note FS50: the two most-used cards, grateful and exhausted,
+           show the dichotomy. They flank the phone: the library holds
+           both ends of the feeling. */
         gallery:  { kind: 'cards', faces: 'front-and-back',
-                    emotions: ['joyful', 'exhausted', 'heartbroken'] },
+                    emotions: ['grateful', 'exhausted'],
+                    note: 'The two most-used cards: grateful and exhausted. Turn one over for the somatic exercise.' },
       },
       name: 'Groundswell Mindfulness Library',
       body: 'A digital library of mindfulness resources including guided meditations of varying lengths, the Groundswell poem, and calming instrumentals. Groundswell Reflection Cards are part of the library: a deck of guided reflection cards designed to help healthcare staff identify and process the complex emotions of caregiving work. Each card offers emotional validation, simple somatic exercises for nervous system regulation, and conversation starters for meaningful dialogue about well-being.',

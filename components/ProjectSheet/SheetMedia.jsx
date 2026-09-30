@@ -277,7 +277,7 @@ function SheetPhone({ phone, poem }) {
 }
 
 /**
- * THE DECK — the phone, then the reflection cards, in one row.
+ * THE DECK — a triptych: a reflection card either side of the phone.
  *
  * Nine emotions exist; three are shown, spanning the deck's range, at the
  * cards' true proportions. Each card carries a front and a back, and the
@@ -306,21 +306,30 @@ export function SheetCardGallery({ gallery, poem, phone }) {
 
   if (!cards.length && !poem && !phone) return null
 
+  /* The phone sits in the middle of the cards: with two cards, a triptych. */
+  const items = cards.map((card) => ({ kind: 'card', card }))
+  if (poem || phone) items.splice(Math.floor(items.length / 2), 0, { kind: 'phone' })
+
   return (
     <div className={styles.gallery}>
-      <div className={styles.deck} data-poem={poem || phone ? '' : undefined}
-        style={{ '--deck': cards.length + (poem || phone ? 1 : 0) }}>
-        {(poem || phone) && <SheetPhone phone={phone} poem={poem} />}
-        {cards.length > 0 && (
-          <p className={styles.galleryNote}>
-            Three of nine cards. Turn one over for the somatic exercise.
-          </p>
-        )}
-        <ul className={styles.cards}>
-        {cards.map((card) => {
+      {cards.length > 0 && (
+        <p className={styles.galleryNote}>
+          {gallery.note || 'Turn a card over for the somatic exercise.'}
+        </p>
+      )}
+      <div className={styles.deck} style={{ '--deck': items.length }}>
+        {items.map((it) => {
+          if (it.kind === 'phone') {
+            return (
+              <div key="phone" className={styles.deckItem} data-kind="phone">
+                <SheetPhone phone={phone} poem={poem} />
+              </div>
+            )
+          }
+          const { card } = it
           const isBack = flipped.has(card.name)
           return (
-            <li key={card.name}>
+            <div key={card.name} className={styles.deckItem} data-kind="card">
               <button
                 type="button"
                 className={styles.card}
@@ -340,10 +349,9 @@ export function SheetCardGallery({ gallery, poem, phone }) {
                   <span className={styles.cardLabel}>{card.name}</span>
                 </span>
               </button>
-            </li>
+            </div>
           )
         })}
-        </ul>
       </div>
     </div>
   )

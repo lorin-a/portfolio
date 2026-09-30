@@ -33,38 +33,40 @@
 
 /* ══ COVER ════════════════════════════════════════════════════════════
 
-   With a photograph (her notes FS46, FS48): full bleed and in full
-   colour. The cover pulls out past the gutter and up past the sheet's top
-   padding so the photo runs edge to edge under the tab line, its top
-   corners matching the folder's (20px, less the 1.5px outline).
+   With a photograph (her notes FS46, FS49): full bleed, full colour, and
+   the photo itself dissolves into the folder's own ground through a real
+   painted edge, so photo and page read as one surface with nothing laid
+   on top. The title and facts sit on that ground, rising into the
+   dissolved edge.
 
-   A watercolor wash in the project's own colour (--band) rises over the
-   photo's foot and carries the name and facts. The wash is three layers
-   made by scripts/make-watercolor-band.py: an alpha mask with a painted
-   edge that thins as the pigment does, granulation from the real scanned
-   watercolor (soft-light), and a faint darker rim where pigment pools.
-   All colour-free, so any project tints them with one variable. */
+   The mask is made by scripts/make-cover-dissolve.py from a scan of a real
+   watercolor stain (pigment = photo, paper = ground). It is 2400 × 708 and
+   drawn at least 1400px wide so the brush keeps its scale on phones; a
+   solid layer above it keeps the rest of the photo whole. */
 
 .cover {
   margin-bottom: var(--flow-4);
 }
 
 .coverImage {
-  --band: var(--color-plum);
-  position: relative;
-  display: grid;
-  align-items: end;
-  min-height: min(90dvh, 54rem);
+  container-type: inline-size;
   margin-top: calc(-5.5rem + 1.5px);
   margin-inline: calc(var(--gutter) * -1 + 1.5px);
-  overflow: hidden;
-  border-radius: 18.5px 18.5px 0 0;
-  background: #141311;
 }
 
 .coverMedia {
-  position: absolute;
-  inset: 0;
+  --mask-h: calc(max(100cqi, 1400px) * 708 / 2400);
+  position: relative;
+  height: min(74dvh, 46rem);
+  min-height: 26rem;
+  overflow: hidden;
+  border-radius: 18.5px 18.5px 0 0;
+  mask:
+    linear-gradient(#000, #000) top / 100% calc(100% - var(--mask-h) * 0.8) no-repeat,
+    url('/art/cover-dissolve.png') bottom center / max(100cqi, 1400px) auto no-repeat;
+  -webkit-mask:
+    linear-gradient(#000, #000) top / 100% calc(100% - var(--mask-h) * 0.8) no-repeat,
+    url('/art/cover-dissolve.png') bottom center / max(100cqi, 1400px) auto no-repeat;
 }
 
 .coverText {
@@ -73,43 +75,11 @@
   min-width: 0;
 }
 
-/* The wash. The mask is 2400 × 1600 with its edge in the top ~230px;
-   sized to at least 1400px wide so the edge keeps its scale on phones. */
+/* The text rises into the lower, fully dissolved part of the edge. */
 .coverImage .coverText {
   position: relative;
-  padding: 7.5rem calc(var(--gutter) - 1.5px) var(--flow-3);
-  background:
-    url('/art/wc-grain.jpg') center / cover,
-    var(--band);
-  background-blend-mode: soft-light;
-  mask: url('/art/wc-band-mask.png') top center / max(100%, 1400px) auto no-repeat;
-  -webkit-mask: url('/art/wc-band-mask.png') top center / max(100%, 1400px) auto no-repeat;
-  pointer-events: none;
-}
-
-.coverImage .coverText::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: color-mix(in srgb, var(--band) 55%, #000);
-  opacity: 0.45;
-  mask: url('/art/wc-band-rim.png') top center / max(100%, 1400px) auto no-repeat;
-  -webkit-mask: url('/art/wc-band-rim.png') top center / max(100%, 1400px) auto no-repeat;
-}
-
-.coverImage .coverText > * {
-  position: relative;
-}
-
-/* On the overlay, every colour is the fixed light ink. */
-.coverImage .num,
-.coverImage .title,
-.coverImage .tagline,
-.coverImage .meta dt,
-.coverImage .meta dd,
-.coverImage .todo,
-.coverImage .todo b {
-  color: var(--overlay-ink);
+  margin-top: calc(max(100cqi, 1400px) * 708 / 2400 * -0.3);
+  padding-inline: calc(var(--gutter) - 1.5px);
 }
 
 .num {
@@ -145,10 +115,6 @@
   margin: var(--flow-3) 0 0;
   padding-top: var(--flow-2);
   border-top: var(--rule);
-}
-
-.coverImage .meta {
-  border-top-color: color-mix(in srgb, var(--overlay-ink) 55%, transparent);
 }
 
 @media (min-width: 600px) {
