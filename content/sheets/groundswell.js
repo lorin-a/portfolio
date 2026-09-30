@@ -89,6 +89,14 @@ export const groundswell = {
   credits: [
     ['Design Team', 'Kristin Hughes, Lorin Anderberg, Elijah Benzon, Greg Baltus, Robertus Sucahyo, Kelly McDowell'],
     ['Clinical Team', 'Dr.\u00a0Sarah Taylor, Dr.\u00a0Grace Campbell, Dr.\u00a0Heidi Donovan, Kendyl Grant'],
+    /* FS128, assembled from her own project records, not new wording:
+       docs/groundswell.md “Funding” (“Extended gratitude to the College of
+       Fine Arts at CMU; the UPMC Magee-Womens Hospital Medical Staff Fund;
+       and the Paul D. Schurgot Foundation for generous support.”), the
+       same doc's “over $30,000 in material donations”, and the case
+       study's “NookPod donated the restorative pod structure ($13,000
+       value)”. Hers to rewrite. */
+    ['Funding', 'The College of Fine Arts at CMU, the UPMC Magee-Womens Hospital Medical Staff Fund, and the Paul D. Schurgot Foundation, with over $30,000 in material donations, including the restorative pod structure from NookPod ($13,000 value).'],
   ],
 
   frame: {

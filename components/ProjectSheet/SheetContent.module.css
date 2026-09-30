@@ -15,8 +15,6 @@
 /* ── The one label recipe — every label on the sheet is this ─────── */
 
 .frameBlock h3,
-.closeBlock h3,
-.lesson h3,
 .componentNum {
   display: block;
   margin: 0 0 var(--flow-1);
@@ -193,83 +191,76 @@
   }
 }
 
-/* ══ CLOSE ════════════════════════════════════════════════════════════ */
+/* ══ CLOSE — three glass cards (FS129) ════════════════════════════════
+   What changed · My role, in full · The biggest lesson, each on the
+   brand glass (the logo's gradient over a smoky base, a light edge), on
+   the 4 · 4 · 4 grid, equal heights. The lesson sets its words in the
+   serif to stay the strongest voice of the three. */
 
 .close {
-  padding-top: var(--flow-2);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--gap-col);
+  padding-top: var(--hero-gap);
   border-top: var(--rule);
   border-image: var(--rule-grad) 1;
 }
 
-/* 112 words beside 108: equal halves, 6 | 6 on the grid. */
-.closePair {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: var(--flow-3);
-  margin-bottom: var(--flow-4);
-}
-
 @media (min-width: 900px) {
-  .closePair {
+  .close {
     grid-template-columns: var(--grid);
-    column-gap: var(--gap-col);
+    align-items: stretch;
   }
 
-  .closeBlock {
-    grid-column: span 6;
+  .closeCard {
+    grid-column: span 4;
   }
 }
 
-.closeBlock {
+.closeCard {
   min-width: 0;
+  padding: var(--flow-2);
+  border-radius: 3px;
+  background:
+    linear-gradient(135deg,
+      rgba(197, 207, 166, 0.16) 5%,
+      rgba(199, 170, 209, 0.13) 45%,
+      rgba(247, 156, 126, 0.11) 88%),
+    rgba(28, 26, 30, 0.35);
+  box-shadow:
+    inset 0 0 0 1px rgba(244, 241, 236, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22),
+    0 18px 38px rgba(0, 0, 0, 0.3);
 }
 
-.closeBlock p {
+.closeCard h3 {
+  display: block;
+  margin: 0 0 var(--flow-1);
+  font-family: var(--font-body);
+  font-size: var(--step-label);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-sage);
+}
+
+.closeCard p {
   margin: 0 0 1rem;
   font-family: var(--font-body);
-  font-size: var(--step-body);
-  line-height: 1.7;
+  font-size: var(--step-small);
+  line-height: 1.65;
   color: var(--color-ink);
   text-wrap: pretty;
 }
 
-.closeBlock p:last-child {
+.closeCard p:last-child {
   margin-bottom: 0;
 }
 
-/* The lesson: the strongest thing in the corpus, on the page's own
-   proportion, label in the rail and the words across the work column. */
-.lesson {
-  display: grid;
-  grid-template-columns: 1fr;
-  margin: 0;
-}
-
-@media (min-width: 1000px) {
-  .lesson {
-    grid-template-columns: var(--grid);
-    column-gap: var(--gap-col);
-    align-items: baseline;
-  }
-
-  .lesson h3 {
-    grid-column: span 4;
-  }
-
-  .lesson p {
-    grid-column: span 8;
-  }
-}
-
-.lesson p {
-  max-width: 46ch;
-  margin: 0;
+.lessonCard p {
   font-family: var(--font-heading);
-  font-size: var(--step-statement);
-  font-weight: 300;
-  line-height: 1.5;
-  color: var(--color-ink);
-  text-wrap: pretty;
+  font-size: var(--step-body);
+  line-height: 1.55;
 }
 
 /* ══ COLOPHON ═════════════════════════════════════════════════════════ */
@@ -353,7 +344,7 @@
   }
 
   .credits > div {
-    grid-column: span 6;
+    grid-column: span 4;   /* Design Team · Clinical Team · Funding (FS128) */
   }
 
   .credits {

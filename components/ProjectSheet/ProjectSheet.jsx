@@ -385,7 +385,14 @@ export default function ProjectSheet({
                  card is one link: the page as published under a faded
                  overlay carrying where it ran, the headline, and the call. */
               <section className={styles.press} aria-labelledby={`${titleId}-press`}>
-                <h3 id={`${titleId}-press`} className={styles.pressHead}>As featured in</h3>
+                {/* FS127: set as press, unmistakably. A heading that says so,
+                    then each article as a glass clipping: the page itself in
+                    full colour, the publication as its masthead, the date,
+                    the headline, the call. */}
+                <div className={styles.pressHeadRow}>
+                  <span className={styles.pressKicker}>Press</span>
+                  <h3 id={`${titleId}-press`} className={styles.pressHead}>Featured in</h3>
+                </div>
                 <ul className={styles.pressRow}>
                   {pressList.map((a) => (
                     <li key={a.href}>
@@ -396,18 +403,16 @@ export default function ProjectSheet({
                             <img className={styles.pressImg} src={a.preview} alt="" loading="lazy" />
                           </span>
                         )}
-                        {/* The overlay: faded and darkened by default with
-                            the citation on it; hover lifts it away and the
-                            page shows in full colour. */}
-                        <span className={styles.pressOverlay}>
+                        <span className={styles.pressBody}>
+                          <span className={styles.pressMasthead}>{a.publication}</span>
                           <span className={styles.pressMeta}>
-                            <span>{a.publication}</span>
+                            {a.publisher && <span>{a.publisher}</span>}
                             {a.date && <span>{a.date}</span>}
                           </span>
                           <span className={styles.pressTitle}>{a.title}</span>
                           <span className={styles.pressCta}>
                             Read the article<span aria-hidden="true"> ↗</span>
-                            <span className={styles.srOnly}>, {a.publisher}, opens in a new tab</span>
+                            <span className={styles.srOnly}>, opens in a new tab</span>
                           </span>
                         </span>
                       </a>

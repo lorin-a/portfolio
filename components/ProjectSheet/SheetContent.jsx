@@ -171,26 +171,24 @@ export default function SheetContent({ sheet, num, title, tagline, titleId }) {
         )
       })}
 
+      {/* THE CLOSE (FS129): three glass cards on the 4 · 4 · 4 grid, the
+          same brand glass as the cover. */}
       <section className={styles.close} data-reveal="0">
-        {(close.outcomes || frame.role) && (
-          <div className={styles.closePair}>
-            {close.outcomes && (
-              <div className={styles.closeBlock}>
-                <h3>What changed</h3>
-                <p>{close.outcomes}</p>
-                {close.qualitative && <p>{close.qualitative}</p>}
-              </div>
-            )}
-            {frame.role && (
-              <div className={styles.closeBlock}>
-                <h3>My role, in full</h3>
-                <p>{frame.role}</p>
-              </div>
-            )}
+        {close.outcomes && (
+          <div className={styles.closeCard}>
+            <h3>What changed</h3>
+            <p>{close.outcomes}</p>
+            {close.qualitative && <p>{close.qualitative}</p>}
+          </div>
+        )}
+        {frame.role && (
+          <div className={styles.closeCard}>
+            <h3>My role, in full</h3>
+            <p>{frame.role}</p>
           </div>
         )}
         {close.takeaway && (
-          <div className={styles.lesson}>
+          <div className={`${styles.closeCard} ${styles.lessonCard}`}>
             <h3>The biggest lesson</h3>
             <p>{close.takeaway}</p>
           </div>
