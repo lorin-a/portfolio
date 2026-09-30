@@ -100,8 +100,9 @@ export const groundswell = {
        The full `why` and `research` stay above, untouched, as the source
        for her edit. The outcome (23 words) is the length target. */
     short: {
+      /* Her copy 2026-09-30 (FS107), verbatim. */
       why:
-        'Groundswell is a 9-month pilot program designed to support the emotional well-being of UPMC Magee-Womens Cancer Services staff by introducing resources that honor the emotional complexities of oncology care.',
+        'Groundswell is a 9-month pilot program and quality improvement study designed to support the emotional well-being of UPMC Magee-Womens Cancer Services staff by introducing resources that honor the emotional complexities of oncology care.',
       /* Her copy 2026-09-30 (FS104). Copy edits, hers to reverse: “self care”
          → self-care; “wellbeing” → well-being (the site's spelling);
          “neglected from” → neglected in; a serial comma before the last
