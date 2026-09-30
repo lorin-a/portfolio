@@ -185,6 +185,7 @@ export default function SheetContent({ sheet, num, title, tagline, titleId }) {
           <div className={styles.closeCard}>
             <h3>My role, in full</h3>
             <p>{frame.role}</p>
+            {frame.roleMore && <p>{frame.roleMore}</p>}
           </div>
         )}
         {close.takeaway && (

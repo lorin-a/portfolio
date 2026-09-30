@@ -141,6 +141,12 @@ export const groundswell = {
         'Interviews and generative workshops across roles revealed the core thesis: care worker well-being is neglected in patient care standards. Staff need tangible and emotional support, permission for self-care, and acknowledgement of the work’s difficulty.',
     },
 
+    /* FS141, PROVISIONAL: the dashboard, expanded, in her first person to
+       match the paragraph above; every term verified in the dashboard repo
+       (see the dashboard component's FS140 note). Hers to edit. */
+    roleMore:
+      'For the data dashboard, I designed and built a full-stack site with Claude Code: a Next.js front end with Three.js watercolor views, a Neon PostgreSQL database, and three pipelines that normalize research assistants’ transcriptions of the handwritten art wall responses, pull live sessions from the pod’s Density occupancy sensor, and sync listening data from the YouTube Analytics API. I built a password-protected admin hub for uploads and review, audited the pod data with Density’s team after finding their API was dropping real visits, ran an accessibility audit, and wrote the methodology documentation.',
+
     /* Her copy 2026-08-27, verbatim. */
     partners:
       'A collaboration between Carnegie Mellon School of Design, the University of Pittsburgh Schools of Medicine and Nursing, and UPMC Magee-Womens Hospital Gynecologic Oncology with assistance from the UPP Department of OBGYN and Women’s Health.',
@@ -300,7 +306,8 @@ export const groundswell = {
          record, not in this line: a 31-finding accessibility audit, a
          methodology PDF with an AI disclosure, a stakeholder summary page,
          a staff surveys view, CSV export. */
-      mine: 'Design and development of the dashboard from scratch with Claude Code, a first AI-assisted build; backend data pipelines for the art wall’s transcribed responses, the pod’s Density occupancy sensor, and the library’s YouTube analytics, into a Neon PostgreSQL database with a password-protected admin hub; troubleshooting with Density’s team, including an audit that found their API dropping real visits; playtests with clinical staff; and co-design of the study results visual with clinical staff.',
+      /* FS141: concise; the detail moved to “My role, in full” (roleMore). */
+      mine: 'Full-stack design and development with Claude Code: three live data pipelines, a PostgreSQL backend, and an admin hub; a data audit with Density’s engineers; playtests and co-design of the results visual with clinical staff.',
       gated: true,
     },
   ],
