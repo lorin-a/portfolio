@@ -33,31 +33,35 @@ export const groundswell = {
     { key: 'gs-cards', caption: 'The Cards', alt: 'Hands sorting the Groundswell Reflection Cards on a table.' },
   ],
 
+  /* THE FACTS — her copy, 2026-09-30 (FS93), verbatim except:
+       · names corrected to her own records (the Groundswell case study's
+         credits, GroundswellContent.js): “Gerg” → Greg Baltus, “Sara” →
+         Sarah Taylor, “Kendyl” → Kendyl Grant (she asked for this check);
+       · “20205” → 2025 (typo); ranges set with en dashes;
+       · Context: CUT from her longer paragraph to its first clause, as she
+         asked (“shorten and maybe save some for the bottom reference”); the
+         full paragraph already lives lower on the sheet (frame.why) and the
+         partners line in the colophon (frame.partners).
+     Her original, verbatim, for the record:
+       Role: Generative research, content copywriting, project management,
+       fundraising, data dashboard development & design, strategy
+       Design Team: Kristin Hughes, Lorin Anderberg, Elijah Benzon, Gerg
+       Baltus, Robertus Sucahyo, Kelly McDowell
+       Clinical Team: Dr. Sara Taylor, Dr. Grace Campbell, Dr. Heidi
+       Donovan, Kendyl
+       Tools Used: Adobe Creative Suite, Figma, Claude Code
+       Timeline: Research: Jan-May 2025 / Production: June-October 2025 /
+       Study Period: October 20205-June 2026
+     OPEN, hers: Su Hong & Mia Jeong (credited Research Assistants) are not
+     in the team lines; Tools Used is marked unsure. An array value renders
+     one item per ruled line. */
   meta: [
-    /* Her own words, 2026-08-27, and authoritative over anything assembled
-       from the rehearsal answers. */
-    ['Role', 'Generative research, content copywriting, project management, fundraising, data dashboard'],
-    ['Team', 'Carnegie Mellon School of Design, with UPMC and Pitt partners'],
-    ['Timeline', { todo: 'The 15-week CARES course, then the 9-month pilot. Dates?' }],
-    ['Context', 'UPMC Magee-Womens Cancer Services'],
-  ],
-
-  /* THE LONGER FACTS for the cover's paper sheet (her note FS62:
-     "add more context copy to the metadata so it becomes longer").
-     PROVISIONAL, and assembled ONLY from words she has already written;
-     nothing here is new wording. Receipts per line:
-       Role        frame.role, her first sentence, verbatim
-       Team        the short meta's line, unchanged (the full partners line
-                   is in frame.partners if she wants it here)
-       Context     frame.why, her opening clause, verbatim
-       Photography credit, her note 2026-09-06
-     The short `meta` above stays as it was. */
-  metaLong: [
-    ['Role', 'Generative research, content copywriting, project management, fundraising (securing over $30k in donations), and the production and design of the data dashboard.'],
-    ['Team', 'Carnegie Mellon School of Design, with UPMC and Pitt partners'],
-    ['Timeline', { todo: 'The 15-week CARES course, then the 9-month pilot. Dates?' }],
+    ['Role', 'Generative research, content copywriting, project management, fundraising, data dashboard development & design, strategy'],
+    ['Design Team', 'Kristin Hughes, Lorin Anderberg, Elijah Benzon, Greg Baltus, Robertus Sucahyo, Kelly McDowell'],
+    ['Clinical Team', 'Dr.\u00a0Sarah Taylor, Dr.\u00a0Grace Campbell, Dr.\u00a0Heidi Donovan, Kendyl Grant'],  /* non-breaking after “Dr.” */
+    ['Tools Used', 'Adobe Creative Suite, Figma, Claude Code'],
+    ['Timeline', ['Research: Jan–May 2025', 'Production: June–October 2025', 'Study Period: October 2025–June 2026']],
     ['Context', 'A 9-month pilot program designed to support the emotional well-being of UPMC Magee-Womens Cancer Services staff.'],
-    ['Photography', 'Kevin Lorenzi'],
   ],
 
   frame: {

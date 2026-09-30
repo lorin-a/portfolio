@@ -25,7 +25,9 @@ function Facts({ meta, className }) {
           <dt>{k}</dt>
           <dd className={v?.todo ? styles.todo : undefined}>
             {v?.todo ? <b>Lorin to write</b> : null}
-            {v?.todo || v}
+            {Array.isArray(v)
+              ? v.map((line) => <span key={line} className={styles.factLine}>{line}</span>)
+              : (v?.todo || v)}
           </dd>
         </div>
       ))}
@@ -183,12 +185,8 @@ export default function SheetCover({ sheet, num, title, tagline, titleId }) {
               </div>
             )}
             <div className={onPaper ? paper.ruled : undefined}>
-              {/* The longer facts (FS88: “make the page longer with more text
-                  than shrink the images”); built only from her own words,
-                  receipts in the content file. */}
-              {/* With the heading on the sheet, the short facts: the heading
-                  already adds the height the longer facts would. */}
-              <Facts meta={onPaper ? meta : (sheet.metaLong || meta)} className={`${styles.facts} ${paperStyle === 'tech' ? styles.techFacts : ''}`} />
+              {/* Her facts, FS93; receipts in the content file. */}
+              <Facts meta={meta} className={`${styles.facts} ${paperStyle === 'tech' ? styles.techFacts : ''}`} />
             </div>
           </div>
         </div>
