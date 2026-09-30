@@ -101,6 +101,8 @@ lab route, she points, the winner becomes law — not a fifth solo swing.
 | FS81 | "Good i like it. Make all papers straight not tilted, only polaroids tilted" (2026-09-30) | ✅ SHIPPED: every paper straight (the cover sheet, all “What I did” strips, every paper style); per-card tilts removed. Only the polaroid-family prints tilt |
 | FS82 | "Make polaroids smaller so hero is shorter so we see the start of the next section" | ✅ SHIPPED: polaroid prints 50% → 38% of the column. That alone could not shorten the hero (the text column sets its height), so also: the sheet uses the short facts (the longer `metaLong` set existed only to match the old, taller pile; still in the content file), its rule tightened 26 → 24px with one line of top margin, a narrower label column, and a block-step gap after the cover. At 1440×900 the next section now starts 57px above the fold (was 216px below); 1920×1080: 204px. Honest limit: at 1280×800 and 1024×768 the narrow text rail still pushes it just below the fold |
 | FS83 | "Does text/color on new glass pass accessibility contrast?" (2026-09-30) | ✅ MEASURED against the rendered pixels at 1440: glass paper facts worst 5.38:1, glass “What I did” worst 5.88:1 (pass). Brand-glass captions FAILED at 3.13:1 (bright photos showing through the frost); FIXED with a smoky base under the brand tint: all four now pass, The Hallway 7.91 · The Art Wall 8.37 · The Pod 7.81 · The Cards 7.79 |
+| FS84 | "Great job. Make text on captions of polaroids the body typeface" (2026-09-30) | ⏳ OPEN |
+| FS85 | "try one more thing: add the title to the \"top\" of the paper so its all one paper" | ⏳ OPEN |
 
 ### ⟢ OPEN NOTES LEDGER — Folder sheet (2026-09-06, her verdict on the rebuilt sheet)
 

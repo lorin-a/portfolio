@@ -270,8 +270,7 @@
   display: grid;
   place-items: center;
   aspect-ratio: 79 / 19;
-  font-family: var(--font-heading);
-  font-style: italic;
+  font-family: var(--font-body);   /* body typeface (FS84) */
   font-size: var(--step-body);
   line-height: 1;
   color: #2a2724;
@@ -374,7 +373,7 @@
    The glass, made the site's own: frosted frames tinted with a whisper of
    the flower logo's gradient (sage, lavender, coral at 135°), a fine light
    edge, the photo square and clean; beneath it, the caption in the site's
-   italic serif at body size. FS80 removed the scribble icon and the glare
+   body typeface at body size (FS84). FS80 removed the scribble icon and the glare
    sweep. No brackets, readouts, grids or glows. */
 
 .brandFrame {
@@ -422,8 +421,7 @@
 }
 
 .brandCaption {
-  font-family: var(--font-heading);
-  font-style: italic;
+  font-family: var(--font-body);   /* body typeface (FS84) */
   font-size: var(--step-body);
   line-height: 1;
   color: #f4f1ec;
