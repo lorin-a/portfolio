@@ -151,20 +151,20 @@ const fmt = (t) => {
 }
 
 /**
- * THE POEM — a listening room, not a line.
+ * THE POEM CARD — the recording as a card in the deck.
  *
- * The recording is one of the project's central pieces, so it takes a full
- * band of the sheet: the opening line set large as the invitation, a real
- * play control you cannot miss, and the poem's own text beside it, which
- * scrolls with the recording while it plays (the same linear follow the
- * homepage intro uses, since there are no per-stanza timestamps yet).
+ * Her note FS42: in line with the reflection cards, in a mimic shape. So
+ * it takes the cards' exact proportions, corners and shadow, and sits
+ * first in their row. The face holds the whole poem: the opening line
+ * large, the rest in a window that scrolls with the recording while it
+ * plays (a linear follow; there are no per-stanza timestamps yet) and by
+ * hand at any time, and the transport at the foot.
  *
- * Custom transport over a hidden <audio>: the play button is a real button
- * with a pressed state, and seeking is a native range input, so keyboard
- * and screen-reader users get both for free. Wired into the page-wide
- * single-play system, so starting it pauses any other audio.
+ * Custom transport over a hidden <audio>: a real button with a pressed
+ * state, and a native range input for seeking, so keyboard and screen
+ * reader users get both. Wired into the page-wide single-play system.
  */
-export function SheetPoem({ item }) {
+function SheetPoemCard({ item }) {
   const audioRef = useRef(null)
   const textRef = useRef(null)
   const [playing, setPlaying] = useState(false)
@@ -180,8 +180,7 @@ export function SheetPoem({ item }) {
       setTime(a.currentTime)
       const box = textRef.current
       if (box && a.duration) {
-        const max = box.scrollHeight - box.clientHeight
-        box.scrollTop = max * (a.currentTime / a.duration)
+        box.scrollTop = (box.scrollHeight - box.clientHeight) * (a.currentTime / a.duration)
       }
     }
     const onMeta = () => setDur(a.duration)
@@ -211,10 +210,21 @@ export function SheetPoem({ item }) {
   const pct = dur ? (time / dur) * 100 : 0
 
   return (
-    <figure className={styles.poem} data-playing={playing || undefined}>
-      <div className={styles.poemLead}>
-        <figcaption className={styles.poemKicker}>Listen · {item.title}</figcaption>
-        <p className={styles.poemOpener}>{POEM_OPENER}</p>
+    <figure className={styles.poemCard} data-playing={playing || undefined}>
+      <div className={styles.poemFace}>
+        <span className={styles.poemKicker}>Listen</span>
+
+        <div ref={textRef} className={styles.poemText} tabIndex={0}
+          aria-label={`${item.title}, full text`}>
+          <p className={styles.poemOpener}>{POEM_OPENER}</p>
+          {POEM_STANZAS.map((st, i) => (
+            <p key={i} className={styles.stanza}>
+              {st.map((line, j) => (
+                <span key={j}>{line}{j < st.length - 1 && <br />}</span>
+              ))}
+            </p>
+          ))}
+        </div>
 
         <div className={styles.transport}>
           <button type="button" className={styles.play} onClick={toggle}
@@ -247,21 +257,12 @@ export function SheetPoem({ item }) {
             </span>
           </div>
         </div>
-
-        <p className={styles.poemCredit}>{POEM_CREDIT}</p>
       </div>
 
-      <div ref={textRef} className={styles.poemText} tabIndex={0}
-        aria-label={`${item.title}, full text`}>
-        {/* The opener is the large line at left; the text continues from it. */}
-        {POEM_STANZAS.map((st, i) => (
-          <p key={i} className={styles.stanza}>
-            {st.map((line, j) => (
-              <span key={j}>{line}{j < st.length - 1 && <br />}</span>
-            ))}
-          </p>
-        ))}
-      </div>
+      <figcaption className={styles.cardCaption}>
+        <span className={styles.cardLabel}>{item.title}</span>
+        <span className={styles.poemCredit}>{POEM_CREDIT}</span>
+      </figcaption>
 
       <audio ref={audioRef} preload="metadata" src={src} />
     </figure>
@@ -269,16 +270,16 @@ export function SheetPoem({ item }) {
 }
 
 /**
- * The reflection cards, as a contrasting row.
+ * THE DECK — the poem card, then the reflection cards, in one row.
  *
  * Nine emotions exist; three are shown, spanning the deck's range, at the
  * cards' true proportions. Each card carries a front and a back, and the
  * back is where the somatic exercise and the conversation starter live, so
  * the flip is the content and not an effect. Click or Enter flips. Reduced
  * motion swaps faces without the rotation. The rounded corners stay: they
- * are the printed cards' real corners.
+ * are the printed cards' real corners, and the poem card borrows them.
  */
-export function SheetCardGallery({ gallery }) {
+export function SheetCardGallery({ gallery, poem }) {
   const [flipped, setFlipped] = useState(() => new Set())
 
   const toggle = (name) =>
@@ -288,7 +289,7 @@ export function SheetCardGallery({ gallery }) {
       return next
     })
 
-  const cards = gallery.emotions
+  const cards = (gallery?.emotions || [])
     .map((name) => ({
       name,
       front: GS_CARDS[`${name}-front`] && cloudImg(GS_CARDS[`${name}-front`], 800),
@@ -296,14 +297,19 @@ export function SheetCardGallery({ gallery }) {
     }))
     .filter((c) => c.front)
 
-  if (!cards.length) return null
+  if (!cards.length && !poem) return null
 
   return (
     <div className={styles.gallery}>
-      <p className={styles.galleryNote}>
-        Three of nine cards. Turn one over for the somatic exercise.
-      </p>
-      <ul className={styles.cards}>
+      {cards.length > 0 && (
+        <p className={styles.galleryNote}>
+          Three of nine cards. Turn one over for the somatic exercise.
+        </p>
+      )}
+      <div className={styles.deck} data-poem={poem ? '' : undefined}
+        style={{ '--deck': cards.length + (poem ? 1 : 0) }}>
+        {poem && <SheetPoemCard item={poem} />}
+        <ul className={styles.cards}>
         {cards.map((card) => {
           const isBack = flipped.has(card.name)
           return (
@@ -323,12 +329,15 @@ export function SheetCardGallery({ gallery }) {
                       alt={`Reflection card: ${card.name}, back`} loading="lazy" />
                   )}
                 </span>
-                <span className={styles.cardLabel}>{card.name}</span>
+                <span className={styles.cardCaption}>
+                  <span className={styles.cardLabel}>{card.name}</span>
+                </span>
               </button>
             </li>
           )
         })}
-      </ul>
+        </ul>
+      </div>
     </div>
   )
 }

@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from 'react'
 import Lightbox from '@/components/Lightbox/Lightbox'
-import { SheetStage, SheetPoem, SheetCardGallery, SheetHero, SheetFilmstrip, slidesFor, sheetImg } from './SheetMedia'
+import { SheetStage, SheetCardGallery, SheetHero, SheetFilmstrip, slidesFor, sheetImg } from './SheetMedia'
 import styles from './SheetContent.module.css'
 
 /**
@@ -175,12 +175,14 @@ export default function SheetContent({ sheet, num, title, tagline, titleId }) {
             <div className={styles.work}>
               <SheetStage slides={slides} gated={c.gated}
                 onImage={c.gated ? null : openImage} label={`${c.name}, gallery`} />
-              {c.media?.gallery && <SheetCardGallery gallery={c.media.gallery} />}
             </div>
 
-            {poem && (
+            {/* The deck: the poem as a card at the reflection cards' own
+                proportions, first in one row with them, across the whole
+                component. */}
+            {(c.media?.gallery || poem) && (
               <div className={styles.band}>
-                <SheetPoem item={poem} />
+                <SheetCardGallery gallery={c.media?.gallery} poem={poem} />
               </div>
             )}
           </section>

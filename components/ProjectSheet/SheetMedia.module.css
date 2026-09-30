@@ -148,27 +148,26 @@
   color: var(--color-sage);
 }
 
-/* Thumbnail rail: the whole set at a glance, the current one marked by
-   full opacity and an ink underline rather than a box. */
+/* Thumbnail index: every slide gets an equal share of the gallery's full
+   width, so four or six thumbnails read as one complete strip rather
+   than a short row trailing off into empty space (FS41). Crops are fine
+   here: the stage above shows each piece whole. Current = full opacity
+   and an ink underline. */
 .thumbs {
-  display: flex;
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(0, 1fr);
   gap: 0.5rem;
   margin: var(--flow-1) 0 0;
   padding: 0;
   list-style: none;
-  overflow-x: auto;
-  scrollbar-width: none;
-}
-
-.thumbs::-webkit-scrollbar {
-  display: none;
 }
 
 .thumb {
   position: relative;
   display: block;
-  width: 5.5rem;
-  aspect-ratio: 3 / 2;
+  width: 100%;
+  height: clamp(3.5rem, 5vw, 4.75rem);
   padding: 0 0 4px;
   border: 0;
   border-bottom: 2px solid transparent;
@@ -239,59 +238,28 @@
   outline-offset: 3px;
 }
 
-/* ══ THE POEM ═════════════════════════════════════════════════════════ */
+/* ══ THE POEM CARD ═══════════════════════════════════════════════════ */
 
-/* A full band of the sheet on its own tinted field: containment, not a
-   bordered widget. On desktop its halves sit on the page grid, the
-   invitation in the rail (4) and the text across the work (8), so the
-   band shares its lines with everything above and below. The tint bleeds
-   past the content edges (the ::before) so the grid inside can stay
-   exactly on the page's columns. */
-.poem {
-  position: relative;
-  isolation: isolate;
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: var(--flow-3);
+/* The deck's own shape: same proportions, corners and shadow as the
+   printed cards, on the sheet's tinted field so it reads as the one card
+   that is sound rather than paper. */
+.poemCard {
   margin: 0;
-  padding: clamp(2rem, 4vw, 4rem);
-  background: var(--sheet-field);
 }
 
-@media (min-width: 1000px) {
-  .poem {
-    grid-template-columns: var(--grid);
-    column-gap: var(--gap-col);
-    align-items: stretch;
-    padding-inline: 0;
-    background: none;
-  }
-
-  .poem::before {
-    content: '';
-    position: absolute;
-    inset: 0 calc(var(--gutter) * -0.6);
-    z-index: -1;
-    background: var(--sheet-field);
-  }
-
-  .poemLead {
-    grid-column: span 4;
-  }
-
-  .poemText {
-    grid-column: span 8;
-  }
-}
-
-.poemLead {
+.poemFace {
   display: flex;
   flex-direction: column;
-  min-width: 0;
+  aspect-ratio: 600 / 967;
+  padding: clamp(1rem, 1.6vw, 1.5rem);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  background: var(--sheet-field);
+  overflow: hidden;
 }
 
 .poemKicker {
-  margin: 0 0 var(--flow-2);
+  flex: none;
   font-family: var(--font-body);
   font-size: var(--step-label);
   font-weight: 600;
@@ -300,29 +268,62 @@
   color: var(--color-sage);
 }
 
+/* The whole poem, in a window faded at both ends; it scrolls with the
+   recording and by hand. */
+.poemText {
+  flex: 1;
+  min-height: 0;
+  margin: 0.5rem 0;
+  padding-block: 1rem 2.5rem;
+  overflow-y: auto;
+  scrollbar-width: none;
+  mask-image: linear-gradient(to bottom, transparent, #000 10%, #000 80%, transparent);
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 10%, #000 80%, transparent);
+}
+
+.poemText::-webkit-scrollbar {
+  display: none;
+}
+
+.poemText:focus-visible {
+  outline: 2px solid var(--color-sage);
+  outline-offset: 2px;
+}
+
 .poemOpener {
-  margin: 0 0 var(--flow-3);
+  margin: 0 0 1rem;
   font-family: var(--font-heading);
-  font-size: var(--step-display);
+  font-size: var(--step-statement);
   font-weight: 300;
   font-style: italic;
-  line-height: 1;
+  line-height: 1.15;
   color: var(--color-ink);
   text-wrap: balance;
 }
 
+.stanza {
+  margin: 0 0 1rem;
+  font-family: var(--font-heading);
+  font-size: var(--step-small);
+  font-weight: 300;
+  line-height: 1.5;
+  color: var(--color-ink);
+}
+
 .transport {
+  flex: none;
   display: flex;
   align-items: center;
-  gap: var(--flow-2);
+  gap: 0.75rem;
 }
 
 .play {
+  position: relative;
   flex: none;
   display: grid;
   place-items: center;
-  width: 5.5rem;
-  height: 5.5rem;
+  width: 3.5rem;
+  height: 3.5rem;
   padding: 0;
   border: 0;
   border-radius: 50%;
@@ -333,17 +334,13 @@
 }
 
 .play svg {
-  width: 30px;
-  height: 30px;
+  width: 22px;
+  height: 22px;
   fill: currentColor;
 }
 
 /* At rest, one slow ring breathes out from the button: the one moving
-   thing on the band, and it stops the moment the poem is playing. */
-.play {
-  position: relative;
-}
-
+   thing in the row, and it stops the moment the poem plays. */
 .play::after {
   content: '';
   position: absolute;
@@ -354,7 +351,7 @@
   pointer-events: none;
 }
 
-.poem[data-playing] .play::after {
+.poemCard[data-playing] .play::after {
   animation: none;
   opacity: 0;
 }
@@ -413,17 +410,17 @@
 
 .seek::-webkit-slider-thumb {
   -webkit-appearance: none;
-  width: 14px;
-  height: 14px;
-  margin-top: -6px;
+  width: 12px;
+  height: 12px;
+  margin-top: -5px;
   border: 0;
   border-radius: 50%;
   background: var(--color-ink);
 }
 
 .seek::-moz-range-thumb {
-  width: 14px;
-  height: 14px;
+  width: 12px;
+  height: 12px;
   border: 0;
   border-radius: 50%;
   background: var(--color-ink);
@@ -436,58 +433,24 @@
 
 .time {
   display: block;
+  margin-top: -0.5rem;
   font-family: var(--font-body);
   font-size: var(--step-label);
   font-weight: 600;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.04em;
   font-variant-numeric: tabular-nums;
   color: var(--color-ink);
 }
 
 .poemCredit {
-  margin: auto 0 0;
-  padding-top: var(--flow-3);
+  display: block;
+  margin-top: 0.25rem;
   font-family: var(--font-heading);
   font-style: italic;
   font-size: var(--step-small);
-  line-height: 1.5;
-  color: var(--color-ink);
-}
-
-/* The text: a window onto the whole poem, faded at both edges so it
-   reads as continuing. It scrolls with the recording while playing, and
-   by hand at any time. */
-.poemText {
-  max-height: 26rem;
-  overflow-y: auto;
-  scrollbar-width: none;
-  padding-block: 3rem;
-  mask-image: linear-gradient(to bottom, transparent, #000 18%, #000 82%, transparent);
-  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 18%, #000 82%, transparent);
-}
-
-.poemText::-webkit-scrollbar {
-  display: none;
-}
-
-.poemText:focus-visible {
-  outline: 2px solid var(--color-sage);
-  outline-offset: 4px;
-}
-
-.stanza {
-  margin: 0 0 1.5rem;
-  font-family: var(--font-heading);
-  font-size: var(--step-statement);
-  font-weight: 300;
   line-height: 1.45;
   color: var(--color-ink);
-}
-
-@media (max-width: 899px) {
-  .poemText {
-    max-height: 20rem;
-  }
+  text-wrap: pretty;
 }
 
 /* ══ REFLECTION CARDS — three, equal, true proportions ═══════════════ */
@@ -506,13 +469,66 @@
   color: var(--color-sage);
 }
 
-.cards {
+/* THE DECK — one row on desktop: the poem card and the three reflection
+   cards, equal widths across the whole component (3 · 3 · 3 · 3 on the
+   twelve-column grid, sharing its gutter). The cards' list sits on a
+   subgrid so every card lands on the same columns as the poem.
+   Phones: the poem card full width, then the cards as a swipeable row,
+   the same gesture as the filmstrip, so no card is left alone on a line. */
+.deck {
+  --deck: 4;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: clamp(1rem, 2.5vw, 2.5rem);
-  margin: 0;
-  padding: 0;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--flow-2) var(--gap-col);
+}
+
+.cards {
+  display: flex;
+  gap: var(--gap-media);
+  margin: 0 calc(var(--gutter) * -1);
+  padding: 0 var(--gutter) 0.5rem;
   list-style: none;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: var(--gutter);
+  scrollbar-width: none;
+  overscroll-behavior-x: contain;
+}
+
+.cards::-webkit-scrollbar {
+  display: none;
+}
+
+.cards > li {
+  flex: 0 0 58%;
+  scroll-snap-align: start;
+}
+
+@media (max-width: 699px) {
+  .poemFace {
+    aspect-ratio: auto;
+    height: 26rem;
+  }
+}
+
+@media (min-width: 700px) {
+  .deck {
+    grid-template-columns: repeat(var(--deck), minmax(0, 1fr));
+  }
+
+  .cards {
+    display: grid;
+    grid-column: 1 / -1;
+    grid-template-columns: subgrid;
+    gap: var(--gap-col);
+    margin: 0;
+    padding: 0;
+    overflow: visible;
+  }
+
+  .deck[data-poem] .cards {
+    grid-column: 2 / -1;
+  }
 }
 
 .card {
@@ -558,9 +574,13 @@
   transform: rotateY(180deg);
 }
 
-.cardLabel {
+.cardCaption {
   display: block;
   margin-top: var(--flow-1);
+}
+
+.cardLabel {
+  display: block;
   font-family: var(--font-body);
   font-size: var(--step-label);
   letter-spacing: 0.08em;
