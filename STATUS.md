@@ -47,6 +47,7 @@ lab route, she points, the winner becomes law — not a fifth solo swing.
 | FS27 | "A lot of the text is left aligned and it makes the page look empty on the right side and makes it elongated unnecessarily, is there a 2 column set up or alternative that looks better?" | ⏳ OPEN |
 | FS28 | "The bottom gallery also needs to be something more sophisticated" | ⏳ OPEN |
 | FS29 | "why must everything be so centered with tons of space on the left and right? Should we go for a more full width layout inside of the folder? Its looking a little like mobile-first and I would rather design for desktop first and make sure mobile looks clean" | ⏳ OPEN |
+| FS30 | "I want the ratio to be 80% visual 20% copy" | ⏳ OPEN |
 
 ### ⟢ OPEN NOTES LEDGER — Folder sheet (2026-09-06, her verdict on the rebuilt sheet)
 
