@@ -335,6 +335,8 @@ export default function ProjectSheet({
   if (!open) return null
 
   const titleId = `sheet-title-${num}`
+  /* One article or several: always a list. */
+  const pressList = !press ? [] : (Array.isArray(press) ? press : [{ ...press, href }]).filter((a) => a?.href)
 
   return (
     <>
@@ -377,30 +379,37 @@ export default function ProjectSheet({
                 sectionsRef={sectionsRef} prefersReduced={prefersReduced}
                 styles={styles} />
             )}
-            {href && press ? (
-              /* A featured piece is a credential, so it is set as one:
-                 masthead double rules, the publication named large, the
-                 article cited by title. The whole block is the link. */
-              <a
-                className={styles.press}
-                href={href}
-                {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-              >
-                <span className={styles.pressEyebrow}>As featured in</span>
-                <span className={styles.pressMasthead}>{press.publication}</span>
-                {press.publisher && (
-                  <span className={styles.pressPublisher}>{press.publisher}</span>
-                )}
-                <span className={styles.pressTitle}>“{press.title}”</span>
-                {press.preview && (
-                  <span className={styles.pressPreview}>
-                    <img src={press.preview} alt={press.previewAlt || ''} loading="lazy" />
-                  </span>
-                )}
-                <span className={styles.pressCta}>
-                  {hrefLabel || 'Read the feature'} <span aria-hidden="true">↗</span>
-                </span>
-              </a>
+            {pressList.length > 0 ? (
+              /* Featured articles: a row of three on the sheet's grid. Each
+                 card is one link: the page as published, where it ran, and
+                 the headline. */
+              <section className={styles.press} aria-labelledby={`${titleId}-press`}>
+                <h3 id={`${titleId}-press`} className={styles.pressHead}>As featured in</h3>
+                <ul className={styles.pressRow}>
+                  {pressList.map((a) => (
+                    <li key={a.href}>
+                      <a className={styles.pressCard} href={a.href}
+                        target="_blank" rel="noopener noreferrer">
+                        {a.preview && (
+                          <span className={styles.pressPreview}>
+                            <img src={a.preview} alt="" loading="lazy" />
+                          </span>
+                        )}
+                        <span className={styles.pressMeta}>
+                          <span>{a.publication}</span>
+                          {a.date && <span>{a.date}</span>}
+                        </span>
+                        <span className={styles.pressTitle}>{a.title}</span>
+                        <span className={styles.pressPublisher}>
+                          {a.publisher}
+                          <span aria-hidden="true"> ↗</span>
+                          <span className={styles.srOnly}> (opens in a new tab)</span>
+                        </span>
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </section>
             ) : href ? (
               <div className={styles.deeper}>
                 <span className={styles.deeperLabel}>Go further</span>
