@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from 'react'
 import Lightbox from '@/components/Lightbox/Lightbox'
-import { SheetStage, SheetCardGallery, SheetAudioBars, slidesFor, sheetImg } from './SheetMedia'
+import { SheetStage, SheetLibraryKit, slidesFor, sheetImg } from './SheetMedia'
 import SheetCover from './SheetCover'
 import styles from './SheetContent.module.css'
 import paper from './Paper.module.css'
@@ -150,7 +150,6 @@ export default function SheetContent({ sheet, num, title, tagline, titleId }) {
                     </p>
                   </div>
                 )}
-                {c.media?.listen && <SheetAudioBars items={c.media.listen} />}
               </div>
             </div>
 
@@ -162,9 +161,13 @@ export default function SheetContent({ sheet, num, title, tagline, titleId }) {
             {/* The deck: the phone (the digital library, with the poem
                 playing inside it) and the reflection cards, one row of
                 objects across the whole component. */}
+            {/* FS149: the library as a matched pair of framed objects under
+                the gallery: the phone with its two recordings, and the
+                reflection cards one at a time. */}
             {(c.media?.gallery || phone) && (
               <div className={styles.band}>
-                <SheetCardGallery gallery={c.media?.gallery} phone={phone} />
+                <SheetLibraryKit phone={phone} listen={c.media?.listen}
+                  emotions={c.media?.gallery?.deck || c.media?.gallery?.emotions || []} />
               </div>
             )}
           </section>
@@ -205,7 +208,7 @@ export default function SheetContent({ sheet, num, title, tagline, titleId }) {
             {process.map((ph) => (
               <div key={ph.title} className={styles.phase}>
                 <span className={styles.phaseLabel}>{ph.title}</span>
-                <SheetStage slides={slidesFor({ stills: ph.images })}
+                <SheetStage slides={slidesFor({ stills: ph.images })} fit="cover"
                   onImage={openImage} label={`${ph.title} gallery`} />
               </div>
             ))}

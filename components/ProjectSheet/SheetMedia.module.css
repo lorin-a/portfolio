@@ -127,7 +127,8 @@
   --nav-dot: 11px;
   --nav-ink: var(--color-ink);
   --nav-ground: var(--color-cream);
-  flex: none;
+  flex: 0 1 auto;
+  min-width: 0;   /* a long deck's dots wrap rather than overflow */
   gap: 16px;
 }
 
@@ -599,5 +600,185 @@
 
   .barPlay {
     transition: none;
+  }
+}
+
+/* ══ BTS frames fill (FS150) ═══════════════════════════════════════════ */
+.mat[data-fit='cover'] .stageMedia {
+  object-fit: cover;
+}
+
+/* ══ THE LIBRARY, IN TWO FRAMES (FS149) ═══════════════════════════════
+   A matched pair on 6 | 6, the same glass frame as every gallery. Both
+   mats share one proportion so the phone and the card stand the same
+   height; the phone's footer carries the two recordings. */
+
+.kit {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--flow-3) var(--gap-col);
+  align-items: stretch;
+}
+
+@media (min-width: 900px) {
+  .kit {
+    grid-template-columns: var(--grid);
+  }
+
+  .kit > * {
+    grid-column: span 6;
+  }
+}
+
+.kitFrame {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+}
+
+.kitMat {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 5 / 4;
+  padding-block: 4%;
+}
+
+/* the phone, fitted to the mat's height */
+.kitMat .phone {
+  height: 100%;
+}
+
+.kitMat .device {
+  width: auto;
+  height: 100%;
+  padding: 1.2%;
+}
+
+.kitBar {
+  display: grid;
+  gap: 0.75rem;
+  padding: 0.75rem 0.25rem 1rem;
+}
+
+.kitTitle {
+  font-family: var(--font-body);
+  font-size: var(--step-label);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-sage);
+}
+
+/* the card, one at a time */
+.kitCard {
+  height: 100%;
+  aspect-ratio: 600 / 967;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  perspective: 1400px;
+}
+
+.kitCardInner {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform var(--motion-medium) var(--ease-in-out);
+}
+
+.kitCard[data-back] .kitCardInner {
+  transform: rotateY(180deg);
+}
+
+.kitFace {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  backface-visibility: hidden;
+}
+
+.kitBack {
+  transform: rotateY(180deg);
+}
+
+.kitCard:focus-visible {
+  outline: 2px solid var(--color-sage);
+  outline-offset: 4px;
+  border-radius: var(--radius-lg);
+}
+
+.kitName {
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.turnButton {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 44px;
+  padding: 0 1.125rem;
+  border: 1px solid var(--color-ink);
+  border-radius: var(--radius-pill);
+  background: none;
+  font-family: var(--font-body);
+  font-size: var(--step-label);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-ink);
+  cursor: pointer;
+  transition:
+    background var(--motion-fast) var(--ease-out),
+    color var(--motion-fast) var(--ease-out);
+}
+
+.turnButton svg {
+  width: 16px;
+  height: 16px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+@media (hover: hover) {
+  .turnButton:hover {
+    background: var(--color-ink);
+    color: var(--color-cream);
+  }
+}
+
+.turnButton:focus-visible {
+  outline: 2px solid var(--color-sage);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .kitCardInner {
+    transform: none !important;
+    transition: none;
+  }
+
+  .kitFace {
+    backface-visibility: visible;
+  }
+
+  .kitBack {
+    opacity: 0;
+    transform: none;
+  }
+
+  .kitCard[data-back] .kitBack {
+    opacity: 1;
   }
 }

@@ -33,7 +33,7 @@ export function slidesFor(media = {}) {
     const type = item.type || 'image'
     const src = type === 'video' ? vid(item.key, 1600) : img(item.key, 1800)
     if (!src) return
-    out.push({ key: item.key, type, alt: item.alt || '', src, blur: !!item.blur })
+    out.push({ key: item.key, type, alt: item.alt || '', src, blur: item.blur || false })
   }
   add(media.lead)
   media.also?.forEach(add)
@@ -55,7 +55,7 @@ export function slidesFor(media = {}) {
  * focus is anywhere in the gallery. A public image also opens into the
  * sheet-wide overlay.
  */
-export function SheetStage({ slides, gated, onImage, label }) {
+export function SheetStage({ slides, gated, onImage, label, fit }) {
   const [at, setAt] = useState(0)
   const n = slides.length
   const go = useCallback((d) => setAt((i) => (i + d + n) % n), [n])
@@ -71,7 +71,8 @@ export function SheetStage({ slides, gated, onImage, label }) {
 
   const mediaEl = s.type === 'video' ? (
     <video key={s.key} src={s.src} muted loop playsInline autoPlay preload="metadata"
-      aria-label={s.alt} className={styles.stageMedia} data-blur={s.blur || undefined} />
+      aria-label={s.alt} className={styles.stageMedia} data-blur={s.blur || undefined}
+      style={typeof s.blur === 'number' ? { '--data-blur': `${s.blur}px` } : undefined} />
   ) : (
     <img key={s.key} src={s.src} alt={onImage && !gated ? '' : s.alt}
       className={styles.stageMedia} data-blur={s.blur || undefined} />
@@ -86,7 +87,7 @@ export function SheetStage({ slides, gated, onImage, label }) {
       aria-label={label}
       onKeyDown={onKey}
     >
-      <div className={styles.mat}>
+      <div className={styles.mat} data-fit={fit || undefined}>
         {s.type === 'image' && onImage && !gated ? (
           <button type="button" className={styles.matButton}
             onClick={(e) => onImage(s.key, e.currentTarget)}
@@ -136,7 +137,7 @@ const fmt = (t) => {
  * recordings lives in the text column's audio bars, so the phone never
  * shows more than the real experience offered.
  */
-function SheetPhone({ phone }) {
+function SheetPhone({ phone, bare }) {
   const videoRef = useRef(null)
   const videoSrc = phone && vid(phone.key, 720)
 
@@ -160,9 +161,11 @@ function SheetPhone({ phone }) {
             preload="metadata" className={styles.screenVideo} aria-label={phone.alt} />
         </div>
       </div>
-      <figcaption className={styles.cardCaption}>
-        <span className={styles.cardLabel}>The digital library</span>
-      </figcaption>
+      {!bare && (
+        <figcaption className={styles.cardCaption}>
+          <span className={styles.cardLabel}>The digital library</span>
+        </figcaption>
+      )}
     </figure>
   )
 }
@@ -339,6 +342,92 @@ export function SheetCardGallery({ gallery, phone }) {
             </div>
           )
         })}
+      </div>
+    </div>
+  )
+}
+
+/**
+ * THE LIBRARY, IN TWO FRAMES (FS149): the same framed object as every
+ * gallery on the sheet, as a matched pair.
+ *
+ *   The phone: the screen recording of the library as staff used it, on
+ *   the mat; in the footer, the two recordings as plain players.
+ *   The cards: one reflection card at a time, large; in the footer, its
+ *   name, a "Turn over" button, and the gallery controls through the deck.
+ */
+export function SheetLibraryKit({ phone, listen = [], emotions = [] }) {
+  return (
+    <div className={styles.kit}>
+      {phone && (
+        <figure className={`${styles.stage} ${styles.kitFrame}`}>
+          <div className={`${styles.mat} ${styles.kitMat}`}>
+            <SheetPhone phone={phone} bare />
+          </div>
+          <figcaption className={styles.kitBar}>
+            <span className={styles.kitTitle}>The digital library, as staff used it</span>
+            {listen.map((it) => <AudioBar key={it.key} item={it} />)}
+            {listen.some((it) => it.key === 'gs-poem-remember') && (
+              <span className={styles.barsCredit}>{POEM_CREDIT}</span>
+            )}
+          </figcaption>
+        </figure>
+      )}
+      {emotions.length > 0 && <CardStage emotions={emotions} />}
+    </div>
+  )
+}
+
+function CardStage({ emotions }) {
+  const cards = emotions
+    .map((name) => ({
+      name,
+      front: GS_CARDS[`${name}-front`] && cloudImg(GS_CARDS[`${name}-front`], 900),
+      back: GS_CARDS[`${name}-back`] && cloudImg(GS_CARDS[`${name}-back`], 900),
+    }))
+    .filter((c) => c.front && c.back)
+  const [at, setAt] = useState(0)
+  const [back, setBack] = useState(false)
+  const n = cards.length
+  const go = (i) => { setAt((i + n) % n); setBack(false) }
+  if (!n) return null
+  const c = cards[at]
+  return (
+    <div className={`${styles.stage} ${styles.kitFrame}`} role="group"
+      aria-roledescription="card deck" aria-label="Groundswell Reflection Cards"
+      onKeyDown={(e) => {
+        if (e.key === 'ArrowRight') { e.preventDefault(); go(at + 1) }
+        if (e.key === 'ArrowLeft') { e.preventDefault(); go(at - 1) }
+      }}>
+      <div className={`${styles.mat} ${styles.kitMat}`}>
+        <button type="button" className={styles.kitCard} data-back={back || undefined}
+          onClick={() => setBack((b) => !b)} aria-pressed={back}
+          aria-label={`Reflection card: ${c.name}, ${back ? 'back' : 'front'}. Turn over.`}>
+          <span className={styles.kitCardInner}>
+            <img className={styles.kitFace} src={c.front} alt="" />
+            <img className={`${styles.kitFace} ${styles.kitBack}`} src={c.back} alt="" />
+          </span>
+        </button>
+      </div>
+      <div className={styles.stageBar}>
+        <p className={styles.caption} aria-live="polite">
+          <span className={styles.counter}>
+            {String(at + 1).padStart(2, '0')}<span aria-hidden="true"> / </span>
+            <span className={styles.srOnly}> of </span>{String(n).padStart(2, '0')}
+          </span>
+          <span className={styles.captionText}>
+            <span className={styles.kitName}>{c.name}</span>
+            {' '}{back ? 'The somatic exercise and a conversation starter.' : 'The card’s front.'}
+          </span>
+        </p>
+        <button type="button" className={styles.turnButton} onClick={() => setBack((b) => !b)}
+          aria-pressed={back}>
+          <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8a5 5 0 0 1 8.5-3.5M13 3v2.5h-2.5M13 8a5 5 0 0 1-8.5 3.5M3 13v-2.5h2.5" /></svg>
+          {back ? 'Turn back' : 'Turn over'}
+        </button>
+        <GalleryNav className={styles.stageNav} count={n} index={at}
+          onPrev={() => go(at - 1)} onNext={() => go(at + 1)} onSelect={go}
+          label="Reflection cards" />
       </div>
     </div>
   )

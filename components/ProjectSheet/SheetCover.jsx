@@ -86,8 +86,10 @@ function Pile({ prints }) {
   const crop = (p) => (p.zoom || p.focus)
     ? { transform: `scale(${p.zoom || 1})`, transformOrigin: p.focus || '50% 50%', objectPosition: p.focus || undefined }
     : undefined
+  /* FS145: each print keeps its own place in the pile; clicking one
+     raises it to the top. Nothing moves but the one you chose. */
   const [order, setOrder] = useState(() => items.map((_, i) => i))
-  const next = () => setOrder((o) => [...o.slice(1), o[0]])
+  const raise = (i) => setOrder((o) => [i, ...o.filter((x) => x !== i)])
   if (!items.length) return null
   return (
     <div className={`${styles.pile} ${styles.polaroids} ${styles.brandPile}`}>
@@ -95,11 +97,10 @@ function Pile({ prints }) {
         const depth = order.indexOf(i)
         return (
           <button key={p.key} type="button" className={styles.print}
-            data-depth={depth} style={{ zIndex: 10 - depth }}
-            tabIndex={depth === 0 ? 0 : -1}
-            aria-hidden={depth === 0 ? undefined : true}
-            onClick={next}
-            aria-label={`${p.alt} Photo ${i + 1} of ${items.length}. Show the next photo.`}>
+            data-slot={i} data-front={depth === 0 || undefined} style={{ zIndex: 10 - depth }}
+            onClick={() => raise(i)}
+            aria-pressed={depth === 0}
+            aria-label={depth === 0 ? `${p.alt} (on top)` : `Bring to the top: ${p.alt}`}>
             <span className={styles.brandFrame}>
               <span className={styles.brandPhoto}><img src={p.src} alt="" style={crop(p)} /></span>
               <span className={styles.brandStrip}>

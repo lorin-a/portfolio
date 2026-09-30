@@ -171,7 +171,7 @@ export const groundswell = {
           { key: 'gs-artwall-detail-03', alt: 'A staff member points to a contribution on the wall.' },
           /* FS121: this component's own view in the data dashboard, lightly
              blurred (FS120) so the design reads and the numbers do not. */
-          { type: 'video', key: 'gs-display-view', blur: true, alt: 'The art wall in the data dashboard: each emotion as a painted bubble, sized by how often it was chosen.' },
+          { type: 'video', key: 'gs-display-view', blur: 5, alt: 'The art wall in the data dashboard: each emotion as a painted bubble, sized by how often it was chosen.' },
         ],
       },
       name: 'Groundswell Garden Community Art Wall',
@@ -190,9 +190,10 @@ export const groundswell = {
          object and its details, plus the facade she had to redesign when
          admin required doors. */
       media: {
-        lead:    { type: 'video', key: 'gs-walkthrough-video', alt: 'Walkthrough of the Groundswell Restorative Pod.' },
+        /* FS148: leads with the pod photo, then the walkthrough. */
         stills:  [
           { key: 'gs-pod',             alt: 'The Groundswell Restorative Pod in the hallway.' },
+          { type: 'video', key: 'gs-walkthrough-video', alt: 'Walkthrough of the Groundswell Restorative Pod.' },
           { key: 'gs-pod-detail-01',   alt: 'Two staff members at the table inside the pod.' },
           { key: 'gs-pod-detail-02',   alt: 'Reflection cards and the pod’s invitation to set down what you carry.' },
           { key: 'gs-pod-detail-03',   alt: 'Opening the mindfulness library on a phone inside the pod.' },
@@ -254,6 +255,9 @@ export const groundswell = {
                        spectrum; grateful and exhausted (the most used) sit
                        nearest the phone. */
                     emotions: ['joyful', 'grateful', 'exhausted', 'heartbroken'],
+                    /* FS149: the card frame browses the full set of emotion
+                       cards, opening on the two most used. */
+                    deck: ['grateful', 'exhausted', 'joyful', 'heartbroken', 'hopeful', 'numb', 'connected', 'vulnerable', 'present', 'angry', 'invisible', 'valued'],
                     note: 'Four of the nine reflection cards. Turn one over for its somatic exercise.' },
       },
       name: 'Groundswell Mindfulness Library',
@@ -296,7 +300,7 @@ export const groundswell = {
       media: {
         lead:    { type: 'video', key: 'gs-intro-artwall', blur: true, alt: 'The data dashboard’s opening screen.' },
         also:    [
-          { type: 'video', key: 'gs-display-view', blur: true, alt: 'The art wall view: each emotion as a painted bubble, sized by how often it was chosen.' },
+          { type: 'video', key: 'gs-display-view', blur: 5, alt: 'The art wall view: each emotion as a painted bubble, sized by how often it was chosen.' },
           { type: 'video', key: 'gs-pod-data', blur: true, alt: 'The pod view: minutes of use by month.' },
           { type: 'video', key: 'gs-new-meditations', blur: true, alt: 'The mindfulness library view: listens for each meditation.' },
         ],
