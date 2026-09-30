@@ -61,7 +61,7 @@ function useSheetReveal(rootRef) {
  * Gated media never enters the gallery.
  */
 export default function SheetContent({ sheet, num, title, tagline, titleId }) {
-  const { outcome, meta = [], frame = {}, components = [], close = {}, bts, credit } = sheet
+  const { outcome, meta = [], frame = {}, components = [], close = {}, bts, credit, credits = [] } = sheet
 
   /* The folder's images, flat and in reading order, for the overlay. */
   const images = useMemo(() => {
@@ -199,8 +199,15 @@ export default function SheetContent({ sheet, num, title, tagline, titleId }) {
 
       {bts && <SheetFilmstrip bts={bts} onImage={openImage} />}
 
-      {(frame.partners || credit) && (
+      {(frame.partners || credit || credits.length > 0) && (
         <div className={styles.colophon}>
+          {credits.length > 0 && (
+            <dl className={styles.credits}>
+              {credits.map(([k, v]) => (
+                <div key={k}><dt>{k}</dt><dd>{v}</dd></div>
+              ))}
+            </dl>
+          )}
           {frame.partners && <p className={styles.partners}>{frame.partners}</p>}
           {credit && <p className={styles.credit}>{credit}</p>}
         </div>

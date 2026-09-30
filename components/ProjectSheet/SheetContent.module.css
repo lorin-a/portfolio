@@ -314,3 +314,50 @@
   line-height: 1.6;
   color: var(--color-ink);
 }
+
+/* The named credits, first in the colophon (FS99). */
+.credits {
+  display: grid;
+  gap: var(--flow-1);
+  margin: 0 0 var(--flow-1);
+}
+
+.credits dt {
+  margin: 0 0 0.25rem;
+  font-family: var(--font-body);
+  font-size: var(--step-label);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-sage);
+}
+
+.credits dd {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--step-small);
+  line-height: 1.6;
+  color: var(--color-ink);
+  text-wrap: pretty;
+}
+
+@media (min-width: 1000px) {
+  .credits {
+    grid-column: 1 / -1;
+    grid-template-columns: var(--grid);
+    column-gap: var(--gap-col);
+  }
+
+  .credits > div {
+    grid-column: span 6;
+  }
+
+  .credits {
+    grid-row: 1;
+  }
+
+  .colophon:has(.credits) .credit,
+  .colophon:has(.credits) .partners {
+    grid-row: 2;
+  }
+}

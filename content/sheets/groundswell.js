@@ -55,13 +55,26 @@ export const groundswell = {
      OPEN, hers: Su Hong & Mia Jeong (credited Research Assistants) are not
      in the team lines; Tools Used is marked unsure. An array value renders
      one item per ruled line. */
+  /* FS99–FS100 (2026-09-30): Role becomes her TITLES (her claims, turned
+     into titles with her permission: “experience designer, copywriter,
+     project management, donor relations, data visualization (rephrase
+     however makes sense for role)”). The duties line above lives on as
+     “My role, in full” near the close and in each “What I did”. The named
+     teams move to the colophon (`credits` below); the hero lists the
+     collaborating groups in her teammate's register. */
   meta: [
-    ['Role', 'Generative research, content copywriting, project management, fundraising, data dashboard development & design, strategy'],
-    ['Design Team', 'Kristin Hughes, Lorin Anderberg, Elijah Benzon, Greg Baltus, Robertus Sucahyo, Kelly McDowell'],
-    ['Clinical Team', 'Dr.\u00a0Sarah Taylor, Dr.\u00a0Grace Campbell, Dr.\u00a0Heidi Donovan, Kendyl Grant'],  /* non-breaking after “Dr.” */
+    ['Role', 'Experience Designer, Copywriter, Project Coordinator, Donor Relations, Data Visualization Designer'],  /* “Project Coordinator”, her correction FS101 */
+    ['Collaborators', 'Designers, Fabricators & Engineers, Hospital Staff, Hospital Administration, Subject Matter Experts, Donors'],
     ['Tools Used', 'Adobe Creative Suite, Figma, Claude Code'],
     ['Timeline', ['Research: Jan–May 2025', 'Production: June–October 2025', 'Study Period: October 2025–June 2026']],
     ['Context', 'A 9-month pilot program designed to support the emotional well-being of UPMC Magee-Womens Cancer Services staff.'],
+  ],
+
+  /* The named credits, at the foot of the sheet (FS99): her team lines from
+     FS93, names checked against her case-study credits. */
+  credits: [
+    ['Design Team', 'Kristin Hughes, Lorin Anderberg, Elijah Benzon, Greg Baltus, Robertus Sucahyo, Kelly McDowell'],
+    ['Clinical Team', 'Dr.\u00a0Sarah Taylor, Dr.\u00a0Grace Campbell, Dr.\u00a0Heidi Donovan, Kendyl Grant'],
   ],
 
   frame: {

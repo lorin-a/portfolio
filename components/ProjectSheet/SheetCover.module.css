@@ -641,3 +641,10 @@
 .pile:not(.polaroids) .print {
   overflow: hidden;
 }
+
+/* Each label on its own ruled line above its value, at every width
+   (FS100): “Collaborators” is wider than any sensible label column, and
+   stacking is also the shorter sheet at 1440 (714px vs 846px). */
+.facts > div {
+  grid-template-columns: minmax(0, 1fr);
+}
