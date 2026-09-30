@@ -17,8 +17,15 @@ export const groundswell = {
   /* The punchline, in the masthead, so the outcome lands on the first screen
      rather than after the evidence. Her copy 2026-08-27, trimmed of its
      "The findings demonstrated that" wind-up. */
+  /* Her copy 2026-09-30 (FS108). Copy edits, hers to reverse: “1423 minute
+     spend” → 1,423 minutes spent; thousands comma. Original, verbatim:
+     "Participation: 429 uses of the art wall, 1423 minute spend inside the
+     pod, 176 meditation listens, 117 survey responses. All scales aside
+     from perceived support from leadership improved throughout the study,
+     indicating a core problem around institutional trust and support from
+     administration." */
   outcome:
-    'All scales aside from perceived support from leadership improved throughout the study, indicating a core problem around institutional trust and support from administration.',
+    'Participation: 429 uses of the art wall, 1,423 minutes spent inside the pod, 176 meditation listens, 117 survey responses. All scales aside from perceived support from leadership improved throughout the study, indicating a core problem around institutional trust and support from administration.',
 
   /* THE COVER'S PRINTS: four photographs in a loose pile beside the name
      (her notes FS57–FS67). Chosen for range across the project: the place,
