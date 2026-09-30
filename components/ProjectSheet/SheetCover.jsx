@@ -86,21 +86,34 @@ function Pile({ prints }) {
   const crop = (p) => (p.zoom || p.focus)
     ? { transform: `scale(${p.zoom || 1})`, transformOrigin: p.focus || '50% 50%', objectPosition: p.focus || undefined }
     : undefined
-  /* FS145: each print keeps its own place in the pile; clicking one
-     raises it to the top. Nothing moves but the one you chose. */
-  const [order, setOrder] = useState(() => items.map((_, i) => i))
-  const raise = (i) => setOrder((o) => [i, ...o.filter((x) => x !== i)])
+  /* FS151: a swap to the front. Each print sits in a position (0 = on
+     top, at the front). Clicking a print lifts it out and carries it to
+     the front; the print that was there slides back into the chosen one's
+     old place. Only those two move, so nothing shuffles and repeated
+     clicks never cycle the pile. */
+  const [pos, setPos] = useState(() => items.map((_, i) => i))   /* pos[card] */
+  const [lifting, setLifting] = useState(-1)
+  const raise = (i) => {
+    const from = pos[i]
+    if (from === 0) return
+    const front = pos.indexOf(0)
+    setPos((p) => p.map((v, k) => (k === i ? 0 : k === front ? from : v)))
+    setLifting(i)
+    setTimeout(() => setLifting(-1), 700)
+  }
   if (!items.length) return null
   return (
     <div className={`${styles.pile} ${styles.polaroids} ${styles.brandPile}`}>
       {items.map((p, i) => {
-        const depth = order.indexOf(i)
+        const depth = pos[i]
         return (
           <button key={p.key} type="button" className={styles.print}
-            data-slot={i} data-front={depth === 0 || undefined} style={{ zIndex: 10 - depth }}
+            data-pos={depth} data-front={depth === 0 || undefined}
+            data-lifting={lifting === i || undefined}
+            style={{ zIndex: lifting === i ? 20 : 10 - depth }}
             onClick={() => raise(i)}
             aria-pressed={depth === 0}
-            aria-label={depth === 0 ? `${p.alt} (on top)` : `Bring to the top: ${p.alt}`}>
+            aria-label={depth === 0 ? `${p.alt} (on top)` : `Bring to the front: ${p.alt}`}>
             <span className={styles.brandFrame}>
               <span className={styles.brandPhoto}><img src={p.src} alt="" style={crop(p)} /></span>
               <span className={styles.brandStrip}>
