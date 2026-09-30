@@ -5,6 +5,11 @@ import Lightbox from '@/components/Lightbox/Lightbox'
 import { SheetStage, SheetCardGallery, SheetHero, SheetFilmstrip, slidesFor, sheetImg } from './SheetMedia'
 import CoverLab, { CoverLabSwitch } from './CoverLab'
 import styles from './SheetContent.module.css'
+import paper from './Paper.module.css'
+
+/* Each “What I did” card rests at its own small angle, like notes laid
+   down by hand rather than printed in a row. */
+const CARD_TILTS = ['-0.9deg', '0.7deg', '-0.5deg', '1deg', '-0.7deg', '0.6deg']
 
 /**
  * Entrance choreography: each section composes itself once as it enters the
@@ -185,10 +190,14 @@ export default function SheetContent({ sheet, num, title, tagline, titleId }) {
                 {c.gated && <span className={styles.gated}>Confidential</span>}
                 <p className={styles.componentBody}>{c.body}</p>
                 {c.mine && (
-                  <p className={styles.mine}>
-                    <span className={styles.mineLabel}>What I did</span>
-                    <span className={styles.mineBody}>{c.mine}</span>
-                  </p>
+                  <div className={`${paper.paper} ${styles.mine}`}
+                    style={{ '--tilt': CARD_TILTS[i % CARD_TILTS.length] }}>
+                    <span className={paper.holes} aria-hidden="true"><i /><i /><i /></span>
+                    <p className={styles.mineText}>
+                      <span className={paper.label}>What I did</span>
+                      <span className={`${styles.mineBody} ${paper.ink}`}>{c.mine}</span>
+                    </p>
+                  </div>
                 )}
               </div>
             </div>

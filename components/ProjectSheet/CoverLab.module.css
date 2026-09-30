@@ -373,52 +373,6 @@
   margin-top: var(--flow-3);
 }
 
-.paperSheet {
-  --line: 1.625rem;                 /* 26px: one ruled line */
-  --top: calc(var(--line) * 2);     /* the sheet's top margin, two lines */
-  --margin: 2.75rem;                /* where the red margin line falls */
-  position: relative;
-  padding: var(--top) 1.25rem var(--line) calc(var(--margin) + 0.75rem);
-  background:
-    /* grain: fractal noise, very faint */
-    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='g'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.35 0 0 0 0 0.3 0 0 0 0 0.25 0 0 0 0.09 0'/></filter><rect width='100%25' height='100%25' filter='url(%23g)'/></svg>"),
-    /* the red margin line */
-    linear-gradient(to right, transparent var(--margin), rgba(214, 120, 116, 0.55) var(--margin), rgba(214, 120, 116, 0.55) calc(var(--margin) + 1px), transparent calc(var(--margin) + 1px)),
-    /* the blue rules, one per line, starting under the top margin */
-    repeating-linear-gradient(to bottom, transparent 0, transparent calc(var(--line) - 1px), rgba(120, 160, 196, 0.42) calc(var(--line) - 1px), rgba(120, 160, 196, 0.42) var(--line)) 0 var(--top) / 100% calc(100% - var(--top)) no-repeat,
-    /* the stock: a touch lighter at the top, as paper catches light */
-    linear-gradient(to bottom, #f8f5ee, #f1ece2);
-  box-shadow:
-    inset 0 0 0 1px rgba(255, 255, 255, 0.35),
-    inset 0 -1px 0 rgba(0, 0, 0, 0.06),
-    0 1px 1px rgba(0, 0, 0, 0.2),
-    0 18px 36px rgba(0, 0, 0, 0.34);
-  transform: rotate(-0.8deg);
-}
-
-/* Three punched holes, showing the folder's ground through the sheet. */
-.holes {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0.875rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  pointer-events: none;
-}
-
-.holes i {
-  display: block;
-  width: 0.875rem;
-  height: 0.875rem;
-  border-radius: 50%;
-  background: var(--color-cream);   /* the folder's own fill */
-  box-shadow:
-    inset 0 1px 2px rgba(0, 0, 0, 0.55),
-    0 1px 0 rgba(255, 255, 255, 0.6);
-}
-
 .paperFacts {
   display: grid;
   row-gap: var(--line);
@@ -461,12 +415,6 @@
   color: #4f5a47;
 }
 
-@media (max-width: 999px) {
-  .paperSheet {
-    transform: rotate(-0.5deg);
-  }
-}
-
 /* Long facts on wide columns, short ones on narrow. display: none also
    takes the hidden list out of the accessibility tree. */
 .factsShort {
@@ -483,63 +431,26 @@
   }
 }
 
-/* The wabi-sabi pile (FS60, FS64): four prints scattered loosely across
-   the full height of the text column, so the pile and the sheet always
-   end together whatever the text's length. The stack is a size container:
-   each print is sized from the stack's own width and height (cqw / cqh),
-   and each sits at its own angle and its own point of a loose scatter,
-   as a fraction of the room the stack has spare. Hover lets each drift a
-   little further out; click brings one to the front. */
-.wabi {
-  container-type: size;
-  aspect-ratio: auto;
-  align-self: stretch;
-  min-height: 26rem;
-}
-
+/* The wabi-sabi pile (FS60, FS65): the four prints close together in one
+   compact stack, as before, each at its own tilt: uneven in size as well
+   as direction, with small uneven offsets, so it reads as dropped rather
+   than arranged. Hover lets each drift a little further; click brings one
+   to the front. */
 .wabi .print {
-  --pw: min(64cqw, 92cqh);                       /* print width */
-  --ph: calc(var(--pw) / 1.5);                   /* 3:2 print height */
-  --sx: max(0px, calc((100cqw - var(--pw)) / 2)); /* spare room, each side */
-  --sy: max(0px, calc((100cqh - var(--ph)) / 2)); /* spare room, above/below */
-  --fx: 0;
-  --fy: 0;
-  --rot: 0deg;
-  --spread: 0.94;
-  inset: 0;
-  width: var(--pw);
-  height: var(--ph);
-  margin: auto;
-  transform:
-    translate(calc(var(--sx) * var(--fx) * var(--spread)), calc(var(--sy) * var(--fy) * var(--spread)))
-    rotate(var(--rot));
+  left: 10%;
+  width: 77%;
 }
 
-.wabi .print[data-depth='0'] { --fx: 0.05;  --fy: -0.05; --rot: -1.3deg; }
-.wabi .print[data-depth='1'] { --fx: 0.85;  --fy: -0.9;  --rot: 2.8deg; }
-.wabi .print[data-depth='2'] { --fx: -0.9;  --fy: 0.8;   --rot: -4deg; }
-.wabi .print[data-depth='3'] { --fx: 0.7;   --fy: 1;     --rot: 3.4deg; }
+.wabi .print[data-depth='0'] { transform: translate(0, 0) rotate(-1.6deg); }
+.wabi .print[data-depth='1'] { transform: translate(5%, -5%) rotate(3.1deg); }
+.wabi .print[data-depth='2'] { transform: translate(-4%, 5%) rotate(-4.6deg); }
+.wabi .print[data-depth='3'] { transform: translate(7%, 4%) rotate(2.2deg); }
 
 @media (hover: hover) {
-  /* restate the transform: the plain pile's fan-out hover would win */
-  .wabi:hover .print {
-    --spread: 1;
-    transform:
-      translate(calc(var(--sx) * var(--fx) * var(--spread)), calc(var(--sy) * var(--fy) * var(--spread)))
-      rotate(var(--rot));
-  }
-
-  .wabi:hover .print[data-depth='0'] {
-    --rot: -0.5deg;
-  }
-}
-
-@media (max-width: 999px) {
-  .wabi {
-    align-self: auto;
-    height: 30rem;
-    min-height: 0;
-  }
+  .wabi:hover .print[data-depth='0'] { transform: translate(0, -1%) rotate(-0.8deg); }
+  .wabi:hover .print[data-depth='1'] { transform: translate(9%, -8%) rotate(3.9deg); }
+  .wabi:hover .print[data-depth='2'] { transform: translate(-8%, 8%) rotate(-5.6deg); }
+  .wabi:hover .print[data-depth='3'] { transform: translate(11%, 7%) rotate(2.9deg); }
 }
 
 /* ══ The switcher (lab only) ═══════════════════════════════════════════ */

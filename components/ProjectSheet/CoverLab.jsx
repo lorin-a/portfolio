@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { sheetImg } from './SheetMedia'
 import styles from './CoverLab.module.css'
+import paper from './Paper.module.css'
 
 /**
  * COVER LAB — three cover treatments to compare in place (her note FS57:
@@ -184,8 +185,8 @@ function PrintsCover({ sheet, num, title, tagline, titleId, onImage, meta, treat
           <span className={styles.num}>{num}</span>
           <FitPair title={title} tagline={tagline} titleId={titleId} />
           <div className={styles.paper}>
-            <div className={styles.paperSheet}>
-              <span className={styles.holes} aria-hidden="true"><i /><i /><i /></span>
+            <div className={paper.paper}>
+              <span className={paper.holes} aria-hidden="true"><i /><i /><i /></span>
               {/* The longer facts where the column is wide enough to carry
                   them; the short ones where it is narrow. */}
               <Facts meta={sheet.metaLong || meta} className={`${styles.paperFacts} ${styles.factsLong}`} />

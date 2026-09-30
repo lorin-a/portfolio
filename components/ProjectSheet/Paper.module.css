@@ -1,0 +1,75 @@
+/* PAPER — one sheet of loose-leaf, shared by the cover's fact sheet and
+   every “What I did” card (her notes FS61, FS66), so they cannot drift
+   apart. Warm stock with a fine grain, blue ruled lines the text sits on,
+   a red margin line, three punched holes that show the folder through,
+   a light edge and a soft shadow. Paper colours are fixed (stock and ink),
+   not theme colours.
+
+   Set on the element:  --line (one ruled line), --top (the top margin,
+   in lines), --tilt (its resting angle). Text inside should use
+   line-height: var(--line) so it lands on the rules. */
+
+.paper {
+  --line: 1.625rem;
+  --top: calc(var(--line) * 2);
+  --margin: 2.75rem;
+  --tilt: -0.8deg;
+  position: relative;
+  padding: var(--top) 1.25rem var(--line) calc(var(--margin) + 0.75rem);
+  background:
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='g'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.35 0 0 0 0 0.3 0 0 0 0 0.25 0 0 0 0.09 0'/></filter><rect width='100%25' height='100%25' filter='url(%23g)'/></svg>"),
+    linear-gradient(to right, transparent var(--margin), rgba(214, 120, 116, 0.55) var(--margin), rgba(214, 120, 116, 0.55) calc(var(--margin) + 1px), transparent calc(var(--margin) + 1px)),
+    repeating-linear-gradient(to bottom, transparent 0, transparent calc(var(--line) - 1px), rgba(120, 160, 196, 0.42) calc(var(--line) - 1px), rgba(120, 160, 196, 0.42) var(--line)) 0 var(--top) / 100% calc(100% - var(--top)) no-repeat,
+    linear-gradient(to bottom, #f8f5ee, #f1ece2);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.35),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.06),
+    0 1px 1px rgba(0, 0, 0, 0.2),
+    0 18px 36px rgba(0, 0, 0, 0.34);
+  transform: rotate(var(--tilt));
+}
+
+/* Three punched holes, showing the folder's ground through the sheet. */
+.holes {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0.875rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  pointer-events: none;
+}
+
+.holes i {
+  display: block;
+  width: 0.875rem;
+  height: 0.875rem;
+  border-radius: 50%;
+  background: var(--color-cream);
+  box-shadow:
+    inset 0 1px 2px rgba(0, 0, 0, 0.55),
+    0 1px 0 rgba(255, 255, 255, 0.6);
+}
+
+/* Type on paper: the label ink and the body ink. */
+.label {
+  display: block;
+  font-family: var(--font-body);
+  font-size: var(--step-label);
+  font-weight: 600;
+  line-height: var(--line);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #4f5a47;
+}
+
+.ink {
+  color: #24221f;
+}
+
+@media (max-width: 999px) {
+  .paper {
+    --tilt: -0.5deg;
+  }
+}

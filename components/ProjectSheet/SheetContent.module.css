@@ -14,7 +14,6 @@
 
 /* ── The one label recipe — every label on the sheet is this ─────── */
 
-.mineLabel,
 .frameBlock h3,
 .closeBlock h3,
 .lesson h3,
@@ -305,19 +304,34 @@
   text-wrap: pretty;
 }
 
+/* Her contribution, on a card of the same loose-leaf as the cover's fact
+   sheet (Paper.module.css, her note FS66). One ruled line of top margin on
+   a card this small; the label and her line sit on the rules. */
 .mine {
-  margin: var(--flow-2) 0 0;
-  padding-top: var(--flow-1);
-  border-top: 1px solid var(--sheet-hair);
+  --top: var(--line);
+  margin-top: var(--flow-3);
+}
+
+.mineText {
+  margin: 0;
+}
+
+/* Real loose-leaf spaces its holes far apart; a strip this short would
+   only carry one of them. */
+.mine > span i:not(:first-child) {
+  display: none;
+}
+
+.mine > span {
+  justify-content: center;
 }
 
 .mineBody {
   display: block;
   font-family: var(--font-heading);
   font-style: italic;
-  font-size: var(--step-body);
-  line-height: 1.55;
-  color: var(--color-ink);
+  font-size: var(--step-small);
+  line-height: var(--line);
   text-wrap: pretty;
 }
 
