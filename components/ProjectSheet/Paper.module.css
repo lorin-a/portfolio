@@ -13,7 +13,7 @@
   --line: 1.625rem;
   --top: calc(var(--line) * 2);
   --margin: 2.75rem;
-  --tilt: -0.8deg;
+  --tilt: 0deg;   /* straight (FS81): only the polaroids tilt */
   position: relative;
   padding: var(--top) 1.25rem var(--line) calc(var(--margin) + 0.75rem);
   background:
@@ -68,11 +68,6 @@
   color: #24221f;
 }
 
-@media (max-width: 999px) {
-  .paper {
-    --tilt: -0.5deg;
-  }
-}
 
 /* ══ TECH — the same loose-leaf, rebuilt as an instrument (lab, FS69/71)
    Still unmistakably lined paper: ruled lines, a margin line, three
