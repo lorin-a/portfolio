@@ -24,11 +24,13 @@ export const groundswell = {
      (her notes FS57–FS67). Chosen for range across the project: the place,
      the wall in use, the pod in use, the cards in hand. Image choice and
      alt text, not copy; alts are hers to rewrite. */
+  /* `caption`: the two-word label under a polaroid (lab, FS70); furniture,
+     hers to rewrite. */
   prints: [
-    { key: 'gs-hero', alt: 'The Groundswell Garden and the Restorative Pod in the hallway.' },
-    { key: 'gs-artwall-detail-01', alt: 'Writing a response to one of the guided prompts at the art wall.' },
-    { key: 'gs-pod-detail-01', alt: 'Two staff members at the table inside the Restorative Pod.' },
-    { key: 'gs-cards', alt: 'Hands sorting the Groundswell Reflection Cards on a table.' },
+    { key: 'gs-hero', caption: 'The hallway', alt: 'The Groundswell Garden and the Restorative Pod in the hallway.' },
+    { key: 'gs-artwall-detail-01', caption: 'The art wall', alt: 'Writing a response to one of the guided prompts at the art wall.' },
+    { key: 'gs-pod-detail-01', caption: 'The pod', alt: 'Two staff members at the table inside the Restorative Pod.' },
+    { key: 'gs-cards', caption: 'The cards', alt: 'Hands sorting the Groundswell Reflection Cards on a table.' },
   ],
 
   meta: [

@@ -65,13 +65,13 @@ function FitPair({ title, tagline, titleId }) {
   )
 }
 
-function Pile({ prints }) {
+function Pile({ prints, style = 'prints' }) {
   const items = prints.map((p) => ({ ...p, src: sheetImg(p.key, 1400) })).filter((p) => p.src)
   const [order, setOrder] = useState(() => items.map((_, i) => i))
   const next = () => setOrder((o) => [...o.slice(1), o[0]])
   if (!items.length) return null
   return (
-    <div className={styles.pile}>
+    <div className={`${styles.pile} ${style === 'polaroid' ? styles.polaroids : ''}`}>
       {items.map((p, i) => {
         const depth = order.indexOf(i)
         return (
@@ -81,7 +81,14 @@ function Pile({ prints }) {
             aria-hidden={depth === 0 ? undefined : true}
             onClick={next}
             aria-label={`${p.alt} Photo ${i + 1} of ${items.length}. Show the next photo.`}>
-            <img src={p.src} alt="" />
+            {style === 'polaroid' ? (
+              <span className={styles.polaroidFrame}>
+                <img src={p.src} alt="" />
+                {p.caption && <span className={styles.polaroidCaption}>{p.caption}</span>}
+              </span>
+            ) : (
+              <img src={p.src} alt="" />
+            )}
           </button>
         )
       })}
@@ -89,24 +96,59 @@ function Pile({ prints }) {
   )
 }
 
+/* LAB (FS69, FS70): ?coverlab on the page URL shows a switcher for the
+   paper (loose-leaf / tech) and the pile (prints / polaroids). The shipped
+   defaults are loose-leaf and prints until she picks. */
+function useCoverLab() {
+  const [lab, setLab] = useState(false)
+  const [paperStyle, setPaperStyle] = useState('leaf')
+  const [pileStyle, setPileStyle] = useState('prints')
+  useEffect(() => {
+    if (new URLSearchParams(window.location.search).has('coverlab')) setLab(true)
+  }, [])
+  return { lab, paperStyle, setPaperStyle, pileStyle, setPileStyle }
+}
+
+function LabSwitch({ paperStyle, setPaperStyle, pileStyle, setPileStyle }) {
+  const group = (label, value, set, opts) => (
+    <div className={styles.labGroup} role="radiogroup" aria-label={label}>
+      <span className={styles.labLabel}>{label}</span>
+      {opts.map(([v, l]) => (
+        <button key={v} type="button" role="radio" aria-checked={value === v}
+          className={styles.labBtn} onClick={() => set(v)}>{l}</button>
+      ))}
+    </div>
+  )
+  return (
+    <div className={styles.lab}>
+      {group('Paper', paperStyle, setPaperStyle, [['leaf', 'Loose-leaf'], ['tech', 'Tech']])}
+      {group('Pile', pileStyle, setPileStyle, [['prints', 'Prints'], ['polaroid', 'Polaroids']])}
+    </div>
+  )
+}
+
 export default function SheetCover({ sheet, num, title, tagline, titleId }) {
   const meta = sheet.meta || []
+  const labState = useCoverLab()
+  const { lab, paperStyle, pileStyle } = labState
   return (
     <header className={styles.cover} data-reveal="0">
       <div className={styles.text}>
         <span className={styles.num}>{num}</span>
         <FitPair title={title} tagline={tagline} titleId={titleId} />
         <div className={styles.sheet}>
-          <div className={paper.paper}>
+          <div className={paperStyle === 'tech' ? `${paper.paper} ${paper.tech}` : paper.paper}>
             <span className={paper.holes} aria-hidden="true"><i /><i /><i /></span>
+            {paperStyle === 'tech' && <span className={paper.marks} aria-hidden="true"><i /><i /><i /><i /></span>}
             {/* The longer facts where the column can carry them; the short
                 ones where it is narrow. */}
-            <Facts meta={sheet.metaLong || meta} className={`${styles.facts} ${styles.factsLong}`} />
-            <Facts meta={meta} className={`${styles.facts} ${styles.factsShort}`} />
+            <Facts meta={sheet.metaLong || meta} className={`${styles.facts} ${styles.factsLong} ${paperStyle === 'tech' ? styles.techFacts : ''}`} />
+            <Facts meta={meta} className={`${styles.facts} ${styles.factsShort} ${paperStyle === 'tech' ? styles.techFacts : ''}`} />
           </div>
         </div>
       </div>
-      {sheet.prints?.length > 0 && <Pile prints={sheet.prints} />}
+      {sheet.prints?.length > 0 && <Pile prints={sheet.prints} style={pileStyle} />}
+      {lab && <LabSwitch {...labState} />}
     </header>
   )
 }
