@@ -144,6 +144,9 @@ lab route, she points, the winner becomes law — not a fifth solo swing.
 | FS124 | "Are the page brak lines using the site color gradient? If not, they should!" | ✅ ANSWERED no, and SHIPPED: every page-break rule in the folder (under the hero, above each component, above the close, the colophon, the featured row) now carries the flower logo’s gradient: #C5CFA6 → #C7AAD1 → #F79C7E in the dark theme, #8A9263 → #9F84A9 → #C97D64 in the light theme. The Confidential pill keeps its plain border |
 | FS125 | "In paper put context at the top of the list" | ✅ SHIPPED: Context is first on the sheet, then Role, Collaborators, Tools Used, Timeline |
 | FS126 | "On polaroid change \"the hallway\" to \"The Installation\"" | ✅ SHIPPED: the first polaroid’s caption reads “The Installation” |
+| FS127 | "I am not happy with the featured in section, on first glance you cannot tell these are publicity and the type is set weird inside the frame, these could instead take the shape of smaller cards or polaroids or somehow be more clear that this is featured more strongly?" (2026-09-30) | ⏳ OPEN |
+| FS128 | "The team section needs better layout, make it 3 columns and add one about funding (search copy within project for that info)" | ⏳ OPEN |
+| FS129 | "We could also make the what changed, my role in full, aand biggest lesson into 3 columns, perhaps make them stand out even more as glass cards or mini papers?" | ⏳ OPEN |
 
 ### ⟢ OPEN NOTES LEDGER — Folder sheet (2026-09-06, her verdict on the rebuilt sheet)
 
