@@ -171,8 +171,7 @@
 
 .mineBody {
   display: block;
-  font-family: var(--font-heading);
-  font-style: italic;
+  font-family: var(--font-body);   /* regular body text (FS135) */
   font-size: var(--step-small);
   line-height: var(--line);
   text-wrap: pretty;

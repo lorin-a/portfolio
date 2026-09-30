@@ -170,7 +170,12 @@ export const groundswell = {
       },
       name: 'Groundswell Garden Community Art Wall',
       body: 'The Groundswell Garden is a community art wall where the emotional realities of oncology work can be witnessed, shared, and honored. Through guided prompts that explore the complex spectrum of grief, healthcare staff and the broader community anonymously contribute messages of support, creating a living tapestry of human stories at the heart of cancer care.',
-      mine: 'I led the brand research and copywriting, including the guided prompts.',
+      /* Her copy 2026-09-30 (FS134). Copy edits: a comma before “although”;
+         “hand-written” → handwritten. Original: "I led brand copywriting
+         although the language came from the research and collaborations. I
+         worked with Claude Code to translate hand-written data collected by
+         research assistants into the interactive dashboard." */
+      mine: 'I led brand copywriting, although the language came from the research and collaborations. I worked with Claude Code to translate handwritten data collected by research assistants into the interactive dashboard.',
     },
     {
       key: 'pod',
