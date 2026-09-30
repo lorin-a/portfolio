@@ -216,19 +216,28 @@ export default function SheetContent({ sheet, num, title, tagline, titleId }) {
         </section>
       )}
 
-      {(frame.partners || credit || credits.length > 0) && (
-        <div className={styles.colophon}>
-          {credits.length > 0 && (
-            <dl className={styles.credits}>
-              {credits.map(([k, v]) => (
-                <div key={k}><dt>{k}</dt><dd>{v}</dd></div>
-              ))}
-            </dl>
-          )}
-          {frame.partners && <p className={styles.partners}>{frame.partners}</p>}
-          {credit && <p className={styles.credit}>{credit}</p>}
-        </div>
-      )}
+      {/* THE TEAM (FS155): exactly three columns. The photography credit
+          joins the design team's column and the partners line the clinical
+          team's; funding stands alone. */}
+      {credits.length > 0 && (() => {
+        const find = (label) => credits.find(([k]) => k === label)
+        const columns = [
+          [find('Design Team'), credit && ['Photography', credit.replace(/^Photography by\s*/i, '').replace(/\.$/, '')]],
+          [find('Clinical Team'), frame.partners && ['Partners', frame.partners]],
+          [find('Funding')],
+        ].map((col) => col.filter(Boolean)).filter((col) => col.length)
+        return (
+          <div className={styles.colophon}>
+            {columns.map((col) => (
+              <dl key={col[0][0]} className={styles.creditCol}>
+                {col.map(([k, v]) => (
+                  <div key={k}><dt>{k}</dt><dd>{v}</dd></div>
+                ))}
+              </dl>
+            ))}
+          </div>
+        )
+      })()}
 
       {lightboxAt >= 0 && images[lightboxAt] && (
         <Lightbox

@@ -427,6 +427,7 @@ function CardStage({ emotions }) {
         })}
       </div>
       <div className={styles.fanBar}>
+        <span className={styles.kitTitle}>The reflection cards</span>
         <p className={styles.fanCaption} aria-live="polite">
           <span className={styles.counter}>
             {String(at + 1).padStart(2, '0')}<span aria-hidden="true"> / </span>

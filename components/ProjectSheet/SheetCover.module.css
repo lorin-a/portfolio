@@ -491,7 +491,7 @@
 
 @media (hover: hover) {
   .polaroids .print:not([data-front]):hover .brandFrame {
-    transform: translateY(-10px) rotate(-1deg) scale(1.02);
+    transform: translateY(-10px) rotate(var(--tilt, 0deg)) scale(1.02);
     box-shadow:
       inset 0 0 0 1px rgba(244, 241, 236, 0.3),
       0 30px 56px rgba(0, 0, 0, 0.5);
@@ -506,14 +506,20 @@
   }
 }
 
-@keyframes liftOut {
-  0% { transform: scale(1); }
-  35% { transform: translateY(-9%) scale(1.09) rotate(-3deg); }
-  100% { transform: scale(1); }
+/* FS153: the pick-up, played on the print's frame while its place in the
+   pile stays put; the set-down angle is the frame's --tilt. */
+@keyframes pickUp {
+  0% { transform: rotate(var(--tilt-from, 0deg)) scale(1); }
+  40% { transform: translateY(-7%) rotate(0deg) scale(1.08); }
+  100% { transform: rotate(var(--tilt)) scale(1); }
+}
+
+.polaroids .print .brandFrame {
+  transform: rotate(var(--tilt, 0deg));
 }
 
 .polaroids .print[data-lifting] .brandFrame {
-  animation: liftOut 700ms cubic-bezier(0.3, 0.8, 0.3, 1);
+  animation: pickUp 760ms cubic-bezier(0.3, 0.75, 0.25, 1);
   box-shadow:
     inset 0 0 0 1px rgba(244, 241, 236, 0.3),
     0 40px 70px rgba(0, 0, 0, 0.55);

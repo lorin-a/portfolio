@@ -268,61 +268,36 @@
   line-height: 1.55;
 }
 
-/* ══ COLOPHON ═════════════════════════════════════════════════════════ */
+/* ══ THE TEAM — three columns (FS155) ═══════════════════════════════ */
 
 .colophon {
   display: grid;
-  grid-template-columns: 1fr;
-  gap: var(--flow-1);
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--flow-3) var(--gap-col);
   margin-top: var(--hero-gap);
   padding-top: var(--hero-gap);
   border-top: 1px solid var(--sheet-hair);
   border-image: var(--rule-grad) 1;
 }
 
-@media (min-width: 1000px) {
+@media (min-width: 900px) {
   .colophon {
     grid-template-columns: var(--grid);
-    column-gap: var(--gap-col);
   }
 
-  .credit {
-    grid-column: 1 / span 4;
-    grid-row: 1;
-  }
-
-  .partners {
-    grid-column: 5 / span 8;
+  .creditCol {
+    grid-column: span 4;
   }
 }
 
-.partners {
-  max-width: 80ch;
-  margin: 0;
-  font-family: var(--font-body);
-  font-size: var(--step-small);
-  line-height: 1.6;
-  color: var(--color-ink);
-  text-wrap: pretty;
-}
-
-.credit {
-  margin: 0;
-  font-family: var(--font-heading);
-  font-style: italic;
-  font-size: var(--step-small);
-  line-height: 1.6;
-  color: var(--color-ink);
-}
-
-/* The named credits, first in the colophon (FS99). */
-.credits {
+.creditCol {
   display: grid;
-  gap: var(--flow-1);
-  margin: 0 0 var(--flow-1);
+  align-content: start;
+  gap: var(--flow-2);
+  margin: 0;
 }
 
-.credits dt {
+.creditCol dt {
   margin: 0 0 0.25rem;
   font-family: var(--font-body);
   font-size: var(--step-label);
@@ -332,34 +307,13 @@
   color: var(--color-sage);
 }
 
-.credits dd {
+.creditCol dd {
   margin: 0;
   font-family: var(--font-body);
   font-size: var(--step-small);
   line-height: 1.6;
   color: var(--color-ink);
   text-wrap: pretty;
-}
-
-@media (min-width: 1000px) {
-  .credits {
-    grid-column: 1 / -1;
-    grid-template-columns: var(--grid);
-    column-gap: var(--gap-col);
-  }
-
-  .credits > div {
-    grid-column: span 4;   /* Design Team · Clinical Team · Funding (FS128) */
-  }
-
-  .credits {
-    grid-row: 1;
-  }
-
-  .colophon:has(.credits) .credit,
-  .colophon:has(.credits) .partners {
-    grid-row: 2;
-  }
 }
 
 /* ══ BEHIND THE SCENES — research and production (FS131) ══════════════ */

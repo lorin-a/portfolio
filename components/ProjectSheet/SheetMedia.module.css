@@ -654,10 +654,26 @@
   padding: 1.2%;
 }
 
-.kitBar {
+/* Both footers (FS154): a title at the top, then the content centred in
+   whatever height the frame has, so the pair match and neither leaves a
+   gap at the bottom. */
+.kitBar,
+.fanBar {
   display: grid;
-  gap: 0.75rem;
-  padding: 0.75rem 0.25rem 1rem;
+  flex: 1;
+  align-content: center;
+  gap: 0.875rem;
+  padding: 1rem 0.25rem 1.25rem;
+  text-align: center;
+}
+
+.kitBar .barsCredit {
+  text-align: center;
+}
+
+/* the player reads left to right beside its play button */
+.kitBar .audioBar {
+  text-align: left;
 }
 
 .kitTitle {
@@ -829,11 +845,7 @@
 
 /* the footer, centred */
 .fanBar {
-  display: grid;
   justify-items: center;
-  gap: 0.75rem;
-  padding: 0.875rem 0.25rem 1.125rem;
-  text-align: center;
 }
 
 .fanCaption {
