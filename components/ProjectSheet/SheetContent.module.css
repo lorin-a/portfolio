@@ -356,3 +356,52 @@
     grid-row: 2;
   }
 }
+
+/* ══ BEHIND THE SCENES — research and production (FS131) ══════════════ */
+
+.process {
+  margin-top: var(--flow-4);
+  padding-top: var(--hero-gap);
+  border-top: var(--rule);
+  border-image: var(--rule-grad) 1;
+}
+
+.processTitle {
+  margin: 0 0 var(--flow-3);
+  font-family: var(--font-heading);
+  font-size: var(--step-heading);
+  font-weight: 400;
+  line-height: 1.12;
+  color: var(--color-ink);
+}
+
+.processRow {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--flow-3) var(--gap-col);
+}
+
+@media (min-width: 900px) {
+  .processRow {
+    grid-template-columns: var(--grid);
+  }
+
+  .phase {
+    grid-column: span 6;
+  }
+}
+
+.phase {
+  min-width: 0;
+}
+
+.phaseLabel {
+  display: block;
+  margin-bottom: var(--flow-1);
+  font-family: var(--font-body);
+  font-size: var(--step-label);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-sage);
+}

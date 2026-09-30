@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from 'react'
 import Lightbox from '@/components/Lightbox/Lightbox'
-import { SheetStage, SheetCardGallery, SheetFilmstrip, slidesFor, sheetImg } from './SheetMedia'
+import { SheetStage, SheetCardGallery, slidesFor, sheetImg } from './SheetMedia'
 import SheetCover from './SheetCover'
 import styles from './SheetContent.module.css'
 import paper from './Paper.module.css'
@@ -61,7 +61,7 @@ function useSheetReveal(rootRef) {
  * Gated media never enters the gallery.
  */
 export default function SheetContent({ sheet, num, title, tagline, titleId }) {
-  const { outcome, meta = [], frame = {}, components = [], close = {}, bts, credit, credits = [] } = sheet
+  const { outcome, meta = [], frame = {}, components = [], close = {}, process = [], processTitle, credit, credits = [] } = sheet
 
   /* The folder's images, flat and in reading order, for the overlay. */
   const images = useMemo(() => {
@@ -74,9 +74,9 @@ export default function SheetContent({ sheet, num, title, tagline, titleId }) {
       if (c.gated) return
       slidesFor(c.media).forEach((sl) => { if (sl.type === 'image') push(sl.key, sl.alt) })
     })
-    bts?.images?.forEach((i) => push(i.key, i.alt))
+    process.forEach((ph) => ph.images.forEach((i) => push(i.key, i.alt)))
     return list
-  }, [components, bts])
+  }, [components, process])
 
   const [lightboxAt, setLightboxAt] = useState(-1)
 
@@ -195,7 +195,22 @@ export default function SheetContent({ sheet, num, title, tagline, titleId }) {
         )}
       </section>
 
-      {bts && <SheetFilmstrip bts={bts} onImage={openImage} />}
+      {/* BEHIND THE SCENES (FS131): two framed galleries, research and
+          production, side by side on 6 | 6. */}
+      {process.length > 0 && (
+        <section className={styles.process} data-reveal="0">
+          <h3 className={styles.processTitle}>{processTitle || 'Behind the scenes'}</h3>
+          <div className={styles.processRow}>
+            {process.map((ph) => (
+              <div key={ph.title} className={styles.phase}>
+                <span className={styles.phaseLabel}>{ph.title}</span>
+                <SheetStage slides={slidesFor({ stills: ph.images })}
+                  onImage={openImage} label={`${ph.title} gallery`} />
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
 
       {(frame.partners || credit || credits.length > 0) && (
         <div className={styles.colophon}>

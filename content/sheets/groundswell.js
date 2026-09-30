@@ -268,25 +268,40 @@ export const groundswell = {
     },
   ],
 
-  /* Her note 2026-09-06: "cute team photos and BTS at the bottom… a little
-     5-10 image gallery." Curated from the making / playtest / workshop /
-     finale sets for people and warmth — swap keys freely (the full menu is
-     GS_IMAGES in lib/cloudinary.js). Title and alts are furniture, hers to
-     rewrite in the copy pass. */
-  bts: {
-    title: 'Behind the scenes',
-    /* Chronological: making → playtests → workshops → the finale. */
-    images: [
-      { key: 'gs-making-build-01',     alt: 'A teammate celebrates beside the pod mid-build.' },
-      { key: 'gs-making-build-04',     alt: 'The team lays out a printed mural panel.' },
-      { key: 'gs-making-install-01',   alt: 'Installing the pod’s painted facade.' },
-      { key: 'gs-playtest-01',         alt: 'Setting up the playtest table.' },
-      { key: 'gs-playtest-03',         alt: 'A staff member smiles beside the pod during playtesting.' },
-      { key: 'gs-workshop-flower-01',  alt: 'Making paper flowers at the workshop table.' },
-      { key: 'gs-workshop-coats-01',   alt: 'Two teammates with a basket of paper flowers.' },
-      { key: 'gs-finale',              alt: 'A hug in front of the art wall at the finale.' },
-    ],
-  },
+  /* BEHIND THE SCENES, in two phases (FS131): research, then production.
+     Photos chosen and sorted by what each shows; captions are furniture
+     (described from the photos), hers to rewrite. */
+  process: [
+    {
+      title: 'Research',
+      images: [
+        { key: 'gs-sense-affinity-01', alt: 'Affinity mapping interview findings on the wall.' },
+        { key: 'gs-context-03',        alt: 'Reviewing research boards with partners.' },
+        { key: 'gs-sense-affinity-02', alt: 'The team talking through the synthesis wall.' },
+        { key: 'gs-sense-affinity-03', alt: 'Mapping the tetrahedron analysis.' },
+        { key: 'gs-workshop-grief-01', alt: 'The grief workshop with oncology staff.' },
+        { key: 'gs-workshop-grief-02', alt: 'Staff working through prompts at the grief workshop.' },
+        { key: 'gs-workshop-flower-01', alt: 'The flower workshop at the table.' },
+        { key: 'gs-workshop-flower-02', alt: 'A completed “Nourishing the Flower” worksheet.' },
+      ],
+    },
+    {
+      title: 'Production',
+      images: [
+        { key: 'gs-making-prototype-01', alt: 'Early prototypes of the finger labyrinths and reflection cards.' },
+        { key: 'gs-making-mockup-01',    alt: 'Design options for the pod’s painted facade.' },
+        { key: 'gs-making-figma-01',     alt: 'Laying out the art wall’s pieces and signage in Figma.' },
+        { key: 'gs-making-build-04',     alt: 'Laying out a printed mural panel.' },
+        { key: 'gs-making-build-05',     alt: 'Fitting the facade panels.' },
+        { key: 'gs-making-build-02',     alt: 'Assembling the pod’s interior.' },
+        { key: 'gs-making-install-01',   alt: 'Installing the pod in the hallway.' },
+        { key: 'gs-playtest-03',         alt: 'Playtesting the pod with staff.' },
+        { key: 'gs-finale',              alt: 'A hug in front of the art wall at the finale.' },
+      ],
+    },
+  ],
+  processTitle: 'Behind the scenes',
+
 
   /* Her note 2026-09-06: "We need to credit Kevin Lorenzi photography."
      Rendered at the foot of the close, beside the partners line. Exact
