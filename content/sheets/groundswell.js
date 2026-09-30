@@ -201,7 +201,9 @@ export const groundswell = {
          that built the pod: the pod structure, finger labyrinths, wood
          working, Schlage locks, density sensor hardware and software, and a
          meditation teacher to co-write and record the custom meditations." */
-      mine: 'I secured over $40k value in donations and partnerships that built the pod: the pod structure, finger labyrinths, woodworking, Schlage locks, Density sensor hardware and software, and a meditation teacher to co-write and record the custom meditations.',
+      /* FS138: “over $40k value in donations” → material and service
+         donations (no money changed hands). */
+      mine: 'I secured material and service donations and partnerships that built the pod: the pod structure, finger labyrinths, woodworking, Schlage locks, Density sensor hardware and software, and a meditation teacher to co-write and record the custom meditations.',
     },
     {
       key: 'library',
