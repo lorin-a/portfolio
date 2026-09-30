@@ -102,8 +102,17 @@ export const groundswell = {
     short: {
       why:
         'Groundswell is a 9-month pilot program designed to support the emotional well-being of UPMC Magee-Womens Cancer Services staff by introducing resources that honor the emotional complexities of oncology care.',
+      /* Her copy 2026-09-30 (FS104). Copy edits, hers to reverse: “self care”
+         → self-care; “wellbeing” → well-being (the site's spelling);
+         “neglected from” → neglected in; lowercase after the second colon;
+         a serial comma before the last item. Her original, verbatim:
+         "Interviews and generative workshops with staff across roles
+         revealed the core thesis: care worker wellbeing is neglected from
+         patient care standards. This is a culture change problem: Staff
+         need tangible and emotional support, permission to perform self
+         care and acknowledgement of the difficulty of the work." */
       research:
-        'Interviews across roles, from front desk to chemo nurse, synthesized into one thesis: care worker wellbeing is neglected from patient care standards. Staff need permission and acknowledgement.',
+        'Interviews and generative workshops with staff across roles revealed the core thesis: care worker well-being is neglected in patient care standards. This is a culture change problem: staff need tangible and emotional support, permission to perform self-care, and acknowledgement of the difficulty of the work.',
     },
 
     /* Her copy 2026-08-27, verbatim. */

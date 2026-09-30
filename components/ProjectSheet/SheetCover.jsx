@@ -115,7 +115,7 @@ export default function SheetCover({ sheet, num, title, tagline, titleId }) {
             {/* The heading sits in the sheet's unruled top margin; the rules
                 begin beneath it. */}
             <div className={styles.paperHead}>
-              <span className={styles.num}>{num}</span>
+              {/* No folio number on the cover (FS103). */}
               <FitPair title={title} tagline={tagline} titleId={titleId} />
             </div>
             <div className={paper.ruled}>
