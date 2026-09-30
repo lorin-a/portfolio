@@ -720,7 +720,8 @@
   }
 
   .inner {
-    padding-top: 2rem;
+    /* room for the close button above the first thing on the sheet */
+    padding-top: 5rem;
   }
 }
 
