@@ -149,16 +149,20 @@
    Tilts are uneven in size and direction, with small uneven offsets, so it
    reads as dropped rather than arranged. Hover lets each drift a little. */
 
+/* All prints share one grid cell, centred, so the pile always sits on
+   the middle of the text column beside it (FS77), whatever its size. The
+   padding leaves room for each print's offset and tilt. */
 .pile {
   position: relative;
-  align-self: start;
-  aspect-ratio: 16 / 10;
+  display: grid;
+  place-items: center;
+  align-self: center;
+  padding-block: 6%;
 }
 
 .print {
-  position: absolute;
-  top: 12%;
-  left: 10%;
+  position: relative;
+  grid-area: 1 / 1;
   width: 77%;
   aspect-ratio: 3 / 2;
   padding: 0;
@@ -220,9 +224,7 @@
    Corners are the film's own, barely rounded. */
 
 .polaroids .print {
-  top: 3%;
-  left: 27%;
-  width: 41%;
+  width: 50%;
   aspect-ratio: auto;
   background: none;
   box-shadow: none;
@@ -290,8 +292,8 @@
 
 @media (hover: hover) {
   .polaroids:hover .print[data-depth='0'] { transform: translate(0, -2%) rotate(-1deg); }
-  .polaroids:hover .print[data-depth='1'] { transform: translate(52%, -4%) rotate(6deg); }
-  .polaroids:hover .print[data-depth='2'] { transform: translate(-54%, 7%) rotate(-7.5deg); }
+  .polaroids:hover .print[data-depth='1'] { transform: translate(46%, -4%) rotate(6deg); }
+  .polaroids:hover .print[data-depth='2'] { transform: translate(-48%, 7%) rotate(-7.5deg); }
   .polaroids:hover .print[data-depth='3'] { transform: translate(30%, 12%) rotate(4deg); }
 }
 
