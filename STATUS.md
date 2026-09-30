@@ -31,6 +31,23 @@ lab route, she points, the winner becomes law — not a fifth solo swing.
 - Safety: private mirror `lorin-a/portfolio-private` holds all branches + the bundle at
   `~/portfolio-backups/`.
 
+### ⟢ OPEN NOTES LEDGER — Folder sheet, round three (2026-09-30, her verdict on the priority pass)
+
+> **"OKay I am very pleased thus far."** Visual round only: **"I will not edit copy in this round just visual."**
+
+| # | Note (her words) | Status |
+|---|---|---|
+| FS20 | "Depending on what is needed for mobile, I would prefer to see the Groundswell folder lip/title tab on the left like an actual manila folder" | ⏳ OPEN |
+| FS21 | "the close symbol inside of the folder frame rather than on top of it" | ⏳ OPEN |
+| FS22 | "I will not edit copy in this round just visual" | 📌 CONSTRAINT — no copy touched this round |
+| FS23 | "I feel that the rounded edge images look novice and naieve. I want a more sophisticated image set up" | ⏳ OPEN |
+| FS24 | "I think it would look more sophisticated to show some kind of click gallery of images in their full size within the gallery box rather than a bento box style of different sized images and such" | ⏳ OPEN |
+| FS25 | "I love the flip cards" | ✅ KEEP — untouched |
+| FS26 | "The poem is almost there but needs a more inviting and eye catching interaction, it currently looks like a line easy to miss, not asking the user to click--its a huge feature of the project and should take up space as such" | ⏳ OPEN |
+| FS27 | "A lot of the text is left aligned and it makes the page look empty on the right side and makes it elongated unnecessarily, is there a 2 column set up or alternative that looks better?" | ⏳ OPEN |
+| FS28 | "The bottom gallery also needs to be something more sophisticated" | ⏳ OPEN |
+| FS29 | "why must everything be so centered with tons of space on the left and right? Should we go for a more full width layout inside of the folder? Its looking a little like mobile-first and I would rather design for desktop first and make sure mobile looks clean" | ⏳ OPEN |
+
 ### ⟢ OPEN NOTES LEDGER — Folder sheet (2026-09-06, her verdict on the rebuilt sheet)
 
 > **"I am VERY happy with this draft. I think it can be tightened up but overall very nice
