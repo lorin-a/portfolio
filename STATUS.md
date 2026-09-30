@@ -129,6 +129,12 @@ lab route, she points, the winner becomes law — not a fifth solo swing.
 | FS109 | "on the hero paper add more padding to the right of the line/left of the text" (2026-09-30) | ✅ SHIPPED: the text on the cover sheet starts 24px further from the margin line (68px from the sheet’s edge, was 44px + 12px) |
 | FS110 | "one role: move donor down to next line. On collaborators: move Hospital down to next line" | ✅ SHIPPED as her line breaks: Role breaks before “Donor Relations”, Collaborators before “Hospital Staff”. Each title and group is kept whole (non-breaking spaces), so lines only ever break between items; date ranges likewise never split on phones |
 | FS111 | "on timeline: bold pre-colon text" | ✅ SHIPPED: “Research:”, “Production:” and “Study Period:” set in semibold; any “Label: value” line in a fact does the same |
+| FS112 | "reshufle the layout of the polaroids so that each are equally covered/stacked" (2026-09-30) | ⏳ OPEN |
+| FS113 | "and then copy edit the 3 column text below so each are the same number of lines" | ⏳ OPEN |
+| FS114 | "Change hero paper context to: \"A pilot program designed imrpove hospital culture and support emotional well-being of Cancer Services staff.\"" | ⏳ OPEN |
+| FS115 | "Ensure \"close\" button is always on top of content (currently polaroids are on top when scrolling)" | ⏳ OPEN |
+| FS116 | "I should not state explicit study outcomes in order to not disqualify it from any paper submissions -- how can we rewrite the outcome?" (2026-09-30) | ⏳ OPEN |
+| FS117 | "I don't like the polaroids as one horizontal line they should still be a pile shape just more evenly distributed" | ⏳ OPEN |
 
 ### ⟢ OPEN NOTES LEDGER — Folder sheet (2026-09-06, her verdict on the rebuilt sheet)
 

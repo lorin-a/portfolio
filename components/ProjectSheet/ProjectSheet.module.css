@@ -181,6 +181,10 @@
 
 .body {
   position: absolute;
+  /* its own stacking layer, below the close button (z 4): nothing inside
+     the sheet, however high its own z-index, can rise over the close
+     (FS115) */
+  z-index: 1;
   left: 0;
   right: 0;
   bottom: 0;

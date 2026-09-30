@@ -25,7 +25,12 @@ export const groundswell = {
      indicating a core problem around institutional trust and support from
      administration." */
   outcome:
-    'Participation: 429 uses of the art wall, 1,423 minutes spent inside the pod, 176 meditation listens, 117 survey responses. All scales aside from perceived support from leadership improved throughout the study, indicating a core problem around institutional trust and support from administration.',
+    /* FS113 trim: “spent inside” → in; “All scales aside from perceived
+     support from leadership improved throughout the study, indicating a core
+     problem around institutional trust and support from administration” →
+     “Every scale but perceived leadership support improved, pointing to a
+     core problem of institutional trust and support”. */
+    'Participation: 429 uses of the art wall, 1,423 minutes in the pod, 176 meditation listens, 117 survey responses. Every scale but perceived leadership support improved, pointing to a core problem of institutional trust and support.',
 
   /* THE COVER'S PRINTS: four photographs in a loose pile beside the name
      (her notes FS57–FS67). Chosen for range across the project: the place,
@@ -74,7 +79,10 @@ export const groundswell = {
     ['Collaborators', ['Designers, Fabricators\u00a0&\u00a0Engineers,', 'Hospital\u00a0Staff, Hospital\u00a0Administration, Subject\u00a0Matter\u00a0Experts, Donors']],  /* her line break (FS110); each group kept whole */
     ['Tools Used', 'Adobe Creative Suite, Figma, Claude Code'],
     ['Timeline', ['Research: Jan\u2060–\u2060May\u00a02025', 'Production: June\u2060–\u2060October\u00a02025', 'Study Period: October\u00a02025\u2060–\u2060June\u00a02026']],  /* ranges kept whole (word joiners) */
-    ['Context', 'A 9-month pilot program designed to support the emotional well-being of UPMC Magee-Womens Cancer Services staff.'],
+    /* Context: her copy FS114, with edits (added “to” and “the”, fixed
+       “imrpove”). Original: "A pilot program designed imrpove hospital
+       culture and support emotional well-being of Cancer Services staff." */
+    ['Context', 'A pilot program designed to improve hospital culture and support the emotional well-being of Cancer Services staff.'],
   ],
 
   /* The named credits, at the foot of the sheet (FS99): her team lines from
@@ -120,7 +128,10 @@ export const groundswell = {
          need tangible and emotional support, permission to perform self
          care and acknowledgement of the difficulty of the work." */
       research:
-        'Interviews and generative workshops with staff across roles revealed the core thesis: care worker well-being is neglected in patient care standards. Staff need tangible and emotional support, permission to perform self-care, and acknowledgement of the difficulty of the work.',
+        /* FS113 trim to match the project column's line count: “with staff” →
+         cut; “to perform” → for; “of the difficulty of the work” → of the
+         work’s difficulty. */
+        'Interviews and generative workshops across roles revealed the core thesis: care worker well-being is neglected in patient care standards. Staff need tangible and emotional support, permission for self-care, and acknowledgement of the work’s difficulty.',
     },
 
     /* Her copy 2026-08-27, verbatim. */
