@@ -76,7 +76,7 @@
 
 .folderTabText {
   font-family: var(--font-body);
-  font-size: 0.8125rem;
+  font-size: 0.875rem; /* = --step-label; the tab sits outside .inner */
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -204,18 +204,23 @@
   padding: 5.5rem var(--gutter) 6rem;
 
   /* ══ THE SHEET SYSTEM ═══════════════════════════════════════════════
-     Type steps, one page proportion, one rule, one label recipe, four
-     rhythm values. Everything in the sheet maps to these; no component
-     invents its own value. Inherited by SheetContent + SheetMedia. */
-  --step-label: 0.875rem;                         /* every label + folio   */
-  --step-small: 0.9375rem;                        /* rail prose, captions  */
-  --step-body: 1.0625rem;                         /* long-form prose       */
-  --step-statement: clamp(1.375rem, 1.7vw, 1.625rem); /* the lesson, poem   */
-  --step-heading: clamp(1.625rem, 2.2vw, 2.125rem);  /* component names    */
-  --step-headline: clamp(1.875rem, 3.2vw, 3rem);  /* the outcome           */
-  --step-display: clamp(3rem, 6vw, 5.5rem);       /* the cover title       */
-  --rail: minmax(17rem, 1fr);                     /* the text rail  ≈ 25%  */
-  --work: 3fr;                                    /* the work column ≈ 75% */
+     One grid, one type scale, one rule, one label recipe, four rhythm
+     values. Scoped to the sheet: nothing here reaches the rest of the
+     site. Inherited by SheetContent + SheetMedia.
+
+     TYPE SCALE (2026-09-30, FS38/FS39) — six steps, each about 1.25× the
+     last, each with one job:
+       label 14 · small 16 · body 19 · statement 24 · heading 32 · display 68
+     (sizes at 1440; body and up scale gently with the window). */
+  --step-label: 0.875rem;                               /* labels, folios, counters */
+  --step-small: 1rem;                                   /* captions, metadata, credits */
+  --step-body: clamp(1.0625rem, 0.875rem + 0.35vw, 1.1875rem); /* all prose */
+  --step-statement: clamp(1.375rem, 1.7vw, 1.625rem);   /* the frame row, the lesson, the poem */
+  --step-heading: clamp(1.625rem, 2.2vw, 2.125rem);     /* component names */
+  --step-display: clamp(2.75rem, 4.7vw, 5.5rem);        /* the cover title: fits one third */
+
+  /* THE GRID — twelve columns, one gutter. Sections span 4, 6, 8 or 12. */
+  --grid: repeat(12, minmax(0, 1fr));
   --gap-col: clamp(2rem, 3.5vw, 4rem);            /* column gutter         */
   --gap-media: 1rem;                              /* media rows            */
   --strip-h: clamp(15rem, 26vw, 24rem);           /* filmstrip height      */

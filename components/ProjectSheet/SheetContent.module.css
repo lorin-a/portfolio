@@ -1,13 +1,16 @@
 /* The folder sheet body, on THE SHEET SYSTEM (defined on .inner in
    ProjectSheet.module.css).
 
-   Round three (2026-09-30): desktop first, full width inside the folder.
-   Her brief: 80% visual, 20% copy. The page is built on one proportion,
-   a narrow text rail beside a wide work column (--rail / --work, about
-   1 : 3), and every component uses it the same way. Text never pairs with
-   text of a different length: where two text blocks do sit side by side,
-   each column is sized to its own word count so both end together.
-   Below 1000px everything stacks into one clean column. */
+   ONE GRID (2026-09-30, her notes FS37/FS40): twelve columns, one
+   gutter. The sections keep their own shapes; what they share is the
+   lines. Every span is a multiple of four or six:
+     · the frame row ............ 4 · 4 · 4
+     · cover, components, lesson,
+       colophon, poem band ...... 4 | 8  (the rail is exactly one third)
+     · the closing pair ......... 6 | 6
+   So the rail's right edge, the first third of the frame row, and the
+   poem's text column all fall on the same vertical line. Below 1000px
+   (900px for the two text rows) everything stacks into one column. */
 
 /* ── The one label recipe — every label on the sheet is this ─────── */
 
@@ -37,24 +40,32 @@
   margin-bottom: var(--flow-4);
 }
 
-/* The left column fits the title at full size (capped at 45%, longer
-   names wrap); the photo takes the rest of the row and crops to fit it. */
+/* Cover: facts in the rail (4), the photo across the work (8), cropped
+   to fill. The title's display size is set so the name fits one third. */
 @media (min-width: 1000px) {
   .cover {
-    grid-template-columns: fit-content(45%) 1fr;
+    grid-template-columns: var(--grid);
     column-gap: var(--gap-col);
     align-items: stretch;
   }
 
-  .coverSolo {
-    grid-template-columns: 1fr;
+  .coverText {
+    grid-column: span 4;
+  }
+
+  .coverMedia {
+    grid-column: span 8;
+  }
+
+  .coverSolo .coverText {
+    grid-column: 1 / -1;
   }
 }
 
 .coverText {
   display: flex;
   flex-direction: column;
-  min-width: 17rem;
+  min-width: 0;
 }
 
 .num {
@@ -102,14 +113,7 @@
   min-width: 0;
 }
 
-/* On the cover, only the title sets the column's width: the facts and
-   tagline wrap to whatever the title leaves them. */
-@media (min-width: 1000px) {
-  .meta,
-  .tagline {
-    contain: inline-size;
-  }
-}
+
 
 .meta dt {
   margin-bottom: 0.25rem;
@@ -175,8 +179,12 @@
 
 @media (min-width: 900px) {
   .frame {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: var(--grid);
     column-gap: var(--gap-col);
+  }
+
+  .frameBlock {
+    grid-column: span 4;
   }
 }
 
@@ -207,9 +215,17 @@
 
 @media (min-width: 1000px) {
   .component {
-    grid-template-columns: var(--rail) var(--work);
+    grid-template-columns: var(--grid);
     column-gap: var(--gap-col);
     row-gap: var(--flow-3);
+  }
+
+  .rail {
+    grid-column: span 4;
+  }
+
+  .work {
+    grid-column: span 8;
   }
 }
 
@@ -256,7 +272,7 @@
 .componentBody {
   margin: var(--flow-2) 0 0;
   font-family: var(--font-body);
-  font-size: var(--step-small);
+  font-size: var(--step-body);
   line-height: 1.65;
   color: var(--color-ink);
   text-wrap: pretty;
@@ -272,7 +288,7 @@
   display: block;
   font-family: var(--font-heading);
   font-style: italic;
-  font-size: var(--step-small);
+  font-size: var(--step-body);
   line-height: 1.55;
   color: var(--color-ink);
   text-wrap: pretty;
@@ -302,7 +318,7 @@
   border-top: var(--rule);
 }
 
-/* 112 words beside 108: equal columns. */
+/* 112 words beside 108: equal halves, 6 | 6 on the grid. */
 .closePair {
   display: grid;
   grid-template-columns: 1fr;
@@ -312,8 +328,12 @@
 
 @media (min-width: 900px) {
   .closePair {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: var(--grid);
     column-gap: var(--gap-col);
+  }
+
+  .closeBlock {
+    grid-column: span 6;
   }
 }
 
@@ -344,9 +364,17 @@
 
 @media (min-width: 1000px) {
   .lesson {
-    grid-template-columns: var(--rail) var(--work);
+    grid-template-columns: var(--grid);
     column-gap: var(--gap-col);
     align-items: baseline;
+  }
+
+  .lesson h3 {
+    grid-column: span 4;
+  }
+
+  .lesson p {
+    grid-column: span 8;
   }
 }
 
@@ -374,13 +402,17 @@
 
 @media (min-width: 1000px) {
   .colophon {
-    grid-template-columns: var(--rail) var(--work);
+    grid-template-columns: var(--grid);
     column-gap: var(--gap-col);
   }
 
   .credit {
-    grid-column: 1;
+    grid-column: 1 / span 4;
     grid-row: 1;
+  }
+
+  .partners {
+    grid-column: 5 / span 8;
   }
 }
 
