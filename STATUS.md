@@ -54,6 +54,9 @@ lab route, she points, the winner becomes law — not a fifth solo swing.
 | FS34 | "ensure all text is reaching accessibility requirements" | ✅ VERIFIED — scripted audit of every text element in the open sheet against its real background, at 1440 and 390: zero WCAG AA failures, lowest ratio 5.11:1 (the green labels; AA needs 4.5:1), no text under 14px, no control under 44×44px. Sizes are in rem, so browser text zoom scales everything |
 | FS35 | "I feel the subheads in green are too small. even just visually they look too small" | ✅ SHIPPED — every green label (and the folio, counters, card names, close) went from 12px to 14px, one step in the sheet system, so they stay consistent everywhere |
 | FS36 | "For the image resizing, I would rather adjust the image to fit inside the frame and keep text consistent" | ✅ SHIPPED — title back to its full cover size (86px at 1440). The cover’s left column now fits the title; the photo takes the rest of the row and crops to fill it, top on “01”, bottom on the last metadata line (0px off at 1024 / 1440 / 1920) |
+| FS37 | "Match the rest of the layout to the three columns so that there is a unified layout design system" (2026-09-30) | ⏳ OPEN |
+| FS38 | "Same for the type system right now there seem to be inconsistencies across different type styles" | ⏳ OPEN |
+| FS39 | "I like how big the 3 column text is but the body looks too small in comparison, can you adjust the body or does that mess with site-wide styles?" | ⏳ OPEN |
 
 ### ⟢ OPEN NOTES LEDGER — Folder sheet (2026-09-06, her verdict on the rebuilt sheet)
 
