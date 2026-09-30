@@ -1,26 +1,26 @@
 # Project Status
 
-## ▶ RESUME HERE (2026-09-06, session close)
+## ▶ RESUME HERE (2026-09-30, paused by Lorin)
 
-**What we're doing: THE FOLDER SHEET**, on `feat/folder-expand`. The one-tab folder is
-**settled — do not relitigate it.** This session worked her notes in four batches (full
-detail = the FS ledger below): **FS1–FS4** (page break, signed annotations, card pair,
-press credential), **FS6–FS16** (one rule weight, all-white text, overlay gallery paging
-all 14 images with focus return, Lorenzi credit, 3 cards, CTB corners root-caused, CFA
-article preview, the team gallery), then **four design passes** — finesse and bold and
-system were each rejected (FS17 "novice youth… D", FS19 "eyes do not know where to look"),
-and the **PRIORITY PASS** (`188677d`) is what now stands: THE SHEET SYSTEM as custom
-properties on `.inner` (six type steps · one split, now used only by image pairs · one
-label recipe · one 1px rule · four rhythm values), all prose in ONE reading column, the
-title alone on the cover, exactly two serif statement moments (The outcome · The biggest
-lesson). Read [[design-pass-bar]] in project memory before touching the design again.
+**What we're doing: THE GROUNDSWELL FOLDER SHEET**, on `feat/folder-expand` (pushed to
+the PRIVATE mirror `private`, not the public `origin`). Look at it: `npm run dev -- -p 3005`,
+scroll to Groundswell, **Open project** (hard-refresh). Ledger: FS20–FS144 below, all closed
+or answered.
 
-**Look at it first:** `npm run dev -- -p 3005`, scroll to Groundswell, click **Open
-project** (hard-refresh if the tab was already open).
+**Where it stands (shipped):** the cover is a glass loose-leaf sheet (name + tagline on it,
+facts on the rules: Context, Role titles, Collaborators, Tools, Timeline) beside an evenly
+distributed pile of four glass polaroids (click advances). Brand-glass material throughout
+(galleries as framed objects with built-in caption bars, “My Contribution” strips, close
+cards, press clippings). Gradient page-break rules, 64px either side. Library: two audio
+bars (poem, Coming Home to Yourself) under My Contribution; a full-width row of four flip
+cards around the plain phone recording. Behind the scenes = Research + Production galleries.
+Dashboard recordings lightly blurred; each component's gallery ends with its dashboard view.
 
-**⚠ AWAITING: her verdict on the priority pass.** If it still misses, the agreed next move
-is a VARIANT LAB (the N30 move): 3–4 genuinely different treatments of one component at a
-lab route, she points, the winner becomes law — not a fifth solo swing.
+**Open, hers to decide:** $30k vs $40k (role line + Funding credit); “fundraising” wording in
+My role, in full; the qualitative paragraph in “What changed” overlapping the outcome line;
+Context line vs “quality improvement study”; Su Hong & Mia Jeong in credits; a written OK
+from the meditation teachers; confirm with UPMC before any study data goes public; the
+provisional copy (outcome, dashboard contribution + role paragraph, funding, captions).
 
 ### Standing context (from 2026-08-27, still true)
 
