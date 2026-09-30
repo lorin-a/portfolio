@@ -17,20 +17,18 @@ export const groundswell = {
   /* The punchline, in the masthead, so the outcome lands on the first screen
      rather than after the evidence. Her copy 2026-08-27, trimmed of its
      "The findings demonstrated that" wind-up. */
-  /* Her copy 2026-09-30 (FS108). Copy edits, hers to reverse: “1423 minute
-     spend” → 1,423 minutes spent; thousands comma. Original, verbatim:
-     "Participation: 429 uses of the art wall, 1423 minute spend inside the
-     pod, 176 meditation listens, 117 survey responses. All scales aside
-     from perceived support from leadership improved throughout the study,
-     indicating a core problem around institutional trust and support from
-     administration." */
+  /* FS116: no explicit study outcomes (she is protecting eligibility for
+     paper submissions). The scale result AND the participation figures
+     (collected as study data) are removed. This line is PROVISIONAL,
+     assembled from her own words on how the program was received (close
+     .qualitative, rehearsal Q7 part 2): not a study finding. Her FS108
+     line, kept for the record: "Participation: 429 uses of the art wall,
+     1423 minute spend inside the pod, 176 meditation listens, 117 survey
+     responses. All scales aside from perceived support from leadership
+     improved throughout the study, indicating a core problem around
+     institutional trust and support from administration." */
   outcome:
-    /* FS113 trim: “spent inside” → in; “All scales aside from perceived
-     support from leadership improved throughout the study, indicating a core
-     problem around institutional trust and support from administration” →
-     “Every scale but perceived leadership support improved, pointing to a
-     core problem of institutional trust and support”. */
-    'Participation: 429 uses of the art wall, 1,423 minutes in the pod, 176 meditation listens, 117 survey responses. Every scale but perceived leadership support improved, pointing to a core problem of institutional trust and support.',
+    'Staff used every component throughout the pilot. Senior staff who began as skeptics shed tears at launch, donors committed to keep it running, coworkers walked a colleague in distress to the pod, and other departments expressed interest.',
 
   /* THE COVER'S PRINTS: four photographs in a loose pile beside the name
      (her notes FS57–FS67). Chosen for range across the project: the place,
@@ -284,8 +282,10 @@ export const groundswell = {
   close: {
     /* Her copy 2026-08-27 for the measures; rehearsal Q7 part 2 for the
        qualitative half, which she bounded honestly herself. */
+    /* FS116: the result sentence removed (no explicit study outcomes);
+       the method stays. */
     outcomes:
-      'Our clinical partners ran pre, mid, and post surveys measuring six validated scales on workplace culture and wellbeing: Burnout frequency, Exhaustion/Dread, Turnover Intention, Compassion fatigue, Workplace Wellbeing, and Perceived Support. All scales aside from perceived support from leadership improved throughout the study, indicating a core problem around institutional trust and support from administration.',
+      'Our clinical partners ran pre, mid, and post surveys measuring six validated scales on workplace culture and wellbeing: Burnout frequency, Exhaustion/Dread, Turnover Intention, Compassion fatigue, Workplace Wellbeing, and Perceived Support.',
 
     qualitative:
       'There is significant documented usage and participation: commitment to offer donations to keep it running, tears shed at launch by senior staff who were originally skeptical, stories of people using it regularly, a moment Dr. Taylor witnessed a staff member in distress and others flock around them and encourage them to go use the pod. Interest from other departments.',

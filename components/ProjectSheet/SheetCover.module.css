@@ -411,26 +411,26 @@
     width: var(--pw);
   }
 
-  /* FS112: an even stack. The four prints step across the pile in equal
-     intervals, each covering the same share of the one behind it; the
-     front print (depth 0) sits on top at the right, fully visible. Each
-     click sends it to the back at the far left and the rest step right. */
+  /* FS117: a pile, evenly distributed. The four prints sit at even
+     intervals across a narrower span than a row (so they overlap like a
+     pile), alternating high and low and tilting alternately, the front one
+     centre-right on top. Each shows a similar share of itself. */
   .cover:has(.sheetTitled) .polaroids .print {
-    --step: calc((96cqw - var(--pw)) / 3);
+    --step: calc((84cqw - var(--pw)) / 3);
     transition: transform var(--motion-medium) var(--ease-out);
   }
 
-  .cover:has(.sheetTitled) .polaroids .print[data-depth='0'] { transform: translate(calc(var(--step) * 1.5), 0) rotate(2deg); }
-  .cover:has(.sheetTitled) .polaroids .print[data-depth='1'] { transform: translate(calc(var(--step) * 0.5), -3%) rotate(-2deg); }
-  .cover:has(.sheetTitled) .polaroids .print[data-depth='2'] { transform: translate(calc(var(--step) * -0.5), 0) rotate(2deg); }
-  .cover:has(.sheetTitled) .polaroids .print[data-depth='3'] { transform: translate(calc(var(--step) * -1.5), -3%) rotate(-2deg); }
+  .cover:has(.sheetTitled) .polaroids .print[data-depth='0'] { transform: translate(calc(var(--step) * 0.5), 5%) rotate(-2deg); }
+  .cover:has(.sheetTitled) .polaroids .print[data-depth='1'] { transform: translate(calc(var(--step) * -0.5), -6%) rotate(4deg); }
+  .cover:has(.sheetTitled) .polaroids .print[data-depth='2'] { transform: translate(calc(var(--step) * 1.5), -8%) rotate(6deg); }
+  .cover:has(.sheetTitled) .polaroids .print[data-depth='3'] { transform: translate(calc(var(--step) * -1.5), 4%) rotate(-6deg); }
 }
 
 @media (min-width: 1000px) and (hover: hover) {
-  .cover:has(.sheetTitled) .polaroids:hover .print[data-depth='0'] { transform: translate(calc(var(--step) * 1.5), -2%) rotate(1deg); }
-  .cover:has(.sheetTitled) .polaroids:hover .print[data-depth='1'] { transform: translate(calc(var(--step) * 0.5), -4%) rotate(-2deg); }
-  .cover:has(.sheetTitled) .polaroids:hover .print[data-depth='2'] { transform: translate(calc(var(--step) * -0.5), -1%) rotate(2deg); }
-  .cover:has(.sheetTitled) .polaroids:hover .print[data-depth='3'] { transform: translate(calc(var(--step) * -1.5), -4%) rotate(-2deg); }
+  .cover:has(.sheetTitled) .polaroids:hover .print[data-depth='0'] { transform: translate(calc(var(--step) * 0.5), 3%) rotate(-1deg); }
+  .cover:has(.sheetTitled) .polaroids:hover .print[data-depth='1'] { transform: translate(calc(var(--step) * -0.6), -8%) rotate(5deg); }
+  .cover:has(.sheetTitled) .polaroids:hover .print[data-depth='2'] { transform: translate(calc(var(--step) * 1.65), -10%) rotate(7deg); }
+  .cover:has(.sheetTitled) .polaroids:hover .print[data-depth='3'] { transform: translate(calc(var(--step) * -1.65), 6%) rotate(-7deg); }
 }
 
 /* One item per ruled line (e.g. the timeline's three phases). */
