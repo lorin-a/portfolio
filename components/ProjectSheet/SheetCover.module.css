@@ -494,3 +494,35 @@
 [data-paper='glass'] .facts dd {
   color: #f4f1ec;
 }
+
+/* ══ LAB: title on the paper (FS85) ═════════════════════════════════════ */
+
+.sheetTitled {
+  margin-top: 0;
+}
+
+.paperHead {
+  padding: 0 0 var(--flow-2);
+}
+
+.paperHead .num {
+  color: #434d3b;
+}
+
+.paperHead .title,
+.paperHead .tagline {
+  color: #24221f;
+}
+
+.paperHead .title {
+  font-size: calc(var(--step-display) * 0.86);   /* inside the sheet's padding */
+}
+
+[data-paper='glass'] .paperHead .num {
+  color: #c5cfa6;
+}
+
+[data-paper='glass'] .paperHead .title,
+[data-paper='glass'] .paperHead .tagline {
+  color: #f4f1ec;
+}

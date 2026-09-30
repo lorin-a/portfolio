@@ -121,13 +121,14 @@ function useCoverLab() {
   const [lab, setLab] = useState(false)
   const [paperStyle, setPaperStyle] = useState('leaf')
   const [pileStyle, setPileStyle] = useState('prints')
+  const [titleOn, setTitleOn] = useState('above')
   useEffect(() => {
     if (new URLSearchParams(window.location.search).has('coverlab')) setLab(true)
   }, [])
-  return { lab, paperStyle, setPaperStyle, pileStyle, setPileStyle }
+  return { lab, paperStyle, setPaperStyle, pileStyle, setPileStyle, titleOn, setTitleOn }
 }
 
-function LabSwitch({ paperStyle, setPaperStyle, pileStyle, setPileStyle }) {
+function LabSwitch({ paperStyle, setPaperStyle, pileStyle, setPileStyle, titleOn, setTitleOn }) {
   const group = (label, value, set, opts) => (
     <div className={styles.labGroup} role="radiogroup" aria-label={label}>
       <span className={styles.labLabel}>{label}</span>
@@ -140,6 +141,7 @@ function LabSwitch({ paperStyle, setPaperStyle, pileStyle, setPileStyle }) {
   return (
     <div className={styles.lab}>
       {group('Paper', paperStyle, setPaperStyle, [['leaf', 'Loose-leaf'], ['tech', 'Tech'], ['glass', 'Glass']])}
+      {group('Title', titleOn, setTitleOn, [['above', 'Above'], ['paper', 'On the paper']])}
       {group('Pile', pileStyle, setPileStyle, [['prints', 'Prints'], ['polaroid', 'Polaroids'], ['techpol', 'Tech polaroids'], ['brand', 'Brand glass']])}
     </div>
   )
@@ -148,7 +150,8 @@ function LabSwitch({ paperStyle, setPaperStyle, pileStyle, setPileStyle }) {
 export default function SheetCover({ sheet, num, title, tagline, titleId }) {
   const meta = sheet.meta || []
   const labState = useCoverLab()
-  const { lab, paperStyle, pileStyle } = labState
+  const { lab, paperStyle, pileStyle, titleOn } = labState
+  const onPaper = titleOn === 'paper'
   const rootRef = useRef(null)
   /* Glass paper applies to the whole sheet (cover + every “What I did”),
      so the lab marks the dialog itself. */
@@ -161,15 +164,29 @@ export default function SheetCover({ sheet, num, title, tagline, titleId }) {
   return (
     <header ref={rootRef} className={styles.cover} data-reveal="0">
       <div className={styles.text}>
-        <span className={styles.num}>{num}</span>
-        <FitPair title={title} tagline={tagline} titleId={titleId} />
-        <div className={styles.sheet}>
-          <div className={paperStyle === 'tech' ? `${paper.paper} ${paper.tech}` : paper.paper}>
+        {!onPaper && (
+          <>
+            <span className={styles.num}>{num}</span>
+            <FitPair title={title} tagline={tagline} titleId={titleId} />
+          </>
+        )}
+        <div className={`${styles.sheet} ${onPaper ? styles.sheetTitled : ''}`}>
+          <div className={[paper.paper, paperStyle === 'tech' ? paper.tech : '', onPaper ? paper.titled : ''].join(' ')}>
             <span className={paper.holes} aria-hidden="true"><i /><i /><i /></span>
             {paperStyle === 'tech' && <span className={paper.marks} aria-hidden="true"><i /><i /><i /><i /></span>}
-            {/* The short facts (FS82): the longer set (metaLong in the content
-                file) only existed to match the old, taller pile. */}
-            <Facts meta={meta} className={`${styles.facts} ${paperStyle === 'tech' ? styles.techFacts : ''}`} />
+            {/* Title on the paper (lab, FS85): the heading sits in the sheet's
+                unruled top margin; the rules begin beneath it. */}
+            {onPaper && (
+              <div className={styles.paperHead}>
+                <span className={styles.num}>{num}</span>
+                <FitPair title={title} tagline={tagline} titleId={titleId} />
+              </div>
+            )}
+            <div className={onPaper ? paper.ruled : undefined}>
+              {/* The short facts (FS82): the longer set (metaLong in the content
+                  file) only existed to match the old, taller pile. */}
+              <Facts meta={meta} className={`${styles.facts} ${paperStyle === 'tech' ? styles.techFacts : ''}`} />
+            </div>
           </div>
         </div>
       </div>
