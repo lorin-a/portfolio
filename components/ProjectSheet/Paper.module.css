@@ -136,3 +136,44 @@
 .marks i:nth-child(2) { top: 6px; right: 6px; border-top-width: 1px; border-right-width: 1px; }
 .marks i:nth-child(3) { bottom: 6px; left: 6px; border-bottom-width: 1px; border-left-width: 1px; }
 .marks i:nth-child(4) { bottom: 6px; right: 6px; border-bottom-width: 1px; border-right-width: 1px; }
+
+/* ══ GLASS — the paper as brand glass (lab, FS79) ═══════════════════════
+   The same loose-leaf structure (rules, margin line, three holes), made of
+   the pile's glass: frosted and tinted with a whisper of the logo's
+   gradient, faint light rules, the margin line drawn in the gradient
+   itself (sage → lavender → coral), the holes as clear rings. Applies to
+   the cover sheet and every “What I did” strip together, switched by
+   data-paper="glass" on the sheet (set by the cover lab). */
+
+[data-paper='glass'] .paper {
+  background:
+    /* the margin line, in the logo's gradient */
+    linear-gradient(to bottom, #c5cfa6, #c7aad1 50%, #f79c7e) var(--margin) 0 / 1.5px 100% no-repeat,
+    /* the rules, as faint light */
+    repeating-linear-gradient(to bottom, transparent 0, transparent calc(var(--line) - 1px), rgba(244, 241, 236, 0.13) calc(var(--line) - 1px), rgba(244, 241, 236, 0.13) var(--line)) 0 var(--top) / 100% calc(100% - var(--top)) no-repeat,
+    /* one soft sheen */
+    linear-gradient(115deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 35%),
+    /* the glass: a whisper of the brand gradient */
+    linear-gradient(135deg, rgba(197, 207, 166, 0.16) 5%, rgba(199, 170, 209, 0.13) 45%, rgba(247, 156, 126, 0.11) 88%);
+  backdrop-filter: blur(14px) saturate(1.25);
+  -webkit-backdrop-filter: blur(14px) saturate(1.25);
+  box-shadow:
+    inset 0 0 0 1px rgba(244, 241, 236, 0.24),
+    inset 0 1px 0 rgba(255, 255, 255, 0.26),
+    0 20px 42px rgba(0, 0, 0, 0.4);
+}
+
+[data-paper='glass'] .holes i {
+  background: var(--color-cream);
+  box-shadow:
+    inset 0 0 0 1.5px rgba(244, 241, 236, 0.5),
+    inset 0 2px 3px rgba(0, 0, 0, 0.45);
+}
+
+[data-paper='glass'] .label {
+  color: #c5cfa6;
+}
+
+[data-paper='glass'] .ink {
+  color: #f4f1ec;
+}

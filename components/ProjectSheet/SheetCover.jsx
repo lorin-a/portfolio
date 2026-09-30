@@ -4,11 +4,7 @@ import { useEffect, useRef, useState } from 'react'
 import { sheetImg } from './SheetMedia'
 import styles from './SheetCover.module.css'
 import paper from './Paper.module.css'
-import SenseMark from '@/components/marks/SenseMark'
 
-/* The site's own gradient: the flower logo's and the hand-drawn marks'
-   (dark theme; HeroScatter / Nav), used to tint the brand glass (FS75). */
-const BRAND_GRADIENT = ['#C5CFA6', '#C7AAD1', '#F79C7E']
 
 /**
  * THE COVER — a pile of content inside the folder (her notes FS57–FS68).
@@ -73,8 +69,7 @@ function FitPair({ title, tagline, titleId }) {
 function Pile({ prints, style = 'prints' }) {
   const items = prints.map((p) => ({ ...p, src: sheetImg(p.key, 1400) })).filter((p) => p.src)
   const [order, setOrder] = useState(() => items.map((_, i) => i))
-  const [turns, setTurns] = useState(0)
-  const next = () => { setOrder((o) => [...o.slice(1), o[0]]); setTurns((t) => t + 1) }
+  const next = () => setOrder((o) => [...o.slice(1), o[0]])
   if (!items.length) return null
   return (
     <div className={`${styles.pile} ${['polaroid', 'techpol', 'brand'].includes(style) ? styles.polaroids : ''} ${style === 'brand' ? styles.brandPile : ''}`}>
@@ -96,12 +91,6 @@ function Pile({ prints, style = 'prints' }) {
               <span className={styles.brandFrame}>
                 <span className={styles.brandPhoto}><img src={p.src} alt="" /></span>
                 <span className={styles.brandStrip}>
-                  {/* Her own scribble mark, on the front print only; it draws
-                      itself on each time a new print comes forward. */}
-                  {depth === 0 && (
-                    <SenseMark key={turns} animate replay={turns}
-                      gradientColors={BRAND_GRADIENT} className={styles.brandMark} />
-                  )}
                   <span className={styles.brandCaption}>{p.caption}</span>
                 </span>
               </span>
@@ -150,7 +139,7 @@ function LabSwitch({ paperStyle, setPaperStyle, pileStyle, setPileStyle }) {
   )
   return (
     <div className={styles.lab}>
-      {group('Paper', paperStyle, setPaperStyle, [['leaf', 'Loose-leaf'], ['tech', 'Tech']])}
+      {group('Paper', paperStyle, setPaperStyle, [['leaf', 'Loose-leaf'], ['tech', 'Tech'], ['glass', 'Glass']])}
       {group('Pile', pileStyle, setPileStyle, [['prints', 'Prints'], ['polaroid', 'Polaroids'], ['techpol', 'Tech polaroids'], ['brand', 'Brand glass']])}
     </div>
   )
@@ -160,8 +149,17 @@ export default function SheetCover({ sheet, num, title, tagline, titleId }) {
   const meta = sheet.meta || []
   const labState = useCoverLab()
   const { lab, paperStyle, pileStyle } = labState
+  const rootRef = useRef(null)
+  /* Glass paper applies to the whole sheet (cover + every “What I did”),
+     so the lab marks the dialog itself. */
+  useEffect(() => {
+    const dlg = rootRef.current?.closest('[role=dialog]')
+    if (!dlg) return
+    if (paperStyle === 'glass') dlg.setAttribute('data-paper', 'glass')
+    else dlg.removeAttribute('data-paper')
+  }, [paperStyle])
   return (
-    <header className={styles.cover} data-reveal="0">
+    <header ref={rootRef} className={styles.cover} data-reveal="0">
       <div className={styles.text}>
         <span className={styles.num}>{num}</span>
         <FitPair title={title} tagline={tagline} titleId={titleId} />

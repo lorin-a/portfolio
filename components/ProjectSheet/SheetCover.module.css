@@ -261,12 +261,11 @@
   filter: saturate(0.9) contrast(0.95) sepia(0.1) brightness(1.02);
 }
 
-/* The recessed edge and the gloss. */
+/* The recessed edge (no glare, FS80). */
 .polaroidPhoto::after {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0) 38%);
   box-shadow:
     inset 0 0 0 1px rgba(0, 0, 0, 0.22),
     inset 0 2px 3px rgba(0, 0, 0, 0.18);
@@ -280,7 +279,7 @@
   aspect-ratio: 79 / 19;
   font-family: var(--font-heading);
   font-style: italic;
-  font-size: var(--step-small);
+  font-size: var(--step-body);
   line-height: 1;
   color: #2a2724;
 }
@@ -382,10 +381,8 @@
    The glass, made the site's own: frosted frames tinted with a whisper of
    the flower logo's gradient (sage, lavender, coral at 135°), a fine light
    edge, the photo square and clean; beneath it, the caption in the site's
-   italic serif beside her own scribble mark, which draws itself on each
-   time a print comes forward. On hover, one soft sheen crosses the front
-   print. No brackets, readouts, grids or glows: one new material, the rest
-   in the site's existing voice. */
+   italic serif at body size. FS80 removed the scribble icon and the glare
+   sweep. No brackets, readouts, grids or glows. */
 
 .brandFrame {
   position: relative;
@@ -403,23 +400,6 @@
     inset 0 0 0 1px rgba(244, 241, 236, 0.28),
     inset 0 1px 0 rgba(255, 255, 255, 0.3),
     0 20px 42px rgba(0, 0, 0, 0.4);
-}
-
-/* The sheen: one soft band of light, parked off the left edge. */
-.brandFrame::after {
-  content: '';
-  position: absolute;
-  inset: -20% -40%;
-  background: linear-gradient(105deg, transparent 38%, rgba(255, 255, 255, 0.22) 50%, transparent 62%);
-  transform: translateX(-70%);
-  transition: transform 1100ms var(--ease-out);
-  pointer-events: none;
-}
-
-@media (hover: hover) {
-  .brandPile:hover .print[data-depth='0'] .brandFrame::after {
-    transform: translateX(70%);
-  }
 }
 
 .brandPhoto {
@@ -444,24 +424,12 @@
   aspect-ratio: 79 / 17;
 }
 
-.brandStrip .brandMark {
-  width: 1.625rem;
-  height: 1.625rem;
-  flex: none;
-}
-
 .brandCaption {
   font-family: var(--font-heading);
   font-style: italic;
-  font-size: var(--step-small);
+  font-size: var(--step-body);
   line-height: 1;
   color: #f4f1ec;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .brandFrame::after {
-    transition: none;
-  }
 }
 
 /* ══ LAB: switcher ══════════════════════════════════════════════════════ */
@@ -520,4 +488,14 @@
 .labBtn:focus-visible {
   outline: 2px solid #f4f1ec;
   outline-offset: 2px;
+}
+
+/* Glass paper (lab, FS79): the facts' ink turns light. */
+[data-paper='glass'] .facts dt,
+[data-paper='glass'] .facts .todo b {
+  color: #c5cfa6;
+}
+
+[data-paper='glass'] .facts dd {
+  color: #f4f1ec;
 }
