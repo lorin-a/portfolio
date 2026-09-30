@@ -167,10 +167,9 @@ export default function SheetCover({ sheet, num, title, tagline, titleId }) {
           <div className={paperStyle === 'tech' ? `${paper.paper} ${paper.tech}` : paper.paper}>
             <span className={paper.holes} aria-hidden="true"><i /><i /><i /></span>
             {paperStyle === 'tech' && <span className={paper.marks} aria-hidden="true"><i /><i /><i /><i /></span>}
-            {/* The longer facts where the column can carry them; the short
-                ones where it is narrow. */}
-            <Facts meta={sheet.metaLong || meta} className={`${styles.facts} ${styles.factsLong} ${paperStyle === 'tech' ? styles.techFacts : ''}`} />
-            <Facts meta={meta} className={`${styles.facts} ${styles.factsShort} ${paperStyle === 'tech' ? styles.techFacts : ''}`} />
+            {/* The short facts (FS82): the longer set (metaLong in the content
+                file) only existed to match the old, taller pile. */}
+            <Facts meta={meta} className={`${styles.facts} ${paperStyle === 'tech' ? styles.techFacts : ''}`} />
           </div>
         </div>
       </div>

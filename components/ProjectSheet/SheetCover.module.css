@@ -7,7 +7,9 @@
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   gap: var(--flow-3);
-  margin-bottom: var(--flow-4);
+  /* one block step, not a section step, so the next section shows on the
+     first screen (FS82) */
+  margin-bottom: var(--flow-3);
 }
 
 @media (min-width: 1000px) {
@@ -64,8 +66,15 @@
 
 /* ── The sheet: the facts typed on loose-leaf ──────────────────────── */
 
+/* The cover's sheet runs a slightly tighter rule (24px) with one line of
+   top margin, so the hero fits the first screen (FS82). */
 .sheet {
-  margin-top: var(--flow-3);
+  margin-top: var(--flow-2);
+}
+
+.sheet > div {
+  --line: 1.5rem;
+  --top: var(--line);
 }
 
 .facts {
@@ -76,8 +85,8 @@
 
 .facts > div {
   display: grid;
-  /* wide enough for the longest label, “Photography” */
-  grid-template-columns: 7.5rem minmax(0, 1fr);
+  /* wide enough for the longest label, “Timeline” */
+  grid-template-columns: 5.5rem minmax(0, 1fr);
   gap: 0 var(--flow-1);
 }
 
@@ -125,22 +134,6 @@
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: #434d3b;
-}
-
-/* Long facts on wide columns, short ones on narrow. display: none also
-   takes the hidden list out of the accessibility tree. */
-.factsShort {
-  display: none;
-}
-
-@media (max-width: 1279px) {
-  .factsLong {
-    display: none;
-  }
-
-  .factsShort {
-    display: grid;
-  }
 }
 
 /* ── The pile: four prints, each at its own tilt ───────────────────────
@@ -224,7 +217,7 @@
    Corners are the film's own, barely rounded. */
 
 .polaroids .print {
-  width: 50%;
+  width: 38%;   /* smaller (FS82), so the hero fits the first screen */
   aspect-ratio: auto;
   background: none;
   box-shadow: none;
@@ -390,10 +383,14 @@
   overflow: hidden;
   padding: 4.5% 4.5% 0;
   border-radius: 3px;
-  background: linear-gradient(135deg,
-    rgba(197, 207, 166, 0.24) 5%,
-    rgba(199, 170, 209, 0.2) 45%,
-    rgba(247, 156, 126, 0.18) 88%);
+  /* the brand tint over a smoky base, so bright photos beneath never wash
+     out the caption (measured to pass AA, FS83) */
+  background:
+    linear-gradient(135deg,
+      rgba(197, 207, 166, 0.2) 5%,
+      rgba(199, 170, 209, 0.17) 45%,
+      rgba(247, 156, 126, 0.15) 88%),
+    rgba(28, 26, 30, 0.5);
   backdrop-filter: blur(14px) saturate(1.25);
   -webkit-backdrop-filter: blur(14px) saturate(1.25);
   box-shadow:
