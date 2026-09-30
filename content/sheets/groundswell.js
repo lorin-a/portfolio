@@ -288,8 +288,19 @@ export const groundswell = {
       },
       name: 'The data dashboard',
       body: 'An interactive platform that translated the data collected from each component into an immersive storytelling experience that translated lived experience into actionable metrics. It combined qualitative and quantitative findings in one place, showcasing the importance of telling a well-rounded story.',
-      /* FS139: recast without “I” */
-      mine: 'Production and design of the data dashboard.',
+      /* FS140, PROVISIONAL: her notes, phrased from the dashboard repo
+         (~/Desktop/groundswell-digital-wall-with-admin, 226 commits,
+         2026-01-21 → 2026-07-22). Verified terms: Next.js/React on Vercel,
+         Neon serverless PostgreSQL, three pipelines (transcribed art-wall
+         spreadsheets normalised per response; Density Sessions API v3;
+         YouTube Analytics API via Google OAuth), a password-gated admin hub
+         with de-duplicating uploads, Three.js (React Three Fiber) watercolor
+         views. Density: the 2026-04-25 outage fix and the audit showing the
+         Sessions API drops real visits (103 active days → 66). Also in the
+         record, not in this line: a 31-finding accessibility audit, a
+         methodology PDF with an AI disclosure, a stakeholder summary page,
+         a staff surveys view, CSV export. */
+      mine: 'Design and development of the dashboard from scratch with Claude Code, a first AI-assisted build; backend data pipelines for the art wall’s transcribed responses, the pod’s Density occupancy sensor, and the library’s YouTube analytics, into a Neon PostgreSQL database with a password-protected admin hub; troubleshooting with Density’s team, including an audit that found their API dropping real visits; playtests with clinical staff; and co-design of the study results visual with clinical staff.',
       gated: true,
     },
   ],
