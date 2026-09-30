@@ -32,6 +32,24 @@ export const groundswell = {
     ['Context', 'UPMC Magee-Womens Cancer Services'],
   ],
 
+  /* THE LONGER FACTS for the cover's paper sheet (her note FS62:
+     "add more context copy to the metadata so it becomes longer").
+     PROVISIONAL, and assembled ONLY from words she has already written;
+     nothing here is new wording. Receipts per line:
+       Role        frame.role, her first sentence, verbatim
+       Team        the short meta's line, unchanged (the full partners line
+                   is in frame.partners if she wants it here)
+       Context     frame.why, her opening clause, verbatim
+       Photography credit, her note 2026-09-06
+     The short `meta` above stays as it was. */
+  metaLong: [
+    ['Role', 'Generative research, content copywriting, project management, fundraising (securing over $30k in donations), and the production and design of the data dashboard.'],
+    ['Team', 'Carnegie Mellon School of Design, with UPMC and Pitt partners'],
+    ['Timeline', { todo: 'The 15-week CARES course, then the 9-month pilot. Dates?' }],
+    ['Context', 'A 9-month pilot program designed to support the emotional well-being of UPMC Magee-Womens Cancer Services staff.'],
+    ['Photography', 'Kevin Lorenzi'],
+  ],
+
   frame: {
     /* Her copy 2026-08-27, verbatim. */
     why: 'Groundswell is a 9-month pilot program designed to support the emotional well-being of UPMC Magee-Womens Cancer Services staff by introducing resources that honor the emotional complexities of oncology care. Groundswell fosters a culture where grief is acknowledged, isolation transforms into belonging, and self-care is honored as essential to delivering excellent patient care.',

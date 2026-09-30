@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { sheetImg } from './SheetMedia'
 import styles from './CoverLab.module.css'
 
@@ -66,14 +66,50 @@ function TextRail({ num, title, tagline, titleId, meta, className }) {
   )
 }
 
+/* The title and its tagline at one width (FS63): the tagline's size is
+   fitted so its line is exactly as wide as the title's. Measured from the
+   text itself, so it holds for any project name; re-fitted on resize and
+   once the web fonts have loaded. Clamped so a very short or very long
+   tagline never lands at an absurd size. */
+function FitPair({ title, tagline, titleId }) {
+  const hRef = useRef(null)
+  const tRef = useRef(null)
+  useEffect(() => {
+    const h = hRef.current, t = tRef.current
+    if (!h || !t) return
+    const width = (el) => { const r = document.createRange(); r.selectNodeContents(el); return r.getBoundingClientRect().width }
+    const fit = () => {
+      t.style.fontSize = ''
+      t.style.whiteSpace = 'nowrap'
+      const base = parseFloat(getComputedStyle(t).fontSize)
+      const scale = Math.min(1.8, Math.max(0.6, width(h) / width(t)))
+      t.style.fontSize = `${base * scale}px`
+    }
+    fit()
+    document.fonts?.ready.then(fit)
+    const ro = new ResizeObserver(fit)
+    ro.observe(h)
+    return () => ro.disconnect()
+  }, [title, tagline])
+  return (
+    <>
+      <h2 id={titleId} ref={hRef} className={styles.title}>{title}</h2>
+      {tagline && <p ref={tRef} className={styles.tagline}>{tagline}</p>}
+    </>
+  )
+}
+
 /* E · THE PRINTS ────────────────────────────────────────────────────── */
 const PRINT_KEYS = [
+  /* Four, for range across the project (FS64): the place, the wall in
+     use, the pod in use, the cards in hand. */
   { key: 'gs-hero', alt: 'The Groundswell Garden and the Restorative Pod in the hallway.' },
-  { key: 'gs-pod-detail-01', alt: 'Two staff members at the table inside the pod.' },
+  { key: 'gs-artwall-detail-01', alt: 'Writing a response to one of the guided prompts at the art wall.' },
+  { key: 'gs-pod-detail-01', alt: 'Two staff members at the table inside the Restorative Pod.' },
   { key: 'gs-cards', alt: 'Hands sorting the Groundswell Reflection Cards on a table.' },
 ]
 function PrintsCover({ sheet, num, title, tagline, titleId, onImage, meta, treatment }) {
-  const [order, setOrder] = useState([0, 1, 2])
+  const [order, setOrder] = useState(() => PRINT_KEYS.map((_, i) => i))
   const prints = PRINT_KEYS.map((p) => ({ ...p, src: sheetImg(p.key, 1400) })).filter((p) => p.src)
   const front = (i) => setOrder((o) => [i, ...o.filter((x) => x !== i)])
   const shown = prints[order[0]]
@@ -146,12 +182,14 @@ function PrintsCover({ sheet, num, title, tagline, titleId, onImage, meta, treat
       <header className={`${styles.cover} ${styles.prints}`}>
         <div className={styles.printsText}>
           <span className={styles.num}>{num}</span>
-          <h2 id={titleId} className={styles.title}>{title}</h2>
-          {tagline && <p className={styles.tagline}>{tagline}</p>}
+          <FitPair title={title} tagline={tagline} titleId={titleId} />
           <div className={styles.paper}>
             <div className={styles.paperSheet}>
               <span className={styles.holes} aria-hidden="true"><i /><i /><i /></span>
-              <Facts meta={meta} className={styles.paperFacts} />
+              {/* The longer facts where the column is wide enough to carry
+                  them; the short ones where it is narrow. */}
+              <Facts meta={sheet.metaLong || meta} className={`${styles.paperFacts} ${styles.factsLong}`} />
+              <Facts meta={meta} className={`${styles.paperFacts} ${styles.factsShort}`} />
             </div>
           </div>
         </div>

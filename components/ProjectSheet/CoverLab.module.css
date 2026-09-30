@@ -427,7 +427,8 @@
 
 .paperFacts > div {
   display: grid;
-  grid-template-columns: 6rem minmax(0, 1fr);
+  /* wide enough for the longest label, “Photography” */
+  grid-template-columns: 7.5rem minmax(0, 1fr);
   gap: 0 var(--flow-1);
 }
 
@@ -466,37 +467,78 @@
   }
 }
 
-/* The wabi-sabi pile: each print at its own angle, alternating, with
-   uneven offsets, like prints dropped on a desk rather than dealt. Hover
-   lets each drift a little further in its own direction. */
+/* Long facts on wide columns, short ones on narrow. display: none also
+   takes the hidden list out of the accessibility tree. */
+.factsShort {
+  display: none;
+}
+
+@media (max-width: 1279px) {
+  .factsLong {
+    display: none;
+  }
+
+  .factsShort {
+    display: grid;
+  }
+}
+
+/* The wabi-sabi pile (FS60, FS64): four prints scattered loosely across
+   the full height of the text column, so the pile and the sheet always
+   end together whatever the text's length. The stack is a size container:
+   each print is sized from the stack's own width and height (cqw / cqh),
+   and each sits at its own angle and its own point of a loose scatter,
+   as a fraction of the room the stack has spare. Hover lets each drift a
+   little further out; click brings one to the front. */
+.wabi {
+  container-type: size;
+  aspect-ratio: auto;
+  align-self: stretch;
+  min-height: 26rem;
+}
+
 .wabi .print {
-  left: 10%;
-  width: 77%;
+  --pw: min(64cqw, 92cqh);                       /* print width */
+  --ph: calc(var(--pw) / 1.5);                   /* 3:2 print height */
+  --sx: max(0px, calc((100cqw - var(--pw)) / 2)); /* spare room, each side */
+  --sy: max(0px, calc((100cqh - var(--ph)) / 2)); /* spare room, above/below */
+  --fx: 0;
+  --fy: 0;
+  --rot: 0deg;
+  --spread: 0.94;
+  inset: 0;
+  width: var(--pw);
+  height: var(--ph);
+  margin: auto;
+  transform:
+    translate(calc(var(--sx) * var(--fx) * var(--spread)), calc(var(--sy) * var(--fy) * var(--spread)))
+    rotate(var(--rot));
 }
 
-.wabi .print[data-depth='0'] {
-  transform: translate(0, 0) rotate(-1.3deg);
-}
-
-.wabi .print[data-depth='1'] {
-  transform: translate(6%, -5%) rotate(2.8deg);
-}
-
-.wabi .print[data-depth='2'] {
-  transform: translate(-5%, 6%) rotate(-4.2deg);
-}
+.wabi .print[data-depth='0'] { --fx: 0.05;  --fy: -0.05; --rot: -1.3deg; }
+.wabi .print[data-depth='1'] { --fx: 0.85;  --fy: -0.9;  --rot: 2.8deg; }
+.wabi .print[data-depth='2'] { --fx: -0.9;  --fy: 0.8;   --rot: -4deg; }
+.wabi .print[data-depth='3'] { --fx: 0.7;   --fy: 1;     --rot: 3.4deg; }
 
 @media (hover: hover) {
+  /* restate the transform: the plain pile's fan-out hover would win */
+  .wabi:hover .print {
+    --spread: 1;
+    transform:
+      translate(calc(var(--sx) * var(--fx) * var(--spread)), calc(var(--sy) * var(--fy) * var(--spread)))
+      rotate(var(--rot));
+  }
+
   .wabi:hover .print[data-depth='0'] {
-    transform: translate(0, -1%) rotate(-0.6deg);
+    --rot: -0.5deg;
   }
+}
 
-  .wabi:hover .print[data-depth='1'] {
-    transform: translate(10%, -8%) rotate(3.6deg);
-  }
-
-  .wabi:hover .print[data-depth='2'] {
-    transform: translate(-9%, 9%) rotate(-5.4deg);
+@media (max-width: 999px) {
+  .wabi {
+    align-self: auto;
+    height: 30rem;
+    min-height: 0;
   }
 }
 
