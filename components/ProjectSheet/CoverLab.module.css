@@ -358,6 +358,148 @@
   border-bottom: 0;
 }
 
+/* ══ E4 · THE SHEET ════════════════════════════════════════════════════
+   One sheet of loose-leaf paper (FS61): warm stock with a fine grain,
+   blue ruled lines the typed facts sit on, a red margin line, three
+   punched holes that show the folder through, and an edge that catches a
+   little light with a soft shadow beneath. Paper colours are fixed (stock
+   and ink), not theme colours.
+
+   Every line of type is one ruled line tall (--line), and the rows sit a
+   blank line apart, so the text lands on the rules as it would if typed. */
+
+.paper {
+  position: relative;
+  margin-top: var(--flow-3);
+}
+
+.paperSheet {
+  --line: 1.625rem;                 /* 26px: one ruled line */
+  --top: calc(var(--line) * 2);     /* the sheet's top margin, two lines */
+  --margin: 2.75rem;                /* where the red margin line falls */
+  position: relative;
+  padding: var(--top) 1.25rem var(--line) calc(var(--margin) + 0.75rem);
+  background:
+    /* grain: fractal noise, very faint */
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='g'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.35 0 0 0 0 0.3 0 0 0 0 0.25 0 0 0 0.09 0'/></filter><rect width='100%25' height='100%25' filter='url(%23g)'/></svg>"),
+    /* the red margin line */
+    linear-gradient(to right, transparent var(--margin), rgba(214, 120, 116, 0.55) var(--margin), rgba(214, 120, 116, 0.55) calc(var(--margin) + 1px), transparent calc(var(--margin) + 1px)),
+    /* the blue rules, one per line, starting under the top margin */
+    repeating-linear-gradient(to bottom, transparent 0, transparent calc(var(--line) - 1px), rgba(120, 160, 196, 0.42) calc(var(--line) - 1px), rgba(120, 160, 196, 0.42) var(--line)) 0 var(--top) / 100% calc(100% - var(--top)) no-repeat,
+    /* the stock: a touch lighter at the top, as paper catches light */
+    linear-gradient(to bottom, #f8f5ee, #f1ece2);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.35),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.06),
+    0 1px 1px rgba(0, 0, 0, 0.2),
+    0 18px 36px rgba(0, 0, 0, 0.34);
+  transform: rotate(-0.8deg);
+}
+
+/* Three punched holes, showing the folder's ground through the sheet. */
+.holes {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0.875rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  pointer-events: none;
+}
+
+.holes i {
+  display: block;
+  width: 0.875rem;
+  height: 0.875rem;
+  border-radius: 50%;
+  background: var(--color-cream);   /* the folder's own fill */
+  box-shadow:
+    inset 0 1px 2px rgba(0, 0, 0, 0.55),
+    0 1px 0 rgba(255, 255, 255, 0.6);
+}
+
+.paperFacts {
+  display: grid;
+  row-gap: var(--line);
+  margin: 0;
+}
+
+.paperFacts > div {
+  display: grid;
+  grid-template-columns: 6rem minmax(0, 1fr);
+  gap: 0 var(--flow-1);
+}
+
+.paperFacts dt,
+.paperFacts dd {
+  line-height: var(--line);
+}
+
+.paperFacts dt {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--step-label);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #4f5a47;
+}
+
+.paperFacts dd {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--step-small);
+  color: #24221f;
+  text-wrap: pretty;
+}
+
+.paperFacts .todo b {
+  display: block;
+  line-height: var(--line);
+  color: #4f5a47;
+}
+
+@media (max-width: 999px) {
+  .paperSheet {
+    transform: rotate(-0.5deg);
+  }
+}
+
+/* The wabi-sabi pile: each print at its own angle, alternating, with
+   uneven offsets, like prints dropped on a desk rather than dealt. Hover
+   lets each drift a little further in its own direction. */
+.wabi .print {
+  left: 10%;
+  width: 77%;
+}
+
+.wabi .print[data-depth='0'] {
+  transform: translate(0, 0) rotate(-1.3deg);
+}
+
+.wabi .print[data-depth='1'] {
+  transform: translate(6%, -5%) rotate(2.8deg);
+}
+
+.wabi .print[data-depth='2'] {
+  transform: translate(-5%, 6%) rotate(-4.2deg);
+}
+
+@media (hover: hover) {
+  .wabi:hover .print[data-depth='0'] {
+    transform: translate(0, -1%) rotate(-0.6deg);
+  }
+
+  .wabi:hover .print[data-depth='1'] {
+    transform: translate(10%, -8%) rotate(3.6deg);
+  }
+
+  .wabi:hover .print[data-depth='2'] {
+    transform: translate(-9%, 9%) rotate(-5.4deg);
+  }
+}
+
 /* ══ The switcher (lab only) ═══════════════════════════════════════════ */
 
 .switch {

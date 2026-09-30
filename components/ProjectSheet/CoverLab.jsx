@@ -19,6 +19,9 @@ import styles from './CoverLab.module.css'
  *                   pile of prints.
  *   printsLabel     E3 · the text column as a file folder's label: a box
  *                   with a filled header bar, the facts in ruled rows.
+ *   printsSheet     E4 · (FS60, FS61) the facts typed on one sheet of
+ *                   loose-leaf under the name: punched holes, grain, ruled
+ *                   and margin lines; the prints in a wabi-sabi pile.
  *
  * Earlier options (ambient, ecosystem, colour returns, settle on scroll,
  * the name) were set aside when she chose E (FS59); they live in git.
@@ -76,7 +79,7 @@ function PrintsCover({ sheet, num, title, tagline, titleId, onImage, meta, treat
   const shown = prints[order[0]]
 
   const stack = (
-    <div className={styles.printStack}>
+    <div className={`${styles.printStack} ${treatment === 'sheet' ? styles.wabi : ''}`}>
       {prints.map((p, i) => {
         const depth = order.indexOf(i)
         return (
@@ -135,6 +138,28 @@ function PrintsCover({ sheet, num, title, tagline, titleId, onImage, meta, treat
     )
   }
 
+  /* E4 · THE SHEET: the facts typed on one sheet of loose-leaf paper
+     under the name (FS61: a single sheet; a second one read as something
+     to click); the prints in a looser pile. */
+  if (treatment === 'sheet') {
+    return (
+      <header className={`${styles.cover} ${styles.prints}`}>
+        <div className={styles.printsText}>
+          <span className={styles.num}>{num}</span>
+          <h2 id={titleId} className={styles.title}>{title}</h2>
+          {tagline && <p className={styles.tagline}>{tagline}</p>}
+          <div className={styles.paper}>
+            <div className={styles.paperSheet}>
+              <span className={styles.holes} aria-hidden="true"><i /><i /><i /></span>
+              <Facts meta={meta} className={styles.paperFacts} />
+            </div>
+          </div>
+        </div>
+        {stack}
+      </header>
+    )
+  }
+
   /* E3 · THE FOLDER LABEL */
   if (treatment === 'label') {
     return (
@@ -171,6 +196,7 @@ export function CoverLabSwitch({ value, onChange }) {
     ['printsCatalogue', 'E1 · Catalogue record'],
     ['printsSlip', 'E2 · The slip'],
     ['printsLabel', 'E3 · Folder label'],
+    ['printsSheet', 'E4 · The sheet'],
   ]
   return (
     <div className={styles.switch} role="radiogroup" aria-label="Cover option">
