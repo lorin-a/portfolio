@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from 'react'
 import Lightbox from '@/components/Lightbox/Lightbox'
-import { SheetLead, SheetStills, SheetAudio, SheetCardGallery, SheetBts, sheetImg } from './SheetMedia'
+import { SheetStage, SheetPoem, SheetCardGallery, SheetHero, SheetFilmstrip, slidesFor, sheetImg } from './SheetMedia'
 import styles from './SheetContent.module.css'
 
 /**
@@ -63,18 +63,17 @@ export default function SheetContent({ sheet, num, title, tagline, titleId }) {
   const images = useMemo(() => {
     const list = []
     const push = (key, alt) => {
-      const src = sheetImg(key, 1800)
-      if (src) list.push({ key, alt: alt || '', src })
+      const src = sheetImg(key, 2000)
+      if (src && !list.some((i) => i.key === key)) list.push({ key, alt: alt || '', src })
     }
+    if (sheet.hero) push(sheet.hero.key, sheet.hero.alt)
     components.forEach((c) => {
       if (c.gated) return
-      if (c.media?.lead?.type === 'image') push(c.media.lead.key, c.media.lead.alt)
-      c.media?.also?.forEach((i) => { if (i.type === 'image') push(i.key, i.alt) })
-      c.media?.stills?.forEach((k) => push(k))
+      slidesFor(c.media).forEach((sl) => { if (sl.type === 'image') push(sl.key, sl.alt) })
     })
     bts?.images?.forEach((i) => push(i.key, i.alt))
     return list
-  }, [components, bts])
+  }, [sheet.hero, components, bts])
 
   const [lightboxAt, setLightboxAt] = useState(-1)
   const openerRef = useRef(null)
@@ -95,91 +94,117 @@ export default function SheetContent({ sheet, num, title, tagline, titleId }) {
 
   return (
     <div ref={rootRef}>
-      {/* The cover: the title alone. One thing to look at. */}
-      <header className={styles.masthead} data-reveal="0">
-        <span className={styles.num}>{num}</span>
-        <h2 id={titleId} className={styles.title}>{title}</h2>
-        {tagline && <p className={styles.tagline}>{tagline}</p>}
-      </header>
+      {/* THE COVER — the name across the top at full scale, then the facts in
+          the rail beside the place itself. One name, one picture. */}
+      <header className={`${styles.cover} ${sheet.hero ? '' : styles.coverSolo}`} data-reveal="0">
+        <div className={styles.coverHead}>
+          <span className={styles.num}>{num}</span>
+          <h2 id={titleId} className={styles.title}>{title}</h2>
+          {tagline && <p className={styles.tagline}>{tagline}</p>}
+        </div>
+        <div className={styles.coverText}>
 
-      {meta.length > 0 && (
-        <dl className={styles.meta} data-reveal="1">
-          {meta.map(([k, v]) => (
-            <div key={k}>
-              <dt>{k}</dt>
-              <dd className={v?.todo ? styles.todo : undefined}>
-                {v?.todo ? <b>Lorin to write</b> : null}
-                {v?.todo || v}
-              </dd>
-            </div>
-          ))}
-        </dl>
-      )}
+          {meta.length > 0 && (
+            <dl className={styles.meta}>
+              {meta.map(([k, v]) => (
+                <div key={k}>
+                  <dt>{k}</dt>
+                  <dd className={v?.todo ? styles.todo : undefined}>
+                    {v?.todo ? <b>Lorin to write</b> : null}
+                    {v?.todo || v}
+                  </dd>
+                </div>
+              ))}
+            </dl>
+          )}
+        </div>
+        {sheet.hero && (
+          <div className={styles.coverMedia}>
+            <SheetHero item={sheet.hero} onImage={openImage} />
+          </div>
+        )}
+      </header>
 
       {/* The punchline: the one statement between the cover and the work. */}
       {outcome && (
-        <div className={styles.statement} data-reveal="2">
+        <div className={styles.statement} data-reveal="1">
           <span className={styles.statementLabel}>The outcome</span>
           <p className={styles.statementBody}>{outcome}</p>
         </div>
       )}
 
-      {/* One reading column, top to bottom. */}
-      <div className={styles.frame} data-reveal="3">
-        {frame.why && <p className={styles.why}>{frame.why}</p>}
-        {frame.research && (
-          <section className={styles.frameBlock}>
-            <h3>What the research told us</h3>
-            <p>{frame.research}</p>
+      {/* The frame: two blocks side by side, each column sized to its own
+          length so both end together rather than one trailing the other. */}
+      {(frame.why || frame.research) && (
+        <div className={styles.frame} data-reveal="2">
+          {frame.why && (
+            <section className={styles.frameBlock}>
+              <h3>The project</h3>
+              <p>{frame.why}</p>
+            </section>
+          )}
+          {frame.research && (
+            <section className={styles.frameBlock}>
+              <h3>What the research told us</h3>
+              <p>{frame.research}</p>
+            </section>
+          )}
+        </div>
+      )}
+
+      {components.map((c, i) => {
+        const slides = slidesFor(c.media)
+        const poem = [c.media?.lead, ...(c.media?.also || [])].find((m) => m?.type === 'audio')
+        return (
+          <section key={c.key} className={styles.component} data-reveal="0">
+            {/* The rail: name, what it is, what I did. Narrow and sticky,
+                so the words stay beside the work while the work leads. */}
+            <div className={styles.rail}>
+              <div className={styles.railInner}>
+                <span className={styles.componentNum}>{String(i + 1).padStart(2, '0')}</span>
+                <h3 className={styles.componentName}>{c.name}</h3>
+                {c.gated && <span className={styles.gated}>Confidential</span>}
+                <p className={styles.componentBody}>{c.body}</p>
+                {c.mine && (
+                  <p className={styles.mine}>
+                    <span className={styles.mineLabel}>What I did</span>
+                    <span className={styles.mineBody}>{c.mine}</span>
+                  </p>
+                )}
+              </div>
+            </div>
+
+            <div className={styles.work}>
+              <SheetStage slides={slides} gated={c.gated}
+                onImage={c.gated ? null : openImage} label={`${c.name}, gallery`} />
+              {c.media?.gallery && <SheetCardGallery gallery={c.media.gallery} />}
+            </div>
+
+            {poem && (
+              <div className={styles.band}>
+                <SheetPoem item={poem} />
+              </div>
+            )}
           </section>
-        )}
-      </div>
-
-      {components.map((c, i) => (
-        <section key={c.key} className={styles.component} data-reveal="0">
-          <div className={styles.componentHead}>
-            <span className={styles.componentNum}>{String(i + 1).padStart(2, '0')}</span>
-            <h3>{c.name}</h3>
-            {c.gated && <span className={styles.gated}>Confidential</span>}
-          </div>
-
-          {/* The artifact leads; the words follow it. */}
-          {c.media?.lead && (
-            <SheetLead item={c.media.lead} gated={c.gated} onImage={openImage} />
-          )}
-
-          <p className={styles.componentBody}>{c.body}</p>
-          {c.mine && (
-            <p className={styles.mine}>
-              <span className={styles.mineLabel}>What I did</span>
-              <span className={styles.mineBody}>{c.mine}</span>
-            </p>
-          )}
-
-          {c.media?.also?.map((item) =>
-            item.type === 'audio'
-              ? <SheetAudio key={item.key} item={item} />
-              : <SheetLead key={item.key} item={item} gated={c.gated} onImage={openImage} />
-          )}
-          {c.media?.stills && (
-            <SheetStills keys={c.media.stills} gated={c.gated} onImage={openImage} />
-          )}
-          {c.media?.gallery && <SheetCardGallery gallery={c.media.gallery} />}
-        </section>
-      ))}
+        )
+      })}
 
       <section className={styles.close} data-reveal="0">
-        {close.outcomes && (
-          <div className={styles.closeBlock}>
-            <h3>What changed</h3>
-            <p>{close.outcomes}</p>
-            {close.qualitative && <p>{close.qualitative}</p>}
-          </div>
-        )}
-        {frame.role && (
-          <div className={styles.closeBlock}>
-            <h3>My role, in full</h3>
-            <p>{frame.role}</p>
+        {(close.outcomes || frame.role) && (
+          <div className={styles.closePair}>
+            {close.outcomes && (
+              <div className={styles.closeBlock}>
+                <h3>What changed</h3>
+                <p>{close.outcomes}</p>
+                {close.qualitative && <p>{close.qualitative}</p>}
+              </div>
+            )}
+            {frame.role && (
+              <div className={styles.closeBlock}>
+                <h3>My role, in full</h3>
+                <p>{frame.role}</p>
+              </div>
+            )}
           </div>
         )}
         {close.takeaway && (
@@ -188,13 +213,16 @@ export default function SheetContent({ sheet, num, title, tagline, titleId }) {
             <p>{close.takeaway}</p>
           </div>
         )}
+      </section>
+
+      {bts && <SheetFilmstrip bts={bts} onImage={openImage} />}
+
+      {(frame.partners || credit) && (
         <div className={styles.colophon}>
           {frame.partners && <p className={styles.partners}>{frame.partners}</p>}
           {credit && <p className={styles.credit}>{credit}</p>}
         </div>
-      </section>
-
-      {bts && <SheetBts bts={bts} onImage={openImage} />}
+      )}
 
       {lightboxAt >= 0 && images[lightboxAt] && (
         <Lightbox

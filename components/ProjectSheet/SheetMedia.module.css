@@ -1,60 +1,134 @@
 /* Media inside the folder sheet, on THE SHEET SYSTEM (see .inner in
-   ProjectSheet.module.css). One radius, one media gap, one rule, the
-   shared type steps. */
+   ProjectSheet.module.css).
 
-.box {
-  position: relative;
-  display: block;
+   Round three (2026-09-30): square corners on every photograph and
+   recording. The work is the object; a rounded frame decorates it and
+   reads soft. The one exception is the reflection cards, whose rounded
+   corners are the printed cards' real corners. */
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
   overflow: hidden;
-  /* One radius for every artifact; no backing fill, so exports with
-     baked transparent corners (the CTB browser frame) show the sheet's
-     own ground. */
-  border-radius: var(--radius-lg);
-  background: none;
+  clip-path: inset(50%);
+  white-space: nowrap;
 }
 
-/* One clickable image: the whole artifact is the button. */
-.zoom {
+/* Shared arrow control: gallery stage + filmstrip. */
+.arrows {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.arrow {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 1px solid var(--color-ink);
+  border-radius: var(--radius-pill);
+  background: none;
+  color: var(--color-ink);
+  cursor: pointer;
+  transition:
+    background var(--motion-fast) var(--ease-out),
+    color var(--motion-fast) var(--ease-out),
+    opacity var(--motion-fast) var(--ease-out);
+}
+
+.arrow svg {
+  width: 16px;
+  height: 16px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.arrow:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+@media (hover: hover) {
+  .arrow:not(:disabled):hover {
+    background: var(--color-ink);
+    color: var(--color-cream);
+  }
+}
+
+.arrow:focus-visible {
+  outline: 2px solid var(--color-sage);
+  outline-offset: 3px;
+}
+
+/* ══ THE STAGE ════════════════════════════════════════════════════════ */
+
+.stage {
+  min-width: 0;
+}
+
+/* The mat: one fixed frame, every artifact whole inside it. The ground is
+   a quiet step off the sheet fill, so letterboxing reads as a mount, not
+   as missing pixels. */
+.mat {
+  position: relative;
+  aspect-ratio: 3 / 2;
+  overflow: hidden;
+  background: var(--sheet-mat);
+}
+
+.matButton {
   display: block;
   width: 100%;
+  height: 100%;
   padding: 0;
   border: 0;
   background: none;
   cursor: zoom-in;
-  border-radius: var(--radius-lg);
 }
 
-.zoom:focus-visible {
+.matButton:focus-visible {
   outline: 2px solid var(--color-sage);
-  outline-offset: 4px;
+  outline-offset: -2px;
 }
 
-@media (hover: hover) {
-  .zoom:hover .media {
-    transform: scale(1.02);
-  }
-}
-
-.media {
+.stageMedia {
   display: block;
   width: 100%;
-  height: auto;
-  transition: transform var(--motion-medium) var(--ease-out);
+  height: 100%;
+  object-fit: contain;
+  animation: stageIn var(--motion-medium) var(--ease-out);
 }
 
-.boxGated .media {
-  filter: blur(4px);
+@keyframes stageIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
-/* ── Lead artifact ───────────────────────────────────────────────── */
-
-.lead {
-  margin: 0;
+.stage[data-gated] .stageMedia,
+.stage[data-gated] .thumb img {
+  filter: blur(6px);
 }
 
-.lead figcaption,
-.stills figcaption {
+.stageBar {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--flow-2);
   margin-top: var(--flow-1);
+}
+
+.caption {
+  display: flex;
+  align-items: baseline;
+  gap: var(--flow-1);
+  min-height: 44px;
+  margin: 0;
+  padding-top: 0.625rem;
   font-family: var(--font-heading);
   font-style: italic;
   font-size: var(--step-small);
@@ -63,51 +137,137 @@
   text-wrap: pretty;
 }
 
-/* ── Supporting stills: a pair on the one split, one shared height ── */
+.counter {
+  flex: none;
+  font-family: var(--font-body);
+  font-style: normal;
+  font-size: var(--step-label);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-sage);
+}
 
-.stills {
+/* Thumbnail rail: the whole set at a glance, the current one marked by
+   full opacity and an ink underline rather than a box. */
+.thumbs {
+  display: flex;
+  gap: 0.5rem;
+  margin: var(--flow-1) 0 0;
+  padding: 0;
+  list-style: none;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.thumbs::-webkit-scrollbar {
+  display: none;
+}
+
+.thumb {
+  position: relative;
+  display: block;
+  width: 5.5rem;
+  aspect-ratio: 3 / 2;
+  padding: 0 0 4px;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  background: none;
+  cursor: pointer;
+  opacity: 0.5;
+  transition:
+    opacity var(--motion-fast) var(--ease-out),
+    border-color var(--motion-fast) var(--ease-out);
+}
+
+.thumb img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  background: var(--sheet-mat);
+}
+
+.thumb[aria-current='true'] {
+  opacity: 1;
+  border-bottom-color: var(--color-ink);
+}
+
+@media (hover: hover) {
+  .thumb:hover {
+    opacity: 0.85;
+  }
+}
+
+.thumb:focus-visible {
+  outline: 2px solid var(--color-sage);
+  outline-offset: 2px;
+}
+
+.thumbPlay {
+  position: absolute;
+  left: 50%;
+  top: calc(50% - 2px);
+  width: 18px;
+  height: 18px;
+  transform: translate(-50%, -50%);
+  fill: #fff;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.5));
+}
+
+/* ══ THE COVER IMAGE ══════════════════════════════════════════════════ */
+
+.hero {
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  background: var(--sheet-mat);
+  cursor: zoom-in;
+}
+
+.heroImg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero:focus-visible {
+  outline: 2px solid var(--color-sage);
+  outline-offset: 3px;
+}
+
+/* ══ THE POEM ═════════════════════════════════════════════════════════ */
+
+/* A full band of the sheet on its own tinted field: containment, not a
+   bordered widget. Two halves of equal visual weight — the invitation and
+   the text — so the split is balanced by design. */
+.poem {
   display: grid;
   grid-template-columns: 1fr;
-  gap: var(--gap-media);
-  margin-top: var(--flow-2);
-}
-
-@media (min-width: 700px) {
-  .stills {
-    grid-template-columns: var(--split);
-  }
-
-  .stills:has(> figure:nth-child(2)) .box {
-    height: clamp(16rem, 24vw, 22rem);
-  }
-
-  .stills:has(> figure:nth-child(2)) .media {
-    height: 100%;
-    object-fit: cover;
-  }
-}
-
-.stills figure {
+  gap: var(--flow-3);
   margin: 0;
+  padding: clamp(2rem, 4vw, 4rem);
+  background: var(--sheet-field);
 }
 
-/* ── Audio: the poem ─────────────────────────────────────────────── */
-
-.audio {
-  margin: 0;
-  padding: var(--flow-2);
-  border: var(--rule);
-  border-radius: var(--radius-lg);
+@media (min-width: 900px) {
+  .poem {
+    grid-template-columns: 5fr 6fr;
+    align-items: stretch;
+  }
 }
 
-.audioHead {
+.poemLead {
   display: flex;
-  align-items: baseline;
-  gap: var(--flow-1);
-  margin-bottom: var(--flow-2);
+  flex-direction: column;
+  min-width: 0;
 }
 
-.audioKind {
+.poemKicker {
+  margin: 0 0 var(--flow-2);
   font-family: var(--font-body);
   font-size: var(--step-label);
   font-weight: 600;
@@ -116,34 +276,216 @@
   color: var(--color-sage);
 }
 
-.audioTitle {
+.poemOpener {
+  margin: 0 0 var(--flow-3);
   font-family: var(--font-heading);
-  font-size: var(--step-body);
+  font-size: clamp(2.5rem, 4.6vw, 4.25rem);
+  font-weight: 300;
+  font-style: italic;
+  line-height: 1.02;
+  color: var(--color-ink);
+  text-wrap: balance;
+}
+
+.transport {
+  display: flex;
+  align-items: center;
+  gap: var(--flow-2);
+}
+
+.play {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 5.5rem;
+  height: 5.5rem;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: var(--color-ink);
+  color: var(--color-cream);
+  cursor: pointer;
+  transition: transform var(--motion-fast) var(--ease-out);
+}
+
+.play svg {
+  width: 30px;
+  height: 30px;
+  fill: currentColor;
+}
+
+/* At rest, one slow ring breathes out from the button: the one moving
+   thing on the band, and it stops the moment the poem is playing. */
+.play {
+  position: relative;
+}
+
+.play::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 1.5px solid var(--color-ink);
+  animation: breathe 2.8s var(--ease-out) infinite;
+  pointer-events: none;
+}
+
+.poem[data-playing] .play::after {
+  animation: none;
+  opacity: 0;
+}
+
+@keyframes breathe {
+  0% { transform: scale(1); opacity: 0.55; }
+  70%, 100% { transform: scale(1.45); opacity: 0; }
+}
+
+@media (hover: hover) {
+  .play:hover {
+    transform: scale(1.05);
+  }
+}
+
+.play:focus-visible {
+  outline: 2px solid var(--color-sage);
+  outline-offset: 4px;
+}
+
+.track {
+  flex: 1;
+  min-width: 0;
+}
+
+.seek {
+  --pct: 0%;
+  display: block;
+  width: 100%;
+  height: 44px;
+  margin: 0;
+  background: none;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.seek::-webkit-slider-runnable-track {
+  height: 2px;
+  background: linear-gradient(
+    to right,
+    var(--color-ink) var(--pct),
+    color-mix(in srgb, var(--color-ink) 22%, transparent) var(--pct)
+  );
+}
+
+.seek::-moz-range-track {
+  height: 2px;
+  background: color-mix(in srgb, var(--color-ink) 22%, transparent);
+}
+
+.seek::-moz-range-progress {
+  height: 2px;
+  background: var(--color-ink);
+}
+
+.seek::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 14px;
+  height: 14px;
+  margin-top: -6px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--color-ink);
+}
+
+.seek::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--color-ink);
+}
+
+.seek:focus-visible {
+  outline: 2px solid var(--color-sage);
+  outline-offset: 2px;
+}
+
+.time {
+  display: block;
+  font-family: var(--font-body);
+  font-size: var(--step-label);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  font-variant-numeric: tabular-nums;
   color: var(--color-ink);
 }
 
-.audioEl {
-  width: 100%;
-  height: 40px;
+.poemCredit {
+  margin: auto 0 0;
+  padding-top: var(--flow-3);
+  font-family: var(--font-heading);
+  font-style: italic;
+  font-size: var(--step-small);
+  line-height: 1.5;
+  color: var(--color-ink);
 }
 
-/* ── Reflection cards: three, equal, true proportions ────────────── */
+/* The text: a window onto the whole poem, faded at both edges so it
+   reads as continuing. It scrolls with the recording while playing, and
+   by hand at any time. */
+.poemText {
+  max-height: 26rem;
+  overflow-y: auto;
+  scrollbar-width: none;
+  padding-block: 3rem;
+  mask-image: linear-gradient(to bottom, transparent, #000 18%, #000 82%, transparent);
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 18%, #000 82%, transparent);
+}
+
+.poemText::-webkit-scrollbar {
+  display: none;
+}
+
+.poemText:focus-visible {
+  outline: 2px solid var(--color-sage);
+  outline-offset: 4px;
+}
+
+.stanza {
+  margin: 0 0 1.5rem;
+  font-family: var(--font-heading);
+  font-size: var(--step-statement);
+  font-weight: 300;
+  line-height: 1.45;
+  color: var(--color-ink);
+}
+
+@media (max-width: 899px) {
+  .poemText {
+    max-height: 20rem;
+  }
+}
+
+/* ══ REFLECTION CARDS — three, equal, true proportions ═══════════════ */
 
 .gallery {
-  margin-top: var(--flow-2);
+  min-width: 0;
 }
 
 .galleryNote {
-  margin: 0 0 var(--flow-1);
+  margin: 0 0 var(--flow-2);
   font-family: var(--font-body);
-  font-size: var(--step-small);
-  color: var(--color-ink);
+  font-size: var(--step-label);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-sage);
 }
 
 .cards {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: var(--gap-media);
+  gap: clamp(1rem, 2.5vw, 2.5rem);
   margin: 0;
   padding: 0;
   list-style: none;
@@ -157,7 +499,6 @@
   background: none;
   cursor: pointer;
   text-align: left;
-  /* 44px minimum target is satisfied by the card's own height. */
 }
 
 .cardInner {
@@ -223,9 +564,96 @@
   }
 }
 
-/* Reduced motion: the flip still has to WORK, because the back of the card
-   carries the exercise. Swap the faces with no rotation. */
+/* ══ THE FILMSTRIP ════════════════════════════════════════════════════ */
+
+.strip {
+  margin-top: var(--flow-4);
+}
+
+.stripHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--flow-2);
+  margin-bottom: var(--flow-2);
+}
+
+.stripTitle {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: var(--step-heading);
+  font-weight: 400;
+  line-height: 1.15;
+  color: var(--color-ink);
+}
+
+/* Bleeds to the folder's edges so the row reads as continuing off the
+   sheet, while the first photo still starts on the content's left edge. */
+.stripRow {
+  display: flex;
+  gap: var(--gap-media);
+  margin: 0 calc(var(--gutter) * -1);
+  padding: 0 var(--gutter) 0.5rem;
+  list-style: none;
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+  scroll-padding-inline: var(--gutter);
+  scrollbar-width: none;
+  overscroll-behavior-x: contain;
+}
+
+.stripRow::-webkit-scrollbar {
+  display: none;
+}
+
+.stripItem {
+  flex: none;
+  scroll-snap-align: start;
+}
+
+.stripButton {
+  display: block;
+  height: var(--strip-h);
+  padding: 0;
+  border: 0;
+  background: var(--sheet-mat);
+  cursor: zoom-in;
+}
+
+.stripButton:focus-visible {
+  outline: 2px solid var(--color-sage);
+  outline-offset: 3px;
+}
+
+.stripImg {
+  display: block;
+  height: 100%;
+  width: auto;
+}
+
+.stripCaption {
+  max-width: 28ch;
+  margin: var(--flow-1) 0 0;
+  font-family: var(--font-heading);
+  font-style: italic;
+  font-size: var(--step-small);
+  line-height: 1.5;
+  color: var(--color-ink);
+  text-wrap: pretty;
+}
+
+/* ══ Reduced motion ═══════════════════════════════════════════════════ */
+
 @media (prefers-reduced-motion: reduce) {
+  .stageMedia {
+    animation: none;
+  }
+
+  .play::after {
+    animation: none;
+    opacity: 0;
+  }
+
   .cardInner {
     transform: none !important;
     transition: none;
@@ -242,57 +670,5 @@
 
   .card[data-back='true'] .cardBack {
     opacity: 1;
-  }
-}
-
-/* ── Behind the scenes: one calm grid ────────────────────────────── */
-
-.bts {
-  margin-top: var(--flow-4);
-  padding-top: var(--flow-2);
-  border-top: var(--rule);
-}
-
-.btsHead {
-  display: block;
-  margin: 0 0 var(--flow-2);
-  font-family: var(--font-body);
-  font-size: var(--step-label);
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--color-sage);
-}
-
-.btsGrid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: var(--gap-media);
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-@media (min-width: 900px) {
-  .btsGrid {
-    grid-template-columns: repeat(4, 1fr);
-  }
-}
-
-.btsBox {
-  aspect-ratio: 4 / 3;
-}
-
-.btsImg {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform var(--motion-medium) var(--ease-out);
-}
-
-@media (hover: hover) {
-  .zoom:hover .btsImg {
-    transform: scale(1.02);
   }
 }

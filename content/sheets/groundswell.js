@@ -20,6 +20,9 @@ export const groundswell = {
   outcome:
     'All scales aside from perceived support from leadership improved throughout the study, indicating a core problem around institutional trust and support from administration.',
 
+  /* The cover image, beside the title. Image choice, not copy. */
+  hero: { key: 'gs-hero', alt: 'A clinician walks past the Groundswell Garden and the Restorative Pod in the hallway.' },
+
   meta: [
     /* Her own words, 2026-08-27, and authoritative over anything assembled
        from the rehearsal answers. */
@@ -62,7 +65,12 @@ export const groundswell = {
          show the object but not the accumulation. */
       media: {
         lead:    { type: 'video', key: 'gs-intro-artwall', alt: 'The Groundswell Garden art wall filling with anonymous contributions.' },
-        stills:  ['gs-artwall', 'gs-artwall-detail-02'],
+        stills:  [
+          { key: 'gs-artwall',           alt: 'A staff member adds a contribution to the Groundswell Garden wall.' },
+          { key: 'gs-artwall-detail-01', alt: 'Writing a response to one of the guided prompts at the wall.' },
+          { key: 'gs-artwall-detail-02', alt: 'Close detail of the painted flowers and pinned contributions.' },
+          { key: 'gs-artwall-detail-03', alt: 'A staff member points to a contribution on the wall.' },
+        ],
       },
       name: 'Groundswell Garden Community Art Wall',
       body: 'The Groundswell Garden is a community art wall where the emotional realities of oncology work can be witnessed, shared, and honored. Through guided prompts that explore the complex spectrum of grief, healthcare staff and the broader community anonymously contribute messages of support, creating a living tapestry of human stories at the heart of cancer care.',
@@ -75,7 +83,13 @@ export const groundswell = {
          admin required doors. */
       media: {
         lead:    { type: 'video', key: 'gs-walkthrough-video', alt: 'Walkthrough of the Groundswell Restorative Pod.' },
-        stills:  ['gs-pod', 'gs-making-facade'],
+        stills:  [
+          { key: 'gs-pod',             alt: 'The Groundswell Restorative Pod in the hallway.' },
+          { key: 'gs-pod-detail-01',   alt: 'Two staff members at the table inside the pod.' },
+          { key: 'gs-pod-detail-02',   alt: 'Reflection cards and the pod’s invitation to set down what you carry.' },
+          { key: 'gs-pod-detail-03',   alt: 'Opening the mindfulness library on a phone inside the pod.' },
+          { key: 'gs-making-facade',   alt: 'The pod’s painted facade, redesigned when doors were required.' },
+        ],
       },
       name: 'Groundswell Restorative Pod',
       body: 'A dedicated space for staff to process emotions, decompress, and recognize restoration as essential to care work. Designed for ease and impact, it offers calming visuals, guided meditations, reflection cards, and hands-on mindfulness tools that turn even a brief break into meaningful support.',
@@ -92,7 +106,14 @@ export const groundswell = {
          cards' true proportions. Any other set is a one-line swap here. */
       media: {
         lead:     { type: 'audio', key: 'gs-poem-remember', title: 'The Groundswell poem' },
-        also:     [{ type: 'video', key: 'New_Meditations', alt: 'The meditation library.' }],
+        /* Key fixed 2026-09-30: 'New_Meditations' is the Cloudinary id, not
+           the map key, so this video had been silently skipped. */
+        also:     [{ type: 'video', key: 'gs-new-meditations', alt: 'The meditation library.' }],
+        stills:   [
+          { key: 'gs-cards',      alt: 'Hands sorting the Groundswell Reflection Cards on a table.' },
+          { key: 'gs-mockups-43', alt: 'Reading the back of the exhausted card.' },
+          { key: 'gs-mockups-50', alt: 'The reflection card deck spread across a table.' },
+        ],
         gallery:  { kind: 'cards', faces: 'front-and-back',
                     emotions: ['joyful', 'exhausted', 'heartbroken'] },
       },
@@ -108,7 +129,12 @@ export const groundswell = {
       /* A document. Motion adds nothing; the copy is the artifact. */
       media: {
         lead:    { type: 'image', key: 'gs-ctb-email', alt: 'The redesigned Ceased to Breathe email template.' },
-        stills:  ['gs-ctb-detail-01'],
+        stills:  [
+          { key: 'gs-ctb-detail-01',     alt: 'The redesigned email template in a browser window.' },
+          { key: 'gs-ctb-detail-02',     alt: 'The email template open on a laptop.' },
+          { key: 'gs-ctb-detail-03',     alt: 'Typing into the email template.' },
+          { key: 'groundswell-ctb-docs', alt: 'The email template open at a workstation in the office.' },
+        ],
       },
       name: 'Ceased to Breathe (CTB) Email Template',
       body: 'The updated Ceased to Breathe (CTB) email template builds upon the firm foundation of existing staff-led support initiatives for patient death notifications by softening the emotional tone of delivering devastating news. The addition of empathetic language and comforting visuals creates a communal space where the emotional realities of oncology work can be acknowledged, shared, and honored by recognizing both the professional and personal impact of patient loss.',

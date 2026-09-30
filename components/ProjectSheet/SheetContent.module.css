@@ -1,7 +1,13 @@
 /* The folder sheet body, on THE SHEET SYSTEM (defined on .inner in
-   ProjectSheet.module.css): six type steps, one grid split, one rule,
-   one label recipe, four rhythm values. No component invents a value.
-   Type floor is 12px; the project's stylelint rejects anything smaller. */
+   ProjectSheet.module.css).
+
+   Round three (2026-09-30): desktop first, full width inside the folder.
+   Her brief: 80% visual, 20% copy. The page is built on one proportion,
+   a narrow text rail beside a wide work column (--rail / --work, about
+   1 : 3), and every component uses it the same way. Text never pairs with
+   text of a different length: where two text blocks do sit side by side,
+   each column is sized to its own word count so both end together.
+   Below 1000px everything stacks into one clean column. */
 
 /* ── The one label recipe — every label on the sheet is this ─────── */
 
@@ -23,10 +29,37 @@
   color: var(--color-sage);
 }
 
-/* ── Masthead: the cover — the title alone ───────────────────────── */
+/* ══ COVER ════════════════════════════════════════════════════════════ */
 
-.masthead {
-  margin-bottom: var(--flow-3);
+.cover {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--flow-3);
+  margin-bottom: var(--flow-4);
+}
+
+@media (min-width: 1000px) {
+  .cover {
+    grid-template-columns: var(--rail) var(--work);
+    column-gap: var(--gap-col);
+    row-gap: var(--flow-2);
+    align-items: stretch;
+  }
+
+  .coverSolo {
+    grid-template-columns: 1fr;
+  }
+}
+
+.coverHead {
+  grid-column: 1 / -1;
+  min-width: 0;
+}
+
+.coverText {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
 }
 
 .num {
@@ -37,7 +70,8 @@
   margin: 0;
   font-family: var(--font-heading);
   font-size: var(--step-display);
-  line-height: 1.05;
+  font-weight: 300;
+  line-height: 1;
   color: var(--color-ink);
   text-wrap: balance;
 }
@@ -46,48 +80,42 @@
   margin: var(--flow-1) 0 0;
   font-family: var(--font-heading);
   font-style: italic;
+  font-weight: 300;
   font-size: var(--step-statement);
+  line-height: 1.3;
   color: var(--color-ink);
-  text-wrap: pretty;
+  text-wrap: balance;
 }
 
-/* ── The statement: the one serif moment between cover and work ──── */
-
-.statement {
-  max-width: 52ch;
-  margin: 0 0 var(--flow-4);
-}
-
-.statementBody {
-  margin: 0;
-  font-family: var(--font-heading);
-  font-size: var(--step-statement);
-  line-height: 1.5;
-  color: var(--color-ink);
-  text-wrap: pretty;
-}
-
-/* ── Metadata strip ──────────────────────────────────────────────── */
-
+/* The facts run down the rail beside the image, top edges level, so the
+   cover resolves as one rectangle under the name. */
 .meta {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(180px, 100%), 1fr));
   gap: var(--flow-2);
-  margin: 0 0 var(--flow-3);
-  padding-block: var(--flow-2);
+  margin: 0;
+  padding-top: var(--flow-2);
   border-top: var(--rule);
-  border-bottom: var(--rule);
+}
+
+@media (min-width: 600px) and (max-width: 999px) {
+  .meta {
+    grid-template-columns: 1fr 1fr;
+  }
 }
 
 .meta div {
   min-width: 0;
 }
 
+.meta dt {
+  margin-bottom: 0.25rem;
+}
+
 .meta dd {
   margin: 0;
   font-family: var(--font-body);
   font-size: var(--step-small);
-  line-height: 1.6;
+  line-height: 1.55;
   color: var(--color-ink);
   text-wrap: pretty;
 }
@@ -107,30 +135,64 @@
   color: var(--color-sage);
 }
 
-/* ── Frame: one reading column ───────────────────────────────────── */
+/* align-self: start matters: stretched to the rail's height, the aspect
+   ratio would derive the WIDTH from that height and overflow the column. */
+.coverMedia {
+  align-self: start;
+  width: 100%;
+  min-width: 0;
+  aspect-ratio: 16 / 9;
+}
+
+/* ══ THE STATEMENT — the outcome, set as a headline across the page ═══ */
+
+.statement {
+  display: grid;
+  grid-template-columns: 1fr;
+  margin: 0 0 var(--flow-4);
+}
+
+@media (min-width: 1000px) {
+  .statement {
+    grid-template-columns: var(--rail) var(--work);
+    column-gap: var(--gap-col);
+    align-items: baseline;
+  }
+}
+
+.statementBody {
+  max-width: 34ch;
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: var(--step-headline);
+  font-weight: 300;
+  line-height: 1.2;
+  color: var(--color-ink);
+  text-wrap: balance;
+}
+
+/* ══ FRAME — two blocks, columns proportional to their length ════════ */
 
 .frame {
-  max-width: 62ch;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--flow-3);
   margin-bottom: var(--flow-4);
-}
-
-.why {
-  margin: 0;
-  font-family: var(--font-body);
-  font-size: var(--step-body);
-  line-height: 1.7;
-  color: var(--color-ink);
-  text-wrap: pretty;
-}
-
-.frameBlock {
-  margin-top: var(--flow-2);
+  padding-top: var(--flow-2);
+  border-top: var(--rule);
 }
 
 @media (min-width: 900px) {
-  .frameBlock:first-child {
-    margin-top: 0;
+  .frame {
+    /* 52 words beside 85: widths in the same ratio, so the two blocks
+       finish within a line of each other. */
+    grid-template-columns: 5fr 8fr;
+    column-gap: var(--gap-col);
   }
+}
+
+.frameBlock {
+  min-width: 0;
 }
 
 .frameBlock p {
@@ -142,37 +204,54 @@
   text-wrap: pretty;
 }
 
-/* ── Components: identical anatomy, every time ───────────────────── */
+/* ══ COMPONENTS — the rail and the work, identical every time ════════ */
 
 .component {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--flow-2);
   margin-bottom: var(--flow-4);
   padding-top: var(--flow-2);
   border-top: var(--rule);
 }
 
-.componentHead {
-  display: flex;
-  align-items: baseline;
-  gap: var(--flow-1);
-  margin-bottom: var(--flow-2);
+@media (min-width: 1000px) {
+  .component {
+    grid-template-columns: var(--rail) var(--work);
+    column-gap: var(--gap-col);
+    row-gap: var(--flow-3);
+  }
+}
+
+.rail {
+  min-width: 0;
+}
+
+/* Sticky, so a long gallery never leaves its words behind. */
+@media (min-width: 1000px) {
+  .railInner {
+    position: sticky;
+    top: var(--flow-2);
+  }
 }
 
 .componentNum {
-  margin: 0;
   font-variant-numeric: tabular-nums;
 }
 
-.componentHead h3 {
+.componentName {
   margin: 0;
   font-family: var(--font-heading);
   font-size: var(--step-heading);
-  line-height: 1.15;
+  font-weight: 400;
+  line-height: 1.12;
   color: var(--color-ink);
   text-wrap: balance;
 }
 
 .gated {
-  margin-left: auto;
+  display: inline-block;
+  margin-top: var(--flow-1);
   padding: 0.25rem 0.625rem;
   border: var(--rule);
   border-radius: var(--radius-pill);
@@ -185,42 +264,71 @@
 }
 
 .componentBody {
-  max-width: 62ch;
   margin: var(--flow-2) 0 0;
   font-family: var(--font-body);
-  font-size: var(--step-body);
-  line-height: 1.7;
+  font-size: var(--step-small);
+  line-height: 1.65;
   color: var(--color-ink);
   text-wrap: pretty;
 }
 
-/* Her contribution: quiet but unmistakable — the label plus the italic
-   serif, in the reading flow, right after the description it signs. */
 .mine {
-  max-width: 56ch;
   margin: var(--flow-2) 0 0;
+  padding-top: var(--flow-1);
+  border-top: 1px solid var(--sheet-hair);
 }
 
 .mineBody {
   display: block;
   font-family: var(--font-heading);
   font-style: italic;
-  font-size: var(--step-body);
-  line-height: 1.6;
+  font-size: var(--step-small);
+  line-height: 1.55;
   color: var(--color-ink);
   text-wrap: pretty;
 }
 
-/* ── Close: one reading column, then the lesson, then the colophon ─ */
+.work {
+  display: grid;
+  gap: var(--flow-3);
+  min-width: 0;
+}
+
+/* The poem band spans the whole component, rail and work together. */
+.band {
+  min-width: 0;
+}
+
+@media (min-width: 1000px) {
+  .band {
+    grid-column: 1 / -1;
+  }
+}
+
+/* ══ CLOSE ════════════════════════════════════════════════════════════ */
 
 .close {
   padding-top: var(--flow-2);
   border-top: var(--rule);
 }
 
+/* 112 words beside 108: equal columns. */
+.closePair {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--flow-3);
+  margin-bottom: var(--flow-4);
+}
+
+@media (min-width: 900px) {
+  .closePair {
+    grid-template-columns: 1fr 1fr;
+    column-gap: var(--gap-col);
+  }
+}
+
 .closeBlock {
-  max-width: 62ch;
-  margin-bottom: var(--flow-3);
+  min-width: 0;
 }
 
 .closeBlock p {
@@ -232,28 +340,62 @@
   text-wrap: pretty;
 }
 
-/* The strongest thing in the corpus, in the editorial voice, on the
-   sheet's own left axis. */
+.closeBlock p:last-child {
+  margin-bottom: 0;
+}
+
+/* The lesson: the strongest thing in the corpus, on the page's own
+   proportion, label in the rail and the words across the work column. */
 .lesson {
-  max-width: 52ch;
-  margin: var(--flow-3) 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  margin: 0;
+}
+
+@media (min-width: 1000px) {
+  .lesson {
+    grid-template-columns: var(--rail) var(--work);
+    column-gap: var(--gap-col);
+    align-items: baseline;
+  }
 }
 
 .lesson p {
+  max-width: 46ch;
   margin: 0;
   font-family: var(--font-heading);
   font-size: var(--step-statement);
-  line-height: 1.55;
+  font-weight: 300;
+  line-height: 1.5;
   color: var(--color-ink);
   text-wrap: pretty;
 }
 
+/* ══ COLOPHON ═════════════════════════════════════════════════════════ */
+
 .colophon {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--flow-1);
+  margin-top: var(--flow-3);
   padding-top: var(--flow-2);
-  border-top: var(--rule);
+  border-top: 1px solid var(--sheet-hair);
+}
+
+@media (min-width: 1000px) {
+  .colophon {
+    grid-template-columns: var(--rail) var(--work);
+    column-gap: var(--gap-col);
+  }
+
+  .credit {
+    grid-column: 1;
+    grid-row: 1;
+  }
 }
 
 .partners {
+  max-width: 80ch;
   margin: 0;
   font-family: var(--font-body);
   font-size: var(--step-small);
@@ -263,19 +405,10 @@
 }
 
 .credit {
-  margin: var(--flow-1) 0 0;
-  font-family: var(--font-body);
+  margin: 0;
+  font-family: var(--font-heading);
+  font-style: italic;
   font-size: var(--step-small);
   line-height: 1.6;
   color: var(--color-ink);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .masthead,
-  .frame,
-  .component,
-  .close {
-    opacity: 1;
-    transform: none;
-  }
 }

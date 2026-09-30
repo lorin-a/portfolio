@@ -136,12 +136,12 @@ export default function ProjectSheet({
     }
   }
 
-  /* The tab hangs off the content column's left edge, not the sheet's, so
-     it registers to the type below it instead of floating at the corner. */
-  const tabLeft = useCallback(W => {
-    const col = Math.min(1024, W)
-    const pad = Math.max(24, Math.min(48, W * 0.04))
-    return Math.max(28, (W - col) / 2 + pad)
+  /* The tab sits at the folder's LEFT, like a filed manila folder, on the
+     same gutter as the content (the CSS --gutter: clamp(1.25rem, 4vw, 4rem)),
+     so tab, title, and every text edge share one left line. */
+  const tabLeft = useCallback(() => {
+    const vw = typeof window !== 'undefined' ? window.innerWidth : 1440
+    return Math.max(20, Math.min(64, vw * 0.04))
   }, [])
 
   /** Natural tab width, measured from its label once the sheet is shown. */
@@ -358,9 +358,11 @@ export default function ProjectSheet({
           <span className={styles.folderTabText}>{label}</span>
         </div>
 
-        <button ref={closeRef} type="button" className={styles.close} onClick={requestClose}>
+        <button ref={closeRef} type="button" className={styles.close} onClick={requestClose}
+          aria-label="Close project">
           <ExpandCorners inward />
-          Close <span className={styles.esc}>esc</span>
+          <span className={styles.closeLabel}>Close</span>
+          <span className={styles.esc} aria-hidden="true">esc</span>
         </button>
 
         <div ref={bodyRef} className={styles.body}>

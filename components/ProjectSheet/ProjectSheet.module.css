@@ -87,16 +87,16 @@
 }
 
 /* ===========================================
-   CLOSE — the sheet's own top-right corner, where an overlay's close
-   lives. Registered to the content column it read as adrift in the
-   middle of the screen.
+   CLOSE — inside the folder, top right, on the content's right edge
+   (her note FS21: inside the frame rather than riding the outline).
    =========================================== */
 
 .close {
   position: absolute;
   z-index: 4;
-  top: 22px;
-  right: 22px;
+  /* Inside the folder: below the tab line, on the content's right edge. */
+  top: calc(52px + 1.25rem);
+  right: clamp(1.25rem, 4vw, 4rem);
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
@@ -150,8 +150,22 @@
 }
 
 .close:focus-visible {
-  outline: 2px solid var(--color-ink);
+  outline: 2px solid var(--color-sage);
   outline-offset: 3px;
+}
+
+/* Narrow: an icon-only 44px circle, so it never sits over a line of text. */
+@media (max-width: 720px) {
+  .close {
+    justify-content: center;
+    width: 44px;
+    padding: 0;
+  }
+
+  .closeLabel,
+  .esc {
+    display: none;
+  }
 }
 
 .esc {
@@ -181,30 +195,38 @@
 }
 
 .inner {
-  max-width: 66rem;
+  /* Round three (2026-09-30): desktop first and full width. The gutter is
+     one number shared with the tab and the close, so the folder's tab,
+     the close, and the content's left and right edges all register. */
+  --gutter: clamp(1.25rem, 4vw, 4rem);
+  max-width: 120rem;
   margin: 0 auto;
-  padding: 2.5rem clamp(1.5rem, 4vw, 3rem) 5rem;
+  padding: 5.5rem var(--gutter) 6rem;
 
   /* ══ THE SHEET SYSTEM ═══════════════════════════════════════════════
-     Six type steps, one grid proportion, one radius, one rule weight,
-     one label recipe, four rhythm values. Everything in the sheet maps
-     to these — no component invents its own value. Inherited by
-     SheetContent + SheetMedia via custom properties. */
-  --step-label: 0.75rem;                        /* every label + folio  */
-  --step-small: 0.9375rem;                      /* captions, meta, notes */
-  --step-body: 1.0625rem;                       /* body prose            */
-  --step-statement: 1.5rem;                     /* the two serif moments:
-                                                   the outcome + lesson  */
-  --step-heading: clamp(1.625rem, 2.2vw, 2rem); /* component titles      */
-  --step-display: clamp(2.75rem, 5vw, 4rem);    /* the cover title       */
-  --split: 1.55fr 1fr;                          /* the one column split  */
-  --gap-col: 3rem;                              /* column gutter         */
-  --gap-media: 1rem;                            /* media grids           */
-  --flow-1: 0.75rem;                            /* label → content       */
-  --flow-2: 1.5rem;                             /* within a section      */
-  --flow-3: 3rem;                               /* block → block         */
-  --flow-4: 5rem;                               /* section → section     */
-  --rule: 1px solid var(--color-ink);           /* the one rule          */
+     Type steps, one page proportion, one rule, one label recipe, four
+     rhythm values. Everything in the sheet maps to these; no component
+     invents its own value. Inherited by SheetContent + SheetMedia. */
+  --step-label: 0.75rem;                          /* every label + folio   */
+  --step-small: 0.9375rem;                        /* rail prose, captions  */
+  --step-body: 1.0625rem;                         /* long-form prose       */
+  --step-statement: clamp(1.375rem, 1.7vw, 1.625rem); /* the lesson, poem   */
+  --step-heading: clamp(1.625rem, 2.2vw, 2.125rem);  /* component names    */
+  --step-headline: clamp(1.875rem, 3.2vw, 3rem);  /* the outcome           */
+  --step-display: clamp(3rem, 6vw, 5.5rem);       /* the cover title       */
+  --rail: minmax(17rem, 1fr);                     /* the text rail  ≈ 25%  */
+  --work: 3fr;                                    /* the work column ≈ 75% */
+  --gap-col: clamp(2rem, 3.5vw, 4rem);            /* column gutter         */
+  --gap-media: 1rem;                              /* media rows            */
+  --strip-h: clamp(15rem, 26vw, 24rem);           /* filmstrip height      */
+  --flow-1: 0.75rem;                              /* label → content       */
+  --flow-2: 1.5rem;                               /* within a section      */
+  --flow-3: 3rem;                                 /* block → block         */
+  --flow-4: clamp(4rem, 7vw, 7rem);               /* section → section     */
+  --rule: 1px solid var(--color-ink);             /* the one rule          */
+  --sheet-hair: color-mix(in srgb, var(--color-ink) 18%, transparent);
+  --sheet-mat: color-mix(in srgb, var(--color-ink) 6%, var(--color-cream));
+  --sheet-field: color-mix(in srgb, var(--color-sage) 14%, var(--color-cream));
 }
 
 .masthead {
@@ -507,8 +529,6 @@
   max-width: 40rem;
   margin: var(--flow-2) auto 0;
   overflow: hidden;
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-lg);
 }
 
 .pressPreview img {
@@ -545,29 +565,7 @@
 }
 
 @media (hover: hover) {
-  .press:hover .pressPreview {
-  display: block;
-  max-width: 40rem;
-  margin: var(--flow-2) auto 0;
-  overflow: hidden;
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-lg);
-}
-
-.pressPreview img {
-  display: block;
-  width: 100%;
-  height: auto;
-  transition: transform var(--motion-medium) var(--ease-out);
-}
-
-@media (hover: hover) {
-  .press:hover .pressPreview img {
-    transform: scale(1.015);
-  }
-}
-
-.pressCta {
+  .press:hover .pressCta {
     background: var(--color-ink);
     color: var(--color-cream);
   }

@@ -37,17 +37,17 @@ lab route, she points, the winner becomes law — not a fifth solo swing.
 
 | # | Note (her words) | Status |
 |---|---|---|
-| FS20 | "Depending on what is needed for mobile, I would prefer to see the Groundswell folder lip/title tab on the left like an actual manila folder" | ⏳ OPEN |
-| FS21 | "the close symbol inside of the folder frame rather than on top of it" | ⏳ OPEN |
-| FS22 | "I will not edit copy in this round just visual" | 📌 CONSTRAINT — no copy touched this round |
-| FS23 | "I feel that the rounded edge images look novice and naieve. I want a more sophisticated image set up" | ⏳ OPEN |
-| FS24 | "I think it would look more sophisticated to show some kind of click gallery of images in their full size within the gallery box rather than a bento box style of different sized images and such" | ⏳ OPEN |
+| FS20 | "Depending on what is needed for mobile, I would prefer to see the Groundswell folder lip/title tab on the left like an actual manila folder" | ✅ SHIPPED — the tab sits at the folder’s left on the content gutter, so tab, title and every text edge share one left line at every width (measured 1440 / 1024 / 390). Mobile keeps it left too |
+| FS21 | "the close symbol inside of the folder frame rather than on top of it" | ✅ SHIPPED — close moved inside the folder, below the tab line, on the content’s right edge; on phones it becomes an icon-only 44px circle so it never sits over text |
+| FS22 | "I will not edit copy in this round just visual" | ✅ HELD — no copy edited. Structural additions only: the label “The project” over the frame paragraph, image alt text for the new gallery images (hers to rewrite), and the poem text + her Joy Harjo credit line, both already in the repo in her words |
+| FS23 | "I feel that the rounded edge images look novice and naieve. I want a more sophisticated image set up" | ✅ SHIPPED — square corners on every photo and recording. Only the reflection cards keep rounded corners, because those are the printed cards’ real corners |
+| FS24 | "I think it would look more sophisticated to show some kind of click gallery of images in their full size within the gallery box rather than a bento box style of different sized images and such" | ✅ SHIPPED — THE STAGE: each component is one gallery, one artifact at a time at its true proportions inside a fixed 3:2 mat (letterboxed, never cropped), with counter, arrows, a thumbnail rail, arrow keys, and click-through to the full-screen overlay. Galleries also grew: Garden 5, Pod 6, Library 4, CTB 5 |
 | FS25 | "I love the flip cards" | ✅ KEEP — untouched |
-| FS26 | "The poem is almost there but needs a more inviting and eye catching interaction, it currently looks like a line easy to miss, not asking the user to click--its a huge feature of the project and should take up space as such" | ⏳ OPEN |
-| FS27 | "A lot of the text is left aligned and it makes the page look empty on the right side and makes it elongated unnecessarily, is there a 2 column set up or alternative that looks better?" | ⏳ OPEN |
-| FS28 | "The bottom gallery also needs to be something more sophisticated" | ⏳ OPEN |
-| FS29 | "why must everything be so centered with tons of space on the left and right? Should we go for a more full width layout inside of the folder? Its looking a little like mobile-first and I would rather design for desktop first and make sure mobile looks clean" | ⏳ OPEN |
-| FS30 | "I want the ratio to be 80% visual 20% copy" | ⏳ OPEN |
+| FS26 | "The poem is almost there but needs a more inviting and eye catching interaction, it currently looks like a line easy to miss, not asking the user to click--its a huge feature of the project and should take up space as such" | ✅ SHIPPED — the poem is its own full-width band on a tinted field: “Remember your heart.” set large, an 88px play button with one breathing ring at rest, a real seek bar and time, and the full poem text beside it that scrolls with the recording. Poem text moved to content/poems/groundswell.js, shared with the homepage intro |
+| FS27 | "A lot of the text is left aligned and it makes the page look empty on the right side and makes it elongated unnecessarily, is there a 2 column set up or alternative that looks better?" | ✅ SHIPPED — each component is a narrow sticky text rail beside a wide work column; the frame and the close pair their blocks side by side with column widths proportional to word count, so paired blocks end together |
+| FS28 | "The bottom gallery also needs to be something more sophisticated" | ✅ SHIPPED — behind the scenes is now a full-bleed filmstrip: one height, every photo at its own width, nothing cropped, horizontal scroll with arrows, captions under each |
+| FS29 | "why must everything be so centered with tons of space on the left and right? Should we go for a more full width layout inside of the folder? Its looking a little like mobile-first and I would rather design for desktop first and make sure mobile looks clean" | ✅ SHIPPED — desktop first, full width inside the folder (max 120rem, 4vw gutter); one clean single column below 1000px. Sheet is ~17% shorter at 1440 (11,992 → 9,948px) |
+| FS30 | "I want the ratio to be 80% visual 20% copy" | ✅ SHIPPED — the page runs on a rail : work proportion of about 1 : 3, the cover leads with the photograph, and the galleries carry more images, so visuals take most of every screen while no copy was cut |
 
 ### ⟢ OPEN NOTES LEDGER — Folder sheet (2026-09-06, her verdict on the rebuilt sheet)
 
