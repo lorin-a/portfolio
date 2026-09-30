@@ -57,6 +57,7 @@ lab route, she points, the winner becomes law — not a fifth solo swing.
 | FS37 | "Match the rest of the layout to the three columns so that there is a unified layout design system" (2026-09-30) | ⏳ OPEN |
 | FS38 | "Same for the type system right now there seem to be inconsistencies across different type styles" | ⏳ OPEN |
 | FS39 | "I like how big the 3 column text is but the body looks too small in comparison, can you adjust the body or does that mess with site-wide styles?" | ⏳ OPEN |
+| FS40 | "I do not want every section to be 3 columns, I like them how they are I just want the sizing of the 3 columns to fit into the overall layout ratio design system" (clarifies FS37) | ⏳ OPEN |
 
 ### ⟢ OPEN NOTES LEDGER — Folder sheet (2026-09-06, her verdict on the rebuilt sheet)
 
