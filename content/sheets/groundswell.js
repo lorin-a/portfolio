@@ -195,7 +195,13 @@ export const groundswell = {
       },
       name: 'Groundswell Restorative Pod',
       body: 'A dedicated space for staff to process emotions, decompress, and recognize restoration as essential to care work. Designed for ease and impact, it offers calming visuals, guided meditations, reflection cards, and hands-on mindfulness tools that turn even a brief break into meaningful support.',
-      mine: 'I secured the donations and partnerships that built it: NookPod, finger labyrinths, wood working, Schlage locks, density sensor hardware and software, and a meditation teacher partner.',
+      /* Her copy 2026-09-30 (FS136). Copy edits: “wood working” →
+         woodworking; “density” → Density (the company, as in her credits).
+         Original: "I secured over $40k value in donations and partnerships
+         that built the pod: the pod structure, finger labyrinths, wood
+         working, Schlage locks, density sensor hardware and software, and a
+         meditation teacher to co-write and record the custom meditations." */
+      mine: 'I secured over $40k value in donations and partnerships that built the pod: the pod structure, finger labyrinths, woodworking, Schlage locks, Density sensor hardware and software, and a meditation teacher to co-write and record the custom meditations.',
     },
     {
       key: 'library',
