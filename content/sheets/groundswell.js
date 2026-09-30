@@ -239,7 +239,15 @@ export const groundswell = {
       },
       name: 'Groundswell Mindfulness Library',
       body: 'A digital library of mindfulness resources including guided meditations of varying lengths, the Groundswell poem, and calming instrumentals. Groundswell Reflection Cards are part of the library: a deck of guided reflection cards designed to help healthcare staff identify and process the complex emotions of caregiving work. Each card offers emotional validation, simple somatic exercises for nervous system regulation, and conversation starters for meaningful dialogue about well-being.',
-      mine: 'I applied my knowledge of somatic bodywork to draft the reflection cards, and set up the recorded meditations and instrumentals.',
+      /* Her copy 2026-09-30 (FS137). Copy edits: typos (“fpr”, “preprared”);
+         “micro-site” → microsite; “the” before YouTube channel; a closing
+         period. Original: "I applied my knowledge of somatic bodywork to
+         draft the reflection cards and copy fpr the poem and custom
+         meditation, coordinated with meditation teachers to write and
+         record additional custom meditations, selected the featured
+         instrumentals, designed the micro-site and preprared YouTube
+         channel" */
+      mine: 'I applied my knowledge of somatic bodywork to draft the reflection cards and copy for the poem and custom meditation, coordinated with meditation teachers to write and record additional custom meditations, selected the featured instrumentals, designed the microsite and prepared the YouTube channel.',
       /* Her build request, 2026-08-27: "I want to embed a player for the poem
          as an interactive component." Not built yet. */
       wants: 'An embedded player for the Groundswell poem.',
