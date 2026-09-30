@@ -575,3 +575,42 @@
     grid-row: 1 / span 2;
   }
 }
+
+/* ══ Title on the paper, 25% shorter (FS91) ═════════════════════════════
+   The paper widens from 4 to 5 of the 12 columns (the pile takes 7), so
+   the facts wrap onto fewer lines; the heading on the sheet steps down a
+   little. No words cut. */
+@media (min-width: 1000px) {
+  .cover:has(.sheetTitled) .sheet {
+    grid-column: 1 / span 5;
+  }
+
+  .cover:has(.sheetTitled) .pile {
+    grid-column: 6 / span 7;
+  }
+
+  .cover:has(.sheetTitled) .paperHead {
+    padding-bottom: var(--flow-1);
+  }
+
+  /* 2× (FS92), capped at the sheet's width: “Groundswell” measures 4.87em,
+     and a little wider at small sizes (optical-size axis), so 18.5cqi of the
+     heading's own width is the widest that always fits. */
+  .cover:has(.sheetTitled) .paperHead {
+    container-type: inline-size;
+  }
+
+  .cover:has(.sheetTitled) .paperHead .title {
+    font-size: min(calc(var(--step-display) * 0.78 * 2), 18.5cqi);
+    line-height: 0.95;
+  }
+
+  .cover:has(.sheetTitled) .sheet > div {
+    --line: 1.375rem;   /* 22px rule on this sheet */
+  }
+
+  /* the last few percent: the prints set the row's height here */
+  .cover:has(.sheetTitled) .polaroids .print {
+    width: 45%;
+  }
+}
