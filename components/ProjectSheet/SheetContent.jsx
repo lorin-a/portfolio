@@ -94,10 +94,11 @@ export default function SheetContent({ sheet, num, title, tagline, titleId }) {
 
   return (
     <div ref={rootRef}>
-      {/* THE COVER — the place itself, full bleed across the folder, faded
-          under the project's name and facts (her note FS46). Hover lifts
-          the overlay and the photograph shows in full colour. */}
-      <header className={`${styles.cover} ${sheet.hero ? styles.coverImage : ''}`} data-reveal="0">
+      {/* THE COVER — the place itself, full bleed and in full colour, with a
+          watercolor wash in the project's own colour rising over its foot
+          to carry the name and facts (her notes FS46, FS48). */}
+      <header className={`${styles.cover} ${sheet.hero ? styles.coverImage : ''}`} data-reveal="0"
+        style={sheet.band ? { '--band': sheet.band } : undefined}>
         {sheet.hero && (
           <div className={styles.coverMedia}>
             <SheetHero item={sheet.hero} onImage={openImage} />
@@ -152,7 +153,8 @@ export default function SheetContent({ sheet, num, title, tagline, titleId }) {
 
       {components.map((c, i) => {
         const slides = slidesFor(c.media)
-        const poem = [c.media?.lead, ...(c.media?.also || [])].find((m) => m?.type === 'audio')
+        const poem = c.media?.poem || [c.media?.lead, ...(c.media?.also || [])].find((m) => m?.type === 'audio')
+        const phone = c.media?.phone
         return (
           <section key={c.key} className={styles.component} data-reveal="0">
             {/* The rail: name, what it is, what I did. Narrow and sticky,
@@ -177,12 +179,12 @@ export default function SheetContent({ sheet, num, title, tagline, titleId }) {
                 onImage={c.gated ? null : openImage} label={`${c.name}, gallery`} />
             </div>
 
-            {/* The deck: the poem as a card at the reflection cards' own
-                proportions, first in one row with them, across the whole
-                component. */}
-            {(c.media?.gallery || poem) && (
+            {/* The deck: the phone (the digital library, with the poem
+                playing inside it) and the reflection cards, one row of
+                objects across the whole component. */}
+            {(c.media?.gallery || poem || phone) && (
               <div className={styles.band}>
-                <SheetCardGallery gallery={c.media?.gallery} poem={poem} />
+                <SheetCardGallery gallery={c.media?.gallery} poem={poem} phone={phone} />
               </div>
             )}
           </section>

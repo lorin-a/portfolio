@@ -117,27 +117,48 @@ const fmt = (t) => {
 }
 
 /**
- * THE POEM CARD — the recording as a card in the deck.
+ * THE PHONE — the digital library, with the poem playing inside it.
  *
- * Her note FS42: in line with the reflection cards, in a mimic shape. So
- * it takes the cards' exact proportions, corners and shadow, and sits
- * first in their row. The face holds the whole poem: the opening line
- * large, the rest in a window that scrolls with the recording while it
- * plays (a linear follow; there are no per-stanza timestamps yet) and by
- * hand at any time, and the transport at the foot.
+ * Her note FS47. The poem is an item in the digital library (the recording
+ * shows it on the library's meditations page), so rather than a card of
+ * its own it plays inside the phone. At rest the screen auto-plays the real
+ * iPhone recording of the library. A now-playing bar sits at the foot of
+ * the screen, the way a phone's own mini-player does; press play and the
+ * screen turns to the poem's words, which scroll with the recording. Pause
+ * and it returns to the library.
  *
- * Custom transport over a hidden <audio>: a real button with a pressed
- * state, and a native range input for seeking, so keyboard and screen
- * reader users get both. Wired into the page-wide single-play system.
+ * The recording plays only while on screen, and not at all under reduced
+ * motion (tap the screen to play it). Transport is a real button with a
+ * pressed state plus a native range input, wired into the page-wide
+ * single-play audio system.
  */
-function SheetPoemCard({ item }) {
+function SheetPhone({ phone, poem }) {
+  const videoRef = useRef(null)
   const audioRef = useRef(null)
   const textRef = useRef(null)
+  const inViewRef = useRef(false)
   const [playing, setPlaying] = useState(false)
   const [time, setTime] = useState(0)
   const [dur, setDur] = useState(0)
-  useSharedAudio(audioRef, item.title)
-  const src = aud(item.key)
+  useSharedAudio(audioRef, poem?.title || 'Poem')
+
+  const reduced = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  const poemPlaying = () => audioRef.current ? !audioRef.current.paused : false
+  const videoSrc = phone && vid(phone.key, 720)
+  const audioSrc = poem && aud(poem.key)
+
+  /* The library recording plays while the phone is on screen. */
+  useEffect(() => {
+    const v = videoRef.current
+    if (!v || reduced()) return
+    const io = new IntersectionObserver(([en]) => {
+      inViewRef.current = en.isIntersecting
+      if (en.isIntersecting && !poemPlaying()) v.play().catch(() => {})
+      else v.pause()
+    }, { threshold: 0.35 })
+    io.observe(v)
+    return () => io.disconnect()
+  }, [])
 
   useEffect(() => {
     const a = audioRef.current
@@ -150,8 +171,11 @@ function SheetPoemCard({ item }) {
       }
     }
     const onMeta = () => setDur(a.duration)
-    const onPlay = () => setPlaying(true)
-    const onPause = () => setPlaying(false)
+    const onPlay = () => { setPlaying(true); videoRef.current?.pause() }
+    const onPause = () => {
+      setPlaying(false)
+      if (inViewRef.current && !reduced()) videoRef.current?.play().catch(() => {})
+    }
     a.addEventListener('timeupdate', onTime)
     a.addEventListener('loadedmetadata', onMeta)
     a.addEventListener('play', onPlay)
@@ -166,77 +190,94 @@ function SheetPoemCard({ item }) {
     }
   }, [])
 
-  if (!src) return null
+  if (!videoSrc && !audioSrc) return null
 
   const toggle = () => {
     const a = audioRef.current
     if (!a) return
     a.paused ? a.play() : a.pause()
   }
+  const toggleVideo = () => {
+    const v = videoRef.current
+    if (!v || playing) return
+    v.paused ? v.play().catch(() => {}) : v.pause()
+  }
   const pct = dur ? (time / dur) * 100 : 0
 
   return (
-    <figure className={styles.poemCard} data-playing={playing || undefined}>
-      <div className={styles.poemFace}>
-        <span className={styles.poemKicker}>Listen</span>
+    <figure className={styles.phone} data-playing={playing || undefined}>
+      <div className={styles.device}>
+        <div className={styles.screen}>
+          {videoSrc && (
+            <video ref={videoRef} src={`${videoSrc}#t=0.1`} muted loop playsInline
+              preload="metadata" className={styles.screenVideo}
+              aria-label={phone.alt} onClick={toggleVideo} />
+          )}
 
-        <div ref={textRef} className={styles.poemText} tabIndex={0}
-          aria-label={`${item.title}, full text`}>
-          <p className={styles.poemOpener}>{POEM_OPENER}</p>
-          {POEM_STANZAS.map((st, i) => (
-            <p key={i} className={styles.stanza}>
-              {st.map((line, j) => (
-                <span key={j}>{line}{j < st.length - 1 && <br />}</span>
+          {audioSrc && (
+            <div ref={textRef} className={styles.lyrics} tabIndex={playing ? 0 : -1}
+              aria-hidden={!playing} aria-label={`${poem.title}, words`}>
+              <p className={styles.lyricsOpener}>{POEM_OPENER}</p>
+              {POEM_STANZAS.map((st, i) => (
+                <p key={i} className={styles.lyricsStanza}>
+                  {st.map((line, j) => (
+                    <span key={j}>{line}{j < st.length - 1 && <br />}</span>
+                  ))}
+                </p>
               ))}
-            </p>
-          ))}
-        </div>
+            </div>
+          )}
 
-        <div className={styles.transport}>
-          <button type="button" className={styles.play} onClick={toggle}
-            aria-pressed={playing}
-            aria-label={playing ? `Pause ${item.title}` : `Play ${item.title}`}>
-            {playing ? (
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                <rect x="6.5" y="5" width="3.5" height="14" rx="0.5" />
-                <rect x="14" y="5" width="3.5" height="14" rx="0.5" />
-              </svg>
-            ) : (
-              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.2v13.6L19 12z" /></svg>
-            )}
-          </button>
-          <div className={styles.track}>
-            <input
-              type="range"
-              className={styles.seek}
-              min={0}
-              max={dur || 0}
-              step={0.1}
-              value={time}
-              onChange={(e) => { if (audioRef.current) audioRef.current.currentTime = +e.target.value }}
-              aria-label={`Seek ${item.title}`}
-              aria-valuetext={`${fmt(time)} of ${fmt(dur)}`}
-              style={{ '--pct': `${pct}%` }}
-            />
-            <span className={styles.time}>
-              {fmt(time)} <span aria-hidden="true">/</span> {dur ? fmt(dur) : '–:––'}
-            </span>
-          </div>
+          {audioSrc && (
+            <div className={styles.mini}>
+              <button type="button" className={styles.miniPlay} onClick={toggle}
+                aria-pressed={playing}
+                aria-label={playing ? `Pause ${poem.title}` : `Play ${poem.title}`}>
+                <span className={styles.miniDisc}>
+                  {playing ? (
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <rect x="6.5" y="5" width="3.5" height="14" rx="0.5" />
+                      <rect x="14" y="5" width="3.5" height="14" rx="0.5" />
+                    </svg>
+                  ) : (
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.2v13.6L19 12z" /></svg>
+                  )}
+                </span>
+              </button>
+              <div className={styles.miniMeta}>
+                <span className={styles.miniTitle} aria-hidden="true">
+                  {playing || time > 0 ? `${fmt(time)} / ${fmt(dur)}` : 'The poem'}
+                </span>
+                <input
+                  type="range"
+                  className={styles.miniSeek}
+                  min={0}
+                  max={dur || 0}
+                  step={0.1}
+                  value={time}
+                  onChange={(e) => { if (audioRef.current) audioRef.current.currentTime = +e.target.value }}
+                  aria-label={`Seek ${poem.title}`}
+                  aria-valuetext={`${fmt(time)} of ${fmt(dur)}`}
+                  style={{ '--pct': `${pct}%` }}
+                />
+              </div>
+            </div>
+          )}
         </div>
       </div>
 
       <figcaption className={styles.cardCaption}>
-        <span className={styles.cardLabel}>{item.title}</span>
-        <span className={styles.poemCredit}>{POEM_CREDIT}</span>
+        <span className={styles.cardLabel}>The digital library</span>
+        {audioSrc && <span className={styles.poemCredit}>{POEM_CREDIT}</span>}
       </figcaption>
 
-      <audio ref={audioRef} preload="metadata" src={src} />
+      {audioSrc && <audio ref={audioRef} preload="metadata" src={audioSrc} />}
     </figure>
   )
 }
 
 /**
- * THE DECK — the poem card, then the reflection cards, in one row.
+ * THE DECK — the phone, then the reflection cards, in one row.
  *
  * Nine emotions exist; three are shown, spanning the deck's range, at the
  * cards' true proportions. Each card carries a front and a back, and the
@@ -245,7 +286,7 @@ function SheetPoemCard({ item }) {
  * motion swaps faces without the rotation. The rounded corners stay: they
  * are the printed cards' real corners, and the poem card borrows them.
  */
-export function SheetCardGallery({ gallery, poem }) {
+export function SheetCardGallery({ gallery, poem, phone }) {
   const [flipped, setFlipped] = useState(() => new Set())
 
   const toggle = (name) =>
@@ -263,18 +304,18 @@ export function SheetCardGallery({ gallery, poem }) {
     }))
     .filter((c) => c.front)
 
-  if (!cards.length && !poem) return null
+  if (!cards.length && !poem && !phone) return null
 
   return (
     <div className={styles.gallery}>
-      {cards.length > 0 && (
-        <p className={styles.galleryNote}>
-          Three of nine cards. Turn one over for the somatic exercise.
-        </p>
-      )}
-      <div className={styles.deck} data-poem={poem ? '' : undefined}
-        style={{ '--deck': cards.length + (poem ? 1 : 0) }}>
-        {poem && <SheetPoemCard item={poem} />}
+      <div className={styles.deck} data-poem={poem || phone ? '' : undefined}
+        style={{ '--deck': cards.length + (poem || phone ? 1 : 0) }}>
+        {(poem || phone) && <SheetPhone phone={phone} poem={poem} />}
+        {cards.length > 0 && (
+          <p className={styles.galleryNote}>
+            Three of nine cards. Turn one over for the somatic exercise.
+          </p>
+        )}
         <ul className={styles.cards}>
         {cards.map((card) => {
           const isBack = flipped.has(card.name)

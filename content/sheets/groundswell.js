@@ -20,7 +20,12 @@ export const groundswell = {
   outcome:
     'All scales aside from perceived support from leadership improved throughout the study, indicating a core problem around institutional trust and support from administration.',
 
-  /* The cover image, beside the title. Image choice, not copy. */
+  /* The cover's watercolor band colour: Groundswell's own brand purple,
+     the wash colour its intro already uses (#554E65). Each project sets
+     its own. */
+  band: '#554E65',
+
+  /* The cover image. Image choice, not copy. */
   hero: { key: 'gs-hero', alt: 'A clinician walks past the Groundswell Garden and the Restorative Pod in the hallway.' },
 
   meta: [
@@ -116,16 +121,23 @@ export const groundswell = {
          2026-09-06: full section width; three if two reads too big): the
          deck's poles plus its most workaday state between them, at the
          cards' true proportions. Any other set is a one-line swap here. */
+      /* Round FS47 (2026-09-30): four things to show, presented as three.
+         THE GALLERY: photographs of the cards in use, beside the rail like
+         every other component. THE PHONE: the real iPhone recording of the
+         digital library, auto-playing. THE POEM: it is an item inside that
+         library, so it plays inside the phone (the screen turns to its
+         words) instead of taking a card of its own. THE CARDS: the flip
+         deck, in one row with the phone. The dashboard's meditation view
+         that used to lead this gallery moved to the dashboard, where it
+         belongs. */
       media: {
-        lead:     { type: 'audio', key: 'gs-poem-remember', title: 'The Groundswell poem' },
-        /* Key fixed 2026-09-30: 'New_Meditations' is the Cloudinary id, not
-           the map key, so this video had been silently skipped. */
-        also:     [{ type: 'video', key: 'gs-new-meditations', alt: 'The meditation library.' }],
         stills:   [
           { key: 'gs-cards',      alt: 'Hands sorting the Groundswell Reflection Cards on a table.' },
           { key: 'gs-mockups-43', alt: 'Reading the back of the exhausted card.' },
           { key: 'gs-mockups-50', alt: 'The reflection card deck spread across a table.' },
         ],
+        phone:    { key: 'gs-qr-library', alt: 'Scrolling the Groundswell digital library on a phone.' },
+        poem:     { type: 'audio', key: 'gs-poem-remember', title: 'The Groundswell poem' },
         gallery:  { kind: 'cards', faces: 'front-and-back',
                     emotions: ['joyful', 'exhausted', 'heartbroken'] },
       },
@@ -158,7 +170,12 @@ export const groundswell = {
          patient care data behind the blur (GatedOverlay). */
       media: {
         lead:    { type: 'video', key: 'gs-display-view', alt: 'The Groundswell data dashboard.' },
-        also:    [{ type: 'video', key: 'gs-pod-data', alt: 'Pod usage data over the study.' }],
+        also:    [
+          { type: 'video', key: 'gs-pod-data', alt: 'Pod usage data over the study.' },
+          /* Moved from the Library 2026-09-30: this is the dashboard's
+             meditation view, not the library itself. */
+          { type: 'video', key: 'gs-new-meditations', alt: 'The dashboard’s view of meditation library listening.' },
+        ],
       },
       name: 'The data dashboard',
       body: 'An interactive platform that translated the data collected from each component into an immersive storytelling experience that translated lived experience into actionable metrics. It combined qualitative and quantitative findings in one place, showcasing the importance of telling a well-rounded story.',

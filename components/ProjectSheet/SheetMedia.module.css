@@ -105,150 +105,208 @@
   outline-offset: 3px;
 }
 
-/* ══ THE POEM CARD ═══════════════════════════════════════════════════ */
+/* ══ THE PHONE ═════════════════════════════════════════════════════════
 
-/* The deck's own shape: same proportions, corners and shadow as the
-   printed cards, on the sheet's tinted field so it reads as the one card
-   that is sound rather than paper. */
-.poemCard {
+   The digital library in an iPhone, first in the deck. Sized so its height
+   equals the cards' faces (cards are 600:967; the phone is 9:19.5, so it
+   is 74.4% of the column's width) and left-aligned so it starts on the
+   grid line like everything else. All inner measurements are in cqi of
+   the device, so the frame keeps its proportions at any size. The screen's
+   colours are fixed (it depicts the library app, not the site's theme). */
+
+.phone {
   margin: 0;
 }
 
-.poemFace {
-  display: flex;
-  flex-direction: column;
-  aspect-ratio: 600 / 967;
-  padding: clamp(1rem, 1.6vw, 1.5rem);
-  border-radius: var(--radius-lg);
+/* The device is the size container for everything inside it. Its OWN
+   padding and radius can't use cqi (an element's own properties resolve
+   against its ancestor's container), so they are percentages: padding
+   against the column (1.8% of the device = 1.34% of the column), radius
+   as an ellipse (15% of the width, which is 6.92% of the 9:19.5 height). */
+.device {
+  container-type: inline-size;
+  width: 74.4%;
+  aspect-ratio: 9 / 19.5;
+  padding: 1.34%;
+  border-radius: 15% / 6.92%;
+  background: var(--color-device-bezel);
   box-shadow: var(--shadow-md);
-  background: var(--sheet-field);
+}
+
+.screen {
+  position: relative;
+  height: 100%;
   overflow: hidden;
+  border: 2.6cqi solid var(--color-device-inner);
+  border-radius: 13cqi;
+  background: #000;
+  transition: background var(--motion-medium) var(--ease-out);
 }
 
-.poemKicker {
-  flex: none;
-  font-family: var(--font-body);
-  font-size: var(--step-label);
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--color-sage);
+.screenVideo {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity var(--motion-medium) var(--ease-out);
 }
 
-/* The whole poem, in a window faded at both ends; it scrolls with the
-   recording and by hand. */
-.poemText {
-  flex: 1;
-  min-height: 0;
-  margin: 0.5rem 0;
-  padding-block: 1rem 2.5rem;
+.phone[data-playing] .screenVideo {
+  opacity: 0;
+}
+
+/* While the poem plays the screen's own ground matches the words view, so
+   its faded edges dissolve into paper rather than into black. */
+.phone[data-playing] .screen {
+  background: #f6ede9;
+}
+
+/* The poem's words, shown while it plays, scrolling with the recording. */
+.lyrics {
+  position: absolute;
+  inset: 0;
+  padding: 16cqi 9cqi 36cqi;
   overflow-y: auto;
   scrollbar-width: none;
-  mask-image: linear-gradient(to bottom, transparent, #000 10%, #000 80%, transparent);
-  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 10%, #000 80%, transparent);
+  background: #f6ede9;
+  color: #3d3748;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--motion-medium) var(--ease-out);
+  mask-image: linear-gradient(to bottom, transparent, #000 12%, #000 72%, transparent 88%);
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 12%, #000 72%, transparent 88%);
 }
 
-.poemText::-webkit-scrollbar {
+.lyrics::-webkit-scrollbar {
   display: none;
 }
 
-.poemText:focus-visible {
-  outline: 2px solid var(--color-sage);
-  outline-offset: 2px;
+.phone[data-playing] .lyrics {
+  opacity: 1;
+  pointer-events: auto;
 }
 
-.poemOpener {
-  margin: 0 0 1rem;
+.lyricsOpener {
+  margin: 0 0 1em;
   font-family: var(--font-heading);
-  font-size: var(--step-statement);
+  font-size: max(1.125rem, 10cqi);
   font-weight: 300;
   font-style: italic;
   line-height: 1.15;
-  color: var(--color-ink);
-  text-wrap: balance;
 }
 
-.stanza {
-  margin: 0 0 1rem;
+.lyricsStanza {
+  margin: 0 0 1em;
   font-family: var(--font-heading);
-  font-size: var(--step-small);
+  font-size: max(0.875rem, 7cqi);
   font-weight: 300;
   line-height: 1.5;
-  color: var(--color-ink);
 }
 
-.transport {
-  flex: none;
+/* The mini-player, the way the phone's own now-playing bar sits. */
+.mini {
+  position: absolute;
+  left: 4cqi;
+  right: 4cqi;
+  bottom: 5cqi;
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: 2cqi;
+  padding: 1.5cqi 4cqi 1.5cqi 1.5cqi;
+  border-radius: 8cqi;
+  background: rgba(255, 255, 255, 0.86);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.18);
+  color: #3d3748;
 }
 
-.play {
+.miniPlay {
   position: relative;
   flex: none;
   display: grid;
   place-items: center;
-  width: 3.5rem;
-  height: 3.5rem;
+  width: 44px;
+  height: 44px;
   padding: 0;
   border: 0;
-  border-radius: 50%;
-  background: var(--color-ink);
-  color: var(--color-cream);
+  background: none;
   cursor: pointer;
+}
+
+.miniDisc {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: #3d3748;
+  color: #fff;
   transition: transform var(--motion-fast) var(--ease-out);
 }
 
-.play svg {
-  width: 22px;
-  height: 22px;
+.miniDisc svg {
+  width: 18px;
+  height: 18px;
   fill: currentColor;
 }
 
-/* At rest, one slow ring breathes out from the button: the one moving
-   thing in the row, and it stops the moment the poem plays. */
-.play::after {
+/* At rest, one slow ring breathes out from the play button: the one
+   moving invitation on the phone, gone the moment the poem plays. */
+.miniPlay::after {
   content: '';
   position: absolute;
-  inset: 0;
+  inset: 3px;
   border-radius: 50%;
-  border: 1.5px solid var(--color-ink);
+  border: 1.5px solid #3d3748;
   animation: breathe 2.8s var(--ease-out) infinite;
   pointer-events: none;
 }
 
-.poemCard[data-playing] .play::after {
+.phone[data-playing] .miniPlay::after {
   animation: none;
   opacity: 0;
 }
 
 @keyframes breathe {
   0% { transform: scale(1); opacity: 0.55; }
-  70%, 100% { transform: scale(1.45); opacity: 0; }
+  70%, 100% { transform: scale(1.4); opacity: 0; }
 }
 
 @media (hover: hover) {
-  .play:hover {
-    transform: scale(1.05);
+  .miniPlay:hover .miniDisc {
+    transform: scale(1.06);
   }
 }
 
-.play:focus-visible {
-  outline: 2px solid var(--color-sage);
-  outline-offset: 4px;
+.miniPlay:focus-visible {
+  outline: 2px solid #3d3748;
+  outline-offset: 1px;
+  border-radius: 50%;
 }
 
-.track {
+.miniMeta {
   flex: 1;
   min-width: 0;
 }
 
-.seek {
+.miniTitle {
+  display: block;
+  overflow: hidden;
+  font-family: var(--font-heading);
+  font-size: 0.875rem;
+  font-style: italic;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.2;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.miniSeek {
   --pct: 0%;
   display: block;
   width: 100%;
-  height: 44px;
+  height: 24px;
   margin: 0;
   background: none;
   cursor: pointer;
@@ -256,57 +314,42 @@
   -webkit-appearance: none;
 }
 
-.seek::-webkit-slider-runnable-track {
+.miniSeek::-webkit-slider-runnable-track {
   height: 2px;
-  background: linear-gradient(
-    to right,
-    var(--color-ink) var(--pct),
-    color-mix(in srgb, var(--color-ink) 22%, transparent) var(--pct)
-  );
+  background: linear-gradient(to right, #3d3748 var(--pct), rgba(61, 55, 72, 0.25) var(--pct));
 }
 
-.seek::-moz-range-track {
+.miniSeek::-moz-range-track {
   height: 2px;
-  background: color-mix(in srgb, var(--color-ink) 22%, transparent);
+  background: rgba(61, 55, 72, 0.25);
 }
 
-.seek::-moz-range-progress {
+.miniSeek::-moz-range-progress {
   height: 2px;
-  background: var(--color-ink);
+  background: #3d3748;
 }
 
-.seek::-webkit-slider-thumb {
+.miniSeek::-webkit-slider-thumb {
   -webkit-appearance: none;
-  width: 12px;
-  height: 12px;
-  margin-top: -5px;
+  width: 10px;
+  height: 10px;
+  margin-top: -4px;
   border: 0;
   border-radius: 50%;
-  background: var(--color-ink);
+  background: #3d3748;
 }
 
-.seek::-moz-range-thumb {
-  width: 12px;
-  height: 12px;
+.miniSeek::-moz-range-thumb {
+  width: 10px;
+  height: 10px;
   border: 0;
   border-radius: 50%;
-  background: var(--color-ink);
+  background: #3d3748;
 }
 
-.seek:focus-visible {
-  outline: 2px solid var(--color-sage);
+.miniSeek:focus-visible {
+  outline: 2px solid #3d3748;
   outline-offset: 2px;
-}
-
-.time {
-  display: block;
-  margin-top: -0.5rem;
-  font-family: var(--font-body);
-  font-size: var(--step-label);
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  font-variant-numeric: tabular-nums;
-  color: var(--color-ink);
 }
 
 .poemCredit {
@@ -327,7 +370,7 @@
 }
 
 .galleryNote {
-  margin: 0 0 var(--flow-2);
+  margin: 0;
   font-family: var(--font-body);
   font-size: var(--step-label);
   font-weight: 600;
@@ -372,9 +415,8 @@
 }
 
 @media (max-width: 699px) {
-  .poemFace {
-    aspect-ratio: auto;
-    height: 26rem;
+  .device {
+    width: 62%;
   }
 }
 
@@ -395,6 +437,23 @@
 
   .deck[data-poem] .cards {
     grid-column: 2 / -1;
+  }
+
+  /* The note heads the cards only: row one over the cards' columns, the
+     phone and the cards both on row two, so their tops stay level. */
+  .deck .galleryNote {
+    grid-column: 1 / -1;
+    grid-row: 1;
+    margin: 0;
+  }
+
+  .deck[data-poem] .galleryNote {
+    grid-column: 2 / -1;
+  }
+
+  .deck > .phone,
+  .deck > .cards {
+    grid-row: 2;
   }
 }
 
@@ -553,9 +612,14 @@
     animation: none;
   }
 
-  .play::after {
+  .miniPlay::after {
     animation: none;
     opacity: 0;
+  }
+
+  .screenVideo,
+  .lyrics {
+    transition: none;
   }
 
   .cardInner {

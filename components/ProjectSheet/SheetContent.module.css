@@ -33,23 +33,28 @@
 
 /* ══ COVER ════════════════════════════════════════════════════════════
 
-   With a photograph (her note FS46): full bleed. The cover pulls out
-   past the gutter and up past the sheet's top padding so the photo runs
-   edge to edge under the tab line, its top corners matching the folder's
-   (20px radius, less the 1.5px of the outline it sits inside). The photo
-   is faded and darkened under the project's name and facts; hover lifts
-   the overlay and it shows in full colour. Keyboard focus and touch
-   screens keep the overlay, so the text is always reachable. */
+   With a photograph (her notes FS46, FS48): full bleed and in full
+   colour. The cover pulls out past the gutter and up past the sheet's top
+   padding so the photo runs edge to edge under the tab line, its top
+   corners matching the folder's (20px, less the 1.5px outline).
+
+   A watercolor wash in the project's own colour (--band) rises over the
+   photo's foot and carries the name and facts. The wash is three layers
+   made by scripts/make-watercolor-band.py: an alpha mask with a painted
+   edge that thins as the pigment does, granulation from the real scanned
+   watercolor (soft-light), and a faint darker rim where pigment pools.
+   All colour-free, so any project tints them with one variable. */
 
 .cover {
   margin-bottom: var(--flow-4);
 }
 
 .coverImage {
+  --band: var(--color-plum);
   position: relative;
   display: grid;
   align-items: end;
-  min-height: min(82dvh, 48rem);
+  min-height: min(90dvh, 54rem);
   margin-top: calc(-5.5rem + 1.5px);
   margin-inline: calc(var(--gutter) * -1 + 1.5px);
   overflow: hidden;
@@ -62,38 +67,38 @@
   inset: 0;
 }
 
-.coverImage img {
-  filter: saturate(0.3) brightness(0.8);
-  transition:
-    filter var(--motion-medium) var(--ease-out),
-    transform var(--motion-medium) var(--ease-out);
-}
-
 .coverText {
   display: flex;
   flex-direction: column;
   min-width: 0;
 }
 
+/* The wash. The mask is 2400 × 1600 with its edge in the top ~230px;
+   sized to at least 1400px wide so the edge keeps its scale on phones. */
 .coverImage .coverText {
   position: relative;
-  justify-content: flex-end;
-  min-height: 100%;
-  padding: 7rem calc(var(--gutter) - 1.5px) var(--flow-3);
-  background: var(--overlay-scrim);
+  padding: 7.5rem calc(var(--gutter) - 1.5px) var(--flow-3);
+  background:
+    url('/art/wc-grain.jpg') center / cover,
+    var(--band);
+  background-blend-mode: soft-light;
+  mask: url('/art/wc-band-mask.png') top center / max(100%, 1400px) auto no-repeat;
+  -webkit-mask: url('/art/wc-band-mask.png') top center / max(100%, 1400px) auto no-repeat;
   pointer-events: none;
-  transition: opacity var(--motion-medium) var(--ease-out);
 }
 
-@media (hover: hover) {
-  .coverImage:hover img {
-    filter: none;
-    transform: scale(1.01);
-  }
+.coverImage .coverText::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: color-mix(in srgb, var(--band) 55%, #000);
+  opacity: 0.45;
+  mask: url('/art/wc-band-rim.png') top center / max(100%, 1400px) auto no-repeat;
+  -webkit-mask: url('/art/wc-band-rim.png') top center / max(100%, 1400px) auto no-repeat;
+}
 
-  .coverImage:hover .coverText {
-    opacity: 0;
-  }
+.coverImage .coverText > * {
+  position: relative;
 }
 
 /* On the overlay, every colour is the fixed light ink. */
