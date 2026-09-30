@@ -84,430 +84,11 @@
 }
 
 @media (min-width: 1000px) {
-  .ambient,
-  .strip,
-  .lens,
-  .settle,
   .prints {
     display: grid;
     grid-template-columns: var(--grid);
     column-gap: var(--gap-col);
     align-items: stretch;
-  }
-}
-
-/* ══ 1 · AMBIENT BLEED ═════════════════════════════════════════════════
-   The photograph, blurred far past recognition and dimmed, becomes the
-   light the whole cover sits in; it runs edge to edge across the folder
-   and melts into the sheet below. The photo itself stays crisp. */
-
-.ambient {
-  padding-block: var(--flow-3);
-  isolation: isolate;
-}
-
-/* The clip frame: exactly the folder's width, so nothing spills sideways.
-   The blurred, scaled light lives on ::before inside it. */
-.glow {
-  position: absolute;
-  z-index: -1;
-  inset: calc(-5.5rem + 1.5px) calc(var(--gutter) * -1 + 1.5px) calc(var(--flow-4) * -1);
-  overflow: hidden;
-  border-radius: 18.5px 18.5px 0 0;
-  mask-image: linear-gradient(to bottom, #000 55%, transparent);
-  -webkit-mask-image: linear-gradient(to bottom, #000 55%, transparent);
-}
-
-.glow::before {
-  content: '';
-  position: absolute;
-  inset: -10%;
-  background-image: var(--glow);
-  background-position: center;
-  background-size: cover;
-  filter: blur(70px) saturate(1.5) brightness(0.5);
-}
-
-.ambient .num,
-.ambient .title,
-.ambient .tagline,
-.ambient .facts dt,
-.ambient .facts dd,
-.ambient .todo b {
-  color: var(--overlay-ink);
-}
-
-.ambient .facts {
-  border-top-color: color-mix(in srgb, var(--overlay-ink) 40%, transparent);
-}
-
-.ambientText {
-  min-width: 0;
-}
-
-.ambientPhoto {
-  position: relative;
-  display: block;
-  min-height: 24rem;
-  margin-top: var(--flow-3);
-  padding: 0;
-  border: 0;
-  background: none;
-  cursor: zoom-in;
-  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.35);
-}
-
-.ambientPhoto img {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: 62% 40%;
-}
-
-@media (min-width: 1000px) {
-  .ambientText {
-    grid-column: span 4;
-  }
-
-  .ambientPhoto {
-    grid-column: span 8;
-    margin-top: 0;
-  }
-}
-
-/* ══ 3 · THE ECOSYSTEM AT A GLANCE ═════════════════════════════════════
-   The five components as tall slices of their own images: the cover is
-   the contents. Hover or focus widens a slice; click jumps there. */
-
-.stripText {
-  min-width: 0;
-}
-
-.slices {
-  display: flex;
-  gap: 0.5rem;
-  height: 22rem;
-  margin-top: var(--flow-3);
-}
-
-@media (min-width: 1000px) {
-  .stripText {
-    grid-column: span 4;
-  }
-
-  .slices {
-    grid-column: span 8;
-    height: auto;
-    min-height: 26rem;
-    margin-top: 0;
-  }
-}
-
-.slice {
-  position: relative;
-  flex: 1 1 0;
-  min-width: 0;
-  overflow: hidden;
-  padding: 0;
-  border: 0;
-  background: var(--sheet-mat);
-  cursor: pointer;
-  transition: flex-grow var(--motion-medium) var(--ease-out);
-}
-
-.slice img {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform var(--motion-medium) var(--ease-out);
-}
-
-.slice[data-gated] img {
-  filter: blur(6px);
-}
-
-.slice::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to top, rgba(16, 15, 13, 0.85), rgba(16, 15, 13, 0) 55%);
-}
-
-.sliceLabel {
-  position: absolute;
-  z-index: 1;
-  left: 0.875rem;
-  right: 0.875rem;
-  bottom: 0.875rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-  text-align: left;
-}
-
-.sliceNum {
-  font-family: var(--font-body);
-  font-size: var(--step-label);
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  color: var(--overlay-ink);
-}
-
-.sliceName {
-  font-family: var(--font-heading);
-  font-size: var(--step-small);
-  line-height: 1.25;
-  color: var(--overlay-ink);
-  opacity: 0;
-  transform: translateY(6px);
-  transition:
-    opacity var(--motion-fast) var(--ease-out),
-    transform var(--motion-fast) var(--ease-out);
-}
-
-@media (hover: hover) {
-  .slice:hover {
-    flex-grow: 3;
-  }
-
-  .slice:hover .sliceName {
-    opacity: 1;
-    transform: none;
-  }
-}
-
-.slice:focus-visible {
-  flex-grow: 3;
-  outline: 2px solid var(--color-sage);
-  outline-offset: 3px;
-}
-
-.slice:focus-visible .sliceName {
-  opacity: 1;
-  transform: none;
-}
-
-/* Touch screens have no hover: names always show. */
-@media (hover: none) {
-  .sliceName {
-    opacity: 1;
-    transform: none;
-  }
-}
-
-/* ══ C · COLOUR RETURNS ═══════════════════════════════════════════════
-   The cover in Groundswell purple, edge to edge across the folder; the
-   photograph in a purple duotone. Where the cursor goes, a soft circle of
-   the photo's true colour follows: restoration, where you attend. Touch
-   screens: a tap brings the whole photo back to colour. */
-
-.lens {
-  --band: #554e65;
-  padding-block: var(--flow-3);
-  isolation: isolate;
-}
-
-.lensField {
-  position: absolute;
-  z-index: -1;
-  inset: calc(-5.5rem + 1.5px) calc(var(--gutter) * -1 + 1.5px) 0;
-  border-radius: 18.5px 18.5px 0 0;
-  background: var(--band);
-}
-
-.lens .num,
-.lens .title,
-.lens .tagline,
-.lens .facts dt,
-.lens .facts dd,
-.lens .todo b {
-  color: var(--overlay-ink);
-}
-
-.lens .facts {
-  border-top-color: color-mix(in srgb, var(--overlay-ink) 40%, transparent);
-}
-
-.lensText {
-  min-width: 0;
-}
-
-@property --r {
-  syntax: '<length>';
-  inherits: true;
-  initial-value: 0px;
-}
-
-.lensPhoto {
-  transition: --r var(--motion-medium) var(--ease-out);
-  --x: 50%;
-  --y: 50%;
-  --r: 0px;
-  position: relative;
-  min-height: 24rem;
-  margin-top: var(--flow-3);
-  overflow: hidden;
-  cursor: none;
-}
-
-.lensPhoto[data-on] {
-  --r: 190px;
-}
-
-.lensPhoto img {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: 62% 40%;
-}
-
-/* The duotone: greyscale, then the brand purple in the shadows and the
-   light ink in the highlights. */
-.lensDuo {
-  filter: grayscale(1) contrast(1.05) brightness(1.05) sepia(0.35) hue-rotate(215deg) saturate(1.6);
-}
-
-.lensTrue {
-  mask-image: radial-gradient(circle var(--r) at var(--x) var(--y), #000 55%, transparent 100%);
-  -webkit-mask-image: radial-gradient(circle var(--r) at var(--x) var(--y), #000 55%, transparent 100%);
-}
-
-@media (hover: none) {
-  .lensPhoto[data-on] .lensTrue {
-    mask-image: none;
-    -webkit-mask-image: none;
-  }
-}
-
-.lensTap {
-  position: absolute;
-  inset: 0;
-  padding: 0;
-  border: 0;
-  background: none;
-  cursor: none;
-}
-
-.lensTap:focus-visible {
-  outline: 2px solid var(--overlay-ink);
-  outline-offset: -4px;
-}
-
-@media (min-width: 1000px) {
-  .lensText {
-    grid-column: span 4;
-  }
-
-  .lensPhoto {
-    grid-column: span 8;
-    margin-top: 0;
-  }
-}
-
-/* ══ D · SETTLE ON SCROLL ══════════════════════════════════════════════
-   The first screen is the photograph alone across the full content width.
-   As the sheet scrolls, it glides into the right two thirds and the name
-   and facts arrive on the left (script: SettleCover). Below 1000px and
-   under reduced motion it simply sits settled. */
-
-.settleTrack {
-  position: relative;
-  margin-bottom: var(--flow-4);
-}
-
-.settle {
-  position: relative;
-  margin-bottom: 0;
-}
-
-@media (min-width: 1000px) {
-  .settle {
-    position: sticky;
-    top: 5.5rem;
-  }
-}
-
-.settleText {
-  min-width: 0;
-  will-change: opacity, transform;
-}
-
-.settleSlot {
-  display: block;
-  min-height: 24rem;
-  margin-top: var(--flow-3);
-}
-
-.settlePhoto {
-  position: absolute;
-  z-index: 2;
-  display: block;
-  padding: 0;
-  border: 0;
-  background: var(--sheet-mat);
-  overflow: hidden;
-  cursor: zoom-in;
-}
-
-.settlePhoto img {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: 62% 40%;
-}
-
-.settleHint {
-  position: absolute;
-  left: 50%;
-  bottom: 1.25rem;
-  padding: 0.5rem 1rem;
-  border-radius: var(--radius-pill);
-  background: rgba(16, 15, 13, 0.6);
-  font-family: var(--font-body);
-  font-size: var(--step-label);
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: #f4f1ec;
-  opacity: var(--hint, 0);
-  transform: translateX(-50%);
-  pointer-events: none;
-}
-
-@media (min-width: 1000px) {
-  .settleText {
-    grid-column: span 4;
-    grid-row: 1;
-  }
-
-  .settleSlot {
-    grid-column: 5 / span 8;
-    grid-row: 1;
-    margin-top: 0;
-  }
-}
-
-@media (max-width: 999px) {
-  .settlePhoto {
-    position: relative;
-    width: 100% !important;
-    height: auto !important;
-    aspect-ratio: 16 / 9;
-    left: auto !important;
-    top: auto !important;
-    margin-top: var(--flow-3);
-  }
-
-  .settleSlot {
-    display: none;
   }
 }
 
@@ -520,9 +101,12 @@
   min-width: 0;
 }
 
+/* A fixed proportion that holds the fanned prints (70% wide at 3:2, set
+   12% down, plus the fan's offsets) so nothing spills past the stack. */
 .printStack {
   position: relative;
-  min-height: 26rem;
+  align-self: start;  /* stretched, the ratio would widen it past its column */
+  aspect-ratio: 16 / 10;
   margin-top: var(--flow-3);
 }
 
@@ -568,15 +152,210 @@
   outline-offset: 4px;
 }
 
+.printsCol {
+  min-width: 0;
+}
+
 @media (min-width: 1000px) {
   .printsText {
     grid-column: span 4;
   }
 
-  .printStack {
+  .printStack,
+  .printsCol {
     grid-column: span 8;
     margin-top: 0;
   }
+
+  .printsCol .printStack {
+    margin-top: 0;
+  }
+}
+
+/* ══ E1 · THE CATALOGUE RECORD ═════════════════════════════════════════
+   An archive's record for a set of photographs: an accession number, the
+   name, and the facts as ruled label / value rows. Under the prints, a
+   caption names whichever print is in front and changes as you shuffle. */
+
+.accession {
+  display: block;
+  margin: 0 0 var(--flow-1);
+  font-family: var(--font-body);
+  font-size: var(--step-label);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-sage);
+}
+
+.record {
+  margin: var(--flow-3) 0 0;
+  border-top: var(--rule);
+}
+
+.record > div {
+  display: grid;
+  grid-template-columns: 6.5rem minmax(0, 1fr);
+  gap: var(--flow-1);
+  padding-block: 0.875rem;
+  border-bottom: 1px solid var(--sheet-hair);
+}
+
+.record dt {
+  margin: 0;
+  padding-top: 0.15rem;
+  font-family: var(--font-body);
+  font-size: var(--step-label);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-sage);
+}
+
+.record dd {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--step-small);
+  line-height: 1.5;
+  color: var(--color-ink);
+  text-wrap: pretty;
+}
+
+.printCaption {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.25rem var(--flow-1);
+  margin: var(--flow-1) 0 0;
+  padding-top: var(--flow-1);
+  border-top: 1px solid var(--sheet-hair);
+  font-family: var(--font-heading);
+  font-style: italic;
+  font-size: var(--step-small);
+  line-height: 1.5;
+  color: var(--color-ink);
+}
+
+.printCount {
+  font-family: var(--font-body);
+  font-style: normal;
+  font-size: var(--step-label);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-sage);
+}
+
+/* ══ E2 · THE SLIP ═════════════════════════════════════════════════════
+   The four facts typed on a paper slip tucked into the pile, over the
+   prints' lower-left corner. The slip is paper, so its colours are fixed:
+   warm off-white stock, dark ink. */
+
+.slip {
+  position: absolute;
+  z-index: 20;
+  left: 0;
+  bottom: 0;
+  width: min(22rem, 52%);
+  padding: 1.25rem 1.375rem;
+  background: #f3efe7;
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.35);
+  transform: rotate(-2.5deg);
+  transition: transform var(--motion-medium) var(--ease-out);
+}
+
+@media (hover: hover) {
+  .printStack:hover .slip {
+    transform: rotate(-1deg) translateY(-4px);
+  }
+}
+
+.slipFacts {
+  display: grid;
+  gap: 0.875rem;
+  margin: 0;
+}
+
+.slipFacts dt {
+  margin-bottom: 0.2rem;
+  font-family: var(--font-body);
+  font-size: var(--step-label);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #4f5a47;
+}
+
+.slipFacts dd {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--step-small);
+  line-height: 1.45;
+  color: #24221f;
+  text-wrap: pretty;
+}
+
+.slipFacts .todo b {
+  color: #4f5a47;
+}
+
+@media (max-width: 999px) {
+  .slip {
+    position: relative;
+    width: auto;
+    margin-top: var(--flow-2);
+    transform: none;
+  }
+}
+
+/* ══ E3 · THE FOLDER LABEL ═════════════════════════════════════════════
+   The text column as the label on a file folder: a square-cornered box
+   with a filled header bar, the name, then the facts in ruled rows.
+   Containment, not loose lines. */
+
+.label {
+  align-self: start;
+  border: var(--rule);
+}
+
+.labelBar {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--flow-1);
+  padding: 0.625rem 1rem;
+  background: var(--color-ink);
+  font-family: var(--font-body);
+  font-size: var(--step-label);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-cream);
+}
+
+.labelBody {
+  padding: var(--flow-2) 1rem 0.25rem;
+}
+
+/* Inside the label's padding the name gets a touch smaller so it clears
+   the border. */
+.label .title {
+  font-size: calc(var(--step-display) * 0.88);
+}
+
+.label .record {
+  margin-top: var(--flow-2);
+  margin-inline: -1rem;
+}
+
+.label .record > div {
+  padding-inline: 1rem;
+}
+
+.label .record > div:last-child {
+  border-bottom: 0;
 }
 
 /* ══ The switcher (lab only) ═══════════════════════════════════════════ */
@@ -626,10 +405,7 @@
 
 @media (prefers-reduced-motion: reduce) {
   .print,
-  .lensTrue,
-  .slice,
-  .slice img,
-  .sliceName {
+  .slip {
     transition: none;
   }
 }
