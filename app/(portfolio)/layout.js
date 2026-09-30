@@ -1,5 +1,5 @@
 import '../globals.css'
-import { Fraunces, Open_Sans, Crimson_Pro, Noto_Sans } from 'next/font/google'
+import { Fraunces, Open_Sans, Crimson_Pro, Noto_Sans, Caveat } from 'next/font/google'
 import PortfolioShell from './PortfolioShell'
 
 const fraunces = Fraunces({
@@ -37,6 +37,15 @@ const notoSans = Noto_Sans({
   display: 'swap',
 })
 
+/* Handwriting, used ONLY for the marker captions on the cover's polaroids
+   (her note FS72: semi-realism; a real Polaroid is captioned by hand). */
+const caveat = Caveat({
+  subsets: ['latin'],
+  weight: ['500'],
+  variable: '--font-hand',
+  display: 'swap',
+})
+
 export const metadata = {
   title: 'Lorin Anderberg | Design Researcher',
   description: 'I uncover human stories and insights that transform how people navigate healthcare, education, and complex systems.',
@@ -65,7 +74,7 @@ export const viewport = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={`${fraunces.variable} ${openSans.variable} ${crimsonPro.variable} ${notoSans.variable}`}>
+    <html lang="en" className={`${fraunces.variable} ${openSans.variable} ${crimsonPro.variable} ${notoSans.variable} ${caveat.variable}`}>
       <head>
         <link rel="icon" href="/favicon.ico" sizes="any" />
         {/* P22 Mackinac Pro via Adobe Fonts. Used by the Whelm case

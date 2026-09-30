@@ -199,57 +199,88 @@
   }
 }
 
-/* ══ LAB: tech paper type colours (FS69) ════════════════════════════════ */
+/* ══ LAB: tech paper type colours (FS69, FS71) ═════════════════════════ */
 
 .techFacts dt,
 .techFacts .todo b {
-  color: #a8b88c;
+  color: #3a5427;
 }
 
 .techFacts dd {
-  color: #e8ebe2;
+  color: #1b2417;
 }
 
-/* ══ LAB: polaroids (FS70) ══════════════════════════════════════════════
-   Each photo as an instant print: off-white frame, the deep bottom edge,
-   the photo cropped square, a two-word caption. The pile keeps its uneven
-   tilts and its click-to-advance. */
+/* ══ LAB: polaroids, semi-real (FS70, FS72) ═════════════════════════════
+   Built from a real Polaroid 600's proportions: a square photo, thin even
+   borders on three sides (about 5% of the width) and the deep chin below
+   (about 24%). The frame is matte, faintly grained, lighter at the top;
+   the photo sits a hair recessed, with instant film's slightly warm, soft
+   colour and a gloss sheen; the caption is written by hand in marker.
+   Corners are the film's own, barely rounded. */
 
 .polaroids .print {
-  top: 4%;
-  left: 26%;
-  width: 43%;
+  top: 3%;
+  left: 27%;
+  width: 41%;
   aspect-ratio: auto;
   background: none;
   box-shadow: none;
 }
 
 .polaroidFrame {
+  position: relative;
   display: block;
-  padding: 5.5% 5.5% 0;
-  background: #f4f1ea;
+  padding: 5.1% 5.1% 0;
+  border-radius: 2px;
+  background:
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='g'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.3 0 0 0 0 0.28 0 0 0 0 0.25 0 0 0 0.07 0'/></filter><rect width='100%25' height='100%25' filter='url(%23g)'/></svg>"),
+    linear-gradient(to bottom, #f7f5ef, #eeebe3);
   box-shadow:
-    0 1px 1px rgba(0, 0, 0, 0.2),
-    0 18px 38px rgba(0, 0, 0, 0.38);
+    inset 0 0 0 1px rgba(255, 255, 255, 0.5),
+    0 1px 1.5px rgba(0, 0, 0, 0.28),
+    0 6px 12px rgba(0, 0, 0, 0.18),
+    0 22px 42px rgba(0, 0, 0, 0.3);
 }
 
-.polaroidFrame img {
+.polaroidPhoto {
+  position: relative;
+  display: block;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  background: #141311;
+}
+
+.polaroidPhoto img {
   display: block;
   width: 100%;
-  height: auto;
-  aspect-ratio: 1 / 1;
+  height: 100%;
   object-fit: cover;
+  filter: saturate(0.9) contrast(0.95) sepia(0.1) brightness(1.02);
 }
 
+/* The recessed edge and the gloss. */
+.polaroidPhoto::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0) 38%);
+  box-shadow:
+    inset 0 0 0 1px rgba(0, 0, 0, 0.22),
+    inset 0 2px 3px rgba(0, 0, 0, 0.18);
+  pointer-events: none;
+}
+
+/* The chin, and the marker caption on it. */
 .polaroidCaption {
-  display: block;
-  padding: 0.6em 0 0.9em;
-  font-family: var(--font-heading);
-  font-style: italic;
-  font-size: var(--step-small);
-  line-height: 1.3;
-  text-align: center;
-  color: #2a2724;
+  display: grid;
+  place-items: center;
+  aspect-ratio: 79 / 19;
+  font-family: var(--font-hand), var(--font-heading);
+  font-size: clamp(1.125rem, 1.5vw, 1.5rem);
+  font-weight: 500;
+  line-height: 1;
+  color: #262a3a;
+  transform: rotate(-1.5deg);
 }
 
 .polaroids .print[data-depth='0'] { transform: translate(0, 0) rotate(-2deg); }
@@ -262,6 +293,87 @@
   .polaroids:hover .print[data-depth='1'] { transform: translate(52%, -4%) rotate(6deg); }
   .polaroids:hover .print[data-depth='2'] { transform: translate(-54%, 7%) rotate(-7.5deg); }
   .polaroids:hover .print[data-depth='3'] { transform: translate(30%, 12%) rotate(4deg); }
+}
+
+/* ══ LAB: tech polaroids (FS73) ═════════════════════════════════════════
+   The instant print, reimagined: a frosted-glass frame in the site's green
+   (it blurs whatever lies beneath it in the pile), a fine lit edge, the
+   photo square and crisp with corner brackets, and a readout strip in
+   place of the hand caption: the name in small caps and its index. */
+
+.techFrame {
+  position: relative;
+  display: block;
+  padding: 4.5% 4.5% 0;
+  border-radius: 3px;
+  background: linear-gradient(160deg, rgba(232, 240, 222, 0.22), rgba(232, 240, 222, 0.08));
+  backdrop-filter: blur(12px) saturate(1.2);
+  -webkit-backdrop-filter: blur(12px) saturate(1.2);
+  box-shadow:
+    inset 0 0 0 1px rgba(168, 184, 140, 0.6),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22),
+    0 0 26px rgba(168, 184, 140, 0.14),
+    0 20px 42px rgba(0, 0, 0, 0.42);
+}
+
+.techPhoto {
+  position: relative;
+  display: block;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  background: #101410;
+}
+
+.techPhoto img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Corner brackets drawn over the photo. */
+.techPhoto::after {
+  --b: rgba(232, 240, 222, 0.85);
+  content: '';
+  position: absolute;
+  inset: 6%;
+  background:
+    linear-gradient(var(--b), var(--b)) top left / 14px 1.5px no-repeat,
+    linear-gradient(var(--b), var(--b)) top left / 1.5px 14px no-repeat,
+    linear-gradient(var(--b), var(--b)) top right / 14px 1.5px no-repeat,
+    linear-gradient(var(--b), var(--b)) top right / 1.5px 14px no-repeat,
+    linear-gradient(var(--b), var(--b)) bottom left / 14px 1.5px no-repeat,
+    linear-gradient(var(--b), var(--b)) bottom left / 1.5px 14px no-repeat,
+    linear-gradient(var(--b), var(--b)) bottom right / 14px 1.5px no-repeat,
+    linear-gradient(var(--b), var(--b)) bottom right / 1.5px 14px no-repeat;
+  pointer-events: none;
+}
+
+.techStrip {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  aspect-ratio: 79 / 17;
+  padding-inline: 0.25rem;
+}
+
+.techCaption {
+  font-family: var(--font-body);
+  font-size: var(--step-label);
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #eef3e6;
+}
+
+.techIndex {
+  font-family: var(--font-body);
+  font-size: var(--step-label);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  font-variant-numeric: tabular-nums;
+  color: #b9c99e;
 }
 
 /* ══ LAB: switcher ══════════════════════════════════════════════════════ */

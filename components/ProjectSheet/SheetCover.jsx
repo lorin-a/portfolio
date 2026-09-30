@@ -71,7 +71,7 @@ function Pile({ prints, style = 'prints' }) {
   const next = () => setOrder((o) => [...o.slice(1), o[0]])
   if (!items.length) return null
   return (
-    <div className={`${styles.pile} ${style === 'polaroid' ? styles.polaroids : ''}`}>
+    <div className={`${styles.pile} ${style === 'polaroid' ? styles.polaroids : ''} ${style === 'techpol' ? `${styles.polaroids} ${styles.techPols}` : ''}`}>
       {items.map((p, i) => {
         const depth = order.indexOf(i)
         return (
@@ -83,8 +83,18 @@ function Pile({ prints, style = 'prints' }) {
             aria-label={`${p.alt} Photo ${i + 1} of ${items.length}. Show the next photo.`}>
             {style === 'polaroid' ? (
               <span className={styles.polaroidFrame}>
-                <img src={p.src} alt="" />
+                <span className={styles.polaroidPhoto}><img src={p.src} alt="" /></span>
                 {p.caption && <span className={styles.polaroidCaption}>{p.caption}</span>}
+              </span>
+            ) : style === 'techpol' ? (
+              <span className={styles.techFrame}>
+                <span className={styles.techPhoto}><img src={p.src} alt="" /></span>
+                <span className={styles.techStrip}>
+                  <span className={styles.techCaption}>{p.caption}</span>
+                  <span className={styles.techIndex}>
+                    {String(i + 1).padStart(2, '0')}<span aria-hidden="true"> / </span>{String(items.length).padStart(2, '0')}
+                  </span>
+                </span>
               </span>
             ) : (
               <img src={p.src} alt="" />
@@ -122,7 +132,7 @@ function LabSwitch({ paperStyle, setPaperStyle, pileStyle, setPileStyle }) {
   return (
     <div className={styles.lab}>
       {group('Paper', paperStyle, setPaperStyle, [['leaf', 'Loose-leaf'], ['tech', 'Tech']])}
-      {group('Pile', pileStyle, setPileStyle, [['prints', 'Prints'], ['polaroid', 'Polaroids']])}
+      {group('Pile', pileStyle, setPileStyle, [['prints', 'Prints'], ['polaroid', 'Polaroids'], ['techpol', 'Tech polaroids']])}
     </div>
   )
 }
