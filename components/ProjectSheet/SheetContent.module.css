@@ -33,25 +33,18 @@
 
 /* ══ COVER ════════════════════════════════════════════════════════════
 
-   Her notes FS53–FS55. The photograph sits clean and in full colour ON the
-   content grid: the same left and right edges as the body text and the
-   tab, starting below the close button's band. It is sized so the photo,
-   the caption row beneath it, and the top of the next section all fit the
-   first screen, so there is visibly more to scroll to.
-
-   Beneath it, the caption plate: the name on the left, a vertical rule,
-   the four facts inline. No text on the photograph, so nothing depends on
-   what the photo is doing behind a word. */
+   Her note FS56: back to the side-by-side cover. Desktop: the name,
+   tagline and the four facts in the left third (4 columns), the photo
+   across the right two thirds (8), on the sheet grid. The photo fills the
+   row, so its top is level with the folio and its bottom with the last
+   fact. It sits below the close button's band. Phones and tablets: the
+   text first, then the photo at 16:9. */
 
 .cover {
-  margin-bottom: var(--flow-3);
-}
-
-.coverMedia {
-  /* first screen = photo + caption row (~11rem) + a peek of what follows */
-  height: clamp(16rem, calc(100dvh - 32rem), 36rem);
-  overflow: hidden;
-  background: var(--sheet-mat);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--flow-3);
+  margin-bottom: var(--flow-4);
 }
 
 .coverText {
@@ -60,41 +53,58 @@
   min-width: 0;
 }
 
-.coverImage .coverText {
-  margin-top: var(--flow-2);
-}
-
 .coverHead {
   min-width: 0;
 }
 
-/* Desktop: name (4 columns) | rule | the four facts inline (8 columns). */
+.coverMedia {
+  position: relative;
+  order: 2;
+  min-width: 0;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: var(--sheet-mat);
+}
+
 @media (min-width: 1000px) {
-  .coverImage .coverText {
-    display: grid;
+  .cover {
     grid-template-columns: var(--grid);
     column-gap: var(--gap-col);
-    align-items: start;
+    align-items: stretch;
   }
 
-  .coverImage .coverHead {
-    grid-column: span 4;
+  .coverText {
+    grid-column: 1 / span 4;
+    grid-row: 1;
   }
 
+  .coverMedia {
+    grid-column: 5 / span 8;
+    grid-row: 1;
+    aspect-ratio: auto;
+    min-height: 26rem;
+  }
+
+  /* The image is absolutely placed so its own pixels never push the row
+     taller than the text: the text sets the height, the photo fills it. */
+  .coverMedia > * {
+    position: absolute;
+    inset: 0;
+  }
+}
+
+/* The facts run down the rail under the name. */
+.coverImage .meta {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+@media (min-width: 600px) and (max-width: 999px) {
   .coverImage .meta {
-    grid-column: span 8;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    column-gap: var(--flow-2);
-    align-self: stretch;
-    margin-block: 0;
-    padding: 0 0 0 calc(var(--gap-col) / 2);
-    border-top: 0;
-    border-left: var(--rule);
-    /* the rule sits in the middle of the gutter between name and facts;
-       the facts still start on the grid line */
-    margin-left: calc(var(--gap-col) / -2);
+    grid-template-columns: 1fr 1fr;
   }
+}
 
+@media (min-width: 1000px) {
   .coverImage .meta > div {
     grid-column: auto;
   }

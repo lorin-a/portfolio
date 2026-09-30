@@ -94,9 +94,8 @@ export default function SheetContent({ sheet, num, title, tagline, titleId }) {
 
   return (
     <div ref={rootRef}>
-      {/* THE COVER — the photograph clean and in full colour on the content
-          grid, then the caption plate: name | rule | the four facts
-          (her notes FS53–FS55). */}
+      {/* THE COVER — the name and facts in the left third, the photograph
+          across the right two thirds, level top and bottom (her note FS56). */}
       <header className={`${styles.cover} ${sheet.hero ? styles.coverImage : ''}`} data-reveal="0">
         {sheet.hero && (
           <div className={styles.coverMedia}>
