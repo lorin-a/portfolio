@@ -107,7 +107,7 @@
   border: 1.5px solid var(--color-ink);
   border-radius: var(--radius-pill);
   font-family: var(--font-body);
-  font-size: 0.75rem;
+  font-size: 0.875rem;
   font-weight: 600;
   letter-spacing: 0.06em;
   text-transform: uppercase;
@@ -207,7 +207,7 @@
      Type steps, one page proportion, one rule, one label recipe, four
      rhythm values. Everything in the sheet maps to these; no component
      invents its own value. Inherited by SheetContent + SheetMedia. */
-  --step-label: 0.75rem;                          /* every label + folio   */
+  --step-label: 0.875rem;                         /* every label + folio   */
   --step-small: 0.9375rem;                        /* rail prose, captions  */
   --step-body: 1.0625rem;                         /* long-form prose       */
   --step-statement: clamp(1.375rem, 1.7vw, 1.625rem); /* the lesson, poem   */

@@ -49,6 +49,18 @@ export const groundswell = {
     role:
       'Generative research, content copywriting, project management, fundraising (securing over $30k in donations), and the production and design of the data dashboard. I found the Groundswell name after doing a lot of research on nature metaphors and oncology symbolism. I drafted workshop scripts and led facilitation of the grief workshop, and specifically drafted it to be trauma-informed and responsive so as not to be extractive in collecting emotional data. I applied my knowledge of somatic bodywork to draft the reflection cards. We all participated in collective feedback, strategizing, prototyping, but I did not own any specific component. The exception is the data dashboard, which I led: production and design.',
 
+    /* SHORT VERSIONS for the three-column row (her note FS33, 2026-09-30:
+       "shorten text to all match (lorin will edit later)"). PROVISIONAL.
+       Cut and compressed from her own sentences above; no new wording.
+       The full `why` and `research` stay above, untouched, as the source
+       for her edit. The outcome (23 words) is the length target. */
+    short: {
+      why:
+        'Groundswell is a 9-month pilot program designed to support the emotional well-being of UPMC Magee-Womens Cancer Services staff by introducing resources that honor the emotional complexities of oncology care.',
+      research:
+        'Interviews across roles, from front desk to chemo nurse, synthesized into one thesis: care worker wellbeing is neglected from patient care standards. Staff need permission and acknowledgement.',
+    },
+
     /* Her copy 2026-08-27, verbatim. */
     partners:
       'A collaboration between Carnegie Mellon School of Design, the University of Pittsburgh Schools of Medicine and Nursing, and UPMC Magee-Womens Hospital Gynecologic Oncology with assistance from the UPP Department of OBGYN and Women’s Health.',

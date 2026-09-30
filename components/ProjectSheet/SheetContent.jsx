@@ -124,28 +124,27 @@ export default function SheetContent({ sheet, num, title, tagline, titleId }) {
         )}
       </header>
 
-      {/* The punchline: the one statement between the cover and the work. */}
-      {outcome && (
-        <div className={styles.statement} data-reveal="1">
-          <span className={styles.statementLabel}>The outcome</span>
-          <p className={styles.statementBody}>{outcome}</p>
-        </div>
-      )}
-
-      {/* The frame: two blocks side by side, each column sized to its own
-          length so both end together rather than one trailing the other. */}
-      {(frame.why || frame.research) && (
-        <div className={styles.frame} data-reveal="2">
+      {/* THE FRAME — one row of three: what it is, what the research
+          found, what changed. Equal columns, matched lengths, identical
+          treatment, so the row reads as one sentence in three parts. */}
+      {(frame.why || frame.research || outcome) && (
+        <div className={styles.frame} data-reveal="1">
           {frame.why && (
             <section className={styles.frameBlock}>
               <h3>The project</h3>
-              <p>{frame.why}</p>
+              <p>{frame.short?.why || frame.why}</p>
             </section>
           )}
           {frame.research && (
             <section className={styles.frameBlock}>
               <h3>What the research told us</h3>
-              <p>{frame.research}</p>
+              <p>{frame.short?.research || frame.research}</p>
+            </section>
+          )}
+          {outcome && (
+            <section className={styles.frameBlock}>
+              <h3>The outcome</h3>
+              <p>{outcome}</p>
             </section>
           )}
         </div>

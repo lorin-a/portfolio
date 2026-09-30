@@ -11,7 +11,6 @@
 
 /* ── The one label recipe — every label on the sheet is this ─────── */
 
-.statementLabel,
 .mineLabel,
 .frameBlock h3,
 .closeBlock h3,
@@ -38,9 +37,11 @@
   margin-bottom: var(--flow-4);
 }
 
+/* The left column fits the title at full size (capped at 45%, longer
+   names wrap); the photo takes the rest of the row and crops to fit it. */
 @media (min-width: 1000px) {
   .cover {
-    grid-template-columns: var(--rail) var(--work);
+    grid-template-columns: fit-content(45%) 1fr;
     column-gap: var(--gap-col);
     align-items: stretch;
   }
@@ -50,13 +51,10 @@
   }
 }
 
-/* The rail is a size container so the title can scale to fit it: the
-   photo's left edge stays on the same line as every gallery below. */
 .coverText {
   display: flex;
   flex-direction: column;
-  min-width: 0;
-  container-type: inline-size;
+  min-width: 17rem;
 }
 
 .num {
@@ -66,9 +64,7 @@
 .title {
   margin: 0;
   font-family: var(--font-heading);
-  /* "Groundswell" sets at about 5.5em wide; 17cqi keeps it inside the
-     rail with a little air. Longer names wrap, balanced. */
-  font-size: min(var(--step-display), 17cqi);
+  font-size: var(--step-display);
   font-weight: 300;
   line-height: 1;
   color: var(--color-ink);
@@ -104,6 +100,15 @@
 
 .meta div {
   min-width: 0;
+}
+
+/* On the cover, only the title sets the column's width: the facts and
+   tagline wrap to whatever the title leaves them. */
+@media (min-width: 1000px) {
+  .meta,
+  .tagline {
+    contain: inline-size;
+  }
 }
 
 .meta dt {
@@ -157,34 +162,7 @@
   }
 }
 
-/* ══ THE STATEMENT — the outcome, set as a headline across the page ═══ */
-
-.statement {
-  display: grid;
-  grid-template-columns: 1fr;
-  margin: 0 0 var(--flow-4);
-}
-
-@media (min-width: 1000px) {
-  .statement {
-    grid-template-columns: var(--rail) var(--work);
-    column-gap: var(--gap-col);
-    align-items: baseline;
-  }
-}
-
-.statementBody {
-  max-width: 34ch;
-  margin: 0;
-  font-family: var(--font-heading);
-  font-size: var(--step-headline);
-  font-weight: 300;
-  line-height: 1.2;
-  color: var(--color-ink);
-  text-wrap: balance;
-}
-
-/* ══ FRAME — two blocks, columns proportional to their length ════════ */
+/* ══ FRAME — one row of three, equal and matched ═══════════════════ */
 
 .frame {
   display: grid;
@@ -197,9 +175,7 @@
 
 @media (min-width: 900px) {
   .frame {
-    /* 52 words beside 85: widths in the same ratio, so the two blocks
-       finish within a line of each other. */
-    grid-template-columns: 5fr 8fr;
+    grid-template-columns: repeat(3, 1fr);
     column-gap: var(--gap-col);
   }
 }
@@ -210,9 +186,10 @@
 
 .frameBlock p {
   margin: 0;
-  font-family: var(--font-body);
-  font-size: var(--step-body);
-  line-height: 1.7;
+  font-family: var(--font-heading);
+  font-size: var(--step-statement);
+  font-weight: 300;
+  line-height: 1.45;
   color: var(--color-ink);
   text-wrap: pretty;
 }
