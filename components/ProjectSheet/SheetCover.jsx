@@ -28,7 +28,16 @@ function Facts({ meta, className }) {
           <dd className={v?.todo ? styles.todo : undefined}>
             {v?.todo ? <b>Lorin to write</b> : null}
             {Array.isArray(v)
-              ? v.map((line) => <span key={line} className={styles.factLine}>{line}</span>)
+              ? v.map((line) => {
+                  /* “Label: value” lines set the part before the colon in
+                     bold (the timeline's phases, FS111). */
+                  const m = line.match(/^([^:,]{1,24}):\s(.*)$/)
+                  return (
+                    <span key={line} className={styles.factLine}>
+                      {m ? <><strong className={styles.factKey}>{m[1]}:</strong> {m[2]}</> : line}
+                    </span>
+                  )
+                })
               : (v?.todo || v)}
           </dd>
         </div>

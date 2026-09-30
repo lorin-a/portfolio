@@ -70,10 +70,10 @@ export const groundswell = {
      teams move to the colophon (`credits` below); the hero lists the
      collaborating groups in her teammate's register. */
   meta: [
-    ['Role', 'Experience Designer, Copywriter, Project Coordinator, Donor Relations, Data Visualization Designer'],  /* “Project Coordinator”, her correction FS101 */
-    ['Collaborators', 'Designers, Fabricators & Engineers, Hospital Staff, Hospital Administration, Subject Matter Experts, Donors'],
+    ['Role', ['Experience\u00a0Designer, Copywriter, Project\u00a0Coordinator,', 'Donor\u00a0Relations, Data\u00a0Visualization\u00a0Designer']],  /* her line break (FS110); each title kept whole */  /* “Project Coordinator”, her correction FS101 */
+    ['Collaborators', ['Designers, Fabricators\u00a0&\u00a0Engineers,', 'Hospital\u00a0Staff, Hospital\u00a0Administration, Subject\u00a0Matter\u00a0Experts, Donors']],  /* her line break (FS110); each group kept whole */
     ['Tools Used', 'Adobe Creative Suite, Figma, Claude Code'],
-    ['Timeline', ['Research: Jan–May 2025', 'Production: June–October 2025', 'Study Period: October 2025–June 2026']],
+    ['Timeline', ['Research: Jan\u2060–\u2060May\u00a02025', 'Production: June\u2060–\u2060October\u00a02025', 'Study Period: October\u00a02025\u2060–\u2060June\u00a02026']],  /* ranges kept whole (word joiners) */
     ['Context', 'A 9-month pilot program designed to support the emotional well-being of UPMC Magee-Womens Cancer Services staff.'],
   ],
 

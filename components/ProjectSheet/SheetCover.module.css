@@ -434,6 +434,10 @@
   display: block;
 }
 
+.factKey {
+  font-weight: 600;
+}
+
 /* Plain prints crop their own photo (per-print zoom, FS95). */
 .pile:not(.polaroids) .print {
   overflow: hidden;
@@ -444,4 +448,10 @@
    stacking is also the shorter sheet at 1440 (714px vs 846px). */
 .facts > div {
   grid-template-columns: minmax(0, 1fr);
+}
+
+/* More room between the margin line and the text on the cover's sheet
+   (FS109). */
+.sheet > div {
+  padding-left: calc(var(--margin) + 1.5rem);
 }
