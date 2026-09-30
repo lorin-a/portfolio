@@ -98,6 +98,8 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+  /* Narrow crops keep the clinician and the art wall in frame. */
+  object-position: 62% 40%;
 }
 
 .hero:focus-visible {

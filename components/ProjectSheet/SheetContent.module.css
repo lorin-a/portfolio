@@ -33,40 +33,32 @@
 
 /* ══ COVER ════════════════════════════════════════════════════════════
 
-   With a photograph (her notes FS46, FS49): full bleed, full colour, and
-   the photo itself dissolves into the folder's own ground through a real
-   painted edge, so photo and page read as one surface with nothing laid
-   on top. The title and facts sit on that ground, rising into the
-   dissolved edge.
-
-   The mask is made by scripts/make-cover-dissolve.py from a scan of a real
-   watercolor stain (pigment = photo, paper = ground). It is 2400 × 708 and
-   drawn at least 1400px wide so the brush keeps its scale on phones; a
-   solid layer above it keeps the rest of the photo whole. */
+   With a photograph (her note FS51): full bleed and in full colour, with
+   one smooth gradient in the project's colour rising from the foot. It is
+   clear across the top half so the photograph reads as itself, and deepens
+   to solid behind the name and facts. Only the bottom is tinted: a wash
+   over the whole image would dull the colour the photo is about. */
 
 .cover {
   margin-bottom: var(--flow-4);
 }
 
 .coverImage {
-  container-type: inline-size;
+  --band: #554e65;  /* Groundswell's brand purple */
+  position: relative;
+  display: grid;
+  align-items: end;
+  min-height: min(88dvh, 52rem);
   margin-top: calc(-5.5rem + 1.5px);
   margin-inline: calc(var(--gutter) * -1 + 1.5px);
+  overflow: hidden;
+  border-radius: 18.5px 18.5px 0 0;
+  background: var(--band);
 }
 
 .coverMedia {
-  --mask-h: calc(max(100cqi, 1400px) * 708 / 2400);
-  position: relative;
-  height: min(74dvh, 46rem);
-  min-height: 26rem;
-  overflow: hidden;
-  border-radius: 18.5px 18.5px 0 0;
-  mask:
-    linear-gradient(#000, #000) top / 100% calc(100% - var(--mask-h) * 0.8) no-repeat,
-    url('/art/cover-dissolve.png') bottom center / max(100cqi, 1400px) auto no-repeat;
-  -webkit-mask:
-    linear-gradient(#000, #000) top / 100% calc(100% - var(--mask-h) * 0.8) no-repeat,
-    url('/art/cover-dissolve.png') bottom center / max(100cqi, 1400px) auto no-repeat;
+  position: absolute;
+  inset: 0;
 }
 
 .coverText {
@@ -75,11 +67,74 @@
   min-width: 0;
 }
 
-/* The text rises into the lower, fully dissolved part of the edge. */
+/* The gradient fades only across the padding above the text (--fade)
+   and is fully solid behind every line of it, at any width, so contrast
+   never depends on what the photo happens to be doing behind a word. */
 .coverImage .coverText {
+  --fade: 9rem;
   position: relative;
-  margin-top: calc(max(100cqi, 1400px) * 708 / 2400 * -0.3);
-  padding-inline: calc(var(--gutter) - 1.5px);
+  /* Phones and tablets: the facts stack tall, so a clear window of photo
+     (--clear) is reserved above the fade. Desktop needs none. */
+  --clear: 44vh;
+  padding: calc(var(--clear) + var(--fade)) calc(var(--gutter) - 1.5px) var(--flow-3);
+  background: linear-gradient(
+    to top,
+    var(--band) 0,
+    var(--band) calc(100% - var(--clear) - var(--fade)),
+    color-mix(in srgb, var(--band) 80%, transparent) calc(100% - var(--clear) - var(--fade) * 0.7),
+    color-mix(in srgb, var(--band) 40%, transparent) calc(100% - var(--clear) - var(--fade) * 0.35),
+    transparent calc(100% - var(--clear)),
+    transparent 100%
+  );
+  pointer-events: none;
+}
+
+/* Desktop (her note FS52): name and tagline on the left, the four facts as
+   a 2 × 2 on the right, bottoms aligned. The block is about half as tall,
+   so the purple is shorter and more of the photograph stays clear. */
+@media (min-width: 1000px) {
+  .coverImage .coverText {
+    --clear: 0px;
+    display: grid;
+    grid-template-columns: var(--grid);
+    column-gap: var(--gap-col);
+    align-items: end;
+  }
+
+  .coverImage .coverHead {
+    grid-column: span 6;
+  }
+
+  .coverImage .meta {
+    grid-column: span 6;
+    grid-template-columns: 1fr 1fr;
+    margin: 0;
+    padding-top: 0;
+    border-top: 0;
+  }
+
+  .coverImage .meta > div {
+    grid-column: auto;
+  }
+}
+
+/* On the gradient, every colour is the fixed light ink. */
+.coverImage .num,
+.coverImage .title,
+.coverImage .tagline,
+.coverImage .meta dt,
+.coverImage .meta dd,
+.coverImage .todo,
+.coverImage .todo b {
+  color: var(--overlay-ink);
+}
+
+.coverImage .meta {
+  border-top-color: color-mix(in srgb, var(--overlay-ink) 45%, transparent);
+}
+
+.coverHead {
+  min-width: 0;
 }
 
 .num {

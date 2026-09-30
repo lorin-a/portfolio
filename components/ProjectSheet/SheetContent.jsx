@@ -94,9 +94,9 @@ export default function SheetContent({ sheet, num, title, tagline, titleId }) {
 
   return (
     <div ref={rootRef}>
-      {/* THE COVER — the place itself, full bleed and in full colour,
-          dissolving through a real painted edge into the folder's ground,
-          where the name and facts sit (her notes FS46, FS49). */}
+      {/* THE COVER — the place itself, full bleed and in full colour, with
+          one smooth gradient in the brand purple rising from the foot to
+          carry the name and facts (her note FS51). */}
       <header className={`${styles.cover} ${sheet.hero ? styles.coverImage : ''}`} data-reveal="0">
         {sheet.hero && (
           <div className={styles.coverMedia}>
@@ -104,9 +104,11 @@ export default function SheetContent({ sheet, num, title, tagline, titleId }) {
           </div>
         )}
         <div className={styles.coverText}>
-          <span className={styles.num}>{num}</span>
-          <h2 id={titleId} className={styles.title}>{title}</h2>
-          {tagline && <p className={styles.tagline}>{tagline}</p>}
+          <div className={styles.coverHead}>
+            <span className={styles.num}>{num}</span>
+            <h2 id={titleId} className={styles.title}>{title}</h2>
+            {tagline && <p className={styles.tagline}>{tagline}</p>}
+          </div>
 
           {meta.length > 0 && (
             <dl className={styles.meta}>
