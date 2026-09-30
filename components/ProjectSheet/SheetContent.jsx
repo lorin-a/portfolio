@@ -94,15 +94,14 @@ export default function SheetContent({ sheet, num, title, tagline, titleId }) {
 
   return (
     <div ref={rootRef}>
-      {/* THE COVER — the name across the top at full scale, then the facts in
-          the rail beside the place itself. One name, one picture. */}
+      {/* THE COVER — the name and its facts in the rail, the place itself
+          beside them, top edge level with the folio and running the full
+          height of the text. One rectangle, one name, one picture. */}
       <header className={`${styles.cover} ${sheet.hero ? '' : styles.coverSolo}`} data-reveal="0">
-        <div className={styles.coverHead}>
+        <div className={styles.coverText}>
           <span className={styles.num}>{num}</span>
           <h2 id={titleId} className={styles.title}>{title}</h2>
           {tagline && <p className={styles.tagline}>{tagline}</p>}
-        </div>
-        <div className={styles.coverText}>
 
           {meta.length > 0 && (
             <dl className={styles.meta}>

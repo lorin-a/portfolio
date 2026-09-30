@@ -42,7 +42,6 @@
   .cover {
     grid-template-columns: var(--rail) var(--work);
     column-gap: var(--gap-col);
-    row-gap: var(--flow-2);
     align-items: stretch;
   }
 
@@ -51,15 +50,13 @@
   }
 }
 
-.coverHead {
-  grid-column: 1 / -1;
-  min-width: 0;
-}
-
+/* The rail is a size container so the title can scale to fit it: the
+   photo's left edge stays on the same line as every gallery below. */
 .coverText {
   display: flex;
   flex-direction: column;
   min-width: 0;
+  container-type: inline-size;
 }
 
 .num {
@@ -69,7 +66,9 @@
 .title {
   margin: 0;
   font-family: var(--font-heading);
-  font-size: var(--step-display);
+  /* "Groundswell" sets at about 5.5em wide; 17cqi keeps it inside the
+     rail with a little air. Longer names wrap, balanced. */
+  font-size: min(var(--step-display), 17cqi);
   font-weight: 300;
   line-height: 1;
   color: var(--color-ink);
@@ -92,7 +91,7 @@
 .meta {
   display: grid;
   gap: var(--flow-2);
-  margin: 0;
+  margin: var(--flow-3) 0 0;
   padding-top: var(--flow-2);
   border-top: var(--rule);
 }
@@ -135,13 +134,27 @@
   color: var(--color-sage);
 }
 
-/* align-self: start matters: stretched to the rail's height, the aspect
-   ratio would derive the WIDTH from that height and overflow the column. */
+/* Phones and tablets: the photo stacks under the facts at 16:9. */
 .coverMedia {
-  align-self: start;
+  position: relative;
   width: 100%;
   min-width: 0;
   aspect-ratio: 16 / 9;
+}
+
+/* Desktop: the photo fills the grid row, so its top meets the folio and
+   its bottom meets the last line of the facts. The image is absolutely
+   placed so its own pixels never push the row taller than the text. */
+@media (min-width: 1000px) {
+  .coverMedia {
+    aspect-ratio: auto;
+    min-height: 26rem;
+  }
+
+  .coverMedia > * {
+    position: absolute;
+    inset: 0;
+  }
 }
 
 /* ══ THE STATEMENT — the outcome, set as a headline across the page ═══ */
