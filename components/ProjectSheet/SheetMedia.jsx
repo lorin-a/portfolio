@@ -33,7 +33,7 @@ export function slidesFor(media = {}) {
     const type = item.type || 'image'
     const src = type === 'video' ? vid(item.key, 1600) : img(item.key, 1800)
     if (!src) return
-    out.push({ key: item.key, type, alt: item.alt || '', src })
+    out.push({ key: item.key, type, alt: item.alt || '', src, blur: !!item.blur })
   }
   add(media.lead)
   media.also?.forEach(add)
@@ -71,10 +71,10 @@ export function SheetStage({ slides, gated, onImage, label }) {
 
   const mediaEl = s.type === 'video' ? (
     <video key={s.key} src={s.src} muted loop playsInline autoPlay preload="metadata"
-      aria-label={s.alt} className={styles.stageMedia} />
+      aria-label={s.alt} className={styles.stageMedia} data-blur={s.blur || undefined} />
   ) : (
     <img key={s.key} src={s.src} alt={onImage && !gated ? '' : s.alt}
-      className={styles.stageMedia} />
+      className={styles.stageMedia} data-blur={s.blur || undefined} />
   )
 
   return (

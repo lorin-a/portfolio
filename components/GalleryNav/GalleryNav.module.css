@@ -7,7 +7,7 @@
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  height: 28px;
+  height: var(--nav-ring, 28px);
   color: var(--nav-ink, currentColor);
 }
 
@@ -27,8 +27,8 @@
 .ring {
   display: grid;
   place-items: center;
-  width: 28px;
-  height: 28px;
+  width: var(--nav-ring, 28px);
+  height: var(--nav-ring, 28px);
   border: 1px solid var(--nav-ink, currentColor);
   border-radius: 50%;
   opacity: 0.6;
@@ -39,8 +39,8 @@
 }
 
 .ring svg {
-  width: 14px;
-  height: 14px;
+  width: var(--nav-icon, 14px);
+  height: var(--nav-icon, 14px);
 }
 
 @media (hover: hover) {
@@ -81,8 +81,8 @@
 }
 
 .mark {
-  width: 8px;
-  height: 8px;
+  width: var(--nav-dot, 8px);
+  height: var(--nav-dot, 8px);
   border: 1px solid var(--nav-ink, currentColor);
   border-radius: 50%;
   opacity: 0.5;

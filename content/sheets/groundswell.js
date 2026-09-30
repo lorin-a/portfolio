@@ -147,12 +147,16 @@ export const groundswell = {
       /* Motion IS the content: a wall fills up over months. A still can
          show the object but not the accumulation. */
       media: {
-        lead:    { type: 'video', key: 'gs-intro-artwall', alt: 'The Groundswell Garden art wall filling with anonymous contributions.' },
+        /* FS120: 'gs-intro-artwall' was the DASHBOARD's intro screen, not the
+           wall, and was mislabeled here; it moved to the dashboard. */
         stills:  [
           { key: 'gs-artwall',           alt: 'A staff member adds a contribution to the Groundswell Garden wall.' },
           { key: 'gs-artwall-detail-01', alt: 'Writing a response to one of the guided prompts at the wall.' },
           { key: 'gs-artwall-detail-02', alt: 'Close detail of the painted flowers and pinned contributions.' },
           { key: 'gs-artwall-detail-03', alt: 'A staff member points to a contribution on the wall.' },
+          /* FS121: this component's own view in the data dashboard, lightly
+             blurred (FS120) so the design reads and the numbers do not. */
+          { type: 'video', key: 'gs-display-view', blur: true, alt: 'The art wall in the data dashboard: each emotion as a painted bubble, sized by how often it was chosen.' },
         ],
       },
       name: 'Groundswell Garden Community Art Wall',
@@ -172,6 +176,7 @@ export const groundswell = {
           { key: 'gs-pod-detail-02',   alt: 'Reflection cards and the pod’s invitation to set down what you carry.' },
           { key: 'gs-pod-detail-03',   alt: 'Opening the mindfulness library on a phone inside the pod.' },
           { key: 'gs-making-facade',   alt: 'The pod’s painted facade, redesigned when doors were required.' },
+          { type: 'video', key: 'gs-pod-data', blur: true, alt: 'The pod in the data dashboard: minutes of use by month.' },
         ],
       },
       name: 'Groundswell Restorative Pod',
@@ -201,6 +206,7 @@ export const groundswell = {
           { key: 'gs-cards',      alt: 'Hands sorting the Groundswell Reflection Cards on a table.' },
           { key: 'gs-mockups-43', alt: 'Reading the back of the exhausted card.' },
           { key: 'gs-mockups-50', alt: 'The reflection card deck spread across a table.' },
+          { type: 'video', key: 'gs-new-meditations', blur: true, alt: 'The mindfulness library in the data dashboard: listens for each meditation.' },
         ],
         phone:    { key: 'gs-qr-library', alt: 'Scrolling the Groundswell digital library on a phone.' },
         poem:     { type: 'audio', key: 'gs-poem-remember', title: 'The Groundswell poem' },
@@ -239,12 +245,11 @@ export const groundswell = {
       /* Interactive, so video is the honest way to show it. Gated: real
          patient care data behind the blur (GatedOverlay). */
       media: {
-        lead:    { type: 'video', key: 'gs-display-view', alt: 'The Groundswell data dashboard.' },
+        lead:    { type: 'video', key: 'gs-intro-artwall', blur: true, alt: 'The data dashboard’s opening screen.' },
         also:    [
-          { type: 'video', key: 'gs-pod-data', alt: 'Pod usage data over the study.' },
-          /* Moved from the Library 2026-09-30: this is the dashboard's
-             meditation view, not the library itself. */
-          { type: 'video', key: 'gs-new-meditations', alt: 'The dashboard’s view of meditation library listening.' },
+          { type: 'video', key: 'gs-display-view', blur: true, alt: 'The art wall view: each emotion as a painted bubble, sized by how often it was chosen.' },
+          { type: 'video', key: 'gs-pod-data', blur: true, alt: 'The pod view: minutes of use by month.' },
+          { type: 'video', key: 'gs-new-meditations', blur: true, alt: 'The mindfulness library view: listens for each meditation.' },
         ],
       },
       name: 'The data dashboard',

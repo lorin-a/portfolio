@@ -59,13 +59,20 @@
   to { opacity: 1; }
 }
 
-.stage[data-gated] .stageMedia {
-  filter: blur(6px);
+/* Data recordings carry real counts: a light blur, just enough that the
+   numbers cannot be read while the design still can (FS120). */
+.stageMedia[data-blur] {
+  filter: blur(var(--data-blur, 2.5px));
 }
 
-/* The shared gallery control, in the sheet's ink. */
+/* The shared gallery control, in the sheet's ink, a size up from the
+   homepage's (FS118: the gallery here is much wider, so the same marks
+   read smaller). */
 .stageNav {
-  margin-top: var(--flow-1);
+  --nav-ring: 38px;
+  --nav-icon: 18px;
+  --nav-dot: 11px;
+  margin-top: var(--flow-2);
   --nav-ink: var(--color-ink);
   --nav-ground: var(--color-cream);
 }
