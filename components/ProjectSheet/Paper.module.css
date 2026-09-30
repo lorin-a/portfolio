@@ -2,7 +2,8 @@
    every “What I did” card (her notes FS61, FS66), so they cannot drift
    apart. Structure of real loose-leaf (grain, ruled lines the text sits
    on, a margin line, three punched holes, a light edge and soft shadow),
-   coloured from the brand (FS87/FS89) rather than school paper: the stock
+   coloured from the brand (FS87/FS89) rather than school paper. The glass
+   variant below is what ships (FS102); the loose-leaf is its base: the stock
    carries the flower logo's gradient at its palest (sage → lavender →
    coral), the rules are the logo's lavender, the margin line its coral.
 
@@ -70,76 +71,13 @@
 }
 
 
-/* ══ TECH — the same loose-leaf, rebuilt as an instrument (lab, FS69/71)
-   Still unmistakably lined paper: ruled lines, a margin line, three
-   punched holes. Now bright (FS71: the dark version didn't catch the eye):
-   a pale sage coated stock with a soft sheen, green hairline rules over a
-   faint engineering dot grid, a vivid green margin line with a glow, holes
-   as lit green rings the folder shows through, and crop marks at the
-   corners. Dead straight: precision is the modern cue. */
-
-.tech {
-  --tilt: 0deg;
-  --rule-ink: rgba(76, 110, 52, 0.26);
-  --margin-ink: #6f9a45;
-  background:
-    /* coated-stock sheen */
-    linear-gradient(115deg, rgba(255, 255, 255, 0.55) 0%, rgba(255, 255, 255, 0) 32%),
-    /* a faint dot grid between the rules, like engineering paper */
-    radial-gradient(circle, rgba(76, 110, 52, 0.2) 1px, transparent 1.5px) calc(var(--margin) + 0.4rem) var(--top) / 1rem var(--line),
-    /* the margin line, and its glow */
-    linear-gradient(to right, transparent var(--margin), var(--margin-ink) var(--margin), var(--margin-ink) calc(var(--margin) + 1.5px), transparent calc(var(--margin) + 1.5px)),
-    linear-gradient(to right, transparent calc(var(--margin) - 8px), rgba(111, 154, 69, 0.22) var(--margin), transparent calc(var(--margin) + 8px)),
-    /* the rules */
-    repeating-linear-gradient(to bottom, transparent 0, transparent calc(var(--line) - 1px), var(--rule-ink) calc(var(--line) - 1px), var(--rule-ink) var(--line)) 0 var(--top) / 100% calc(100% - var(--top)) no-repeat,
-    /* the stock: pale sage */
-    linear-gradient(to bottom, #f0f4e9, #e3ead8);
-  box-shadow:
-    inset 0 0 0 1px rgba(76, 110, 52, 0.28),
-    inset 0 1px 0 rgba(255, 255, 255, 0.8),
-    0 0 30px rgba(168, 196, 120, 0.18),
-    0 18px 38px rgba(0, 0, 0, 0.36);
-}
-
-.tech .holes i {
-  background: var(--color-cream);
-  box-shadow:
-    inset 0 0 0 2px #6f9a45,
-    inset 0 2px 3px rgba(0, 0, 0, 0.5),
-    0 0 8px rgba(111, 154, 69, 0.45);
-}
-
-.tech .label {
-  color: #3a5427;
-}
-
-.tech .ink {
-  color: #1b2417;
-}
-
-/* Crop marks, one at each corner. */
-.marks i {
-  position: absolute;
-  width: 10px;
-  height: 10px;
-  border-color: #6f9a45;
-  border-style: solid;
-  border-width: 0;
-  pointer-events: none;
-}
-
-.marks i:nth-child(1) { top: 6px; left: 6px; border-top-width: 1px; border-left-width: 1px; }
-.marks i:nth-child(2) { top: 6px; right: 6px; border-top-width: 1px; border-right-width: 1px; }
-.marks i:nth-child(3) { bottom: 6px; left: 6px; border-bottom-width: 1px; border-left-width: 1px; }
-.marks i:nth-child(4) { bottom: 6px; right: 6px; border-bottom-width: 1px; border-right-width: 1px; }
-
 /* ══ GLASS — the paper as brand glass (lab, FS79) ═══════════════════════
    The same loose-leaf structure (rules, margin line, three holes), made of
    the pile's glass: frosted and tinted with a whisper of the logo's
    gradient, faint light rules, the margin line drawn in the gradient
    itself (sage → lavender → coral), the holes as clear rings. Applies to
-   the cover sheet and every “What I did” strip together, switched by
-   data-paper="glass" on the sheet (set by the cover lab). */
+   the cover sheet and every “What I did” strip together, switched on by
+   data-paper="glass" on the folder's dialog (ProjectSheet.jsx, FS102). */
 
 [data-paper='glass'] .paper {
   background:
@@ -195,18 +133,6 @@
   --rule-c: rgba(159, 132, 169, 0.4);
   padding-top: var(--line);
   background: repeating-linear-gradient(to bottom, transparent 0, transparent calc(var(--line) - 1px), var(--rule-c) calc(var(--line) - 1px), var(--rule-c) var(--line));
-}
-
-/* Titled tech: keep the tech stock, rules in green. */
-.tech.titled {
-  background:
-    linear-gradient(115deg, rgba(255, 255, 255, 0.55) 0%, rgba(255, 255, 255, 0) 32%),
-    linear-gradient(to right, transparent var(--margin), #6f9a45 var(--margin), #6f9a45 calc(var(--margin) + 1.5px), transparent calc(var(--margin) + 1.5px)),
-    linear-gradient(to bottom, #f0f4e9, #e3ead8);
-}
-
-.tech .ruled {
-  --rule-c: rgba(76, 110, 52, 0.26);
 }
 
 /* Titled glass: the glass stays; rules as faint light. */

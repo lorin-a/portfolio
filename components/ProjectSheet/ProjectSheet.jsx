@@ -348,6 +348,7 @@ export default function ProjectSheet({
         role="dialog"
         aria-modal="true"
         aria-labelledby={titleId}
+        data-paper="glass"
       >
         <svg ref={svgRef} className={styles.frame} preserveAspectRatio="none" aria-hidden="true">
           <path ref={fillRef} className={styles.frameFill} />
