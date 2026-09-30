@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import Lightbox from '@/components/Lightbox/Lightbox'
 import { SheetStage, SheetCardGallery, SheetHero, SheetFilmstrip, slidesFor, sheetImg } from './SheetMedia'
+import CoverLab, { CoverLabSwitch } from './CoverLab'
 import styles from './SheetContent.module.css'
 
 /**
@@ -76,6 +77,18 @@ export default function SheetContent({ sheet, num, title, tagline, titleId }) {
   }, [sheet.hero, components, bts])
 
   const [lightboxAt, setLightboxAt] = useState(-1)
+
+  /* Cover lab (FS57): ?coverlab on the page URL shows a switcher between
+     the shipped cover and three options. Lab only. */
+  const [lab, setLab] = useState(false)
+  const [coverVariant, setCoverVariant] = useState('current')
+  useEffect(() => {
+    const q = new URLSearchParams(window.location.search)
+    if (q.has('coverlab')) {
+      setLab(true)
+      setCoverVariant(q.get('coverlab') || 'current')
+    }
+  }, [])
   const openerRef = useRef(null)
 
   const openImage = (key, el) => {
@@ -96,34 +109,40 @@ export default function SheetContent({ sheet, num, title, tagline, titleId }) {
     <div ref={rootRef}>
       {/* THE COVER — the name and facts in the left third, the photograph
           across the right two thirds, level top and bottom (her note FS56). */}
-      <header className={`${styles.cover} ${sheet.hero ? styles.coverImage : ''}`} data-reveal="0">
-        {sheet.hero && (
-          <div className={styles.coverMedia}>
-            <SheetHero item={sheet.hero} onImage={openImage} />
-          </div>
-        )}
-        <div className={styles.coverText}>
-          <div className={styles.coverHead}>
-            <span className={styles.num}>{num}</span>
-            <h2 id={titleId} className={styles.title}>{title}</h2>
-            {tagline && <p className={styles.tagline}>{tagline}</p>}
-          </div>
-
-          {meta.length > 0 && (
-            <dl className={styles.meta}>
-              {meta.map(([k, v]) => (
-                <div key={k}>
-                  <dt>{k}</dt>
-                  <dd className={v?.todo ? styles.todo : undefined}>
-                    {v?.todo ? <b>Lorin to write</b> : null}
-                    {v?.todo || v}
-                  </dd>
-                </div>
-              ))}
-            </dl>
+      {coverVariant !== 'current' ? (
+        <CoverLab variant={coverVariant} sheet={sheet} num={num} title={title}
+          tagline={tagline} titleId={titleId} onImage={openImage} />
+      ) : (
+        <header className={`${styles.cover} ${sheet.hero ? styles.coverImage : ''}`} data-reveal="0">
+          {sheet.hero && (
+            <div className={styles.coverMedia}>
+              <SheetHero item={sheet.hero} onImage={openImage} />
+            </div>
           )}
-        </div>
-      </header>
+          <div className={styles.coverText}>
+            <div className={styles.coverHead}>
+              <span className={styles.num}>{num}</span>
+              <h2 id={titleId} className={styles.title}>{title}</h2>
+              {tagline && <p className={styles.tagline}>{tagline}</p>}
+            </div>
+  
+            {meta.length > 0 && (
+              <dl className={styles.meta}>
+                {meta.map(([k, v]) => (
+                  <div key={k}>
+                    <dt>{k}</dt>
+                    <dd className={v?.todo ? styles.todo : undefined}>
+                      {v?.todo ? <b>Lorin to write</b> : null}
+                      {v?.todo || v}
+                    </dd>
+                  </div>
+                ))}
+              </dl>
+            )}
+          </div>
+        </header>
+      )}
+      {lab && <CoverLabSwitch value={coverVariant} onChange={setCoverVariant} />}
 
       {/* THE FRAME — one row of three: what it is, what the research
           found, what changed. Equal columns, matched lengths, identical
@@ -156,7 +175,7 @@ export default function SheetContent({ sheet, num, title, tagline, titleId }) {
         const poem = c.media?.poem || [c.media?.lead, ...(c.media?.also || [])].find((m) => m?.type === 'audio')
         const phone = c.media?.phone
         return (
-          <section key={c.key} className={styles.component} data-reveal="0">
+          <section key={c.key} id={`sheet-${c.key}`} className={styles.component} data-reveal="0">
             {/* The rail: name, what it is, what I did. Narrow and sticky,
                 so the words stay beside the work while the work leads. */}
             <div className={styles.rail}>

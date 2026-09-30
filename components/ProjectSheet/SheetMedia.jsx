@@ -20,6 +20,19 @@ const aud = (k) => (GS_AUDIO[k] ? cloudAudio(GS_AUDIO[k]) : null)
 /** Exported for the sheet's lightbox registry. */
 export const sheetImg = img
 
+/** One still that stands for a component: its first photograph, else a
+    frame from its first video. Used by the cover lab's ecosystem strip. */
+export function stillFor(media = {}, w = 900) {
+  const items = [media.lead, ...(media.also || []), ...(media.stills || [])]
+    .filter(Boolean)
+    .map((s) => (typeof s === 'string' ? { key: s } : s))
+  const photo = items.find((i) => (i.type || 'image') === 'image' && GS_IMAGES[i.key])
+  if (photo) return img(photo.key, w)
+  const video = items.find((i) => i.type === 'video' && GS_VIDEOS[i.key])
+  if (video) return cloudVideo(GS_VIDEOS[video.key], w).replace('/video/upload/', '/video/upload/so_1,f_jpg,') + '.jpg'
+  return null
+}
+
 /**
  * A component's media, flattened into slides in reading order:
  * lead → also → stills. Audio never becomes a slide (the poem has its own
