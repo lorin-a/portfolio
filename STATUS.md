@@ -49,6 +49,11 @@ lab route, she points, the winner becomes law — not a fifth solo swing.
 | FS29 | "why must everything be so centered with tons of space on the left and right? Should we go for a more full width layout inside of the folder? Its looking a little like mobile-first and I would rather design for desktop first and make sure mobile looks clean" | ✅ SHIPPED — desktop first, full width inside the folder (max 120rem, 4vw gutter); one clean single column below 1000px. Sheet is ~17% shorter at 1440 (11,992 → 9,948px) |
 | FS30 | "I want the ratio to be 80% visual 20% copy" | ✅ SHIPPED — the page runs on a rail : work proportion of about 1 : 3, the cover leads with the photograph, and the galleries carry more images, so visuals take most of every screen while no copy was cut |
 | FS31 | "Very good. Make first image match height of text - it should be bigger so in line with \"01\"" (2026-09-30) | ✅ SHIPPED — the cover photo now starts exactly level with the “01” folio and ends exactly level with the last metadata line (measured 0px off at 1024 / 1440 / 1920), about 600px tall at 1440. Its left edge stays on the same line as every gallery below. To fit the rail, the title scales to the column (51px at 1440, 70px at 1920, was 86px); phones stack the photo under the facts at 16:9 |
+| FS32 | "Make \"the project, \"the reseach\" and \"the outcome\" in one 3 column row" (2026-09-30) | ⏳ OPEN |
+| FS33 | "shorten text to all match (lorin will edit later)" | ⏳ OPEN |
+| FS34 | "ensure all text is reaching accessibility requirements" | ⏳ OPEN |
+| FS35 | "I feel the subheads in green are too small. even just visually they look too small" | ⏳ OPEN |
+| FS36 | "For the image resizing, I would rather adjust the image to fit inside the frame and keep text consistent" | ⏳ OPEN |
 
 ### ⟢ OPEN NOTES LEDGER — Folder sheet (2026-09-06, her verdict on the rebuilt sheet)
 
