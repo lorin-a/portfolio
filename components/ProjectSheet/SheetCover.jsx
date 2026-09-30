@@ -165,10 +165,10 @@ export default function SheetCover({ sheet, num, title, tagline, titleId }) {
     <header ref={rootRef} className={styles.cover} data-reveal="0">
       <div className={styles.text}>
         {!onPaper && (
-          <>
+          <div className={styles.head}>
             <span className={styles.num}>{num}</span>
             <FitPair title={title} tagline={tagline} titleId={titleId} />
-          </>
+          </div>
         )}
         <div className={`${styles.sheet} ${onPaper ? styles.sheetTitled : ''}`}>
           <div className={[paper.paper, paperStyle === 'tech' ? paper.tech : '', onPaper ? paper.titled : ''].join(' ')}>
@@ -183,9 +183,12 @@ export default function SheetCover({ sheet, num, title, tagline, titleId }) {
               </div>
             )}
             <div className={onPaper ? paper.ruled : undefined}>
-              {/* The short facts (FS82): the longer set (metaLong in the content
-                  file) only existed to match the old, taller pile. */}
-              <Facts meta={meta} className={`${styles.facts} ${paperStyle === 'tech' ? styles.techFacts : ''}`} />
+              {/* The longer facts (FS88: “make the page longer with more text
+                  than shrink the images”); built only from her own words,
+                  receipts in the content file. */}
+              {/* With the heading on the sheet, the short facts: the heading
+                  already adds the height the longer facts would. */}
+              <Facts meta={onPaper ? meta : (sheet.metaLong || meta)} className={`${styles.facts} ${paperStyle === 'tech' ? styles.techFacts : ''}`} />
             </div>
           </div>
         </div>

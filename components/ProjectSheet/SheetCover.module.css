@@ -110,7 +110,7 @@
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: #434d3b;
+  color: #3d4636;
 }
 
 .facts dd {
@@ -133,7 +133,7 @@
   line-height: var(--line);
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: #434d3b;
+  color: #3d4636;
 }
 
 /* ── The pile: four prints, each at its own tilt ───────────────────────
@@ -217,7 +217,7 @@
    Corners are the film's own, barely rounded. */
 
 .polaroids .print {
-  width: 38%;   /* smaller (FS82), so the hero fits the first screen */
+  width: 50%;   /* full size again (FS88: grow the text, not shrink the images) */
   aspect-ratio: auto;
   background: none;
   box-shadow: none;
@@ -506,7 +506,7 @@
 }
 
 .paperHead .num {
-  color: #434d3b;
+  color: #3d4636;
 }
 
 .paperHead .title,
@@ -525,4 +525,53 @@
 [data-paper='glass'] .paperHead .title,
 [data-paper='glass'] .paperHead .tagline {
   color: #f4f1ec;
+}
+
+/* ══ The pile matches the paper (FS86, FS88) ═══════════════════════════
+   Desktop: the heading takes the first row of the left column; the paper
+   and the pile share the second row and stretch to the same height. The
+   polaroids keep their size (FS88: grow the text, never shrink the
+   images); if the facts run shorter than the pile, the paper extends with
+   blank ruled lines, as a real sheet would. The prints centre in the
+   pile's row, and the paper's top and bottom meet the pile's. */
+@media (min-width: 1000px) {
+  .cover {
+    align-items: stretch;
+    row-gap: var(--flow-2);
+  }
+
+  .text {
+    display: contents;
+  }
+
+  .head {
+    grid-column: 1 / span 4;
+    grid-row: 1;
+  }
+
+  .sheet {
+    display: flex;
+    flex-direction: column;
+    grid-column: 1 / span 4;
+    grid-row: 2;
+    margin-top: 0;
+  }
+
+  .sheetTitled {
+    grid-row: 1 / span 2;
+  }
+
+  .sheet > div {
+    flex: 1;
+  }
+
+  .pile {
+    grid-column: 5 / span 8;
+    grid-row: 2;
+    align-self: stretch;
+  }
+
+  .cover:has(.sheetTitled) .pile {
+    grid-row: 1 / span 2;
+  }
 }
