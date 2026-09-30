@@ -175,7 +175,8 @@ export const groundswell = {
          although the language came from the research and collaborations. I
          worked with Claude Code to translate hand-written data collected by
          research assistants into the interactive dashboard." */
-      mine: 'I led brand copywriting, although the language came from the research and collaborations. I worked with Claude Code to translate handwritten data collected by research assistants into the interactive dashboard.',
+      /* FS139: her FS134 line, recast without “I” */
+      mine: 'Brand copywriting, with language drawn from the research and collaborations, and translation of handwritten data collected by research assistants into the interactive dashboard, built with Claude Code.',
     },
     {
       key: 'pod',
@@ -203,7 +204,8 @@ export const groundswell = {
          meditation teacher to co-write and record the custom meditations." */
       /* FS138: “over $40k value in donations” → material and service
          donations (no money changed hands). */
-      mine: 'I secured material and service donations and partnerships that built the pod: the pod structure, finger labyrinths, woodworking, Schlage locks, Density sensor hardware and software, and a meditation teacher to co-write and record the custom meditations.',
+      /* FS139: her FS136/FS138 line, recast without “I” */
+      mine: 'Securing the material and service donations and partnerships that built the pod: the pod structure, finger labyrinths, woodworking, Schlage locks, Density sensor hardware and software, and a meditation teacher to co-write and record the custom meditations.',
     },
     {
       key: 'library',
@@ -249,7 +251,8 @@ export const groundswell = {
          record additional custom meditations, selected the featured
          instrumentals, designed the micro-site and preprared YouTube
          channel" */
-      mine: 'I applied my knowledge of somatic bodywork to draft the reflection cards and copy for the poem and custom meditation, coordinated with meditation teachers to write and record additional custom meditations, selected the featured instrumentals, designed the microsite and prepared the YouTube channel.',
+      /* FS139: her FS137 line, recast without “I” */
+      mine: 'Copy for the reflection cards, poem, and custom meditation, grounded in somatic bodywork; coordination with meditation teachers to write and record additional custom meditations; selection of the featured instrumentals; and design of the microsite and YouTube channel.',
       /* Her build request, 2026-08-27: "I want to embed a player for the poem
          as an interactive component." Not built yet. */
       wants: 'An embedded player for the Groundswell poem.',
@@ -268,7 +271,8 @@ export const groundswell = {
       },
       name: 'Ceased to Breathe (CTB) Email Template',
       body: 'The updated Ceased to Breathe (CTB) email template builds upon the firm foundation of existing staff-led support initiatives for patient death notifications by softening the emotional tone of delivering devastating news. The addition of empathetic language and comforting visuals creates a communal space where the emotional realities of oncology work can be acknowledged, shared, and honored by recognizing both the professional and personal impact of patient loss.',
-      mine: 'I led the copy drafting.',
+      /* FS139: her copy, verbatim (FS139) */
+      mine: 'Copy and template drafting, creation of onboarding materials for staff, and coordination and troubleshooting with key stakeholders in the hospital.',
     },
     {
       key: 'dashboard',
@@ -284,7 +288,8 @@ export const groundswell = {
       },
       name: 'The data dashboard',
       body: 'An interactive platform that translated the data collected from each component into an immersive storytelling experience that translated lived experience into actionable metrics. It combined qualitative and quantitative findings in one place, showcasing the importance of telling a well-rounded story.',
-      mine: 'I led the production and design of the data dashboard.',
+      /* FS139: recast without “I” */
+      mine: 'Production and design of the data dashboard.',
       gated: true,
     },
   ],

@@ -146,7 +146,7 @@ export default function SheetContent({ sheet, num, title, tagline, titleId }) {
                   <div className={`${paper.paper} ${styles.mine}`}>
                     <span className={paper.holes} aria-hidden="true"><i /><i /><i /></span>
                     <p className={styles.mineText}>
-                      <span className={paper.label}>What I did</span>
+                      <span className={paper.label}>My Contribution</span>
                       <span className={`${styles.mineBody} ${paper.ink}`}>{c.mine}</span>
                     </p>
                   </div>
