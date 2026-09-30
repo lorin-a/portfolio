@@ -81,6 +81,7 @@ lab route, she points, the winner becomes law — not a fifth solo swing.
 | FS61 | "no paper stack, it is misleading for an interaction. and makee it look more like real paper, 3 hole punch, texture, paper edges, paper lines?" (2026-09-30) | 🧪 BUILT in E4: the second sheet removed (it read as something to click). The one sheet is now real loose-leaf: warm stock with a fine grain, blue ruled lines, a red margin line, three punched holes showing the folder’s charcoal through, a light top edge and a soft shadow beneath. Every line of type is exactly one ruled line tall and the rows sit a blank line apart, so the text lands on the rules (measured: rows start at 2, 8, 12 and 17 lines). No new typeface |
 | FS62 | "Good add more context copy to the metadata so it becomes longer to reach the same length as the image stack" (2026-09-30) | ⏳ OPEN |
 | FS63 | "Make the title subhead reach the same width as the title" (2026-09-30) | ⏳ OPEN |
+| FS64 | "Choose a more diverse selection of product photos and make it 4 the best of the best" (2026-09-30) | ⏳ OPEN |
 
 ### ⟢ OPEN NOTES LEDGER — Folder sheet (2026-09-06, her verdict on the rebuilt sheet)
 
