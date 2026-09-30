@@ -97,8 +97,7 @@
   flex: 1 1 18rem;
   min-width: 0;
   margin: 0;
-  font-family: var(--font-heading);
-  font-style: italic;
+  font-family: var(--font-body);   /* regular body text (FS133) */
   font-size: var(--step-small);
   line-height: 1.45;
   color: var(--color-ink);

@@ -32,7 +32,7 @@
   display: grid;
   grid-template-columns: 1fr;
   gap: var(--flow-3);
-  margin-bottom: var(--flow-4);
+  margin-top: var(--hero-gap);
   padding-top: var(--hero-gap);   /* equals the gap above the rule (FS94) */
   border-top: var(--rule);
   border-image: var(--rule-grad) 1;
@@ -66,14 +66,18 @@
   text-wrap: pretty;
 }
 
+/* EQUAL BREAKS (FS132): every page-break rule in the folder has the same
+   space above it and below it, --hero-gap (64px), with no section adding
+   its own margin beneath; adjacent margins collapse to that one value. */
+
 /* ══ COMPONENTS — the rail and the work, identical every time ════════ */
 
 .component {
   display: grid;
   grid-template-columns: 1fr;
   gap: var(--flow-2);
-  margin-bottom: var(--flow-4);
-  padding-top: var(--flow-2);
+  margin-top: var(--hero-gap);
+  padding-top: var(--hero-gap);
   border-top: var(--rule);
   border-image: var(--rule-grad) 1;
 }
@@ -201,6 +205,7 @@
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   gap: var(--gap-col);
+  margin-top: var(--hero-gap);
   padding-top: var(--hero-gap);
   border-top: var(--rule);
   border-image: var(--rule-grad) 1;
@@ -269,8 +274,8 @@
   display: grid;
   grid-template-columns: 1fr;
   gap: var(--flow-1);
-  margin-top: var(--flow-3);
-  padding-top: var(--flow-2);
+  margin-top: var(--hero-gap);
+  padding-top: var(--hero-gap);
   border-top: 1px solid var(--sheet-hair);
   border-image: var(--rule-grad) 1;
 }
@@ -360,7 +365,7 @@
 /* ══ BEHIND THE SCENES — research and production (FS131) ══════════════ */
 
 .process {
-  margin-top: var(--flow-4);
+  margin-top: var(--hero-gap);
   padding-top: var(--hero-gap);
   border-top: var(--rule);
   border-image: var(--rule-grad) 1;

@@ -505,7 +505,7 @@
    =========================================== */
 
 .press {
-  margin-top: var(--flow-4);
+  margin-top: var(--hero-gap);   /* equal breaks (FS132) */
   padding-top: var(--hero-gap);
   border-top: var(--rule);
   border-image: var(--rule-grad) 1;
