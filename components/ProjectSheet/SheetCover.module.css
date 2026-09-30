@@ -215,7 +215,8 @@
    borders on three sides (about 5% of the width) and the deep chin below
    (about 24%). The frame is matte, faintly grained, lighter at the top;
    the photo sits a hair recessed, with instant film's slightly warm, soft
-   colour and a gloss sheen; the caption is written by hand in marker.
+   colour and a gloss sheen; the caption sits on the chin in the site's
+   italic serif (no handwriting fonts, her standing rule FS76).
    Corners are the film's own, barely rounded. */
 
 .polaroids .print {
@@ -270,17 +271,16 @@
   pointer-events: none;
 }
 
-/* The chin, and the marker caption on it. */
+/* The chin, and the caption on it. */
 .polaroidCaption {
   display: grid;
   place-items: center;
   aspect-ratio: 79 / 19;
-  font-family: var(--font-hand), var(--font-heading);
-  font-size: clamp(1.125rem, 1.5vw, 1.5rem);
-  font-weight: 500;
+  font-family: var(--font-heading);
+  font-style: italic;
+  font-size: var(--step-small);
   line-height: 1;
-  color: #262a3a;
-  transform: rotate(-1.5deg);
+  color: #2a2724;
 }
 
 .polaroids .print[data-depth='0'] { transform: translate(0, 0) rotate(-2deg); }
@@ -374,6 +374,92 @@
   letter-spacing: 0.06em;
   font-variant-numeric: tabular-nums;
   color: #b9c99e;
+}
+
+/* ══ LAB: brand glass (FS74, FS75) ═════════════════════════════════════
+   The glass, made the site's own: frosted frames tinted with a whisper of
+   the flower logo's gradient (sage, lavender, coral at 135°), a fine light
+   edge, the photo square and clean; beneath it, the caption in the site's
+   italic serif beside her own scribble mark, which draws itself on each
+   time a print comes forward. On hover, one soft sheen crosses the front
+   print. No brackets, readouts, grids or glows: one new material, the rest
+   in the site's existing voice. */
+
+.brandFrame {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  padding: 4.5% 4.5% 0;
+  border-radius: 3px;
+  background: linear-gradient(135deg,
+    rgba(197, 207, 166, 0.24) 5%,
+    rgba(199, 170, 209, 0.2) 45%,
+    rgba(247, 156, 126, 0.18) 88%);
+  backdrop-filter: blur(14px) saturate(1.25);
+  -webkit-backdrop-filter: blur(14px) saturate(1.25);
+  box-shadow:
+    inset 0 0 0 1px rgba(244, 241, 236, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    0 20px 42px rgba(0, 0, 0, 0.4);
+}
+
+/* The sheen: one soft band of light, parked off the left edge. */
+.brandFrame::after {
+  content: '';
+  position: absolute;
+  inset: -20% -40%;
+  background: linear-gradient(105deg, transparent 38%, rgba(255, 255, 255, 0.22) 50%, transparent 62%);
+  transform: translateX(-70%);
+  transition: transform 1100ms var(--ease-out);
+  pointer-events: none;
+}
+
+@media (hover: hover) {
+  .brandPile:hover .print[data-depth='0'] .brandFrame::after {
+    transform: translateX(70%);
+  }
+}
+
+.brandPhoto {
+  display: block;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  background: #141311;
+}
+
+.brandPhoto img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.brandStrip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  aspect-ratio: 79 / 17;
+}
+
+.brandStrip .brandMark {
+  width: 1.625rem;
+  height: 1.625rem;
+  flex: none;
+}
+
+.brandCaption {
+  font-family: var(--font-heading);
+  font-style: italic;
+  font-size: var(--step-small);
+  line-height: 1;
+  color: #f4f1ec;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .brandFrame::after {
+    transition: none;
+  }
 }
 
 /* ══ LAB: switcher ══════════════════════════════════════════════════════ */

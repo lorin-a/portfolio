@@ -4,6 +4,11 @@ import { useEffect, useRef, useState } from 'react'
 import { sheetImg } from './SheetMedia'
 import styles from './SheetCover.module.css'
 import paper from './Paper.module.css'
+import SenseMark from '@/components/marks/SenseMark'
+
+/* The site's own gradient: the flower logo's and the hand-drawn marks'
+   (dark theme; HeroScatter / Nav), used to tint the brand glass (FS75). */
+const BRAND_GRADIENT = ['#C5CFA6', '#C7AAD1', '#F79C7E']
 
 /**
  * THE COVER — a pile of content inside the folder (her notes FS57–FS68).
@@ -68,10 +73,11 @@ function FitPair({ title, tagline, titleId }) {
 function Pile({ prints, style = 'prints' }) {
   const items = prints.map((p) => ({ ...p, src: sheetImg(p.key, 1400) })).filter((p) => p.src)
   const [order, setOrder] = useState(() => items.map((_, i) => i))
-  const next = () => setOrder((o) => [...o.slice(1), o[0]])
+  const [turns, setTurns] = useState(0)
+  const next = () => { setOrder((o) => [...o.slice(1), o[0]]); setTurns((t) => t + 1) }
   if (!items.length) return null
   return (
-    <div className={`${styles.pile} ${style === 'polaroid' ? styles.polaroids : ''} ${style === 'techpol' ? `${styles.polaroids} ${styles.techPols}` : ''}`}>
+    <div className={`${styles.pile} ${['polaroid', 'techpol', 'brand'].includes(style) ? styles.polaroids : ''} ${style === 'brand' ? styles.brandPile : ''}`}>
       {items.map((p, i) => {
         const depth = order.indexOf(i)
         return (
@@ -85,6 +91,19 @@ function Pile({ prints, style = 'prints' }) {
               <span className={styles.polaroidFrame}>
                 <span className={styles.polaroidPhoto}><img src={p.src} alt="" /></span>
                 {p.caption && <span className={styles.polaroidCaption}>{p.caption}</span>}
+              </span>
+            ) : style === 'brand' ? (
+              <span className={styles.brandFrame}>
+                <span className={styles.brandPhoto}><img src={p.src} alt="" /></span>
+                <span className={styles.brandStrip}>
+                  {/* Her own scribble mark, on the front print only; it draws
+                      itself on each time a new print comes forward. */}
+                  {depth === 0 && (
+                    <SenseMark key={turns} animate replay={turns}
+                      gradientColors={BRAND_GRADIENT} className={styles.brandMark} />
+                  )}
+                  <span className={styles.brandCaption}>{p.caption}</span>
+                </span>
               </span>
             ) : style === 'techpol' ? (
               <span className={styles.techFrame}>
@@ -132,7 +151,7 @@ function LabSwitch({ paperStyle, setPaperStyle, pileStyle, setPileStyle }) {
   return (
     <div className={styles.lab}>
       {group('Paper', paperStyle, setPaperStyle, [['leaf', 'Loose-leaf'], ['tech', 'Tech']])}
-      {group('Pile', pileStyle, setPileStyle, [['prints', 'Prints'], ['polaroid', 'Polaroids'], ['techpol', 'Tech polaroids']])}
+      {group('Pile', pileStyle, setPileStyle, [['prints', 'Prints'], ['polaroid', 'Polaroids'], ['techpol', 'Tech polaroids'], ['brand', 'Brand glass']])}
     </div>
   )
 }
