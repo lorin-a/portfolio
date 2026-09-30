@@ -31,41 +31,80 @@
   color: var(--color-sage);
 }
 
-/* ══ COVER ════════════════════════════════════════════════════════════ */
+/* ══ COVER ════════════════════════════════════════════════════════════
+
+   With a photograph (her note FS46): full bleed. The cover pulls out
+   past the gutter and up past the sheet's top padding so the photo runs
+   edge to edge under the tab line, its top corners matching the folder's
+   (20px radius, less the 1.5px of the outline it sits inside). The photo
+   is faded and darkened under the project's name and facts; hover lifts
+   the overlay and it shows in full colour. Keyboard focus and touch
+   screens keep the overlay, so the text is always reachable. */
 
 .cover {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: var(--flow-3);
   margin-bottom: var(--flow-4);
 }
 
-/* Cover: facts in the rail (4), the photo across the work (8), cropped
-   to fill. The title's display size is set so the name fits one third. */
-@media (min-width: 1000px) {
-  .cover {
-    grid-template-columns: var(--grid);
-    column-gap: var(--gap-col);
-    align-items: stretch;
-  }
+.coverImage {
+  position: relative;
+  display: grid;
+  align-items: end;
+  min-height: min(82dvh, 48rem);
+  margin-top: calc(-5.5rem + 1.5px);
+  margin-inline: calc(var(--gutter) * -1 + 1.5px);
+  overflow: hidden;
+  border-radius: 18.5px 18.5px 0 0;
+  background: #141311;
+}
 
-  .coverText {
-    grid-column: span 4;
-  }
+.coverMedia {
+  position: absolute;
+  inset: 0;
+}
 
-  .coverMedia {
-    grid-column: span 8;
-  }
-
-  .coverSolo .coverText {
-    grid-column: 1 / -1;
-  }
+.coverImage img {
+  filter: saturate(0.3) brightness(0.8);
+  transition:
+    filter var(--motion-medium) var(--ease-out),
+    transform var(--motion-medium) var(--ease-out);
 }
 
 .coverText {
   display: flex;
   flex-direction: column;
   min-width: 0;
+}
+
+.coverImage .coverText {
+  position: relative;
+  justify-content: flex-end;
+  min-height: 100%;
+  padding: 7rem calc(var(--gutter) - 1.5px) var(--flow-3);
+  background: var(--overlay-scrim);
+  pointer-events: none;
+  transition: opacity var(--motion-medium) var(--ease-out);
+}
+
+@media (hover: hover) {
+  .coverImage:hover img {
+    filter: none;
+    transform: scale(1.01);
+  }
+
+  .coverImage:hover .coverText {
+    opacity: 0;
+  }
+}
+
+/* On the overlay, every colour is the fixed light ink. */
+.coverImage .num,
+.coverImage .title,
+.coverImage .tagline,
+.coverImage .meta dt,
+.coverImage .meta dd,
+.coverImage .todo,
+.coverImage .todo b {
+  color: var(--overlay-ink);
 }
 
 .num {
@@ -93,27 +132,39 @@
   text-wrap: balance;
 }
 
-/* The facts run down the rail beside the image, top edges level, so the
-   cover resolves as one rectangle under the name. */
+/* The facts: a row across the foot of the cover, on the grid (3 · 3 ·
+   3 · 3), two by two on tablets, stacked on phones. */
 .meta {
   display: grid;
-  gap: var(--flow-2);
+  gap: var(--flow-2) var(--gap-col);
   margin: var(--flow-3) 0 0;
   padding-top: var(--flow-2);
   border-top: var(--rule);
 }
 
-@media (min-width: 600px) and (max-width: 999px) {
+.coverImage .meta {
+  border-top-color: color-mix(in srgb, var(--overlay-ink) 55%, transparent);
+}
+
+@media (min-width: 600px) {
   .meta {
     grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (min-width: 1000px) {
+  .meta {
+    grid-template-columns: var(--grid);
+  }
+
+  .meta > div {
+    grid-column: span 3;
   }
 }
 
 .meta div {
   min-width: 0;
 }
-
-
 
 .meta dt {
   margin-bottom: 0.25rem;
@@ -141,29 +192,6 @@
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--color-sage);
-}
-
-/* Phones and tablets: the photo stacks under the facts at 16:9. */
-.coverMedia {
-  position: relative;
-  width: 100%;
-  min-width: 0;
-  aspect-ratio: 16 / 9;
-}
-
-/* Desktop: the photo fills the grid row, so its top meets the folio and
-   its bottom meets the last line of the facts. The image is absolutely
-   placed so its own pixels never push the row taller than the text. */
-@media (min-width: 1000px) {
-  .coverMedia {
-    aspect-ratio: auto;
-    min-height: 26rem;
-  }
-
-  .coverMedia > * {
-    position: absolute;
-    inset: 0;
-  }
 }
 
 /* ══ FRAME — one row of three, equal and matched ═══════════════════ */

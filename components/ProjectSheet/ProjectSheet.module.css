@@ -232,6 +232,15 @@
   --sheet-hair: color-mix(in srgb, var(--color-ink) 18%, transparent);
   --sheet-mat: color-mix(in srgb, var(--color-ink) 6%, var(--color-cream));
   --sheet-field: color-mix(in srgb, var(--color-sage) 14%, var(--color-cream));
+  /* Image overlays (cover + featured articles) are dark in either theme,
+     so their text is a fixed light ink, not the theme's ink. */
+  --overlay-ink: #f4f1ec;
+  --overlay-scrim: linear-gradient(
+    to top,
+    rgba(16, 15, 13, 0.9) 0%,
+    rgba(16, 15, 13, 0.78) 45%,
+    rgba(16, 15, 13, 0.55) 100%
+  );
 }
 
 .masthead {
@@ -513,78 +522,119 @@
   }
 }
 
+/* One card = one link. The article page fills it; the overlay sits on
+   top, faded and darkened, carrying the citation. Hover (and only hover)
+   lifts the overlay so the page shows in full colour; keyboard focus
+   keeps the text, since that is where the link's meaning lives. On touch
+   screens there is no hover, so the overlay simply stays. */
 .pressCard {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  color: var(--color-ink);
+  position: relative;
+  display: grid;
+  align-items: end;
+  /* 4:3 at least, taller when a long headline needs it. A spacer in the
+     card's single grid cell holds the 4:3 minimum; the overlay shares that
+     cell and pushes it taller if its text needs more. Only the image layer
+     clips. */
+  color: var(--overlay-ink);
   text-decoration: none;
+  background: #141311;
 }
 
-.pressPreview {
-  display: block;
-  aspect-ratio: 16 / 10;
+.pressCard::before {
+  content: '';
+  grid-area: 1 / 1;
+  padding-top: 75%;
+}
+
+.pressMedia {
+  position: absolute;
+  inset: 0;
   overflow: hidden;
-  background: var(--sheet-mat);
 }
 
-.pressPreview img {
-  display: block;
+.pressImg {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: top;
-  transition: transform var(--motion-medium) var(--ease-out);
+  /* Blurred as well as faded by default: these are pages of text, and
+     their headlines would otherwise read through the overlay's own. The
+     slight scale hides the blur's soft edge. */
+  filter: saturate(0.3) brightness(0.7) blur(3px);
+  transform: scale(1.06);
+  transition:
+    filter var(--motion-medium) var(--ease-out),
+    transform var(--motion-medium) var(--ease-out);
+}
+
+.pressOverlay {
+  position: relative;
+  grid-area: 1 / 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--flow-1);
+  min-height: 100%;
+  justify-content: flex-end;
+  padding: var(--flow-2);
+  background: var(--overlay-scrim);
+  transition: opacity var(--motion-medium) var(--ease-out);
 }
 
 .pressMeta {
   display: flex;
   justify-content: space-between;
   gap: var(--flow-1);
-  margin-top: var(--flow-2);
   font-family: var(--font-body);
   font-size: var(--step-label);
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--color-sage);
+  color: var(--overlay-ink);
 }
 
 .pressTitle {
   display: block;
-  margin-top: var(--flow-1);
   font-family: var(--font-heading);
   font-size: var(--step-statement);
   font-weight: 300;
-  line-height: 1.3;
-  color: var(--color-ink);
+  line-height: 1.25;
+  color: var(--overlay-ink);
   text-wrap: pretty;
 }
 
-.pressPublisher {
-  display: block;
-  margin-top: auto;
-  padding-top: var(--flow-2);
+.pressCta {
+  display: inline-flex;
+  align-self: flex-start;
+  align-items: center;
+  min-height: 44px;
+  margin-top: 0.25rem;
   font-family: var(--font-body);
-  font-size: var(--step-small);
-  color: var(--color-ink);
+  font-size: var(--step-label);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--overlay-ink);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.35em;
 }
 
 @media (hover: hover) {
-  .pressCard:hover .pressPreview img {
-    transform: scale(1.03);
+  .pressCard:hover .pressImg {
+    filter: none;
+    transform: none;
   }
 
-  .pressCard:hover .pressTitle {
-    text-decoration: underline;
-    text-decoration-thickness: 1px;
-    text-underline-offset: 0.18em;
+  .pressCard:hover .pressOverlay {
+    opacity: 0;
   }
 }
 
 .pressCard:focus-visible {
   outline: 2px solid var(--color-sage);
-  outline-offset: 6px;
+  outline-offset: 4px;
 }
 
 .srOnly {

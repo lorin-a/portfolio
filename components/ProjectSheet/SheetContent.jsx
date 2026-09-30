@@ -94,10 +94,15 @@ export default function SheetContent({ sheet, num, title, tagline, titleId }) {
 
   return (
     <div ref={rootRef}>
-      {/* THE COVER — the name and its facts in the rail, the place itself
-          beside them, top edge level with the folio and running the full
-          height of the text. One rectangle, one name, one picture. */}
-      <header className={`${styles.cover} ${sheet.hero ? '' : styles.coverSolo}`} data-reveal="0">
+      {/* THE COVER — the place itself, full bleed across the folder, faded
+          under the project's name and facts (her note FS46). Hover lifts
+          the overlay and the photograph shows in full colour. */}
+      <header className={`${styles.cover} ${sheet.hero ? styles.coverImage : ''}`} data-reveal="0">
+        {sheet.hero && (
+          <div className={styles.coverMedia}>
+            <SheetHero item={sheet.hero} onImage={openImage} />
+          </div>
+        )}
         <div className={styles.coverText}>
           <span className={styles.num}>{num}</span>
           <h2 id={titleId} className={styles.title}>{title}</h2>
@@ -117,11 +122,6 @@ export default function SheetContent({ sheet, num, title, tagline, titleId }) {
             </dl>
           )}
         </div>
-        {sheet.hero && (
-          <div className={styles.coverMedia}>
-            <SheetHero item={sheet.hero} onImage={openImage} />
-          </div>
-        )}
       </header>
 
       {/* THE FRAME — one row of three: what it is, what the research

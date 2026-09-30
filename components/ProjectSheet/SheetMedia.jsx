@@ -2,11 +2,12 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react'
 import {
-  cloudImg, cloudVideo, cloudVideoPoster, cloudAudio,
+  cloudImg, cloudVideo, cloudAudio,
   GS_IMAGES, GS_VIDEOS, GS_AUDIO, GS_CARDS,
 } from '@/lib/cloudinary'
 import { useSharedAudio } from '@/lib/useSharedAudio'
 import { POEM_OPENER, POEM_STANZAS, POEM_CREDIT } from '@/content/poems/groundswell'
+import GalleryNav from '@/components/GalleryNav/GalleryNav'
 import styles from './SheetMedia.module.css'
 
 /* Cloudinary keys resolve through the project's existing maps. A missing
@@ -14,7 +15,6 @@ import styles from './SheetMedia.module.css'
    a broken box. */
 const img = (k, w) => (GS_IMAGES[k] ? cloudImg(GS_IMAGES[k], w) : null)
 const vid = (k, w) => (GS_VIDEOS[k] ? cloudVideo(GS_VIDEOS[k], w) : null)
-const poster = (k, w) => (GS_VIDEOS[k] ? cloudVideoPoster(GS_VIDEOS[k], w) : null)
 const aud = (k) => (GS_AUDIO[k] ? cloudAudio(GS_AUDIO[k]) : null)
 
 /** Exported for the sheet's lightbox registry. */
@@ -32,8 +32,7 @@ export function slidesFor(media = {}) {
     const type = item.type || 'image'
     const src = type === 'video' ? vid(item.key, 1600) : img(item.key, 1800)
     if (!src) return
-    const thumb = type === 'video' ? poster(item.key, 240) : img(item.key, 240)
-    out.push({ key: item.key, type, alt: item.alt || '', src, thumb })
+    out.push({ key: item.key, type, alt: item.alt || '', src })
   }
   add(media.lead)
   media.also?.forEach(add)
@@ -50,9 +49,10 @@ export function slidesFor(media = {}) {
  * can share the same frame without either being cut. Square corners: the
  * work is the object; the frame should not be decorated.
  *
- * Arrows, a numbered counter, and a thumbnail rail page through it; the
- * arrow keys work while focus is anywhere in the gallery. A public image
- * also opens into the sheet-wide overlay.
+ * Paged with the site's one gallery control (GalleryNav: circle arrows at
+ * the ends, dots in the middle, her note FS44); the arrow keys work while
+ * focus is anywhere in the gallery. A public image also opens into the
+ * sheet-wide overlay.
  */
 export function SheetStage({ slides, gated, onImage, label }) {
   const [at, setAt] = useState(0)
@@ -95,51 +95,17 @@ export function SheetStage({ slides, gated, onImage, label }) {
         ) : mediaEl}
       </div>
 
-      <div className={styles.stageBar}>
-        <p className={styles.caption} aria-live="polite">
-          {n > 1 && (
-            <span className={styles.counter}>
-              {String(at + 1).padStart(2, '0')}
-              <span aria-hidden="true"> / </span>
-              <span className={styles.srOnly}> of </span>
-              {String(n).padStart(2, '0')}
-            </span>
-          )}
-          {s.alt && <span className={styles.captionText}>{s.alt}</span>}
-        </p>
-        {n > 1 && (
-          <div className={styles.arrows}>
-            <button type="button" className={styles.arrow} onClick={() => go(-1)}
-              aria-label="Previous">
-              <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10 3 5 8l5 5" /></svg>
-            </button>
-            <button type="button" className={styles.arrow} onClick={() => go(1)}
-              aria-label="Next">
-              <svg viewBox="0 0 16 16" aria-hidden="true"><path d="m6 3 5 5-5 5" /></svg>
-            </button>
-          </div>
-        )}
-      </div>
+      <GalleryNav
+        className={styles.stageNav}
+        count={n}
+        index={at}
+        onPrev={() => go(-1)}
+        onNext={() => go(1)}
+        onSelect={setAt}
+        label={label}
+      />
 
-      {n > 1 && (
-        <ul className={styles.thumbs}>
-          {slides.map((t, i) => (
-            <li key={t.key}>
-              <button type="button" className={styles.thumb}
-                aria-current={i === at ? 'true' : undefined}
-                aria-label={`Show ${i + 1} of ${n}${t.type === 'video' ? ', video' : ''}`}
-                onClick={() => setAt(i)}>
-                {t.thumb && <img src={t.thumb} alt="" loading="lazy" />}
-                {t.type === 'video' && (
-                  <svg className={styles.thumbPlay} viewBox="0 0 16 16" aria-hidden="true">
-                    <path d="M5 3.5v9l7.5-4.5z" />
-                  </svg>
-                )}
-              </button>
-            </li>
-          ))}
-        </ul>
-      )}
+      {s.alt && <p className={styles.caption} aria-live="polite">{s.alt}</p>}
     </div>
   )
 }
@@ -365,44 +331,44 @@ export function SheetHero({ item, onImage }) {
  */
 export function SheetFilmstrip({ bts, onImage }) {
   const rowRef = useRef(null)
-  const [edge, setEdge] = useState({ start: true, end: false })
+  const [at, setAt] = useState(0)
 
   const items = (bts.images || [])
     .map((i) => ({ ...i, src: img(i.key, 1200) }))
     .filter((i) => i.src)
 
+  /* The dot follows whichever photo sits at the strip's left edge. At the
+     very end the last photo may never reach the edge, so the end of the
+     scroll counts as the last photo. */
   const sync = useCallback(() => {
     const r = rowRef.current
     if (!r) return
-    setEdge({ start: r.scrollLeft < 4, end: r.scrollLeft + r.clientWidth > r.scrollWidth - 4 })
+    if (r.scrollLeft + r.clientWidth >= r.scrollWidth - 4) { setAt(r.children.length - 1); return }
+    const pad = parseFloat(getComputedStyle(r).paddingLeft) || 0
+    let best = 0, dist = Infinity
+    ;[...r.children].forEach((li, i) => {
+      const d = Math.abs(li.offsetLeft - pad - r.scrollLeft)
+      if (d < dist) { dist = d; best = i }
+    })
+    setAt(best)
   }, [])
 
-  useEffect(() => { sync() }, [sync])
+  const goTo = useCallback((i) => {
+    const r = rowRef.current
+    if (!r) return
+    const n = r.children.length
+    const li = r.children[(i + n) % n]
+    const pad = parseFloat(getComputedStyle(r).paddingLeft) || 0
+    const smooth = !window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    r.scrollTo({ left: li.offsetLeft - pad, behavior: smooth ? 'smooth' : 'auto' })
+    setAt((i + n) % n)
+  }, [])
 
   if (!items.length) return null
 
-  const page = (d) => {
-    const r = rowRef.current
-    if (!r) return
-    const smooth = !window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    r.scrollBy({ left: d * r.clientWidth * 0.8, behavior: smooth ? 'smooth' : 'auto' })
-  }
-
   return (
     <section className={styles.strip} data-reveal="0" aria-label={bts.title}>
-      <div className={styles.stripHead}>
-        <h3 className={styles.stripTitle}>{bts.title}</h3>
-        <div className={styles.arrows}>
-          <button type="button" className={styles.arrow} onClick={() => page(-1)}
-            disabled={edge.start} aria-label="Scroll back">
-            <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10 3 5 8l5 5" /></svg>
-          </button>
-          <button type="button" className={styles.arrow} onClick={() => page(1)}
-            disabled={edge.end} aria-label="Scroll forward">
-            <svg viewBox="0 0 16 16" aria-hidden="true"><path d="m6 3 5 5-5 5" /></svg>
-          </button>
-        </div>
-      </div>
+      <h3 className={styles.stripTitle}>{bts.title}</h3>
       <ul ref={rowRef} className={styles.stripRow} onScroll={sync}>
         {items.map((i) => (
           <li key={i.key} className={styles.stripItem}>
@@ -415,6 +381,15 @@ export function SheetFilmstrip({ bts, onImage }) {
           </li>
         ))}
       </ul>
+      <GalleryNav
+        className={styles.stageNav}
+        count={items.length}
+        index={at}
+        onPrev={() => goTo(at - 1)}
+        onNext={() => goTo(at + 1)}
+        onSelect={goTo}
+        label={bts.title}
+      />
     </section>
   )
 }

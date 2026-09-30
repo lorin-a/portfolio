@@ -381,8 +381,8 @@ export default function ProjectSheet({
             )}
             {pressList.length > 0 ? (
               /* Featured articles: a row of three on the sheet's grid. Each
-                 card is one link: the page as published, where it ran, and
-                 the headline. */
+                 card is one link: the page as published under a faded
+                 overlay carrying where it ran, the headline, and the call. */
               <section className={styles.press} aria-labelledby={`${titleId}-press`}>
                 <h3 id={`${titleId}-press`} className={styles.pressHead}>As featured in</h3>
                 <ul className={styles.pressRow}>
@@ -391,19 +391,23 @@ export default function ProjectSheet({
                       <a className={styles.pressCard} href={a.href}
                         target="_blank" rel="noopener noreferrer">
                         {a.preview && (
-                          <span className={styles.pressPreview}>
-                            <img src={a.preview} alt="" loading="lazy" />
+                          <span className={styles.pressMedia}>
+                            <img className={styles.pressImg} src={a.preview} alt="" loading="lazy" />
                           </span>
                         )}
-                        <span className={styles.pressMeta}>
-                          <span>{a.publication}</span>
-                          {a.date && <span>{a.date}</span>}
-                        </span>
-                        <span className={styles.pressTitle}>{a.title}</span>
-                        <span className={styles.pressPublisher}>
-                          {a.publisher}
-                          <span aria-hidden="true"> ↗</span>
-                          <span className={styles.srOnly}> (opens in a new tab)</span>
+                        {/* The overlay: faded and darkened by default with
+                            the citation on it; hover lifts it away and the
+                            page shows in full colour. */}
+                        <span className={styles.pressOverlay}>
+                          <span className={styles.pressMeta}>
+                            <span>{a.publication}</span>
+                            {a.date && <span>{a.date}</span>}
+                          </span>
+                          <span className={styles.pressTitle}>{a.title}</span>
+                          <span className={styles.pressCta}>
+                            Read the article<span aria-hidden="true"> ↗</span>
+                            <span className={styles.srOnly}>, {a.publisher}, opens in a new tab</span>
+                          </span>
                         </span>
                       </a>
                     </li>

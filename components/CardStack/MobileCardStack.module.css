@@ -45,34 +45,12 @@
   filter: blur(4px) saturate(0.95);
 }
 
-.dots {
-  display: flex;
-  gap: 6px;
-  padding: 4px 0;
-  flex-wrap: wrap;
-  justify-content: center;
-  max-width: 240px;
-}
-
-.dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  border: none;
-  padding: 0;
-  background: rgba(255, 255, 255, 0.28);
-  cursor: pointer;
-  transition: background 200ms ease, transform 200ms ease;
-}
-
-.dot:focus-visible {
-  outline: 2px solid var(--cream, #f7f7f7);
-  outline-offset: 2px;
-}
-
-.dotActive {
-  background: var(--cream, #f7f7f7);
-  transform: scale(1.2);
+/* The shared GalleryNav, in the stack's cream. */
+.nav {
+  width: min(100%, 320px);
+  margin-top: 4px;
+  --nav-ink: var(--cream, #f7f7f7);
+  --nav-ground: var(--color-cream, #252525);
 }
 
 .cta {

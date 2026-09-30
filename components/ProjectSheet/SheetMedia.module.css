@@ -15,56 +15,6 @@
   white-space: nowrap;
 }
 
-/* Shared arrow control: gallery stage + filmstrip. */
-.arrows {
-  display: flex;
-  gap: 0.5rem;
-}
-
-.arrow {
-  display: grid;
-  place-items: center;
-  width: 44px;
-  height: 44px;
-  padding: 0;
-  border: 1px solid var(--color-ink);
-  border-radius: var(--radius-pill);
-  background: none;
-  color: var(--color-ink);
-  cursor: pointer;
-  transition:
-    background var(--motion-fast) var(--ease-out),
-    color var(--motion-fast) var(--ease-out),
-    opacity var(--motion-fast) var(--ease-out);
-}
-
-.arrow svg {
-  width: 16px;
-  height: 16px;
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 1.6;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
-
-.arrow:disabled {
-  opacity: 0.3;
-  cursor: default;
-}
-
-@media (hover: hover) {
-  .arrow:not(:disabled):hover {
-    background: var(--color-ink);
-    color: var(--color-cream);
-  }
-}
-
-.arrow:focus-visible {
-  outline: 2px solid var(--color-sage);
-  outline-offset: 3px;
-}
-
 /* ══ THE STAGE ════════════════════════════════════════════════════════ */
 
 .stage {
@@ -109,109 +59,26 @@
   to { opacity: 1; }
 }
 
-.stage[data-gated] .stageMedia,
-.stage[data-gated] .thumb img {
+.stage[data-gated] .stageMedia {
   filter: blur(6px);
 }
 
-.stageBar {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: var(--flow-2);
+/* The shared gallery control, in the sheet's ink. */
+.stageNav {
   margin-top: var(--flow-1);
+  --nav-ink: var(--color-ink);
+  --nav-ground: var(--color-cream);
 }
 
 .caption {
-  display: flex;
-  align-items: baseline;
-  gap: var(--flow-1);
-  min-height: 44px;
-  margin: 0;
-  padding-top: 0.625rem;
+  margin: var(--flow-1) 0 0;
   font-family: var(--font-heading);
   font-style: italic;
   font-size: var(--step-small);
   line-height: 1.5;
   color: var(--color-ink);
-  text-wrap: pretty;
-}
-
-.counter {
-  flex: none;
-  font-family: var(--font-body);
-  font-style: normal;
-  font-size: var(--step-label);
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  font-variant-numeric: tabular-nums;
-  color: var(--color-sage);
-}
-
-/* Thumbnail index: every slide gets an equal share of the gallery's full
-   width, so four or six thumbnails read as one complete strip rather
-   than a short row trailing off into empty space (FS41). Crops are fine
-   here: the stage above shows each piece whole. Current = full opacity
-   and an ink underline. */
-.thumbs {
-  display: grid;
-  grid-auto-flow: column;
-  grid-auto-columns: minmax(0, 1fr);
-  gap: 0.5rem;
-  margin: var(--flow-1) 0 0;
-  padding: 0;
-  list-style: none;
-}
-
-.thumb {
-  position: relative;
-  display: block;
-  width: 100%;
-  height: clamp(3.5rem, 5vw, 4.75rem);
-  padding: 0 0 4px;
-  border: 0;
-  border-bottom: 2px solid transparent;
-  background: none;
-  cursor: pointer;
-  opacity: 0.5;
-  transition:
-    opacity var(--motion-fast) var(--ease-out),
-    border-color var(--motion-fast) var(--ease-out);
-}
-
-.thumb img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  background: var(--sheet-mat);
-}
-
-.thumb[aria-current='true'] {
-  opacity: 1;
-  border-bottom-color: var(--color-ink);
-}
-
-@media (hover: hover) {
-  .thumb:hover {
-    opacity: 0.85;
-  }
-}
-
-.thumb:focus-visible {
-  outline: 2px solid var(--color-sage);
-  outline-offset: 2px;
-}
-
-.thumbPlay {
-  position: absolute;
-  left: 50%;
-  top: calc(50% - 2px);
-  width: 18px;
-  height: 18px;
-  transform: translate(-50%, -50%);
-  fill: #fff;
-  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.5));
+  text-align: center;
+  text-wrap: balance;
 }
 
 /* ══ THE COVER IMAGE ══════════════════════════════════════════════════ */
@@ -614,16 +481,8 @@
   margin-top: var(--flow-4);
 }
 
-.stripHead {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--flow-2);
-  margin-bottom: var(--flow-2);
-}
-
 .stripTitle {
-  margin: 0;
+  margin: 0 0 var(--flow-2);
   font-family: var(--font-heading);
   font-size: var(--step-heading);
   font-weight: 400;
@@ -634,6 +493,7 @@
 /* Bleeds to the folder's edges so the row reads as continuing off the
    sheet, while the first photo still starts on the content's left edge. */
 .stripRow {
+  position: relative;
   display: flex;
   gap: var(--gap-media);
   margin: 0 calc(var(--gutter) * -1);
