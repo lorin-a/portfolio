@@ -229,6 +229,7 @@
   --flow-3: 3rem;                                 /* block → block         */
   --flow-4: clamp(4rem, 7vw, 7rem);               /* section → section     */
   --rule: 1px solid var(--color-ink);             /* the one rule          */
+  --hero-gap: 4rem;                               /* either side of the rule under the hero */
   --sheet-hair: color-mix(in srgb, var(--color-ink) 18%, transparent);
   --sheet-mat: color-mix(in srgb, var(--color-ink) 6%, var(--color-cream));
   --sheet-field: color-mix(in srgb, var(--color-sage) 14%, var(--color-cream));
@@ -241,6 +242,13 @@
     rgba(16, 15, 13, 0.78) 45%,
     rgba(16, 15, 13, 0.55) 100%
   );
+}
+
+/* FS98: in the dark theme the sheet's green is the brighter soft sage, the
+   same #C5CFA6 the glass labels use (≈10:1 on the charcoal). The light
+   theme keeps the darker sage, which is what passes on cream. */
+:root[data-theme='dark'] .inner {
+  --color-sage: var(--color-sage-soft);
 }
 
 .masthead {

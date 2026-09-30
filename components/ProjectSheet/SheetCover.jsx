@@ -70,6 +70,11 @@ function FitPair({ title, tagline, titleId }) {
 
 function Pile({ prints, style = 'prints' }) {
   const items = prints.map((p) => ({ ...p, src: sheetImg(p.key, 1400) })).filter((p) => p.src)
+  /* Per-print crop: `zoom` scales the photo inside its frame, `focus` is
+     the point it scales toward (e.g. to lose a table edge). */
+  const crop = (p) => (p.zoom || p.focus)
+    ? { transform: `scale(${p.zoom || 1})`, transformOrigin: p.focus || '50% 50%', objectPosition: p.focus || undefined }
+    : undefined
   const [order, setOrder] = useState(() => items.map((_, i) => i))
   const next = () => setOrder((o) => [...o.slice(1), o[0]])
   if (!items.length) return null
@@ -86,19 +91,19 @@ function Pile({ prints, style = 'prints' }) {
             aria-label={`${p.alt} Photo ${i + 1} of ${items.length}. Show the next photo.`}>
             {style === 'polaroid' ? (
               <span className={styles.polaroidFrame}>
-                <span className={styles.polaroidPhoto}><img src={p.src} alt="" /></span>
+                <span className={styles.polaroidPhoto}><img src={p.src} alt="" style={crop(p)} /></span>
                 {p.caption && <span className={styles.polaroidCaption}>{p.caption}</span>}
               </span>
             ) : style === 'brand' ? (
               <span className={styles.brandFrame}>
-                <span className={styles.brandPhoto}><img src={p.src} alt="" /></span>
+                <span className={styles.brandPhoto}><img src={p.src} alt="" style={crop(p)} /></span>
                 <span className={styles.brandStrip}>
                   <span className={styles.brandCaption}>{p.caption}</span>
                 </span>
               </span>
             ) : style === 'techpol' ? (
               <span className={styles.techFrame}>
-                <span className={styles.techPhoto}><img src={p.src} alt="" /></span>
+                <span className={styles.techPhoto}><img src={p.src} alt="" style={crop(p)} /></span>
                 <span className={styles.techStrip}>
                   <span className={styles.techCaption}>{p.caption}</span>
                   <span className={styles.techIndex}>
@@ -107,7 +112,7 @@ function Pile({ prints, style = 'prints' }) {
                 </span>
               </span>
             ) : (
-              <img src={p.src} alt="" />
+              <img src={p.src} alt="" style={crop(p)} />
             )}
           </button>
         )

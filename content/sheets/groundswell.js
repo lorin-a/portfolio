@@ -30,7 +30,7 @@ export const groundswell = {
     { key: 'gs-hero', caption: 'The Hallway', alt: 'The Groundswell Garden and the Restorative Pod in the hallway.' },
     { key: 'gs-artwall-detail-01', caption: 'The Art Wall', alt: 'Writing a response to one of the guided prompts at the art wall.' },
     { key: 'gs-pod-detail-01', caption: 'The Pod', alt: 'Two staff members at the table inside the Restorative Pod.' },
-    { key: 'gs-cards', caption: 'The Cards', alt: 'Hands sorting the Groundswell Reflection Cards on a table.' },
+    { key: 'gs-cards', caption: 'The Cards', zoom: 1.18, focus: '50% 30%',  /* crops off the table's edge (FS95) */ alt: 'Hands sorting the Groundswell Reflection Cards on a table.' },
   ],
 
   /* THE FACTS — her copy, 2026-09-30 (FS93), verbatim except:
