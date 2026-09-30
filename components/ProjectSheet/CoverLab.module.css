@@ -136,7 +136,7 @@
 }
 
 .print[data-depth='0'] {
-  cursor: zoom-in;
+  cursor: pointer;
 }
 
 @media (hover: hover) {

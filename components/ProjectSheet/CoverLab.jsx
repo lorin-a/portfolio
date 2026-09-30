@@ -112,7 +112,10 @@ const PRINT_KEYS = [
 function PrintsCover({ sheet, num, title, tagline, titleId, onImage, meta, treatment }) {
   const [order, setOrder] = useState(() => PRINT_KEYS.map((_, i) => i))
   const prints = PRINT_KEYS.map((p) => ({ ...p, src: sheetImg(p.key, 1400) })).filter((p) => p.src)
-  const front = (i) => setOrder((o) => [i, ...o.filter((x) => x !== i)])
+  /* Every click advances (FS67): the front print goes to the back and the
+     next comes forward, in one fixed cycle, so clicking can never bounce
+     between two photos. */
+  const next = () => setOrder((o) => [...o.slice(1), o[0]])
   const shown = prints[order[0]]
 
   const stack = (
@@ -122,8 +125,10 @@ function PrintsCover({ sheet, num, title, tagline, titleId, onImage, meta, treat
         return (
           <button key={p.key} type="button" className={styles.print}
             data-depth={depth} style={{ '--depth': depth, zIndex: 10 - depth }}
-            onClick={(e) => depth === 0 ? onImage?.(p.key, e.currentTarget) : front(i)}
-            aria-label={depth === 0 ? `View full screen: ${p.alt}` : `Bring to front: ${p.alt}`}>
+            tabIndex={depth === 0 ? 0 : -1}
+            aria-hidden={depth === 0 ? undefined : true}
+            onClick={next}
+            aria-label={`${p.alt} Photo ${i + 1} of ${prints.length}. Show the next photo.`}>
             <img src={p.src} alt="" />
           </button>
         )
