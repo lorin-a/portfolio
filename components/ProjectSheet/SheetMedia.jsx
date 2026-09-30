@@ -96,17 +96,30 @@ export function SheetStage({ slides, gated, onImage, label }) {
         ) : mediaEl}
       </div>
 
-      <GalleryNav
-        className={styles.stageNav}
-        count={n}
-        index={at}
-        onPrev={() => go(-1)}
-        onNext={() => go(1)}
-        onSelect={setAt}
-        label={label}
-      />
-
-      {s.alt && <p className={styles.caption} aria-live="polite">{s.alt}</p>}
+      {/* The frame's footer (FS130): the caption and the controls are part
+          of the gallery's structure, not text left under it. */}
+      <div className={styles.stageBar}>
+        <p className={styles.caption} aria-live="polite">
+          {n > 1 && (
+            <span className={styles.counter}>
+              {String(at + 1).padStart(2, '0')}
+              <span aria-hidden="true"> / </span>
+              <span className={styles.srOnly}> of </span>
+              {String(n).padStart(2, '0')}
+            </span>
+          )}
+          <span className={styles.captionText}>{s.alt}</span>
+        </p>
+        <GalleryNav
+          className={styles.stageNav}
+          count={n}
+          index={at}
+          onPrev={() => go(-1)}
+          onNext={() => go(1)}
+          onSelect={setAt}
+          label={label}
+        />
+      </div>
     </div>
   )
 }
