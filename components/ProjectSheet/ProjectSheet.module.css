@@ -234,6 +234,9 @@
   --flow-4: clamp(4rem, 7vw, 7rem);               /* section → section     */
   --rule: 1px solid var(--color-ink);             /* the one rule          */
   --hero-gap: 4rem;                               /* either side of the rule under the hero */
+  /* the page-break rules carry the flower logo's gradient (FS124); the
+     light theme's deeper version here, the dark theme's below */
+  --rule-grad: linear-gradient(90deg, #8a9263, #9f84a9 50%, #c97d64);
   --sheet-hair: color-mix(in srgb, var(--color-ink) 18%, transparent);
   --sheet-mat: color-mix(in srgb, var(--color-ink) 6%, var(--color-cream));
   --sheet-field: color-mix(in srgb, var(--color-sage) 14%, var(--color-cream));
@@ -253,6 +256,7 @@
    theme keeps the darker sage, which is what passes on cream. */
 :root[data-theme='dark'] .inner {
   --color-sage: var(--color-sage-soft);
+  --rule-grad: linear-gradient(90deg, #c5cfa6, #c7aad1 50%, #f79c7e);
 }
 
 .masthead {
@@ -503,6 +507,7 @@
   margin-top: var(--flow-4);
   padding-top: var(--flow-2);
   border-top: var(--rule);
+  border-image: var(--rule-grad) 1;
 }
 
 .pressHead {

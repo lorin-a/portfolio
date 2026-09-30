@@ -28,7 +28,7 @@ export const groundswell = {
      improved throughout the study, indicating a core problem around
      institutional trust and support from administration." */
   outcome:
-    'Staff used every component throughout the pilot. Senior staff who began as skeptics shed tears at launch, donors committed to keep it running, coworkers walked a colleague in distress to the pod, and other departments expressed interest.',
+    'Staff used every component throughout the pilot. Senior staff who began as skeptics shed tears at launch, admin committed to keep it running, coworkers walked a colleague in distress to the pod, and other departments expressed interest.',
 
   /* THE COVER'S PRINTS: four photographs in a loose pile beside the name
      (her notes FS57–FS67). Chosen for range across the project: the place,
@@ -37,7 +37,7 @@ export const groundswell = {
   /* `caption`: the short label under a polaroid (lab, FS70), in title case
      (FS80: "cap sensitive"); furniture, hers to rewrite. */
   prints: [
-    { key: 'gs-hero', caption: 'The Hallway', alt: 'The Groundswell Garden and the Restorative Pod in the hallway.' },
+    { key: 'gs-hero', caption: 'The Installation', alt: 'The Groundswell Garden and the Restorative Pod in the hallway.' },
     { key: 'gs-artwall-detail-01', caption: 'The Art Wall', alt: 'Writing a response to one of the guided prompts at the art wall.' },
     { key: 'gs-pod-detail-01', caption: 'The Pod', alt: 'Two staff members at the table inside the Restorative Pod.' },
     { key: 'gs-cards', caption: 'The Cards', zoom: 1.18, focus: '50% 30%',  /* crops off the table's edge (FS95) */ alt: 'Hands sorting the Groundswell Reflection Cards on a table.' },
@@ -73,14 +73,15 @@ export const groundswell = {
      teams move to the colophon (`credits` below); the hero lists the
      collaborating groups in her teammate's register. */
   meta: [
-    ['Role', ['Experience\u00a0Designer, Copywriter, Project\u00a0Coordinator,', 'Donor\u00a0Relations, Data\u00a0Visualization\u00a0Designer']],  /* her line break (FS110); each title kept whole */  /* “Project Coordinator”, her correction FS101 */
-    ['Collaborators', ['Designers, Fabricators\u00a0&\u00a0Engineers,', 'Hospital\u00a0Staff, Hospital\u00a0Administration, Subject\u00a0Matter\u00a0Experts, Donors']],  /* her line break (FS110); each group kept whole */
-    ['Tools Used', 'Adobe Creative Suite, Figma, Claude Code'],
-    ['Timeline', ['Research: Jan\u2060–\u2060May\u00a02025', 'Production: June\u2060–\u2060October\u00a02025', 'Study Period: October\u00a02025\u2060–\u2060June\u00a02026']],  /* ranges kept whole (word joiners) */
+    /* first on the sheet (FS125) */
     /* Context: her copy FS114, with edits (added “to” and “the”, fixed
        “imrpove”). Original: "A pilot program designed imrpove hospital
        culture and support emotional well-being of Cancer Services staff." */
     ['Context', 'A pilot program designed to improve hospital culture and support the emotional well-being of Cancer Services staff.'],
+    ['Role', ['Experience\u00a0Designer, Copywriter, Project\u00a0Coordinator,', 'Donor\u00a0Relations, Data\u00a0Visualization\u00a0Designer']],  /* her line break (FS110); each title kept whole */  /* “Project Coordinator”, her correction FS101 */
+    ['Collaborators', ['Designers, Fabricators\u00a0&\u00a0Engineers,', 'Hospital\u00a0Staff, Hospital\u00a0Administration, Subject\u00a0Matter\u00a0Experts, Donors']],  /* her line break (FS110); each group kept whole */
+    ['Tools Used', 'Adobe Creative Suite, Figma, Claude Code'],
+    ['Timeline', ['Research: Jan\u2060–\u2060May\u00a02025', 'Production: June\u2060–\u2060October\u00a02025', 'Study Period: October\u00a02025\u2060–\u2060June\u00a02026']],  /* ranges kept whole (word joiners) */
   ],
 
   /* The named credits, at the foot of the sheet (FS99): her team lines from
@@ -115,7 +116,7 @@ export const groundswell = {
     short: {
       /* Her copy 2026-09-30 (FS107), verbatim. */
       why:
-        'Groundswell is a 9-month pilot program and quality improvement study designed to support the emotional well-being of UPMC Magee-Womens Cancer Services staff by introducing resources that honor the emotional complexities of oncology care.',
+        'Groundswell is a 9-month pilot program and quality improvement study designed to support the well-being of UPMC Magee-Womens Cancer Services staff by introducing resources that honor the emotional complexities of oncology care.',
       /* Her copy 2026-09-30 (FS104). Copy edits, hers to reverse: “self care”
          → self-care; “wellbeing” → well-being (the site's spelling);
          “neglected from” → neglected in; a serial comma before the last
