@@ -244,7 +244,6 @@ export const groundswell = {
            (no longer inside the phone, which showed more than staff saw). */
         listen:   [
           { key: 'gs-poem-remember',   title: 'Remember',                kind: 'The Groundswell poem' },
-          { key: 'gs-meditation-home', title: 'Coming Home to Yourself', kind: 'Guided meditation' },
         ],
         /* Her note FS50: the two most-used cards, grateful and exhausted,
            show the dichotomy. They flank the phone: the library holds
@@ -257,7 +256,9 @@ export const groundswell = {
                     emotions: ['joyful', 'grateful', 'exhausted', 'heartbroken'],
                     /* FS149: the card frame browses the full set of emotion
                        cards, opening on the two most used. */
-                    deck: ['grateful', 'exhausted', 'joyful', 'heartbroken', 'hopeful', 'numb', 'connected', 'vulnerable', 'present', 'angry', 'invisible', 'valued'],
+                    /* FS152: four cards, two contradicting pairs, alternating
+                       so each next card answers the last. */
+                    deck: ['grateful', 'exhausted', 'joyful', 'heartbroken'],
                     note: 'Four of the nine reflection cards. Turn one over for its somatic exercise.' },
       },
       name: 'Groundswell Mindfulness Library',

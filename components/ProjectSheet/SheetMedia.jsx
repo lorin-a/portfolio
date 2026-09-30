@@ -392,6 +392,13 @@ function CardStage({ emotions }) {
   const go = (i) => { setAt((i + n) % n); setBack(false) }
   if (!n) return null
   const c = cards[at]
+  /* The fan (FS152): each card's place is its distance from the front
+     card: 0 = front and centre, 1 = fanned right, n-1 = fanned left, the
+     rest tucked behind. */
+  const rel = (i) => {
+    const r = (i - at + n) % n
+    return r === 0 ? 'front' : r === 1 ? 'right' : r === n - 1 ? 'left' : 'behind'
+  }
   return (
     <div className={`${styles.stage} ${styles.kitFrame}`} role="group"
       aria-roledescription="card deck" aria-label="Groundswell Reflection Cards"
@@ -399,35 +406,47 @@ function CardStage({ emotions }) {
         if (e.key === 'ArrowRight') { e.preventDefault(); go(at + 1) }
         if (e.key === 'ArrowLeft') { e.preventDefault(); go(at - 1) }
       }}>
-      <div className={`${styles.mat} ${styles.kitMat}`}>
-        <button type="button" className={styles.kitCard} data-back={back || undefined}
-          onClick={() => setBack((b) => !b)} aria-pressed={back}
-          aria-label={`Reflection card: ${c.name}, ${back ? 'back' : 'front'}. Turn over.`}>
-          <span className={styles.kitCardInner}>
-            <img className={styles.kitFace} src={c.front} alt="" />
-            <img className={`${styles.kitFace} ${styles.kitBack}`} src={c.back} alt="" />
-          </span>
-        </button>
+      <div className={`${styles.mat} ${styles.kitMat} ${styles.fanMat}`}>
+        {cards.map((card, i) => {
+          const place = rel(i)
+          const isFront = place === 'front'
+          return (
+            <button key={card.name} type="button" className={styles.fanCard}
+              data-place={place} data-back={isFront && back ? '' : undefined}
+              tabIndex={isFront ? 0 : -1}
+              onClick={() => (isFront ? setBack((b) => !b) : go(i))}
+              aria-pressed={isFront ? back : undefined}
+              aria-hidden={isFront ? undefined : true}
+              aria-label={isFront ? `Reflection card: ${card.name}, ${back ? 'back' : 'front'}. Turn over.` : undefined}>
+              <span className={styles.kitCardInner}>
+                <img className={styles.kitFace} src={card.front} alt="" />
+                <img className={`${styles.kitFace} ${styles.kitBack}`} src={card.back} alt="" />
+              </span>
+            </button>
+          )
+        })}
       </div>
-      <div className={styles.stageBar}>
-        <p className={styles.caption} aria-live="polite">
+      <div className={styles.fanBar}>
+        <p className={styles.fanCaption} aria-live="polite">
           <span className={styles.counter}>
             {String(at + 1).padStart(2, '0')}<span aria-hidden="true"> / </span>
             <span className={styles.srOnly}> of </span>{String(n).padStart(2, '0')}
           </span>
-          <span className={styles.captionText}>
-            <span className={styles.kitName}>{c.name}</span>
-            {' '}{back ? 'The somatic exercise and a conversation starter.' : 'The card’s front.'}
-          </span>
+          <span className={styles.kitName}>{c.name}</span>
+          <span>{back ? 'The somatic exercise and a conversation starter.' : 'The card’s front.'}</span>
         </p>
-        <button type="button" className={styles.turnButton} onClick={() => setBack((b) => !b)}
-          aria-pressed={back}>
-          <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8a5 5 0 0 1 8.5-3.5M13 3v2.5h-2.5M13 8a5 5 0 0 1-8.5 3.5M3 13v-2.5h2.5" /></svg>
-          {back ? 'Turn back' : 'Turn over'}
-        </button>
-        <GalleryNav className={styles.stageNav} count={n} index={at}
-          onPrev={() => go(at - 1)} onNext={() => go(at + 1)} onSelect={go}
-          label="Reflection cards" />
+        <div className={styles.fanControls}>
+          <button type="button" className={styles.fanArrow} onClick={() => go(at - 1)} aria-label="Previous card">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 6 L8 12 L14 18" /></svg>
+          </button>
+          <button type="button" className={styles.turnButton} onClick={() => setBack((b) => !b)} aria-pressed={back}>
+            <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8a5 5 0 0 1 8.5-3.5M13 3v2.5h-2.5M13 8a5 5 0 0 1-8.5 3.5M3 13v-2.5h2.5" /></svg>
+            {back ? 'Turn back' : 'Turn over'}
+          </button>
+          <button type="button" className={styles.fanArrow} onClick={() => go(at + 1)} aria-label="Next card">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 6 L16 12 L10 18" /></svg>
+          </button>
+        </div>
       </div>
     </div>
   )

@@ -639,8 +639,8 @@
 .kitMat {
   display: grid;
   place-items: center;
-  aspect-ratio: 5 / 4;
-  padding-block: 4%;
+  aspect-ratio: 1 / 1;   /* taller now the footer holds one player (FS152) */
+  padding-block: 5%;
 }
 
 /* the phone, fitted to the mat's height */
@@ -779,6 +779,131 @@
   }
 
   .kitCard[data-back] .kitBack {
+    opacity: 1;
+  }
+}
+
+/* ══ The fan (FS152) ══════════════════════════════════════════════════
+   Four cards in one grid cell: the front card centred and full size, its
+   neighbours fanned out behind it to either side, the fourth tucked
+   behind. Clicking a peeking card brings it round to the front. */
+.fanMat {
+  position: relative;
+  overflow: hidden;
+}
+
+.fanCard {
+  grid-area: 1 / 1;
+  height: 86%;
+  aspect-ratio: 600 / 967;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  perspective: 1400px;
+  transition:
+    transform 620ms cubic-bezier(0.22, 0.9, 0.24, 1),
+    opacity var(--motion-medium) var(--ease-out),
+    filter var(--motion-medium) var(--ease-out);
+}
+
+.fanCard[data-place='front'] { z-index: 4; transform: none; }
+.fanCard[data-place='right'] { z-index: 3; transform: translateX(38%) rotate(9deg) scale(0.9); filter: brightness(0.82); }
+.fanCard[data-place='left'] { z-index: 2; transform: translateX(-38%) rotate(-9deg) scale(0.9); filter: brightness(0.82); }
+.fanCard[data-place='behind'] { z-index: 1; transform: translateY(-4%) scale(0.84); filter: brightness(0.7); }
+
+@media (hover: hover) {
+  .fanCard[data-place='right']:hover { transform: translateX(44%) rotate(11deg) scale(0.92); filter: none; }
+  .fanCard[data-place='left']:hover { transform: translateX(-44%) rotate(-11deg) scale(0.92); filter: none; }
+}
+
+.fanCard[data-back] .kitCardInner {
+  transform: rotateY(180deg);
+}
+
+.fanCard:focus-visible {
+  outline: 2px solid var(--color-sage);
+  outline-offset: 4px;
+  border-radius: var(--radius-lg);
+}
+
+/* the footer, centred */
+.fanBar {
+  display: grid;
+  justify-items: center;
+  gap: 0.75rem;
+  padding: 0.875rem 0.25rem 1.125rem;
+  text-align: center;
+}
+
+.fanCaption {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: baseline;
+  gap: 0.25rem 0.625rem;
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--step-small);
+  line-height: 1.45;
+  color: var(--color-ink);
+}
+
+.fanControls {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.fanArrow {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 1px solid var(--color-ink);
+  border-radius: 50%;
+  background: none;
+  color: var(--color-ink);
+  cursor: pointer;
+  opacity: 0.75;
+  transition:
+    opacity var(--motion-fast) var(--ease-out),
+    background var(--motion-fast) var(--ease-out),
+    color var(--motion-fast) var(--ease-out);
+}
+
+.fanArrow svg {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+@media (hover: hover) {
+  .fanArrow:hover {
+    opacity: 1;
+    background: var(--color-ink);
+    color: var(--color-cream);
+  }
+}
+
+.fanArrow:focus-visible {
+  outline: 2px solid var(--color-sage);
+  outline-offset: 3px;
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fanCard {
+    transition: none;
+  }
+
+  /* the flip still works: faces swap without rotating */
+  .fanCard[data-back] .kitBack {
     opacity: 1;
   }
 }
