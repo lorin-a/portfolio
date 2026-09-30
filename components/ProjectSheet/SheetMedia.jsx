@@ -358,18 +358,6 @@ export function SheetCardGallery({ gallery, poem, phone }) {
   )
 }
 
-/** The cover image beside the title. Opens into the overlay. */
-export function SheetHero({ item, onImage }) {
-  const src = item && img(item.key, 2000)
-  if (!src) return null
-  return (
-    <button type="button" className={styles.hero}
-      onClick={(e) => onImage?.(item.key, e.currentTarget)}
-      aria-label={`View full screen: ${item.alt}`}>
-      <img src={src} alt="" className={styles.heroImg} />
-    </button>
-  )
-}
 
 /**
  * THE FILMSTRIP — the team, at the bottom.

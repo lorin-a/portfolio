@@ -20,8 +20,16 @@ export const groundswell = {
   outcome:
     'All scales aside from perceived support from leadership improved throughout the study, indicating a core problem around institutional trust and support from administration.',
 
-  /* The cover image. Image choice, not copy. */
-  hero: { key: 'gs-hero', alt: 'A clinician walks past the Groundswell Garden and the Restorative Pod in the hallway.' },
+  /* THE COVER'S PRINTS: four photographs in a loose pile beside the name
+     (her notes FS57–FS67). Chosen for range across the project: the place,
+     the wall in use, the pod in use, the cards in hand. Image choice and
+     alt text, not copy; alts are hers to rewrite. */
+  prints: [
+    { key: 'gs-hero', alt: 'The Groundswell Garden and the Restorative Pod in the hallway.' },
+    { key: 'gs-artwall-detail-01', alt: 'Writing a response to one of the guided prompts at the art wall.' },
+    { key: 'gs-pod-detail-01', alt: 'Two staff members at the table inside the Restorative Pod.' },
+    { key: 'gs-cards', alt: 'Hands sorting the Groundswell Reflection Cards on a table.' },
+  ],
 
   meta: [
     /* Her own words, 2026-08-27, and authoritative over anything assembled

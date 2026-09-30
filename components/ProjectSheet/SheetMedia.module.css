@@ -81,32 +81,6 @@
   text-wrap: balance;
 }
 
-/* ══ THE COVER IMAGE ══════════════════════════════════════════════════ */
-
-.hero {
-  display: block;
-  width: 100%;
-  height: 100%;
-  padding: 0;
-  border: 0;
-  background: var(--sheet-mat);
-  cursor: zoom-in;
-}
-
-.heroImg {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  /* Narrow crops keep the clinician and the art wall in frame. */
-  object-position: 62% 40%;
-}
-
-.hero:focus-visible {
-  outline: 2px solid var(--color-sage);
-  outline-offset: 3px;
-}
-
 /* ══ THE PHONE ═════════════════════════════════════════════════════════
 
    The digital library in an iPhone, first in the deck. Sized so its height
