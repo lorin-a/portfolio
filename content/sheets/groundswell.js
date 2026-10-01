@@ -520,7 +520,11 @@ export const groundswell = {
          responsive by providing a worksheet for mindfulness and wellbeing
          with journal prompts and somatic exercises so as to not be
          extractive in collecting emotional data.” */
-      { head: 'Practice Reciprocity', text: 'In the grief workshop I led, staff left with a worksheet of journal prompts and somatic exercises, so we gave back as much as we\u00a0asked.' },
+      /* FS205, her note: every generative activity included an offering,
+         since there were no funds to pay staff for their time (the
+         Women in White Coats orchid boutonnieres + thank-you cards, R Q1;
+         the grief workshop's worksheet, R Q3). */
+      { head: 'Practice Reciprocity', text: 'With no funds to pay staff for their time, every workshop offered something back, from thank-you cards and hand-painted orchid boutonnieres to somatic\u00a0exercises.' },
       /* R Q6: doors required late; redesigned; playtesters confirmed. */
       { head: 'Embrace Constraints', text: 'When admin required doors late in production, we redesigned in acrylic, and playtesters found the pod private without feeling closed\u00a0off.' },
       /* R Q3: the dashboard she led; freestyle: voices to administrators. */
