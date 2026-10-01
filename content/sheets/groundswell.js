@@ -328,22 +328,26 @@ export const groundswell = {
            silent loops recorded from the live dashboard, each a different
            meeting of qual and quant, numbers frosted throughout. The
            blurred recordings below stay as the fallback record. */
-        /* FS215: ordered by her own framework, the three registers, from the
-           dashboard's design doc (groundswell-digital-wall-with-admin/
-           CLAUDE.md): “Surface (The Story): What everyone receives with zero
-           interaction… Structure (The Pattern): The same marks reorganize
-           into readable charts and timelines… Substance (The Evidence): Full
-           data provenance on interaction.” Purposes drafted, hers to edit. */
-        motionIntro: 'Every data moment works at three levels at once: the story anyone can feel, the pattern an analyst can read, and the evidence behind\u00a0both.',
+        /* FS216: her thesis (her words, 2026-10-01, lightly edited): “we
+           believe data are stories and that when qual and quant work
+           together they tell a more holistic story. This dashboard was
+           designed to increase details with deeper engagement and serve
+           multiple stakeholders. On first glance it shows the overview,
+           interaction reveals more details, and there are more traditionally
+           quantitative graphics to communicate to scientifically minded
+           stakeholders, and the general public alike.” Purposes are drafts,
+           hers to edit. Kendyl's spreadsheet quote: not found on file; slot
+           waits for her to paste it. */
+        motionIntro: 'Data are stories, and when qualitative and quantitative work together they tell a more holistic one. The dashboard deepens with engagement to serve every stakeholder: an overview at first glance, details on interaction, and traditional charts for scientific minds and the public\u00a0alike.',
         motion: [
-          { register: 'Surface', title: 'Arrange the feelings', duration: 13.3, src: '/video/gs-dashboard/4-arrange-the-feelings.mp4', poster: '/video/gs-dashboard/4-arrange-the-feelings.jpg',
-            purpose: 'The story, with zero interaction required. On the unit’s display, staff meet each emotion as watercolor and move it by touch; there is no chart to decode, so anyone passing can take it\u00a0in.' },
-          { register: 'Structure', title: 'Filter the patterns', duration: 18.5, src: '/video/gs-dashboard/2-filter-the-patterns.mp4', poster: '/video/gs-dashboard/2-filter-the-patterns.jpg',
-            purpose: 'The same data, reorganized into a pattern. Toggling session lengths lets an administrator isolate how staff actually used the pod, without leaving the\u00a0timeline.' },
-          { register: 'Structure', title: 'How six measures moved', duration: 14.3, src: '/video/gs-dashboard/3-words-and-data.mp4', poster: '/video/gs-dashboard/3-words-and-data.jpg',
-            purpose: 'Six measures as small multiples on one shared scale, so change reads across all of them at a glance. Values are blurred while the study is under\u00a0review.' },
-          { register: 'Substance', title: 'Size, then stories', duration: 17.9, src: '/video/gs-dashboard/1-size-to-stories.mp4', poster: '/video/gs-dashboard/1-size-to-stories.jpg',
-            purpose: 'The evidence, one tap away. Each circle is sized by count, and a tap opens the handwritten words behind the number, so no figure stands apart from the people who made\u00a0it.' },
+          { depth: 'At a glance', audience: 'For everyone', title: 'Arrange the feelings', duration: 13.3, src: '/video/gs-dashboard/4-arrange-the-feelings.mp4', poster: '/video/gs-dashboard/4-arrange-the-feelings.jpg',
+            purpose: 'The overview anyone can take in. On the unit’s display, each emotion is a watercolor sized by how often staff chose it, with no chart to\u00a0decode.' },
+          { depth: 'With a tap', audience: 'For the curious', title: 'Size, then stories', duration: 17.9, src: '/video/gs-dashboard/1-size-to-stories.mp4', poster: '/video/gs-dashboard/1-size-to-stories.jpg',
+            purpose: 'Interaction reveals the people behind the numbers: a tap on any emotion opens the handwritten words that make up its\u00a0count.' },
+          { depth: 'In depth', audience: 'For scientific stakeholders', title: 'Filter the patterns', duration: 18.5, src: '/video/gs-dashboard/2-filter-the-patterns.mp4', poster: '/video/gs-dashboard/2-filter-the-patterns.jpg',
+            purpose: 'The same data as a traditional timeline. Toggling session lengths isolates how staff actually used the\u00a0pod.' },
+          { depth: 'In depth', audience: 'For scientific stakeholders', title: 'How six measures moved', duration: 14.3, src: '/video/gs-dashboard/3-words-and-data.mp4', poster: '/video/gs-dashboard/3-words-and-data.jpg',
+            purpose: 'Six validated measures as small multiples on one shared scale, so change reads at a glance. Values are blurred while the study is under\u00a0review.' },
         ],
       },
       name: 'The data dashboard',
