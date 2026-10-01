@@ -2,7 +2,6 @@
 
 .maps { margin: 0; }
 
-.top { margin-bottom: 0.75rem; }
 
 .stage {
   position: relative;
@@ -38,13 +37,11 @@
 .voidKicker { font-family: var(--font-body); font-size: 22px; letter-spacing: 0.14em; text-transform: uppercase; text-anchor: middle; }
 .pill { font-family: var(--font-heading); font-size: 28px; text-anchor: middle; }
 .voice { font-family: var(--font-body); font-size: 24px; }
-.count { font-family: var(--font-body); font-size: 22px; font-weight: 600; text-anchor: middle; }
-.prov { font-family: var(--font-body); font-size: 21px; letter-spacing: 0.04em; text-anchor: middle; opacity: 0.75; }
 
 /* tension pills are buttons */
 .pillBtn { cursor: pointer; outline: none; }
 .pillBtn rect { transition: fill var(--motion-fast) var(--ease-out); }
-@media (hover: hover) { .pillBtn:hover rect { fill: #EFDDD5; } }
+@media (hover: hover) { .pillBtn:not([aria-pressed='true']):hover rect { fill: #EFDDD5; } }
 .pillBtn:focus-visible rect { stroke-dasharray: none; stroke-width: 7; }
 
 .enlarge {
@@ -65,53 +62,20 @@
 .enlarge svg { width: 13px; height: 13px; fill: none; stroke: currentColor; stroke-width: 1.6; }
 .enlarge:focus-visible { outline: 2px solid #554D65; outline-offset: 2px; }
 
-/* the reader: what staff said, over the map */
-.reader {
-  position: absolute;
-  left: 50%;
-  bottom: 1rem;
-  width: min(92%, 40rem);
-  max-height: 70%;
-  overflow: auto;
-  transform: translateX(-50%);
-  padding: 1.25rem 1.4rem 1.4rem;
-  border-radius: 6px;
-  background: #FFFBF8;
-  box-shadow: 0 0 0 2px #554D65, 0 18px 40px rgba(85, 77, 101, 0.25);
-  color: #554D65;
-}
+/* the nav, below the frame and as wide as it (FS254) */
+.bottom { margin-top: 0.75rem; }
+.navWide { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; }
 
-.readerHead {
-  display: grid;
-  grid-template-columns: 1fr auto;
-  gap: 0.15rem 1rem;
-  align-items: start;
-  margin-bottom: 0.9rem;
-}
-
-.readerTitle { margin: 0; font-family: var(--font-heading); font-size: var(--step-body); }
-.readerTitle span { opacity: 0.6; }
-.readerCount { grid-column: 1; margin: 0; font-family: var(--font-body); font-size: var(--step-label); color: #6C625F; }
-.readerNav { grid-column: 2; grid-row: 1 / span 2; display: flex; gap: 0.35rem; }
-
-.readerNav button {
-  width: 40px;
-  height: 40px;
-  border: 0;
-  border-radius: 50%;
-  background: rgba(85, 77, 101, 0.1);
-  color: #554D65;
-  font-size: var(--step-body);
-  cursor: pointer;
-}
-
-.readerNav button:focus-visible { outline: 2px solid #554D65; outline-offset: 2px; }
-
-.readerList { display: grid; gap: 0.75rem; margin: 0; padding: 0; list-style: none; }
-
-.readerList li {
+/* one caption area: the view's sentence, or the tension's voices */
+.caption { min-height: 3.4em; margin: 0.9rem 0.5rem 0.25rem; color: var(--color-ink); }
+.capText { margin: 0; font-family: var(--font-body); font-size: var(--step-small); line-height: 1.6; text-wrap: pretty; }
+.capTitle { margin: 0 0 0.6rem; font-family: var(--font-heading); font-size: var(--step-body); }
+.capTitle span { opacity: 0.6; }
+.capTitle em { font-family: var(--font-body); font-size: var(--step-label); font-style: normal; opacity: 0.8; }
+.capList { display: grid; gap: 0.55rem; margin: 0; padding: 0; list-style: none; }
+.capList li {
   padding-left: 0.9rem;
-  border-left: 2px solid rgba(85, 77, 101, 0.35);
+  border-left: 2px solid #E0A893;
   font-family: var(--font-heading);
   font-size: var(--step-small);
   font-style: italic;
@@ -119,15 +83,10 @@
   text-wrap: pretty;
 }
 
-.caption {
-  min-height: 3.2em;
-  margin: 0.85rem 0.5rem 0.25rem;
-  font-family: var(--font-body);
-  font-size: var(--step-small);
-  line-height: 1.6;
-  color: var(--color-ink);
-  text-wrap: pretty;
-}
+/* focus on one tension: everything else steps back */
+.edgeG, .pillBtn { transition: opacity var(--motion-fast) var(--ease-out); }
+.edgeG[data-dim], .pillBtn[data-dim] { opacity: 0.35; }
+.hit { cursor: pointer; }
 
 /* full screen */
 .dialog {
