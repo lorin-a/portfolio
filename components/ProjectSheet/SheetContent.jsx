@@ -238,26 +238,30 @@ export default function SheetContent({ sheet, num, title, tagline, titleId }) {
           revised from the old Groundswell page’s “In gratitude” section. */}
       {acknowledgements ? (
         <section className={styles.thanks} data-reveal="0" aria-labelledby="sheet-thanks">
-          <h3 id="sheet-thanks" className={styles.thanksLabel}>Acknowledgements</h3>
-          <div className={styles.thanksCols}>
-            {acknowledgements.columns.map((col) => (
-              <div key={col.title} className={styles.thanksCol}>
-                <h4 className={styles.thanksColTitle}>{col.title}</h4>
-                <ul className={styles.thanksList}>
-                  {col.people.map(([name, role]) => (
-                    <li key={name}><span className={styles.thanksName}>{name}</span><span className={styles.thanksRole}>{role}</span></li>
-                  ))}
-                </ul>
-              </div>
-            ))}
+          <div className={styles.thanksIntro}>
+            <h3 id="sheet-thanks" className={styles.thanksLabel}>Acknowledgements</h3>
+            {acknowledgements.intro && <p className={styles.thanksLead}>{acknowledgements.intro}</p>}
+            <p className={styles.thanksPartners}>{acknowledgements.partners}</p>
           </div>
+          {acknowledgements.columns.map((col) => (
+            <div key={col.title} className={styles.thanksCol}>
+              <h4 className={styles.thanksColTitle}>{col.title}</h4>
+              <ul className={styles.thanksList}>
+                {col.people.map(([name, role]) => (
+                  <li key={name}><span className={styles.thanksName}>{name}</span><span className={styles.thanksRole}>{role}</span></li>
+                ))}
+              </ul>
+              {col.note && <p className={styles.thanksNote}>{col.note}</p>}
+            </div>
+          ))}
           {acknowledgements.supporters && (
-            <dl className={styles.thanksSupporters}>
+            <p className={styles.thanksSupporters}>
               {acknowledgements.supporters.map(([label, text]) => (
-                <div key={label}><dt>{label}</dt><dd>{text}</dd></div>
+                <span key={label}><strong className={styles.thanksSupLabel}>{label}</strong> {text} </span>
               ))}
-            </dl>
+            </p>
           )}
+          {acknowledgements.closing && <p className={styles.thanksClosing}>{acknowledgements.closing}</p>}
         </section>
       ) : credits.length > 0 && (() => {
         const find = (label) => credits.find(([k]) => k === label)
