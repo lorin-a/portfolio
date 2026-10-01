@@ -33,7 +33,7 @@ export function slidesFor(media = {}) {
     const type = item.type || 'image'
     const src = type === 'video' ? vid(item.key, 1600) : img(item.key, 1800)
     if (!src) return
-    out.push({ key: item.key, type, alt: item.alt || '', src, blur: item.blur || false })
+    out.push({ key: item.key, type, alt: item.alt || '', src, blur: item.blur || false, focus: item.focus })
   }
   add(media.lead)
   media.also?.forEach(add)
@@ -75,7 +75,9 @@ export function SheetStage({ slides, gated, onImage, label, fit }) {
       style={typeof s.blur === 'number' ? { '--data-blur': `${s.blur}px` } : undefined} />
   ) : (
     <img key={s.key} src={s.src} alt={onImage && !gated ? '' : s.alt}
-      className={styles.stageMedia} data-blur={s.blur || undefined} />
+      className={styles.stageMedia} data-blur={s.blur || undefined}
+      /* where a cover crop anchors (FS161): faces stay in frame */
+      style={s.focus ? { objectPosition: s.focus } : undefined} />
   )
 
   return (

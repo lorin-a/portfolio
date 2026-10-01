@@ -353,6 +353,10 @@ export const groundswell = {
     },
   ],
 
+  /* FS161–FS163 (2026-10-01): her image edits. Research + flower-04, coats-01,
+     coats-03; Production + build-01, playtest-01; removed context-03 and
+     flower-02 (still used by the older case-study pages, untouched). New
+     alts are described from the photos, hers to rewrite. */
   /* BEHIND THE SCENES, in two phases (FS131): research, then production.
      Photos chosen and sorted by what each shows; captions are furniture
      (described from the photos), hers to rewrite. */
@@ -361,13 +365,14 @@ export const groundswell = {
       title: 'Research',
       images: [
         { key: 'gs-sense-affinity-01', alt: 'Affinity mapping interview findings on the wall.' },
-        { key: 'gs-context-03',        alt: 'Reviewing research boards with partners.' },
         { key: 'gs-sense-affinity-02', alt: 'The team talking through the synthesis wall.' },
         { key: 'gs-sense-affinity-03', alt: 'Mapping the tetrahedron analysis.' },
         { key: 'gs-workshop-grief-01', alt: 'The grief workshop with oncology staff.' },
         { key: 'gs-workshop-grief-02', alt: 'Staff working through prompts at the grief workshop.' },
         { key: 'gs-workshop-flower-01', alt: 'The flower workshop at the table.' },
-        { key: 'gs-workshop-flower-02', alt: 'A completed “Nourishing the Flower” worksheet.' },
+        { key: 'gs-workshop-flower-04', alt: 'Staff coloring “Nourishing the Flower” worksheets at the flower workshop.' },
+        { key: 'gs-workshop-coats-01',  focus: '50% 15%',  /* portrait: keep the faces in the cover crop */ alt: 'Two team members with a basket of paper orchids beside an orchid prompt poster.' },
+        { key: 'gs-workshop-coats-03',  alt: 'Paper orchids and “Thank you” cards inviting staff to share their experience.' },
       ],
     },
     {
@@ -376,10 +381,12 @@ export const groundswell = {
         { key: 'gs-making-prototype-01', alt: 'Early prototypes of the finger labyrinths and reflection cards.' },
         { key: 'gs-making-mockup-01',    alt: 'Design options for the pod’s painted facade.' },
         { key: 'gs-making-figma-01',     alt: 'Laying out the art wall’s pieces and signage in Figma.' },
+        { key: 'gs-making-build-01',     alt: 'A thumbs-up beside the nearly finished pod in the studio.' },
         { key: 'gs-making-build-04',     alt: 'Laying out a printed mural panel.' },
         { key: 'gs-making-build-05',     alt: 'Fitting the facade panels.' },
         { key: 'gs-making-build-02',     alt: 'Assembling the pod’s interior.' },
         { key: 'gs-making-install-01',   alt: 'Installing the pod in the hallway.' },
+        { key: 'gs-playtest-01',         alt: 'Setting out reflection cards beside the Groundswell signage for a playtest.' },
         { key: 'gs-playtest-03',         alt: 'Playtesting the pod with staff.' },
         { key: 'gs-finale',              alt: 'A hug in front of the art wall at the finale.' },
       ],
