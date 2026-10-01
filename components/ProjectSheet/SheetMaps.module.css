@@ -304,13 +304,19 @@
 
 /* full screen */
 .dialog {
-  width: min(96vw, 155vh);
+  inset: 0;
+  margin: auto;   /* the site reset strips the dialog's own centering */
+  width: min(94vw, 150vh);
   max-width: none;
-  max-height: 96vh;
-  padding: 3rem 2rem 2rem;
+  height: fit-content;
+  max-height: 94vh;
+  padding: 3.25rem 2rem 2rem;
+  overflow: auto;
   border: 0;
   border-radius: 4px;
-  background: #22201E;
+  background:
+    linear-gradient(135deg, rgba(197, 207, 166, 0.14) 5%, rgba(244, 241, 236, 0.06) 50%, rgba(247, 156, 126, 0.1) 92%),
+    #2A2729;
   box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
 }
 

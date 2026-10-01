@@ -309,10 +309,10 @@ funding, captions, card note).
 | FS273 | "hover to explore button should be green or purple." (2026-10-01) | ✅ FIXED: the on-diagram ‘Hover to explore’ tag, its cursor, and its ripple are sage green |
 | FS274 | "some of the spacing on what we build copy area looks off, there seem to be extra arrows on the left heder and the wrapping of longer lines could look more balanced" (2026-10-01) | ✅ FIXED: the built footer’s stray arrows removed: a component now reads ‘Built on normalcy · Restorative Pod · Reached at … · Environment → Normalcy → Restorative Pod’, the same rhythm as the value footer. Every left column shares one spacing and a narrower measure (34rem); notes, list items, and definitions wrap balanced; ‘work-life’ no longer breaks at its hyphen |
 | FS275 | "do site purple for hover instruction" (2026-10-01) | ✅ FIXED: the hint tag, cursor, and ripple use the site’s plum (--color-plum-soft) |
-| FS276 | "don't use this \"Line weight shows how many scenarios staff described.\" just say \"Four themes\"" (2026-10-01) | ⏳ IN PROGRESS |
-| FS277 | "don't make culture circle darker." (2026-10-01) | ⏳ IN PROGRESS |
-| FS278 | "make one side of the tetrahedron have more foggy faded color look to add dimension." (2026-10-01) | ⏳ IN PROGRESS |
-| FS279 | "the expand button is not working" (2026-10-01) | ⏳ IN PROGRESS |
+| FS276 | "don't use this \"Line weight shows how many scenarios staff described.\" just say \"Four themes\"" (2026-10-01) | ✅ FIXED: the line-weight sentence removed; the right column’s label is now simply ‘Four themes’ |
+| FS277 | "don't make culture circle darker." (2026-10-01) | ✅ FIXED: Culture is the same cream as the other three circles |
+| FS278 | "make one side of the tetrahedron have more foggy faded color look to add dimension." (2026-10-01) | 💬 SHIPPED: the side face (Recognition–Environment–Culture), turned away from the light, now holds a soft fog: a haze that thickens toward its far edge, softened with a wide blur and clipped to the face. The front face stays clear, so the solid reads in 3D |
+| FS279 | "the expand button is not working" (2026-10-01) | ✅ FIXED: the button did open, but the site’s CSS reset stripped the dialog’s centering, so the full-screen view rendered pinned to the top-left and spilling off-screen. Now centered (inset 0 + margin auto), sized to fit the viewport, on the same brand glass |
 =======
 | FS193 | "i need this to look 50% neater, better orgnanized and simple" (2026-10-01), read as the Acknowledgements | ⏳ IN PROGRESS |
 >>>>>>> parent of f51f3e4 (feat(sheet): acknowledgements in one format: name over one-line role, three labelled lines (FS193))

@@ -151,9 +151,17 @@ function Stage({ view, focus, setFocus, interactive, uid, ready = true, hint = n
         <linearGradient id={`${uid}-front`} x1="0" y1="0" x2="0.35" y2="1">
           <stop offset="0" stopColor="#F4F1EC" stopOpacity="0.03" /><stop offset="1" stopColor="#F4F1EC" stopOpacity="0.09" />
         </linearGradient>
-        <linearGradient id={`${uid}-side`} x1="0" y1="0" x2="1" y2="0.6">
-          <stop offset="0" stopColor="#F4F1EC" stopOpacity="0.06" /><stop offset="1" stopColor="#F4F1EC" stopOpacity="0.12" />
+        <linearGradient id={`${uid}-side`} gradientUnits="userSpaceOnUse" x1="1100" y1="500" x2="1490" y2="560">
+          <stop offset="0" stopColor="#F4F1EC" stopOpacity="0.05" />
+          <stop offset="0.6" stopColor="#E9E4F0" stopOpacity="0.2" />
+          <stop offset="1" stopColor="#F4F1EC" stopOpacity="0.32" />
         </linearGradient>
+        <filter id={`${uid}-fog`} x="-40%" y="-40%" width="180%" height="180%">
+          <feGaussianBlur stdDeviation="60" />
+        </filter>
+        <clipPath id={`${uid}-sideClip`}>
+          <polygon points={['rec', 'env', 'cul'].map((k) => POS[k][0].slice(0, 2).join(',')).join(' ')} />
+        </clipPath>
         {['arr', 'arrOn'].map((k) => (
           <marker key={k} id={`${uid}-${k}`} viewBox="0 0 12 12" refX="10" refY="6" markerWidth="24" markerHeight="24"
             markerUnits="userSpaceOnUse" orient="auto-start-reverse">
@@ -164,7 +172,11 @@ function Stage({ view, focus, setFocus, interactive, uid, ready = true, hint = n
 
       {/* ── found ── */}
       <g className={s.layer} data-on={(ready && view === 0) || undefined}>
-        <polygon points={['rec', 'env', 'cul'].map((k) => POS[k][0].slice(0, 2).join(',')).join(' ')} fill={`url(#${uid}-side)`} />
+        {/* the side face, turned away from the light: a fog that thickens toward its far edge */}
+        <g clipPath={`url(#${uid}-sideClip)`}>
+          <polygon points={['rec', 'env', 'cul'].map((k) => POS[k][0].slice(0, 2).join(',')).join(' ')} fill={`url(#${uid}-side)`} />
+          <ellipse cx="1560" cy="560" rx="360" ry="460" fill="#F4F1EC" opacity="0.13" filter={`url(#${uid}-fog)`} />
+        </g>
         <polygon points={['rec', 'sys', 'env'].map((k) => POS[k][0].slice(0, 2).join(',')).join(' ')} fill={`url(#${uid}-front)`} />
         {TENSIONS.map(edge)}
         <g className={`${s.fade} ${s.voidG}`} data-on={isF('void', 0) || undefined} data-dim={(anyF('t') && !isF('void', 0)) || undefined}
@@ -243,7 +255,7 @@ function Stage({ view, focus, setFocus, interactive, uid, ready = true, hint = n
         const on = (view === 1 && isF('v', id)) || (view === 2 && (isF('c', id) || momentOn(id)))
           || (view === 0 && focus?.kind === 't' && (TENSIONS[focus.id].a === id || TENSIONS[focus.id].b === id))
         const dim = !!focus && !on && focus.kind !== 'void'
-        const back = view === 0 && id === 'cul'
+        const back = false
         return (
           <g key={id} className={s.node} data-wait={!ready || undefined} data-dim={dim || undefined} data-on={on || undefined} data-back={back || undefined}
             style={{ transform: `translate(${x}px, ${y}px)` }}
@@ -395,10 +407,9 @@ export default function SheetMaps() {
         <div className={s.fPair}>
           <p className={s.fKick}>The void, at the center</p>
           <p className={s.fBig}>Patient-centered care neglects the people who give it.</p>
-          <p className={s.fNote}>Line weight shows how many scenarios staff described.</p>
         </div>
         <div className={s.fSide}>
-          <p className={s.fKick}>Four themes enclose it</p>
+          <p className={s.fKick}>Four themes</p>
           <dl className={s.fDefs}>
             {['rec', 'sys', 'env', 'cul'].map((k) => <div key={k}><dt>{THEME[k]}</dt><dd>{THEME_SUB[k]}</dd></div>)}
           </dl>
