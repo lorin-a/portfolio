@@ -16,8 +16,7 @@ export const metadata = {
    only what no other section says, all of it visible.
    · lesson: her rehearsal Q6 (“To” dropped); the note compresses her
      takeaway paragraph
-   · role: the two facts found nowhere else on the sheet, from her role
-     paragraph (naming; the trauma-informed grief workshop)
+   · growth: FS167, her own list (see the card)
    · change: Kendyl Grant, groundswell-digital-wall-with-admin
      src/app/summary/page.js:536 (needs her OK for public use); the note is
      the study method from close.outcomes (no results: FS116) */
@@ -28,9 +27,25 @@ const CARDS = [
     note: 'The “cold” email we set out to redesign was a senior staff member’s own innovation. We learned it when she broke down in tears during a content\u00a0review.',
   },
   {
-    id: 'weave', verb: 'Weave', title: 'My role',
-    line: 'I named Groundswell and led its grief\u00a0workshop.',
-    note: 'I designed the workshop to be trauma-informed and responsive, so it would not be extractive in collecting emotional\u00a0data.',
+    /* FS167, her words (2026-10-01): “through this project I grew into a
+       data viz designer, navigated my first production of a installation,
+       coordinated and secured donors, pitched to hospital admin, coordinated
+       with stakeholders etc? Transformed a concept from start to finish,
+       iterated through two brand identities, play tested etc etc”. Edits:
+       “data viz” → data visualization (her cover title); “a installation”
+       → an installation; “play tested” → playtested. Her “etc” means the
+       list is hers to finish. */
+    id: 'weave', verb: 'Weave', title: 'My growth',
+    line: 'Through this project, I grew into a data visualization\u00a0designer.',
+    list: [
+      'Navigated my first production of an installation',
+      'Coordinated and secured donors',
+      'Pitched to hospital admin',
+      'Coordinated with stakeholders',
+      'Transformed a concept from start to finish',
+      'Iterated through two brand identities',
+      'Playtested',
+    ],
   },
   {
     id: 'shape', verb: 'Shape', title: 'What changed',

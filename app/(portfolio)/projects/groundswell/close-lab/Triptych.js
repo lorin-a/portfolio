@@ -12,7 +12,7 @@ const BRAND_GRADIENT = ['#C5CFA6', '#C7AAD1', '#F79C7E']
 export default function Triptych({ cards }) {
   return (
     <section className={s.close} aria-label="What the project taught, my role, and what changed">
-      {cards.map(({ id, verb, title, line, cite, note }, i) => {
+      {cards.map(({ id, verb, title, line, cite, note, list }, i) => {
         const Mark = MARKS[id]
         return (
           <article key={id} className={s.card} data-practice={id}>
@@ -23,7 +23,11 @@ export default function Triptych({ cards }) {
             <h3 className={s.title}>{title}</h3>
             <p className={s.line}>{line}</p>
             {cite && <p className={s.cite}>{cite}</p>}
-            <p className={s.note}>{note}</p>
+            {list ? (
+              <ul className={`${s.note} ${s.list}`}>
+                {list.map((x) => <li key={x}>{x}</li>)}
+              </ul>
+            ) : <p className={s.note}>{note}</p>}
           </article>
         )
       })}
