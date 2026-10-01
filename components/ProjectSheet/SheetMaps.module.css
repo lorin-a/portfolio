@@ -34,6 +34,7 @@
 
 .theme { font-family: var(--font-heading); font-size: 30px; text-anchor: middle; }
 .thesis { font-family: var(--font-heading); font-size: 28px; text-anchor: middle; }
+.voidName { font-family: var(--font-heading); font-size: 34px; font-style: italic; text-anchor: middle; opacity: 0.75; }
 .voidKicker { font-family: var(--font-body); font-size: 22px; letter-spacing: 0.14em; text-transform: uppercase; text-anchor: middle; }
 .pill { font-family: var(--font-heading); font-size: 28px; text-anchor: middle; }
 .voice { font-family: var(--font-body); font-size: 24px; }
@@ -126,6 +127,31 @@
 .edgeG, .pillBtn { transition: opacity var(--motion-fast) var(--ease-out); }
 .edgeG[data-dim], .pillBtn[data-dim] { opacity: 0.35; }
 .hit { cursor: pointer; }
+
+
+/* FS257: what staff said, and the void, live inside the frame */
+.foot {
+  min-height: 15.5rem;   /* holds steady across states, so the nav never jumps */
+  margin: 0 clamp(1rem, 2.5vw, 2rem);
+  padding: 1.1rem 0 1.4rem;
+  border-top: 1px solid rgba(85, 77, 101, 0.18);
+  color: #554D65;
+}
+
+.foot .capText { color: #6C625F; }
+.foot .capKicker { color: #B0644C; }
+.foot .capList li::before { color: #C97D64; }
+
+.voidFoot { display: grid; gap: 0.35rem; max-width: 46rem; }
+.voidFoot .capKicker { margin: 0; }
+
+.thesisFoot {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: var(--step-statement);
+  line-height: 1.25;
+  text-wrap: balance;
+}
 
 /* full screen */
 .dialog {

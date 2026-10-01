@@ -121,10 +121,7 @@ function Stage({ view, onTension, interactive, moving, active, uid = 'gsm' }) {
         {edge('sys', 'cul', true)}
         {edge('rec', 'sys')}{edge('rec', 'env')}{edge('rec', 'cul')}{edge('sys', 'env')}{edge('env', 'cul')}
         <circle cx={VOID.x} cy={VOID.y} r={VOID.r} fill={`url(#${uid}-void)`} stroke={PLUM} strokeWidth="4" strokeDasharray="11.78 11.78" />
-        <text className={s.voidKicker} x={VOID.x} y={VOID.y - 64} fill={PLUM}>The void</text>
-        <text className={s.thesis} x={VOID.x} y={VOID.y - 20} fill={PLUM}>
-          {['Patient-centered', 'care neglects', 'the people', 'who give it'].map((l, i) => <tspan key={l} x={VOID.x} dy={i ? 34 : 0}>{l}</tspan>)}
-        </text>
+        <text className={s.voidName} x={VOID.x} y={VOID.y + 10} fill={PLUM}>The void</text>
         {TENSIONS.map((t, i) => {
           if (!t.pill) return null
           const w = t.pill.length * 15 + 70
@@ -193,6 +190,20 @@ export default function SheetMaps() {
         <div className={s.canvas}>
           <Stage view={view} interactive onTension={setTension} moving={moving} active={T ? tension : null} uid="gsm-a" />
         </div>
+        <div className={s.foot} aria-live="polite" data-mode={T ? 'voices' : view === 0 ? 'void' : 'caption'}>
+          {T ? (
+            <>
+              <p className={s.capTitle}><span className={s.capKicker}>What staff said</span>{NAME[T.a]} × {NAME[T.b]}</p>
+              <ul className={s.capList} data-n={T.items.length}>{T.items.map((q) => <li key={q}>{q}</li>)}</ul>
+            </>
+          ) : view === 0 ? (
+            <div className={s.voidFoot}>
+              <p className={s.capKicker}>The void, at the centre</p>
+              <p className={s.thesisFoot}>Patient-centered care neglects the people who give it.</p>
+              <p className={s.capText}>Four themes from affinity mapping enclose it. Line weight shows how many scenarios staff described; point to a tension to hear them.</p>
+            </div>
+          ) : <p className={s.capText}>{VIEWS[view].caption}</p>}
+        </div>
         <button type="button" className={s.enlarge} onClick={() => setOpen(true)} aria-label="View this map full screen">
           <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 6V2h4M10 2h4v4M14 10v4h-4M6 14H2v-4" /></svg>
         </button>
@@ -212,15 +223,6 @@ export default function SheetMaps() {
         </ol>
       </div>
 
-
-      <div className={s.caption} aria-live="polite">
-        {T ? (
-          <>
-            <p className={s.capTitle}><span className={s.capKicker}>What staff said</span>{NAME[T.a]} × {NAME[T.b]}</p>
-            <ul className={s.capList} data-n={T.items.length}>{T.items.map((q) => <li key={q}>{q}</li>)}</ul>
-          </>
-        ) : <p className={s.capText}>{VIEWS[view].caption}</p>}
-      </div>
 
       <dialog ref={dlg} className={s.dialog} onClose={() => setOpen(false)}
         onClick={(e) => { if (e.target === dlg.current) setOpen(false) }} aria-label={`${VIEWS[view].view}, full screen`}>
