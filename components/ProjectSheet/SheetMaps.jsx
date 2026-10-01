@@ -23,35 +23,35 @@ const R0 = 104
 
 /* where each circle sits in each view (centre x, y, radius) */
 const POS = {
-  rec: [[868, 150, R0], [917, 205, 150], [1087, 508, 147]],
-  env: [[1235, 905, R0], [917, 874, 150], [650, 508, 147]],
-  cul: [[1365, 548, 86], [1275, 554, 150], [1524, 508, 147]],
-  sys: [[345, 812, R0], [562, 554, 150], [213, 508, 147]],
+  rec: [[868, 110, R0], [917, 205, 150], [1087, 508, 147]],
+  env: [[1270, 955, R0], [917, 874, 150], [650, 508, 147]],
+  cul: [[1490, 515, 86], [1275, 554, 150], [1524, 508, 147]],
+  sys: [[250, 850, R0], [562, 554, 150], [213, 508, 147]],
 }
 const LABEL = { rec: ['Recognition'], env: ['Environment'], cul: ['Culture'], sys: ['Systemic', 'Issues'] }
 
-const VOID = { x: 812, y: 628, r: 132 }
+const VOID = { x: 796, y: 632, r: 125 }
 
 /* all six tensions, verbatim from the board, by the edge each sits on */
 const TENSIONS = [
-  { a: 'rec', b: 'sys', pill: 'Admin crowds out care', x: 560, y: 410, items: [
+  { a: 'rec', b: 'sys', pill: 'Admin crowds out care', x: 652, y: 369, items: [
     'When my work is interrupted, it makes me feel unrecognized and as if my work is unimportant.',
     'I am so busy with administrative tasks that I hardly get to do the work I am trained for, the reason I got into this field. This leaves me feeling undervalued and disconnected from my sense of worth.',
     'I don’t feel like my voice is heard or valued in a system where decision making is top-down and communication is lacking.' ] },
-  { a: 'rec', b: 'cul', pill: 'Guilt over breaks', x: 1186, y: 405, items: [
+  { a: 'rec', b: 'cul', pill: 'Guilt over breaks', x: 1210, y: 333, items: [
     'I feel like I have to prove myself at work to be valued by higher status coworkers and feel guilty about taking breaks.',
     'Patient Centered Care neglects the needs of care workers.' ] },
-  { a: 'sys', b: 'env', pill: 'Profit over people', x: 790, y: 880, items: [
+  { a: 'sys', b: 'env', pill: 'Profit over people', x: 760, y: 902, items: [
     'Healthcare is a commodity. A focus on profit creates systemic disregard for employee wellbeing.',
     'Execs do not see care worker’s needs as worth investing in. We are replaceable even though we work the hardest and are the most passionate.' ] },
-  { a: 'env', b: 'cul', dotT: 0.2, pill: 'Nowhere to go on a bad day', x: 1400, y: 722, items: [
+  { a: 'env', b: 'cul', pill: 'No place to grieve', x: 1406, y: 682, items: [
     'The lack of physical space, windows, and poor lighting takes a toll on my overall happiness at work.',
     'I feel burnt out when there is no space for me to take a real break, get some peace & quiet or gather with my colleagues.',
     'When you’re having a bad day, there is no where to go to express your grief; this makes me want to get home ASAP.' ] },
-  { a: 'rec', b: 'env', pill: null, items: [
+  { a: 'rec', b: 'env', pill: 'Breaks in name only', x: 1037, y: 465, items: [
     'Having to pay for parking and take a shuttle to work makes me feel undervalued and like I don’t matter.',
     'Even though breaks are encouraged from management, no real effort is made to ensure we aren’t overworking ourselves.' ] },
-  { a: 'sys', b: 'cul', dotT: 0.27, pill: null, items: [
+  { a: 'sys', b: 'cul', back: true, pill: 'Overwork as norm', x: 506, y: 790, items: [
     'There is no system in place to support breaks and no functional formal feedback system. I have no faith in management to make changes.',
     'I can never get all of my work done. Too much cross over and lack of clarity on roles/duties creates a system of dysfunction, exhaustion, and frustration.',
     'Overworking, “do the work” and “don’t complain” mentality is the norm, causing many to suffer in silence or develop resentment.' ] },
@@ -137,8 +137,9 @@ function Stage({ view, onTension, interactive, moving, active, uid = 'gsm' }) {
                 onMouseEnter: () => onTension(i), onFocus: () => onTension(i), onClick: () => onTension(i),
               } : {})}>
               <rect x={t.x - w / 2} y={t.y - 40} width={w} height="80" rx="40" fill={on ? ACCENT : CREAM}
+                opacity={t.back && !on ? 0.85 : 1}
                 stroke={on ? ACCENT : PLUM} strokeWidth="5.89" strokeDasharray={on ? undefined : '11.78 11.78'} />
-              <text className={s.pill} x={t.x} y={t.y + 10} fill={on ? '#fff' : PLUM}>{t.pill}</text>
+              <text className={s.pill} x={t.x} y={t.y + 10} fill={on ? '#fff' : PLUM} opacity={t.back && !on ? 0.7 : 1}>{t.pill}</text>
             </g>
           )
         })}
