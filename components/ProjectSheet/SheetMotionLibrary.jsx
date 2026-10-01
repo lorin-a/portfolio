@@ -8,6 +8,15 @@ import s from './SheetMotionLibrary.module.css'
    the view serves and why. Each clip plays once (silent) and the next
    view follows; any view can be chosen. Plays only in view. Reduced
    motion: nothing plays on its own; choosing a view plays it. */
+
+/* FS230: user-flow glyphs, one per view (stroke icons, UX diagram idiom) */
+const GLYPH = {
+  'At a glance': <><path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12z" /><circle cx="12" cy="12" r="3" /></>,
+  'With a tap': <><circle cx="12" cy="9" r="2.2" /><path d="M7.5 9a4.5 4.5 0 0 1 9 0" /><path d="M5 9a7 7 0 0 1 14 0" opacity=".55" /><path d="M12 11.5v8M9.5 17l2.5 2.5 2.5-2.5" /></>,
+  'In depth': <><path d="M3.5 20.5h17" /><path d="M6 20.5v-6M10.5 20.5v-11M15 20.5v-8M19.5 20.5v-4" /></>,
+  'Over time': <><path d="M3.5 3.5v17h17" /><path d="M6.5 15l4-4.5 3 3 6-6.5" /><circle cx="19.5" cy="7" r="1.2" /></>,
+}
+
 export default function SheetMotionLibrary({ items = [], nav = 'toggle' }) {
   const [active, setActive] = useState(0)
   const [inView, setInView] = useState(false)
@@ -96,6 +105,28 @@ export default function SheetMotionLibrary({ items = [], nav = 'toggle' }) {
         </ol>
       )}
       </div>
+
+      {nav === 'flow' && (
+        <ol className={s.flow} role="tablist" aria-label="Dashboard views, as a user flow">
+          {items.map((x, i) => (
+            <li key={x.view} className={s.flowStep}>
+              <button type="button" role="tab" aria-selected={i === active} className={s.node} onClick={() => go(i)}>
+                <span className={s.glyph} aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">{GLYPH[x.view]}</svg>
+                  {bar(i, x)}
+                </span>
+                <span className={s.nodeView}>{x.view}</span>
+              </button>
+              {i < items.length - 1 && (
+                <span className={s.edge} aria-hidden="true">
+                  <span className={s.edgeLabel}>{x.next}</span>
+                  <svg viewBox="0 0 60 10" preserveAspectRatio="none"><path d="M1 5h54" /><path d="M51 1.5l4.5 3.5-4.5 3.5" /></svg>
+                </span>
+              )}
+            </li>
+          ))}
+        </ol>
+      )}
 
       {nav === 'chapters' && (
         <div className={s.chapters}>

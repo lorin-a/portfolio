@@ -331,11 +331,11 @@ export const groundswell = {
         /* FS221–FS225: each view recorded from its first frame of drawing,
            showing every interaction she named. Captions refined (FS225). */
         motion: [
-          { view: 'At a glance', audience: 'For everyone', duration: 9.6, src: '/video/gs-dashboard/view-glance.mp4', poster: '/video/gs-dashboard/view-glance.jpg',
+          { view: 'At a glance', next: 'Tap an emotion', audience: 'For everyone', duration: 9.6, src: '/video/gs-dashboard/view-glance.mp4', poster: '/video/gs-dashboard/view-glance.jpg',
             caption: 'Emotions bloom onto the screen as watercolors, each sized by how often staff chose it, and can be dragged into new arrangements. There is no chart to decode.' },
-          { view: 'With a tap', audience: 'For the curious', duration: 12.5, src: '/video/gs-dashboard/view-tap.mp4', poster: '/video/gs-dashboard/view-tap.jpg',
+          { view: 'With a tap', next: 'Open the insights', audience: 'For the curious', duration: 12.5, src: '/video/gs-dashboard/view-tap.mp4', poster: '/video/gs-dashboard/view-tap.jpg',
             caption: 'Every count opens into the handwritten responses behind it, and any single response can be read up close.' },
-          { view: 'In depth', audience: 'For researchers and administrators', duration: 14.5, src: '/video/gs-dashboard/view-depth.mp4', poster: '/video/gs-dashboard/view-depth.jpg',
+          { view: 'In depth', next: 'Compare across time', audience: 'For researchers and administrators', duration: 14.5, src: '/video/gs-dashboard/view-depth.mp4', poster: '/video/gs-dashboard/view-depth.jpg',
             caption: 'Pod use as a summary and a timeline: tap a session length for its breakdown, or isolate one across nine months.' },
           { view: 'Over time', audience: 'For researchers and administrators', duration: 10.2, src: '/video/gs-dashboard/view-time.mp4', poster: '/video/gs-dashboard/view-time.jpg',
             caption: 'Six validated measures as small multiples on one scale, then the themes in staff’s written answers beside the data behind them. Values are blurred while the study is under review.' },

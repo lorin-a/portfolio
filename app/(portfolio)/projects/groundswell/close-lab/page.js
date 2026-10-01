@@ -89,9 +89,9 @@ export default function CloseLab() {
   return (
     <div className={`${sheet.inner} ${s.page}`}>
       <DarkTheme />
-      <p className={s.kicker}>Groundswell · FS226 lab · private</p>
+      <p className={s.kicker}>Groundswell · FS230 lab · private</p>
 
-      {[['chapters', 'A · Chapter bar'], ['ladder', 'B · Depth ladder'], ['arrows', 'C · Arrows and dots'], ['toggle', 'D · Current toggle']].map(([nav, name]) => (
+      {[['flow', 'E · User flow (FS230)'], ['toggle', 'D · Current toggle']].map(([nav, name]) => (
         <section key={nav} className={s.variant} style={{ maxWidth: '54rem' }}>
           <h2 className={s.labH}>{name}</h2>
           <MotionLibrary nav={nav} items={groundswell.components.find((c) => c.key === 'dashboard').media.motion} />
