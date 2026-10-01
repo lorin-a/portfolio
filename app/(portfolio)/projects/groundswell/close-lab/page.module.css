@@ -150,3 +150,82 @@
   }
   .card .note { grid-row: 6; align-self: start; }
 }
+
+/* ══ FS170 drafting sections ══════════════════════════════════════════ */
+
+.labH {
+  margin: var(--flow-4) 0 var(--flow-2);
+  font-family: var(--font-heading);
+  font-size: var(--step-statement);
+  font-weight: 400;
+  color: var(--color-ink);
+}
+
+.labNote {
+  max-width: 46rem;
+  margin: 0 0 var(--flow-3);
+  font-family: var(--font-body);
+  font-size: var(--step-small);
+  line-height: 1.6;
+  opacity: 0.8;
+}
+
+.eco { max-width: 52rem; margin-bottom: var(--flow-3); }
+
+.ecoLabel,
+.shapedLabel {
+  margin: 0 0 var(--flow-1);
+  font-family: var(--font-body);
+  font-size: var(--step-label);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-sage);
+}
+
+.ecoLine {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: var(--step-statement);
+  line-height: 1.35;
+  color: var(--color-ink);
+  text-wrap: pretty;
+}
+
+.shapedGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 22rem), 1fr));
+  gap: var(--gap-col);
+}
+
+.shapedName {
+  margin: 0 0 var(--flow-2);
+  font-family: var(--font-heading);
+  font-size: var(--step-body);
+  font-weight: 400;
+  color: var(--color-ink);
+}
+
+.shapedList {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-family: var(--font-body);
+  font-size: var(--step-small);
+  line-height: 1.55;
+  color: var(--color-ink);
+}
+
+.shapedList li { position: relative; padding-left: 1.1rem; text-wrap: pretty; }
+.shapedList li + li { margin-top: 0.5rem; }
+
+.shapedList li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.62em;
+  width: 0.4rem;
+  height: 0.4rem;
+  border-radius: 50%;
+  background: var(--color-sage);
+}
