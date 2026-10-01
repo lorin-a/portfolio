@@ -292,6 +292,7 @@ export default function HeroScatter() {
     /* `intro` is read by the scroll timeline's onUpdate (to snap it done on
        a first scroll), so it must exist before the trigger is built. */
     let intro
+    let removeRemeasure = null
     buildScrollTimeline()
     ScrollTrigger.normalizeScroll(true)
     ScrollTrigger.refresh()
@@ -355,22 +356,49 @@ export default function HeroScatter() {
         if (mCChars[i]) mCChars[i].style.marginRight = `${px}px`
       })
 
-      const sRect = section.getBoundingClientRect()
-      const toPos = (r) => ({
-        left: ((r.left + r.width / 2 - sRect.left) / sRect.width) * 100,
-        top: ((r.top + r.height / 2 - sRect.top) / sRect.height) * 100,
-        w: r.width, h: r.height,
-      })
-
-      const dFinals = Array.from(mDChars).map(el => toPos(el.getBoundingClientRect()))
-      const cFinals = Array.from(mCChars).map(el => toPos(el.getBoundingClientRect()))
-      const mFinals = Array.from(measureRef.current.querySelectorAll('[data-mark]')).map(el => toPos(el.getBoundingClientRect()))
-      const subEl = measureRef.current.querySelector('[data-sub]')
-      const subFinal = subEl ? toPos(subEl.getBoundingClientRect()) : null
-
+      /* FS293: the final letter positions are measured as percentages of
+         the section, but the letters stop growing at 140px. Measured once,
+         a window made wider after load scaled the gaps and not the letters,
+         so the word landed stretched. Measure again on every ScrollTrigger
+         refresh (it refreshes on resize), and read the positions through
+         functions so invalidateOnRefresh re-records them. The measure layer
+         is visibility:hidden, which keeps its layout, so it measures as is. */
+      const measure = () => {
+        const sRect = section.getBoundingClientRect()
+        const toPos = (r) => ({
+          left: ((r.left + r.width / 2 - sRect.left) / sRect.width) * 100,
+          top: ((r.top + r.height / 2 - sRect.top) / sRect.height) * 100,
+          w: r.width, h: r.height,
+        })
+        const subEl = measureRef.current.querySelector('[data-sub]')
+        return {
+          d: Array.from(mDChars).map(el => toPos(el.getBoundingClientRect())),
+          c: Array.from(mCChars).map(el => toPos(el.getBoundingClientRect())),
+          m: Array.from(measureRef.current.querySelectorAll('[data-mark]')).map(el => toPos(el.getBoundingClientRect())),
+          sub: subEl ? toPos(subEl.getBoundingClientRect()) : null,
+        }
+      }
+      let F = measure()
       gsap.set(measureRef.current, { autoAlpha: 0 })
-
-      if (subFinal) gsap.set(subtitleRef.current, { left: subFinal.left + '%', top: subFinal.top + '%' })
+      const placeSub = () => { if (F.sub) gsap.set(subtitleRef.current, { left: F.sub.left + '%', top: F.sub.top + '%' }) }
+      placeSub()
+      const remeasure = () => { if (measureRef.current) { F = measure(); placeSub() } }
+      /* refreshInit runs while the hero is still pinned at the OLD width, so
+         that reading can be stale. Once the refresh has settled, measure
+         again; if the word moved, refresh once more so the timeline takes
+         the true positions (the second pass measures the same: no loop). */
+      const settle = () => {
+        if (!measureRef.current) return
+        const G = measure()
+        const moved = G.d.some((p, i) => Math.abs(p.left - F.d[i].left) > 0.05 || Math.abs(p.top - F.d[i].top) > 0.05)
+        if (moved) { F = G; placeSub(); ScrollTrigger.refresh() }
+      }
+      ScrollTrigger.addEventListener('refreshInit', remeasure)
+      ScrollTrigger.addEventListener('refresh', settle)
+      removeRemeasure = () => {
+        ScrollTrigger.removeEventListener('refreshInit', remeasure)
+        ScrollTrigger.removeEventListener('refresh', settle)
+      }
 
       /* ─── MASTER SCROLL TIMELINE ─── */
       const tl = gsap.timeline({
@@ -393,6 +421,7 @@ export default function HeroScatter() {
              for ~1s after you stop, so fast and slow scrolls both play out
              more evenly. Raise toward 1.5 for a more uniform pace. */
           scrub: 1,
+          invalidateOnRefresh: true,
           /* Welcome → Keep Scrolling crossfade is built into the timeline below
              (search "WELCOME → KEEP SCROLLING SWAP"), so progress drives the swap
              and the hint persists through scatter, fading as gather begins.
@@ -496,10 +525,10 @@ export default function HeroScatter() {
       tl.to(flower, {
         keyframes: [
           { width: 70, height: 70, duration: SWEEP_IN, ease: 'power2.in' },
-          mFinals[2]
+          F.m[2]
             ? {
-                left: mFinals[2].left + '%', top: mFinals[2].top + '%',
-                width: mFinals[2].w, height: mFinals[2].h,
+                left: () => F.m[2].left + '%', top: () => F.m[2].top + '%',
+                width: () => F.m[2].w, height: () => F.m[2].h,
                 duration: SWEEP_OUT, ease: 'power2.out',
               }
             : { duration: SWEEP_OUT },
@@ -507,38 +536,38 @@ export default function HeroScatter() {
       }, 0)
 
       dChars.forEach((el, i) => {
-        if (!dFinals[i]) return
+        if (!F.d[i]) return
         tl.to(el, {
           keyframes: [
             { left: D_SCATTER[i][0] + '%', top: D_SCATTER[i][1] + '%', duration: SWEEP_IN, ease: 'power2.in' },
-            { left: dFinals[i].left + '%', top: dFinals[i].top + '%', duration: SWEEP_OUT, ease: 'power2.out' },
+            { left: () => F.d[i].left + '%', top: () => F.d[i].top + '%', duration: SWEEP_OUT, ease: 'power2.out' },
           ],
         }, i * 0.005)
       })
 
       cChars.forEach((el, i) => {
-        if (!cFinals[i]) return
+        if (!F.c[i]) return
         tl.to(el, {
           keyframes: [
             { left: C_SCATTER[i][0] + '%', top: C_SCATTER[i][1] + '%', duration: SWEEP_IN, ease: 'power2.in' },
-            { left: cFinals[i].left + '%', top: cFinals[i].top + '%', duration: SWEEP_OUT, ease: 'power2.out' },
+            { left: () => F.c[i].left + '%', top: () => F.c[i].top + '%', duration: SWEEP_OUT, ease: 'power2.out' },
           ],
         }, 0.02 + i * 0.005)
       })
 
-      if (senseRef.current && mFinals[0]) {
+      if (senseRef.current && F.m[0]) {
         tl.to(senseRef.current, {
           keyframes: [
             { left: MARK_SCATTER.sense[0] + '%', top: MARK_SCATTER.sense[1] + '%', duration: SWEEP_IN, ease: 'power2.in' },
-            { left: mFinals[0].left + '%', top: mFinals[0].top + '%', width: mFinals[0].w, height: mFinals[0].h, duration: SWEEP_OUT, ease: 'power2.out' },
+            { left: () => F.m[0].left + '%', top: () => F.m[0].top + '%', width: () => F.m[0].w, height: () => F.m[0].h, duration: SWEEP_OUT, ease: 'power2.out' },
           ],
         }, 0.02)
       }
-      if (weaveRef.current && mFinals[1]) {
+      if (weaveRef.current && F.m[1]) {
         tl.to(weaveRef.current, {
           keyframes: [
             { left: MARK_SCATTER.weave[0] + '%', top: MARK_SCATTER.weave[1] + '%', duration: SWEEP_IN, ease: 'power2.in' },
-            { left: mFinals[1].left + '%', top: mFinals[1].top + '%', width: mFinals[1].w, height: mFinals[1].h, duration: SWEEP_OUT, ease: 'power2.out' },
+            { left: () => F.m[1].left + '%', top: () => F.m[1].top + '%', width: () => F.m[1].w, height: () => F.m[1].h, duration: SWEEP_OUT, ease: 'power2.out' },
           ],
         }, 0.03)
       }
@@ -567,6 +596,7 @@ export default function HeroScatter() {
     }
 
     return () => {
+      removeRemeasure?.()
       document.body.classList.remove('hero-loading')
       document.body.style.overflow = ''
       /* Revert the splits so a remount (React Strict Mode double-invokes
