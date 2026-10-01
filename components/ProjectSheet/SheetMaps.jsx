@@ -30,12 +30,6 @@ const POS = {
 }
 const LABEL = { rec: ['Recognition'], env: ['Environment'], cul: ['Culture'], sys: ['Systemic', 'Issues'] }
 
-const VOICE = {
-  rec: { t: ['“What I do at work', 'is indescribable.”'], x: 1000, y: 132, a: 'start' },
-  sys: { t: ['“I’ve given up on trying', 'to change things.”'], x: 345, y: 958, a: 'middle' },
-  env: { t: ['“There is no time', 'to grieve.”'], x: 1365, y: 898, a: 'start' },
-  cul: { t: ['“I can’t turn it off.”'], x: 1475, y: 548, a: 'start' },
-}
 const VOID = { x: 812, y: 628, r: 132 }
 
 /* all six tensions, verbatim from the board, by the edge each sits on */
@@ -65,7 +59,7 @@ const TENSIONS = [
 const NAME = { rec: 'Recognition', env: 'Environment', cul: 'Culture', sys: 'Systemic Issues' }
 
 const VIEWS = [
-  { view: 'What we found', caption: 'Four themes from affinity mapping, each touching the other three, enclosing the void. Every dot on an edge is a scenario staff described; point to a tension to read them.',
+  { view: 'What we found', caption: 'Four themes from affinity mapping, each touching the other three, enclosing the void. Line weight shows how many scenarios staff described; point to a tension to read them.',
     glyph: <><path d="M12 4l7 12H5z" /><path d="M12 4l2 12" opacity=".5" /></> },
   { view: 'What we value', caption: 'Each theme became a value the work would hold: recognition as humanity, environment as normalcy, culture as togetherness, the system as compassion.',
     glyph: <><circle cx="12" cy="5.5" r="2.2" /><circle cx="18.5" cy="12" r="2.2" /><circle cx="12" cy="18.5" r="2.2" /><circle cx="5.5" cy="12" r="2.2" /></> },
@@ -82,23 +76,13 @@ function Stage({ view, onTension, interactive, moving, active, uid = 'gsm' }) {
     const x1 = ax + (dx / d) * ar, y1 = ay + (dy / d) * ar, x2 = bx - (dx / d) * br, y2 = by - (dy / d) * br
     const n = TENSIONS[i].items.length
     /* one dot per scenario on this edge: the evidence, counted */
-    /* the dots sit on the open stretch of the edge, clear of its pill */
-    const P = TENSIONS[i].pill ? TENSIONS[i] : null
-    const tp = P ? ((P.x - x1) * (x2 - x1) + (P.y - y1) * (y2 - y1)) / ((x2 - x1) ** 2 + (y2 - y1) ** 2) : 0.5
-    const c = TENSIONS[i].dotT ?? (P ? (tp < 0.5 ? Math.min(tp + 0.3, 0.85) : Math.max(tp - 0.3, 0.15)) : 0.5)
-    const dots = Array.from({ length: n }, (_, k) => {
-      const t = c + (k - (n - 1) / 2) * 0.07
-      return [x1 + (x2 - x1) * t, y1 + (y2 - y1) * t]
-    })
+    /* line weight is the evidence: how many scenarios staff described here */
+    const w = 1.5 + n * 1.25
     return (
       <g key={a + b} className={s.edgeG} data-dim={dim || undefined}>
         <line x1={x1} y1={y1} x2={x2} y2={y2}
-          stroke={on ? ACCENT : PLUM} strokeWidth={on ? 6 : dashed ? 2.5 : 3.5}
-          strokeDasharray={dashed ? '11.78 11.78' : undefined} opacity={dashed && !on ? 0.5 : 1} />
-        {dots.map(([x, y], k) => (
-          <circle key={k} cx={x} cy={y} r={on ? 11 : 9} fill={on ? ACCENT : CREAM}
-            stroke={on ? ACCENT : PLUM} strokeWidth="3" opacity={dashed && !on ? 0.6 : 1} />
-        ))}
+          stroke={on ? ACCENT : PLUM} strokeWidth={on ? w + 1.5 : w} strokeLinecap="round"
+          strokeDasharray={dashed ? '12 14' : undefined} opacity={dashed && !on ? 0.45 : 1} />
         {interactive && (
           <line x1={x1} y1={y1} x2={x2} y2={y2} stroke="transparent" strokeWidth="40" className={s.hit}
             onMouseEnter={() => onTension(i)} onClick={() => onTension(i)} />
@@ -158,11 +142,6 @@ function Stage({ view, onTension, interactive, moving, active, uid = 'gsm' }) {
             </g>
           )
         })}
-        {Object.entries(VOICE).map(([id, v]) => (
-          <text key={id} className={s.voice} x={v.x} y={v.y} textAnchor={v.a} fill={PLUM}>
-            {v.t.map((l, i) => <tspan key={l} x={v.x} dy={i ? 32 : 0}>{l}</tspan>)}
-          </text>
-        ))}
       </g>
 
       {/* the four circles: they persist and move between the maps */}
@@ -236,8 +215,8 @@ export default function SheetMaps() {
       <div className={s.caption} aria-live="polite">
         {T ? (
           <>
-            <p className={s.capTitle}>{NAME[T.a]} <span>×</span> {NAME[T.b]} <em>· {T.items.length} scenarios</em></p>
-            <ul className={s.capList}>{T.items.map((q) => <li key={q}>“{q}”</li>)}</ul>
+            <p className={s.capTitle}><span className={s.capKicker}>What staff said</span>{NAME[T.a]} × {NAME[T.b]}</p>
+            <ul className={s.capList} data-n={T.items.length}>{T.items.map((q) => <li key={q}>{q}</li>)}</ul>
           </>
         ) : <p className={s.capText}>{VIEWS[view].caption}</p>}
       </div>

@@ -67,20 +67,59 @@
 .navWide { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; }
 
 /* one caption area: the view's sentence, or the tension's voices */
-.caption { min-height: 3.4em; margin: 0.9rem 0.5rem 0.25rem; color: var(--color-ink); }
+.caption { min-height: 8.5em; margin: 0.9rem 0.5rem 0.25rem; color: var(--color-ink); }
 .capText { margin: 0; font-family: var(--font-body); font-size: var(--step-small); line-height: 1.6; text-wrap: pretty; }
-.capTitle { margin: 0 0 0.6rem; font-family: var(--font-heading); font-size: var(--step-body); }
-.capTitle span { opacity: 0.6; }
-.capTitle em { font-family: var(--font-body); font-size: var(--step-label); font-style: normal; opacity: 0.8; }
-.capList { display: grid; gap: 0.55rem; margin: 0; padding: 0; list-style: none; }
+.capTitle {
+  display: flex;
+  align-items: baseline;
+  gap: 0.9rem;
+  margin: 0 0 0.85rem;
+  font-family: var(--font-heading);
+  font-size: var(--step-body);
+}
+
+.capKicker {
+  font-family: var(--font-body);
+  font-size: var(--step-label);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #E0A893;
+}
+
+/* the voices, side by side, one column each */
+.capList {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1.25rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (min-width: 800px) {
+  .capList[data-n='2'] { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .capList[data-n='3'] { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
 .capList li {
-  padding-left: 0.9rem;
-  border-left: 2px solid #E0A893;
+  position: relative;
+  padding-top: 1.4rem;
   font-family: var(--font-heading);
   font-size: var(--step-small);
-  font-style: italic;
   line-height: 1.5;
   text-wrap: pretty;
+}
+
+.capList li::before {
+  content: '“';
+  position: absolute;
+  top: -0.35rem;
+  left: 0;
+  font-family: var(--font-heading);
+  font-size: 2.6rem;
+  line-height: 1;
+  color: #E0A893;
 }
 
 /* focus on one tension: everything else steps back */
