@@ -293,9 +293,12 @@ export default function ProjectSheet({
     const prevBody = document.body.style.overflow
     root.style.overflow = 'hidden'
     document.body.style.overflow = 'hidden'
+    /* FS292: the nav reads this to step its name out of the open tab's way */
+    root.dataset.sheetOpen = 'true'
     document.addEventListener('keydown', onKey, true)
     return () => {
       normalizer?.enable()
+      delete root.dataset.sheetOpen
       root.style.overflow = prevRoot
       document.body.style.overflow = prevBody
       document.removeEventListener('keydown', onKey, true)
