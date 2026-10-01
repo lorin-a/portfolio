@@ -247,12 +247,11 @@ export const groundswell = {
          that used to lead this gallery moved to the dashboard, where it
          belongs. */
       media: {
-        stills:   [
-          { key: 'gs-cards',      alt: 'Hands sorting the Groundswell Reflection Cards on a table.' },
-          { key: 'gs-mockups-43', alt: 'Reading the back of the exhausted card.' },
-          { key: 'gs-mockups-50', alt: 'The reflection card deck spread across a table.' },
-          { type: 'video', key: 'gs-new-meditations', blur: true, alt: 'The mindfulness library in the data dashboard: listens for each meditation.' },
-        ],
+        /* FS192: the library is one row like the others: the phone and
+           the cards take the gallery slot (kitInWork). Its card photos
+           moved to Production behind the scenes; the dashboard's
+           meditation view already lives in the dashboard gallery. */
+        kitInWork: true,
         phone:    { key: 'gs-qr-library', alt: 'Scrolling the Groundswell digital library on a phone.' },
         /* FS144: the two recordings, as plain players in the text column
            (no longer inside the phone, which showed more than staff saw). */
@@ -386,6 +385,10 @@ export const groundswell = {
         { key: 'gs-making-build-05',     alt: 'Fitting the facade panels.' },
         { key: 'gs-making-build-02',     alt: 'Assembling the pod’s interior.' },
         { key: 'gs-making-install-01',   alt: 'Installing the pod in the hallway.' },
+        /* FS192: the library's card photos, moved here */
+        { key: 'gs-cards',      alt: 'Hands sorting the Groundswell Reflection Cards on a table.' },
+        { key: 'gs-mockups-43', alt: 'Reading the back of the exhausted card.' },
+        { key: 'gs-mockups-50', alt: 'The reflection card deck spread across a table.' },
         { key: 'gs-playtest-01',         alt: 'Setting out reflection cards beside the Groundswell signage for a playtest.' },
         { key: 'gs-playtest-03',         alt: 'Playtesting the pod with staff.' },
         { key: 'gs-finale',              alt: 'A hug in front of the art wall at the finale.' },
@@ -475,10 +478,11 @@ export const groundswell = {
         ],
       },
     ],
-    /* FS190: donors and funders get their own row, every name scannable */
-    footer: [
-      { title: 'Donors & Partners', names: ['NookPod, the pod structure', 'Schlage', 'Density', 'Fox Woodworks', 'Dixie&Grace', 'Z9 Machinings', 'EHC Industries', 'Deborah Linhart', 'Pamela Meadowcroft', 'Marge Petruska', 'Mark Baskinger'] },
-      { title: 'Funding', names: ['College of Fine Arts, CMU', 'UPMC Magee-Womens Hospital Medical Staff Fund', 'Paul D. Schurgot Foundation'] },
+    /* FS192: donors and funders compressed to one small paragraph
+       (everyone still named; official names exact) */
+    supporters: [
+      ['Donors and partners', 'NookPod (the pod structure), Schlage, Density, Fox Woodworks, Dixie&Grace, Z9 Machinings, EHC Industries, Deborah Linhart, Pamela Meadowcroft, Marge Petruska, and Mark Baskinger.'],
+      ['Funded by', 'the College of Fine Arts at CMU, the UPMC Magee-Womens Hospital Medical Staff Fund, and the Paul D. Schurgot Foundation.'],
     ],
     /* FS188: the closing thank-you removed at her request. */
   },

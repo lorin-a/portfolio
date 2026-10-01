@@ -603,6 +603,10 @@
   }
 }
 
+/* FS192: the behind-the-scenes gallery fills its frame, so it can take
+   a wider frame and spend less height */
+.mat[data-fit='cover'] { aspect-ratio: 16 / 9; }
+
 /* ══ BTS frames fill (FS150) ═══════════════════════════════════════════ */
 .mat[data-fit='cover'] .stageMedia {
   object-fit: cover;

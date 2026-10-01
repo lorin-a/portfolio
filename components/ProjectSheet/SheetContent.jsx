@@ -155,8 +155,14 @@ export default function SheetContent({ sheet, num, title, tagline, titleId }) {
             </div>
 
             <div className={styles.work}>
-              <SheetStage slides={slides} gated={c.gated}
-                onImage={c.gated ? null : openImage} label={`${c.name}, gallery`} />
+              {c.media?.kitInWork ? (
+                /* FS192: the library's pair takes the gallery slot */
+                <SheetLibraryKit phone={phone} listen={c.media?.listen}
+                  emotions={c.media?.gallery?.deck || c.media?.gallery?.emotions || []} />
+              ) : (
+                <SheetStage slides={slides} gated={c.gated}
+                  onImage={c.gated ? null : openImage} label={`${c.name}, gallery`} />
+              )}
             </div>
 
             {/* The deck: the phone (the digital library, with the poem
@@ -165,7 +171,7 @@ export default function SheetContent({ sheet, num, title, tagline, titleId }) {
             {/* FS149: the library as a matched pair of framed objects under
                 the gallery: the phone with its two recordings, and the
                 reflection cards one at a time. */}
-            {(c.media?.gallery || phone) && (
+            {(c.media?.gallery || phone) && !c.media?.kitInWork && (
               <div className={styles.band}>
                 <SheetLibraryKit phone={phone} listen={c.media?.listen}
                   emotions={c.media?.gallery?.deck || c.media?.gallery?.emotions || []} />
@@ -206,19 +212,21 @@ export default function SheetContent({ sheet, num, title, tagline, titleId }) {
         </section>
       )}
 
-      {/* BEHIND THE SCENES (FS131): two framed galleries, research and
-          production, side by side on 6 | 6. */}
+      {/* BEHIND THE SCENES (FS192): one gallery, research then production,
+          on the components' rail | work layout. */}
       {process.length > 0 && (
-        <section className={styles.process} data-reveal="0">
-          <h3 className={styles.processTitle}>{processTitle || 'Behind the scenes'}</h3>
-          <div className={styles.processRow}>
-            {process.map((ph) => (
-              <div key={ph.title} className={styles.phase}>
-                <span className={styles.phaseLabel}>{ph.title}</span>
-                <SheetStage slides={slidesFor({ stills: ph.images })} fit="cover"
-                  onImage={openImage} label={`${ph.title} gallery`} />
-              </div>
-            ))}
+        <section className={`${styles.component} ${styles.process}`} data-reveal="0">
+          <div className={styles.rail}>
+            <div className={styles.railInner}>
+              <h3 className={styles.componentName}>{processTitle || 'Behind the scenes'}</h3>
+              <p className={styles.componentBody}>
+                {process.map((ph) => `${ph.title} (${ph.images.length})`).join(', then ')}
+              </p>
+            </div>
+          </div>
+          <div className={styles.work}>
+            <SheetStage slides={slidesFor({ stills: process.flatMap((ph) => ph.images) })} fit="cover"
+              onImage={openImage} label="Behind the scenes gallery" />
           </div>
         </section>
       )}
@@ -246,14 +254,13 @@ export default function SheetContent({ sheet, num, title, tagline, titleId }) {
               {col.note && <p className={styles.thanksNote}>{col.note}</p>}
             </div>
           ))}
-          {acknowledgements.footer?.map((row, i) => (
-            <div key={row.title} className={styles.thanksRow} data-wide={i === 0 || undefined}>
-              <h4 className={styles.thanksColTitle}>{row.title}</h4>
-              <ul className={styles.thanksInline}>
-                {row.names.map((n) => <li key={n}>{n}</li>)}
-              </ul>
-            </div>
-          ))}
+          {acknowledgements.supporters && (
+            <p className={styles.thanksSupporters}>
+              {acknowledgements.supporters.map(([label, text]) => (
+                <span key={label}><strong className={styles.thanksSupLabel}>{label}</strong> {text} </span>
+              ))}
+            </p>
+          )}
           {acknowledgements.closing && <p className={styles.thanksClosing}>{acknowledgements.closing}</p>}
         </section>
       ) : credits.length > 0 && (() => {
