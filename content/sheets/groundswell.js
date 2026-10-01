@@ -432,6 +432,52 @@ export const groundswell = {
       'A senior staff member broke down in tears during a content review and revealed that she felt deeply hurt by the language surrounding the Ceased to Breathe email. It had been framed to us as a cold clinical protocol that lacked human touch. Unbeknownst to us, a person had created it: the very person in the room, reading our description of her work as a flaw. It was a thoughtful staff innovation, developed only as far as it could go while staying manageable in roles that were already drowning. We had been framing the system as a problem and a common enemy. What we needed instead was to highlight the immense strength, innovation, and support that had kept this system alive for decades.',
   },
 
+  /* ACKNOWLEDGEMENTS (FS187, 2026-10-01): replaces the three-column team
+     area. Source: the hidden Groundswell page's "In gratitude" section,
+     components/Groundswell/GroundswellContent.js:967 (her words, kept there
+     verbatim), revised to be concise at her request. Kendyl Grant added
+     from her FS93 clinical team. Dollar values left out while $30k vs $40k
+     is open. The `credits` above stay as the record. */
+  acknowledgements: {
+    intro: 'Groundswell was shaped by the voices of the oncology staff at UPMC Magee-Womens Hospital, who live this work every day.',
+    partners: 'A collaboration between Carnegie Mellon University’s School of Design, the University of Pittsburgh Schools of Medicine and Nursing, and the Gynecologic Oncology staff at UPMC Magee-Womens Hospital.',
+    columns: [
+      {
+        title: 'Leadership',
+        people: [
+          ['Kristin Hughes, MFA', 'Project Lead and Principal Investigator, CMU'],
+          ['Sarah E. Taylor, MD, PhD', 'Principal Investigator, UPMC Hillman Cancer Center'],
+          ['Grace Campbell, PhD, MSW, RN', 'Supervising Faculty, Duquesne University'],
+          ['Heidi Donovan, PhD, RN', 'Supervising Faculty, Pitt School of Nursing'],
+          ['Kendyl Grant', 'Director of Operations, Gynecologic Oncology, UPMC'],
+        ],
+      },
+      {
+        title: 'Design & Production',
+        people: [
+          ['Lorin Anderberg, MA', 'Design, development, research, production, coordination, donor outreach'],
+          ['Elijah Benzon, MA', 'Design, development, research, production'],
+          ['Kelly McDowell', 'Design, development, research'],
+          ['Robertus Sucahyo, MBA', 'Development, research'],
+          ['Greg Baltus, Hardware Assembly', 'Design, engineering, fabrication'],
+          ['Su Hong & Mia Jeong', 'Research assistants'],
+          ['Kevin Lorenzi', 'Photography'],
+        ],
+      },
+      {
+        title: 'Art, Donors & Funding',
+        people: [
+          ['Carolyn Gavin', 'Artwork, the visual thread through every component'],
+          ['Catherine Liggett & Mark Staley', 'Custom guided meditations and poetry'],
+          ['NookPod', 'The restorative pod structure'],
+          ['Ryan Thompson', 'Walnut tabletop, from wood donated by Eleanor Mackie Pigma'],
+        ],
+        note: 'With Fox Woodworks, Schlage, Density, Dixie&Grace, Z9 Machinings, EHC Industries, Deborah Linhart, Pamela Meadowcroft, Marge Petruska, and Mark Baskinger. Funded by the College of Fine Arts at CMU, the UPMC Magee-Womens Hospital Medical Staff Fund, and the Paul D. Schurgot Foundation.',
+      },
+    ],
+    closing: 'Groundswell grew from trust built over years between earlier cohorts, Professor Kristin Hughes, and UPMC staff. To everyone who helped bring it to life, thank you.',
+  },
+
   /* THE REFLECTION (FS164–FS186, 2026-10-01): replaces the old close
      cards on the sheet. Built in the lab (/projects/groundswell/close-lab),
      her pick C. Every card: mark · label · a from → to shift · three

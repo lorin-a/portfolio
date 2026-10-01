@@ -62,7 +62,7 @@ function useSheetReveal(rootRef) {
  * Gated media never enters the gallery.
  */
 export default function SheetContent({ sheet, num, title, tagline, titleId }) {
-  const { outcome, meta = [], frame = {}, components = [], close = {}, process = [], processTitle, credit, credits = [], reflection = [] } = sheet
+  const { outcome, meta = [], frame = {}, components = [], close = {}, process = [], processTitle, credit, credits = [], reflection = [], acknowledgements } = sheet
 
   /* The folder's images, flat and in reading order, for the overlay. */
   const images = useMemo(() => {
@@ -226,7 +226,29 @@ export default function SheetContent({ sheet, num, title, tagline, titleId }) {
       {/* THE TEAM (FS155): exactly three columns. The photography credit
           joins the design team's column and the partners line the clinical
           team's; funding stands alone. */}
-      {credits.length > 0 && (() => {
+      {/* ACKNOWLEDGEMENTS (FS187): everyone named, the artist included,
+          revised from the old Groundswell page’s “In gratitude” section. */}
+      {acknowledgements ? (
+        <section className={styles.thanks} data-reveal="0" aria-labelledby="sheet-thanks">
+          <div className={styles.thanksIntro}>
+            <h3 id="sheet-thanks" className={styles.thanksLabel}>Acknowledgements</h3>
+            <p className={styles.thanksLead}>{acknowledgements.intro}</p>
+            <p className={styles.thanksPartners}>{acknowledgements.partners}</p>
+          </div>
+          {acknowledgements.columns.map((col) => (
+            <div key={col.title} className={styles.thanksCol}>
+              <h4 className={styles.thanksColTitle}>{col.title}</h4>
+              <ul className={styles.thanksList}>
+                {col.people.map(([name, role]) => (
+                  <li key={name}><span className={styles.thanksName}>{name}</span><span className={styles.thanksRole}>{role}</span></li>
+                ))}
+              </ul>
+              {col.note && <p className={styles.thanksNote}>{col.note}</p>}
+            </div>
+          ))}
+          <p className={styles.thanksClosing}>{acknowledgements.closing}</p>
+        </section>
+      ) : credits.length > 0 && (() => {
         const find = (label) => credits.find(([k]) => k === label)
         const columns = [
           [find('Design Team'), credit && ['Photography', credit.replace(/^Photography by\s*/i, '').replace(/\.$/, '')]],
