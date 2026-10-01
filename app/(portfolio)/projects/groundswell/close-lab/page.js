@@ -3,6 +3,7 @@ import s from './page.module.css'
 import DarkTheme from './DarkTheme'
 import Triptych from './Triptych'
 import MotionLibrary from '@/components/ProjectSheet/SheetMotionLibrary'
+import { groundswell } from '@/content/sheets/groundswell'
 
 /* FS171 LAB (2026-10-01): the reflection, edited to what earns its place.
    Each card has one job and one budget: a statement, then at most three
@@ -88,12 +89,14 @@ export default function CloseLab() {
   return (
     <div className={`${sheet.inner} ${s.page}`}>
       <DarkTheme />
-      <p className={s.kicker}>Groundswell · FS212 lab · private</p>
+      <p className={s.kicker}>Groundswell · FS226 lab · private</p>
 
-      <section className={s.variant}>
-        <h2 className={s.labH}>The data dashboard, as an interaction library (FS212)</h2>
-        <MotionLibrary items={MOTION} />
-      </section>
+      {[['chapters', 'A · Chapter bar'], ['ladder', 'B · Depth ladder'], ['arrows', 'C · Arrows and dots'], ['toggle', 'D · Current toggle']].map(([nav, name]) => (
+        <section key={nav} className={s.variant} style={{ maxWidth: '54rem' }}>
+          <h2 className={s.labH}>{name}</h2>
+          <MotionLibrary nav={nav} items={groundswell.components.find((c) => c.key === 'dashboard').media.motion} />
+        </section>
+      ))}
 
       <section className={s.variant}>
         <h2 className={s.labH}>The reflection (shipped)</h2>

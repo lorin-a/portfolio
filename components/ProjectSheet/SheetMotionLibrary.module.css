@@ -133,3 +133,138 @@
   .progress[data-run] { animation: none; transform: scaleX(1); }
   .tab { transition: none; }
 }
+
+/* ══ FS226 navigation options (lab) ════════════════════════════════════ */
+
+/* A · chapter bar */
+.chapters { margin-top: var(--flow-1); }
+.chapterRow { display: flex; gap: 6px; }
+.chapter {
+  display: grid;
+  gap: 0.45rem;
+  min-width: 0;
+  min-height: 44px;
+  padding: 0.35rem 0 0;
+  border: 0;
+  background: none;
+  text-align: left;
+  color: var(--color-ink);
+  cursor: pointer;
+}
+.track {
+  position: relative;
+  display: block;
+  height: 4px;
+  overflow: hidden;
+  border-radius: 2px;
+  background: rgba(244, 241, 236, 0.18);
+}
+.chapter[aria-selected='true'] .track { background: rgba(197, 207, 166, 0.3); }
+.track .progress { left: 0; right: 0; bottom: 0; height: 100%; }
+.chapterView {
+  font-family: var(--font-body);
+  font-size: var(--step-label);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  line-height: 1.25;
+  text-wrap: balance;
+}
+@media (max-width: 599px) { .chapterView { font-size: 0.75rem; letter-spacing: 0.04em; } .chapterRow { gap: 4px; } }
+.chapter[aria-selected='true'] .chapterView { color: var(--color-sage); }
+.chapter:focus-visible { outline: 2px solid var(--color-sage); outline-offset: 3px; }
+.axis {
+  display: flex;
+  justify-content: space-between;
+  margin: 0.4rem 0 0;
+  font-family: var(--font-body);
+  font-size: var(--step-label);
+  color: var(--color-ink);
+  opacity: 0.85;
+}
+
+/* B · depth ladder */
+@media (min-width: 900px) {
+  .withLadder { display: grid; grid-template-columns: minmax(0, 1fr) 11rem; gap: var(--flow-2); align-items: start; }
+}
+.ladder { display: grid; gap: 0.35rem; margin: var(--flow-1) 0 0; padding: 0; list-style: none; }
+@media (min-width: 900px) { .ladder { margin: 0; } }
+.ladder li { padding-left: calc(var(--step, 0) * 0.9rem); }
+.rung {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.6rem;
+  align-items: baseline;
+  width: 100%;
+  min-height: 44px;
+  padding: 0.6rem 0.75rem;
+  overflow: hidden;
+  border: 0;
+  border-left: 2px solid rgba(244, 241, 236, 0.2);
+  background: none;
+  text-align: left;
+  color: var(--color-ink);
+  cursor: pointer;
+}
+.rung[aria-selected='true'] { border-left-color: var(--color-sage); background: rgba(197, 207, 166, 0.1); }
+.rung:focus-visible { outline: 2px solid var(--color-sage); outline-offset: 2px; }
+.rungNum { font-family: var(--font-body); font-size: var(--step-label); font-weight: 600; color: var(--color-sage); }
+.rungView { font-family: var(--font-heading); font-size: var(--step-small); }
+.rung .progress { left: 0; right: 0; bottom: 0; }
+.ladderAxis {
+  padding-top: 0.4rem;
+  font-family: var(--font-body);
+  font-size: var(--step-label);
+  color: var(--color-ink);
+  opacity: 0.85;
+}
+
+/* C · arrows and dots */
+.arrow {
+  position: absolute;
+  top: 50%;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  margin-top: -22px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(40, 34, 52, 0.72);
+  color: #f4f1ec;
+  cursor: pointer;
+}
+.arrow svg { width: 16px; height: 16px; }
+.prev { left: 12px; }
+.next { right: 12px; }
+.arrow:focus-visible { outline: 2px solid var(--color-sage); outline-offset: 3px; }
+.dots { display: flex; align-items: center; gap: 0.25rem; margin-top: var(--flow-1); }
+.dot {
+  position: relative;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+.dot::before {
+  content: '';
+  position: absolute;
+  inset: 9px;
+  border-radius: 50%;
+  border: 1.5px solid var(--color-ink);
+}
+.dot[aria-current]::before { background: var(--color-sage); border-color: var(--color-sage); }
+.dot:focus-visible { outline: 2px solid var(--color-sage); outline-offset: 0; border-radius: 50%; }
+.dotLabel {
+  margin-left: 0.5rem;
+  font-family: var(--font-body);
+  font-size: var(--step-label);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-ink);
+}
