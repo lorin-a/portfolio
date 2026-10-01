@@ -114,6 +114,27 @@
   color: var(--accent);
 }
 
+/* 2 · the shift (FS182): from → to, one line each side */
+.shift {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.1rem;
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: var(--step-statement);
+  line-height: 1.2;
+  color: var(--color-ink);
+}
+
+.shift > span:first-child { opacity: 0.6; }
+
+.arrow {
+  color: var(--accent);
+  font-family: var(--font-body);
+  line-height: 1;
+}
+
 /* 2 · the statement */
 .line {
   margin: 0;

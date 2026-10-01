@@ -33,7 +33,10 @@ export const metadata = {
 const CARDS = [
   {
     id: 'sense', verb: 'Sense', title: 'What I learned',
-    line: 'Honor staff-led innovation from the start, rather than imposing designer-led\u00a0solutions.',
+    /* FS182: arrows. Her “Start With What’s Working”, as a shift. Not her
+       “Designer Innovations → Community Wisdom”: it would say the same
+       thing as Shape’s Designer-Led → Community-Led. */
+    shift: ['What’s Broken', 'What’s Working'],
     list: [
       { head: 'Build Trust', text: 'With subject matter this emotional, the work had to speak to staff experience and earn trust across hierarchy before it could solve\u00a0anything.' },
       { head: 'Be Relational', text: 'Pre-existing relationships opened the door, and a transdisciplinary team of designers, clinicians, makers, artists, and donors kept it\u00a0moving.' },
@@ -42,7 +45,7 @@ const CARDS = [
   },
   {
     id: 'weave', verb: 'Weave', title: 'What I’ll carry forward',
-    line: 'Moving from theoretical to tangible design gave me practices I’ll\u00a0keep.',
+    shift: ['Theoretical', 'Tangible'],  /* hers, FS182 */
     list: [
       /* R Q3: “I specifically drafted the workshop to be trauma-informed and
          responsive by providing a worksheet for mindfulness and wellbeing
@@ -57,7 +60,7 @@ const CARDS = [
   },
   {
     id: 'shape', verb: 'Shape', title: 'What’s next',
-    line: 'The installation alone was never the solution; it was the starting\u00a0point.',
+    shift: ['Designer-Led', 'Community-Led'],  /* hers, FS182 */
     list: [
       { head: 'Build Capacity', text: 'With enough respite to stop drowning, staff could start the conversations their days rarely allowed and innovate together on\u00a0solutions.' },
       { head: 'Expand Engagement', text: 'Creative expression workshops drew strong turnout throughout the pilot, so programming will grow beyond the\u00a0installation.' },
@@ -71,7 +74,7 @@ export default function CloseLab() {
   return (
     <div className={`${sheet.inner} ${s.page}`}>
       <DarkTheme />
-      <p className={s.kicker}>Groundswell · FS181 lab · private</p>
+      <p className={s.kicker}>Groundswell · FS182 lab · private</p>
 
       <h2 className={s.labH}>The reflection</h2>
       <Triptych cards={CARDS} />
