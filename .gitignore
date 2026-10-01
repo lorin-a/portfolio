@@ -40,6 +40,9 @@ npm-debug.log*
 *.MOV
 *.mp4
 *.MP4
+# exception: the dashboard interaction clips (FS217–FS220), small web encodes
+# (under 1.5 MB each) served from /public; everything else stays external
+!public/video/gs-dashboard/view-*.mp4
 
 # Large audio files (use external hosting)
 *.mp3

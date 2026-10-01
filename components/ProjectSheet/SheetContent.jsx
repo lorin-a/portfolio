@@ -158,7 +158,7 @@ export default function SheetContent({ sheet, num, title, tagline, titleId }) {
             <div className={styles.work}>
               {c.media?.motion ? (
                 /* FS214: the dashboard as an interaction library */
-                <SheetMotionLibrary items={c.media.motion} intro={c.media.motionIntro} />
+                <SheetMotionLibrary items={c.media.motion} />
               ) : (
                 <SheetStage slides={slides} gated={c.gated}
                   onImage={c.gated ? null : openImage} label={`${c.name}, gallery`} />

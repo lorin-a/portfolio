@@ -328,31 +328,28 @@ export const groundswell = {
            silent loops recorded from the live dashboard, each a different
            meeting of qual and quant, numbers frosted throughout. The
            blurred recordings below stay as the fallback record. */
-        /* FS216: her thesis (her words, 2026-10-01, lightly edited): “we
-           believe data are stories and that when qual and quant work
-           together they tell a more holistic story. This dashboard was
-           designed to increase details with deeper engagement and serve
-           multiple stakeholders. On first glance it shows the overview,
-           interaction reveals more details, and there are more traditionally
-           quantitative graphics to communicate to scientifically minded
-           stakeholders, and the general public alike.” Purposes are drafts,
-           hers to edit. Kendyl's spreadsheet quote: not found on file; slot
-           waits for her to paste it. */
-        motionIntro: 'Data are stories, and when qualitative and quantitative work together they tell a more holistic one. The dashboard deepens with engagement to serve every stakeholder: an overview at first glance, details on interaction, and traditional charts for scientific minds and the public\u00a0alike.',
+        /* FS217–FS220: four views recorded to match their depth, each cut
+           at the first frame its visualization draws. Her thesis moved to
+           the rail (the component body, FS217). Captions are drafts. */
         motion: [
-          { depth: 'At a glance', audience: 'For everyone', title: 'Arrange the feelings', duration: 13.3, src: '/video/gs-dashboard/4-arrange-the-feelings.mp4', poster: '/video/gs-dashboard/4-arrange-the-feelings.jpg',
-            purpose: 'The overview anyone can take in. On the unit’s display, each emotion is a watercolor sized by how often staff chose it, with no chart to\u00a0decode.' },
-          { depth: 'With a tap', audience: 'For the curious', title: 'Size, then stories', duration: 17.9, src: '/video/gs-dashboard/1-size-to-stories.mp4', poster: '/video/gs-dashboard/1-size-to-stories.jpg',
-            purpose: 'Interaction reveals the people behind the numbers: a tap on any emotion opens the handwritten words that make up its\u00a0count.' },
-          { depth: 'In depth', audience: 'For scientific stakeholders', title: 'Filter the patterns', duration: 18.5, src: '/video/gs-dashboard/2-filter-the-patterns.mp4', poster: '/video/gs-dashboard/2-filter-the-patterns.jpg',
-            purpose: 'The same data as a traditional timeline. Toggling session lengths isolates how staff actually used the\u00a0pod.' },
-          { depth: 'In depth', audience: 'For scientific stakeholders', title: 'How six measures moved', duration: 14.3, src: '/video/gs-dashboard/3-words-and-data.mp4', poster: '/video/gs-dashboard/3-words-and-data.jpg',
-            purpose: 'Six validated measures as small multiples on one shared scale, so change reads at a glance. Values are blurred while the study is under\u00a0review.' },
+          { view: 'At a glance', audience: 'For everyone', duration: 7.4, src: '/video/gs-dashboard/view-glance.mp4', poster: '/video/gs-dashboard/view-glance.jpg',
+            caption: 'Each emotion blooms as a watercolor, sized by how often staff chose it: an overview with no chart to\u00a0decode.' },
+          { view: 'With a tap', audience: 'For the curious', duration: 6.0, src: '/video/gs-dashboard/view-tap.mp4', poster: '/video/gs-dashboard/view-tap.jpg',
+            caption: 'One tap opens the handwritten words behind a count, so no number stands apart from the people who made\u00a0it.' },
+          { view: 'In depth', audience: 'For researchers and administrators', duration: 9.1, src: '/video/gs-dashboard/view-depth.mp4', poster: '/video/gs-dashboard/view-depth.jpg',
+            caption: 'A traditional timeline of pod use; toggling session lengths isolates how staff actually used the\u00a0space.' },
+          { view: 'Over time', audience: 'For researchers and administrators', duration: 6.0, src: '/video/gs-dashboard/view-time.mp4', poster: '/video/gs-dashboard/view-time.jpg',
+            caption: 'Six validated measures drawn as small multiples on one scale, values blurred while the study is under\u00a0review.' },
         ],
       },
       name: 'The data dashboard',
-      body: /* FS158: present tense like the other four components; the doubled “translated” fixed. Before: "An interactive platform that translated the data collected from each component into an immersive storytelling experience that translated lived experience into actionable metrics. It combined qualitative and quantitative findings in one place, showcasing the importance of telling a well-rounded story." */
-      'An interactive platform that turns the data collected from each component into an immersive story, translating lived experience into actionable metrics. It brings qualitative and quantitative findings together in one place to tell a well\u2011rounded story.',  /* non-breaking hyphen: the compound never splits across the last line */
+      /* FS217: her thesis (FS216, her words lightly edited) moves here from
+         above the player. The previous body, kept: "An interactive platform
+         that turns the data collected from each component into an immersive
+         story, translating lived experience into actionable metrics. It
+         brings qualitative and quantitative findings together in one place
+         to tell a well-rounded story." */
+      body: 'Data are stories, and when qualitative and quantitative work together they tell a more holistic one. The dashboard deepens with engagement to serve every stakeholder: an overview at first glance, details on interaction, and traditional charts for scientific minds and the public\u00a0alike.',
       /* FS140, PROVISIONAL: her notes, phrased from the dashboard repo
          (~/Desktop/groundswell-digital-wall-with-admin, 226 commits,
          2026-01-21 → 2026-07-22). Verified terms: Next.js/React on Vercel,

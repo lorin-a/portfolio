@@ -1,15 +1,68 @@
-/* FS216: the dashboard playlist. Sheet tokens throughout. */
+/* FS220: the dashboard player. A segmented toggle (the dashboard's own
+   lens-switch idiom), the clip, one caption. Sheet tokens throughout. */
 
-.tour { min-width: 0; }
+.player { min-width: 0; }
 
-/* the thesis, in her words */
-.intro {
-  margin: 0 0 var(--flow-2);
-  font-family: var(--font-heading);
-  font-size: var(--step-body);
-  line-height: 1.45;
+.toggle {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-bottom: var(--flow-1);
+  padding: 4px;
+  border-radius: 999px;
+  background: rgba(244, 241, 236, 0.07);
+  box-shadow: inset 0 0 0 1px rgba(244, 241, 236, 0.14);
+}
+
+.tab {
+  position: relative;
+  overflow: hidden;
+  min-height: 40px;
+  padding: 0 1.1rem;
+  border: 0;
+  border-radius: 999px;
+  background: none;
+  font-family: var(--font-body);
+  font-size: var(--step-small);
   color: var(--color-ink);
-  text-wrap: pretty;
+  cursor: pointer;
+  transition: background var(--motion-fast) var(--ease-out), color var(--motion-fast) var(--ease-out);
+}
+
+@media (hover: hover) {
+  .tab:not([aria-selected='true']):hover { background: rgba(244, 241, 236, 0.08); }
+}
+
+.tab[aria-selected='true'] {
+  background: var(--color-ink);
+  color: var(--color-cream);
+  font-weight: 600;
+}
+
+.tab:focus-visible {
+  outline: 2px solid var(--color-sage);
+  outline-offset: 2px;
+}
+
+/* a hairline inside the selected pill fills as its view plays */
+.progress {
+  position: absolute;
+  left: 18%;
+  right: 18%;
+  bottom: 5px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--color-sage);
+  transform-origin: left;
+  transform: scaleX(0);
+  opacity: 0.9;
+}
+
+.progress[data-run] { animation: fill var(--dur) linear forwards; }
+
+@keyframes fill {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
 }
 
 .frame {
@@ -60,28 +113,10 @@
   outline-offset: 3px;
 }
 
-/* what is playing, and why */
-.now {
-  margin-top: var(--flow-2);
-  padding-top: var(--flow-1);
-  border-top: 1px solid var(--sheet-hair);
-  min-height: 4.6em;   /* steady height as the text changes */
-}
-
-.nowDepth {
-  margin: 0 0 0.25rem;
-  font-family: var(--font-body);
-  font-size: var(--step-label);
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--color-sage);
-}
-
-.nowDepth span { color: var(--color-ink); }
-
-.purpose {
-  margin: 0;
+/* the one caption */
+.caption {
+  min-height: 3.2em;   /* steady as the text changes */
+  margin: var(--flow-1) 0 0;
   font-family: var(--font-body);
   font-size: var(--step-small);
   line-height: 1.6;
@@ -89,124 +124,12 @@
   text-wrap: pretty;
 }
 
-/* the playlist */
-.hint {
-  margin: var(--flow-1) 0 0.5rem;
-  font-family: var(--font-body);
-  font-size: var(--step-label);
+.who {
   font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--color-ink);
-}
-
-.cards {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0.75rem;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-@media (min-width: 700px) {
-  .cards { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-}
-
-.card {
-  display: grid;
-  gap: 0.3rem;
-  width: 100%;
-  padding: 0;
-  border: 0;
-  background: none;
-  text-align: left;
-  color: var(--color-ink);
-  cursor: pointer;
-}
-
-.thumb {
-  position: relative;
-  display: block;
-  overflow: hidden;
-  border-radius: 3px;
-  aspect-ratio: 16 / 10;
-  box-shadow: inset 0 0 0 1px rgba(244, 241, 236, 0.18);
-}
-
-.thumb img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform var(--motion-fast) var(--ease-out);
-}
-
-.card[aria-current] .thumb {
-  box-shadow: 0 0 0 2px var(--color-sage);
-}
-
-@media (hover: hover) {
-  .card:hover .thumb img { transform: scale(1.04); }
-}
-
-.card:focus-visible { outline: none; }
-.card:focus-visible .thumb { box-shadow: 0 0 0 2px var(--color-sage), 0 0 0 5px rgba(197, 207, 166, 0.35); }
-
-.mark {
-  position: absolute;
-  left: 8px;
-  bottom: 8px;
-  display: grid;
-  place-items: center;
-  min-width: 28px;
-  height: 28px;
-  padding: 0 8px;
-  border-radius: 999px;
-  background: rgba(40, 34, 52, 0.82);
-  color: #f4f1ec;
-  font-family: var(--font-body);
-  font-size: var(--step-label);
-  font-weight: 600;
-  letter-spacing: 0.04em;
-}
-
-.mark svg { width: 11px; height: 11px; margin-left: 1px; }
-
-.progress {
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  height: 3px;
-  width: 100%;
-  background: var(--color-sage);
-  transform-origin: left;
-  transform: scaleX(0);
-}
-
-.progress[data-run] { animation: fill var(--dur) linear forwards; }
-
-@keyframes fill {
-  from { transform: scaleX(0); }
-  to { transform: scaleX(1); }
+  color: var(--color-sage);
 }
 
 @media (prefers-reduced-motion: reduce) {
   .progress[data-run] { animation: none; transform: scaleX(1); }
-  .thumb img { transition: none; }
-}
-
-.cardDepth {
-  font-family: var(--font-body);
-  font-size: var(--step-label);
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--color-sage);
-}
-
-.cardTitle {
-  font-family: var(--font-heading);
-  font-size: var(--step-small);
-  line-height: 1.3;
+  .tab { transition: none; }
 }
