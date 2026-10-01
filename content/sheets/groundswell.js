@@ -28,7 +28,8 @@ export const groundswell = {
      improved throughout the study, indicating a core problem around
      institutional trust and support from administration." */
   outcome:
-    'Staff used every component throughout the pilot. Senior staff who began as skeptics shed tears at launch, admin committed to keep it running, coworkers walked a colleague in distress to the pod, and other departments expressed interest.',
+    /* FS158 copy edit: “admin committed to keep” → administration committed to keeping. */
+    'Staff used every component throughout the pilot. Senior staff who began as skeptics shed tears at launch, administration committed to keeping it running, coworkers walked a colleague in distress to the pod, and other departments expressed interest.',
 
   /* THE COVER'S PRINTS: four photographs in a loose pile beside the name
      (her notes FS57–FS67). Chosen for range across the project: the place,
@@ -114,7 +115,17 @@ export const groundswell = {
        than a claim over a team's work. The two statements are not in tension
        once the distinction is named. */
     role:
-      'Generative research, content copywriting, project management, fundraising (securing over $30k in donations), and the production and design of the data dashboard. I found the Groundswell name after doing a lot of research on nature metaphors and oncology symbolism. I drafted workshop scripts and led facilitation of the grief workshop, and specifically drafted it to be trauma-informed and responsive so as not to be extractive in collecting emotional data. I applied my knowledge of somatic bodywork to draft the reflection cards. We all participated in collective feedback, strategizing, prototyping, but I did not own any specific component. The exception is the data dashboard, which I led: production and design.',
+      /* FS158 copy edit (tense and structure; “fundraising … $30k” untouched,
+       still hers to settle). Before: "…I found the Groundswell name after
+       doing a lot of research on nature metaphors and oncology symbolism. I
+       drafted workshop scripts and led facilitation of the grief workshop,
+       and specifically drafted it to be trauma-informed and responsive so as
+       not to be extractive in collecting emotional data. I applied my
+       knowledge of somatic bodywork to draft the reflection cards. We all
+       participated in collective feedback, strategizing, prototyping, but I
+       did not own any specific component. The exception is the data
+       dashboard, which I led: production and design." */
+      'Generative research, content copywriting, project management, fundraising (securing over $30k in donations), and the production and design of the data dashboard. I found the Groundswell name through research into nature metaphors and oncology symbolism. I drafted the workshop scripts and led the grief workshop, designing it to be trauma-informed and responsive so it would not be extractive in collecting emotional data. I applied my knowledge of somatic bodywork to draft the reflection cards. We all took part in feedback, strategy, and prototyping, and I did not own any one component. The exception was the data dashboard, whose production and design I led.',
 
     /* SHORT VERSIONS for the three-column row (her note FS33, 2026-09-30:
        "shorten text to all match (lorin will edit later)"). PROVISIONAL.
@@ -124,7 +135,8 @@ export const groundswell = {
     short: {
       /* Her copy 2026-09-30 (FS107), verbatim. */
       why:
-        'Groundswell is a 9-month pilot program and quality improvement study designed to support the well-being of UPMC Magee-Womens Cancer Services staff by introducing resources that honor the emotional complexities of oncology care.',
+        /* FS158: “is a” → began as a (the pilot has ended; Groundswell keeps running) */
+        'Groundswell began as a 9-month pilot program and quality improvement study designed to support the well-being of UPMC Magee-Womens Cancer Services staff by introducing resources that honor the emotional complexities of oncology care.',
       /* Her copy 2026-09-30 (FS104). Copy edits, hers to reverse: “self care”
          → self-care; “wellbeing” → well-being (the site's spelling);
          “neglected from” → neglected in; a serial comma before the last
@@ -138,18 +150,18 @@ export const groundswell = {
         /* FS113 trim to match the project column's line count: “with staff” →
          cut; “to perform” → for; “of the difficulty of the work” → of the
          work’s difficulty. */
-        'Interviews and generative workshops across roles revealed the core thesis: care worker well-being is neglected in patient care standards. Staff need tangible and emotional support, permission for self-care, and acknowledgement of the work’s difficulty.',
+        'Interviews and generative workshops across roles revealed the core thesis: care worker well-being is neglected in patient care standards. Staff need tangible and emotional support, permission for self-care, and acknowledgement of the work’s difficulty.',  /* FS158: kept in the present, a standing finding like “is neglected”; “needed” pushed this column a line past its pair */
     },
 
     /* FS141, PROVISIONAL: the dashboard, expanded, in her first person to
        match the paragraph above; every term verified in the dashboard repo
        (see the dashboard component's FS140 note). Hers to edit. */
     roleMore:
-      'For the data dashboard, I designed and built a full-stack site with Claude Code: a Next.js front end with Three.js watercolor views, a Neon PostgreSQL database, and three pipelines that normalize research assistants’ transcriptions of the handwritten art wall responses, pull live sessions from the pod’s Density occupancy sensor, and sync listening data from the YouTube Analytics API. I built a password-protected admin hub for uploads and review, audited the pod data with Density’s team after finding their API was dropping real visits, ran an accessibility audit, and wrote the methodology documentation.',
+      'For the data dashboard, I designed and built a full-stack site with Claude Code: a Next.js front end with Three.js watercolor views, a Neon PostgreSQL database, and three pipelines that normalize research assistants’ transcriptions of the handwritten art wall responses, pull live sessions from the pod’s Density occupancy sensor, and sync listening data from the YouTube Analytics API. I built a password-protected admin hub for uploads and review, audited the pod data with Density’s team after finding that their API dropped real visits, ran an accessibility audit, and wrote the methodology documentation.',
 
     /* Her copy 2026-08-27, verbatim. */
     partners:
-      'A collaboration between Carnegie Mellon School of Design, the University of Pittsburgh Schools of Medicine and Nursing, and UPMC Magee-Womens Hospital Gynecologic Oncology with assistance from the UPP Department of OBGYN and Women’s Health.',
+      'A collaboration between Carnegie Mellon School of Design, the University of Pittsburgh Schools of Medicine and Nursing, and UPMC Magee-Womens Hospital Gynecologic Oncology, with assistance from the UPP Department of OBGYN and Women’s Health.',
   },
 
   /* THE COMPONENTS. All her copy 2026-08-27, verbatim, with her own "Redo"
@@ -182,7 +194,8 @@ export const groundswell = {
          worked with Claude Code to translate hand-written data collected by
          research assistants into the interactive dashboard." */
       /* FS139: her FS134 line, recast without “I” */
-      mine: 'Brand copywriting, with language drawn from the research and collaborations, and translation of handwritten data collected by research assistants into the interactive dashboard, built with Claude Code.',
+      /* FS158: one series, no nested commas. Before: "Brand copywriting, with language drawn from the research and collaborations, and translation of handwritten data collected by research assistants into the interactive dashboard, built with Claude Code." */
+      mine: 'Brand copywriting drawn from the research and collaborations, and translation of research assistants’ handwritten data into the interactive dashboard, built with Claude Code.',
     },
     {
       key: 'pod',
@@ -212,7 +225,8 @@ export const groundswell = {
       /* FS138: “over $40k value in donations” → material and service
          donations (no money changed hands). */
       /* FS139: her FS136/FS138 line, recast without “I” */
-      mine: 'Securing the material and service donations and partnerships that built the pod: the pod structure, finger labyrinths, woodworking, Schlage locks, Density sensor hardware and software, and a meditation teacher to co-write and record the custom meditations.',
+      /* FS158: noun-led like the other four. Before: "Securing the material and service donations and partnerships that built the pod: the pod structure, …" */
+      mine: 'Material and service donations and partnerships secured to build the pod: its structure, finger labyrinths, woodworking, Schlage locks, Density sensor hardware and software, and a meditation teacher to co-write and record the custom meditations.',
     },
     {
       key: 'library',
@@ -262,7 +276,8 @@ export const groundswell = {
                     note: 'Four of the nine reflection cards. Turn one over for its somatic exercise.' },
       },
       name: 'Groundswell Mindfulness Library',
-      body: 'A digital library of mindfulness resources including guided meditations of varying lengths, the Groundswell poem, and calming instrumentals. Groundswell Reflection Cards are part of the library: a deck of guided reflection cards designed to help healthcare staff identify and process the complex emotions of caregiving work. Each card offers emotional validation, simple somatic exercises for nervous system regulation, and conversation starters for meaningful dialogue about well-being.',
+      body: /* FS158: a comma before “including”; “The” before the cards; the repeated “reflection cards” cut. */
+      'A digital library of mindfulness resources, including guided meditations of varying lengths, the Groundswell poem, and calming instrumentals. The Groundswell Reflection Cards are part of the library: a guided deck designed to help healthcare staff identify and process the complex emotions of caregiving work. Each card offers emotional validation, simple somatic exercises for nervous system regulation, and conversation starters for meaningful dialogue about well-being.',
       /* Her copy 2026-09-30 (FS137). Copy edits: typos (“fpr”, “preprared”);
          “micro-site” → microsite; “the” before YouTube channel; a closing
          period. Original: "I applied my knowledge of somatic bodywork to
@@ -272,7 +287,8 @@ export const groundswell = {
          instrumentals, designed the micro-site and preprared YouTube
          channel" */
       /* FS139: her FS137 line, recast without “I” */
-      mine: 'Copy for the reflection cards, poem, and custom meditation, grounded in somatic bodywork; coordination with meditation teachers to write and record additional custom meditations; selection of the featured instrumentals; and design of the microsite and YouTube channel.',
+      /* FS158. Before: "…coordination with meditation teachers to write and record additional custom meditations; selection of the featured instrumentals; and design of the microsite and YouTube channel." */
+      mine: 'Copy for the reflection cards, poem, and custom meditation, grounded in somatic bodywork; coordination of meditation teachers who wrote and recorded more custom meditations; curation of the instrumentals; and design of the microsite and YouTube channel.',
       /* Her build request, 2026-08-27: "I want to embed a player for the poem
          as an interactive component." Not built yet. */
       wants: 'An embedded player for the Groundswell poem.',
@@ -290,9 +306,18 @@ export const groundswell = {
         ],
       },
       name: 'Ceased to Breathe (CTB) Email Template',
-      body: 'The updated Ceased to Breathe (CTB) email template builds upon the firm foundation of existing staff-led support initiatives for patient death notifications by softening the emotional tone of delivering devastating news. The addition of empathetic language and comforting visuals creates a communal space where the emotional realities of oncology work can be acknowledged, shared, and honored by recognizing both the professional and personal impact of patient loss.',
+      body: /* FS158 copy edit, tightened. Before: "The updated Ceased to Breathe
+         (CTB) email template builds upon the firm foundation of existing
+         staff-led support initiatives for patient death notifications by
+         softening the emotional tone of delivering devastating news. The
+         addition of empathetic language and comforting visuals creates a
+         communal space where the emotional realities of oncology work can be
+         acknowledged, shared, and honored by recognizing both the
+         professional and personal impact of patient loss." */
+      'The updated Ceased to Breathe (CTB) email template builds on the firm foundation of an existing staff-led practice for patient death notifications, softening the tone of devastating news. Empathetic language and comforting visuals make it a communal space where the emotional realities of oncology work can be acknowledged, shared, and honored, recognizing both the professional and personal impact of patient loss.',
       /* FS139: her copy, verbatim (FS139) */
-      mine: 'Copy and template drafting, creation of onboarding materials for staff, and coordination and troubleshooting with key stakeholders in the hospital.',
+      /* FS158: her FS139 line, “creation of” cut and the last item tightened. Before: "Copy and template drafting, creation of onboarding materials for staff, and coordination and troubleshooting with key stakeholders in the hospital." */
+      mine: 'Copy and template drafting, onboarding materials for staff, and coordination and troubleshooting with key hospital stakeholders.',
     },
     {
       key: 'dashboard',
@@ -307,7 +332,8 @@ export const groundswell = {
         ],
       },
       name: 'The data dashboard',
-      body: 'An interactive platform that translated the data collected from each component into an immersive storytelling experience that translated lived experience into actionable metrics. It combined qualitative and quantitative findings in one place, showcasing the importance of telling a well-rounded story.',
+      body: /* FS158: present tense like the other four components; the doubled “translated” fixed. Before: "An interactive platform that translated the data collected from each component into an immersive storytelling experience that translated lived experience into actionable metrics. It combined qualitative and quantitative findings in one place, showcasing the importance of telling a well-rounded story." */
+      'An interactive platform that turns the data collected from each component into an immersive story, translating lived experience into actionable metrics. It brings qualitative and quantitative findings together in one place to tell a well\u2011rounded story.',  /* non-breaking hyphen: the compound never splits across the last line */
       /* FS140, PROVISIONAL: her notes, phrased from the dashboard repo
          (~/Desktop/groundswell-digital-wall-with-admin, 226 commits,
          2026-01-21 → 2026-07-22). Verified terms: Next.js/React on Vercel,
@@ -321,7 +347,8 @@ export const groundswell = {
          methodology PDF with an AI disclosure, a stakeholder summary page,
          a staff surveys view, CSV export. */
       /* FS141: concise; the detail moved to “My role, in full” (roleMore). */
-      mine: 'Full-stack design and development with Claude Code: three live data pipelines, a PostgreSQL backend, and an admin hub; a data audit with Density’s engineers; playtests and co-design of the results visual with clinical staff.',
+      /* FS158: the same X, Y, and Z series as the other four. Before: "Full-stack design and development with Claude Code: three live data pipelines, a PostgreSQL backend, and an admin hub; a data audit with Density’s engineers; playtests and co-design of the results visual with clinical staff." */
+      mine: 'Full-stack design and development with Claude Code (three live data pipelines, a PostgreSQL backend, and an admin hub), a data audit with Density’s engineers, and playtests and co-design of the results visual with clinical staff.',
       gated: true,
     },
   ],
@@ -372,15 +399,30 @@ export const groundswell = {
     /* FS116: the result sentence removed (no explicit study outcomes);
        the method stays. */
     outcomes:
-      'Our clinical partners ran pre, mid, and post surveys measuring six validated scales on workplace culture and wellbeing: Burnout frequency, Exhaustion/Dread, Turnover Intention, Compassion fatigue, Workplace Wellbeing, and Perceived Support.',
+      /* FS158: scale names in one case; “well-being” in the prose. Before: "Our clinical partners ran pre, mid, and post surveys measuring six validated scales on workplace culture and wellbeing: Burnout frequency, Exhaustion/Dread, Turnover Intention, Compassion fatigue, Workplace Wellbeing, and Perceived Support." */
+      'Our clinical partners ran pre-, mid-, and post-pilot surveys on six validated scales of workplace culture and well-being: Burnout Frequency, Exhaustion/Dread, Turnover Intention, Compassion Fatigue, Workplace Wellbeing, and Perceived Support.',
 
     qualitative:
-      'There is significant documented usage and participation: commitment to offer donations to keep it running, tears shed at launch by senior staff who were originally skeptical, stories of people using it regularly, a moment Dr. Taylor witnessed a staff member in distress and others flock around them and encourage them to go use the pod. Interest from other departments.',
+      /* FS158: one tense (past), the closing fragment made a sentence. Before: "There is significant documented usage and participation: commitment to offer donations to keep it running, tears shed at launch by senior staff who were originally skeptical, stories of people using it regularly, a moment Dr. Taylor witnessed a staff member in distress and others flock around them and encourage them to go use the pod. Interest from other departments." */
+      'Usage and participation were significant and documented: a commitment of donations to keep it running, tears at launch from senior staff who had been skeptical, stories of people using it regularly, and a moment when Dr. Taylor saw coworkers gather around a staff member in distress and encourage them to go to the pod. Other departments expressed interest.',
 
     /* Rehearsal Q6. The strongest thing in the corpus and the reason the
        project reads as credible rather than tidy. */
     takeaway:
-      'A senior staff member broke down into tears during a content review and revealed that she felt deeply hurt by the language surrounding the Ceased to Breathe email. It had been framed to us as a cold clinical protocol that lacked human touch. Unbeknownst to us, it was indeed created by a human, the very person in the room who was reading it as a flaw. This was a thoughtful staff innovation, developed only as far as it could be to stay manageable amid roles that are already drowning. We had been framing the system as a problem and a common enemy. What we needed to do instead was to highlight the immense strength, innovation, and support that was keeping this system alive for decades.',
+      /* FS158: one tense (past); “who was reading it as a flaw” clarified
+       to what happened in the content review (hers to check). Before: "A
+       senior staff member broke down into tears during a content review and
+       revealed that she felt deeply hurt by the language surrounding the
+       Ceased to Breathe email. It had been framed to us as a cold clinical
+       protocol that lacked human touch. Unbeknownst to us, it was indeed
+       created by a human, the very person in the room who was reading it as
+       a flaw. This was a thoughtful staff innovation, developed only as far
+       as it could be to stay manageable amid roles that are already
+       drowning. We had been framing the system as a problem and a common
+       enemy. What we needed to do instead was to highlight the immense
+       strength, innovation, and support that was keeping this system alive
+       for decades." */
+      'A senior staff member broke down in tears during a content review and revealed that she felt deeply hurt by the language surrounding the Ceased to Breathe email. It had been framed to us as a cold clinical protocol that lacked human touch. Unbeknownst to us, a person had created it: the very person in the room, reading our description of her work as a flaw. It was a thoughtful staff innovation, developed only as far as it could go while staying manageable in roles that were already drowning. We had been framing the system as a problem and a common enemy. What we needed instead was to highlight the immense strength, innovation, and support that had kept this system alive for decades.',
   },
 
   /* OPEN, and hers to settle. Logged here so none of it gets lost.
@@ -396,5 +438,15 @@ export const groundswell = {
         survey data." The six-scale results are survey data. CONFIRM WITH
         UPMC PARTNERS BEFORE THIS GOES PUBLIC. */
 }
+
+/* No orphans (FS158): text-wrap: pretty does not guarantee it, so every
+   paragraph's last two words are tied with a no-break space. */
+const tie = (t) => (typeof t === 'string' ? t.replace(/ (\S+)$/, '\u00a0$1') : t)
+groundswell.outcome = tie(groundswell.outcome)
+for (const k of ['why', 'research', 'role', 'roleMore', 'partners']) groundswell.frame[k] = tie(groundswell.frame[k])
+for (const k of ['why', 'research']) groundswell.frame.short[k] = tie(groundswell.frame.short[k])
+for (const c of groundswell.components) { c.body = tie(c.body); c.mine = tie(c.mine) }
+for (const k of ['outcomes', 'qualitative', 'takeaway']) groundswell.close[k] = tie(groundswell.close[k])
+groundswell.credits = groundswell.credits.map(([label, text]) => [label, tie(text)])
 
 export default groundswell
