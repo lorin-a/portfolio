@@ -5,7 +5,7 @@
 **What we're doing: THE GROUNDSWELL FOLDER SHEET, near final.** Branch `feat/folder-expand`,
 pushed to the PRIVATE mirror only (`git push private feat/folder-expand`; `origin` is public).
 See it: `npm run dev -- -p 3005`, scroll to Groundswell, **Open project** (hard-refresh).
-Ledger FS20–FS164 below. Final-touches round open from FS156.
+Ledger FS20–FS165 below. Final-touches round open from FS156.
 
 **Next move:** Lorin's final touches (her words: "I will make final touches tomorrow"). Take
 her notes one at a time, ledger-first.
@@ -189,6 +189,7 @@ funding, captions, card note).
 | FS162 | "Production": gs-playtest-01, gs-making-build-01 | ✅ SHIPPED: Production is now 11 photos. The build thumbs-up opens the build sequence (before the mural panel), and the art-wall playtest sits beside the pod playtest |
 | FS163 | "remove": gs-context-03, gs-workshop-flower-02 | ✅ SHIPPED: both gone from the folder sheet. The older Groundswell case-study pages still use them; untouched |
 | FS164 | "I do not like any of the close-lab examples. It feels far from my site-wide brand. If anything we coudl call back to sense weave shape icons?" (2026-10-01) | ⏳ RESEARCHING the brand marks |
+| FS165 | "Or if you redo what you did just make it SO simple like elegant minimalist straight to the point can understand it in 10 seconds" (2026-10-01) | ⏳ BUILDING with FS164: one lab version |
 
 ### ⟢ OPEN NOTES LEDGER — Folder sheet (2026-09-06, her verdict on the rebuilt sheet)
 
