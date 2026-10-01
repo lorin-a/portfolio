@@ -34,7 +34,9 @@
   opacity: 0.8;
 }
 
-/* ══ THE REFLECTION ═══════════════════════════════════════════════════ */
+/* ══ THE REFLECTION (FS183: four treatments, shared base) ════════════ */
+
+.variant { margin-bottom: var(--flow-4); }
 
 .close {
   display: grid;
@@ -65,29 +67,26 @@
 .card[data-practice='weave'] { --accent: var(--color-plum-soft); }
 .card[data-practice='shape'] { --accent: var(--color-terracotta-soft); }
 
-@media (min-width: 900px) {
+/* three across only when each card can hold its shift on one line */
+@media (min-width: 1100px) {
   .close {
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    grid-template-rows: auto auto 1fr;
+    grid-template-rows: auto 1fr;
     row-gap: 0;
   }
 
   .card {
     display: grid;
-    grid-row: span 3;
+    grid-row: span 2;
     grid-template-rows: subgrid;
     row-gap: 0;
     align-content: start;
   }
 }
 
-/* 1 · the header: the painted mark, then ONE label line */
 .head {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: var(--flow-2);
-  margin-bottom: var(--flow-2);
+  position: relative;
+  container-type: inline-size;  /* the shift sizes to this width */
 }
 
 .mark {
@@ -95,8 +94,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 3.5rem;
-  height: 3.5rem;
 }
 
 .label {
@@ -114,38 +111,27 @@
   color: var(--accent);
 }
 
-/* 2 · the shift (FS182): from → to, one line each side */
+/* the shift, always one line: sized to the card, never wraps */
 .shift {
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 0.1rem;
-  margin: 0;
+  align-items: baseline;
+  gap: 0.45em;
+  margin: var(--flow-1) 0 0;
   font-family: var(--font-heading);
-  font-size: var(--step-statement);
+  font-size: clamp(0.95rem, 5.9cqi, 1.625rem);  /* longest shift ≈ 16.5em wide */
   line-height: 1.2;
+  white-space: nowrap;
   color: var(--color-ink);
 }
 
-.shift > span:first-child { opacity: 0.6; }
+.from { opacity: 0.55; }
 
 .arrow {
   color: var(--accent);
   font-family: var(--font-body);
-  line-height: 1;
+  font-size: 0.9em;
 }
 
-/* 2 · the statement */
-.line {
-  margin: 0;
-  font-family: var(--font-heading);
-  font-size: var(--step-statement);
-  line-height: 1.3;
-  color: var(--color-ink);
-  text-wrap: balance;
-}
-
-/* 3 · two bullets */
 .list {
   margin: var(--flow-2) 0 0;
   padding: 0;
@@ -164,15 +150,6 @@
 
 .list li + li { margin-top: 0.85rem; }
 
-.bulletHead {
-  display: block;
-  margin-bottom: 0.15rem;
-  font-weight: 600;
-  color: var(--color-ink);
-}
-
-.bulletText { display: block; }
-
 .list li::before {
   content: '';
   position: absolute;
@@ -183,6 +160,82 @@
   border-radius: 50%;
   background: var(--accent);
 }
+
+.bulletHead {
+  display: block;
+  margin-bottom: 0.15rem;
+  font-weight: 600;
+}
+
+.bulletText { display: block; }
+
+.runHead {
+  font-weight: 600;
+  color: var(--accent);
+}
+
+/* A–C: the mark beside the label already names the practice, so the verb
+   word is for screen readers only there (it keeps the label on one line) */
+.va .verb,
+.vb .verb,
+.vc .verb {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* A · compact header: small mark + label on one row, shift beneath */
+.va .head {
+  display: grid;
+  grid-template-columns: 2.25rem 1fr;
+  column-gap: 0.75rem;
+  align-items: center;
+}
+
+.va .mark { width: 2.25rem; height: 2.25rem; }
+.va .shift { grid-column: 1 / -1; margin-top: var(--flow-2); }
+
+/* B · mark in the corner, out of the reading line */
+.vb .card { position: relative; }
+.vb .mark {
+  position: absolute;
+  top: calc(var(--flow-3) * -0.35);
+  right: calc(var(--flow-3) * -0.35);
+  width: 3rem;
+  height: 3rem;
+}
+.vb .head { padding-right: 3.25rem; }
+
+/* C · a tinted header band */
+.vc .card { padding: 0; overflow: hidden; }
+.vc .head {
+  display: grid;
+  grid-template-columns: 2.25rem 1fr;
+  column-gap: 0.75rem;
+  align-items: center;
+  padding: var(--flow-3) var(--flow-3) var(--flow-2);
+  background: color-mix(in srgb, var(--accent) 13%, transparent);
+}
+.vc .mark { width: 2.25rem; height: 2.25rem; }
+.vc .shift { grid-column: 1 / -1; margin-top: var(--flow-2); }
+.vc .list { margin: 0; padding: var(--flow-2) var(--flow-3) var(--flow-3); }
+
+@media (max-width: 599px) {
+  .vc .head { padding: var(--flow-2); }
+  .vc .list { padding: var(--flow-2); }
+}
+
+/* D · open columns, no boxes */
+.vd .card {
+  padding: 0;
+  background: none;
+  border: 0;
+  border-radius: 0;
+}
+.vd .mark { width: 3rem; height: 3rem; margin-bottom: var(--flow-2); justify-content: flex-start; }
 
 /* ══ ONE DECISION PER COMPONENT ═══════════════════════════════════════ */
 
