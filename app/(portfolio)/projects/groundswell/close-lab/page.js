@@ -5,7 +5,7 @@ import Triptych from './Triptych'
 import MotionLibrary from '@/components/ProjectSheet/SheetMotionLibrary'
 import ResearchStage from './ResearchStage'
 import SheetSynthesis from '@/components/ProjectSheet/SheetSynthesis'
-import SheetTetra from '@/components/ProjectSheet/SheetTetra'
+import SheetSystemMap from '@/components/ProjectSheet/SheetSystemMap'
 import { groundswell } from '@/content/sheets/groundswell'
 
 /* FS171 LAB (2026-10-01): the reflection, edited to what earns its place.
@@ -95,9 +95,9 @@ export default function CloseLab() {
       <p className={s.kicker}>Groundswell · FS238 lab · private</p>
 
       <section className={s.variant}>
-        <h2 className={s.labH}>The synthesis as a true tetrahedron (FS245)</h2>
-        <p className={s.labNote}>Drag to turn. The key on top isolates one layer and dims the rest; the panel reads it out. Select an edge in Tensions to read the scenarios staff described there.</p>
-        <SheetTetra />
+        <h2 className={s.labH}>The synthesis as a system map (FS246)</h2>
+        <p className={s.labNote}>Static and widescreen. Tap the map to view it full screen.</p>
+        <SheetSystemMap />
       </section>
 
       <section className={s.variant}>
