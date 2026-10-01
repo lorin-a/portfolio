@@ -5,7 +5,7 @@
 **What we're doing: THE GROUNDSWELL FOLDER SHEET, near final.** Branch `feat/folder-expand`,
 pushed to the PRIVATE mirror only (`git push private feat/folder-expand`; `origin` is public).
 See it: `npm run dev -- -p 3005`, scroll to Groundswell, **Open project** (hard-refresh).
-Ledger FS20–FS155 below: every note closed or answered.
+Ledger FS20–FS157 below. Final-touches round open from FS156.
 
 **Next move:** Lorin's final touches (her words: "I will make final touches tomorrow"). Take
 her notes one at a time, ledger-first.
@@ -180,6 +180,8 @@ funding, captions, card note).
 | FS153 | "Polaroids, better but I do not like how they just all go to the same spot, looks odd/repetitive. what could make it better and smoother?" (2026-10-01) | ✅ SHIPPED, answered: sending every chosen photo to one spot made each click identical, so the travel is gone. Now pick up and set down, in place: the clicked print lifts toward the viewer and straightens (760ms), then settles back on top of the pile where it lay at a fresh visible angle (1.2°–3.5°, either way), so the pile never looks the same twice and nothing slides across it. Verified over four clicks: each raised in its own place with a new angle, others untouched |
 | FS154 | "flip cards needs a centered bottom half, and should match the left side -- a title, etc." | ✅ SHIPPED: the two frames’ footers now match: a small title on each (“The digital library, as staff used it” / “The reflection cards”), then the content centred in whatever height the frame has, so the card frame’s bottom half is centred with no stranded gap; the poem player keeps its text left beside its button |
 | FS155 | "Lastly, the team/funding area needs realignment it should just be the 3 columns" | ✅ SHIPPED: the team area is exactly three columns on the grid: Design Team (+ Photography: Kevin Lorenzi) · Clinical Team (+ Partners: her collaboration line) · Funding. The loose second row is gone |
+| FS156 | "the click reaction of the polaroids where they bounce up and land is a litle too exaggerated, make it 50% less bouncey" (2026-10-01, final touches) | ✅ SHIPPED: the pick-up is half as big: it rises half as far (peak 14.6px, was 29), swells half as much (1.04, was 1.08) and only half-straightens before it settles at its new angle. Same 760ms timing. Also fixed what made it feel jumpier than it was: the print used to snap flat and drop out of its hover lift the instant it was clicked; it now starts from exactly where it sits. Measured frame by frame in Chrome at 1440 |
+| FS157 | (Claude’s observation, logged 2026-10-01; hers to decide) The Close pill overlaps sheet text when scrolled past it (e.g. covers part of the Funding credit) | ⏳ AWAITING HER CALL |
 
 ### ⟢ OPEN NOTES LEDGER — Folder sheet (2026-09-06, her verdict on the rebuilt sheet)
 

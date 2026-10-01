@@ -94,8 +94,10 @@ function Pile({ prints }) {
   const [order, setOrder] = useState(() => items.map((_, i) => i))   /* top first */
   const [tilt, setTilt] = useState(() => items.map(() => 0))
   const [lifting, setLifting] = useState(-1)
+  const [tiltFrom, setTiltFrom] = useState(0)   /* the angle it is picked up from */
   const raise = (i) => {
     if (order[0] === i) return
+    setTiltFrom(tilt[i])
     setOrder((o) => [i, ...o.filter((x) => x !== i)])
     setTilt((t) => t.map((v, k) => {
       if (k !== i) return v
@@ -115,7 +117,11 @@ function Pile({ prints }) {
           <button key={p.key} type="button" className={styles.print}
             data-pos={i} data-front={depth === 0 || undefined}
             data-lifting={lifting === i || undefined}
-            style={{ zIndex: lifting === i ? 20 : 10 - depth, '--tilt': `${tilt[i]}deg` }}
+            style={{
+              zIndex: lifting === i ? 20 : 10 - depth,
+              '--tilt': `${tilt[i]}deg`,
+              ...(lifting === i && { '--tilt-from': `${tiltFrom}deg` }),
+            }}
             onClick={() => raise(i)}
             aria-pressed={depth === 0}
             aria-label={depth === 0 ? `${p.alt} (on top)` : `Bring to the top: ${p.alt}`}>
