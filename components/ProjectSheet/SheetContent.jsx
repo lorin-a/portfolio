@@ -73,13 +73,14 @@ export default function SheetContent({ sheet, num, title, tagline, titleId }) {
       const src = sheetImg(key, 2000)
       if (src && !list.some((i) => i.key === key)) list.push({ key, alt: alt || '', src })
     }
+    slidesFor(sheet.system?.exhibit ? {} : sheet.system?.media).forEach((sl) => { if (sl.type === 'image') push(sl.key, sl.alt) })
     components.forEach((c) => {
       if (c.gated) return
       slidesFor(c.media).forEach((sl) => { if (sl.type === 'image') push(sl.key, sl.alt) })
     })
     process.forEach((ph) => ph.images.forEach((i) => push(i.key, i.alt)))
     return list
-  }, [components, process])
+  }, [components, process, sheet.system])
 
   const [lightboxAt, setLightboxAt] = useState(-1)
 
@@ -142,7 +143,13 @@ export default function SheetContent({ sheet, num, title, tagline, titleId }) {
               <p className={styles.componentBody}>{sheet.system.intro}</p>
             </div>
           </div>
-          <div className={styles.work}><SheetMaps /></div>
+          <div className={styles.work}>
+            {/* FS296: the three-map exhibit is Groundswell's; any other sheet
+                shows its own system media here in the standard gallery. */}
+            {sheet.system.exhibit === 'maps' ? <SheetMaps /> : (
+              <SheetStage slides={slidesFor(sheet.system.media)} onImage={openImage} label={`${sheet.system.label}, gallery`} />
+            )}
+          </div>
         </section>
       )}
 
@@ -190,7 +197,8 @@ export default function SheetContent({ sheet, num, title, tagline, titleId }) {
             {(c.media?.gallery || phone) && (
               <div className={styles.band}>
                 <SheetLibraryKit phone={phone} listen={c.media?.listen}
-                  emotions={c.media?.gallery?.deck || c.media?.gallery?.emotions || []} />
+                  emotions={c.media?.gallery?.deck || c.media?.gallery?.emotions || []}
+                  deckLabel={c.media?.gallery?.label} />
               </div>
             )}
           </section>

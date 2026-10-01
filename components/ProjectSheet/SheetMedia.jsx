@@ -4,17 +4,22 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import {
   cloudImg, cloudVideo, cloudAudio,
   GS_IMAGES, GS_VIDEOS, GS_AUDIO, GS_CARDS,
+  HOME_IMAGES, HOME_VIDEOS, OTHER_VIDEOS, WHELM_IMAGES, WHELM_VIDEOS, BIRTHSTORY_PHOTOS,
 } from '@/lib/cloudinary'
 import { useSharedAudio } from '@/lib/useSharedAudio'
 import { POEM_CREDIT } from '@/content/poems/groundswell'
 import GalleryNav from '@/components/GalleryNav/GalleryNav'
 import styles from './SheetMedia.module.css'
 
-/* Cloudinary keys resolve through the project's existing maps. A missing
-   key returns null and the piece of media is skipped rather than rendering
-   a broken box. */
-const img = (k, w) => (GS_IMAGES[k] ? cloudImg(GS_IMAGES[k], w) : null)
-const vid = (k, w) => (GS_VIDEOS[k] ? cloudVideo(GS_VIDEOS[k], w) : null)
+/* Cloudinary keys resolve through every project's map in lib/cloudinary.js
+   (FS296: so any project's sheet can use its own assets; Groundswell's own
+   maps win on a shared key). A media item may also name a Cloudinary
+   public ID directly with `id`. A missing key returns null and the piece
+   of media is skipped rather than rendering a broken box. */
+const IMAGES = { ...BIRTHSTORY_PHOTOS, ...WHELM_IMAGES, ...HOME_IMAGES, ...GS_IMAGES }
+const VIDEOS = { ...OTHER_VIDEOS, ...WHELM_VIDEOS, ...HOME_VIDEOS, ...GS_VIDEOS }
+const img = (k, w) => (IMAGES[k] ? cloudImg(IMAGES[k], w) : null)
+const vid = (k, w) => (VIDEOS[k] ? cloudVideo(VIDEOS[k], w) : null)
 const aud = (k) => (GS_AUDIO[k] ? cloudAudio(GS_AUDIO[k]) : null)
 
 /** Exported for the sheet's lightbox registry. */
@@ -31,9 +36,11 @@ export function slidesFor(media = {}) {
   const add = (item) => {
     if (!item || item.type === 'audio') return
     const type = item.type || 'image'
-    const src = type === 'video' ? vid(item.key, 1600) : img(item.key, 1800)
+    const src = item.id
+      ? (type === 'video' ? cloudVideo(item.id, 1600) : cloudImg(item.id, 1800))
+      : (type === 'video' ? vid(item.key, 1600) : img(item.key, 1800))
     if (!src) return
-    out.push({ key: item.key, type, alt: item.alt || '', src, blur: item.blur || false, focus: item.focus })
+    out.push({ key: item.key || item.id, type, alt: item.alt || '', src, blur: item.blur || false, focus: item.focus })
   }
   add(media.lead)
   media.also?.forEach(add)
@@ -358,7 +365,7 @@ export function SheetCardGallery({ gallery, phone }) {
  *   The cards: one reflection card at a time, large; in the footer, its
  *   name, a "Turn over" button, and the gallery controls through the deck.
  */
-export function SheetLibraryKit({ phone, listen = [], emotions = [] }) {
+export function SheetLibraryKit({ phone, listen = [], emotions = [], deckLabel = 'Reflection Cards' }) {
   return (
     <div className={styles.kit}>
       {phone && (
@@ -375,12 +382,12 @@ export function SheetLibraryKit({ phone, listen = [], emotions = [] }) {
           </figcaption>
         </figure>
       )}
-      {emotions.length > 0 && <CardStage emotions={emotions} />}
+      {emotions.length > 0 && <CardStage emotions={emotions} label={deckLabel} />}
     </div>
   )
 }
 
-function CardStage({ emotions }) {
+function CardStage({ emotions, label }) {
   const cards = emotions
     .map((name) => ({
       name,
@@ -403,7 +410,7 @@ function CardStage({ emotions }) {
   }
   return (
     <div className={`${styles.stage} ${styles.kitFrame}`} role="group"
-      aria-roledescription="card deck" aria-label="Groundswell Reflection Cards"
+      aria-roledescription="card deck" aria-label={label}
       onKeyDown={(e) => {
         if (e.key === 'ArrowRight') { e.preventDefault(); go(at + 1) }
         if (e.key === 'ArrowLeft') { e.preventDefault(); go(at - 1) }

@@ -106,6 +106,7 @@ export const groundswell = {
      culture change narrative”), refined per the standing copy rule. */
   system: {
     kicker: 'Synthesis',
+    exhibit: 'maps',   /* the three-map exhibit (SheetMaps) */
     label: 'Mapping the System',
     intro: 'The research pointed to a system, not a single problem, so we didn’t design a single intervention. We brought our strongest ideas together into one ecosystem, united by a shared narrative of culture change and working at several scales at once: practical support inside the workday, care beyond it, and the slower work of rebuilding relationships and communication across the unit.',
   },
@@ -272,7 +273,7 @@ export const groundswell = {
         /* Her note FS50: the two most-used cards, grateful and exhausted,
            show the dichotomy. They flank the phone: the library holds
            both ends of the feeling. */
-        gallery:  { kind: 'cards', faces: 'front-and-back',
+        gallery:  { kind: 'cards', faces: 'front-and-back', label: 'Groundswell Reflection Cards',
                     /* FS144: four cards, the lighter emotions left of the
                        phone and the heavier right, so the row reads as a
                        spectrum; grateful and exhausted (the most used) sit
