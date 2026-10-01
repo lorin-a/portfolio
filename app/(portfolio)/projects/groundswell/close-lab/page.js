@@ -43,7 +43,7 @@ const CARDS = [
     ],
   },
   {
-    id: 'weave', verb: 'Weave', title: 'Who I became',
+    id: 'weave', verb: 'Weave', title: 'What I brought together',
     line: 'I moved from theoretical to tangible design, as a researcher who also\u00a0builds.',
     list: [
       'In the research phase, I designed and facilitated workshops, feedback sessions, synthesis, and ideation, and pitched the concept to hospital\u00a0leadership.',

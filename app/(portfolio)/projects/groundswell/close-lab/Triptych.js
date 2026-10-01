@@ -11,7 +11,7 @@ const BRAND_GRADIENT = ['#C5CFA6', '#C7AAD1', '#F79C7E']
    bullets. Slots aligned across the row by subgrid. */
 export default function Triptych({ cards }) {
   return (
-    <section className={s.close} aria-label="What I learned, who I became, and what’s next">
+    <section className={s.close} aria-label="What I learned, what I brought together, and what’s next">
       {cards.map(({ id, verb, title, line, list }, i) => {
         const Mark = MARKS[id]
         return (
