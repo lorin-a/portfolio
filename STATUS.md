@@ -5,7 +5,7 @@
 **What we're doing: THE GROUNDSWELL FOLDER SHEET, near final.** Branch `feat/folder-expand`,
 pushed to the PRIVATE mirror only (`git push private feat/folder-expand`; `origin` is public).
 See it: `npm run dev -- -p 3005`, scroll to Groundswell, **Open project** (hard-refresh).
-Ledger FS20–FS189 below. Final-touches round open from FS156.
+Ledger FS20–FS190 below. Final-touches round open from FS156.
 
 **Next move (updated 2026-10-01):** the reflection is live in the sheet (FS186). Then: Lorin's final touches (her words: "I will make final touches tomorrow"). Take
 her notes one at a time, ledger-first.
@@ -214,6 +214,7 @@ funding, captions, card note).
 | FS187 | "I feel that the team/funding session is lacking and not accurelty respecting all involved we need to credit the artist too. Can you locate the acknowledgements section of the old Groundswell product page that we hid from the public? it gave the best description, from there you can revise it to be concise for this." (2026-10-01) | ✅ SHIPPED: found in the hidden Groundswell page’s “In gratitude” section (components/Groundswell/GroundswellContent.js:967; original kept there). Revised to be concise as the sheet’s Acknowledgements, replacing the three-column team area: a lead line (shaped by the voices of Magee’s oncology staff) + the collaboration line, then Leadership (Hughes, Taylor, Campbell, Donovan, Kendyl Grant) · Design & Production (Anderberg, Benzon, McDowell, Sucahyo, Baltus/Hardware Assembly, Su Hong & Mia Jeong, Kevin Lorenzi) · Art, Donors & Funding (CAROLYN GAVIN, artwork, the visual thread through every component; Liggett & Staley; NookPod; Ryan Thompson + Eleanor Mackie Pigma; the remaining partners and the three funders in one line), and a closing thank-you crediting the trust built by earlier cohorts. Su Hong & Mia Jeong now credited (her old page credits them). Dollar values left out while $30k vs $40k is open. Verified 1440 / 1024 / 390 |
 | FS188 | "remove \"Groundswell grew from trust built over years between earlier cohorts, Professor Kristin Hughes, and UPMC staff. To everyone who helped bring it to life, thank you.\" and make header one line like somehow put the subhead to the right of the header" (2026-10-01) | ✅ SHIPPED: closing thank-you removed. Header row: the lead shortened to hold ONE line (“Shaped by the voices of Magee’s oncology staff.”) across columns 1–2, the partners line beside it in column 3, tightened to three lines (“With Carnegie Mellon’s School of Design, Pitt’s Schools of Medicine and Nursing, and UPMC Magee-Womens Gynecologic Oncology.”), centre-aligned and sitting on the columns below. One line at 1440 + 1024; stacks on phones |
 | FS189 | "Im not liking the header, what is its value?" (2026-10-01) | ✅ ANSWERED + APPLIED: the lead line had little value. It restated the sheet’s thesis (the project column and the reflection already say staff voices shaped it) and added a third serif statement to a page budgeted for about two. The partners line DOES earn its place: it is the only spot on the sheet naming the three institutions. So: lead removed; the label and the institutions now share one quiet line above the columns |
+| FS190 | "how would a senior designer improve this section?" (2026-10-01) | ⏳ IN PROGRESS |
 
 ### ⟢ OPEN NOTES LEDGER — Folder sheet (2026-09-06, her verdict on the rebuilt sheet)
 
