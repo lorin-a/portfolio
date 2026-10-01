@@ -6,6 +6,7 @@ import MotionLibrary from '@/components/ProjectSheet/SheetMotionLibrary'
 import ResearchStage from './ResearchStage'
 import SheetSynthesis from '@/components/ProjectSheet/SheetSynthesis'
 import SheetSystemMap from '@/components/ProjectSheet/SheetSystemMap'
+import SheetSynthesisMap from '@/components/ProjectSheet/SheetSynthesisMap'
 import { groundswell } from '@/content/sheets/groundswell'
 
 /* FS171 LAB (2026-10-01): the reflection, edited to what earns its place.
@@ -95,7 +96,10 @@ export default function CloseLab() {
       <p className={s.kicker}>Groundswell · FS238 lab · private</p>
 
       <section className={s.variant}>
-        <h2 className={s.labH}>The synthesis map, in the dashboard’s language (FS247)</h2>
+        <h2 className={s.labH}>The synthesis as an evidence chain (FS248)</h2>
+        <p className={s.labNote}>Read left to right, the way the method ran: heard, coded, modeled, concluded, designed. The coding matrix carries the evidence; the tetrahedron summarises it.</p>
+        <SheetSynthesisMap />
+        <h2 className={s.labH} style={{ marginTop: '4rem' }}>Previous: the map in the dashboard’s language (FS247)</h2>
         <p className={s.labNote}>Cream ground, plum ink, the dashboard’s own data colours: each theme a colour, each tension the blend of its two themes, line weight = how many scenarios it holds.</p>
         <SheetSystemMap />
         <h2 className={s.labH} style={{ marginTop: '4rem' }}>Previous: dark (FS246)</h2>
