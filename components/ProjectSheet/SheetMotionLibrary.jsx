@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import s from './MotionLibrary.module.css'
+import s from './SheetMotionLibrary.module.css'
 
 /* FS212: a 2 × 2 library of dashboard interactions. Each tile rests on its
    first frame and plays on hover or keyboard focus; on touch, a tap plays

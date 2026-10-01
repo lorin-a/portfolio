@@ -2,7 +2,7 @@ import sheet from '@/components/ProjectSheet/ProjectSheet.module.css'
 import s from './page.module.css'
 import DarkTheme from './DarkTheme'
 import Triptych from './Triptych'
-import MotionLibrary from './MotionLibrary'
+import MotionLibrary from '@/components/ProjectSheet/SheetMotionLibrary'
 
 /* FS171 LAB (2026-10-01): the reflection, edited to what earns its place.
    Each card has one job and one budget: a statement, then at most three

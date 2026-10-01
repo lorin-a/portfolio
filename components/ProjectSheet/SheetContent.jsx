@@ -5,6 +5,7 @@ import Lightbox from '@/components/Lightbox/Lightbox'
 import { SheetStage, SheetLibraryKit, slidesFor, sheetImg } from './SheetMedia'
 import SheetCover from './SheetCover'
 import SheetReflection from './SheetReflection'
+import SheetMotionLibrary from './SheetMotionLibrary'
 import styles from './SheetContent.module.css'
 import paper from './Paper.module.css'
 
@@ -155,8 +156,13 @@ export default function SheetContent({ sheet, num, title, tagline, titleId }) {
             </div>
 
             <div className={styles.work}>
-              <SheetStage slides={slides} gated={c.gated}
-                onImage={c.gated ? null : openImage} label={`${c.name}, gallery`} />
+              {c.media?.motion ? (
+                /* FS214: the dashboard as an interaction library */
+                <SheetMotionLibrary items={c.media.motion} />
+              ) : (
+                <SheetStage slides={slides} gated={c.gated}
+                  onImage={c.gated ? null : openImage} label={`${c.name}, gallery`} />
+              )}
             </div>
 
             {/* The deck: the phone (the digital library, with the poem
