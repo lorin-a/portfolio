@@ -269,26 +269,31 @@
   color: var(--color-ink);
 }
 
-/* E · user flow (FS230): nodes with flow glyphs, joined by labelled arrows */
+/* E · user flow (FS230, FS231): icon nodes joined by labelled connectors.
+   The connector runs through the icons' centre line; its action label
+   sits above it; each node names its view and its audience beneath. */
 .flow {
   display: flex;
   align-items: flex-start;
   margin: var(--flow-2) 0 var(--flow-1);
-  padding: 0;
+  padding: 0 0 var(--flow-1);
   list-style: none;
+  border-bottom: 1px solid var(--sheet-hair);
 }
 .flowStep { display: flex; align-items: flex-start; flex: 1 1 0; min-width: 0; }
 .flowStep:last-child { flex: 0 0 auto; }
 .node {
   display: grid;
   justify-items: center;
-  gap: 0.5rem;
+  align-content: start;
+  gap: 0.15rem;
   flex: 0 0 auto;
-  width: 6.5rem;
+  width: 7.5rem;
   padding: 0;
   border: 0;
   background: none;
   color: var(--color-ink);
+  text-align: center;
   cursor: pointer;
 }
 .glyph {
@@ -297,52 +302,94 @@
   place-items: center;
   width: 56px;
   height: 56px;
+  margin-bottom: 0.55rem;
   overflow: hidden;
-  border-radius: 14px;
-  box-shadow: inset 0 0 0 1.5px rgba(244, 241, 236, 0.32);
-  transition: box-shadow var(--motion-fast) var(--ease-out), background var(--motion-fast) var(--ease-out);
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 1.5px rgba(244, 241, 236, 0.35);
+  transition: box-shadow var(--motion-fast) var(--ease-out), background var(--motion-fast) var(--ease-out), color var(--motion-fast) var(--ease-out);
 }
 .glyph svg { width: 26px; height: 26px; }
-@media (hover: hover) { .node:hover .glyph { box-shadow: inset 0 0 0 1.5px rgba(244, 241, 236, 0.7); } }
+@media (hover: hover) { .node:hover .glyph { box-shadow: inset 0 0 0 1.5px rgba(244, 241, 236, 0.75); } }
 .node[aria-selected='true'] .glyph {
-  background: rgba(197, 207, 166, 0.14);
-  box-shadow: inset 0 0 0 2px var(--color-sage);
-  color: var(--color-sage);
+  background: var(--color-sage);
+  box-shadow: none;
+  color: #23211f;
 }
-.glyph .progress { left: 8px; right: 8px; bottom: 6px; }
+.glyph .progress { left: 14px; right: 14px; bottom: 8px; background: #23211f; opacity: 0.45; }
 .nodeView {
+  font-family: var(--font-heading);
+  font-size: var(--step-small);
+  line-height: 1.25;
+}
+.nodeWho {
   font-family: var(--font-body);
   font-size: var(--step-label);
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  text-align: center;
-  line-height: 1.25;
+  line-height: 1.35;
+  text-wrap: balance;
+  opacity: 0.8;
 }
 .node[aria-selected='true'] .nodeView { color: var(--color-sage); }
 .node:focus-visible { outline: none; }
-.node:focus-visible .glyph { box-shadow: inset 0 0 0 2px var(--color-sage), 0 0 0 4px rgba(197, 207, 166, 0.35); }
+.node:focus-visible .glyph { box-shadow: 0 0 0 2px var(--color-sage), 0 0 0 5px rgba(197, 207, 166, 0.3); }
 .edge {
-  display: grid;
-  gap: 0.2rem;
+  position: relative;
   flex: 1 1 auto;
-  min-width: 2.5rem;
-  margin-top: 10px;
+  min-width: 3rem;
+  height: 56px;
+  margin: 0 -0.75rem;   /* tuck into the node's side margins, close to the icon */
   color: var(--color-ink);
 }
-.edge svg { width: 100%; height: 10px; fill: none; stroke: currentColor; stroke-width: 1.4; opacity: 0.6; }
+.edgeLine {
+  position: absolute;
+  top: 27.25px;
+  left: 0.25rem;
+  right: 0.85rem;
+  height: 1.5px;
+  background: currentColor;
+  opacity: 0.55;
+}
+.edgeLine::before {
+  content: '';
+  position: absolute;
+  left: -2px;
+  top: -2.25px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+}
+.edgeHead {
+  position: absolute;
+  top: 22px;
+  right: 0.35rem;
+  width: 8px;
+  height: 12px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  opacity: 0.55;
+}
 .edgeLabel {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: calc(50% + 0.45rem);
   font-family: var(--font-body);
   font-size: var(--step-label);
   font-style: italic;
-  line-height: 1.2;
+  line-height: 1.25;
   text-align: center;
-  opacity: 0.85;
+  text-wrap: balance;
 }
+.whoPhoneOnly { display: none; }
 @media (max-width: 599px) {
-  .node { width: 4.25rem; }
-  .glyph { width: 44px; height: 44px; border-radius: 12px; }
+  .node { width: 4.5rem; }
+  .nodeWho, .edgeLabel { display: none; }
+  .nodeView { font-size: var(--step-label); }
+  .glyph { width: 44px; height: 44px; }
   .glyph svg { width: 22px; height: 22px; }
-  .edgeLabel { display: none; }
-  .edge { margin-top: 16px; min-width: 1rem; }
+  .edge { height: 44px; min-width: 1.25rem; margin: 0 -0.5rem; }
+  .edgeLine { top: 21.25px; }
+  .edgeHead { top: 16px; }
+  .whoPhoneOnly { display: inline; }
 }

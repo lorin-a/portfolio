@@ -12,7 +12,8 @@ import s from './SheetMotionLibrary.module.css'
 /* FS230: user-flow glyphs, one per view (stroke icons, UX diagram idiom) */
 const GLYPH = {
   'At a glance': <><path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12z" /><circle cx="12" cy="12" r="3" /></>,
-  'With a tap': <><circle cx="12" cy="9" r="2.2" /><path d="M7.5 9a4.5 4.5 0 0 1 9 0" /><path d="M5 9a7 7 0 0 1 14 0" opacity=".55" /><path d="M12 11.5v8M9.5 17l2.5 2.5 2.5-2.5" /></>,
+  /* a pointing hand (after Lucide's pointer, ISC), tapping */
+  'With a tap': <><path d="M22 14a8 8 0 0 1-8 8" /><path d="M18 11v-1a2 2 0 0 0-4 0" /><path d="M14 10V9a2 2 0 0 0-4 0v1" /><path d="M10 9.5V4a2 2 0 0 0-4 0v10" /><path d="M18 11a2 2 0 1 1 4 0v3a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-6-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 15" /></>,
   'In depth': <><path d="M3.5 20.5h17" /><path d="M6 20.5v-6M10.5 20.5v-11M15 20.5v-8M19.5 20.5v-4" /></>,
   'Over time': <><path d="M3.5 3.5v17h17" /><path d="M6.5 15l4-4.5 3 3 6-6.5" /><circle cx="19.5" cy="7" r="1.2" /></>,
 }
@@ -116,13 +117,19 @@ export default function SheetMotionLibrary({ items = [], nav = 'toggle' }) {
                   {bar(i, x)}
                 </span>
                 <span className={s.nodeView}>{x.view}</span>
+                <span className={s.nodeWho}>{x.audience}</span>
               </button>
               {i < items.length - 1 && (
                 <span className={s.edge} aria-hidden="true">
                   <span className={s.edgeLabel}>{x.next}</span>
-                  <svg viewBox="0 0 60 10" preserveAspectRatio="none"><path d="M1 5h54" /><path d="M51 1.5l4.5 3.5-4.5 3.5" /></svg>
+                  <span className={s.edgeLine} />
+                  <svg className={s.edgeHead} viewBox="0 0 8 12"><path d="M1 1l5.5 5L1 11" /></svg>
                 </span>
               )}
+            </li>
+          ))}
+        </ol>
+      )}
             </li>
           ))}
         </ol>
@@ -154,7 +161,7 @@ export default function SheetMotionLibrary({ items = [], nav = 'toggle' }) {
       )}
 
       <p className={s.caption} aria-live="polite">
-        <span className={s.who}>{it.audience}.</span> {it.caption}
+        <span className={`${s.who} ${nav === 'flow' ? s.whoPhoneOnly : ''}`}>{it.audience}.</span> {it.caption}
       </p>
     </div>
   )
