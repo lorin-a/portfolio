@@ -12,8 +12,20 @@
    solution and not one standalone.” */
 export const ECOSYSTEM = {
   label: 'Why an ecosystem',
-  line: 'At midterm, the best ideas stood alone: an ROI calculator, a parking-pass reward, staff volunteers, card games. Kristin pushed us to “string the pearls,” and the five components became one\u00a0ecosystem.',
+  /* FS171: shortened from the FS170 draft */
+  line: 'At midterm, every idea stood alone. Kristin’s “string the pearls” made them one\u00a0ecosystem.',
 }
+
+/* FS171: ONE decision per component, the strongest of each FS170 block
+   (sources on the SHAPED entries below). The art wall had no decision
+   story strong enough, so it is hers to write. */
+export const DECISIONS = [
+  { name: 'Art Wall', todo: true, line: '[LORIN TO WRITE] One decision that shaped the wall: what you learned, and what you changed because of\u00a0it.' },
+  { name: 'Restorative Pod', line: 'When admin required doors late in production, we rebuilt them in acrylic: private, without feeling closed\u00a0off.' },
+  { name: 'Mindfulness Library', line: 'Feedback moved the brand from grief to restoration, so the cards hold joy and exhaustion\u00a0together.' },
+  { name: 'CTB Email Template', line: 'A small change to the template staff already used, so it adds no work to stretched\u00a0roles.' },
+  { name: 'Data dashboard', line: 'An audit with Density’s team found their API was dropping real pod\u00a0visits.' },
+]
 
 /* What shaped each component (Q5: evidence → decisions). */
 export const SHAPED = [

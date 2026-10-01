@@ -1,6 +1,5 @@
-/* FS164 + FS165 lab: the About practice card, carried into the sheet.
-   Same border, same painted mark, same accent names; the sheet's own
-   type steps and grid. */
+/* FS171 lab: the About practice card's brand (gradient border, painted
+   marks, accent names), set left-aligned with three reading levels. */
 
 .page {
   padding-top: 8rem;
@@ -16,30 +15,45 @@
   opacity: 0.7;
 }
 
+.labH {
+  margin: var(--flow-4) 0 var(--flow-3);
+  font-family: var(--font-heading);
+  font-size: var(--step-statement);
+  font-weight: 400;
+  color: var(--color-ink);
+}
+
+.labH:first-of-type { margin-top: 0; }
+
+.labNote {
+  max-width: 46rem;
+  margin: calc(var(--flow-2) * -1) 0 var(--flow-3);
+  font-family: var(--font-body);
+  font-size: var(--step-small);
+  line-height: 1.6;
+  opacity: 0.8;
+}
+
+/* ══ THE REFLECTION ═══════════════════════════════════════════════════ */
+
 .close {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   gap: var(--gap-col);
 }
 
-@media (min-width: 900px) {
-  .close { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-}
-
 .card {
   display: flex;
   flex-direction: column;
-  align-items: center;
   min-width: 0;
-  padding: var(--flow-3) var(--flow-2) var(--flow-2);
-  text-align: center;
+  padding: var(--flow-3);
   background:
     linear-gradient(var(--color-cream), var(--color-cream)) padding-box,
     linear-gradient(135deg,
       var(--color-sage-soft) 5%,
       var(--color-plum-soft) 50%,
       var(--color-terracotta-soft) 92%) border-box;
-  border: 2px solid transparent;
+  border: 1.5px solid transparent;
   border-radius: var(--radius-lg);
 }
 
@@ -47,27 +61,54 @@
 .card[data-practice='weave'] { --accent: var(--color-plum-soft); }
 .card[data-practice='shape'] { --accent: var(--color-terracotta-soft); }
 
-.mark {
-  position: relative;
-  display: flex;
+@media (min-width: 900px) {
+  .close {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-rows: auto auto auto 1fr;
+    row-gap: 0;
+  }
+
+  .card {
+    display: grid;
+    grid-row: span 4;
+    grid-template-rows: subgrid;
+    row-gap: 0;
+    align-content: start;
+  }
+}
+
+/* header: mark, then the brand verb over the card's job */
+.head {
+  display: grid;
+  grid-template-columns: 3.25rem 1fr;
+  grid-template-rows: auto auto;
+  column-gap: 1rem;
   align-items: center;
-  justify-content: center;
-  width: 84px;
-  height: 84px;
   margin-bottom: var(--flow-2);
 }
 
+.mark {
+  position: relative;
+  grid-row: span 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3.25rem;
+  height: 3.25rem;
+}
+
 .verb {
-  margin: 0;
+  align-self: end;
   font-family: var(--font-heading);
-  font-size: clamp(1.25rem, 1.8vw, 1.5rem);
+  font-size: 1.25rem;
   font-variation-settings: 'SOFT' 50, 'WONK' 0;
-  line-height: 1.2;
+  line-height: 1.1;
   color: var(--accent);
 }
 
 .title {
-  margin: 0.35rem 0 var(--flow-2);
+  align-self: start;
+  margin: 0.25rem 0 0;
   font-family: var(--font-body);
   font-size: var(--step-label);
   font-weight: 600;
@@ -76,8 +117,8 @@
   color: var(--color-ink);
 }
 
+/* level 2: the statement, the thing a skimmer keeps */
 .line {
-  max-width: 22ch;
   margin: 0;
   font-family: var(--font-heading);
   font-size: var(--step-statement);
@@ -86,95 +127,83 @@
   text-wrap: balance;
 }
 
-.cite {
-  max-width: 28ch;
+.context {
   margin: var(--flow-1) 0 0;
   font-family: var(--font-body);
   font-size: var(--step-label);
   line-height: 1.5;
-  opacity: 0.85;
-  text-wrap: balance;
-}
-
-.note {
-  max-width: 34ch;
-  margin: var(--flow-2) 0 0;
-  padding-top: var(--flow-2);
-  border-top: 1px solid var(--sheet-hair);
-  font-family: var(--font-body);
-  font-size: var(--step-small);
-  line-height: 1.6;
   color: var(--color-ink);
+  opacity: 0.8;
   text-wrap: pretty;
 }
 
-.list {
-  justify-self: center;
-  width: fit-content;
-  max-width: 100%;
-  list-style: none;
-  padding-left: 0;
-  padding-right: 0;
-  text-align: left;
+.context:empty { display: none; }
+
+@media (min-width: 900px) {
+  .context:empty { display: block; }
 }
 
-/* a wrapped item hangs under its own text, so it never reads as two */
+/* level 3: the bullets */
+.listWrap {
+  margin-top: var(--flow-2);
+  padding-top: var(--flow-2);
+  border-top: 1px solid var(--sheet-hair);
+}
+
+.listLabel {
+  margin: 0 0 0.5rem;
+  font-family: var(--font-body);
+  font-size: var(--step-label);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-family: var(--font-body);
+  font-size: var(--step-small);
+  line-height: 1.5;
+  color: var(--color-ink);
+}
+
 .list li {
   position: relative;
   padding-left: 1.1rem;
+  text-wrap: pretty;
 }
+
+.list li + li { margin-top: 0.5rem; }
 
 .list li::before {
   content: '';
   position: absolute;
   left: 0;
-  top: 0.62em;
+  top: 0.6em;
   width: 0.4rem;
   height: 0.4rem;
   border-radius: 50%;
   background: var(--accent);
 }
 
-.list li + li { margin-top: 0.35rem; }
+/* ══ ONE DECISION PER COMPONENT ═══════════════════════════════════════ */
 
-/* the notes start on one line across the row */
-@media (min-width: 900px) {
-  .close { grid-template-rows: auto auto auto auto auto 1fr; row-gap: 0; }
-  .card {
-    display: grid;
-    grid-row: span 6;
-    grid-template-rows: subgrid;
-    row-gap: 0;
-    justify-items: center;
-    align-content: start;
-  }
-  .card .note { grid-row: 6; align-self: start; }
-}
-
-/* ══ FS170 drafting sections ══════════════════════════════════════════ */
-
-.labH {
-  margin: var(--flow-4) 0 var(--flow-2);
+.ecoLine {
+  max-width: 52rem;
+  margin: 0 0 var(--flow-3);
   font-family: var(--font-heading);
   font-size: var(--step-statement);
-  font-weight: 400;
+  line-height: 1.35;
   color: var(--color-ink);
+  text-wrap: pretty;
 }
 
-.labNote {
-  max-width: 46rem;
-  margin: 0 0 var(--flow-3);
-  font-family: var(--font-body);
-  font-size: var(--step-small);
-  line-height: 1.6;
-  opacity: 0.8;
-}
-
-.eco { max-width: 52rem; margin-bottom: var(--flow-3); }
-
-.ecoLabel,
-.shapedLabel {
-  margin: 0 0 var(--flow-1);
+.ecoLabel {
+  display: block;
+  margin-bottom: var(--flow-1);
   font-family: var(--font-body);
   font-size: var(--step-label);
   font-weight: 600;
@@ -183,49 +212,39 @@
   color: var(--color-sage);
 }
 
-.ecoLine {
+.decisions {
+  max-width: 64rem;
   margin: 0;
+}
+
+.decision {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0.25rem;
+  padding: var(--flow-2) 0;
+  border-top: 1px solid var(--sheet-hair);
+}
+
+@media (min-width: 900px) {
+  .decision { grid-template-columns: 18rem minmax(0, 1fr); gap: var(--gap-col); }
+}
+
+.decision dt {
   font-family: var(--font-heading);
-  font-size: var(--step-statement);
-  line-height: 1.35;
+  font-size: var(--step-small);
+  color: var(--color-ink);
+}
+
+.decision dd {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--step-body);
+  line-height: 1.5;
   color: var(--color-ink);
   text-wrap: pretty;
 }
 
-.shapedGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 22rem), 1fr));
-  gap: var(--gap-col);
-}
-
-.shapedName {
-  margin: 0 0 var(--flow-2);
-  font-family: var(--font-heading);
-  font-size: var(--step-body);
-  font-weight: 400;
-  color: var(--color-ink);
-}
-
-.shapedList {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  font-family: var(--font-body);
-  font-size: var(--step-small);
-  line-height: 1.55;
-  color: var(--color-ink);
-}
-
-.shapedList li { position: relative; padding-left: 1.1rem; text-wrap: pretty; }
-.shapedList li + li { margin-top: 0.5rem; }
-
-.shapedList li::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 0.62em;
-  width: 0.4rem;
-  height: 0.4rem;
-  border-radius: 50%;
-  background: var(--color-sage);
+.decision dd[data-todo] {
+  color: var(--color-sage);
+  font-style: italic;
 }
