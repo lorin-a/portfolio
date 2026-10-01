@@ -90,9 +90,9 @@ const MOMENTS = [
 const LINKS = [['sys', 'env', false], ['env', 'rec', true], ['rec', 'cul', true]] /* [from, to, both ways] */
 
 const VIEWS = [
-  { view: 'What we found', caption: '' },
-  { view: 'What we value', caption: 'Each theme became a value to guide the work. Point to a value to see the theme it answers.' },
-  { view: 'What we built', caption: 'Each value became a component, met across a shift. Point to a moment or a component to trace its connections.' },
+  { view: 'What we found', short: 'Found', caption: '' },
+  { view: 'What we value', short: 'Values', caption: 'Each theme became a value to guide the work. Point to a value to see the theme it answers.' },
+  { view: 'What we built', short: 'Built', caption: 'Each value became a component, met across a shift. Point to a moment or a component to trace its connections.' },
 ]
 
 const STAGE = ['#F79C7E', '#C7AAD1', '#C5CFA6']
@@ -305,6 +305,7 @@ export default function SheetMaps() {
   const [canHover, setCanHover] = useState(true)
   const dlg = useRef(null)
   const root = useRef(null)
+  const pan = useRef(null)
   const timer = useRef(null)
   const touched = useRef(false)
 
@@ -326,6 +327,15 @@ export default function SheetMaps() {
     if (root.current) io.observe(root.current)
     return () => { io.disconnect(); clearTimeout(timer.current) }
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
+
+  /* FS287: on a phone the map is wider than the screen and pans; each
+     view opens centered on the part it highlights */
+  useEffect(() => {
+    const el = pan.current
+    if (!el || el.scrollWidth <= el.clientWidth) return
+    const fx = [0.56, 0.58, 0.2][view]
+    el.scrollTo({ left: el.scrollWidth * fx - el.clientWidth / 2, behavior: ready ? 'smooth' : 'auto' })
+  }, [view, ready])
 
   const take = (f) => { touched.current = true; clearTimeout(timer.current); setFocus(f) }
 
@@ -426,9 +436,15 @@ export default function SheetMaps() {
   return (
     <figure className={`${m.glass} ${s.maps}`} data-view={view}>
       <div id="gs-maps" role="tabpanel" className={s.stage} ref={root} onMouseLeave={() => { if (touched.current) setFocus({ ...DEMO[view], rest: true }) }}>
-        <div className={s.canvas}>
+        <div className={s.canvas} ref={pan}>
           <Stage view={view} focus={focus} setFocus={take} interactive uid="gsm-a" ready={ready}
             hint={focus?.auto ? (canHover ? 'Hover' : 'Tap') : null} />
+        </div>
+        <div className={s.swipe}>
+          <p aria-hidden="true"><span>←</span> Swipe the map <span>→</span></p>
+          <button type="button" className={s.enlargeInline} onClick={() => setOpen(true)} aria-label="View this map full screen">
+            <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 6V2h4M10 2h4v4M14 10v4h-4M6 14H2v-4" /></svg>
+          </button>
         </div>
         <div className={s.foot} aria-live="polite">
           <div key={`${view}-${focus?.kind}-${focus?.id}`} className={s.footIn}>
@@ -446,7 +462,8 @@ export default function SheetMaps() {
             <li key={x.view} style={{ '--depth': i }}>
               <button type="button" role="tab" aria-selected={i === view} aria-controls="gs-maps" className={m.seg} onClick={() => pick(i)}>
                 <span className={s.stageDot} style={{ '--dot': STAGE[i] }} aria-hidden="true" />
-                <span className={m.segView}>{x.view}</span>
+                <span className={`${m.segView} ${s.long}`}>{x.view}</span>
+                <span className={`${m.segView} ${s.short}`} aria-hidden="true">{x.short}</span>
               </button>
             </li>
           ))}

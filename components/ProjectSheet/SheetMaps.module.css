@@ -2,7 +2,7 @@
    Ink for structure, lavender for the four circles, sage for the void,
    terracotta for whatever the reader points at. */
 
-.maps { margin: 0; }
+.maps { min-width: 0; max-width: 100%; margin: 0; }
 
 /* FS286: one color per stage of the story, so a color always says where
    a thing comes from: terracotta = what we found (the strain), plum =
@@ -335,6 +335,75 @@
 
 .enlarge svg { width: 13px; height: 13px; fill: none; stroke: currentColor; stroke-width: 1.6; }
 .enlarge:focus-visible { outline: 2px solid var(--color-sage); outline-offset: 2px; }
+
+.enlargeInline {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(244, 241, 236, 0.1);
+  color: #F4F1EC;
+  cursor: pointer;
+}
+
+.enlargeInline svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 1.6; }
+.enlargeInline:focus-visible { outline: 2px solid var(--color-sage); outline-offset: 2px; }
+
+/* ── FS287: phones ─────────────────────────────────────────────── */
+.short { display: none; }
+.swipe { display: none; }
+
+@media (max-width: 640px) {
+  .long { display: none; }
+  .short { display: inline; }
+
+  /* the map keeps a readable scale and pans sideways */
+  .maps, .stage, .bottom { min-width: 0; max-width: 100%; }
+
+  .canvas {
+    width: 100%;
+    max-width: 100%;
+    aspect-ratio: auto;
+    padding: 0.75rem 0 0.25rem;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;
+  }
+
+  .canvas::-webkit-scrollbar { display: none; }
+  .canvas .svg { width: 720px; max-width: none; height: 448px; padding: 0 0.75rem; }
+
+  .swipe {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    margin: 0 1rem 0.75rem;
+  }
+
+  .swipe p {
+    margin: 0;
+    font-family: var(--font-body);
+    font-size: var(--step-label);
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: var(--color-ink);
+    opacity: 0.65;
+  }
+
+  .swipe span { margin: 0 0.35rem; }
+
+  /* the sheet's floating Close sits top-right: Enlarge moves into the swipe row */
+  .enlarge { display: none; }
+
+  .foot { min-height: 0; margin: 0 1rem; }
+  .fDefs { grid-template-columns: minmax(0, 1fr); gap: 0.5rem; }
+  .fDefs div { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 0.6rem; }
+  .fDefs dd { margin: 0; }
+}
 
 /* full screen */
 .dialog {
