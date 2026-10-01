@@ -1,0 +1,244 @@
+/* Birth Story hero — three layout directions sharing one orbit stage.
+   Keys: .centered (paper, calm) · .bleed (full gradient) · .split (half-bleed). */
+
+.hero {
+  --bs-teal: #1A434D; --bs-teal-soft: #6D8F99;
+  min-height: 100vh; min-height: 100dvh;
+  display: grid; place-content: center;
+  color: var(--color-ink); overflow: hidden;
+}
+
+/* ── shared lead pieces (constant type across variants — layout is what varies) ── */
+.lead { display: grid; gap: clamp(1.2rem, 2.2vw, 1.8rem); }
+.meta { display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem 0.9rem; margin: 0; font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 0.92rem; letter-spacing: 0.02em; }
+.meta span:not(:last-child)::after { content: '·'; margin-left: 0.9rem; opacity: 0.5; }
+.hook { margin: 0; max-width: 16ch; font-family: var(--font-heading); font-variation-settings: 'SOFT' 60, 'WONK' 0; font-weight: 380; font-size: clamp(2.2rem, 1.3rem + 3.2vw, 3.7rem); line-height: 1.12; letter-spacing: -0.015em; text-wrap: balance; }
+.hook em { font-style: italic; }
+.sub { margin: 0; max-width: 42ch; font-family: var(--font-heading); font-variation-settings: 'SOFT' 60, 'WONK' 0; font-weight: 400; font-size: clamp(1.05rem, 0.95rem + 0.4vw, 1.3rem); line-height: 1.5; }
+.sub em { font-style: italic; }
+
+/* the scroll cue is a real CTA now, not a whisper */
+.cue {
+  display: inline-flex; align-items: center; gap: 0.55rem;
+  min-height: 44px; margin-top: 0.4rem; padding: 0.6rem 1.4rem;
+  border-radius: 999px; border: 1px solid currentColor; background: transparent;
+  color: inherit; cursor: pointer;
+  font-family: var(--font-body); font-size: 0.98rem; letter-spacing: 0.005em;
+  transition: background 0.25s var(--ease-out), color 0.25s var(--ease-out), border-color 0.25s var(--ease-out);
+}
+.cue span { transition: transform 0.3s var(--ease-out); }
+.cue:hover span { transform: translateY(3px); }
+.cue:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
+
+/* honest disclosure — always visible, quiet */
+.disclosure { max-width: 48ch; margin: 0.3rem 0 0; font-family: var(--font-body); font-size: 0.8rem; line-height: 1.5; }
+.disclosure a { text-decoration: underline; text-underline-offset: 2px; }
+.darkBleed .disclosure { color: rgba(255,255,255,0.6); }
+.darkBleed .disclosure a { color: rgba(255,255,255,0.82); }
+.darkBleed .disclosure a:hover { color: #fff; }
+
+/* ── shared orbit stage (sizes are CSS vars so variants can scale the product) ── */
+.stage { position: relative; display: grid; place-items: center; --orbit: 300px; --phone: 152px; }
+.orbit { position: relative; width: var(--orbit); height: var(--orbit); display: grid; place-items: center; }
+.ring { position: absolute; top: 50%; left: 50%; width: var(--orbit); height: var(--orbit); border-radius: 50%; border: 1px dashed rgba(255,255,255,0.45); transform: translate(-50%,-50%) scale(0.6); opacity: 0; transition: opacity 0.9s var(--ease-out), transform 0.9s var(--ease-out); }
+.on .ring { opacity: 1; transform: translate(-50%,-50%) scale(1); }
+.rotor { position: absolute; inset: 0; animation: spin 70s linear infinite; }
+.member { position: absolute; top: 50%; left: 50%; width: 38px; height: 38px; border-radius: 50%; border: 2px solid rgba(255,255,255,0.92); box-shadow: 0 4px 12px rgba(26,67,77,0.3); transform: translate(-50%,-50%) rotate(var(--a)) translateY(calc(var(--orbit) / -2)) scale(0); opacity: 0; transition: opacity 0.6s var(--ease-out), transform 0.7s var(--ease-bounce); transition-delay: calc(0.4s + var(--i) * 0.1s); }
+.on .member { opacity: 1; transform: translate(-50%,-50%) rotate(var(--a)) translateY(calc(var(--orbit) / -2)) scale(1); }
+.blush { background: #DBADAD; } .peri { background: #B1C1F4; } .lav { background: #C9C8EE; }
+
+.phone { position: relative; z-index: 2; display: block; width: var(--phone, 152px); padding: 6px; border-radius: 22px; background: #1d1d1f; box-shadow: 0 24px 50px -22px rgba(26,67,77,0.6); transform: translateY(14px) scale(0.96); opacity: 0; transition: opacity 0.8s var(--ease-out), transform 0.9s var(--ease-out); transition-delay: 0.15s; }
+.on .phone { opacity: 1; transform: none; }
+.notch { position: absolute; top: 11px; left: 50%; width: 26%; height: 9px; transform: translateX(-50%); border-radius: 999px; background: #1d1d1f; z-index: 2; }
+.screen { position: relative; display: block; overflow: hidden; border-radius: 17px; aspect-ratio: 9 / 19.5; background: var(--bs-teal); }
+.screen img { width: 100%; height: 100%; object-fit: cover; display: block; }
+/* cycling stack — strong screens crossfade in place */
+.screenImg { position: absolute; inset: 0; opacity: 0; transition: opacity 0.9s var(--ease-out); }
+.screenOn { opacity: 1; }
+
+.bubble { position: absolute; z-index: 3; top: 6%; right: -2%; padding: 0.42rem 0.8rem; border-radius: 14px 14px 4px 14px; background: #fff; color: var(--bs-teal); font-family: var(--font-body); font-size: 0.74rem; white-space: nowrap; box-shadow: 0 8px 20px -10px rgba(26,67,77,0.5); opacity: 0; animation: bubble 8s var(--ease-out) infinite; animation-delay: 1.8s; }
+
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes bubble { 0%,7% { opacity: 0; transform: translateY(6px); } 16%,60% { opacity: 1; transform: none; } 74%,100% { opacity: 0; transform: translateY(-4px); } }
+
+/* ════════════ A · CENTERED (paper, calm — homepage DNA) ════════════ */
+.centered { background: #F2F3F1; padding: clamp(3rem, 8vh, 6rem) clamp(1.5rem, 5vw, 6rem); }
+.centered .inner { width: min(54rem, 100%); display: grid; justify-items: center; text-align: center; gap: clamp(2.4rem, 6vw, 4rem); }
+.centered .lead { justify-items: center; }
+.centered .meta { justify-content: center; color: var(--bs-teal-soft); }
+.centered .meta span:not(:last-child)::after { color: rgba(109,143,153,0.5); }
+.centered .hook { max-width: 18ch; color: var(--color-ink); }
+.centered .hook em { color: var(--bs-teal); }
+.centered .sub { color: var(--color-ink-light); margin-inline: auto; }
+.centered .cue { color: var(--color-ink-faint); }
+.centered .stage { aspect-ratio: 1 / 1.04; width: min(21rem, 78vw); border-radius: 28px; background: linear-gradient(158deg, #E7C3C8 0%, #B9C2EC 44%, #2A5560 100%); box-shadow: 0 40px 80px -44px rgba(26,67,77,0.6); overflow: hidden; }
+
+/* ════════════ FULL-BLEED FAMILY (the gradient is the hero) ════════════
+   .darkBleed carries the shared dark treatment (component adds it to every
+   bleed variant); each variant below sets only its layout + product scale. */
+.darkBleed {
+  background: linear-gradient(165deg, #1F454D 0%, #3E5E6A 28%, #8089C2 62%, #D7AEBE 100%);
+  color: #fff;
+  padding: clamp(3rem, 8vh, 6rem) clamp(1.5rem, 5vw, 6rem);
+}
+.darkBleed .meta { color: rgba(255,255,255,0.82); }
+.darkBleed .meta span:not(:last-child)::after { color: rgba(255,255,255,0.45); }
+.darkBleed .hook { color: #fff; }
+.darkBleed .hook em { color: #F3DDE2; }
+.darkBleed .sub { color: rgba(255,255,255,0.9); }
+.darkBleed .ring { border-color: rgba(255,255,255,0.55); }
+.darkBleed .cue { color: rgba(255,255,255,0.92); border-color: rgba(255,255,255,0.5); }
+.darkBleed .cue:hover { background: #fff; color: #1A434D; border-color: #fff; }
+
+/* B · text-led (the original): text centered, product below the fold */
+.bleed .inner { width: min(58rem, 100%); display: grid; justify-items: center; text-align: center; gap: clamp(2.2rem, 5vw, 3.4rem); }
+.bleed .lead { justify-items: center; }
+.bleed .meta { justify-content: center; }
+.bleed .hook { max-width: 20ch; }
+.bleed .sub { margin-inline: auto; }
+.bleed .stage { padding: 0.5rem 0; }
+
+/* B1 · balanced: text left, product right, both above the fold */
+.bleedBalanced .inner { width: min(72rem, 100%); min-height: 100vh; min-height: 100dvh; display: grid; grid-template-columns: 1.05fr 0.95fr; align-items: center; gap: clamp(2rem, 5vw, 4.5rem); }
+.bleedBalanced .lead { justify-items: start; text-align: left; }
+.bleedBalanced .meta { justify-content: flex-start; }
+.bleedBalanced .hook { max-width: 14ch; }
+.bleedBalanced .stage { --orbit: 340px; --phone: 188px; justify-self: center; }
+
+/* B2 · product-led: large product on top, text supporting below */
+.bleedProduct .inner { width: min(56rem, 100%); display: grid; justify-items: center; text-align: center; gap: clamp(1.8rem, 4vw, 3rem); }
+.bleedProduct .lead { order: 2; justify-items: center; gap: clamp(0.9rem, 1.6vw, 1.2rem); }
+.bleedProduct .stage { order: 1; --orbit: 460px; --phone: 220px; min-height: 520px; }
+.bleedProduct .hook { max-width: 22ch; font-size: clamp(1.8rem, 1.1rem + 2.2vw, 2.8rem); }
+.bleedProduct .sub { margin-inline: auto; }
+.bleedProduct .meta { justify-content: center; }
+
+/* B3 · immersive: oversized product bleeding off the corner, text in the open space */
+.bleedImmersive { overflow: hidden; }
+.bleedImmersive .inner { width: 100%; min-height: 100vh; min-height: 100dvh; display: grid; grid-template-columns: 1fr 1fr; align-items: center; }
+.bleedImmersive .lead { justify-items: start; text-align: left; max-width: 30rem; }
+.bleedImmersive .meta { justify-content: flex-start; }
+.bleedImmersive .hook { max-width: 13ch; }
+.bleedImmersive .stage { --orbit: 440px; --phone: 280px; align-self: end; justify-self: center; transform: translate(6%, 12%); }
+
+/* C1 · minimal: question + CTA only (no sub), big cycling product on top */
+.min .inner { width: min(50rem, 100%); display: grid; justify-items: center; text-align: center; gap: clamp(1.6rem, 4vw, 2.6rem); }
+.min .lead { justify-items: center; gap: clamp(1rem, 2vw, 1.4rem); }
+.min .meta { justify-content: center; }
+.min .hook { max-width: 18ch; }
+.min .stage { order: -1; --orbit: 440px; --phone: 220px; min-height: 500px; }
+
+/* C2 · fan: several screens at once, minimal text to the side (no orbit) */
+.fan .inner { width: min(72rem, 100%); min-height: 100vh; min-height: 100dvh; display: grid; grid-template-columns: 0.9fr 1.1fr; align-items: center; gap: clamp(2rem, 5vw, 4rem); }
+.fan .lead { justify-items: start; text-align: left; gap: clamp(1rem, 2vw, 1.5rem); }
+.fan .meta { justify-content: flex-start; }
+.fan .hook { max-width: 14ch; }
+.fanStage { position: relative; display: grid; place-items: center; min-height: 540px; }
+.fanCard { position: absolute; opacity: 1; }
+.fanFront, .on .fanFront { z-index: 3; --phone: 212px; transform: rotate(0deg); }
+.fanBack, .on .fanBack { z-index: 1; --phone: 182px; opacity: 0.88; transform: translateX(-48%) translateY(-6%) rotate(-9deg); }
+.fanSide, .on .fanSide { z-index: 2; --phone: 182px; opacity: 0.94; transform: translateX(48%) translateY(4%) rotate(9deg); }
+
+/* C3 · orbit-hero: the rotating care circle is the hero; the phone rides inside it */
+.orbithero .inner { width: min(56rem, 100%); display: grid; justify-items: center; text-align: center; gap: clamp(1.4rem, 3vw, 2rem); }
+.orbithero .lead { justify-items: center; gap: clamp(0.8rem, 1.6vw, 1.1rem); }
+.orbithero .meta { justify-content: center; }
+.orbithero .hook { max-width: 20ch; font-size: clamp(1.7rem, 1.1rem + 2vw, 2.6rem); }
+.orbithero .stage { order: -1; --orbit: 540px; --phone: 168px; min-height: 540px; }
+
+/* ════════════ ECOSYSTEM PREVIEWS — organized, neat, dimensional ════════════ */
+
+/* Cascade: every surface overlapping in a clean, evenly-stepped deck */
+.cascade .inner { width: min(72rem, 100%); min-height: 100vh; min-height: 100dvh; display: grid; grid-template-columns: 0.78fr 1.22fr; align-items: center; gap: clamp(2rem, 5vw, 3.5rem); }
+.cascade .lead { justify-items: start; text-align: left; }
+.cascade .meta { justify-content: flex-start; }
+.cascade .hook { max-width: 14ch; }
+.cascadeStage { position: relative; min-height: 560px; perspective: 1700px; }
+.cascadeCard {
+  position: absolute; left: 50%; top: 50%; --phone: 198px;
+  transform: translate(calc(-50% + (var(--i) - 1.4) * 128px), -50%) translateZ(calc(var(--i) * -56px)) rotateY(-16deg) scale(calc(1 - var(--i) * 0.035));
+  z-index: calc(20 - var(--i));
+  opacity: calc(1 - var(--i) * 0.06);
+}
+
+/* Lineup: an even row of upright phones, the middle one featured */
+.lineup .inner { width: min(74rem, 100%); min-height: 100vh; min-height: 100dvh; display: grid; grid-template-columns: 0.8fr 1.2fr; align-items: center; gap: clamp(2rem, 5vw, 4rem); }
+.lineup .lead { justify-items: start; text-align: left; gap: clamp(1rem, 2vw, 1.5rem); }
+.lineup .meta { justify-content: flex-start; }
+.lineup .hook { max-width: 14ch; }
+.lineupStage { display: flex; align-items: center; justify-content: center; gap: clamp(0.9rem, 2vw, 1.8rem); }
+.lineSide { --phone: 150px; }
+.lineMid { --phone: 192px; box-shadow: 0 34px 64px -26px rgba(26,67,77,0.66); }
+
+/* Grid: a tidy 2×2 of surfaces sitting on one subtle plane */
+.grid .inner { width: min(72rem, 100%); min-height: 100vh; min-height: 100dvh; display: grid; grid-template-columns: 0.9fr 1.1fr; align-items: center; gap: clamp(2rem, 5vw, 3.5rem); }
+.grid .lead { justify-items: start; text-align: left; }
+.grid .meta { justify-content: flex-start; }
+.grid .hook { max-width: 14ch; }
+.gridStage { --phone: 152px; display: grid; grid-template-columns: 1fr 1fr; gap: clamp(1.1rem, 2.4vw, 2rem); justify-content: center; transform: perspective(1500px) rotateX(3deg) rotateY(-10deg); transform-style: preserve-3d; }
+.gridCell { display: grid; place-items: center; }
+
+/* ════════════ C · SPLIT (half-bleed: paper left, gradient right) ════════════ */
+.split { background: #F2F3F1; padding: 0; }
+.split .inner { width: 100%; min-height: 100vh; min-height: 100dvh; display: grid; grid-template-columns: 1fr 1fr; align-items: stretch; gap: 0; }
+.split .lead { align-self: center; justify-self: end; justify-items: start; text-align: left; max-width: 34rem; padding: clamp(2rem, 6vw, 6rem); }
+.split .meta { color: var(--bs-teal-soft); }
+.split .meta span:not(:last-child)::after { color: rgba(109,143,153,0.5); }
+.split .hook { max-width: 15ch; color: var(--color-ink); }
+.split .hook em { color: var(--bs-teal); }
+.split .sub { color: var(--color-ink-light); }
+.split .cue { color: var(--color-ink-faint); }
+.split .stage { align-self: stretch; width: 100%; min-height: 100vh; min-height: 100dvh; background: linear-gradient(158deg, #E7C3C8 0%, #B9C2EC 44%, #2A5560 100%); overflow: hidden; }
+
+@media (max-width: 860px) {
+  .split .inner { grid-template-columns: 1fr; }
+  .split .lead { justify-self: center; justify-items: center; text-align: center; max-width: 38rem; }
+  .split .stage { min-height: 58vh; }
+
+  .bleedBalanced .inner { grid-template-columns: 1fr; justify-items: center; gap: 2.5rem; }
+  .bleedBalanced .lead { justify-items: center; text-align: center; }
+  .bleedBalanced .meta { justify-content: center; }
+
+  .bleedImmersive .inner { grid-template-columns: 1fr; justify-items: center; }
+  .bleedImmersive .lead { justify-items: center; text-align: center; max-width: 38rem; }
+  .bleedImmersive .meta { justify-content: center; }
+  .bleedImmersive .stage { --orbit: 320px; --phone: 200px; align-self: center; transform: none; }
+
+  .bleedProduct .stage { --orbit: 300px; --phone: 190px; }
+
+  .min .stage { --orbit: 320px; --phone: 200px; min-height: 420px; }
+
+  .fan .inner { grid-template-columns: 1fr; justify-items: center; }
+  .fan .lead { justify-items: center; text-align: center; }
+  .fan .meta { justify-content: center; }
+  .fanStage { min-height: 460px; }
+  .fanFront, .on .fanFront { --phone: 178px; }
+  .fanBack, .on .fanBack { --phone: 150px; }
+  .fanSide, .on .fanSide { --phone: 150px; }
+
+  .orbithero .stage { --orbit: 330px; --phone: 152px; min-height: 360px; }
+
+  .cascade .inner { grid-template-columns: 1fr; justify-items: center; }
+  .cascade .lead { justify-items: center; text-align: center; }
+  .cascade .meta { justify-content: center; }
+  .cascadeStage { min-height: 440px; width: 100%; }
+  .cascadeCard { --phone: 156px; transform: translate(calc(-50% + (var(--i) - 1.4) * 92px), -50%) translateZ(calc(var(--i) * -48px)) rotateY(-16deg) scale(calc(1 - var(--i) * 0.05)); }
+
+  .lineup .inner { grid-template-columns: 1fr; justify-items: center; }
+  .lineup .lead { justify-items: center; text-align: center; }
+  .lineup .meta { justify-content: center; }
+  .lineupStage { gap: 0.7rem; }
+  .lineSide { --phone: 116px; }
+  .lineMid { --phone: 150px; }
+
+  .grid .inner { grid-template-columns: 1fr; justify-items: center; }
+  .grid .lead { justify-items: center; text-align: center; }
+  .grid .meta { justify-content: center; }
+  .gridStage { --phone: 130px; transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rotor { animation: none; }
+  .bubble { animation: none; opacity: 1; }
+  .ring, .member, .phone { transition: none; }
+}

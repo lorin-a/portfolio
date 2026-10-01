@@ -1,0 +1,449 @@
+/* FS249–FS260: mapping the system, in the site's glass and palette.
+   Ink for structure, lavender for the four circles, sage for the void,
+   terracotta for whatever the reader points at. */
+
+.maps { min-width: 0; max-width: 100%; margin: 0; }
+
+/* FS286: one color per stage of the story, so a color always says where
+   a thing comes from: terracotta = what we found (the strain), plum =
+   what we value, sage = what we built (and the void it was built to
+   fill). The tabs carry the key; the footer chain repeats it. */
+.maps[data-view='0'] { --accent: #F79C7E; }
+.maps[data-view='1'] { --accent: #C7AAD1; }
+.maps[data-view='2'] { --accent: #C5CFA6; }
+
+.stageDot {
+  display: inline-block;
+  flex: none;
+  width: 9px;
+  height: 9px;
+  margin-right: 0.55rem;
+  border-radius: 50%;
+  background: var(--dot);
+  box-shadow: 0 0 0 1.5px rgba(30, 28, 27, 0.55);
+}
+
+.cFound { color: #F79C7E; }
+.cValue { color: #C7AAD1; }
+.cBuilt { color: #C5CFA6; }
+
+.stage {
+  position: relative;
+  border-radius: 3px;
+  background:
+    linear-gradient(135deg, rgba(197, 207, 166, 0.14) 5%, rgba(244, 241, 236, 0.06) 50%, rgba(247, 156, 126, 0.1) 92%),
+    rgba(28, 26, 30, 0.2);
+  box-shadow: inset 0 0 0 1px rgba(244, 241, 236, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.14);
+}
+
+.canvas {
+  padding: clamp(1rem, 2.5vw, 2rem);
+  aspect-ratio: 1736 / 1080;
+}
+
+.svg { display: block; width: 100%; height: 100%; overflow: visible; }
+
+/* ── motion: layers leave fast, arrive after the circles land ── */
+.layer {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 220ms var(--ease-out);
+}
+
+.layer[data-on] {
+  opacity: 1;
+  pointer-events: auto;
+  transition: opacity 500ms var(--ease-out) 720ms;
+}
+
+.node {
+  outline: none;
+  transition: transform 900ms cubic-bezier(0.65, 0, 0.35, 1), opacity var(--motion-fast) var(--ease-out);
+}
+
+.disc {
+  fill: #EDE6DE;   /* opaque: lines never show through a circle */
+  stroke: #EDE6DE;
+  stroke-width: 2;
+  transition: r 900ms cubic-bezier(0.65, 0, 0.35, 1), fill var(--motion-fast) var(--ease-out), stroke var(--motion-fast) var(--ease-out);
+}
+
+.node[data-back] .disc { fill: #C9C0B6; stroke: #C9C0B6; }
+.node[data-on] .disc { fill: #F4F1EC; stroke: var(--accent); stroke-width: 6; }
+.node[data-dim] { opacity: 0.55; }
+.node[role='button'] { cursor: pointer; }
+.node:focus-visible .disc { stroke-width: 4; }
+
+/* each name arrives once its circle has landed (keyed per view) */
+.name {
+  fill: #2A2624;
+  font-family: var(--font-heading);
+  font-size: 33px;
+  text-anchor: middle;
+  animation: name-in 380ms var(--ease-out) 760ms both;
+}
+
+.name[data-size='l'] { font-size: 40px; }
+
+@keyframes name-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* ── structure ── */
+.line { fill: none; stroke: rgba(244, 241, 236, 0.55); stroke-linecap: round; }
+.line[data-back] { stroke: rgba(244, 241, 236, 0.32); }
+.lineOn { fill: none; stroke: var(--accent); stroke-linecap: round; }
+.mark { stroke: rgba(244, 241, 236, 0.7); }
+.markOn { stroke: var(--accent); }
+.hit { stroke: transparent; stroke-width: 40; cursor: pointer; }
+
+.fade { transition: opacity var(--motion-fast) var(--ease-out); }
+.fade[data-dim] { opacity: 0.3; }
+
+.voidG { outline: none; cursor: pointer; }
+.voidFront { fill: rgba(197, 207, 166, 0.1); stroke: #C5CFA6; stroke-width: 3; stroke-dasharray: 11.78 11.78; stroke-linejoin: round; transition: fill var(--motion-fast) var(--ease-out); }
+.voidSide { fill: rgba(197, 207, 166, 0.18); stroke: #C5CFA6; stroke-width: 3; stroke-dasharray: 11.78 11.78; stroke-linejoin: round; transition: fill var(--motion-fast) var(--ease-out); }
+.voidBack { stroke: rgba(197, 207, 166, 0.5); stroke-width: 2; stroke-dasharray: 6 9; }
+.voidG { transition: filter var(--motion-fast) var(--ease-out); }
+.voidG[data-on] { filter: drop-shadow(0 0 22px rgba(197, 207, 166, 0.55)); }
+.voidG[data-on] .voidFront { fill: rgba(197, 207, 166, 0.45); stroke-dasharray: none; stroke-width: 4; }
+.voidG[data-on] .voidBack { stroke: rgba(197, 207, 166, 0.85); }
+.voidG[data-on] .voidName { fill: #F4F7E8; }
+.voidG[data-on] .voidSide { fill: rgba(197, 207, 166, 0.62); stroke-dasharray: none; stroke-width: 4; }
+.voidG:focus-visible .voidFront { stroke-width: 5; }
+.voidName { transition: fill var(--motion-fast) var(--ease-out); fill: #C5CFA6; font-family: var(--font-heading); font-size: 34px; font-style: italic; text-anchor: middle; }
+
+/* pills: tensions and moments */
+.pillG { outline: none; cursor: default; }
+.pillG[role='button'] { cursor: pointer; }
+
+.pillG rect {
+  fill: rgba(30, 28, 27, 0.78);
+  stroke: rgba(244, 241, 236, 0.6);
+  stroke-width: 3;
+  stroke-dasharray: 11.78 11.78;
+  transition: fill var(--motion-fast) var(--ease-out), stroke var(--motion-fast) var(--ease-out);
+}
+
+.pillG text { fill: #F4F1EC; font-family: var(--font-heading); font-size: 32px; text-anchor: middle; }
+.pillG .pill2 { font-family: var(--font-body); font-size: 27px; }
+.pillG[data-back] rect { stroke: rgba(244, 241, 236, 0.35); }
+.pillG[data-on] rect { fill: color-mix(in srgb, var(--accent) 28%, #1E1C1B); stroke: var(--accent); stroke-width: 4; stroke-dasharray: none; }
+.pillG[data-on] text { fill: #F7F3EE; }
+.pillG:focus-visible rect { stroke-width: 6; }
+
+.say { fill: rgba(244, 241, 236, 0.85); font-family: var(--font-body); font-size: 28px; text-anchor: middle; }
+.say[data-on] { fill: #F4F1EC; }
+
+/* ── the footer, inside the frame ── */
+.foot {
+  min-height: 15rem;   /* the tallest state, measured (FS281), so the nav never jumps */
+  margin: 0 clamp(1rem, 2.5vw, 2rem);
+  padding: 1.1rem 0 1.4rem;
+  border-top: 1px solid rgba(244, 241, 236, 0.14);
+  color: var(--color-ink);
+  container-type: inline-size;
+}
+
+.footIn { animation: foot-in 320ms var(--ease-out) both; }
+
+@keyframes foot-in {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: none; }
+}
+
+.fPair { display: grid; align-content: start; gap: 0.45rem; max-width: 34rem; }
+.fPair .fBig { margin-bottom: 0.1rem; }
+
+.fHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.25rem 0.9rem;
+  margin: 0 0 0.75rem;
+  font-family: var(--font-heading);
+  font-size: var(--step-body);
+}
+
+.fPair .fHead { margin: 0; }
+
+.fKick {
+  font-family: var(--font-body);
+  font-size: var(--step-label);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-sage);
+}
+
+.fBig {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: var(--step-statement);
+  line-height: 1.25;
+  text-wrap: balance;
+}
+
+.fNote {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--step-small);
+  line-height: 1.55;
+  text-wrap: balance;
+  opacity: 0.85;
+}
+
+/* what we heard: synthesized scenarios, set apart from quotations */
+.heard {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0.75rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@container (min-width: 600px) {
+  .heard[data-n='2'] { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .heard[data-n='3'] { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+.heard li {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: baseline;
+  gap: 0.6rem;
+  font-family: var(--font-body);
+  font-size: var(--step-small);
+  line-height: 1.55;
+  text-wrap: pretty;
+}
+
+/* the number carries the grouping: no card, no stripe (FS261) */
+.heardN {
+  font-family: var(--font-body);
+  font-size: var(--step-label);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: var(--accent);
+}
+
+.heard { gap: 1.25rem 2rem; }
+
+.node[data-wait] { opacity: 0; transform: scale(0.9); }
+
+/* below ~1300px the map column narrows and the footer stacks: the
+   tallest stacked state measured 287px of content */
+@media (max-width: 1300px) { .foot { min-height: 20.5rem; } }
+
+/* FS271: every state fills the footer: statement left, evidence right */
+.fSplit {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1.25rem 2.5rem;
+}
+
+@container (min-width: 560px) {
+  .fSplit { grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); }
+}
+
+.fPair .fKick { margin: 0; }
+.fSide { display: grid; align-content: start; gap: 0.6rem; }
+.fSide .fKick { margin: 0; }
+
+.fList { display: grid; gap: 0.45rem; margin: 0; padding: 0; list-style: none; }
+
+.fList li {
+  position: relative;
+  padding-left: 1rem;
+  font-family: var(--font-body);
+  font-size: var(--step-small);
+  line-height: 1.45;
+  text-wrap: balance;
+}
+
+.fList li::before {
+  content: '';
+  position: absolute;
+  top: 0.6em;
+  left: 0;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--color-sage);
+}
+
+.fList b { font-weight: 600; }
+.fList[data-stage='found'] li::before { background: #F79C7E; }
+.fList[data-stage='built'] li::before { background: #C5CFA6; }
+
+.fDefs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.7rem 1.5rem; margin: 0; }
+.fDefs dt { font-family: var(--font-heading); font-size: var(--step-body); }
+.fDefs dd { margin: 0.1rem 0 0; font-family: var(--font-body); font-size: var(--step-small); line-height: 1.4; text-wrap: balance; opacity: 0.8; }
+
+.fChain {
+  margin: 0.4rem 0 0;
+  font-family: var(--font-body);
+  font-size: var(--step-label);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  opacity: 0.8;
+}
+
+.fChain .arrow { margin: 0 0.35rem; opacity: 0.6; }
+
+/* FS270: the instruction, on the diagram */
+.hintG { pointer-events: none; animation: hint-in 500ms var(--ease-out) both; }
+.hintG rect { fill: var(--color-plum-soft); }
+.hintG text { fill: #23211F; font-family: var(--font-body); font-size: 30px; font-weight: 600; text-anchor: middle; }
+.cursor path { fill: var(--color-plum-soft); stroke: #2A2624; stroke-width: 2.5; stroke-linejoin: round; }
+.cursor { animation: tap 2.2s var(--ease-in-out) infinite; }
+.ripple { fill: none; stroke: var(--color-plum-soft); stroke-width: 3; transform-box: fill-box; transform-origin: center; animation: ripple 2.2s var(--ease-out) infinite; }
+
+@keyframes hint-in { from { opacity: 0; } to { opacity: 1; } }
+
+@keyframes tap {
+  0%, 100% { transform: translate(14px, 14px); }
+  35%, 55% { transform: translate(0, 0); }
+}
+
+@keyframes ripple {
+  0%, 35% { opacity: 0; transform: scale(0.4); }
+  45% { opacity: 0.9; }
+  100% { opacity: 0; transform: scale(2.6); }
+}
+
+/* nav, below the frame, full width */
+.bottom { margin-top: 0.75rem; }
+.navWide { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; }
+
+.enlarge {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(244, 241, 236, 0.1);
+  color: #F4F1EC;
+  cursor: pointer;
+}
+
+.enlarge svg { width: 13px; height: 13px; fill: none; stroke: currentColor; stroke-width: 1.6; }
+.enlarge:focus-visible { outline: 2px solid var(--color-sage); outline-offset: 2px; }
+
+.enlargeInline {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(244, 241, 236, 0.1);
+  color: #F4F1EC;
+  cursor: pointer;
+}
+
+.enlargeInline svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 1.6; }
+.enlargeInline:focus-visible { outline: 2px solid var(--color-sage); outline-offset: 2px; }
+
+/* ── FS287: phones ─────────────────────────────────────────────── */
+.short { display: none; }
+.swipe { display: none; }
+
+@media (max-width: 640px) {
+  .long { display: none; }
+  .short { display: inline; }
+
+  /* the map keeps a readable scale and pans sideways */
+  .maps, .stage, .bottom { min-width: 0; max-width: 100%; }
+
+  .canvas {
+    width: 100%;
+    max-width: 100%;
+    aspect-ratio: auto;
+    padding: 0.75rem 0 0.25rem;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;
+  }
+
+  .canvas::-webkit-scrollbar { display: none; }
+  .canvas .svg { width: 720px; max-width: none; height: 448px; padding: 0 0.75rem; }
+
+  .swipe {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    margin: 0 1rem 0.75rem;
+  }
+
+  .swipe p {
+    margin: 0;
+    font-family: var(--font-body);
+    font-size: var(--step-label);
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: var(--color-ink);
+    opacity: 0.65;
+  }
+
+  .swipe span { margin: 0 0.35rem; }
+
+  /* the sheet's floating Close sits top-right: Enlarge moves into the swipe row */
+  .enlarge { display: none; }
+
+  .foot { min-height: 0; margin: 0 1rem; }
+  .fDefs { grid-template-columns: minmax(0, 1fr); gap: 0.5rem; }
+  .fDefs div { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 0.6rem; }
+  .fDefs dd { margin: 0; }
+}
+
+/* full screen */
+.dialog {
+  inset: 0;
+  margin: auto;   /* the site reset strips the dialog's own centering */
+  width: min(94vw, 150vh);
+  max-width: none;
+  height: fit-content;
+  max-height: 94vh;
+  padding: 3.25rem 2rem 2rem;
+  overflow: auto;
+  border: 0;
+  border-radius: 4px;
+  background:
+    linear-gradient(135deg, rgba(197, 207, 166, 0.14) 5%, rgba(244, 241, 236, 0.06) 50%, rgba(247, 156, 126, 0.1) 92%),
+    #2A2729;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
+}
+
+.dialog::backdrop { background: rgba(10, 9, 12, 0.78); }
+
+.close {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(244, 241, 236, 0.1);
+  color: #F4F1EC;
+  cursor: pointer;
+}
+
+.close svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 1.8; }
+.close:focus-visible { outline: 2px solid var(--color-sage); outline-offset: 2px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .node, .disc, .layer, .layer[data-on], .fade { transition: none; }
+  .name, .footIn, .cursor, .ripple { animation: none; }
+}

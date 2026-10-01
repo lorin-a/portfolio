@@ -40,6 +40,9 @@ npm-debug.log*
 *.MOV
 *.mp4
 *.MP4
+# exception: the dashboard interaction clips (FS217–FS220), small web encodes
+# (under 1.5 MB each) served from /public; everything else stays external
+!public/video/gs-dashboard/view-*.mp4
 
 # Large audio files (use external hosting)
 *.mp3
@@ -86,8 +89,13 @@ public/images/groundswell/Mockup-2_ Sliding Barn Door-2.jpg
 public/images/groundswell/gs-hero.jpg
 public/images/groundswell/*.png
 
+# git worktrees created by the agent harness
+.claude/worktrees/
+
 # Internal process docs — local working material, never public
 STATUS.md
+docs/DECK_SYSTEM.md
+docs/deck-system/
 docs/WORKING_WITH_LORIN.md
 docs/AGENT_PROTOCOL.md
 docs/archive/

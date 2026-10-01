@@ -1,0 +1,469 @@
+/* The folder sheet body, on THE SHEET SYSTEM (defined on .inner in
+   ProjectSheet.module.css).
+
+   ONE GRID (2026-09-30, her notes FS37/FS40): twelve columns, one
+   gutter. The sections keep their own shapes; what they share is the
+   lines. Every span is a multiple of four or six:
+     · the frame row ............ 4 · 4 · 4
+     · cover, components, lesson,
+       colophon, poem band ...... 4 | 8  (the rail is exactly one third)
+     · the closing pair ......... 6 | 6
+   So the rail's right edge, the first third of the frame row, and the
+   poem's text column all fall on the same vertical line. Below 1000px
+   (900px for the two text rows) everything stacks into one column. */
+
+/* ── The one label recipe — every label on the sheet is this ─────── */
+
+.frameBlock h3,
+.componentNum {
+  display: block;
+  margin: 0 0 var(--flow-1);
+  font-family: var(--font-body);
+  font-size: var(--step-label);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-sage);
+}
+
+/* ══ FRAME — one row of three, equal and matched ═══════════════════ */
+
+.frame {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--flow-3);
+  margin-top: var(--hero-gap);
+  padding-top: var(--hero-gap);   /* equals the gap above the rule (FS94) */
+  border-top: var(--rule);
+  border-image: var(--rule-grad) 1;
+}
+
+@media (min-width: 900px) {
+  .frame {
+    grid-template-columns: var(--grid);
+    column-gap: var(--gap-col);
+  }
+
+  .frameBlock {
+    grid-column: span 4;
+  }
+}
+
+/* These are <section>s, and globals.css pads every section; reset it so
+   the rule's gap below equals its gap above (FS94). */
+.frameBlock {
+  min-width: 0;
+  padding: 0;
+}
+
+.frameBlock p {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: var(--step-statement);
+  font-weight: 300;
+  line-height: 1.45;
+  color: var(--color-ink);
+  text-wrap: pretty;
+}
+
+/* EQUAL BREAKS (FS132): every page-break rule in the folder has the same
+   space above it and below it, --hero-gap (64px), with no section adding
+   its own margin beneath; adjacent margins collapse to that one value. */
+
+/* ══ COMPONENTS — the rail and the work, identical every time ════════ */
+
+.component {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--flow-2);
+  margin-top: var(--hero-gap);
+  padding-top: var(--hero-gap);
+  border-top: var(--rule);
+  border-image: var(--rule-grad) 1;
+}
+
+@media (min-width: 1000px) {
+  .component {
+    grid-template-columns: var(--grid);
+    column-gap: var(--gap-col);
+    row-gap: var(--flow-3);
+  }
+
+  .rail {
+    grid-column: span 4;
+  }
+
+  .work {
+    grid-column: span 8;
+  align-content: start;   /* the gallery frame never stretches to the rail's height */
+}
+}
+
+.rail {
+  min-width: 0;
+}
+
+/* Sticky, so a long gallery never leaves its words behind. */
+@media (min-width: 1000px) {
+  .railInner {
+    position: sticky;
+    top: var(--flow-2);
+  }
+}
+
+.componentNum {
+  font-variant-numeric: tabular-nums;
+}
+
+.componentName {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: var(--step-heading);
+  font-weight: 400;
+  line-height: 1.12;
+  color: var(--color-ink);
+  text-wrap: balance;
+}
+
+.gated {
+  display: inline-block;
+  margin-top: var(--flow-1);
+  padding: 0.25rem 0.625rem;
+  border: var(--rule);
+  border-radius: var(--radius-pill);
+  font-family: var(--font-body);
+  font-size: var(--step-label);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-ink);
+  white-space: nowrap;
+}
+
+.componentBody {
+  margin: var(--flow-2) 0 0;
+  font-family: var(--font-body);
+  font-size: var(--step-body);
+  line-height: 1.65;
+  color: var(--color-ink);
+  text-wrap: pretty;
+}
+
+/* Her contribution, on a card of the same loose-leaf as the cover's fact
+   sheet (Paper.module.css, her note FS66). One ruled line of top margin on
+   a card this small; the label and her line sit on the rules. */
+.mine {
+  --top: var(--line);
+  margin-top: var(--flow-3);
+}
+
+.mineText {
+  margin: 0;
+}
+
+/* Real loose-leaf spaces its holes far apart; a strip this short would
+   only carry one of them. */
+.mine > span i:not(:first-child) {
+  display: none;
+}
+
+.mine > span {
+  justify-content: center;
+}
+
+.mineBody {
+  display: block;
+  font-family: var(--font-body);   /* regular body text (FS135) */
+  font-size: var(--step-small);
+  line-height: var(--line);
+  text-wrap: pretty;
+}
+
+.work {
+  display: grid;
+  gap: var(--flow-3);
+  min-width: 0;
+}
+
+/* The poem band spans the whole component, rail and work together. */
+.band {
+  min-width: 0;
+}
+
+@media (min-width: 1000px) {
+  .band {
+    grid-column: 1 / -1;
+  }
+}
+
+/* ══ CLOSE — three glass cards (FS129) ════════════════════════════════
+   What changed · My role, in full · The biggest lesson, each on the
+   brand glass (the logo's gradient over a smoky base, a light edge), on
+   the 4 · 4 · 4 grid, equal heights. The lesson sets its words in the
+   serif to stay the strongest voice of the three. */
+
+.close {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--gap-col);
+  margin-top: var(--hero-gap);
+  padding-top: var(--hero-gap);
+  border-top: var(--rule);
+  border-image: var(--rule-grad) 1;
+}
+
+@media (min-width: 900px) {
+  .close {
+    grid-template-columns: var(--grid);
+    align-items: stretch;
+  }
+
+  .closeCard {
+    grid-column: span 4;
+  }
+}
+
+.closeCard {
+  min-width: 0;
+  padding: var(--flow-2);
+  border-radius: 3px;
+  background:
+    linear-gradient(135deg,
+      rgba(197, 207, 166, 0.16) 5%,
+      rgba(199, 170, 209, 0.13) 45%,
+      rgba(247, 156, 126, 0.11) 88%),
+    rgba(28, 26, 30, 0.35);
+  box-shadow:
+    inset 0 0 0 1px rgba(244, 241, 236, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22),
+    0 18px 38px rgba(0, 0, 0, 0.3);
+}
+
+.closeCard h3 {
+  display: block;
+  margin: 0 0 var(--flow-1);
+  font-family: var(--font-body);
+  font-size: var(--step-label);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-sage);
+}
+
+.closeCard p {
+  margin: 0 0 1rem;
+  font-family: var(--font-body);
+  font-size: var(--step-small);
+  line-height: 1.65;
+  color: var(--color-ink);
+  text-wrap: pretty;
+}
+
+.closeCard p:last-child {
+  margin-bottom: 0;
+}
+
+.lessonCard p {
+  font-family: var(--font-heading);
+  font-size: var(--step-body);
+  line-height: 1.55;
+}
+
+/* ══ THE TEAM — three columns (FS155) ═══════════════════════════════ */
+
+.colophon {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--flow-3) var(--gap-col);
+  margin-top: var(--hero-gap);
+  padding-top: var(--hero-gap);
+  border-top: 1px solid var(--sheet-hair);
+  border-image: var(--rule-grad) 1;
+}
+
+@media (min-width: 900px) {
+  .colophon {
+    grid-template-columns: var(--grid);
+  }
+
+  .creditCol {
+    grid-column: span 4;
+  }
+}
+
+.creditCol {
+  display: grid;
+  align-content: start;
+  gap: var(--flow-2);
+  margin: 0;
+}
+
+.creditCol dt {
+  margin: 0 0 0.25rem;
+  font-family: var(--font-body);
+  font-size: var(--step-label);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-sage);
+}
+
+.creditCol dd {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--step-small);
+  line-height: 1.6;
+  color: var(--color-ink);
+  text-wrap: pretty;
+}
+
+/* ══ ACKNOWLEDGEMENTS (FS187) ═════════════════════════════════════════
+   FS195: a 3 × 3 grid. Row one, three columns of people (name at full
+   ink, role beneath at the label step); row two, Acknowledgements,
+   Donors & Partners, and Funding as matched paragraphs. */
+
+.thanks {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--flow-3) var(--gap-col);
+  margin-top: var(--hero-gap);
+  padding-top: var(--hero-gap);
+  border-top: 1px solid var(--sheet-hair);
+  border-image: var(--rule-grad) 1;
+}
+
+@media (min-width: 900px) {
+  .thanks { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+.thanksColTitle {
+  margin: 0 0 var(--flow-1);
+  font-family: var(--font-body);
+  font-size: var(--step-label);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-sage);
+}
+
+/* FS190: no rule under the column titles; space and the sage label group
+   each column (containment over lines) */
+.thanksColTitle { margin-bottom: var(--flow-2); }
+
+/* FS195: the second row of three: label + one short paragraph each */
+.thanksRow {
+  min-width: 0;
+  padding-top: var(--flow-3);
+  border-top: 1px solid var(--sheet-hair);
+}
+
+.thanksText {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--step-small);
+  line-height: 1.6;
+  color: var(--color-ink);
+  text-wrap: pretty;
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.thanksNote {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--step-small);
+  line-height: 1.6;
+  color: var(--color-ink);
+  text-wrap: pretty;
+}
+
+.thanksList {
+  display: grid;
+  gap: var(--flow-1);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.thanksName {
+  display: block;
+  font-family: var(--font-body);
+  font-size: var(--step-small);
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--color-ink);
+}
+
+.thanksRole {
+  display: block;
+  font-family: var(--font-body);
+  font-size: var(--step-label);
+  line-height: 1.5;
+  color: var(--color-ink);
+  text-wrap: pretty;
+}
+
+.thanksNote {
+  margin-top: var(--flow-2);
+  font-size: var(--step-label);
+}
+
+.thanksClosing {
+  max-width: 52rem;
+  font-style: italic;
+}
+
+/* ══ BEHIND THE SCENES — research and production (FS131) ══════════════ */
+
+.process {
+  margin-top: var(--hero-gap);
+  padding-top: var(--hero-gap);
+  border-top: var(--rule);
+  border-image: var(--rule-grad) 1;
+}
+
+.processTitle {
+  margin: 0 0 var(--flow-3);
+  font-family: var(--font-heading);
+  font-size: var(--step-heading);
+  font-weight: 400;
+  line-height: 1.12;
+  color: var(--color-ink);
+}
+
+.processRow {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--flow-3) var(--gap-col);
+}
+
+@media (min-width: 900px) {
+  .processRow {
+    grid-template-columns: var(--grid);
+  }
+
+  .phase {
+    grid-column: span 6;
+  }
+}
+
+.phase {
+  min-width: 0;
+}
+
+.phaseLabel {
+  display: block;
+  margin-bottom: var(--flow-1);
+  font-family: var(--font-body);
+  font-size: var(--step-label);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-sage);
+}

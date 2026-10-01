@@ -200,16 +200,6 @@
   border-radius: var(--radius-sm);
 }
 
-.bylineLinkDisabled {
-  font-family: var(--font-body);
-  font-size: var(--text-body-small);
-  font-weight: var(--weight-label);
-  letter-spacing: 0.02em;
-  color: var(--color-ink-light);
-  opacity: 0.4;
-  cursor: default;
-}
-
 .bylineLinkSep {
   color: var(--color-ink-faint);
   font-size: var(--text-body-small);

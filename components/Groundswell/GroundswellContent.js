@@ -746,7 +746,7 @@ export default function GroundswellContent() {
           <div className={styles.stickyContentLight}>
             <h2 className={styles.stickyTitleLight}>The Making</h2>
             <p className={styles.stickyBodyLightBold}>
-              Over a 10-week production sprint, we turned concept into installation, backed by roughly $30,000 in donated materials and services.
+              Over a 10-week production sprint, we turned concept into installation, backed by over $40,000 in donated materials and services.
             </p>
             <p className={styles.stickyBodyLight}>
               I led donor outreach and secured those assets and partnerships: the pod itself, the woodworking elements added to it, the sensor within it, the ceramic finger labyrinths, and the Schlage door locks. It was my meditation and shadow-work teacher, Catherine Liggett, who volunteered to co-edit, author, and record the meditations used in the study, which was a full-circle moment and a deeply generous offering. I drafted first-round copy for nearly all of the project, including the internal emails announcing it. I co-led the playtesting sessions, helped with the physical build and installation, and brainstormed and drafted iterations and concepts. Working remotely, outside of the two weeks of in-person install, I was mostly focused on project coordination, documentation, and strategy.

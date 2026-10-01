@@ -1,0 +1,789 @@
+/* ===========================================
+   PROJECT SHEET — the folder, opened.
+
+   Outline aesthetic carried from FileStack: a page-coloured fill and a
+   non-scaling hairline stroke. The sheet is inset on the sides and top
+   and runs off the bottom edge, so it reads as one folder lifted out of
+   the stack onto a ground rather than a rectangle hugging the browser.
+   =========================================== */
+
+.scrim {
+  position: fixed;
+  inset: 0;
+  /* Above the site nav (100), below the skip link (1000), which must stay
+     reachable. */
+  z-index: 400;
+  background: rgba(20, 19, 17, 0.72);
+  opacity: 0;
+  transition: opacity var(--motion-medium) var(--ease-in-out);
+}
+
+.scrim[data-on='true'] {
+  opacity: 1;
+}
+
+.sheet {
+  position: fixed;
+  z-index: 500;
+  will-change: left, top, width, height;
+}
+
+.frame {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.frameFill {
+  fill: var(--color-cream);
+}
+
+.frameStroke {
+  fill: none;
+  stroke: var(--color-ink);
+  stroke-width: 2.25;
+  stroke-linejoin: round;
+}
+
+/* ===========================================
+   THE TAB — identity, not navigation. It names the folder the way a tab
+   on a filed folder does. Absolutely positioned because its bounds come
+   from the same numbers that draw the silhouette; CSS layout can't be
+   allowed to disagree with the path.
+   =========================================== */
+
+.folderTab {
+  position: absolute;
+  top: 0;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  padding: 0 16px;
+  pointer-events: none;
+  overflow: hidden;
+  opacity: 0;
+  transition: opacity var(--motion-fast) var(--ease-out);
+}
+
+.sheet[data-landed='true'] .folderTab {
+  opacity: 1;
+}
+
+.folderTabText {
+  font-family: var(--font-body);
+  font-size: 0.875rem; /* = --step-label; the tab sits outside .inner */
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-ink);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ===========================================
+   CLOSE — inside the folder, top right, on the content's right edge
+   (her note FS21: inside the frame rather than riding the outline).
+   =========================================== */
+
+.close {
+  position: absolute;
+  z-index: 4;
+  /* Inside the folder: below the tab line, on the content's right edge. */
+  top: calc(52px + 1.25rem);
+  right: clamp(1.25rem, 4vw, 4rem);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 44px;
+  padding: 0.4rem 0.85rem;
+  background: var(--color-cream);
+  color: var(--color-ink);
+  border: 1.5px solid var(--color-ink);
+  border-radius: var(--radius-pill);
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  opacity: 0;
+  transition:
+    opacity var(--motion-fast) var(--ease-out),
+    background var(--motion-fast) var(--ease-out),
+    color var(--motion-fast) var(--ease-out);
+}
+
+.sheet[data-landed='true'] .close {
+  opacity: 1;
+}
+
+.close svg {
+  width: 14px;
+  height: 14px;
+  display: block;
+  overflow: visible;
+}
+
+.close .c1,
+.close .c2,
+.close .c3,
+.close .c4 {
+  transition: transform var(--motion-fast) var(--ease-out);
+}
+
+@media (hover: hover) {
+  .close:hover {
+    background: var(--color-ink);
+    color: var(--color-cream);
+  }
+
+  .close:hover .c1 { transform: translate(2px, 2px); }
+  .close:hover .c2 { transform: translate(-2px, 2px); }
+  .close:hover .c3 { transform: translate(-2px, -2px); }
+  .close:hover .c4 { transform: translate(2px, -2px); }
+}
+
+.close:focus-visible {
+  outline: 2px solid var(--color-sage);
+  outline-offset: 3px;
+}
+
+/* Narrow: an icon-only 44px circle, so it never sits over a line of text. */
+@media (max-width: 720px) {
+  .close {
+    justify-content: center;
+    width: 44px;
+    padding: 0;
+  }
+
+  .closeLabel,
+  .esc {
+    display: none;
+  }
+}
+
+.esc {
+  border: 1px solid currentColor;
+  border-radius: var(--radius-xs);
+  padding: 0.05rem 0.3rem;
+  opacity: 0.6;
+}
+
+/* ===========================================
+   BODY
+   =========================================== */
+
+.body {
+  position: absolute;
+  /* its own stacking layer, below the close button (z 4): nothing inside
+     the sheet, however high its own z-index, can rise over the close
+     (FS115) */
+  z-index: 1;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  opacity: 0;
+  transition: opacity var(--motion-fast) var(--ease-out);
+}
+
+.sheet[data-landed='true'] .body {
+  opacity: 1;
+}
+
+.inner {
+  /* Round three (2026-09-30): desktop first and full width. The gutter is
+     one number shared with the tab and the close, so the folder's tab,
+     the close, and the content's left and right edges all register. */
+  --gutter: clamp(1.25rem, 4vw, 4rem);
+  max-width: 120rem;
+  margin: 0 auto;
+  padding: 5.5rem var(--gutter) 6rem;
+
+  /* ══ THE SHEET SYSTEM ═══════════════════════════════════════════════
+     One grid, one type scale, one rule, one label recipe, four rhythm
+     values. Scoped to the sheet: nothing here reaches the rest of the
+     site. Inherited by SheetContent + SheetMedia.
+
+     TYPE SCALE (2026-09-30, FS38/FS39) — six steps, each about 1.25× the
+     last, each with one job:
+       label 14 · small 16 · body 19 · statement 24 · heading 32 · display 68
+     (sizes at 1440; body and up scale gently with the window). */
+  --step-label: 0.875rem;                               /* labels, folios, counters */
+  --step-small: 1rem;                                   /* captions, metadata, credits */
+  --step-body: clamp(1.0625rem, 0.875rem + 0.35vw, 1.1875rem); /* all prose */
+  --step-statement: clamp(1.375rem, 1.7vw, 1.625rem);   /* the frame row, the lesson, the poem */
+  --step-heading: clamp(1.625rem, 2.2vw, 2.125rem);     /* component names */
+  --step-display: clamp(2.75rem, 4.7vw, 5.5rem);        /* the cover title: fits one third */
+
+  /* THE GRID — twelve columns, one gutter. Sections span 4, 6, 8 or 12. */
+  --grid: repeat(12, minmax(0, 1fr));
+  --gap-col: clamp(2rem, 3.5vw, 4rem);            /* column gutter         */
+  --gap-media: 1rem;                              /* media rows            */
+  --strip-h: clamp(15rem, 26vw, 24rem);           /* filmstrip height      */
+  --flow-1: 0.75rem;                              /* label → content       */
+  --flow-2: 1.5rem;                               /* within a section      */
+  --flow-3: 3rem;                                 /* block → block         */
+  --flow-4: clamp(4rem, 7vw, 7rem);               /* section → section     */
+  --rule: 1px solid var(--color-ink);             /* the one rule          */
+  --hero-gap: 4rem;                               /* either side of the rule under the hero */
+  /* the page-break rules carry the flower logo's gradient (FS124); the
+     light theme's deeper version here, the dark theme's below */
+  --rule-grad: linear-gradient(90deg, #8a9263, #9f84a9 50%, #c97d64);
+  --sheet-hair: color-mix(in srgb, var(--color-ink) 18%, transparent);
+  --sheet-mat: color-mix(in srgb, var(--color-ink) 6%, var(--color-cream));
+  --sheet-field: color-mix(in srgb, var(--color-sage) 14%, var(--color-cream));
+  /* Image overlays (cover + featured articles) are dark in either theme,
+     so their text is a fixed light ink, not the theme's ink. */
+  --overlay-ink: #f4f1ec;
+  --overlay-scrim: linear-gradient(
+    to top,
+    rgba(16, 15, 13, 0.9) 0%,
+    rgba(16, 15, 13, 0.78) 45%,
+    rgba(16, 15, 13, 0.55) 100%
+  );
+}
+
+/* FS98: in the dark theme the sheet's green is the brighter soft sage, the
+   same #C5CFA6 the glass labels use (≈10:1 on the charcoal). The light
+   theme keeps the darker sage, which is what passes on cream. */
+:root[data-theme='dark'] .inner {
+  --color-sage: var(--color-sage-soft);
+  --rule-grad: linear-gradient(90deg, #c5cfa6, #c7aad1 50%, #f79c7e);
+}
+
+.masthead {
+  min-height: 5.5rem;
+}
+
+.num {
+  display: block;
+  font-family: var(--font-heading);
+  font-size: clamp(14px, 1.5vw, 20px);
+  font-weight: 340;
+  font-variation-settings: 'SOFT' 100, 'WONK' 1;
+  color: var(--color-ink-faint);
+  margin-bottom: var(--space-xs);
+}
+
+.title {
+  font-family: var(--font-heading);
+  font-size: clamp(28px, 4vw, 56px);
+  font-weight: 200;
+  font-variation-settings: 'SOFT' 100, 'WONK' 1;
+  line-height: 1.05;
+  color: var(--color-ink);
+  margin: 0 0 var(--space-xs);
+  text-wrap: balance;
+}
+
+.tagline {
+  font-family: var(--font-heading);
+  font-size: clamp(16px, 2vw, 24px);
+  font-weight: 300;
+  font-style: italic;
+  font-variation-settings: 'SOFT' 100, 'WONK' 1;
+  color: var(--color-ink);
+  line-height: 1.3;
+  margin: 0;
+  text-wrap: pretty;
+}
+
+/* ── metadata ─────────────────────────────── */
+
+.meta {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+  gap: 0 2rem;
+  margin: 2rem 0 0;
+  border-top: 1.5px solid var(--color-ink);
+}
+
+.meta div {
+  padding: 0.9rem 0 1rem;
+}
+
+.meta dt {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--color-ink);
+  font-weight: 700;
+}
+
+.meta dd {
+  margin: 0.3rem 0 0;
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
+  color: var(--color-ink-light);
+  text-wrap: pretty;
+}
+
+/* ── the four statements ──────────────────── */
+
+.statements {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 3rem;
+  margin-top: 0.5rem;
+}
+
+.statement {
+  padding: 1.6rem 0 1.7rem;
+  border-top: 1px solid var(--color-border-soft, rgba(44, 44, 44, 0.14));
+}
+
+.statementLabel {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-sage);
+  font-weight: 700;
+  margin: 0 0 0.55rem;
+}
+
+.statementBody {
+  font-family: var(--font-heading);
+  font-size: clamp(1.125rem, 1.35vw, 1.3125rem);
+  font-variation-settings: 'SOFT' 100, 'WONK' 0;
+  line-height: 1.5;
+  color: var(--color-ink);
+  margin: 0;
+  text-wrap: pretty;
+}
+
+/* Unwritten copy. Deliberately quiet — a placeholder is not a warning. */
+.todo {
+  color: var(--color-ink-faint);
+}
+
+.todo b {
+  display: block;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  opacity: 0.75;
+  margin-bottom: 0.35rem;
+}
+
+/* ── the work ─────────────────────────────── */
+
+.facet {
+  padding-top: 2.5rem;
+  scroll-margin-top: 1rem;
+}
+
+.facetHead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1.5px solid var(--color-ink);
+  margin-bottom: 1.5rem;
+}
+
+.facetHead h3 {
+  font-family: var(--font-heading);
+  font-size: clamp(20px, 2vw, 26px);
+  font-weight: 300;
+  font-variation-settings: 'SOFT' 100, 'WONK' 1;
+  color: var(--color-ink);
+  margin: 0;
+}
+
+.count {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-ink-faint);
+  white-space: nowrap;
+}
+
+.lead {
+  margin: 0 0 1.5rem;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(13rem, 1fr));
+  gap: 1.25rem;
+}
+
+.grid figure {
+  margin: 0;
+}
+
+.mediaBox {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  background: var(--color-cream-dark);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.grid .mediaBox {
+  aspect-ratio: 4 / 3;
+}
+
+.media {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.mediaGated {
+  transform: scale(1.04);
+  filter: blur(4px) saturate(0.95);
+}
+
+.gatedNote {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-ink-faint);
+  margin: 0.5rem 0 0;
+}
+
+.facet figcaption {
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  color: var(--color-ink-light);
+  margin-top: 0.55rem;
+  text-wrap: pretty;
+}
+
+.deeper {
+  margin-top: 3.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--color-ink);
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.deeperLabel {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-ink);
+  font-weight: 700;
+}
+
+.deeper a {
+  font-family: var(--font-heading);
+  font-size: clamp(16px, 1.5vw, 20px);
+  font-weight: 300;
+  font-style: italic;
+  font-variation-settings: 'SOFT' 100, 'WONK' 1;
+  color: var(--color-ink);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+/* ===========================================
+   FEATURED ARTICLES — press clippings (FS127). A heading that names it
+   as press; each article a glass clipping on the 4 · 4 · 4 grid: the
+   page in full colour on top, then the publication as a masthead, the
+   publisher and date, the headline, and the call.
+   =========================================== */
+
+.press {
+  margin-top: var(--hero-gap);   /* equal breaks (FS132) */
+  padding-top: var(--hero-gap);
+  border-top: var(--rule);
+  border-image: var(--rule-grad) 1;
+}
+
+.pressHeadRow {
+  margin-bottom: var(--flow-3);
+}
+
+.pressKicker {
+  display: block;
+  margin-bottom: var(--flow-1);
+  font-family: var(--font-body);
+  font-size: var(--step-label);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-sage);
+}
+
+.pressHead {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: var(--step-heading);
+  font-weight: 400;
+  line-height: 1.12;
+  color: var(--color-ink);
+}
+
+.pressRow {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--flow-3) var(--gap-col);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (min-width: 900px) {
+  .pressRow {
+    grid-template-columns: var(--grid);
+  }
+
+  .pressRow > li {
+    grid-column: span 4;
+  }
+}
+
+.pressCard {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 4.5% 4.5% 0;
+  border-radius: 3px;
+  color: var(--color-ink);
+  text-decoration: none;
+  background:
+    linear-gradient(135deg,
+      rgba(197, 207, 166, 0.2) 5%,
+      rgba(199, 170, 209, 0.17) 45%,
+      rgba(247, 156, 126, 0.15) 88%),
+    rgba(28, 26, 30, 0.5);
+  box-shadow:
+    inset 0 0 0 1px rgba(244, 241, 236, 0.24),
+    inset 0 1px 0 rgba(255, 255, 255, 0.26),
+    0 20px 42px rgba(0, 0, 0, 0.36);
+  transition: transform var(--motion-medium) var(--ease-out);
+}
+
+.pressMedia {
+  display: block;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  background: #141311;
+}
+
+.pressImg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+  transition: transform var(--motion-medium) var(--ease-out);
+}
+
+.pressBody {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 0.5rem;
+  padding: var(--flow-2) 0.25rem var(--flow-2);
+}
+
+/* The publication, set like a masthead. */
+.pressMasthead {
+  font-family: var(--font-heading);
+  font-size: var(--step-statement);
+  font-weight: 400;
+  line-height: 1.15;
+  color: var(--color-ink);
+}
+
+.pressMeta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1rem;   /* publisher and date wrap as whole items */
+  font-family: var(--font-body);
+  font-size: var(--step-label);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-sage);
+}
+
+.pressTitle {
+  margin-top: 0.25rem;
+  font-family: var(--font-body);
+  font-size: var(--step-small);
+  line-height: 1.5;
+  color: var(--color-ink);
+  text-wrap: pretty;
+}
+
+.pressCta {
+  display: inline-flex;
+  align-self: flex-start;
+  align-items: center;
+  min-height: 44px;
+  margin-top: auto;
+  font-family: var(--font-body);
+  font-size: var(--step-label);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-ink);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.35em;
+}
+
+@media (hover: hover) {
+  .pressCard:hover {
+    transform: translateY(-4px);
+  }
+
+  .pressCard:hover .pressImg {
+    transform: scale(1.03);
+  }
+}
+
+.pressCard:focus-visible {
+  outline: 2px solid var(--color-sage);
+  outline-offset: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pressCard,
+  .pressImg {
+    transition: none;
+  }
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+
+/* ===========================================
+   CONTENTS — the sections. A list, not tabs. Sticks to the top of the
+   reading area once the work begins so you always know where you are.
+   =========================================== */
+
+.contents {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 2rem;
+  margin-top: 1.5rem;
+  padding: 0.9rem 0;
+  background: var(--color-cream);
+  border-top: 1.5px solid var(--color-ink);
+  border-bottom: 1px solid var(--color-border-soft, rgba(44, 44, 44, 0.14));
+}
+
+.contentsItem {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  min-height: 44px;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--color-ink);
+  opacity: 0.45;
+  transition: opacity var(--motion-fast) var(--ease-out);
+}
+
+.contentsItem[aria-current='true'] {
+  opacity: 1;
+  font-weight: 700;
+}
+
+@media (hover: hover) {
+  .contentsItem:hover {
+    opacity: 0.8;
+  }
+}
+
+.contentsItem:focus-visible {
+  outline: 2px solid var(--color-ink);
+  outline-offset: 4px;
+  border-radius: var(--radius-sm);
+}
+
+.contentsNum {
+  font-variant-numeric: tabular-nums;
+  opacity: 0.6;
+  font-weight: 500;
+}
+
+/* ===========================================
+   NARROW — the folder's tab row can't hold three labels, so the tabs
+   become a plain scrolling nav and the silhouette keeps a single tab.
+   =========================================== */
+
+@media (max-width: 720px) {
+  .statements {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .inner {
+    /* room for the close button above the first thing on the sheet */
+    padding-top: 5rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scrim,
+  .sheet,
+  .folderTab,
+  .body,
+  .close,
+  .contents,
+  .contentsItem,
+  .close .c1,
+  .close .c2,
+  .close .c3,
+  .close .c4 {
+    transition: none;
+  }
+}
+
+/* Narrow: the tabs keep their numerals only. The section headings in the
+   body carry the names, so nothing is lost and all three stay reachable. */
+@media (max-width: 720px) {
+  .contents {
+    gap: 0 1.25rem;
+  }
+
+  .contentsLabel {
+    display: none;
+  }
+
+  .contentsItem {
+    font-size: 0.9375rem;
+  }
+}

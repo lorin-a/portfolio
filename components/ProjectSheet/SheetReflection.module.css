@@ -1,0 +1,161 @@
+/* THE REFLECTION (FS164–FS186): the lab's C, refined (FS185). Consumes
+   the sheet system tokens from ProjectSheet .inner. */
+
+.reflection {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--gap-col);
+  margin-top: var(--hero-gap);
+  padding-top: var(--hero-gap);
+  border-top: var(--rule);
+  border-image: var(--rule-grad) 1;
+}
+
+/* three across only when each card can hold its shift on one line */
+@media (min-width: 1100px) {
+  .reflection {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-rows: auto 1fr;
+    row-gap: 0;
+  }
+
+  .card {
+    display: grid;
+    grid-row: span 2;
+    grid-template-rows: subgrid;
+    row-gap: 0;
+    align-content: start;
+  }
+}
+
+.card {
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid transparent;
+  border-radius: var(--radius-lg);
+  background:
+    linear-gradient(var(--color-cream), var(--color-cream)) padding-box,
+    linear-gradient(135deg,
+      var(--color-sage-soft) 5%,
+      var(--color-plum-soft) 50%,
+      var(--color-terracotta-soft) 92%) border-box;
+}
+
+.card[data-practice='sense'] { --accent: var(--color-sage-soft); --mark-scale: 0.86; }
+.card[data-practice='weave'] { --accent: var(--color-plum-soft); --mark-scale: 1.12; }
+.card[data-practice='shape'] { --accent: var(--color-terracotta-soft); --mark-scale: 1; }
+
+/* the header band: a vertical wash of the practice colour */
+.head {
+  container-type: inline-size;   /* the shift sizes to this width */
+  display: grid;
+  grid-template-columns: 2.5rem 1fr;
+  column-gap: 0.75rem;
+  align-items: center;
+  padding: 2rem 2rem 1.5rem;
+  background: linear-gradient(180deg,
+    color-mix(in srgb, var(--accent) 20%, transparent) 0%,
+    color-mix(in srgb, var(--accent) 7%, transparent) 70%,
+    transparent 100%);
+}
+
+/* the mark, held square at any size (FS186: the shared mark style has a
+   48px minimum height, which stretched the Sense dots into an oval) */
+.mark {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  scale: var(--mark-scale, 1);
+}
+
+.mark > * {
+  width: 100% !important;
+  height: 100% !important;
+  min-width: 0;
+  min-height: 0;
+}
+
+.label {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--step-label);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-ink);
+}
+
+/* the mark already names the practice; the word is for screen readers */
+.verb {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* the shift: always one line, sized to the card; no grey text (FS7) */
+.shift {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: baseline;
+  gap: 0.45em;
+  margin: 1.5rem 0 0;
+  font-family: var(--font-heading);
+  font-size: clamp(0.95rem, 5.9cqi, 1.625rem);
+  line-height: 1.2;
+  white-space: nowrap;
+  color: var(--color-ink);
+}
+
+.to { color: var(--accent); }
+
+.arrow {
+  translate: 0 -0.06em;
+  font-family: var(--font-body);
+  font-size: 0.85em;
+  color: var(--accent);
+}
+
+.list {
+  margin: 0;
+  padding: 1.5rem 2rem 2rem;
+  list-style: none;
+  font-family: var(--font-body);
+  font-size: var(--step-small);
+  line-height: 1.5;
+  color: var(--color-ink);
+}
+
+.list li {
+  position: relative;
+  padding-left: 1.1rem;
+  text-wrap: pretty;
+}
+
+.list li + li { margin-top: 1rem; }
+
+.list li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.62em;
+  width: 0.375rem;
+  height: 0.375rem;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.runHead {
+  font-weight: 600;
+  color: var(--accent);
+}
+
+@media (max-width: 599px) {
+  .head { padding: 1.5rem 1.5rem 1.25rem; }
+  .list { padding: 1.25rem 1.5rem 1.5rem; }
+}

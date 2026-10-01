@@ -1,4 +1,5 @@
 import Hero from '@/components/Hero/HeroScatter'
+import groundswellSheet from '@/content/sheets/groundswell'
 import ProjectPreview from '@/components/ProjectPreview/ProjectPreview'
 import AboutSection from '@/components/AboutSection/AboutSection'
 import { cloudImg, cloudVideo, HOME_IMAGES, HOME_VIDEOS, GS_IMAGES, GS_VIDEOS, WHELM_IMAGES, WHELM_VIDEOS } from '@/lib/cloudinary'
@@ -60,6 +61,7 @@ export default function Home() {
             { src: cloudVideo(GS_VIDEOS['gs-walkthrough-video'], 1200), type: 'video', alt: 'Groundswell walkthrough' },
             { src: cloudImg(GS_IMAGES['gs-ctb-email'], 1200), type: 'image', alt: 'Groundswell care-through-books email in use' },
           ]}
+          sheet={groundswellSheet}
           cardVariant="file"
           // Privacy hold (2026-06-24): the /projects/groundswell case study is
           // sealed (reproduces licensed "Blue Garden" artwork). CTA points to
@@ -69,6 +71,34 @@ export default function Home() {
           href="https://cfa.cmu.edu/magazine/groundswell-designing-systems-care-those-who-care"
           external
           ctaLabel="Read the feature"
+          /* Featured articles, newest first (her note FS43: three, to match
+             the three-column row). Titles as published; dates from each page. */
+          press={[
+            {
+              href: 'https://cfa.cmu.edu/magazine/groundswell-designing-systems-care-those-who-care',
+              publisher: 'Carnegie Mellon University',
+              publication: 'College of Fine Arts',
+              date: 'January 2026',
+              title: 'Groundswell: Designing Systems of Care for Those Who Care',
+              preview: '/press/cfa-groundswell.jpg',
+            },
+            {
+              href: 'https://www.design.cmu.edu/news/groundswell-creates-space-soul-co-designing-oncology-staff-upmc-magee-womens-hospital',
+              publisher: 'Carnegie Mellon University',
+              publication: 'School of Design',
+              date: 'October 2025',
+              title: 'Groundswell Creates Space for the Soul: Co-Designing with Oncology Staff at UPMC Magee-Womens Hospital',
+              preview: '/press/design-space-for-the-soul.jpg',
+            },
+            {
+              href: 'https://www.design.cmu.edu/news/concept-care-designing-groundswell-oncology-caregivers',
+              publisher: 'Carnegie Mellon University',
+              publication: 'School of Design',
+              date: 'August 2025',
+              title: 'From Concept to Care: Designing Groundswell for Oncology Caregivers',
+              preview: '/press/design-concept-to-care.jpg',
+            },
+          ]}
         />
 
         <ProjectPreview

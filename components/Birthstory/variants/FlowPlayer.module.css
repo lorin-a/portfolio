@@ -1,0 +1,32 @@
+.flow { display: grid; justify-items: center; gap: 0.8rem; }
+.flowDevice { width: min(15rem, 100%); }
+.flowScreen { position: relative; background: #fffcfa; }
+.flowScreen img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity var(--motion-medium) var(--ease-out);
+}
+.frameOn { opacity: 1; }
+.frameOff { opacity: 0; }
+.dots { display: flex; gap: 0.5rem; }
+.dot,
+.dotOn {
+  width: 0.6rem;
+  height: 0.6rem;
+  padding: 0;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  background: rgba(26, 67, 77, 0.22);
+  box-shadow: 0 0 0 12px transparent;
+}
+.dotOn { background: var(--bs-teal, #1a434d); }
+.dot:focus-visible,
+.dotOn:focus-visible { outline: 2px solid var(--bs-teal, #1a434d); outline-offset: 4px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .flowScreen img { transition: none; }
+}

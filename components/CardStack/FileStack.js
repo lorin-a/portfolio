@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import { gsap } from '@/lib/gsap'
 import { useGSAP } from '@gsap/react'
 import styles from './FileStack.module.css'
+import GalleryNav from '@/components/GalleryNav/GalleryNav'
 import MobileCardStack from './MobileCardStack'
 import GatedOverlay from './GatedOverlay'
 
@@ -126,14 +127,6 @@ function ArrowOut() {
   )
 }
 
-function Chevron({ dir = 'right' }) {
-  const d = dir === 'left' ? 'M14 6 L8 12 L14 18' : 'M10 6 L16 12 L10 18'
-  return (
-    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <path d={d} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  )
-}
 
 /* ====== component ======================================= */
 
@@ -142,6 +135,8 @@ export default function FileStack({
   contributions = [],
   pillVariant = 'weave',
   href,
+  /** Receives { getActiveCard, getActiveIndex, getSlots } for ProjectSheet. */
+  stackApiRef,
 }) {
   const cardCount = Math.max(2, Math.min(slides.length, contributions.length, 15))
   const cards = slides.slice(0, cardCount).map((slide, i) => {
@@ -200,6 +195,28 @@ export default function FileStack({
     (i, active) => (i - active + cardCount) % cardCount,
     [cardCount]
   )
+
+  /* Hand the active card and the tab-slot geometry outward so ProjectSheet
+     can grow this exact folder into the opened one. Slots are normalised to
+     the viewBox width, so the sheet can express them in real pixels at any
+     size. */
+  useEffect(() => {
+    if (!stackApiRef) return
+    stackApiRef.current = {
+      getActiveCard: () => cardRefs.current[activeIndex],
+      getActiveIndex: () => activeIndex,
+      getSlots: () =>
+        Array.from({ length: cardCount }, (_, i) => {
+          const b = tabBounds(i, cardCount)
+          return {
+            l: b.tabL / VB_W,
+            r: b.tabR / VB_W,
+            rad: b.tabRad / VB_W,
+            j: b.junctionRad / VB_W,
+          }
+        }),
+    }
+  }, [activeIndex, cardCount, stackApiRef])
 
   /* On mount, pause every video except the initially active one so
      non-active tabs aren't silently looping in the background. */
@@ -485,37 +502,15 @@ export default function FileStack({
                 AND has more than one image. Sits in the cardstock frame
                 below the matte. */}
             {isActive && card.images.length > 1 && (
-              <div className={styles.galleryNav} aria-label={`${card.label} gallery`}>
-                <button
-                  type="button"
-                  className={styles.galleryArrow}
-                  onClick={() => advanceGallery(i, -1)}
-                  aria-label="Previous image"
-                >
-                  <Chevron dir="left" />
-                </button>
-                <div className={styles.galleryDots} role="tablist" aria-label="Gallery position">
-                  {card.images.map((_, j) => (
-                    <button
-                      key={j}
-                      type="button"
-                      role="tab"
-                      aria-selected={(galleryIndices[i] || 0) === j}
-                      aria-label={`Image ${j + 1} of ${card.images.length}`}
-                      className={`${styles.galleryDot} ${(galleryIndices[i] || 0) === j ? styles.galleryDotActive : ''}`}
-                      onClick={() => setGalleryAt(i, j)}
-                    />
-                  ))}
-                </div>
-                <button
-                  type="button"
-                  className={styles.galleryArrow}
-                  onClick={() => advanceGallery(i, 1)}
-                  aria-label="Next image"
-                >
-                  <Chevron dir="right" />
-                </button>
-              </div>
+              <GalleryNav
+                className={styles.galleryNav}
+                count={card.images.length}
+                index={galleryIndices[i] || 0}
+                onPrev={() => advanceGallery(i, -1)}
+                onNext={() => advanceGallery(i, 1)}
+                onSelect={(j) => setGalleryAt(i, j)}
+                label={`${card.label} gallery`}
+              />
             )}
           </div>
         )

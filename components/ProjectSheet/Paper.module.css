@@ -1,0 +1,148 @@
+/* PAPER — one sheet of loose-leaf, shared by the cover's fact sheet and
+   every “What I did” card (her notes FS61, FS66), so they cannot drift
+   apart. Structure of real loose-leaf (grain, ruled lines the text sits
+   on, a margin line, three punched holes, a light edge and soft shadow),
+   coloured from the brand (FS87/FS89) rather than school paper. The glass
+   variant below is what ships (FS102); the loose-leaf is its base: the stock
+   carries the flower logo's gradient at its palest (sage → lavender →
+   coral), the rules are the logo's lavender, the margin line its coral.
+
+   Set on the element:  --line (one ruled line), --top (the top margin,
+   in lines), --tilt (its resting angle). Text inside should use
+   line-height: var(--line) so it lands on the rules. */
+
+.paper {
+  --line: 1.625rem;
+  --top: calc(var(--line) * 2);
+  --margin: 2.75rem;
+  --tilt: 0deg;   /* straight (FS81): only the polaroids tilt */
+  position: relative;
+  padding: var(--top) 1.25rem var(--line) calc(var(--margin) + 0.75rem);
+  background:
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='g'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.35 0 0 0 0 0.3 0 0 0 0 0.25 0 0 0 0.09 0'/></filter><rect width='100%25' height='100%25' filter='url(%23g)'/></svg>"),
+    linear-gradient(to right, transparent var(--margin), rgba(201, 125, 100, 0.75) var(--margin), rgba(201, 125, 100, 0.75) calc(var(--margin) + 1px), transparent calc(var(--margin) + 1px)),
+    repeating-linear-gradient(to bottom, transparent 0, transparent calc(var(--line) - 1px), rgba(159, 132, 169, 0.4) calc(var(--line) - 1px), rgba(159, 132, 169, 0.4) var(--line)) 0 var(--top) / 100% calc(100% - var(--top)) no-repeat,
+    linear-gradient(135deg, #f2f4ea 5%, #f4eef5 50%, #faeee8 95%);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.35),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.06),
+    0 1px 1px rgba(0, 0, 0, 0.2),
+    0 18px 36px rgba(0, 0, 0, 0.34);
+  transform: rotate(var(--tilt));
+}
+
+/* Three punched holes, showing the folder's ground through the sheet. */
+.holes {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0.875rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  pointer-events: none;
+}
+
+.holes i {
+  display: block;
+  width: 0.875rem;
+  height: 0.875rem;
+  border-radius: 50%;
+  background: var(--color-cream);
+  box-shadow:
+    inset 0 1px 2px rgba(0, 0, 0, 0.55),
+    0 1px 0 rgba(255, 255, 255, 0.6);
+}
+
+/* Type on paper: the label ink and the body ink. */
+.label {
+  display: block;
+  font-family: var(--font-body);
+  font-size: var(--step-label);
+  font-weight: 600;
+  line-height: var(--line);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #3d4636;
+}
+
+.ink {
+  color: #24221f;
+}
+
+
+/* ══ GLASS — the paper as brand glass (lab, FS79) ═══════════════════════
+   The same loose-leaf structure (rules, margin line, three holes), made of
+   the pile's glass: frosted and tinted with a whisper of the logo's
+   gradient, faint light rules, the margin line drawn in the gradient
+   itself (sage → lavender → coral), the holes as clear rings. Applies to
+   the cover sheet and every “What I did” strip together, switched on by
+   data-paper="glass" on the folder's dialog (ProjectSheet.jsx, FS102). */
+
+[data-paper='glass'] .paper {
+  background:
+    /* the margin line, in the logo's gradient */
+    linear-gradient(to bottom, #c5cfa6, #c7aad1 50%, #f79c7e) var(--margin) 0 / 1.5px 100% no-repeat,
+    /* the rules, as faint light */
+    repeating-linear-gradient(to bottom, transparent 0, transparent calc(var(--line) - 1px), rgba(244, 241, 236, 0.13) calc(var(--line) - 1px), rgba(244, 241, 236, 0.13) var(--line)) 0 var(--top) / 100% calc(100% - var(--top)) no-repeat,
+    /* one soft sheen */
+    linear-gradient(115deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 35%),
+    /* the glass: a whisper of the brand gradient */
+    linear-gradient(135deg, rgba(197, 207, 166, 0.16) 5%, rgba(199, 170, 209, 0.13) 45%, rgba(247, 156, 126, 0.11) 88%);
+  backdrop-filter: blur(14px) saturate(1.25);
+  -webkit-backdrop-filter: blur(14px) saturate(1.25);
+  box-shadow:
+    inset 0 0 0 1px rgba(244, 241, 236, 0.24),
+    inset 0 1px 0 rgba(255, 255, 255, 0.26),
+    0 20px 42px rgba(0, 0, 0, 0.4);
+}
+
+[data-paper='glass'] .holes i {
+  background: var(--color-cream);
+  box-shadow:
+    inset 0 0 0 1.5px rgba(244, 241, 236, 0.5),
+    inset 0 2px 3px rgba(0, 0, 0, 0.45);
+}
+
+[data-paper='glass'] .label {
+  color: #c5cfa6;
+}
+
+[data-paper='glass'] .ink {
+  color: #f4f1ec;
+}
+
+/* ══ TITLED — a heading at the top of the sheet (lab, FS85) ═════════════
+   On a titled sheet the rules move off the sheet and onto its ruled body
+   (.ruled), starting from that block's own top, so the heading sits in a
+   clean top margin and the facts below still land on the rules whatever
+   the heading's height. The margin line and holes stay on the whole sheet. */
+
+.titled {
+  --top: 0px;
+}
+
+.paper.titled {
+  background:
+    linear-gradient(to right, transparent var(--margin), rgba(201, 125, 100, 0.75) var(--margin), rgba(201, 125, 100, 0.75) calc(var(--margin) + 1px), transparent calc(var(--margin) + 1px)),
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='g'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.35 0 0 0 0 0.3 0 0 0 0 0.25 0 0 0 0.09 0'/></filter><rect width='100%25' height='100%25' filter='url(%23g)'/></svg>"),
+    linear-gradient(135deg, #f2f4ea 5%, #f4eef5 50%, #faeee8 95%);
+}
+
+.ruled {
+  --rule-c: rgba(159, 132, 169, 0.4);
+  padding-top: var(--line);
+  background: repeating-linear-gradient(to bottom, transparent 0, transparent calc(var(--line) - 1px), var(--rule-c) calc(var(--line) - 1px), var(--rule-c) var(--line));
+}
+
+/* Titled glass: the glass stays; rules as faint light. */
+[data-paper='glass'] .paper.titled {
+  background:
+    linear-gradient(to bottom, #c5cfa6, #c7aad1 50%, #f79c7e) var(--margin) 0 / 1.5px 100% no-repeat,
+    linear-gradient(115deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 35%),
+    linear-gradient(135deg, rgba(197, 207, 166, 0.16) 5%, rgba(199, 170, 209, 0.13) 45%, rgba(247, 156, 126, 0.11) 88%);
+}
+
+[data-paper='glass'] .ruled {
+  --rule-c: rgba(244, 241, 236, 0.13);
+}

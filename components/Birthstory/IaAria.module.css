@@ -1,0 +1,213 @@
+/* ============================================================================
+   THE 4 → 0 COLLAPSE — the process half's one earned aria.
+
+   A band of words across the top, the drawing at full width beneath it. The
+   three plates stack in one frame and cross-fade: the first version, the count
+   landing on it through a wash of paper, and the shipped tree in its place.
+
+   Every dimension that has to fit inside one viewport is measured in JS and
+   written back as --s; nothing here assumes a diagram's height. The findings
+   row is a fixed height on purpose, so that measurement can never chase its
+   own tail.
+   ============================================================================ */
+
+.aria {
+  --top: 9.4rem; /* the fixed nav + the sticky chapter spine */
+  /* mirrors IaDiagrams' compact panel padding and column gap, so the findings
+     row below the drawing registers with the drawing's own five columns */
+  --iaPad: calc(clamp(1rem, 2vw, 1.5rem) * var(--s, 1));
+  --iaGap: calc(clamp(0.7rem, 1.6vw, 1.4rem) * var(--s, 1));
+  --notesH: auto;
+  scroll-margin-top: var(--top);
+}
+
+.track { position: relative; }
+.sticky { display: grid; align-content: start; }
+.frame { display: grid; gap: clamp(1rem, 2.4vh, 1.8rem); }
+
+/* ── the band: the outline of the argument, legible before it is read ────── */
+
+/* off the pin: three labelled beats, stacked, read in order */
+.steps {
+  margin: 0; padding: 0; list-style: none;
+  display: grid; gap: clamp(1.2rem, 2.6vw, 1.8rem);
+}
+.step { display: grid; gap: 0.6rem; align-content: start; }
+.stepHead { display: grid; gap: 0.6rem; }
+/* every label holds full ink from the first frame — the upcoming ones are the
+   clue that more is coming, so they have to be readable (N33/N34). The live
+   beat is marked by its RULE, not by dimming the others. */
+.stepRule { display: block; height: 2px; background: var(--bs-rule); }
+.live .stepRule { background: var(--bs-teal); }
+.past .stepRule { background: var(--bs-teal-soft); }
+.stepLabel {
+  font-family: var(--font-body); font-weight: 700; font-size: 0.75rem;
+  letter-spacing: 0.14em; text-transform: uppercase; color: var(--bs-teal-soft);
+  text-wrap: balance;
+}
+.live .stepLabel { color: var(--color-ink); }
+
+/* the sentence. Sharing one slot is a PINNED behaviour only — off the pin the
+   three beats read in order under their own labels. (Stacking them by default
+   put all three on top of each other in the reduced-motion state, where
+   nothing fades them apart.) */
+.sayingLine {
+  margin: 0; max-width: 68ch;
+  font-family: var(--font-heading); font-variation-settings: 'SOFT' 60, 'WONK' 0;
+  font-weight: 400; font-size: clamp(1.05rem, 0.98rem + 0.42vw, 1.35rem);
+  line-height: 1.4; color: var(--color-ink); text-wrap: pretty;
+}
+
+/* ── the stage ───────────────────────────────────────────────────────────── */
+
+.stage { display: grid; gap: clamp(2rem, 5vw, 3.2rem); min-height: 0; }
+.plate { display: grid; align-content: start; gap: clamp(0.6rem, 1.4vh, 1rem); }
+.artBox { display: grid; }
+.art { width: 100%; }
+
+/* the turn — the story's most skimmable number */
+.turnPlate { display: grid; justify-items: center; align-content: center; gap: 0.6rem; }
+.turnFig {
+  margin: 0; display: flex; align-items: baseline; gap: clamp(0.6rem, 1.6vw, 1.2rem);
+  font-family: var(--font-heading); font-variation-settings: 'SOFT' 60, 'WONK' 0;
+  font-weight: 420; font-size: clamp(3.4rem, 2rem + 7vw, 8rem); line-height: 1;
+  letter-spacing: -0.02em; color: var(--bs-teal); font-variant-numeric: tabular-nums;
+}
+.turnArrow { font-size: 0.42em; color: var(--bs-teal-soft); }
+.turnLabel {
+  margin: 0; font-family: var(--font-body); font-weight: 700; font-size: 0.8rem;
+  letter-spacing: 0.14em; text-transform: uppercase; color: var(--bs-teal-soft);
+  text-align: center; text-wrap: balance;
+}
+
+/* ── the findings, registered against the drawing ─────────────────────────
+   Each note carries a short rule exactly one diagram-column wide with a dotted
+   stem rising off it, so the note reads as belonging to that tab rather than
+   floating under the picture in general. */
+.notes {
+  display: grid; grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 0 var(--iaGap);
+  width: calc(100% * var(--s, 1)); margin-inline: auto;
+  padding-inline: var(--iaPad);
+  /* a FLOOR, not a cap. As a fixed height it clipped the attribution line off
+     the foot of the frame; the fit measurement reads this box's real height, so
+     letting it grow costs the drawing a little scale rather than costing the
+     reader a line. */
+  min-height: var(--notesH);
+}
+.note { grid-column: var(--col, 1) / span 2; display: grid; gap: 0.4rem; align-content: start; }
+.noteWide { grid-column: 1 / 4; }
+/* the mark: one column wide (half the note, minus one gap), the stem centred on it */
+.stem {
+  display: block; position: relative;
+  width: calc((100% - var(--iaGap)) / 2); height: clamp(1rem, 2.2vh, 1.6rem);
+  border-bottom: 2px solid var(--bs-teal);
+}
+.noteWide .stem { width: 100%; }
+.stem::before {
+  content: ''; position: absolute; left: 50%; bottom: 0; width: 0;
+  height: 100%; border-left: 2px dotted var(--bs-teal-soft);
+}
+.heard {
+  margin: 0; max-width: 40ch;
+  font-family: var(--font-heading); font-variation-settings: 'SOFT' 60, 'WONK' 0;
+  font-style: italic; font-weight: 400; font-size: clamp(0.95rem, 0.9rem + 0.25vw, 1.1rem);
+  line-height: 1.35; color: var(--color-ink); text-wrap: pretty;
+}
+.did {
+  margin: 0; max-width: 40ch;
+  font-family: var(--font-body); font-weight: 500; font-size: 0.9rem; line-height: 1.5;
+  color: var(--bs-teal); text-wrap: pretty;
+}
+
+/* ══ PINNED ═══════════════════════════════════════════════════════════════
+   Only above 1000px, and only with motion allowed. Everything below this line
+   is the enhancement; everything above it is what renders without it. */
+
+/* align-content must STRETCH here, not centre. With a centred single-row grid
+   the row is content-sized, so the frame's `height: 100%` had nothing to
+   resolve against and its `minmax(0, 1fr)` stage row measured 0 — the drawing
+   had no height to be fitted into. The frame fills the sticky box; the plates
+   centre themselves inside the stage instead. */
+.pinned .sticky {
+  position: sticky; top: var(--top);
+  height: calc(100svh - var(--top));
+  align-content: stretch;
+}
+/* asymmetric on purpose: the top edge meets the sticky chapter spine and needs
+   air to read as a separate plane; the bottom edge meets nothing */
+.pinned .frame {
+  height: 100%; grid-template-rows: auto minmax(0, 1fr);
+  padding: clamp(1.3rem, 3.2vh, 2.2rem) 0 clamp(0.5rem, 1.4vh, 0.9rem);
+}
+.pinned .stage { position: relative; gap: 0; overflow: hidden; }
+.pinned .plate {
+  position: absolute; inset: 0; align-content: center;
+  transition: opacity 620ms var(--ease-out), transform 620ms var(--ease-out);
+}
+.pinned .on { opacity: 1; transform: none; }
+/* the first version does not vanish; it recedes, and the paper wash carrying
+   the count finishes the job — so the collapse reads as one movement */
+.pinned .ghost { opacity: 0.5; transform: scale(0.99); }
+.pinned .off { opacity: 0; transform: scale(0.99); }
+.pinned .turnPlate {
+  background: rgba(var(--bs-paper-rgb), 0.84);
+  transition-duration: 480ms;
+}
+/* PINNED: the labels lay out as one row across the top and the three sentences
+   share the row beneath them. `display: contents` on each beat is what lets a
+   label and its sentence sit in different grid rows while staying one element
+   in the DOM — which is what keeps them paired off the pin. */
+.pinned .steps {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-rows: auto auto;
+  column-gap: clamp(0.9rem, 2vw, 2rem);
+  row-gap: clamp(1rem, 2.2vh, 1.5rem);
+}
+.pinned .step { display: contents; }
+.pinned .stepHead { grid-row: 1; }
+/* one sentence on screen at a time — a fade in place, never a slide */
+.pinned .sayingLine {
+  grid-row: 2; grid-column: 1 / -1;
+  opacity: 0; transition: opacity 420ms var(--ease-out);
+}
+.pinned .sayingOn { opacity: 1; }
+.pinned .notes { --notesH: clamp(4.6rem, 9.4vh, 6.6rem); }
+.pinned .art { transform: scale(var(--s, 1)); transform-origin: top center; }
+.pinned .artBox { overflow: visible; }
+
+/* SHORT VIEWPORTS — the real laptop case, not an edge case. A 1440×900 display
+   gives Chrome about 760–800px once its own chrome is off the top, so this is
+   what most people will actually see the aria in. Every tier around the drawing
+   gives up height here so that the drawing itself gives up as little scale as
+   possible: measured, the first version sits at ~0.69 without this block and
+   ~0.85 with it, which is the difference between a legible diagram and a
+   thumbnail. */
+@media (min-width: 1001px) and (max-height: 980px) {
+  .pinned .frame { gap: 0.7rem; padding-top: clamp(0.9rem, 2.2vh, 1.4rem); }
+  .pinned .steps { row-gap: 0.6rem; }
+  .pinned .stepHead { gap: 0.45rem; }
+  .pinned .sayingLine { font-size: 1.05rem; line-height: 1.32; }
+  .pinned .plate { gap: 0.4rem; }
+  .pinned .notes { --notesH: 4.2rem; gap: 0 var(--iaGap); }
+  .pinned .stem { height: 0.8rem; }
+  .pinned .heard { font-size: 0.9rem; line-height: 1.3; }
+  .pinned .did { font-size: 0.84rem; line-height: 1.4; }
+}
+
+/* ══ UNPINNED — narrow screens and reduced motion ═════════════════════════
+   Nothing hidden, nothing scaled, nothing waiting on a scroll position: the
+   three beats read in order and both drawings are simply there. */
+
+@media (max-width: 1000px) {
+  .steps { grid-template-columns: 1fr; gap: 1rem; }
+  .notes { grid-template-columns: 1fr; gap: 1.4rem; height: auto; padding-inline: 0; width: 100%; }
+  .note, .noteWide { grid-column: 1; }
+  .stem { width: 2.5rem; }
+  .noteWide .stem { width: 2.5rem; }
+  .turnFig { font-size: clamp(3rem, 14vw, 5rem); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .plate, .sayingLine { transition: none; }
+}

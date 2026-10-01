@@ -1,0 +1,193 @@
+/* ============================================================================
+   THE FIRST ARIA — the IA collapse. Pinned; the sprawl retracts into one line
+   while the shipped home rises. Deep-teal register (the app's own night), so
+   the beat reads as a held breath between editorial passages.
+   ============================================================================ */
+
+.stage {
+  --teal: #1A434D;
+  --teal-deep: #16323A;
+  --teal-soft: #6E93A0;
+  --ink-on-dark: #FBF9F6;
+  --leaf: #B1C1F4;
+  --leaf-doc: #C9B6E0;
+  position: relative;
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: grid;
+  align-content: center;
+  background: var(--teal-deep);
+  color: var(--ink-on-dark);
+  padding: clamp(3rem, 7vh, 5rem) clamp(1.5rem, 5vw, 6rem);
+  overflow: hidden;
+}
+
+.inner {
+  width: 100%;
+  max-width: 74rem;
+  margin: 0 auto;
+}
+
+.head {
+  max-width: 34rem;
+  margin: 0 0 clamp(2rem, 5vh, 3.5rem);
+}
+.kicker {
+  margin: 0 0 0.9rem;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--teal-soft);
+}
+.claim {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-variation-settings: 'SOFT' 50, 'WONK' 0;
+  font-weight: 550;
+  font-size: clamp(1.4rem, 1.1rem + 1.5vw, 2.3rem);
+  line-height: 1.26;
+  text-wrap: balance;
+  color: var(--ink-on-dark);
+}
+
+/* the diagram holds both the tree and the phone in one frame */
+.diagram {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: min(58vh, 540px);
+}
+.count {
+  position: absolute;
+  top: -0.5rem;
+  left: 0;
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  letter-spacing: 0.01em;
+  color: var(--teal-soft);
+}
+.countNum {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 1.15rem;
+  color: var(--leaf);
+}
+
+.tree {
+  width: 100%;
+  max-width: 62rem;
+  height: auto;
+  overflow: visible;
+}
+.spine {
+  stroke: var(--teal-soft);
+  stroke-width: 2;
+  /* starts full height; the timeline it becomes */
+}
+.branch,
+.twig {
+  fill: none;
+  stroke: var(--teal-soft);
+  stroke-width: 1.5;
+  opacity: 0.55;
+}
+.twig {
+  stroke-width: 1;
+  opacity: 0.4;
+}
+.nodeHome {
+  fill: #466F7B;
+  stroke: none;
+}
+.nodeMode {
+  fill: rgba(177, 193, 244, 0.16);
+  stroke: var(--leaf);
+  stroke-width: 1.2;
+}
+.nodeLeaf {
+  fill: rgba(201, 182, 224, 0.14);
+  stroke: rgba(201, 182, 224, 0.6);
+  stroke-width: 1;
+}
+.nodeLabel {
+  fill: var(--ink-on-dark);
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 15px; /* stylelint-disable-line declaration-property-value-disallowed-list -- SVG user units */
+  text-anchor: middle;
+  dominant-baseline: middle;
+}
+.leafLabel {
+  fill: #D9E4E8;
+  font-family: var(--font-body);
+  font-size: 11px; /* stylelint-disable-line declaration-property-value-disallowed-list -- SVG user units */
+  text-anchor: middle;
+  dominant-baseline: middle;
+}
+
+/* the shipped home, hidden until the collapse resolves */
+.home {
+  position: absolute;
+  margin: 0;
+  width: clamp(180px, 20vw, 236px);
+  border-radius: clamp(18px, 2vw, 26px);
+  overflow: hidden;
+  box-shadow: 0 34px 70px -26px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(251, 249, 246, 0.1);
+  opacity: 0; /* JS reveals; reduced-motion overrides below */
+}
+.home img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.resolve {
+  margin: clamp(1.5rem, 4vh, 2.5rem) 0 0;
+  max-width: 32rem;
+  font-family: var(--font-heading);
+  font-variation-settings: 'SOFT' 55, 'WONK' 0;
+  font-style: italic;
+  font-weight: 480;
+  font-size: clamp(1.05rem, 0.95rem + 0.6vw, 1.4rem);
+  line-height: 1.4;
+  color: var(--leaf);
+  opacity: 0; /* JS reveals */
+  text-wrap: pretty;
+}
+
+.staticFallback {
+  display: none;
+}
+
+/* ── reduced motion / no-JS: resolve to the shipped state, tell it plainly ── */
+@media (prefers-reduced-motion: reduce) {
+  .stage {
+    min-height: auto;
+    padding-top: clamp(4rem, 9vh, 6rem);
+    padding-bottom: clamp(4rem, 9vh, 6rem);
+  }
+  .tree,
+  .count {
+    display: none;
+  }
+  .diagram {
+    min-height: 0;
+  }
+  .home {
+    position: static;
+    opacity: 1;
+    margin: 1.5rem auto 0;
+  }
+  .resolve {
+    opacity: 1;
+  }
+}
+
+@media (max-width: 700px) {
+  .home {
+    width: clamp(150px, 42vw, 200px);
+  }
+}

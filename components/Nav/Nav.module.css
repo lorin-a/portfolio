@@ -15,6 +15,35 @@
   backdrop-filter: blur(12px);
 }
 
+/* Floating over a dark, full-bleed hero (no nav background yet): light ink so
+   the wordmark and links read against the gradient. A soft top scrim lifts
+   them off the lighter band of the gradient without a hard bar. */
+.header.overHero::before {
+  content: '';
+  position: absolute;
+  inset: -20px 0 -40px;
+  background: linear-gradient(to bottom, rgba(20, 38, 44, 0.32), transparent);
+  pointer-events: none;
+  z-index: -1;
+}
+
+.header.overHero .navName,
+.header.overHero .navLink {
+  color: #fff;
+}
+
+.header.overHero .navName:focus-visible,
+.header.overHero .navLink:focus-visible {
+  outline-color: #fff;
+}
+
+@media (hover: hover) {
+  .header.overHero .navLink:hover {
+    color: #fff;
+    opacity: 0.78;
+  }
+}
+
 /* Grid layout (not flex space-between) so the flower sits at true
    horizontal center regardless of how wide "Lorin Anderberg" or the
    right-hand links are. Side columns share remaining space equally;

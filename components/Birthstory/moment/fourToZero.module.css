@@ -1,0 +1,73 @@
+/* Aria 3 — the 4→0 collapse. Strike wears the crit color (feedback removing
+   things); the counter is the chapter's one big numeral; the landing is the
+   real shipped IA. Stillness before and after — this beat earns the motion. */
+
+.root { position: relative; display: grid; gap: clamp(2.4rem, 5vw, 3.6rem); justify-items: center; }
+
+.stage {
+  display: grid; grid-template-columns: minmax(0, 30rem) auto;
+  gap: clamp(2.5rem, 7vw, 6rem); align-items: center;
+  min-height: clamp(16rem, 34vh, 22rem);
+}
+.pills { display: grid; gap: 0.7rem; align-content: center; }
+.pill {
+  position: relative; margin: 0; justify-self: start;
+  padding: 0.75rem 1.1rem; border-radius: 12px;
+  background: #fff; box-shadow: 0 1px 2px rgba(26, 67, 77, 0.07), 0 10px 24px -16px rgba(26, 67, 77, 0.25);
+  font-family: var(--font-body); font-size: clamp(0.9rem, 0.86rem + 0.25vw, 1rem);
+  line-height: 1.4; color: var(--color-ink);
+}
+.strike {
+  position: absolute; left: 0.9rem; right: 0.9rem; top: 50%; height: 2px;
+  background: #8089C2; border-radius: 1px;
+}
+
+.counter { display: grid; justify-items: center; gap: 0.6rem; }
+.digits {
+  position: relative; display: grid; place-items: center;
+  width: clamp(5.5rem, 10vw, 8.5rem); height: clamp(6rem, 11vw, 9.5rem);
+}
+.digit {
+  position: absolute; inset: 0; display: grid; place-content: center;
+  font-family: var(--font-heading); font-variation-settings: 'SOFT' 60, 'WONK' 0;
+  font-weight: 380; font-size: clamp(5rem, 4rem + 5vw, 8.5rem); line-height: 1;
+  letter-spacing: -0.02em; color: #1A434D;
+}
+.counterLabel {
+  font-family: var(--font-body); font-weight: 700; font-size: 0.72rem;
+  letter-spacing: 0.16em; text-transform: uppercase; color: #466F7B;
+  max-width: 16rem; text-align: center; line-height: 1.5;
+}
+
+.landing { margin: 0; display: grid; gap: 0.7rem; justify-items: center; width: 100%; max-width: 66rem; }
+.landingCap {
+  margin: 0; font-family: var(--font-body); font-size: 0.8rem; line-height: 1.5;
+  color: var(--color-ink-light); text-align: center; text-wrap: balance;
+}
+
+.replay {
+  justify-self: start;
+  display: inline-flex; align-items: center; gap: 0.5rem; min-height: 44px; padding: 0 0.6rem;
+  background: none; border: 0; cursor: pointer; border-radius: 8px;
+  font-family: var(--font-body); font-weight: 600; font-size: 0.8rem; letter-spacing: 0.06em;
+  color: #466F7B;
+}
+@media (hover: hover) { .replay:hover { color: #1A434D; } }
+.replay:focus-visible { outline: 2px solid #1A434D; outline-offset: 2px; }
+
+.srOnly {
+  position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+
+/* reduced motion: the ended argument, fully visible */
+.done .pill { opacity: 0.45; }
+.done .strike { transform: none; }
+.done .digit { opacity: 0; }
+.done .digit:last-child { opacity: 1; }
+.done .replay { display: none; }
+
+@media (max-width: 760px) {
+  .stage { grid-template-columns: 1fr; gap: 1.8rem; justify-items: center; min-height: 0; }
+  .pill { justify-self: center; }
+}

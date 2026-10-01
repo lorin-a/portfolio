@@ -362,3 +362,81 @@
     opacity: 1 !important;
   }
 }
+
+/* ===========================================
+   EXPAND — opens the folder into ProjectSheet. Lives under the copy, not
+   over the stack: the receded cards' depth strip runs through the stack's
+   lower right, which is where a floating control would sit.
+
+   The glyph is the fullscreen mark (four corners pushing out), not an
+   arrow leaving a box — nothing navigates away, and the arrow is the
+   universal external-link sign. The corners push outward on hover so the
+   control previews its own action.
+   =========================================== */
+
+.expand {
+  /* The text column is a flex column, so a stretched child ran the full
+     column width — 560px for a 20-character label. */
+  align-self: flex-start;
+  width: fit-content;
+  margin-top: var(--space-sm);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  min-height: var(--min-touch-target, 44px);
+  padding: 0.55rem 1rem;
+  background: transparent;
+  color: var(--color-ink);
+  border: 1.5px solid var(--color-ink);
+  border-radius: var(--radius-pill);
+  font-family: var(--font-body);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition:
+    background var(--motion-fast) var(--ease-out),
+    color var(--motion-fast) var(--ease-out);
+}
+
+.expand svg {
+  width: 14px;
+  height: 14px;
+  display: block;
+  overflow: visible;
+}
+
+.expand .c1,
+.expand .c2,
+.expand .c3,
+.expand .c4 {
+  transition: transform var(--motion-fast) var(--ease-out);
+}
+
+@media (hover: hover) {
+  .expand:hover {
+    background: var(--color-ink);
+    color: var(--color-cream);
+  }
+
+  .expand:hover .c1 { transform: translate(-2px, -2px); }
+  .expand:hover .c2 { transform: translate(2px, -2px); }
+  .expand:hover .c3 { transform: translate(2px, 2px); }
+  .expand:hover .c4 { transform: translate(-2px, 2px); }
+}
+
+.expand:focus-visible {
+  outline: 2px solid var(--color-ink);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .expand,
+  .expand .c1,
+  .expand .c2,
+  .expand .c3,
+  .expand .c4 {
+    transition: none;
+  }
+}

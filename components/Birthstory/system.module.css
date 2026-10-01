@@ -1,0 +1,511 @@
+/* ============================================================================
+   Birth Story — shared case-study design system.
+   The portfolio's language is the frame (cream, Fraunces, Open Sans, the reveal
+   motion). Birth Story enters as ONE accent (its teal) + its real screens.
+   Every section composes these classes, so the hierarchy is PREDICTABLE:
+     label (orientation, wins the glance) → headline (voice) → takeaway → proof.
+   This is a PROCESS document — the proof is the reasoning, not the product.
+   ============================================================================ */
+
+.case {
+  --bs-teal: #1A434D;
+  --bs-teal-soft: #466F7B; /* darkened for AA-legible labels + less-faded accents */
+  --bs-rule: rgba(26, 67, 77, 0.3); /* page breaks / hairlines, clearly visible */
+  --bs-wash: rgba(26, 67, 77, 0.05); /* soft teal panel fill — cards, stages */
+  --bs-hairline: rgba(26, 67, 77, 0.12); /* inner card rules, subtler than --bs-rule */
+  --bs-blush: #DBADAD;
+  --bs-peri: #B1C1F4;
+  --bs-lav: #E6E5FD;
+  --bs-accent: var(--bs-teal);
+  /* crit voice — the tester chips wear the brand PERIWINKLE (#B1C1F4, the
+     gradient's middle and the FAB accent) with teal text (6:1). Lorin's call
+     2026-07-03 after blush/rose/terracotta all missed. #8089C2 (the FAB
+     gradient's deep end) carries the decorative lines: leaders, pins,
+     strikethroughs. */
+  --bs-crit: #B1C1F4;
+  --bs-crit-soft: #8089C2;  /* pin + pulse + leader + strikethrough */
+  --bs-crit-line: rgba(128, 137, 194, 0.55);
+  --bs-crit-wash: rgba(177, 193, 244, 0.14);
+  /* her thinking — lilac chip (+ dusk ring), so every chip color maps to a
+     voice: teal = the record, lilac = the designer's thinking, peri = the
+     testers. Teal text on lilac: 8.6:1. */
+  --bs-think: #E6E5FD;
+  --bs-think-line: rgba(157, 163, 191, 0.55);
+  --bs-wide: 76rem;
+  --bs-pad: clamp(1.5rem, 5vw, 6rem);
+  --bs-gutter: clamp(1.2rem, 2.4vw, 3.2rem);
+
+  /* SILENT GROUND — bright, hue-neutral near-white (gallery white). Every tinted
+     ground read wrong (drab grey / yellow greige / juvenile pink-blue / clinical
+     teal / immature warm-rose), because the background shouldn't be a design
+     element at all. It disappears; the photos, app screens, and teal accents are
+     the only color. Bright enough to read clean-white, not muddy-grey. */
+  --bs-paper: #FAFAFA;
+  --bs-paper-rgb: 250, 250, 250;
+  background: var(--bs-paper);
+  color: var(--color-ink);
+  counter-reset: fig; /* specimen-label figure numbering, page-wide */
+}
+
+/* ── section shell ── */
+.section { padding: clamp(4.5rem, 11vh, 9rem) var(--bs-pad); }
+.shade { background: var(--color-cream-dark); }
+.tint { background: linear-gradient(180deg, var(--color-cream) 0%, rgba(109, 143, 153, 0.07) 100%); }
+.inner { max-width: var(--bs-wide); margin: 0 auto; }
+.grid12 { display: grid; grid-template-columns: repeat(12, 1fr); gap: clamp(1.5rem, 3vw, 3.2rem); }
+
+/* ── the hierarchy grammar ── */
+.head { display: grid; gap: clamp(0.9rem, 1.6vw, 1.4rem); max-width: 40rem; }
+.headWide { max-width: 54rem; }
+
+.label {
+  display: inline-flex; align-items: center; gap: 0.7rem;
+  font-family: var(--font-body); font-weight: 700; font-size: 0.82rem;
+  letter-spacing: 0.16em; text-transform: uppercase; color: var(--bs-accent);
+}
+.labelNum {
+  display: inline-grid; place-content: center;
+  min-width: 1.7rem; height: 1.7rem; padding: 0 0.4rem;
+  border-radius: 999px; background: var(--bs-accent); color: var(--color-cream);
+  font-size: 0.72rem; letter-spacing: 0.04em;
+}
+
+.headline {
+  margin: 0; max-width: 18ch;
+  font-family: var(--font-heading); font-variation-settings: 'SOFT' 60, 'WONK' 0; font-weight: 380;
+  font-size: clamp(1.9rem, 1.2rem + 2.2vw, 2.9rem); line-height: 1.16; letter-spacing: -0.012em;
+  color: var(--color-ink); text-wrap: balance;
+}
+.headline em { font-style: italic; color: var(--bs-accent); }
+
+.takeaway {
+  margin: 0; max-width: 56ch;
+  font-family: var(--font-body); font-size: clamp(1rem, 0.96rem + 0.3vw, 1.12rem);
+  line-height: 1.62; color: var(--color-ink-light);
+}
+
+/* a quiet sub-label inside a section (e.g. "What testers said") */
+.eyebrow { font-family: var(--font-body); font-weight: 700; font-size: 0.75rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--bs-teal-soft); margin: 0; }
+
+/* ── device frame (the polish bar; everything else rises to it) ── */
+.phone { position: relative; display: inline-block; padding: 6px; border-radius: 22px; background: #1d1d1f; box-shadow: 0 24px 48px -28px rgba(26, 67, 77, 0.55); }
+.phoneNotch { position: absolute; top: 11px; left: 50%; width: 26%; height: 10px; transform: translateX(-50%); border-radius: 999px; background: #1d1d1f; z-index: 2; }
+.phoneScreen { display: block; overflow: hidden; border-radius: 17px; aspect-ratio: 430 / 932; background: var(--bs-accent); }
+.phoneScreen img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.cap { margin: 0.8rem 0 0; font-family: var(--font-body); font-size: 0.8rem; line-height: 1.45; color: var(--color-ink-faint); text-align: center; }
+
+/* ── dotted-leader annotation (your deck idiom; the clarity bar) ── */
+.annotLabel { margin: 0 0 0.25rem; font-family: var(--font-body); font-weight: 700; font-size: 0.92rem; color: var(--bs-accent); }
+.annotText { margin: 0; font-family: var(--font-body); font-size: 0.86rem; line-height: 1.5; color: var(--color-ink-light); }
+.leader { display: block; height: 0; margin-top: 0.5rem; border-top: 2px dotted var(--bs-teal-soft); transform: scaleX(0); transition: transform var(--motion-slow) var(--ease-out); }
+.in .leader { transform: scaleX(1); transition-delay: 0.5s; }
+
+/* ── before / after (clear labels + visual) ── */
+.ba { display: grid; grid-template-columns: 1fr auto 1fr; align-items: stretch; gap: clamp(0.8rem, 2vw, 1.6rem); }
+.baPane { display: grid; gap: 0.6rem; align-content: start; padding: clamp(1.1rem, 2vw, 1.6rem); border-radius: 16px; }
+.baBefore { background: #fff; box-shadow: inset 0 0 0 1px rgba(44, 44, 44, 0.08); }
+.baAfter { background: var(--bs-accent); color: var(--color-cream); }
+.baTag { font-family: var(--font-body); font-weight: 700; font-size: 0.74rem; letter-spacing: 0.16em; text-transform: uppercase; }
+.baBefore .baTag { color: var(--color-ink-faint); }
+.baAfter .baTag { color: rgba(251, 249, 246, 0.7); }
+.baText { margin: 0; font-family: var(--font-heading); font-variation-settings: 'SOFT' 60, 'WONK' 0; font-size: clamp(1.05rem, 0.9rem + 0.5vw, 1.3rem); line-height: 1.3; }
+.baBefore .baText { color: var(--color-ink); }
+.baArrow { align-self: center; font-size: 1.4rem; color: var(--bs-teal-soft); }
+.baWhy { grid-column: 1 / -1; margin: 0.3rem 0 0; font-family: var(--font-body); font-size: 0.84rem; line-height: 1.5; color: var(--color-ink-light); }
+.baWhy strong { color: var(--bs-accent); font-weight: 700; }
+
+/* ── small artifacts ── */
+.quote { margin: 0; font-family: var(--font-heading); font-variation-settings: 'SOFT' 60, 'WONK' 0; font-style: italic; font-weight: 360; font-size: clamp(1.3rem, 1rem + 1.1vw, 1.9rem); line-height: 1.32; color: var(--color-ink); }
+.quoteAttr { display: block; margin-top: 0.7em; font-family: var(--font-body); font-style: normal; font-size: 0.8rem; letter-spacing: 0.04em; color: var(--color-ink-faint); }
+
+/* a feedback note (used inline, beside the screen it refers to) */
+.note { padding: 0.7rem 0.95rem 0.7rem 1.05rem; border-left: 2px solid var(--bs-teal-soft); background: #fff; border-radius: 0 12px 12px 0; box-shadow: 0 10px 24px -20px rgba(44, 44, 44, 0.4); font-family: var(--font-body); font-size: 0.82rem; line-height: 1.45; color: var(--color-ink-light); }
+.noteWho { display: block; margin-top: 0.3rem; font-size: 0.68rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--bs-teal-soft); }
+
+/* ── reveal: children carry .up; the section root toggles .in ── */
+.up { opacity: 0; transform: translateY(22px); transition: opacity 700ms var(--ease-out), transform 700ms var(--ease-out); transition-delay: var(--d, 0ms); }
+.in .up { opacity: 1; transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .up { opacity: 1; transform: none; transition: none; }
+  .leader { transform: scaleX(1); transition: none; }
+}
+
+@media (max-width: 800px) {
+  .grid12 { grid-template-columns: 1fr; }
+  .ba { grid-template-columns: 1fr; }
+  .baArrow { transform: rotate(90deg); justify-self: center; }
+}
+
+/* ============================================================================
+   FIELD-NOTES REGISTER — the process voice. Question-led, real artifacts as
+   figure plates, first-person running prose, tracked-caps labels (the site's
+   two faces only — Fraunces + Noto Sans, no third typeface), admitted friction,
+   cooler paper. Every section composes these via kit's FieldSection.
+   ============================================================================ */
+
+/* rhythm: between-section padding and within-section flow gap are tuned as a
+   pair (~3.4:1) — the old 11vh/9rem pads put ~290px of empty paper between
+   chapters while thoughts inside sat at ~50px, which read as inconsistent */
+/* clean paper — the dotted grid ground was one more thing to look at (Round 4:
+   "too much to look at… sooo many lines"); the artifacts carry the texture now */
+.field {
+  padding: clamp(3.5rem, 8vh, 6.5rem) var(--bs-pad);
+  scroll-margin-top: 9.75rem; /* clear the fixed nav + sticky progress bar on jump */
+  background-color: var(--bs-paper);
+}
+.fieldAlt { background-color: var(--bs-paper); } /* no colored alternation — the majority is the quiet neutral; color is reserved for intentional moments */
+.sheet { max-width: 60rem; margin: 0 auto; }
+/* wide sheet for split sections — lets the media column run to the right edge */
+.sheetWide { max-width: 92rem; }
+
+/* ── THE MEASURE ───────────────────────────────────────────────────────────
+   ONE twelve-column grid for the whole case study. Every shape on the page is a
+   SPAN against it, which is what makes alternative layouts read as a family
+   instead of nine sections each inventing its own proportion — the page ran
+   1.05fr/0.95fr here, 1.1fr/.85fr/1fr there, 27rem/1fr, 28rem/1fr,
+   repeat(3,1fr), which is mechanically what "no grid" means and the cause of
+   the newspaper feeling (F9).
+
+     ROW          copy 1–4 · column 5 left empty on purpose · artifact 6–12
+     SPREAD       artifact 1–12, its lede on 1–4 above it
+     PROGRESSION  type 1–7, columns 8–12 deliberately empty
+     INSET        artifact 3–10
+
+   The column falls out at ~4.7rem, so ROW's copy column measures ~28rem — which
+   is exactly what the product act already uses. The measure DESCRIBES what is
+   there rather than moving it; that is why it can be adopted a chapter at a time
+   without the shipped act shifting a pixel. */
+.measure {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--bs-gutter);
+  /* width:100% is load-bearing. As a grid item, `margin-inline:auto` alone makes
+     the box shrink-to-fit its content instead of stretching, which collapsed the
+     twelve columns to 28px each and pushed the whole block off the page's left
+     axis. */
+  width: 100%; max-width: 92rem; margin-inline: auto;
+  /* globals.css sets `section { padding: var(--space-lg) 0 }`, so any bare
+     <section> carrying the measure inherits 64px of vertical padding that then
+     stacks on top of .flow's own gap. Vertical rhythm belongs to .flow. */
+  padding-block: 0;
+}
+/* named by role, not by number — a span that means something survives a
+   redesign, and `.colsReading` tells you why it is four columns wide */
+.colsReading { grid-column: 1 / 5; }
+.colsArtifact { grid-column: 6 / 13; }
+.colsFull { grid-column: 1 / 13; }
+.colsInset { grid-column: 3 / 11; }
+.colsProse { grid-column: 1 / 8; }
+
+@media (max-width: 1000px) {
+  .measure { grid-template-columns: minmax(0, 1fr); }
+  .colsReading, .colsArtifact, .colsFull, .colsInset, .colsProse { grid-column: 1 / -1; }
+}
+
+/* the meta tier — the record layer at the grid edges: crumb top-left, week
+   folio top-right, one hairline making the grid's top edge visible. The chapter
+   number itself moves down into the opener as the oversized ghost numeral. */
+.fieldHead {
+  display: flex; align-items: baseline; gap: 0.85rem;
+  padding-bottom: 0.7rem; margin-bottom: 0;
+  /* the meta rule carries the chapter's gradient stop — the arc read at a squint */
+  border-bottom: 2px solid var(--ch, var(--bs-rule));
+  font-family: var(--font-body);
+}
+.fCrumb { font-size: 0.78rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-ink); }
+.fWhen { margin-left: auto; align-self: center; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; font-variant-numeric: tabular-nums; color: var(--bs-teal-soft); }
+
+/* ── the Statement recipe: the chapter opener at true display scale ──
+   An oversized ghosted numeral holds the left columns (the wayfinding
+   throughline made visible); the chapter's thesis hangs asymmetric from
+   ~col 3, overlapping the numeral. Tiny meta above + huge display below
+   is the ≥3:1 hierarchy the page was missing. */
+.openerStage {
+  position: relative;
+  padding: clamp(2.6rem, 6vw, 4.6rem) 0 clamp(1.2rem, 2.6vw, 2rem);
+  margin-bottom: clamp(1.6rem, 3.5vw, 2.6rem);
+}
+.statement {
+  position: relative; z-index: 1;
+  margin: 0; max-width: 20ch;
+  font-family: var(--font-heading); font-variation-settings: 'SOFT' 60, 'WONK' 0;
+  font-weight: 380; font-size: clamp(2.2rem, 1.6rem + 2.8vw, 3.8rem);
+  line-height: 1.08; letter-spacing: -0.016em;
+  color: var(--color-ink); text-wrap: balance;
+}
+.statement b { font-weight: 460; color: var(--bs-accent); font-style: normal; }
+.statement em { font-style: italic; color: var(--bs-accent); }
+/* long theses drop one step and open the measure — still well past 3:1 */
+.statementLong { max-width: 30ch; font-size: clamp(1.9rem, 1.35rem + 2.5vw, 3.4rem); line-height: 1.12; text-wrap: pretty; }
+/* sub-beat statements: one tier down, flush left (a continuation, not a chapter) */
+.openerSub { padding: clamp(1.2rem, 3vw, 2rem) 0 clamp(0.8rem, 1.8vw, 1.2rem); margin-bottom: clamp(1.2rem, 2.6vw, 1.8rem); }
+.statementSub { margin-left: 0; max-width: 24ch; font-size: clamp(1.7rem, 1.3rem + 1.7vw, 2.7rem); line-height: 1.1; }
+@media (max-width: 700px) {
+  .statement, .statementLong { margin-left: 0; }
+  .ghostNum { top: 0; transform: none; }
+  .openerStage { padding-top: clamp(3.4rem, 16vw, 4.5rem); }
+  .openerSub { padding-top: clamp(1.2rem, 3vw, 2rem); }
+}
+
+/* sub-beat within a chapter — pulled up tight under its primary so the two read
+   as one chapter, with a quieter subhead (no big numeral) */
+.fieldSub { padding-top: 0; }
+.subHead {
+  display: flex; align-items: baseline; gap: 0.7rem;
+  padding-bottom: 0.7rem; margin-bottom: clamp(1.6rem, 3.5vw, 2.6rem);
+  border-bottom: 1px solid var(--bs-hairline);
+}
+.subCrumb {
+  position: relative; padding-left: 1.5rem;
+  font-family: var(--font-body); font-size: 0.9rem; font-weight: 700;
+  letter-spacing: 0.14em; text-transform: uppercase; color: var(--bs-teal-soft);
+}
+/* a short lead-in rule marks it as a continuation, not a new chapter */
+.subCrumb::before {
+  content: ''; position: absolute; left: 0; top: 0.5em;
+  width: 0.9rem; height: 2px; border-radius: 1px; background: var(--ch, var(--bs-teal-soft));
+}
+
+/* minmax(0, 1fr) pins the implicit track to the sheet — otherwise one
+   max-content child widens the track and every section child rides past
+   the viewport on mobile */
+.flow { display: grid; grid-template-columns: minmax(0, 1fr); gap: clamp(2.2rem, 4.5vw, 3.8rem); }
+/* globals.css sets `section { padding: var(--space-lg) 0 }`, so every bare
+   <section> inside a chapter inherited 64px of vertical padding that stacked on
+   top of this gap — it cost ~190px between Brief's bands and another 128px
+   between its two graphics before being caught. .flow owns the chapter's
+   vertical rhythm; its children do not get to add to it. */
+.flow > section { padding-block: 0; }
+
+/* question — curiosity first */
+.askBlock { display: grid; gap: 0.7rem; max-width: 40rem; }
+.askKicker { font-family: var(--font-body); font-weight: 600; font-size: 0.75rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--bs-teal-soft); }
+.ask {
+  margin: 0;
+  font-family: var(--font-heading); font-variation-settings: 'SOFT' 60, 'WONK' 0; font-weight: 400;
+  font-size: clamp(1.4rem, 1.15rem + 1vw, 1.95rem); line-height: 1.24; letter-spacing: -0.012em;
+  color: var(--color-ink); text-wrap: balance;
+}
+.ask em { font-style: italic; color: var(--bs-accent); }
+
+/* lead — the declarative takeaway that opens a section (replaces the question).
+   A statement a hiring manager can scan, set in the display face. */
+.lead {
+  margin: 0; max-width: 30ch;
+  font-family: var(--font-heading); font-variation-settings: 'SOFT' 60, 'WONK' 0; font-weight: 400;
+  font-size: clamp(1.5rem, 1.18rem + 1.35vw, 2.2rem); line-height: 1.2; letter-spacing: -0.014em;
+  color: var(--color-ink); text-wrap: balance;
+}
+.lead b { font-weight: 500; color: var(--bs-accent); font-style: normal; }
+.lead em { font-style: italic; color: var(--bs-accent); }
+
+/* a labeled sub-block inside a section: an eyebrow over running prose */
+.subBlock { display: grid; gap: 0.7rem; max-width: 44rem; }
+
+/* head cluster — Lead + its body prose held tight as one thought, so the full
+   .flow gap reads as the break BETWEEN thoughts, not inside them. Use in
+   sections whose opening isn't already clustered by a Split. */
+.headCluster { display: grid; gap: clamp(0.9rem, 1.8vw, 1.3rem); }
+
+/* running first-person prose — the autobiographical body voice. Body typeface,
+   not Fraunces; Fraunces is reserved for leads, headings, and callouts. */
+.prose {
+  margin: 0; max-width: 42rem;
+  font-family: var(--font-body); font-weight: 400;
+  font-size: clamp(1rem, 0.96rem + 0.3vw, 1.12rem); line-height: 1.65;
+  color: var(--color-ink); text-wrap: pretty;
+}
+.prose b { font-weight: 600; color: var(--bs-accent); }
+.prose em { font-style: italic; }
+
+/* figure plate — flat artifact (diagrams, moodboard) */
+.plate {
+  position: relative; display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 15rem); align-items: start;
+  gap: clamp(1rem, 2.5vw, 2rem); width: 100%; max-width: 52rem;
+  padding: 0.9rem 0.9rem 0.7rem; background: #fff; border-radius: 4px;
+  box-shadow: 0 22px 50px -30px rgba(26, 67, 77, 0.4), 0 1px 0 rgba(26,67,77,0.06);
+  transform: rotate(var(--rot, 0deg));
+}
+.plateNarrow { max-width: 34rem; grid-template-columns: 1fr; }
+.plateWide { max-width: 56rem; }
+.plateTab {
+  position: absolute; top: -0.7rem; left: 1rem; padding: 0.15rem 0.55rem; border-radius: 3px;
+  background: var(--bs-accent); color: #fff; font-family: var(--font-body); font-weight: 600; font-size: 0.72rem; letter-spacing: 0.06em; text-transform: uppercase;
+}
+.plateArt { grid-column: 1; background: #16323a; border-radius: 3px; padding: 0.6rem; display: grid; place-items: center; }
+.plateArt img { max-width: 100%; height: auto; display: block; }
+.plateArtLight { background: #fff; box-shadow: inset 0 0 0 1px rgba(26,67,77,0.08); }
+.plateCap { grid-column: 1; margin: 0.55rem 0 0; font-family: var(--font-body); font-size: 0.78rem; line-height: 1.4; color: var(--color-ink-light); }
+.plateMargin {
+  grid-column: 2; align-self: center; margin: 0; padding-left: 0.9rem;
+  border-left: 2px solid var(--bs-teal-soft);
+  font-family: var(--font-body); font-style: italic; font-size: 0.86rem; line-height: 1.5; color: var(--color-ink-light);
+}
+
+/* shot — app screens shown in device frames, as figures (keeps the mockups she likes) */
+.shotRow { display: flex; flex-wrap: wrap; gap: clamp(0.8rem, 2vw, 1.6rem); align-items: flex-start; }
+.shot { display: grid; gap: 0.5rem; justify-items: start; }
+.shotCap { font-family: var(--font-body); font-size: 0.78rem; line-height: 1.4; color: var(--color-ink-light); max-width: 24ch; }
+
+/* friction — admits the open question. Her voice too, so it wears the
+   thinking lilac and the dotted rule. */
+.friction {
+  margin: 0.7rem 0 0; max-width: 40rem; display: grid; gap: 0.7rem;
+  padding-top: 0.8rem; border-top: 2px solid var(--bs-teal);
+}
+.frictionText { margin: 0; font-family: var(--font-body); font-size: 0.95rem; line-height: 1.6; color: var(--color-ink-light); text-wrap: pretty; }
+.frictionText b { font-weight: 700; color: var(--bs-accent); font-style: normal; }
+/* ONE ANNOTATION LANGUAGE (the unify pass): the three margin voices — my
+   thinking, a parent said, still open — used to wear three filled chips in three
+   different colours, which is three furnitures doing one job. They now share the
+   page's single record-layer grammar: a teal rule, an uppercase label, the note
+   beneath. The voice is carried by the label's own words and by the setting of
+   the text (italic display for a quote, roman body for reasoning), not by a
+   coloured pill. */
+.frictionTag {
+  font-family: var(--font-body); font-weight: 700; font-size: 0.72rem;
+  letter-spacing: 0.13em; text-transform: uppercase; color: var(--bs-teal-soft);
+}
+
+/* ── the two margin voices, DE-CARDED: a labeled rule instead of a box. The
+   small voice chip (lilac = her thinking, peri = the testers) rides a hairline
+   that runs to the column edge — the specimen-label grammar — so the voices
+   read woven into the grid, not floated on white cards. The dotted rule stays
+   her hand's idiom; the record keeps solid rules. ── */
+.insight {
+  margin: 0.7rem 0 0; max-width: 40rem; display: grid; gap: 0.55rem;
+  padding-top: 0.8rem; border-top: 2px solid var(--bs-teal);
+}
+.insightRule { display: flex; align-items: center; }
+.insightTag {
+  font-family: var(--font-body); font-weight: 700; font-size: 0.72rem;
+  letter-spacing: 0.13em; text-transform: uppercase; color: var(--bs-teal-soft);
+}
+/* body sans, not Fraunces — Fraunces is reserved for titles, headers, and
+   quotes (Lorin's call). The dotted border + tag carry the "my thinking" cue. */
+.insightText {
+  margin: 0; font-family: var(--font-body); font-weight: 400;
+  font-size: clamp(1.02rem, 0.98rem + 0.3vw, 1.16rem); line-height: 1.6; color: var(--color-ink); text-wrap: pretty;
+}
+/* narrow: a margin-note proportion for when the card sits alone in a wide
+   column — a 40rem two-liner there reads as a banner, not a note. Anchored
+   to the grid's right edge so the emptiness reads as margin, not void. */
+.insightNarrow { max-width: 26rem; justify-self: end; }
+@media (max-width: 860px) { .insightNarrow { justify-self: start; } }
+
+/* standalone tester callout — the crit voice, de-carded to the same labeled
+   rule (solid peri hairline; the peri chip keeps the voice→color mapping) */
+.testerNote {
+  margin: 0.7rem 0 0; max-width: 32rem; display: grid; gap: 0.55rem;
+  padding-top: 0.8rem; border-top: 2px solid var(--bs-teal);
+}
+.testerRule { display: flex; align-items: center; }
+.testerKicker {
+  font-family: var(--font-body); font-weight: 700; font-size: 0.72rem;
+  letter-spacing: 0.13em; text-transform: uppercase; color: var(--bs-teal-soft);
+}
+.testerQuote {
+  margin: 0; font-family: var(--font-heading); font-variation-settings: 'SOFT' 60, 'WONK' 0; font-style: italic; font-weight: 400;
+  font-size: clamp(1.05rem, 0.95rem + 0.45vw, 1.35rem); line-height: 1.33; color: var(--color-ink); text-wrap: pretty;
+}
+.testerWho { margin: 0; font-family: var(--font-body); font-size: 0.72rem; letter-spacing: 0.06em; color: var(--bs-teal-soft); }
+/* summary variant — paraphrased feedback reads as synthesis, not a pulled quote:
+   upright (not italic), so the absence of quote marks is unmistakable */
+.testerSummary .testerQuote { font-style: normal; font-size: clamp(1rem, 0.92rem + 0.4vw, 1.24rem); line-height: 1.4; }
+
+@media (max-width: 720px) {
+  .plate, .plateNarrow { grid-template-columns: 1fr; transform: none; }
+  .plateMargin { grid-column: 1; margin-top: 0.4rem; }
+}
+@media (prefers-reduced-motion: reduce) { .plate { transform: none; } }
+
+/* ── split: documentation layout. Narrow text column (the thinking), large
+   media column that commands the right side. The visuals carry the section. ── */
+.split {
+  display: grid;
+  grid-template-columns: minmax(0, 27rem) minmax(0, 1fr);
+  gap: clamp(2rem, 4vw, 4.5rem);
+  align-items: start;
+}
+/* the text column rides sticky beside tall media, so the left column never
+   sits 70% empty while a 900px artifact scrolls past (composed whitespace) */
+.splitText { display: grid; gap: clamp(1.3rem, 3vw, 2.2rem); align-content: start; position: sticky; top: 10rem; }
+.splitMedia { display: grid; gap: clamp(1.4rem, 3vw, 2.6rem); min-width: 0; }
+/* the deliberate column break — media left, text right (starts past center) */
+.splitFlip { grid-template-columns: minmax(0, 1fr) minmax(0, 27rem); }
+.splitFlip .splitText { order: 2; }
+.splitFlip .splitMedia { order: 1; }
+
+/* ── bleed: the full-width cinematic band — the squint layer. The image runs
+   edge to edge; the caption keys back to the sheet's left edge. Duotone =
+   teal ground + screen-blended grayscale image: shadows take the ink,
+   highlights stay paper — the identity felt at any blur. ── */
+/* transform-free full-bleed (the .up reveal ends in transform:none, which would
+   cancel a translateX centering trick) */
+.bleed { width: 100vw; margin-left: calc(50% - 50vw); display: grid; gap: 0.7rem; }
+.bleedArt { overflow: hidden; background: var(--bs-teal); }
+.bleedArt img {
+  display: block; width: 100%;
+  height: clamp(340px, 58vh, 620px); object-fit: cover;
+}
+.bleedTall img { height: clamp(420px, 78vh, 780px); }
+.bleedDuo img { filter: grayscale(1) contrast(1.06) brightness(1.03); mix-blend-mode: screen; }
+.bleedCap {
+  margin: 0; font-family: var(--font-body); font-size: 0.78rem; line-height: 1.45;
+  color: var(--color-ink-light);
+  padding-inline: max(var(--bs-pad), calc((100vw - 92rem) / 2));
+}
+
+/* large figure — the artifact shown big (photo or screen mockup) */
+.fig { position: relative; margin: 0; display: grid; gap: 0.6rem; }
+/* the specimen label — small caps + figure number + a hairline running to the
+   column edge, set ON the grid above the artifact instead of a chip floating
+   on the image. The page-wide fig counter makes evidence citable. */
+.figTag {
+  display: flex; align-items: center; gap: 0.85rem;
+  font-family: var(--font-body); font-weight: 700; font-size: 0.7rem;
+  letter-spacing: 0.14em; text-transform: uppercase; color: var(--bs-teal-soft);
+}
+.figTag::before {
+  counter-increment: fig;
+  content: 'fig. ' counter(fig, decimal-leading-zero);
+  font-variant-numeric: tabular-nums; color: var(--color-ink);
+}
+.figTagAlt, .figTagOnPanel { background: none; }
+.figArt {
+  overflow: hidden; border-radius: 4px;
+  box-shadow: 0 32px 64px -34px rgba(26, 67, 77, 0.55);
+}
+.figArt img { display: block; width: 100%; height: auto; }
+.figArtCrop img { height: 100%; object-fit: cover; object-position: center; } /* crop to the figure's aspect-ratio */
+.figArtScreen { background: #16323a; } /* matte behind screen mockups that don't fill */
+/* contained duotone — same ink grammar as the bleed, for photos in columns */
+.figArtDuo { background: var(--bs-teal); }
+.figArtDuo img { filter: grayscale(1) contrast(1.06) brightness(1.03); mix-blend-mode: screen; }
+.figSmall { justify-self: start; max-width: min(26rem, 70%); }
+/* portrait photo: large but contained, anchored to the right edge so it fills
+   the right side instead of floating in the middle of a wide media column */
+.figPortrait { justify-self: end; max-width: min(40rem, 100%); }
+.figCap { margin: 0; font-family: var(--font-body); font-size: 0.78rem; line-height: 1.45; color: var(--color-ink-light); }
+.figByline { display: block; margin-top: 0.25rem; letter-spacing: 0.04em; color: var(--bs-teal-soft); }
+/* native diagram artifact — drawn in the page palette, no raster screen behind it */
+.figDiagram { position: relative; }
+
+/* finding — the compressed takeaway (replaces paragraphs); 20% copy, full weight */
+.finding { display: grid; gap: 0.55rem; max-width: 40rem; }
+.findingText {
+  margin: 0; font-family: var(--font-heading); font-variation-settings: 'SOFT' 60, 'WONK' 0; font-weight: 400;
+  font-size: clamp(1.08rem, 1rem + 0.5vw, 1.32rem); line-height: 1.4; letter-spacing: -0.006em;
+  color: var(--color-ink); text-wrap: balance;
+}
+.findingText b { font-weight: 600; color: var(--bs-accent); font-style: normal; }
+
+@media (max-width: 860px) {
+  .split, .splitFlip { grid-template-columns: 1fr; gap: clamp(1.4rem, 5vw, 2.4rem); }
+  .splitText { position: static; }
+  .splitFlip .splitText { order: 0; }
+  .splitFlip .splitMedia { order: 0; }
+  .figSmall { max-width: min(22rem, 80%); }
+}

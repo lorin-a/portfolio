@@ -1,0 +1,593 @@
+/* Body-local bits for the field-notes register. Tokens cascade from .case. */
+
+/* credits — the project metadata as the masthead of the Brief. One row of four,
+   spread across the full width, each value on a single line. */
+.credits {
+  margin: 0; display: grid;
+  grid-template-columns: repeat(4, max-content); justify-content: space-between;
+  gap: 1.4rem 2rem;
+  padding-bottom: clamp(1.6rem, 3.5vw, 2.4rem);
+  border-bottom: 1px solid var(--bs-rule);
+}
+.creditItem { display: grid; gap: 0.45rem; align-content: start; }
+.creditItem dt { font-family: var(--font-body); font-weight: 600; font-size: 0.75rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--bs-teal-soft); }
+.creditItem dd { margin: 0; font-family: var(--font-body); font-size: 0.98rem; line-height: 1.45; color: var(--color-ink); white-space: nowrap; }
+/* below the wide breakpoint the single row won't fit — fall back to 2×2, then stacked */
+@media (max-width: 1300px) {
+  .credits { grid-template-columns: repeat(2, minmax(0, 19rem)); justify-content: start; gap: 1.5rem 3.5rem; }
+  .creditItem dd { white-space: normal; }
+}
+@media (max-width: 540px) { .credits { grid-template-columns: 1fr; gap: 1.1rem; } }
+
+/* brief — the lede (setup) and the tasking line that frame the big question */
+.briefLede {
+  margin: 0; max-width: 34ch;
+  font-family: var(--font-body); font-size: clamp(1rem, 0.95rem + 0.25vw, 1.12rem);
+  line-height: 1.6; color: var(--color-ink-light); text-wrap: pretty;
+}
+.briefTask {
+  margin: 0; max-width: 34ch;
+  font-family: var(--font-body); font-size: 0.95rem; line-height: 1.55; color: var(--color-ink-light); text-wrap: pretty;
+}
+.briefTask b { color: var(--bs-accent); font-weight: 700; }
+
+/* design principles — the qualities the work had to embody, sharpened into
+   named principles (the studio's Saffer model: pithy, specific, a
+   differentiator). Numbered editorial cards, 2×2; the two that testing
+   sharpened carry a hairline-set "what it taught" note. Set off from the brief
+   by a hairline so it reads as part of the section. */
+/* design principles — four CLAIMS set as type (F12): no numerals, no rules,
+   no boxes. The names carry the weight at a small display size; one quiet
+   line each beneath; the two testing-sharpened ones add one italic line. */
+.values {
+  padding-top: clamp(2.4rem, 5.5vw, 3.8rem);
+  display: grid; gap: clamp(1.6rem, 3.4vw, 2.4rem);
+}
+.valuesHead {
+  margin: 0;
+  font-family: var(--font-body); font-weight: 600; font-size: 0.75rem;
+  letter-spacing: 0.14em; text-transform: uppercase; color: var(--bs-teal-soft);
+}
+.valuesList {
+  margin: 0; padding: 0; list-style: none;
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(2.2rem, 4.5vw, 3.4rem) clamp(3rem, 6vw, 5.5rem);
+}
+.principle { display: grid; gap: 0.6rem; align-content: start; max-width: 34rem; }
+.principleName {
+  margin: 0; font-family: var(--font-heading); font-variation-settings: 'SOFT' 60, 'WONK' 0;
+  font-weight: 380; font-size: clamp(1.5rem, 1.25rem + 1.1vw, 2.1rem); line-height: 1.14;
+  letter-spacing: -0.012em; color: var(--color-ink); text-wrap: balance;
+}
+.principleWhy {
+  margin: 0; font-family: var(--font-body); font-size: 0.95rem; line-height: 1.55;
+  color: var(--color-ink-light); text-wrap: pretty;
+}
+/* the two that testing rewrote carry a marked third tier, so the 2 × 2's own
+   shape says "four claims, two of them revised" with the words covered — which
+   is also her standing distinction (L3): she can't claim she applied these,
+   only that they evolved through feedback. */
+.principleEvolved {
+  margin: 0.35rem 0 0; padding-top: 0.6rem; border-top: 2px solid var(--bs-crit);
+  display: grid; gap: 0.3rem;
+  font-family: var(--font-body); font-style: italic;
+  font-size: 0.9rem; line-height: 1.5; color: var(--color-ink-light); text-wrap: pretty;
+}
+.principleTag {
+  font-style: normal; font-weight: 700; font-size: 0.68rem;
+  letter-spacing: 0.12em; text-transform: uppercase; color: var(--bs-teal-soft);
+}
+@media (max-width: 640px) { .valuesList { grid-template-columns: 1fr; gap: 1.8rem; } }
+
+/* THE SYNTHESIS GRID IS RETIRED (N42/N43).
+
+   It was twelve cells of heard → learned → did, and it failed the one gate this
+   page runs on: cover the words and an empty 4 × 3 grid says nothing. Separating
+   text into columns is not information design. Its four rows did not die with
+   it — three of them now hang on the IA diagrams in IaAria, registered against
+   the part of the architecture each one produced, and the fourth (the "reclaim"
+   copy finding) already lived verbatim in the Identity chapter. */
+
+/* ── THE RECORD ───────────────────────────────────────────────────────────
+   THE SUBTRACTION PASS. Everything that is a record rather than the story
+   gathers here, below the argument, and is set to LOOK secondary: one label
+   for the whole block instead of one per object, no display type, no teal
+   rules between tiers. The chapter above it is then free to be four things —
+   statement, paragraph, voice, artifact — which is all Outcome ever was. */
+.record {
+  --pad: clamp(1.2rem, 2.4vw, 1.6rem);
+  display: grid; gap: clamp(1.4rem, 3vw, 2.2rem);
+  padding-top: clamp(2rem, 4.5vw, 3rem);
+  border-top: 1px solid var(--bs-hairline);
+}
+.recordHead {
+  margin: 0; font-family: var(--font-body); font-weight: 700; font-size: 0.72rem;
+  letter-spacing: 0.16em; text-transform: uppercase; color: var(--bs-teal-soft);
+}
+.recordScope { display: grid; gap: clamp(0.8rem, 1.8vw, 1.1rem); }
+.recordLine {
+  margin: 0; max-width: 62ch;
+  font-family: var(--font-body); font-size: 0.95rem; line-height: 1.6;
+  color: var(--color-ink); text-wrap: pretty;
+}
+/* the principles, as plain type. No 2×2, no ruled "sharpened by testing" tier,
+   no numerals — her sentences already say testing taught her, which was the
+   only thing that tier was there to mark. */
+.recordList {
+  margin: 0; padding: 0; list-style: none;
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(1.2rem, 2.6vw, 1.8rem) clamp(2.5rem, 5vw, 4.5rem);
+}
+.recordItem { display: grid; gap: 0.3rem; align-content: start; max-width: 40ch; }
+.recordName {
+  margin: 0; font-family: var(--font-body); font-weight: 700; font-size: 0.95rem;
+  line-height: 1.4; color: var(--color-ink); text-wrap: balance;
+}
+.recordWhy, .recordTaught {
+  margin: 0; font-family: var(--font-body); font-size: 0.9rem; line-height: 1.55;
+  color: var(--color-ink-light); text-wrap: pretty;
+}
+.recordTaught { font-style: italic; }
+@media (max-width: 700px) { .recordList { grid-template-columns: 1fr; } }
+
+.scopeCells { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--bs-hairline); }
+.scopeCell { display: grid; gap: 0.35rem; align-content: start; padding: var(--pad) var(--pad) var(--pad) 0; }
+.scopeCell + .scopeCell { padding-left: var(--pad); border-left: 1px solid var(--bs-hairline); }
+.scopeFigRow { display: flex; align-items: baseline; gap: 0.55rem; }
+.scopeFig {
+  font-family: var(--font-heading); font-variation-settings: 'SOFT' 60, 'WONK' 0;
+  font-weight: 420; font-size: clamp(1.9rem, 1.5rem + 1.4vw, 2.6rem); line-height: 1;
+  color: var(--bs-accent);
+}
+.scopeLabel { font-family: var(--font-body); font-weight: 700; font-size: 0.75rem; letter-spacing: 0.13em; text-transform: uppercase; color: var(--bs-teal-soft); }
+.scopeNames { font-family: var(--font-body); font-size: 0.9rem; line-height: 1.45; color: var(--color-ink-light); text-wrap: balance; }
+/* subtraction made visible — the cut features struck through, the added one lifted */
+.scopeCut { text-decoration: line-through; text-decoration-color: var(--bs-teal-soft); opacity: 0.65; }
+.scopeAdded { color: var(--color-ink); }
+@media (max-width: 640px) {
+  .scopeCells { grid-template-columns: 1fr; }
+  .scopeCell { padding-right: 0; }
+  .scopeCell + .scopeCell { border-left: 0; border-top: 1px solid var(--bs-hairline); padding-left: 0; }
+}
+
+/* DE-PANELLED (the unify pass): the gradient veil belonged to the era when the
+   product lived inside this chapter. The product act now owns the designed
+   surface; the process half is plain paper throughout, so this is whitespace and
+   rules like every other chapter. */
+.voicePanel {
+  display: grid; gap: clamp(1.2rem, 2.6vw, 1.7rem);
+}
+.voicePanel > * { margin-top: 0; }
+
+/* DE-CARDED: the white plate and its dark filled chip were a sixth aside
+   treatment. The revisions now set as a ruled ledger in the page's one
+   record-layer grammar — teal rule, uppercase label, hairline-divided rows. */
+.revisions {
+  margin: 1.1rem 0 0; display: grid;
+  padding-top: 0.8rem; border-top: 2px solid var(--bs-teal);
+}
+.revTag {
+  margin-bottom: 0.2rem;
+  font-family: var(--font-body); font-weight: 700; font-size: 0.72rem;
+  letter-spacing: 0.13em; text-transform: uppercase; color: var(--bs-teal-soft);
+}
+.revRow {
+  display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1.2fr);
+  align-items: center; gap: clamp(0.9rem, 2vw, 1.5rem);
+  padding: clamp(1rem, 2vw, 1.35rem) 0;
+}
+.revRow + .revRow { border-top: 1px solid var(--bs-hairline); }
+.revCell { display: grid; gap: 0.35rem; }
+.revArrow { font-size: 1.15rem; line-height: 1; color: var(--bs-teal-soft); }
+.copyLabel { font-family: var(--font-body); font-weight: 600; font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--bs-teal-soft); }
+@media (max-width: 640px) {
+  .revRow { grid-template-columns: 1fr; gap: 0.6rem; }
+  .revArrow { transform: rotate(90deg); justify-self: start; padding-left: 0.15rem; }
+}
+.draftLine {
+  margin: 0; font-family: var(--font-heading); font-style: italic; font-weight: 360;
+  font-size: clamp(1.15rem, 1rem + 0.6vw, 1.42rem); line-height: 1.28; color: var(--color-ink-light);
+  text-decoration: line-through; text-decoration-color: var(--bs-crit-soft);
+}
+.rewriteLine {
+  margin: 0; font-family: var(--font-heading); font-style: italic; font-weight: 360;
+  font-size: clamp(1.15rem, 1rem + 0.6vw, 1.42rem); line-height: 1.28; color: var(--bs-accent);
+}
+@media (max-width: 720px) { .voiceGrid { grid-template-columns: 1fr; gap: clamp(1.4rem, 5vw, 2rem); } }
+
+/* outcome quote */
+.quote { margin: 0; max-width: 18ch; font-family: var(--font-heading); font-variation-settings: 'SOFT' 60, 'WONK' 0; font-style: italic; font-weight: 360; font-size: clamp(1.7rem, 1.3rem + 1.7vw, 2.65rem); line-height: 1.18; color: var(--color-ink); }
+.quoteAttr { display: block; margin-top: 0.8em; font-family: var(--font-body); font-style: normal; font-weight: 600; font-size: 0.75rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--bs-teal-soft); }
+
+/* close — the coda. A full-bleed gradient finale that reprises the brand
+   identity (blush + peri glow over deep teal), so the study closes on the
+   gradient it opened on. Holds the closing statement and the one exit action.
+   Escapes the sheet with the 50% / 50vw trick. */
+.coda {
+  width: 100vw; margin-left: 50%; transform: translateX(-50%);
+  margin-top: clamp(2.6rem, 6vw, 4.5rem);
+  padding: clamp(3.5rem, 9vw, 6.5rem) var(--bs-pad);
+  background:
+    radial-gradient(115% 130% at 10% 0%, rgba(219, 173, 173, 0.30) 0%, transparent 46%),
+    radial-gradient(120% 130% at 88% 100%, rgba(177, 193, 244, 0.26) 0%, transparent 52%),
+    linear-gradient(158deg, #1F4750 0%, #1A434D 55%, #163038 100%);
+  color: #fff;
+}
+.codaInner { max-width: 42rem; margin: 0 auto; display: grid; justify-items: center; text-align: center; gap: clamp(1.8rem, 4vw, 2.7rem); }
+/* the display line + its quieter proof sentence read as one thought,
+   held tighter than the coda's outer gap */
+.codaText { display: grid; justify-items: center; gap: clamp(0.9rem, 2vw, 1.3rem); }
+.codaSub {
+  margin: 0; max-width: 46ch;
+  font-family: var(--font-body); font-weight: 400;
+  font-size: clamp(0.96rem, 0.9rem + 0.3vw, 1.1rem); line-height: 1.6;
+  color: rgba(255, 255, 255, 0.82); text-wrap: balance;
+}
+.codaLine {
+  margin: 0; max-width: 30ch;
+  font-family: var(--font-heading); font-variation-settings: 'SOFT' 60, 'WONK' 0; font-style: italic; font-weight: 360;
+  font-size: clamp(1.45rem, 1.15rem + 1.3vw, 2.15rem); line-height: 1.34; letter-spacing: -0.01em;
+  color: #fff; text-wrap: balance;
+}
+.codaActions { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 1rem 1.6rem; }
+.codaCta {
+  display: inline-flex; align-items: center; min-height: 44px; padding: 0.7rem 1.5rem;
+  background: var(--color-cream, #FFFCFA); color: var(--bs-teal);
+  border-radius: 999px; font-family: var(--font-body); font-weight: 600; font-size: 0.92rem; letter-spacing: 0.01em;
+  text-decoration: none;
+  transition: transform var(--motion-fast) var(--ease-out), box-shadow var(--motion-fast) var(--ease-out);
+  box-shadow: 0 14px 30px -18px rgba(0, 0, 0, 0.5);
+}
+@media (hover: hover) { .codaCta:hover { transform: translateY(-2px); box-shadow: 0 22px 40px -22px rgba(0, 0, 0, 0.6); } }
+.codaCta:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+.codaAlt {
+  display: inline-flex; align-items: center; min-height: 44px;
+  font-family: var(--font-body); font-weight: 600; font-size: 0.92rem;
+  color: rgba(255, 255, 255, 0.9); text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 1px;
+  text-decoration-color: rgba(255, 255, 255, 0.5);
+  transition: text-decoration-color var(--motion-fast) var(--ease-out);
+}
+@media (hover: hover) { .codaAlt:hover { text-decoration-color: rgba(255, 255, 255, 0.95); } }
+.codaAlt:focus-visible { outline: 2px solid #fff; outline-offset: 3px; border-radius: 4px; }
+
+/* close — the method map. A ruled ledger above the colophon: the taught
+   strategy quiet on the left, her actual move carrying the ink. Appendix
+   register, same column as the colophon so the two read as one closing block. */
+.methodMap {
+  margin: 0; display: grid; gap: clamp(0.9rem, 2vw, 1.2rem);
+  padding-top: clamp(1.4rem, 3vw, 2rem);
+  border-top: 1px solid var(--bs-rule);
+  max-width: 76rem;
+}
+/* ledger left, the cited Dezudio diagram right — the artifact fills the column
+   the colophon leaves empty, and the two read as one closing method block */
+.methodMapGrid {
+  display: grid; grid-template-columns: minmax(0, 44rem) minmax(0, 26rem);
+  gap: clamp(1.6rem, 4vw, 3.5rem); align-items: start;
+}
+.methodMapMain { display: grid; gap: clamp(0.9rem, 2vw, 1.2rem); }
+.methodMapGrid figcaption a { color: inherit; text-underline-offset: 3px; }
+@media (max-width: 900px) { .methodMapGrid { grid-template-columns: 1fr; } }
+.methodMapHead {
+  margin: 0;
+  font-family: var(--font-body); font-weight: 700; font-size: 0.72rem;
+  letter-spacing: 0.14em; text-transform: uppercase; color: var(--bs-teal-soft);
+}
+.methodMapIntro {
+  margin: 0; max-width: 52ch;
+  font-family: var(--font-body); font-size: 0.9rem; line-height: 1.55;
+  color: var(--color-ink-light); text-wrap: pretty;
+}
+.methodMapList { margin: 0.2rem 0 0; padding: 0; list-style: none; display: grid; }
+.methodMapRow {
+  display: grid; grid-template-columns: minmax(0, 15rem) minmax(0, 1fr);
+  gap: 0.4rem 1.4rem; align-items: baseline;
+  padding: 0.75rem 0;
+}
+.methodMapRow + .methodMapRow { border-top: 1px solid var(--bs-hairline); }
+.methodStrat {
+  font-family: var(--font-body); font-weight: 600; font-size: 0.78rem;
+  letter-spacing: 0.06em; text-transform: uppercase; line-height: 1.5;
+  color: var(--bs-teal-soft); text-wrap: pretty;
+}
+.methodNum {
+  display: inline-block; margin-right: 0.55rem;
+  font-weight: 700; color: var(--color-ink-faint); font-variant-numeric: tabular-nums;
+}
+.methodMove {
+  margin: 0; font-family: var(--font-body); font-size: 0.9rem; line-height: 1.55;
+  color: var(--color-ink); text-wrap: pretty;
+}
+@media (max-width: 600px) { .methodMapRow { grid-template-columns: 1fr; gap: 0.3rem; } }
+
+/* close — the sources colophon. Attribution as a clear, ruled block (tools,
+   icons, photography), not a whisper-line a reader could miss. */
+.colophon {
+  margin: 0; display: grid; gap: 0.85rem;
+  padding-top: clamp(1.4rem, 3vw, 2rem);
+  border-top: 1px solid var(--bs-rule);
+  max-width: 44rem;
+}
+.colRow { display: grid; grid-template-columns: 8rem minmax(0, 1fr); gap: 1rem; align-items: baseline; }
+.colRow dt {
+  font-family: var(--font-body); font-weight: 700; font-size: 0.72rem;
+  letter-spacing: 0.14em; text-transform: uppercase; color: var(--bs-teal-soft);
+}
+.colRow dd { margin: 0; font-family: var(--font-body); font-size: 0.85rem; line-height: 1.55; color: var(--color-ink-light); text-wrap: pretty; }
+@media (max-width: 540px) { .colRow { grid-template-columns: 1fr; gap: 0.25rem; } }
+
+/* ── overview — a metadata-forward masthead. No synopsis paragraph: the detail
+   is folded into verbose, sectioned rows so a reader scans it in seconds and
+   gets to the project. Label column, value column, hairline-ruled rows. ── */
+.overview {
+  padding: clamp(3.5rem, 8vh, 6rem) var(--bs-pad) clamp(3rem, 6vh, 4.5rem);
+  background-color: #fff; /* clean solid masthead panel, set apart from the dotted paper body */
+}
+.overviewInner { max-width: 92rem; margin: 0 auto; }
+.overviewMeta {
+  margin: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(1.6rem, 3vw, 2.6rem) clamp(2rem, 4vw, 3.5rem);
+}
+.metaItem { display: grid; gap: 0.45rem; align-content: start; padding-top: 0.85rem; border-top: 1px solid var(--bs-hairline); }
+.metaItem dt { font-family: var(--font-body); font-weight: 700; font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--bs-teal-soft); }
+/* narrow value measure so each fact reads as a tidy 2–3 line block, balanced
+   across the three columns, instead of a value sprawling the full column width */
+.metaItem dd { margin: 0; max-width: 26ch; font-family: var(--font-body); font-size: clamp(0.92rem, 0.88rem + 0.25vw, 1.02rem); line-height: 1.5; color: var(--color-ink); text-wrap: pretty; }
+.metaItem dd a {
+  color: inherit; text-decoration: underline;
+  text-decoration-color: var(--bs-teal-soft); text-underline-offset: 3px;
+  transition: text-decoration-color var(--motion-fast) var(--ease-out);
+}
+@media (hover: hover) { .metaItem dd a:hover { text-decoration-color: var(--bs-accent); } }
+@media (max-width: 760px) { .overviewMeta { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 460px) { .overviewMeta { grid-template-columns: 1fr; } }
+
+/* ── Myana reference — a cited link to the real, shipping app Birth Story
+   companions. Real facts + a real App Store link; reproduces none of Myana's
+   proprietary UI. Also anchors the short intro against the tall opening photo. ── */
+/* DE-CARDED (the unify pass): this was the page's one white bordered-and-shadowed
+   card, and it read as a widget dropped into an otherwise borderless document.
+   Now it sets as a ruled reference block in the same grammar as every other
+   record-layer surface — teal top rule, hairlines, no box. */
+/* ── the Myana attribution ─────────────────────────────────────────────────
+   Was a bordered reference card, then a ruled reference block. Now it is an
+   inline attribution: an icon, a name and a link. A card around a hyperlink is
+   furniture, not information, and this chapter has to earn every surface it
+   spends. */
+.myanaRef {
+  justify-self: start;
+  display: inline-grid; grid-template-columns: auto auto; gap: 0.7rem; align-items: center;
+  margin-top: clamp(0.9rem, 2vw, 1.3rem);
+  text-decoration: none; color: inherit;
+}
+.myanaIcon { width: 2.4rem; height: 2.4rem; border-radius: 22%; display: block; box-shadow: inset 0 0 0 1px rgba(26, 67, 77, 0.12); }
+.myanaText { display: grid; gap: 0.1rem; }
+.myanaTag { font-family: var(--font-body); font-weight: 700; font-size: 0.66rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--bs-teal-soft); }
+.myanaName {
+  font-family: var(--font-body); font-weight: 700; font-size: 0.95rem; line-height: 1.3;
+  color: var(--color-ink);
+}
+.myanaLink { margin-left: 0.5rem; font-weight: 600; font-size: 0.84rem; color: var(--bs-accent); }
+@media (hover: hover) { .myanaRef:hover .myanaLink { text-decoration: underline; text-underline-offset: 3px; } }
+.myanaRef:focus-visible { outline: 2px solid var(--bs-accent); outline-offset: 3px; border-radius: 2px; }
+
+/* ONE SHEET. The reading column and the brief-as-artifact sit side by side and
+   top-aligned, so the chapter is read at once rather than scrolled through. */
+.briefSheet { row-gap: clamp(2rem, 5vh, 3rem); align-items: start; }
+/* the reading column holds three distinct thoughts — the setup, who asked, and
+   her own stake in it — so they need real air between them, not list spacing */
+.briefRead { display: grid; gap: clamp(1.3rem, 3vh, 1.9rem); align-content: start; }
+.briefConnection { margin-top: clamp(0.5rem, 1.6vh, 1rem); }
+.briefDoc { display: grid; gap: clamp(1.6rem, 3.5vh, 2.4rem); align-content: start; }
+/* the two graphics are <section>s for their labels; .flow > section handles the
+   inherited global padding, but these are nested a level deeper */
+.briefDoc > section { padding-block: 0; }
+
+/* ── THE STAKES ────────────────────────────────────────────────────────────
+   The figures were a stat column; they are proportions, so they are drawn as
+   proportions. Cover the words and the shape still reads: most of it
+   preventable, most of it after delivery. Sober on purpose — 2px rules, small
+   type, one colour, no fill animation. */
+.stakeChart {
+  display: grid; gap: clamp(0.6rem, 1.4vh, 0.95rem);
+  margin-top: 0.8rem;
+}
+.stakeShare, .stakeRatio {
+  display: grid; grid-template-columns: 2.9rem minmax(6rem, 14rem) minmax(0, 1fr);
+  gap: 0.8rem; align-items: center;
+}
+.stakeFig {
+  font-family: var(--font-body); font-weight: 700;
+  font-size: clamp(1rem, 0.92rem + 0.35vw, 1.2rem); line-height: 1.2;
+  color: var(--color-ink); font-variant-numeric: tabular-nums;
+}
+/* the shared 0–100 track: the two shares are read against each other, and
+   against the whole, because they are parts of the same whole */
+.stakeTrack { display: block; height: 0.5rem; background: var(--bs-wash); box-shadow: inset 0 0 0 1px var(--bs-hairline); }
+.stakeFill { display: block; height: 100%; width: var(--pct); background: var(--bs-teal); }
+/* the ratio is NOT a share, so it never touches the 0–100 track — one bar
+   against three is the honest drawing of "three times" */
+.stakeBars { display: grid; gap: 0.25rem; }
+.stakeUnit { display: block; height: 0.28rem; width: 22%; background: var(--bs-teal-soft); }
+.stakeUnitThree { width: 66%; background: var(--bs-teal); }
+.stakeText {
+  font-family: var(--font-body); font-size: clamp(0.86rem, 0.83rem + 0.18vw, 0.95rem);
+  line-height: 1.4; color: var(--color-ink-light); text-wrap: pretty;
+}
+.stakeSource { margin: 0.8rem 0 0; font-family: var(--font-body); font-size: 0.78rem; line-height: 1.5; color: var(--color-ink-faint); text-wrap: pretty; }
+.stakeSource b { color: var(--bs-teal-soft); font-weight: 600; }
+@media (max-width: 720px) {
+  .stakeShare, .stakeRatio { grid-template-columns: 3rem minmax(0, 1fr); }
+  .stakeText { grid-column: 1 / -1; }
+}
+
+/* ── THE SPEC ──────────────────────────────────────────────────────────────
+   Two tracks of equal total width; only the subdivision differs. Three solid
+   blocks over five hollow ones says "three to solve, five to choose among"
+   before a word of it is read — which is the whole test a component here has to
+   pass. */
+.specTrack + .specTrack { margin-top: clamp(1.1rem, 2.4vh, 1.6rem); }
+.specSolid, .specHollow {
+  margin: 0.7rem 0 0; padding: 0; list-style: none;
+  display: grid; gap: 0.5rem;
+}
+.specSolid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.specHollow { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+.specSolid li {
+  display: grid; gap: 0.25rem; align-content: start;
+  padding: clamp(0.7rem, 1.4vw, 0.95rem);
+  background: var(--bs-teal); color: #fff;
+}
+.specSolid li b { font-family: var(--font-body); font-weight: 700; font-size: 0.88rem; line-height: 1.25; }
+.specSolid li span { font-family: var(--font-body); font-size: 0.78rem; line-height: 1.4; color: rgba(255, 255, 255, 0.9); text-wrap: pretty; }
+.specHollow li {
+  display: grid; align-content: center;
+  min-height: 2.6rem; padding: 0.5rem clamp(0.45rem, 1vw, 0.7rem);
+  box-shadow: inset 0 0 0 1px var(--bs-rule);
+  font-family: var(--font-body); font-size: 0.78rem; line-height: 1.25;
+  color: var(--color-ink); text-wrap: pretty;
+}
+.specGiven { margin: 0.8rem 0 0; font-family: var(--font-body); font-size: 0.86rem; line-height: 1.5; color: var(--color-ink-light); }
+@media (max-width: 900px) {
+  .specSolid { grid-template-columns: 1fr; }
+  .specHollow { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+/* research band, third column — the parent quote elevated to display size. This
+   is the research-subject voice (teal family, a subject speaking), distinct from
+   the terracotta crit voice; it sits beside the findings it substantiates. */
+.voicesCol { gap: 0.75rem; }
+.parentQuote {
+  margin: 0;
+  font-family: var(--font-heading); font-variation-settings: 'SOFT' 60, 'WONK' 0;
+  font-style: italic; font-weight: 400;
+  font-size: clamp(1.02rem, 0.95rem + 0.4vw, 1.24rem); line-height: 1.42;
+  color: var(--color-ink); text-wrap: pretty;
+}
+.parentWho { margin: 0; font-family: var(--font-body); font-weight: 600; font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--bs-teal-soft); }
+
+/* the product overture's styles are retired with the section itself (N25) — the
+   product is now one act up top, in ProductAct.module.css. */
+
+/* ── THE RESEARCH ROW ──────────────────────────────────────────────────────
+   Words left, the group call right, on the page measure. The old 1.05fr/0.95fr
+   pairing was one of the nine ad-hoc proportions the measure replaces. */
+.researchRow { row-gap: clamp(2rem, 5vh, 3rem); align-items: start; }
+.researchRead { display: grid; gap: clamp(1.1rem, 2.6vh, 1.6rem); align-content: start; }
+/* her research finding, closing the column. It gets weight from SIZE, not from
+   a label and a rule above it — one step up from the prose it follows, which is
+   how a reader knows it is the conclusion without being told. */
+.researchClose {
+  margin: 0.2rem 0 0; max-width: 30ch;
+  font-family: var(--font-heading); font-variation-settings: 'SOFT' 60, 'WONK' 0;
+  font-weight: 400; font-size: clamp(1.2rem, 1.05rem + 0.6vw, 1.55rem); line-height: 1.24;
+  letter-spacing: -0.012em; color: var(--color-ink); text-wrap: pretty;
+}
+.researchClose b { font-weight: 460; color: var(--bs-accent); }
+
+/* ── THE THREE MOMENTS ─────────────────────────────────────────────────────
+   The chapter's claim is that capacity RISES, so the bars rise: a third, two
+   thirds, whole, along one time axis. Cover the words and the staircase still
+   says it. */
+/* her Research statement, demoted from chapter thesis to this graphic's lede —
+   it was always this staircase's caption. One tier under a chapter statement,
+   one tier over the beats. */
+.momentsClaim {
+  margin: 0.7rem 0 0; max-width: 34ch;
+  font-family: var(--font-heading); font-variation-settings: 'SOFT' 60, 'WONK' 0;
+  font-weight: 400; font-size: clamp(1.4rem, 1.15rem + 1vw, 2rem); line-height: 1.18;
+  letter-spacing: -0.014em; color: var(--color-ink); text-wrap: balance;
+}
+.momentsClaim b { font-weight: 460; color: var(--bs-accent); }
+.moments {
+  margin: 1.2rem 0 0; padding: 0; list-style: none;
+  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(1rem, 2.4vw, 2rem);
+  /* the time axis the three beats sit on */
+  border-top: 1px solid var(--bs-rule); padding-top: 1.1rem;
+}
+.moment { display: grid; gap: 0.45rem; align-content: start; }
+.momentBar { display: block; height: 0.42rem; background: var(--bs-wash); box-shadow: inset 0 0 0 1px var(--bs-hairline); }
+.momentFill { display: block; height: 100%; width: var(--grow); background: var(--bs-teal); }
+.momentWhen { font-family: var(--font-body); font-weight: 700; font-size: 0.88rem; line-height: 1.3; color: var(--color-ink); }
+.momentWhat { font-family: var(--font-body); font-size: 0.88rem; line-height: 1.45; color: var(--color-ink-light); text-wrap: pretty; }
+@media (max-width: 820px) {
+  .moments { grid-template-columns: 1fr; gap: 1.1rem; }
+}
+
+
+/* ── THE VOICE PLANE ──────────────────────────────────────────────────────
+   THE CHAT CARD IS RETIRED. It was a group text simulated in JSX — bubbles, a
+   header, a provenance note, a shadowed card — standing in for research that
+   really happened over a real call. A drawn interface is not an artifact; it is
+   a prop, and it put the best sentence in the chapter inside a 1.2rem bubble.
+
+   What replaces it is what research actually leaves behind: a person's words.
+   One verbatim quote at display scale, its attribution, and under a single
+   hairline the asks that came out of the same conversation. No card, no
+   bubbles, no shadow. The type is the whole design. */
+.voicePlane { display: grid; align-content: start; gap: clamp(1.4rem, 3vw, 2rem); }
+.bigQuote {
+  margin: 0; display: grid; gap: clamp(0.9rem, 2vw, 1.3rem);
+  padding-left: clamp(1rem, 2.2vw, 1.6rem);
+  border-left: 2px solid var(--bs-accent);
+}
+.bigQuote p {
+  margin: 0; max-width: 22ch;
+  font-family: var(--font-heading); font-variation-settings: 'SOFT' 60, 'WONK' 0;
+  font-weight: 400; font-size: clamp(1.7rem, 1.2rem + 1.9vw, 2.9rem); line-height: 1.14;
+  letter-spacing: -0.016em; color: var(--color-ink); text-wrap: pretty;
+}
+.bigQuote cite {
+  font-style: normal;
+  font-family: var(--font-body); font-weight: 700; font-size: 0.74rem;
+  letter-spacing: 0.13em; text-transform: uppercase; color: var(--bs-teal-soft);
+}
+/* the asks: three lines and one rule. The rule frames them as a different kind
+   of statement, which is the job a label was doing before. */
+.asks {
+  margin: 0; padding: clamp(1.2rem, 2.6vw, 1.8rem) 0 0; list-style: none;
+  display: grid; gap: 0.7rem; max-width: 52ch;
+  border-top: 1px solid var(--bs-rule);
+}
+.asks li {
+  font-family: var(--font-body); font-size: clamp(1rem, 0.96rem + 0.2vw, 1.1rem);
+  line-height: 1.5; color: var(--color-ink); text-wrap: pretty;
+}
+.asksNote {
+  margin: 0; max-width: 52ch;
+  font-family: var(--font-body); font-size: 0.85rem; line-height: 1.5;
+  color: var(--color-ink-light); text-wrap: pretty;
+}
+
+/* .talkAside / .usePhases retired — the three moments are their own
+   component now, drawn as the rising capacity they describe. */
+.talkTakeaway {
+  margin: 0.5rem 0 0;
+  font-family: var(--font-heading); font-variation-settings: 'SOFT' 60, 'WONK' 0; font-weight: 400;
+  font-size: clamp(1rem, 0.94rem + 0.3vw, 1.15rem); line-height: 1.4; color: var(--color-ink); text-wrap: pretty;
+}
+.specLabel { margin: 0; font-family: var(--font-body); font-weight: 700; font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--bs-teal-soft); }
+.specList { margin: 0; padding: 0; list-style: none; display: grid; gap: 0.6rem; }
+.specList li { position: relative; padding-left: 1.15rem; font-family: var(--font-body); font-size: 0.95rem; line-height: 1.5; color: var(--color-ink-light); text-wrap: pretty; }
+.specList li::before { content: ''; position: absolute; left: 0; top: 0.6em; width: 0.42rem; height: 0.42rem; border-radius: 1px; background: var(--bs-teal-soft); }
+.specList b { font-weight: 700; color: var(--color-ink); }
+/* nested options — indented dashes under the parent bullet, tighter and
+   quieter so they read as a set. Two columns so Provided stays compact and
+   the three cards balance in height instead of this one towering. */
+.specSubList { margin: 0.5rem 0 0; padding: 0; list-style: none; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.34rem 1.1rem; }
+.specSubList li { position: relative; padding-left: 1rem; font-size: 0.9rem; line-height: 1.45; color: var(--color-ink); }
+.specSubList li::before { content: '–'; position: absolute; left: 0; top: 0; width: auto; height: auto; background: none; border-radius: 0; color: var(--bs-teal-soft); }
+@media (max-width: 820px) { .specSubList { grid-template-columns: 1fr 1fr; } }
+
+/* the proof line under the chapter's claim — one step down from the statement,
+   one step up from the prose, so it reads as the evidence for the sentence
+   above it rather than as the start of the body copy */
+.proof {
+  margin: 0 0 clamp(1.6rem, 3.5vw, 2.4rem); max-width: 46ch;
+  padding-left: clamp(0.9rem, 2vw, 1.3rem);
+  border-left: 2px solid var(--bs-accent);
+  font-family: var(--font-body); font-size: clamp(1.02rem, 0.96rem + 0.3vw, 1.18rem);
+  line-height: 1.55; color: var(--color-ink); text-wrap: pretty;
+}
+.proof b { font-weight: 700; color: var(--bs-accent); }

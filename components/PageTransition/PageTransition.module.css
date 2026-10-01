@@ -1,0 +1,22 @@
+/* Full-screen masking field for the dark↔light page crossfade.
+   Sits above the nav (z 100) so the whole frame washes together.
+   GSAP drives autoAlpha (opacity + visibility); CSS holds the resting,
+   inert state. */
+.veil {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  background: var(--color-cream);
+  will-change: opacity;
+}
+
+/* Motion off: no wash. The route flips instantly, content stays visible —
+   PageTransition also no-ops its interception under reduced motion. */
+@media (prefers-reduced-motion: reduce) {
+  .veil {
+    display: none;
+  }
+}

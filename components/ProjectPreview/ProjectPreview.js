@@ -6,6 +6,23 @@ import { useGSAP } from '@gsap/react'
 import styles from './ProjectPreview.module.css'
 import AtmosphericStack from '@/components/CardStack/AtmosphericStack'
 import FileStack from '@/components/CardStack/FileStack'
+import ProjectSheet from '@/components/ProjectSheet/ProjectSheet'
+
+/* Prompts, not copy. Every project gets the same four questions; the
+   answers are Lorin's and are marked until she writes them. */
+const DEFAULT_STATEMENTS = [
+  { label: 'What it proved', todo: 'The outcome in one sentence — what is true now that would not be true without this work?' },
+  { label: 'My role', todo: 'What you specifically did, and what your collaborators did. “I” and “we,” both explicit.' },
+  { label: 'The decision', todo: 'One decision a non-designer would miss, and why you made it.' },
+  { label: 'What I’d change', todo: 'One thing that did not work, and what you would do differently.' },
+]
+
+const DEFAULT_META = [
+  ['Role', { todo: 'What you led' }],
+  ['Team', { todo: 'Who you built it with' }],
+  ['Timeline', { todo: 'Season and year' }],
+  ['Context', { todo: 'Client, studio, or course' }],
+]
 
 gsap.registerPlugin(useGSAP)
 
@@ -29,9 +46,32 @@ export default function ProjectPreview({
   pillVariant = 'weave', mediaSrc, mediaType = 'image', mediaAlt = '',
   mediaSequence = [],
   href, external = false, ctaLabel, comingSoon = false, flip = false,
+  /* Press citation ({ publisher, publication, title }) when the href is a
+     real editorial feature — the sheet sets it as a credential. */
+  press = null,
   /** 'carousel' (default) | 'atmospheric' | 'file' */
   cardVariant = 'carousel',
+  /** Sheet content. Both default to prompts so nothing is invented. */
+  /* New sheet content shape; falls through to statements when absent. */
+  sheet = null,
+  statements = DEFAULT_STATEMENTS,
+  meta = DEFAULT_META,
 }) {
+  const stackApiRef = useRef(null)
+  const [sheetOpen, setSheetOpen] = useState(false)
+  /* The sheet grows out of the folder, so it only exists where a folder
+     does — the other card variants keep the plain case-study link. */
+  const canExpand = cardVariant === 'file' && contributions.length > 0
+
+  const getOrigin = useCallback(() => {
+    const api = stackApiRef.current
+    if (!api) return null
+    return {
+      el: api.getActiveCard(),
+      index: api.getActiveIndex(),
+      slots: api.getSlots(),
+    }
+  }, [])
   const sectionRef = useRef(null)
   const mediaRef = useRef(null)
   const textRef = useRef(null)
@@ -189,7 +229,12 @@ export default function ProjectPreview({
         {cardVariant === 'atmospheric' ? (
           <AtmosphericStack slides={allSlides} />
         ) : cardVariant === 'file' ? (
-          <FileStack slides={allSlides} contributions={contributions} pillVariant={pillVariant} />
+          <FileStack
+            slides={allSlides}
+            contributions={contributions}
+            pillVariant={pillVariant}
+            stackApiRef={stackApiRef}
+          />
         ) : (
           <>
             <div
@@ -280,7 +325,24 @@ export default function ProjectPreview({
             ))}
           </div>
         )}
-        {href && !comingSoon && (
+        {canExpand && (
+          <button
+            type="button"
+            className={styles.expand}
+            aria-expanded={sheetOpen}
+            onClick={() => setSheetOpen(true)}
+          >
+            <svg viewBox="0 0 16 16" fill="none" aria-hidden="true" stroke="currentColor"
+              strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+              <path className={styles.c1} d="M6 1.5H1.5V6" />
+              <path className={styles.c2} d="M10 1.5H14.5V6" />
+              <path className={styles.c3} d="M14.5 10V14.5H10" />
+              <path className={styles.c4} d="M1.5 10V14.5H6" />
+            </svg>
+            Open project
+          </button>
+        )}
+        {href && !comingSoon && !canExpand && (
           <a
             href={href}
             className={styles.cta}
@@ -290,10 +352,29 @@ export default function ProjectPreview({
             <span aria-hidden="true">&rarr;</span>
           </a>
         )}
-        {comingSoon && (
+        {comingSoon && !canExpand && (
           <span className={styles.comingSoon}>Case study coming soon</span>
         )}
       </div>
+
+      {canExpand && (
+        <ProjectSheet
+          open={sheetOpen}
+          onClose={() => setSheetOpen(false)}
+          getOrigin={getOrigin}
+          num={num}
+          title={title}
+          tagline={tagline}
+          sheet={sheet}
+          facets={contributions}
+          meta={meta}
+          statements={statements}
+          href={comingSoon ? null : href}
+          hrefLabel={ctaLabel}
+          press={press}
+          external={external}
+        />
+      )}
     </section>
   )
 }

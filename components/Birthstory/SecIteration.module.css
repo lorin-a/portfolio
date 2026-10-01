@@ -1,0 +1,50 @@
+/* Iteration — each round on the deep-dive grammar: copy column left, the
+   artifact large on the right inside the gradient stage (same recipe as the
+   Features stages), the pinned tester quote part of the stage. */
+
+.round {
+  display: grid; align-items: stretch;
+  grid-template-columns: minmax(0, 30rem) 1fr;
+  gap: clamp(1.6rem, 3vw, 3rem);
+}
+.round + .round {
+  margin-top: clamp(2.2rem, 5vw, 3.6rem);
+  padding-top: clamp(2.2rem, 5vw, 3.6rem);
+  border-top: 1px solid var(--bs-rule);
+}
+/* copy rides sticky beside the tall stage (composed whitespace) */
+.copy { align-self: start; position: sticky; top: 10rem; display: grid; gap: clamp(1.1rem, 2.2vw, 1.6rem); align-content: start; }
+.stage {
+  align-self: stretch; display: grid; place-content: center; justify-items: center;
+  padding: clamp(1.6rem, 3.5vw, 3rem);
+  border-radius: 6px;
+  background:
+    linear-gradient(rgba(250, 250, 250, 0.66), rgba(250, 250, 250, 0.66)),
+    linear-gradient(126deg, #E7C3C8 0%, #B9C2EC 48%, #1A434D 100%);
+}
+
+.roundHead { display: grid; gap: 0.6rem; }
+.strip { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(0.7rem, 1.6vw, 1.4rem); align-items: start; width: 100%; max-width: 52rem; }
+.screen { margin: 0; display: grid; gap: 0.55rem; }
+/* round 1 leads with one emblematic over-built screen, annotated in-stage */
+.critDevice { display: block; width: clamp(270px, 28vw, 350px); } /* squint layer: bigger artifact */
+/* the final-review whiteboard now rides the kit's full-bleed Bleed band (true color) */
+/* the think-aloud walkthrough — the method that produced the round feedback,
+   introduced up top. Contained + centered so it reads as evidence, not a banner. */
+.tapShot { max-width: 46rem; margin-inline: auto; }
+.screenCap { font-family: var(--font-body); font-size: 0.74rem; line-height: 1.35; color: var(--color-ink-light); text-align: center; text-wrap: balance; }
+
+@media (max-width: 860px) {
+  .round { grid-template-columns: 1fr; gap: clamp(1.2rem, 4vw, 1.8rem); }
+  .copy { max-width: 60ch; position: static; }
+  .stage { padding: clamp(1.2rem, 4vw, 2rem); }
+}
+/* on narrow screens the three tall phones can't all be big — swipe them instead */
+@media (max-width: 600px) {
+  .strip {
+    grid-auto-flow: column; grid-template-columns: none; grid-auto-columns: 68%;
+    overflow-x: auto; scroll-snap-type: x mandatory; gap: 0.8rem;
+    padding-bottom: 0.4rem;
+  }
+  .screen { scroll-snap-align: start; }
+}

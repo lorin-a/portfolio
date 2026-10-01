@@ -6,6 +6,7 @@ import { gsap } from '@/lib/gsap'
 import { useGSAP } from '@gsap/react'
 import styles from './MobileCardStack.module.css'
 import GatedOverlay from './GatedOverlay'
+import GalleryNav from '@/components/GalleryNav/GalleryNav'
 
 gsap.registerPlugin(useGSAP)
 
@@ -140,24 +141,18 @@ export default function MobileCardStack({ slides = [], contributions = [], href 
         </div>
       </div>
 
-      {count > 1 && (
-        <div className={styles.dots} role="tablist" aria-label="Gallery position">
-          {images.map((_, i) => (
-            <button
-              key={i}
-              type="button"
-              role="tab"
-              aria-selected={i === activeIdx}
-              aria-label={`Image ${i + 1} of ${count}`}
-              className={`${styles.dot} ${i === activeIdx ? styles.dotActive : ''}`}
-              onClick={() => {
-                if (i === activeIdx || animatingRef.current) return
-                advance(i > activeIdx ? 1 : -1)
-              }}
-            />
-          ))}
-        </div>
-      )}
+      <GalleryNav
+        className={styles.nav}
+        count={count}
+        index={activeIdx}
+        onPrev={() => { if (!animatingRef.current) advance(-1) }}
+        onNext={() => { if (!animatingRef.current) advance(1) }}
+        onSelect={(i) => {
+          if (i === activeIdx || animatingRef.current) return
+          advance(i > activeIdx ? 1 : -1)
+        }}
+        label="Gallery"
+      />
 
       {href && (
         <a className={styles.cta} href={href}>

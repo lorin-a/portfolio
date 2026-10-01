@@ -1,0 +1,237 @@
+/* LAYOUT LAB — four candidate flows, built for real so they can be scrolled.
+   Nothing here ships; whichever wins becomes the template. */
+
+.lab { padding-bottom: clamp(4rem, 10vh, 7rem); }
+
+/* ── the lab's own chrome (deliberately plain, so it never reads as a candidate) ── */
+
+/* the lab's masthead runs dark on purpose: it marks this as the lab's own
+   chrome rather than one of the specimens, and it keeps the site wordmark
+   legible, since the nav renders white until the page is scrolled */
+.mastheadBand { background: linear-gradient(168deg, #1f4750 0%, #1a434d 100%); }
+.masthead {
+  max-width: 92rem; margin: 0 auto;
+  padding: clamp(4rem, 10vh, 7rem) var(--bs-pad) clamp(3rem, 7vh, 4.5rem);
+}
+.masthead .title { color: #f7f4ee; }
+.masthead .intro { color: rgba(247, 244, 238, 0.74); }
+.masthead .kicker { color: rgba(247, 244, 238, 0.66); }
+.kicker {
+  margin: 0 0 1rem; font-family: var(--font-body); font-weight: 700; font-size: 0.72rem;
+  letter-spacing: 0.16em; text-transform: uppercase; color: var(--bs-teal-soft);
+}
+.title {
+  margin: 0; max-width: 22ch;
+  font-family: var(--font-heading); font-variation-settings: 'SOFT' 60, 'WONK' 0; font-weight: 380;
+  font-size: clamp(2rem, 1.4rem + 2.4vw, 3.2rem); line-height: 1.08; letter-spacing: -0.016em;
+  color: var(--color-ink); text-wrap: balance;
+}
+.intro {
+  margin: 1.1rem 0 0; max-width: 56ch;
+  font-family: var(--font-body); font-size: 1.02rem; line-height: 1.6;
+  color: var(--color-ink-light); text-wrap: pretty;
+}
+
+.variant { padding-top: clamp(2.5rem, 7vh, 4.5rem); }
+.variantHead {
+  max-width: 92rem; margin: 0 auto clamp(1.6rem, 4vh, 2.6rem);
+  padding: clamp(1.2rem, 3vw, 1.8rem) var(--bs-pad) 0;
+  display: grid; grid-template-columns: auto minmax(0, 1fr); gap: clamp(1rem, 2.5vw, 1.8rem);
+  align-items: start; border-top: 2px solid var(--bs-teal);
+}
+.variantKey {
+  font-family: var(--font-heading); font-variation-settings: 'SOFT' 60, 'WONK' 0; font-weight: 400;
+  font-size: clamp(2rem, 1.6rem + 1.4vw, 2.8rem); line-height: 1; color: var(--bs-teal);
+}
+.variantTitle {
+  margin: 0.1rem 0 0.4rem;
+  font-family: var(--font-heading); font-variation-settings: 'SOFT' 60, 'WONK' 0; font-weight: 400;
+  font-size: clamp(1.3rem, 1.1rem + 0.8vw, 1.7rem); line-height: 1.2;
+  color: var(--color-ink); text-wrap: balance;
+}
+.variantBlurb {
+  margin: 0; max-width: 66ch;
+  font-family: var(--font-body); font-size: 0.94rem; line-height: 1.6;
+  color: var(--color-ink-light); text-wrap: pretty;
+}
+
+.foot {
+  max-width: 92rem; margin: clamp(3rem, 8vh, 5rem) auto 0;
+  padding: clamp(1.4rem, 3vw, 2rem) var(--bs-pad) 0;
+  border-top: 1px solid var(--bs-rule);
+  font-family: var(--font-body); font-size: 0.94rem; color: var(--color-ink-light);
+}
+
+/* ── the shared copy grammar (identical in every variant, so only the LAYOUT
+   is being compared, never the typography) ── */
+
+.sheet { max-width: 92rem; margin: 0 auto; padding: 0 var(--bs-pad); }
+.head { display: grid; gap: 0.4rem; }
+.eyebrow {
+  margin: 0 0 0.2rem; font-family: var(--font-body); font-weight: 700; font-size: 0.7rem;
+  letter-spacing: 0.16em; text-transform: uppercase; color: var(--bs-teal-soft);
+}
+.name {
+  margin: 0;
+  font-family: var(--font-heading); font-variation-settings: 'SOFT' 60, 'WONK' 0; font-weight: 400;
+  font-size: clamp(1.7rem, 1.35rem + 1.4vw, 2.4rem); line-height: 1.08;
+  letter-spacing: -0.016em; color: var(--color-ink); text-wrap: balance;
+}
+.role {
+  margin: 0.15rem 0 0; max-width: 40ch;
+  font-family: var(--font-body); font-weight: 600; font-size: 1rem; line-height: 1.4;
+  color: var(--bs-teal-soft); text-wrap: pretty;
+}
+.lede {
+  margin: 0.6rem 0 0; max-width: 44ch;
+  font-family: var(--font-body); font-size: 1rem; line-height: 1.6;
+  color: var(--color-ink-light); text-wrap: pretty;
+}
+.notes { display: grid; gap: 1rem; margin-top: 1.2rem; max-width: 44ch; }
+.note { display: grid; gap: 0.22rem; padding-top: 0.65rem; border-top: 2px solid var(--bs-teal); }
+.noteLabel {
+  margin: 0; font-family: var(--font-body); font-weight: 700; font-size: 0.7rem;
+  letter-spacing: 0.13em; text-transform: uppercase; color: var(--bs-teal-soft);
+}
+.noteText {
+  margin: 0; max-width: 44ch;
+  font-family: var(--font-body); font-size: 0.92rem; line-height: 1.55;
+  color: var(--color-ink-light); text-wrap: pretty;
+}
+
+.art { width: clamp(260px, 24vw, 330px); }
+
+/* the soft identity-gradient stage the case study already uses */
+.stageLight {
+  align-self: stretch; display: grid; place-content: center; justify-items: center;
+  padding: clamp(1.6rem, 3.5vw, 3rem); border-radius: 6px;
+  background:
+    linear-gradient(rgba(250, 250, 250, 0.66), rgba(250, 250, 250, 0.66)),
+    linear-gradient(126deg, #e7c3c8 0%, #b9c2ec 48%, #1a434d 100%);
+}
+.stageBare {
+  align-self: stretch; display: grid; place-content: center; justify-items: center;
+  padding: clamp(1.6rem, 3.5vw, 3rem);
+}
+
+/* ── A · contained rows, the copy sticks ── */
+
+.rowA {
+  display: grid; align-items: stretch;
+  grid-template-columns: minmax(0, 28rem) minmax(0, 1fr);
+  gap: clamp(1.6rem, 3vw, 3rem);
+}
+.rowA + .rowA {
+  margin-top: clamp(2.2rem, 5vw, 3.6rem);
+  padding-top: clamp(2.2rem, 5vw, 3.6rem);
+  border-top: 1px solid var(--bs-rule);
+}
+.copyA { align-self: start; position: sticky; top: 10rem; display: grid; align-content: start; }
+
+/* ── B · the same rows on a full-bleed dark ground ── */
+
+.darkBand {
+  padding: clamp(2.5rem, 7vh, 4.5rem) 0;
+  background: linear-gradient(168deg, #1f4750 0%, #1a434d 55%, #16323a 100%);
+}
+.rowDark { --ink-soft: rgba(247, 244, 238, 0.74); }
+.rowDark .eyebrow,
+.rowDark .role,
+.rowDark .noteLabel { color: rgba(247, 244, 238, 0.66); }
+.rowDark .name { color: #f7f4ee; }
+.rowDark .lede,
+.rowDark .noteText { color: var(--ink-soft); }
+.rowDark .note { border-top-color: rgba(247, 244, 238, 0.3); }
+.rowDark figcaption { color: var(--ink-soft); }
+.rowA.rowDark + .rowA.rowDark { border-top-color: rgba(247, 244, 238, 0.18); }
+
+/* ── C · full-bleed split planes, pinned ── */
+
+.trackC { position: relative; }
+.stickyC {
+  position: sticky; top: 9.4rem; height: calc(100svh - 9.4rem);
+  background: linear-gradient(90deg, var(--bs-paper) 0 42%, transparent 42%),
+              linear-gradient(168deg, #1f4750 0%, #1a434d 55%, #16323a 100%);
+}
+.beatC {
+  position: absolute; inset: 0;
+  display: grid; grid-template-columns: 42% minmax(0, 1fr);
+  align-items: center;
+  opacity: 0; visibility: hidden; transform: translateY(26px);
+  transition: opacity 600ms var(--ease-out), transform 700ms var(--ease-out), visibility 0s linear 700ms;
+}
+.beatC.on { opacity: 1; visibility: visible; transform: none; transition-delay: 0s, 0s, 0s; }
+.paneCopy {
+  display: grid; align-content: center;
+  padding: 0 clamp(1.5rem, 3vw, 3rem) 0 var(--bs-pad);
+}
+.paneArt { display: grid; place-content: center; padding: 0 var(--bs-pad); }
+.paneArt .art { width: min(330px, calc((100svh - 16rem) / 2.16)); }
+.beatC figcaption { color: rgba(247, 244, 238, 0.74); max-width: 32ch; }
+
+/* ── D · the inversion: the artifact holds, the words move ── */
+
+.rowD {
+  display: grid; align-items: start;
+  grid-template-columns: minmax(0, 30rem) minmax(0, 1fr);
+  gap: clamp(1.6rem, 3vw, 3.5rem);
+}
+.rowD + .rowD {
+  margin-top: clamp(2.2rem, 5vw, 3.6rem);
+  padding-top: clamp(2.2rem, 5vw, 3.6rem);
+  border-top: 1px solid var(--bs-rule);
+}
+.scrollerD { display: grid; }
+/* each beat gets a screenful of its own, so exactly one is ever in the reading
+   band and the artifact always has a single thing to be answering to */
+.beatD {
+  display: grid; align-content: center;
+  min-height: 58vh; max-width: 44ch;
+  opacity: 0.34; transition: opacity 500ms var(--ease-out);
+}
+.beatInner {
+  display: grid; gap: 0.3rem;
+  padding-left: 1.1rem; border-left: 2px solid transparent;
+  transition: border-color 500ms var(--ease-out);
+}
+.beatOn { opacity: 1; }
+.beatOn .beatInner { border-left-color: var(--bs-teal); }
+.stickyD { position: sticky; top: 9.4rem; display: grid; }
+/* the dots read as "which note the artifact is answering" */
+.dotsD { display: flex; gap: 0.5rem; justify-content: center; margin: 1.1rem 0 0; padding: 0; list-style: none; }
+.dotsD li {
+  width: 1.6rem; height: 2px; background: rgba(26, 67, 77, 0.22);
+  transition: width 400ms var(--ease-out), background 400ms var(--ease-out);
+}
+.dotOn { width: 2.6rem !important; background: var(--bs-teal) !important; }
+
+/* ── narrow ── */
+
+@media (max-width: 900px) {
+  .rowA, .rowD { grid-template-columns: minmax(0, 1fr); gap: clamp(1.2rem, 4vw, 1.8rem); }
+  .copyA, .stickyD { position: static; }
+  .beatD { min-height: 0; opacity: 1; margin-bottom: 1.2rem; }
+  .beatInner { border-left-color: var(--bs-teal); }
+  .art { width: min(78vw, 300px); }
+  .trackC { height: auto !important; }
+  .stickyC { position: static; height: auto; background: linear-gradient(168deg, #1f4750 0%, #1a434d 55%, #16323a 100%); }
+  .beatC {
+    position: static; grid-template-columns: minmax(0, 1fr); gap: 1.4rem;
+    opacity: 1; visibility: visible; transform: none;
+    padding: clamp(2rem, 7vh, 3.5rem) 0;
+  }
+  .beatC .eyebrow, .beatC .role, .beatC .noteLabel { color: rgba(247, 244, 238, 0.66); }
+  .beatC .name { color: #f7f4ee; }
+  .beatC .lede, .beatC .noteText { color: rgba(247, 244, 238, 0.74); }
+  .beatC .note { border-top-color: rgba(247, 244, 238, 0.3); }
+  .paneCopy { padding: 0 var(--bs-pad); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .copyA, .stickyD, .stickyC { position: static; }
+  .beatD { opacity: 1; }
+  .beatInner { border-left-color: var(--bs-teal); }
+  .trackC { height: auto !important; }
+  .stickyC { height: auto; }
+  .beatC { position: static; opacity: 1; visibility: visible; transform: none; transition: none; }
+}

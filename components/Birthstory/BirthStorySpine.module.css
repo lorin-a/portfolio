@@ -1,0 +1,82 @@
+/* BirthStorySpine — horizontal sticky progress bar. Sits after the metadata,
+   pins below the fixed nav, fills as you advance through the beats. */
+
+.spine {
+  position: sticky;
+  top: 6rem; /* clears the 96px fixed nav */
+  z-index: 50;
+  padding-inline: var(--bs-pad); /* match .field so the list aligns to the content grid */
+  /* Opaque, not translucent. The case study's ground is one flat paper the whole
+     way down, so there is nothing for a blur to reveal — all a 0.92 alpha did was
+     smear the copy passing behind it and slice headings mid-glyph at the bar's
+     edge as each row's sticky column released. */
+  background: var(--bs-paper, #fafafa);
+  border-bottom: 1px solid var(--bs-rule, rgba(26, 67, 77, 0.3));
+  transition: opacity 320ms var(--ease-out), transform 320ms var(--ease-out);
+}
+/* A short scrim under the bar so a heading riding up out of a released sticky
+   column dissolves into the paper instead of being cut mid-letter at the rule.
+   Invisible on the flat ground; only the fade it produces is legible. */
+.spine::after {
+  content: ''; position: absolute; inset-inline: 0; top: 100%; height: 1.6rem;
+  background: linear-gradient(var(--bs-paper, #fafafa), rgba(var(--bs-paper-rgb, 250, 250, 250), 0));
+  pointer-events: none;
+}
+
+/* hidden over the hero + overview; revealed once a tracked section is active */
+.hidden { opacity: 0; transform: translateY(-0.6rem); pointer-events: none; }
+
+.list {
+  list-style: none; margin: 0 auto; max-width: 92rem;
+  padding: 0.3rem 0;
+  display: flex; align-items: center; justify-content: space-between; gap: 0.4rem;
+}
+.item { margin: 0; min-width: 0; }
+
+/* padding-block carries the node to the 44px touch floor; the list padding
+   above shrinks to match so the bar's total height stays inside the sections'
+   9.5rem scroll-margin */
+.node {
+  display: inline-flex; align-items: baseline; gap: 0.45rem;
+  padding: 0.6rem 0.2rem; min-height: 44px; white-space: nowrap;
+  border: 0; background: transparent; cursor: pointer;
+}
+.num {
+  font-family: var(--font-body); font-size: 0.74rem; letter-spacing: 0.04em;
+  font-variant-numeric: tabular-nums; color: var(--color-ink-light);
+  transition: color var(--motion-fast) var(--ease-out);
+}
+.label {
+  font-family: var(--font-body); font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--color-ink-light);
+  transition: color var(--motion-fast) var(--ease-out);
+}
+
+.node:hover .num, .node:hover .label { color: var(--color-ink); }
+
+.on .num { color: var(--bs-teal-soft); opacity: 1; }
+.on .label { color: var(--bs-accent); opacity: 1; font-weight: 700; }
+
+.node:focus-visible { outline: 2px solid var(--bs-teal-soft); outline-offset: 3px; border-radius: 4px; }
+
+/* progress fill along the base */
+.track { position: relative; height: 2px; background: rgba(26, 67, 77, 0.18); }
+.fill {
+  position: absolute; left: 0; top: 0; height: 100%;
+  background: var(--bs-accent);
+  transition: width var(--motion-medium) var(--ease-out);
+}
+
+/* compact: drop labels, keep numbers as a stepper, when the row gets tight */
+@media (max-width: 820px) {
+  /* the unnumbered product node has no numeral to fall back on, so it keeps its
+     label — otherwise the first stop in the stepper is an empty tap target */
+  .node:not(.unnumbered) .label { display: none; }
+  .unnumbered .label { font-size: 0.7rem; letter-spacing: 0.08em; }
+  .num { font-size: 0.74rem; }
+  .list { gap: 0.2rem; }
+  .node { padding-inline: 0.55rem; } /* number-only nodes still need a 44px-wide thumb target */
+}
+@media (prefers-reduced-motion: reduce) {
+  .spine, .num, .label, .fill { transition: none; }
+}

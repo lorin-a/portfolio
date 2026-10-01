@@ -1,0 +1,190 @@
+/* FS220: the dashboard player. A segmented toggle (the dashboard's own
+   lens-switch idiom), the clip, one caption. Sheet tokens throughout. */
+
+.player { min-width: 0; }
+
+/* FS232: everything inside one glass container, the brand glass every
+   gallery uses (SheetMedia .stage) */
+.glass {
+  padding: 0.75rem 0.75rem 1.25rem;
+  border-radius: 3px;
+  background:
+    linear-gradient(135deg,
+      rgba(197, 207, 166, 0.16) 5%,
+      rgba(199, 170, 209, 0.13) 45%,
+      rgba(247, 156, 126, 0.11) 88%),
+    rgba(28, 26, 30, 0.35);
+  box-shadow:
+    inset 0 0 0 1px rgba(244, 241, 236, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22),
+    0 18px 38px rgba(0, 0, 0, 0.3);
+}
+
+.glass .frame { box-shadow: inset 0 0 0 1px rgba(244, 241, 236, 0.14); }
+
+
+.frame {
+  position: relative;
+  overflow: hidden;
+  border-radius: 3px;
+  background: var(--sheet-mat, #2a2a2a);
+  box-shadow:
+    inset 0 0 0 1px rgba(244, 241, 236, 0.18),
+    0 14px 32px rgba(0, 0, 0, 0.28);
+  aspect-ratio: 16 / 10;
+}
+
+.frame video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.play {
+  position: absolute;
+  left: 12px;
+  bottom: 12px;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(40, 34, 52, 0.78);
+  color: #f4f1ec;
+  cursor: pointer;
+  transition: opacity var(--motion-fast) var(--ease-out);
+}
+
+.play svg { width: 16px; height: 16px; }
+
+@media (hover: hover) {
+  .play[data-playing] { opacity: 0; }
+  .frame:hover .play { opacity: 1; }
+}
+
+.play:focus-visible {
+  opacity: 1;
+  outline: 2px solid var(--color-sage);
+  outline-offset: 3px;
+}
+
+
+/* E · user flow (FS233): one continuous chevron track, the classic UX
+   flow shape. Four equal steps, interlocking; each step deepens in tone
+   from left to right, so the track itself reads as going deeper. The
+   active step fills sage and its fill sweeps as the clip plays. */
+.flowWrap { margin-top: 0.75rem; }
+
+.flowHint {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin: 0 0 0.6rem;
+  font-family: var(--font-body);
+  font-size: var(--step-label);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-sage);
+}
+
+.flowHint svg { width: 14px; height: 14px; }
+
+.chev {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.chev li { min-width: 0; }
+.chev li + li { margin-left: -10px; }   /* interlock, leaving a 4px seam */
+
+.seg {
+  --tip: 14px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  width: 100%;
+  height: 56px;
+  padding: 0 calc(var(--tip) + 0.5rem);
+  overflow: hidden;
+  border: 0;
+  background: rgba(244, 241, 236, calc(0.06 + var(--depth, 0) * 0.035));
+  color: var(--color-ink);
+  cursor: pointer;
+  clip-path: polygon(0 0, calc(100% - var(--tip)) 0, 100% 50%, calc(100% - var(--tip)) 100%, 0 100%, var(--tip) 50%);
+  transition: background var(--motion-fast) var(--ease-out), color var(--motion-fast) var(--ease-out);
+}
+
+.chev li:first-child .seg {
+  border-radius: 999px 0 0 999px;
+  clip-path: polygon(0 0, calc(100% - var(--tip)) 0, 100% 50%, calc(100% - var(--tip)) 100%, 0 100%);
+}
+
+.chev li:last-child .seg {
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, var(--tip) 50%);
+  border-radius: 0 999px 999px 0;
+}
+
+@media (hover: hover) {
+  .seg:not([aria-selected='true']):hover { background: rgba(244, 241, 236, 0.2); }
+}
+
+.seg[aria-selected='true'] {
+  background: var(--color-sage);
+  color: #23211f;
+}
+
+/* the sweep: a lighter band crossing the active step as its clip plays */
+.segFill {
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.28);
+  transform-origin: left;
+  transform: scaleX(0);
+}
+
+.segFill[data-run] { animation: fill var(--dur) linear forwards; }
+
+@keyframes fill {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+.segIcon {
+  position: relative;
+  flex: 0 0 auto;
+  width: 22px;
+  height: 22px;
+}
+
+.segView {
+  position: relative;
+  min-width: 0;
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: var(--step-small);
+  line-height: 1.15;
+  white-space: nowrap;
+}
+
+.seg:focus-visible { outline: none; }
+.seg:focus-visible .segView { text-decoration: underline; text-underline-offset: 4px; }
+
+@media (max-width: 699px) {
+  .seg { flex-direction: column; gap: 0.2rem; height: 64px; padding: 0 calc(var(--tip) + 0.15rem); }
+  .segIcon { width: 18px; height: 18px; }
+  .segView { font-size: 0.8125rem; white-space: normal; text-align: center; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .segFill[data-run] { animation: none; transform: scaleX(1); }
+  .seg { transition: none; }
+}

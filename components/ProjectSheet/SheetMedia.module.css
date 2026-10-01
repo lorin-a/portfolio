@@ -1,0 +1,949 @@
+/* Media inside the folder sheet, on THE SHEET SYSTEM (see .inner in
+   ProjectSheet.module.css).
+
+   Round three (2026-09-30): square corners on every photograph and
+   recording. The work is the object; a rounded frame decorates it and
+   reads soft. The one exception is the reflection cards, whose rounded
+   corners are the printed cards' real corners. */
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* ══ THE STAGE ════════════════════════════════════════════════════════ */
+
+/* The gallery is one framed object (FS130): the brand glass around the
+   image, and a footer band inside the frame holding the counter, the
+   caption, and the controls. */
+.stage {
+  min-width: 0;
+  padding: 0.75rem 0.75rem 0;
+  border-radius: 3px;
+  background:
+    linear-gradient(135deg,
+      rgba(197, 207, 166, 0.16) 5%,
+      rgba(199, 170, 209, 0.13) 45%,
+      rgba(247, 156, 126, 0.11) 88%),
+    rgba(28, 26, 30, 0.35);
+  box-shadow:
+    inset 0 0 0 1px rgba(244, 241, 236, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22),
+    0 18px 38px rgba(0, 0, 0, 0.3);
+}
+
+/* The mat: one fixed frame, every artifact whole inside it. The ground is
+   a quiet step off the sheet fill, so letterboxing reads as a mount, not
+   as missing pixels. */
+.mat {
+  position: relative;
+  aspect-ratio: 3 / 2;
+  overflow: hidden;
+  background: var(--sheet-mat);
+}
+
+.matButton {
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: zoom-in;
+}
+
+.matButton:focus-visible {
+  outline: 2px solid var(--color-sage);
+  outline-offset: -2px;
+}
+
+.stageMedia {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  animation: stageIn var(--motion-medium) var(--ease-out);
+}
+
+@keyframes stageIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Data recordings carry real counts: a light blur, just enough that the
+   numbers cannot be read while the design still can (FS120). */
+.stageMedia[data-blur] {
+  filter: blur(var(--data-blur, 2.5px));
+}
+
+.stageBar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem var(--flow-2);
+  min-height: 4.5rem;
+  padding: 0.75rem 0.25rem;
+}
+
+.caption {
+  display: flex;
+  align-items: baseline;
+  gap: var(--flow-1);
+  flex: 1 1 18rem;
+  min-width: 0;
+  margin: 0;
+  font-family: var(--font-body);   /* regular body text (FS133) */
+  font-size: var(--step-small);
+  line-height: 1.45;
+  color: var(--color-ink);
+  text-wrap: pretty;
+}
+
+.counter {
+  flex: none;
+  font-family: var(--font-body);
+  font-style: normal;
+  font-size: var(--step-label);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-sage);
+}
+
+.captionText {
+  min-width: 0;
+}
+
+/* The shared gallery control, compact at the footer's right, a size up
+   from the homepage's (FS118). */
+.stageNav {
+  --nav-ring: 38px;
+  --nav-icon: 18px;
+  --nav-dot: 11px;
+  --nav-ink: var(--color-ink);
+  --nav-ground: var(--color-cream);
+  flex: 0 1 auto;
+  min-width: 0;   /* a long deck's dots wrap rather than overflow */
+  gap: 16px;
+}
+
+/* ══ THE PHONE ═════════════════════════════════════════════════════════
+
+   The digital library in an iPhone, first in the deck. Sized so its height
+   equals the cards' faces (cards are 600:967; the phone is 9:19.5, so it
+   is 74.4% of the column's width) and left-aligned so it starts on the
+   grid line like everything else. All inner measurements are in cqi of
+   the device, so the frame keeps its proportions at any size. The screen's
+   colours are fixed (it depicts the library app, not the site's theme). */
+
+.phone {
+  margin: 0;
+}
+
+/* The device is the size container for everything inside it. Its OWN
+   padding and radius can't use cqi (an element's own properties resolve
+   against its ancestor's container), so they are percentages of its item,
+   which is exactly the device's width: padding 1.8%, radius as an ellipse
+   (15% of the width, which is 6.92% of the 9:19.5 height). */
+.device {
+  container-type: inline-size;
+  width: 100%;
+  aspect-ratio: 9 / 19.5;
+  padding: 1.8%;
+  border-radius: 15% / 6.92%;
+  background: var(--color-device-bezel);
+  box-shadow: var(--shadow-md);
+}
+
+.screen {
+  position: relative;
+  height: 100%;
+  overflow: hidden;
+  border: 2.6cqi solid var(--color-device-inner);
+  border-radius: 13cqi;
+  background: #000;
+  transition: background var(--motion-medium) var(--ease-out);
+}
+
+.screenVideo {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity var(--motion-medium) var(--ease-out);
+}
+
+
+
+
+.poemCredit {
+  display: block;
+  margin-top: 0.25rem;
+  font-family: var(--font-heading);
+  font-style: italic;
+  font-size: var(--step-small);
+  line-height: 1.45;
+  color: var(--color-ink);
+  text-wrap: pretty;
+}
+
+/* ══ REFLECTION CARDS — three, equal, true proportions ═══════════════ */
+
+.gallery {
+  min-width: 0;
+}
+
+.galleryNote {
+  margin: 0 0 var(--flow-2);
+  font-family: var(--font-body);
+  font-size: var(--step-label);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-sage);
+}
+
+/* THE DECK — a triptych (her note FS50): grateful, the phone, exhausted.
+   All three objects share one height (--obj-h); widths follow from each
+   object's own proportions (cards 600:967, the phone 9:19.5), and each is
+   centred in its third of the component, 4 · 4 · 4 on the grid. Phones:
+   the same three as a swipeable row. */
+.deck {
+  --deck: 3;
+  --obj-h: clamp(21rem, 34vw, 30rem);
+  display: flex;
+  gap: var(--gap-media);
+  margin: 0 calc(var(--gutter) * -1);
+  padding: 0 var(--gutter) 0.5rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: var(--gutter);
+  scrollbar-width: none;
+  overscroll-behavior-x: contain;
+}
+
+.deck::-webkit-scrollbar {
+  display: none;
+}
+
+.deckItem {
+  flex: none;
+  scroll-snap-align: start;
+}
+
+.deckItem[data-kind='card'] {
+  width: calc(var(--obj-h) * 600 / 967);
+}
+
+.deckItem[data-kind='phone'] {
+  width: calc(var(--obj-h) * 9 / 19.5);
+}
+
+@media (min-width: 700px) {
+  .deck {
+    display: grid;
+    grid-template-columns: repeat(var(--deck), minmax(0, 1fr));
+    gap: var(--gap-col);
+    margin: 0;
+    padding: 0;
+    overflow: visible;
+  }
+
+  /* Desktop: every card fills its column; the phone takes the height a
+     card has (600:967) at its own 9:19.5, i.e. 74.4% of a column. */
+  .deckItem {
+    justify-self: center;
+    width: 100%;
+  }
+
+  .deckItem[data-kind='card'] {
+    width: 100%;
+  }
+
+  .deckItem[data-kind='phone'] {
+    width: 74.4%;
+  }
+
+  .galleryNote {
+    text-align: center;
+  }
+
+  .deckItem .cardCaption,
+  .deckItem .phone figcaption {
+    text-align: center;
+  }
+}
+
+.card {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  text-align: left;
+}
+
+.cardInner {
+  position: relative;
+  display: block;
+  /* The deck's true proportions (the exports are 600×967). */
+  aspect-ratio: 600 / 967;
+  /* No overflow/clip here: any overflow other than `visible` forces
+     transform-style back to flat, which silently kills
+     backface-visibility and shows the FRONT mirrored instead of the back.
+     Clip on the faces instead. */
+  transform-style: preserve-3d;
+  transition: transform var(--motion-medium) var(--ease-in-out);
+}
+
+.card[data-back='true'] .cardInner {
+  transform: rotateY(180deg);
+}
+
+.cardFace {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  backface-visibility: hidden;
+  transition: box-shadow var(--motion-fast) var(--ease-out);
+}
+
+.cardBack {
+  transform: rotateY(180deg);
+}
+
+.cardCaption {
+  display: block;
+  margin-top: var(--flow-1);
+}
+
+.cardLabel {
+  display: block;
+  font-family: var(--font-body);
+  font-size: var(--step-label);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-ink);
+}
+
+.card:focus-visible {
+  outline: 2px solid var(--color-sage);
+  outline-offset: 4px;
+  border-radius: var(--radius-xs);
+}
+
+@media (hover: hover) {
+  .card:hover .cardInner {
+    transform: translateY(-4px);
+  }
+
+  .card[data-back='true']:hover .cardInner {
+    transform: rotateY(180deg) translateY(-4px);
+  }
+
+  .card:hover .cardFace {
+    box-shadow: var(--shadow-lg);
+  }
+}
+
+/* ══ Reduced motion ═══════════════════════════════════════════════════ */
+
+@media (prefers-reduced-motion: reduce) {
+  .stageMedia {
+    animation: none;
+  }
+
+  .cardInner {
+    transform: none !important;
+    transition: none;
+  }
+
+  .cardFace {
+    backface-visibility: visible;
+  }
+
+  .cardBack {
+    transform: none;
+    opacity: 0;
+  }
+
+  .card[data-back='true'] .cardBack {
+    opacity: 1;
+  }
+}
+
+/* ══ The turn-over cue and the one-time hint (FS144) ═════════════════ */
+
+.cardCaption {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.25rem 0.75rem;
+}
+
+.turnCue {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-family: var(--font-body);
+  font-size: var(--step-label);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-sage);
+}
+
+.turnCue svg {
+  width: 14px;
+  height: 14px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+@keyframes hintTurn {
+  0%, 100% { transform: rotateY(0); }
+  45% { transform: rotateY(-28deg); }
+}
+
+.deck[data-hint] .card:not([data-back='true']) .cardInner {
+  animation: hintTurn 1.4s var(--ease-in-out);
+}
+
+/* ══ AUDIO BARS (FS144) ══════════════════════════════════════════════ */
+
+/* The seek bar: a native range, restyled (keyboard and screen readers
+   come for free). */
+.seek {
+  --pct: 0%;
+  display: block;
+  width: 100%;
+  height: 44px;
+  margin: 0;
+  background: none;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.seek::-webkit-slider-runnable-track {
+  height: 2px;
+  background: linear-gradient(
+    to right,
+    var(--color-ink) var(--pct),
+    color-mix(in srgb, var(--color-ink) 22%, transparent) var(--pct)
+  );
+}
+
+.seek::-moz-range-track {
+  height: 2px;
+  background: color-mix(in srgb, var(--color-ink) 22%, transparent);
+}
+
+.seek::-moz-range-progress {
+  height: 2px;
+  background: var(--color-ink);
+}
+
+.seek::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 12px;
+  height: 12px;
+  margin-top: -5px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--color-ink);
+}
+
+.seek::-moz-range-thumb {
+  width: 12px;
+  height: 12px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--color-ink);
+}
+
+.seek:focus-visible {
+  outline: 2px solid var(--color-sage);
+  outline-offset: 2px;
+}
+
+.audioBars {
+  display: grid;
+  gap: 0.75rem;
+  margin-top: var(--flow-3);
+}
+
+.barsLabel {
+  font-family: var(--font-body);
+  font-size: var(--step-label);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-sage);
+}
+
+.audioBar {
+  display: flex;
+  align-items: center;
+  gap: 0.875rem;
+  padding: 0.75rem 1rem 0.75rem 0.75rem;
+  border-radius: 3px;
+  background:
+    linear-gradient(135deg,
+      rgba(197, 207, 166, 0.16) 5%,
+      rgba(199, 170, 209, 0.13) 45%,
+      rgba(247, 156, 126, 0.11) 88%),
+    rgba(28, 26, 30, 0.35);
+  box-shadow:
+    inset 0 0 0 1px rgba(244, 241, 236, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22);
+}
+
+.barPlay {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: var(--color-ink);
+  color: var(--color-cream);
+  cursor: pointer;
+  transition: transform var(--motion-fast) var(--ease-out);
+}
+
+.barPlay svg {
+  width: 18px;
+  height: 18px;
+  fill: currentColor;
+}
+
+/* FS241: the round-three cue, back: at rest one slow ring breathes out
+   from the play button; it stops the moment the poem plays. */
+.barPlay { position: relative; }
+
+.barPlay::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 1.5px solid var(--color-ink);
+  animation: breathe 2.8s var(--ease-out) infinite;
+  pointer-events: none;
+}
+
+.audioBar[data-playing] .barPlay::after {
+  animation: none;
+  opacity: 0;
+}
+
+@keyframes breathe {
+  0% { transform: scale(1); opacity: 0.6; }
+  70%, 100% { transform: scale(1.55); opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .barPlay::after { animation: none; opacity: 0.45; transform: scale(1.25); }
+}
+
+@media (hover: hover) {
+  .barPlay:hover {
+    transform: scale(1.06);
+  }
+}
+
+.barPlay:focus-visible {
+  outline: 2px solid var(--color-sage);
+  outline-offset: 3px;
+}
+
+.barMeta {
+  flex: 1;
+  min-width: 0;
+}
+
+.barTitle {
+  display: block;
+  font-family: var(--font-heading);
+  font-size: var(--step-small);
+  line-height: 1.3;
+  color: var(--color-ink);
+}
+
+.barKind {
+  display: block;
+  font-family: var(--font-body);
+  font-size: var(--step-label);
+  line-height: 1.4;
+  color: var(--color-sage);
+}
+
+.barTrack {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.barTrack .seek {
+  flex: 1;
+  height: 32px;   /* with the 44px play button, the row is the target */
+}
+
+.barTime {
+  flex: none;
+  font-family: var(--font-body);
+  font-size: var(--step-label);
+  font-variant-numeric: tabular-nums;
+  color: var(--color-ink);
+}
+
+.barsCredit {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--step-label);
+  line-height: 1.5;
+  color: var(--color-ink);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .deck[data-hint] .card .cardInner {
+    animation: none;
+  }
+
+  .barPlay {
+    transition: none;
+  }
+}
+
+/* ══ BTS frames fill (FS150) ═══════════════════════════════════════════ */
+.mat[data-fit='cover'] .stageMedia {
+  object-fit: cover;
+}
+
+/* ══ THE LIBRARY, IN TWO FRAMES (FS149) ═══════════════════════════════
+   A matched pair on 6 | 6, the same glass frame as every gallery. Both
+   mats share one proportion so the phone and the card stand the same
+   height; the phone's footer carries the two recordings. */
+
+.kit {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--flow-3) var(--gap-col);
+  align-items: stretch;
+}
+
+@media (min-width: 900px) {
+  .kit {
+    grid-template-columns: var(--grid);
+  }
+
+  .kit > * {
+    grid-column: span 6;
+  }
+}
+
+.kitFrame {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+}
+
+.kitMat {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 1 / 1;   /* taller now the footer holds one player (FS152) */
+  padding-block: 5%;
+}
+
+/* the phone, fitted to the mat's height */
+.kitMat .phone {
+  height: 100%;
+}
+
+.kitMat .device {
+  width: auto;
+  height: 100%;
+  padding: 1.2%;
+}
+
+/* Both footers (FS154): a title at the top, then the content centred in
+   whatever height the frame has, so the pair match and neither leaves a
+   gap at the bottom. */
+.kitBar,
+.fanBar {
+  display: grid;
+  flex: 1;
+  align-content: center;
+  gap: 0.875rem;
+  padding: 1rem 0.25rem 1.25rem;
+  text-align: center;
+}
+
+.kitBar .barsCredit {
+  text-align: center;
+}
+
+/* the player reads left to right beside its play button */
+.kitBar .audioBar {
+  text-align: left;
+}
+
+.kitTitle {
+  font-family: var(--font-body);
+  font-size: var(--step-label);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-sage);
+}
+
+/* the card, one at a time */
+.kitCard {
+  height: 100%;
+  aspect-ratio: 600 / 967;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  perspective: 1400px;
+}
+
+.kitCardInner {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform var(--motion-medium) var(--ease-in-out);
+}
+
+.kitCard[data-back] .kitCardInner {
+  transform: rotateY(180deg);
+}
+
+.kitFace {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  backface-visibility: hidden;
+}
+
+.kitBack {
+  transform: rotateY(180deg);
+}
+
+.kitCard:focus-visible {
+  outline: 2px solid var(--color-sage);
+  outline-offset: 4px;
+  border-radius: var(--radius-lg);
+}
+
+.kitName {
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.turnButton {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 44px;
+  padding: 0 1.125rem;
+  border: 1px solid var(--color-ink);
+  border-radius: var(--radius-pill);
+  background: none;
+  font-family: var(--font-body);
+  font-size: var(--step-label);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-ink);
+  cursor: pointer;
+  transition:
+    background var(--motion-fast) var(--ease-out),
+    color var(--motion-fast) var(--ease-out);
+}
+
+.turnButton svg {
+  width: 16px;
+  height: 16px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+@media (hover: hover) {
+  .turnButton:hover {
+    background: var(--color-ink);
+    color: var(--color-cream);
+  }
+}
+
+.turnButton:focus-visible {
+  outline: 2px solid var(--color-sage);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .kitCardInner {
+    transform: none !important;
+    transition: none;
+  }
+
+  .kitFace {
+    backface-visibility: visible;
+  }
+
+  .kitBack {
+    opacity: 0;
+    transform: none;
+  }
+
+  .kitCard[data-back] .kitBack {
+    opacity: 1;
+  }
+}
+
+/* ══ The fan (FS152) ══════════════════════════════════════════════════
+   Four cards in one grid cell: the front card centred and full size, its
+   neighbours fanned out behind it to either side, the fourth tucked
+   behind. Clicking a peeking card brings it round to the front. */
+.fanMat {
+  position: relative;
+  overflow: hidden;
+}
+
+.fanCard {
+  grid-area: 1 / 1;
+  height: 86%;
+  aspect-ratio: 600 / 967;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  perspective: 1400px;
+  transition:
+    transform 620ms cubic-bezier(0.22, 0.9, 0.24, 1),
+    opacity var(--motion-medium) var(--ease-out),
+    filter var(--motion-medium) var(--ease-out);
+}
+
+.fanCard[data-place='front'] { z-index: 4; transform: none; }
+.fanCard[data-place='right'] { z-index: 3; transform: translateX(38%) rotate(9deg) scale(0.9); filter: brightness(0.82); }
+.fanCard[data-place='left'] { z-index: 2; transform: translateX(-38%) rotate(-9deg) scale(0.9); filter: brightness(0.82); }
+.fanCard[data-place='behind'] { z-index: 1; transform: translateY(-4%) scale(0.84); filter: brightness(0.7); }
+
+@media (hover: hover) {
+  .fanCard[data-place='right']:hover { transform: translateX(44%) rotate(11deg) scale(0.92); filter: none; }
+  .fanCard[data-place='left']:hover { transform: translateX(-44%) rotate(-11deg) scale(0.92); filter: none; }
+}
+
+.fanCard[data-back] .kitCardInner {
+  transform: rotateY(180deg);
+}
+
+.fanCard:focus-visible {
+  outline: 2px solid var(--color-sage);
+  outline-offset: 4px;
+  border-radius: var(--radius-lg);
+}
+
+/* the footer, centred */
+.fanBar {
+  justify-items: center;
+}
+
+.fanCaption {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: baseline;
+  gap: 0.25rem 0.625rem;
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--step-small);
+  line-height: 1.45;
+  color: var(--color-ink);
+}
+
+.fanControls {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.fanArrow {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 1px solid var(--color-ink);
+  border-radius: 50%;
+  background: none;
+  color: var(--color-ink);
+  cursor: pointer;
+  opacity: 0.75;
+  transition:
+    opacity var(--motion-fast) var(--ease-out),
+    background var(--motion-fast) var(--ease-out),
+    color var(--motion-fast) var(--ease-out);
+}
+
+.fanArrow svg {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+@media (hover: hover) {
+  .fanArrow:hover {
+    opacity: 1;
+    background: var(--color-ink);
+    color: var(--color-cream);
+  }
+}
+
+.fanArrow:focus-visible {
+  outline: 2px solid var(--color-sage);
+  outline-offset: 3px;
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fanCard {
+    transition: none;
+  }
+
+  /* the flip still works: faces swap without rotating */
+  .fanCard[data-back] .kitBack {
+    opacity: 1;
+  }
+}

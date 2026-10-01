@@ -1,0 +1,124 @@
+/* The site's one gallery control. See GalleryNav.jsx.
+   Visual marks: 28px circle arrows, 8px dots. Hit areas: 44px, extended
+   past the marks with negative margins so layout stays compact. */
+
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: var(--nav-ring, 28px);
+  color: var(--nav-ink, currentColor);
+}
+
+.arrow {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  margin: -8px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--nav-ink, currentColor);
+  cursor: pointer;
+}
+
+.ring {
+  display: grid;
+  place-items: center;
+  width: var(--nav-ring, 28px);
+  height: var(--nav-ring, 28px);
+  border: 1px solid var(--nav-ink, currentColor);
+  border-radius: 50%;
+  opacity: 0.6;
+  transition:
+    opacity 220ms var(--ease-out),
+    background 220ms var(--ease-out),
+    color 220ms var(--ease-out);
+}
+
+.ring svg {
+  width: var(--nav-icon, 14px);
+  height: var(--nav-icon, 14px);
+}
+
+@media (hover: hover) {
+  .arrow:hover .ring {
+    opacity: 1;
+    background: var(--nav-ink, currentColor);
+    color: var(--nav-ground, var(--color-cream));
+  }
+}
+
+.arrow:focus-visible {
+  outline: none;
+}
+
+.arrow:focus-visible .ring {
+  opacity: 1;
+  outline: 2px solid var(--nav-ink, currentColor);
+  outline-offset: 2px;
+}
+
+.dots {
+  display: flex;
+  flex: 0 1 auto;
+  min-width: 0;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.dot {
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 44px;
+  margin-block: -8px;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+
+.mark {
+  width: var(--nav-dot, 8px);
+  height: var(--nav-dot, 8px);
+  border: 1px solid var(--nav-ink, currentColor);
+  border-radius: 50%;
+  opacity: 0.5;
+  transition:
+    background 220ms var(--ease-out),
+    opacity 220ms var(--ease-out),
+    transform 220ms var(--ease-out);
+}
+
+.dot[aria-current='true'] .mark {
+  background: var(--nav-ink, currentColor);
+  opacity: 1;
+  transform: scale(1.15);
+}
+
+@media (hover: hover) {
+  .dot:hover .mark {
+    opacity: 0.9;
+  }
+}
+
+.dot:focus-visible {
+  outline: none;
+}
+
+.dot:focus-visible .mark {
+  opacity: 1;
+  outline: 2px solid var(--nav-ink, currentColor);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ring,
+  .mark {
+    transition: none;
+  }
+}

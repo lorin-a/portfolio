@@ -1,0 +1,67 @@
+/* Birth Story hero — slide-deck title page, implemented faithfully.
+   Layout proportions taken from the Figma frame (1920×1080): documentary text
+   block left, three-phone cluster top-right, full-bleed Myana gradient. */
+
+.hero {
+  position: relative; isolation: isolate;
+  min-height: 100vh; min-height: 100dvh;
+  display: grid; align-items: center;
+  background: #9aa0b4; overflow: hidden;
+}
+.hero::before {
+  content: ''; position: absolute; inset: 0; z-index: -1;
+  background: url(/images/birthstory/hero/bg-gradient.jpg) center / cover no-repeat;
+}
+
+.inner {
+  width: min(112rem, 100%); margin: 0 auto;
+  padding: clamp(2rem, 5vw, 5rem) clamp(1.6rem, 5vw, 6rem);
+  display: grid; grid-template-columns: 1fr 1fr; align-items: center;
+  gap: clamp(1.5rem, 4vw, 3.5rem); min-height: 100vh; min-height: 100dvh;
+}
+
+/* ── documentary text block ── */
+.lead { color: #fff; max-width: 38rem; }
+.title {
+  margin: 0; font-family: var(--font-heading);
+  font-variation-settings: 'SOFT' 0, 'WONK' 0; font-weight: 300;
+  font-size: clamp(3.4rem, 3rem + 5vw, 7.6rem); line-height: 1.03; letter-spacing: -0.01em;
+}
+.doc {
+  margin: clamp(1rem, 2vw, 1.7rem) 0 0; font-family: var(--font-body); font-weight: 600;
+  font-size: clamp(1.3rem, 1rem + 1vw, 2.1rem); line-height: 1.42; letter-spacing: -0.01em;
+}
+.authors {
+  margin: clamp(0.8rem, 1.5vw, 1.2rem) 0 0; font-family: var(--font-body); font-weight: 400;
+  font-size: clamp(1rem, 0.9rem + 0.4vw, 1.3rem); line-height: 1.4; color: rgba(255,255,255,0.82);
+}
+
+.title, .doc, .authors { opacity: 0; transform: translateY(16px); transition: opacity 0.8s var(--ease-out), transform 0.8s var(--ease-out); }
+.on .title { opacity: 1; transform: none; }
+.on .doc { opacity: 1; transform: none; transition-delay: 0.12s; }
+.on .authors { opacity: 1; transform: none; transition-delay: 0.2s; }
+
+/* ── three-screen cluster ── */
+.cluster { position: relative; justify-self: center; width: min(46rem, 100%); aspect-ratio: 993 / 709; }
+.phone {
+  position: absolute; top: 50%; width: 30.4%; aspect-ratio: 301.655 / 653.183;
+  border-radius: 16.9% / 7.8%; object-fit: cover;
+  box-shadow: 0 34px 90px -22px rgba(54, 64, 86, 0.5);
+  opacity: 0; transition: opacity 0.8s var(--ease-out), transform 0.9s var(--ease-out);
+}
+.pBook    { left: 23%; z-index: 2; transform: translate(-50%, calc(-50% + 24px)) rotate(-15deg); transition-delay: 0.1s; }
+.pCarepod { left: 77%; z-index: 2; transform: translate(-50%, calc(-50% + 24px)) rotate(15deg);  transition-delay: 0.2s; }
+.pCover   { left: 50%; top: 47%; z-index: 3; transform: translate(-50%, calc(-50% + 24px)) rotate(0deg); transition-delay: 0.3s; }
+.on .pBook    { opacity: 1; transform: translate(-50%, -50%) rotate(-15deg); }
+.on .pCarepod { opacity: 1; transform: translate(-50%, -50%) rotate(15deg); }
+.on .pCover   { opacity: 1; transform: translate(-50%, -50%) rotate(0deg); }
+
+@media (max-width: 880px) {
+  .inner { grid-template-columns: 1fr; gap: clamp(2rem, 6vw, 3rem); align-content: center; }
+  .lead { justify-self: start; }
+  .cluster { width: min(32rem, 92%); justify-self: center; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .title, .doc, .authors, .phone { transition: none; }
+}

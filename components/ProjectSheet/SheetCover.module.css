@@ -1,0 +1,548 @@
+/* THE COVER — a pile of content inside the folder (FS57–FS68). On the
+   sheet grid: the text in the left third (4 columns), the pile across the
+   right two thirds (8). Uses the sheet's type steps and the shared paper
+   (Paper.module.css). */
+
+.cover {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--flow-3);
+  /* FS94: more room around the hero, and the gap below it equals the gap
+     from the rule to the next line of copy (--hero-gap on .inner, used by
+     the frame's padding-top too) */
+  margin-top: var(--flow-2);
+  margin-bottom: var(--hero-gap);
+}
+
+@media (min-width: 1000px) {
+  .cover {
+    grid-template-columns: var(--grid);
+    column-gap: var(--gap-col);
+    align-items: start;
+  }
+
+  .text {
+    grid-column: span 4;
+  }
+
+  .pile {
+    grid-column: span 8;
+  }
+}
+
+.text {
+  min-width: 0;
+}
+
+.num {
+  display: block;
+  margin: 0 0 var(--flow-1);
+  font-family: var(--font-body);
+  font-size: var(--step-label);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-sage);
+}
+
+.title {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: var(--step-display);
+  font-weight: 300;
+  line-height: 1;
+  color: var(--color-ink);
+  text-wrap: balance;
+}
+
+/* Sized by script to the name's width (FitPair); this is the fallback. */
+.tagline {
+  margin: var(--flow-1) 0 0;
+  font-family: var(--font-heading);
+  font-style: italic;
+  font-weight: 300;
+  font-size: var(--step-statement);
+  line-height: 1.3;
+  color: var(--color-ink);
+}
+
+/* ── The sheet: the facts typed on loose-leaf ──────────────────────── */
+
+/* The cover's sheet runs a slightly tighter rule (24px) with one line of
+   top margin, so the hero fits the first screen (FS82). */
+.sheet {
+  margin-top: var(--flow-2);
+}
+
+.sheet > div {
+  --line: 1.5rem;
+  --top: var(--line);
+}
+
+.facts {
+  display: grid;
+  row-gap: var(--line);
+  margin: 0;
+}
+
+.facts > div {
+  display: grid;
+  /* the labels wrap onto a second rule if needed (“Clinical / Team”) */
+  grid-template-columns: 5.5rem minmax(0, 1fr);
+  gap: 0 var(--flow-1);
+}
+
+/* Narrow sheets: the label takes its own ruled line above the value, so
+   the value gets the full width instead of a sliver. */
+@media (max-width: 599px) {
+  .facts > div {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.facts dt,
+.facts dd {
+  line-height: var(--line);
+}
+
+.facts dt {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--step-label);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #3d4636;
+}
+
+.facts dd {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--step-small);
+  color: #24221f;
+  text-wrap: pretty;
+}
+
+.todo {
+  font-style: italic;
+}
+
+.todo b {
+  display: block;
+  font-style: normal;
+  font-size: var(--step-label);
+  font-weight: 600;
+  line-height: var(--line);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #3d4636;
+}
+
+/* ── The pile: four prints, each at its own tilt ───────────────────────
+   A fixed proportion that holds the pile so nothing spills past the grid;
+   align-self: start so a stretched row never widens it past its column.
+   Tilts are uneven in size and direction, with small uneven offsets, so it
+   reads as dropped rather than arranged. Hover lets each drift a little. */
+
+/* All prints share one grid cell, centred, so the pile always sits on
+   the middle of the text column beside it (FS77), whatever its size. The
+   padding leaves room for each print's offset and tilt. */
+.pile {
+  position: relative;
+  display: grid;
+  place-items: center;
+  align-self: center;
+  padding-block: 6%;
+}
+
+.print {
+  position: relative;
+  grid-area: 1 / 1;
+  width: 77%;
+  aspect-ratio: 3 / 2;
+  padding: 0;
+  border: 0;
+  background: var(--sheet-mat);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
+  cursor: pointer;
+  transition: transform var(--motion-medium) var(--ease-out);
+}
+
+.print img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.print[data-depth='0'] { transform: translate(0, 0) rotate(-1.6deg); }
+.print[data-depth='1'] { transform: translate(5%, -5%) rotate(3.1deg); }
+.print[data-depth='2'] { transform: translate(-4%, 5%) rotate(-4.6deg); }
+.print[data-depth='3'] { transform: translate(7%, 4%) rotate(2.2deg); }
+
+@media (hover: hover) {
+  .pile:hover .print[data-depth='0'] { transform: translate(0, -1%) rotate(-0.8deg); }
+  .pile:hover .print[data-depth='1'] { transform: translate(9%, -8%) rotate(3.9deg); }
+  .pile:hover .print[data-depth='2'] { transform: translate(-8%, 8%) rotate(-5.6deg); }
+  .pile:hover .print[data-depth='3'] { transform: translate(11%, 7%) rotate(2.9deg); }
+}
+
+.print:focus-visible {
+  outline: 2px solid var(--color-sage);
+  outline-offset: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .print {
+    transition: none;
+  }
+}
+
+/* ══ The pile layout: polaroid proportions (FS70, FS72) ═════════════════════════════
+   Built from a real Polaroid 600's proportions: a square photo, thin even
+   borders on three sides (about 5% of the width) and the deep chin below
+   (about 24%). The frame is matte, faintly grained, lighter at the top;
+   the photo sits a hair recessed, with instant film's slightly warm, soft
+   colour and a gloss sheen; the caption sits on the chin in the site's
+   italic serif (no handwriting fonts, her standing rule FS76).
+   Corners are the film's own, barely rounded. */
+
+.polaroids .print {
+  width: 50%;   /* full size again (FS88: grow the text, not shrink the images) */
+  aspect-ratio: auto;
+  background: none;
+  box-shadow: none;
+}
+
+.polaroids .print[data-pos='0'] { transform: translate(0, 0) rotate(-2deg); }
+.polaroids .print[data-pos='1'] { transform: translate(40%, -2%) rotate(5deg); }
+.polaroids .print[data-pos='2'] { transform: translate(-40%, -2%) rotate(-5deg); }
+.polaroids .print[data-pos='3'] { transform: translate(3%, -9%) rotate(2deg); }
+
+@media (hover: hover) {
+  .polaroids:hover .print[data-pos='0'] { transform: translate(0, -2%) rotate(-1deg); }
+  .polaroids:hover .print[data-pos='1'] { transform: translate(46%, -4%) rotate(6deg); }
+  .polaroids:hover .print[data-pos='2'] { transform: translate(-48%, 7%) rotate(-7.5deg); }
+  .polaroids:hover .print[data-pos='3'] { transform: translate(30%, 12%) rotate(4deg); }
+}
+
+/* ══ Brand glass prints (FS74, FS75, FS80, FS83) ═════════════════════════════════════
+   The glass, made the site's own: frosted frames tinted with a whisper of
+   the flower logo's gradient (sage, lavender, coral at 135°), a fine light
+   edge, the photo square and clean; beneath it, the caption in the site's
+   body typeface at body size (FS84). FS80 removed the scribble icon and the glare
+   sweep. No brackets, readouts, grids or glows. */
+
+.brandFrame {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  padding: 4.5% 4.5% 0;
+  border-radius: 3px;
+  /* the brand tint over a smoky base, so bright photos beneath never wash
+     out the caption (measured to pass AA, FS83) */
+  background:
+    linear-gradient(135deg,
+      rgba(197, 207, 166, 0.2) 5%,
+      rgba(199, 170, 209, 0.17) 45%,
+      rgba(247, 156, 126, 0.15) 88%),
+    rgba(28, 26, 30, 0.5);
+  backdrop-filter: blur(14px) saturate(1.25);
+  -webkit-backdrop-filter: blur(14px) saturate(1.25);
+  box-shadow:
+    inset 0 0 0 1px rgba(244, 241, 236, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    0 20px 42px rgba(0, 0, 0, 0.4);
+}
+
+.brandPhoto {
+  display: block;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  background: #141311;
+}
+
+.brandPhoto img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.brandStrip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  aspect-ratio: 79 / 17;
+}
+
+.brandCaption {
+  font-family: var(--font-body);   /* body typeface (FS84) */
+  font-size: var(--step-body);
+  line-height: 1;
+  color: #f4f1ec;
+}
+
+/* Glass paper (FS79, FS102): the facts' ink turns light. */
+[data-paper='glass'] .facts dt,
+[data-paper='glass'] .facts .todo b {
+  color: #c5cfa6;
+}
+
+[data-paper='glass'] .facts dd {
+  color: #f4f1ec;
+}
+
+/* ══ Title on the paper (FS85) ═════════════════════════════════════ */
+
+.sheetTitled {
+  margin-top: 0;
+}
+
+.paperHead {
+  padding: 0 0 var(--flow-2);
+}
+
+.paperHead .num {
+  color: #3d4636;
+}
+
+.paperHead .title,
+.paperHead .tagline {
+  color: #24221f;
+}
+
+.paperHead .title {
+  font-size: calc(var(--step-display) * 0.86);   /* inside the sheet's padding */
+}
+
+[data-paper='glass'] .paperHead .num {
+  color: #c5cfa6;
+}
+
+[data-paper='glass'] .paperHead .title,
+[data-paper='glass'] .paperHead .tagline {
+  color: #f4f1ec;
+}
+
+/* ══ The pile matches the paper (FS86, FS88) ═══════════════════════════
+   Desktop: the heading takes the first row of the left column; the paper
+   and the pile share the second row and stretch to the same height. The
+   polaroids keep their size (FS88: grow the text, never shrink the
+   images); if the facts run shorter than the pile, the paper extends with
+   blank ruled lines, as a real sheet would. The prints centre in the
+   pile's row, and the paper's top and bottom meet the pile's. */
+@media (min-width: 1000px) {
+  .cover {
+    align-items: stretch;
+    row-gap: var(--flow-2);
+  }
+
+  .text {
+    display: contents;
+  }
+
+  .sheet {
+    display: flex;
+    flex-direction: column;
+    grid-column: 1 / span 4;
+    grid-row: 2;
+    margin-top: 0;
+  }
+
+  .sheetTitled {
+    grid-row: 1 / span 2;
+  }
+
+  .sheet > div {
+    flex: 1;
+  }
+
+  .pile {
+    grid-column: 5 / span 8;
+    grid-row: 2;
+    align-self: stretch;
+  }
+
+  .cover:has(.sheetTitled) .pile {
+    grid-row: 1 / span 2;
+  }
+}
+
+/* ══ Title on the paper (FS91, FS96) ═══════════════════════════════════
+   The paper keeps the page's 4-column rail (FS96 reverted FS91's 5), a
+   22px rule, and a heading sized to the sheet's width. */
+@media (min-width: 1000px) {
+  /* FS96: back to 4 of 12 columns, the width of one column of the
+     three-column row below and of every section's text rail. */
+
+  .cover:has(.sheetTitled) .paperHead {
+    padding-bottom: var(--flow-1);
+  }
+
+  /* 2× (FS92), capped at the sheet's width: “Groundswell” measures 4.87em,
+     and a little wider at small sizes (optical-size axis), so 18.5cqi of the
+     heading's own width is the widest that always fits. */
+  .cover:has(.sheetTitled) .paperHead {
+    container-type: inline-size;
+  }
+
+  .cover:has(.sheetTitled) .paperHead .title {
+    font-size: min(calc(var(--step-display) * 0.78 * 2), 18.5cqi);
+    line-height: 0.95;
+  }
+
+  .cover:has(.sheetTitled) .sheet > div {
+    --line: 1.375rem;   /* 22px rule on this sheet */
+  }
+
+  /* The prints grow to the paper's height (FS86, FS93): the pile is a
+     size container stretched to the row the paper sets; each print's width
+     is the row height ÷ the stack's height-per-width (1.34, measured),
+     capped at 55% of the pile so the fanned stack stays inside the grid. */
+  .cover:has(.sheetTitled) .pile {
+    container-type: size;
+  }
+
+  /* Print size: from the paper's height, capped at 44% of the pile. */
+  .cover:has(.sheetTitled) .polaroids .print {
+    --pw: min(44cqw, calc(100cqh / 1.34));
+    width: var(--pw);
+  }
+
+  /* FS117: a pile, evenly distributed. The four prints sit at even
+     intervals across a narrower span than a row (so they overlap like a
+     pile), alternating high and low and tilting alternately, the front one
+     centre-right on top. Each shows a similar share of itself. */
+  .cover:has(.sheetTitled) .polaroids .print {
+    --step: calc((84cqw - var(--pw)) / 3);
+    transition: transform 720ms cubic-bezier(0.22, 0.9, 0.24, 1);   /* the swap (FS151) */
+  }
+
+  .cover:has(.sheetTitled) .polaroids .print[data-pos='0'] { transform: translate(calc(var(--step) * 0.5), 5%) rotate(-2deg); }
+  .cover:has(.sheetTitled) .polaroids .print[data-pos='1'] { transform: translate(calc(var(--step) * -0.5), -6%) rotate(4deg); }
+  .cover:has(.sheetTitled) .polaroids .print[data-pos='2'] { transform: translate(calc(var(--step) * 1.5), -8%) rotate(6deg); }
+  .cover:has(.sheetTitled) .polaroids .print[data-pos='3'] { transform: translate(calc(var(--step) * -1.5), 4%) rotate(-6deg); }
+}
+
+@media (min-width: 1000px) and (hover: hover) {
+  .cover:has(.sheetTitled) .polaroids:hover .print[data-pos='0'] { transform: translate(calc(var(--step) * 0.5), 3%) rotate(-1deg); }
+  .cover:has(.sheetTitled) .polaroids:hover .print[data-pos='1'] { transform: translate(calc(var(--step) * -0.6), -8%) rotate(5deg); }
+  .cover:has(.sheetTitled) .polaroids:hover .print[data-pos='2'] { transform: translate(calc(var(--step) * 1.65), -10%) rotate(7deg); }
+  .cover:has(.sheetTitled) .polaroids:hover .print[data-pos='3'] { transform: translate(calc(var(--step) * -1.65), 6%) rotate(-7deg); }
+}
+
+/* One item per ruled line (e.g. the timeline's three phases). */
+.factLine {
+  display: block;
+}
+
+.factKey {
+  font-weight: 600;
+}
+
+/* Plain prints crop their own photo (per-print zoom, FS95). */
+.pile:not(.polaroids) .print {
+  overflow: hidden;
+}
+
+/* Each label on its own ruled line above its value, at every width
+   (FS100): “Collaborators” is wider than any sensible label column, and
+   stacking is also the shorter sheet at 1440 (714px vs 846px). */
+.facts > div {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+/* More room between the margin line and the text on the cover's sheet
+   (FS109). */
+.sheet > div {
+  padding-left: calc(var(--margin) + 1.5rem);
+}
+
+/* The print on top lifts a touch (FS145). */
+.polaroids .print[data-front] .brandFrame {
+  box-shadow:
+    inset 0 0 0 1px rgba(244, 241, 236, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    0 28px 56px rgba(0, 0, 0, 0.5);
+}
+
+/* FS146: more room at the sheet's top and bottom, in whole ruled lines. */
+.sheet > div {
+  --top: calc(var(--line) * 2);
+  padding-bottom: calc(var(--line) * 2);
+}
+
+/* ══ The swap (FS151) ═════════════════════════════════════════════════
+   The pile relaxes on hover and the print under the cursor lifts toward
+   the viewer; a clicked print rises out of the pile (scale and shadow on
+   its frame, above everything) while its position glides to the front on
+   a longer, softer curve. */
+.polaroids .print {
+  transition: transform 720ms cubic-bezier(0.22, 0.9, 0.24, 1);
+}
+
+.polaroids .print .brandFrame {
+  transition:
+    transform var(--motion-fast) var(--ease-out),
+    box-shadow var(--motion-fast) var(--ease-out);
+}
+
+@media (hover: hover) {
+  .polaroids .print:not([data-front]):hover .brandFrame {
+    transform: translateY(-10px) rotate(var(--tilt, 0deg)) scale(1.02);
+    box-shadow:
+      inset 0 0 0 1px rgba(244, 241, 236, 0.3),
+      0 30px 56px rgba(0, 0, 0, 0.5);
+  }
+
+  .polaroids .print:not([data-front]) {
+    cursor: pointer;
+  }
+
+  .polaroids .print[data-front] {
+    cursor: default;
+  }
+}
+
+/* FS153: the pick-up, played on the print's frame while its place in the
+   pile stays put; the set-down angle is the frame's --tilt.
+   FS156: half the bounce: half the rise, half the swell, and it only
+   half-straightens. It starts from wherever the print already sits (its
+   old angle, and its hover lift when the cursor is on it), so nothing
+   snaps before the lift begins. */
+@keyframes pickUp {
+  0% { transform: translateY(var(--from-y, 0px)) rotate(var(--tilt-from, 0deg)) scale(var(--from-s, 1)); }
+  40% { transform: translateY(-3.5%) rotate(calc(var(--tilt-from, 0deg) * 0.5)) scale(1.04); }
+  100% { transform: rotate(var(--tilt)) scale(1); }
+}
+
+@media (hover: hover) {
+  .polaroids .print:hover .brandFrame {
+    --from-y: -10px;
+    --from-s: 1.02;
+  }
+}
+
+.polaroids .print .brandFrame {
+  transform: rotate(var(--tilt, 0deg));
+}
+
+.polaroids .print[data-lifting] .brandFrame {
+  animation: pickUp 760ms cubic-bezier(0.3, 0.75, 0.25, 1);
+  box-shadow:
+    inset 0 0 0 1px rgba(244, 241, 236, 0.3),
+    0 30px 56px rgba(0, 0, 0, 0.5);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .polaroids .print,
+  .polaroids .print .brandFrame {
+    transition: none;
+  }
+
+  .polaroids .print[data-lifting] .brandFrame {
+    animation: none;
+  }
+}
