@@ -5,7 +5,7 @@
 **What we're doing: THE GROUNDSWELL FOLDER SHEET, near final.** Branch `feat/folder-expand`,
 pushed to the PRIVATE mirror only (`git push private feat/folder-expand`; `origin` is public).
 See it: `npm run dev -- -p 3005`, scroll to Groundswell, **Open project** (hard-refresh).
-Ledger FS20–FS206 below. Final-touches round open from FS156.
+Ledger FS20–FS207 below. Final-touches round open from FS156.
 
 **Next move (updated 2026-10-01):** the reflection is live in the sheet (FS186). Then: Lorin's final touches (her words: "I will make final touches tomorrow"). Take
 her notes one at a time, ledger-first.
@@ -231,7 +231,8 @@ funding, captions, card note).
 | FS203 | change "Two team members with a basket of paper orchids beside an orchid prompt poster." to "Women in White Coats generative workshop with female oncology leadership" (or something like that.) (2026-10-01, gallery notes) | ✅ SHIPPED, her “or something like that”: “The Women in White Coats generative workshop, with women leaders in oncology.” |
 | FS204 | Change "Laying out a printed mural panel." tp "Assembling the Groundswell Garden" (2026-10-01, gallery notes) | ✅ SHIPPED: “Assembling the Groundswell Garden.” |
 | FS205 | "for \"Practice Reciprocity.\" another time that we were reciprocal in generative research was creating thank you cards with hand painted orchid bouteniers for women in white coats, we could generalize that all generative research activities and workshops included offerings or something -- acknowledging that we did not have access to funds to pay for their time." (2026-10-01) | ✅ SHIPPED, generalized as she suggested: “Practice Reciprocity. With no funds to pay staff for their time, every workshop offered something back, from thank-you cards and hand-painted orchid boutonnieres to somatic exercises.” Same length as before (5 lines at 1440); the card still balances |
-| FS206 | "How can we strengthen the data dashboard gallery? It is just a bunch of blurry content and repetitive and stuck at the pace. I wonder if I should get screenshots and blur text only? What do you advise?" (2026-10-01) | ⏳ RESEARCHING |
+| FS206 | "How can we strengthen the data dashboard gallery? It is just a bunch of blurry content and repetitive and stuck at the pace. I wonder if I should get screenshots and blur text only? What do you advise?" (2026-10-01) | 💬 ADVISED: redact, don’t blur (crisp screenshots, numbers + responses masked with solid bars), one idea per slide (art wall, pod, meditations, surveys, summary page, admin hub), at most one motion piece, captions that name the design decision. FLAG: the current blur is CSS over the real unblurred video, so the data is downloadable; redacted stills fix it at the source. Her go: “Yes try that please” → FS207 |
+| FS207 | "Yes try that please" (2026-10-01): make redacted dashboard screenshots | ⏳ IN PROGRESS |
 =======
 | FS193 | "i need this to look 50% neater, better orgnanized and simple" (2026-10-01), read as the Acknowledgements | ⏳ IN PROGRESS |
 >>>>>>> parent of f51f3e4 (feat(sheet): acknowledgements in one format: name over one-line role, three labelled lines (FS193))
