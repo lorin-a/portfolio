@@ -439,8 +439,10 @@ export const groundswell = {
      from her FS93 clinical team. Dollar values left out while $30k vs $40k
      is open. The `credits` above stay as the record. */
   acknowledgements: {
-    intro: 'Groundswell was shaped by the voices of the oncology staff at UPMC Magee-Womens Hospital, who live this work every day.',
-    partners: 'A collaboration between Carnegie Mellon University’s School of Design, the University of Pittsburgh Schools of Medicine and Nursing, and the Gynecologic Oncology staff at UPMC Magee-Womens Hospital.',
+    /* FS188: shortened to hold one line beside the partners line */
+    intro: 'Shaped by the voices of Magee’s oncology staff.',
+    /* FS188: tightened to sit beside the one-line lead */
+    partners: 'With Carnegie Mellon’s School of Design, Pitt’s Schools of Medicine and Nursing, and UPMC Magee-Womens Gynecologic Oncology.',
     columns: [
       {
         title: 'Leadership',
@@ -475,7 +477,7 @@ export const groundswell = {
         note: 'With Fox Woodworks, Schlage, Density, Dixie&Grace, Z9 Machinings, EHC Industries, Deborah Linhart, Pamela Meadowcroft, Marge Petruska, and Mark Baskinger. Funded by the College of Fine Arts at CMU, the UPMC Magee-Womens Hospital Medical Staff Fund, and the Paul D. Schurgot Foundation.',
       },
     ],
-    closing: 'Groundswell grew from trust built over years between earlier cohorts, Professor Kristin Hughes, and UPMC staff. To everyone who helped bring it to life, thank you.',
+    /* FS188: the closing thank-you removed at her request. */
   },
 
   /* THE REFLECTION (FS164–FS186, 2026-10-01): replaces the old close

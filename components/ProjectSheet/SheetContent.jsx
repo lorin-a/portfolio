@@ -246,7 +246,7 @@ export default function SheetContent({ sheet, num, title, tagline, titleId }) {
               {col.note && <p className={styles.thanksNote}>{col.note}</p>}
             </div>
           ))}
-          <p className={styles.thanksClosing}>{acknowledgements.closing}</p>
+          {acknowledgements.closing && <p className={styles.thanksClosing}>{acknowledgements.closing}</p>}
         </section>
       ) : credits.length > 0 && (() => {
         const find = (label) => credits.find(([k]) => k === label)
