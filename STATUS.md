@@ -1,5 +1,31 @@
 # Project Status
 
+## ▶ NEXT SESSION (planned 2026-10-01): THE SHEET FOR THE OTHER CASE STUDIES
+
+**Her brief (FS295):** replicate the Groundswell open-project view for the other case studies, customized to whatever content each project actually has.
+
+**Where things stand (checked 2026-10-01):**
+- **What the homepage folders hold:** galleries per contribution are in `app/(portfolio)/page.js`. Only Groundswell opens a sheet (`sheet` prop + `!!sheet` in ProjectPreview). The others link to Medium; Whelm shows “coming soon”.
+- **No sheet content exists yet for any other project.** The hidden “drafts” were the generic prompt cards (DEFAULT_STATEMENTS / DEFAULT_META in ProjectPreview.js), not written content.
+- **Source material, by depth:**
+  - BirthStory is rich: `docs/case-study-editorial/BIRTHSTORY-copy.md` (2,600 words), plus the copy plan, interview, visual system, and the `/projects/birthstory-care-pod` routes.
+  - Whelm has its own built case study at `/projects/whelm` (content.js, data.js, sections).
+  - SomeBuddy, Transition Design, and Bridging the G.A.P. are thin: about 130–190 words each in `content/projects/*.md`, plus their Medium articles.
+- **Template, Groundswell-only pieces to make optional or parameterized:**
+  - SheetMaps (its data is hard-coded inside the component)
+  - SheetMedia (imports the Groundswell poem credit; card-deck label)
+  - SheetLibraryKit (library + poem)
+  - the dashboard player (keyed off `media.motion`, already optional)
+  - The rest of SheetContent already renders from the content file and skips absent sections.
+
+**Proposed first moves:**
+1. A per-project content inventory: what exists for cover, frame row, components, reflection, process, and credits.
+2. One `content/sheets/<slug>.js` per project, using her words from the sources (never invented; `[LORIN TO WRITE]` where missing).
+3. Make the Groundswell-only modules opt-in.
+4. Start with BirthStory, the richest source.
+
+**Release recipe:** never merge this branch whole. Build `release/*` from origin/main and overlay site code only (see FS289).
+
 ## ▶ RESUME HERE (2026-10-01, night): THE GROUNDSWELL SHEET IS LIVE (FS289)
 
 Published to lorin.work as e9d4f8f. Releases go out by building a release branch from origin/main and overlaying ONLY site code (app minus close-lab, components, content, lib, public, middleware); never merge this branch whole, it carries private docs. Only the homepage is public (site hold).
@@ -332,6 +358,7 @@ funding, captions, card note).
 | FS292 | "can we make the tab of an open project cover the background nav portion that says lorin anderberg? it will make it look cleaner" (2026-10-01) | ✅ FIXED + LIVE: the tab can’t slide over the name without leaving the folder’s edge (on phones the name wraps to two lines beside the tab), so while a sheet is open the nav’s name fades out (html[data-sheet-open], set by ProjectSheet’s open effect) and returns on close; About stays. Verified open/close at 1440 and 390. Side note: a local dev-cache glitch from the earlier build attempt was found and cleared; live was never affected |
 | FS293 | "on a larger screen the \"designing connections\" was spread out and never reached its intended final position or if it did it was stretched out space between letters." (2026-10-01, live site) | ✅ FIXED + LIVE: reproduced: load at a normal size, then widen the window, and the word landed stretched (~70% too wide). The final letter spots were measured once, as percentages of the width, while the letters cap at 140px. Now re-measured on every refresh (resize), positions read through functions (invalidateOnRefresh), and re-checked once the refresh settles (the first reading happens while the hero is still pinned at the old width). Verified at 2560 after a resize: identical to a fresh load |
 | FS294 | "all other projects besides Groundswell should have their previous buttons click to see medium or whatever, Groundswell is the only finished case study open project. I am glad you prepped the draft of the other projects but that should behind the scenes for now." (2026-10-01, live site) | ✅ FIXED + LIVE: only a project with finished sheet content opens as a sheet (Groundswell); BirthStory, SomeBuddy, Transition Design, and Bridging the G.A.P. are back to “Read on Medium →”. Their draft sheets stay in the code, out of view |
+| FS295 | "Tomorrow's session will be about replicating this open project full view template for the other case studies, they may not be as robust as Groundswell so we will need to customize to what the project content available is. Are the drafts in the right place for this next step?" (2026-10-01) | 💬 ANSWERED + PLAN SAVED (resume block): partly. Folder previews are in place; the source material is scattered; no other sheet content files exist yet (the hidden drafts were empty prompt cards); the template has a few Groundswell-only pieces to make optional |
 =======
 | FS193 | "i need this to look 50% neater, better orgnanized and simple" (2026-10-01), read as the Acknowledgements | ⏳ IN PROGRESS |
 >>>>>>> parent of f51f3e4 (feat(sheet): acknowledgements in one format: name over one-line role, three labelled lines (FS193))
