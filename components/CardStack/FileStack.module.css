@@ -149,7 +149,11 @@
   align-items: center;
   justify-content: center;
   gap: 8px;
-  padding: 0 12px;
+  /* FS290: inline padding only. A `padding` shorthand here used to reset
+     the padding-bottom above to 0, so receded tabs centered their label in
+     the tall hit area and it sat low, deeper the further back the tab. */
+  padding-inline: 12px;
+  padding-top: 0;
   background: transparent;
   border: 0;
   font-family: var(--font-body);
