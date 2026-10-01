@@ -108,27 +108,25 @@ export default function SheetMotionLibrary({ items = [], nav = 'toggle' }) {
       </div>
 
       {nav === 'flow' && (
-        <ol className={s.flow} role="tablist" aria-label="Dashboard views, as a user flow">
-          {items.map((x, i) => (
-            <li key={x.view} className={s.flowStep}>
-              <button type="button" role="tab" aria-selected={i === active} className={s.node} onClick={() => go(i)}>
-                <span className={s.glyph} aria-hidden="true">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">{GLYPH[x.view]}</svg>
-                  {bar(i, x)}
-                </span>
-                <span className={s.nodeView}>{x.view}</span>
-                <span className={s.nodeWho}>{x.audience}</span>
-              </button>
-              {i < items.length - 1 && (
-                <span className={s.edge} aria-hidden="true">
-                  <span className={s.edgeLabel}>{x.next}</span>
-                  <span className={s.edgeLine} />
-                  <svg className={s.edgeHead} viewBox="0 0 8 12"><path d="M1 1l5.5 5L1 11" /></svg>
-                </span>
-              )}
-            </li>
-          ))}
-        </ol>
+        <div className={s.flowWrap}>
+          <p className={s.flowHint} aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">{GLYPH['With a tap']}</svg>
+            Select a view
+          </p>
+          <ol className={s.chev} role="tablist" aria-label="Dashboard views, from overview to depth">
+            {items.map((x, i) => (
+              <li key={x.view} style={{ '--depth': i }}>
+                <button type="button" role="tab" aria-selected={i === active} className={s.seg}
+                  aria-label={`${x.view}. ${x.audience}. ${x.caption}`} onClick={() => go(i)}>
+                  {i === active && <span className={s.segFill} data-run={playing || undefined}
+                    style={{ '--dur': `${x.duration}s` }} aria-hidden="true" />}
+                  <svg className={s.segIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">{GLYPH[x.view]}</svg>
+                  <span className={s.segView}>{x.view}</span>
+                </button>
+              </li>
+            ))}
+          </ol>
+        </div>
       )}
 
       {nav === 'chapters' && (
@@ -156,9 +154,9 @@ export default function SheetMotionLibrary({ items = [], nav = 'toggle' }) {
         </div>
       )}
 
-      <p className={s.caption} aria-live="polite">
+      {nav !== 'flow' && <p className={s.caption} aria-live="polite">
         <span className={`${s.who} ${nav === 'flow' ? s.whoPhoneOnly : ''}`}>{it.audience}.</span> {it.caption}
-      </p>
+      </p>}
     </div>
   )
 }
