@@ -23,34 +23,34 @@ const R0 = 104
 
 /* where each circle sits in each view (centre x, y, radius) */
 const POS = {
-  rec: [[868, 155, R0], [917, 205, 150], [1087, 508, 147]],
-  env: [[868, 950, R0], [917, 874, 150], [650, 508, 147]],
-  cul: [[1436, 560, R0], [1275, 554, 150], [1524, 508, 147]],
-  sys: [[300, 560, R0], [562, 554, 150], [213, 508, 147]],
+  rec: [[868, 150, R0], [917, 205, 150], [1087, 508, 147]],
+  env: [[1235, 905, R0], [917, 874, 150], [650, 508, 147]],
+  cul: [[1365, 548, 86], [1275, 554, 150], [1524, 508, 147]],
+  sys: [[345, 812, R0], [562, 554, 150], [213, 508, 147]],
 }
 const LABEL = { rec: ['Recognition'], env: ['Environment'], cul: ['Culture'], sys: ['Systemic', 'Issues'] }
 
 const VOICE = {
-  rec: { t: ['“What I do at work', 'is indescribable.”'], x: 1005, y: 130, a: 'start' },
-  sys: { t: ['“I’ve given up on trying', 'to change things.”'], x: 60, y: 730, a: 'start' },
-  env: { t: ['“There is no time', 'to grieve.”'], x: 998, y: 950, a: 'start' },
-  cul: { t: ['“I can’t turn it off.”'], x: 1676, y: 730, a: 'end' },
+  rec: { t: ['“What I do at work', 'is indescribable.”'], x: 1000, y: 132, a: 'start' },
+  sys: { t: ['“I’ve given up on trying', 'to change things.”'], x: 345, y: 958, a: 'middle' },
+  env: { t: ['“There is no time', 'to grieve.”'], x: 1365, y: 898, a: 'start' },
+  cul: { t: ['“I can’t turn it off.”'], x: 1475, y: 548, a: 'start' },
 }
-const VOID = { x: 868, y: 556, r: 165 }
+const VOID = { x: 812, y: 628, r: 132 }
 
 /* all six tensions, verbatim from the board, by the edge each sits on */
 const TENSIONS = [
-  { a: 'rec', b: 'sys', pill: 'Admin crowds out care', x: 584, y: 355, items: [
+  { a: 'rec', b: 'sys', pill: 'Admin crowds out care', x: 560, y: 410, items: [
     'When my work is interrupted, it makes me feel unrecognized and as if my work is unimportant.',
     'I am so busy with administrative tasks that I hardly get to do the work I am trained for, the reason I got into this field. This leaves me feeling undervalued and disconnected from my sense of worth.',
     'I don’t feel like my voice is heard or valued in a system where decision making is top-down and communication is lacking.' ] },
-  { a: 'rec', b: 'cul', pill: 'Guilt for taking a break', x: 1152, y: 355, items: [
+  { a: 'rec', b: 'cul', pill: 'Guilt over breaks', x: 1186, y: 405, items: [
     'I feel like I have to prove myself at work to be valued by higher status coworkers and feel guilty about taking breaks.',
     'Patient Centered Care neglects the needs of care workers.' ] },
-  { a: 'sys', b: 'env', pill: 'Profit over people', x: 584, y: 755, items: [
+  { a: 'sys', b: 'env', pill: 'Profit over people', x: 790, y: 880, items: [
     'Healthcare is a commodity. A focus on profit creates systemic disregard for employee wellbeing.',
     'Execs do not see care worker’s needs as worth investing in. We are replaceable even though we work the hardest and are the most passionate.' ] },
-  { a: 'env', b: 'cul', pill: 'Nowhere to go on a bad day', x: 1152, y: 755, items: [
+  { a: 'env', b: 'cul', pill: 'Nowhere to go on a bad day', x: 1400, y: 722, items: [
     'The lack of physical space, windows, and poor lighting takes a toll on my overall happiness at work.',
     'I feel burnt out when there is no space for me to take a real break, get some peace & quiet or gather with my colleagues.',
     'When you’re having a bad day, there is no where to go to express your grief; this makes me want to get home ASAP.' ] },
@@ -65,7 +65,7 @@ const TENSIONS = [
 const NAME = { rec: 'Recognition', env: 'Environment', cul: 'Culture', sys: 'Systemic Issues' }
 
 const VIEWS = [
-  { view: 'What we found', caption: 'Four themes from affinity mapping, each touching the other three, enclosing the void. Tap a tension to read what staff said.',
+  { view: 'What we found', caption: 'Four themes from affinity mapping, each touching the other three, enclosing the void. Each tension holds what staff said there: tap one to read it.',
     glyph: <><path d="M12 4l7 12H5z" /><path d="M12 4l2 12" opacity=".5" /></> },
   { view: 'What we value', caption: 'Each theme became a value the work would hold: recognition as humanity, environment as normalcy, culture as togetherness, the system as compassion.',
     glyph: <><circle cx="12" cy="5.5" r="2.2" /><circle cx="18.5" cy="12" r="2.2" /><circle cx="12" cy="18.5" r="2.2" /><circle cx="5.5" cy="12" r="2.2" /></> },
@@ -75,9 +75,9 @@ const VIEWS = [
 
 function Stage({ view, onTension, interactive, moving }) {
   const edge = (a, b, dashed) => {
-    const [ax, ay] = POS[a][0], [bx, by] = POS[b][0]
+    const [ax, ay, ar] = POS[a][0], [bx, by, br] = POS[b][0]
     const dx = bx - ax, dy = by - ay, d = Math.hypot(dx, dy)
-    return <line key={a + b} x1={ax + (dx / d) * R0} y1={ay + (dy / d) * R0} x2={bx - (dx / d) * R0} y2={by - (dy / d) * R0}
+    return <line key={a + b} x1={ax + (dx / d) * ar} y1={ay + (dy / d) * ar} x2={bx - (dx / d) * br} y2={by - (dy / d) * br}
       stroke={PLUM} strokeWidth="3.5" strokeDasharray={dashed ? '11.78 11.78' : undefined} opacity={dashed ? 0.6 : 1} />
   }
   return (
@@ -92,12 +92,16 @@ function Stage({ view, onTension, interactive, moving }) {
 
       {/* view 1: the synthesis */}
       <g className={s.layer} data-on={view === 0 || undefined}>
+        {/* the form: a front face and a side face, lightly tinted; the edge
+            from the front-left vertex to the set-back one runs behind */}
+        <polygon points={['rec', 'sys', 'env'].map((k) => POS[k][0].slice(0, 2).join(',')).join(' ')} fill={PLUM} opacity="0.07" />
+        <polygon points={['rec', 'env', 'cul'].map((k) => POS[k][0].slice(0, 2).join(',')).join(' ')} fill={PLUM} opacity="0.03" />
         {edge('sys', 'cul', true)}
         {edge('rec', 'sys')}{edge('rec', 'env')}{edge('rec', 'cul')}{edge('sys', 'env')}{edge('env', 'cul')}
         <circle cx={VOID.x} cy={VOID.y} r={VOID.r} fill={CREAM} stroke={PLUM} strokeWidth="5.89" strokeDasharray="11.78 11.78" />
-        <text className={s.voidKicker} x={VOID.x} y={VOID.y - 78} fill={PLUM}>The void</text>
-        <text className={s.thesis} x={VOID.x} y={VOID.y - 26} fill={PLUM}>
-          {['Patient-centered', 'care neglects', 'the people', 'who give it'].map((l, i) => <tspan key={l} x={VOID.x} dy={i ? 40 : 0}>{l}</tspan>)}
+        <text className={s.voidKicker} x={VOID.x} y={VOID.y - 64} fill={PLUM}>The void</text>
+        <text className={s.thesis} x={VOID.x} y={VOID.y - 20} fill={PLUM}>
+          {['Patient-centered', 'care neglects', 'the people', 'who give it'].map((l, i) => <tspan key={l} x={VOID.x} dy={i ? 34 : 0}>{l}</tspan>)}
         </text>
         {TENSIONS.map((t, i) => {
           if (!t.pill) return null
@@ -113,9 +117,16 @@ function Stage({ view, onTension, interactive, moving }) {
               <rect x={t.x - w / 2} y={t.y - 40} width={w} height="80" rx="40" fill={CREAM}
                 stroke={PLUM} strokeWidth="5.89" strokeDasharray="11.78 11.78" />
               <text className={s.pill} x={t.x} y={t.y + 10} fill={PLUM}>{t.pill}</text>
+              <g transform={`translate(${t.x + w / 2 - 6} ${t.y - 38})`} aria-hidden="true">
+                <circle r="22" fill={PLUM} />
+                <text className={s.count} y="8" fill={CREAM}>{t.items.length}</text>
+              </g>
             </g>
           )
         })}
+        <text className={s.prov} x="868" y="1068" fill={PLUM}>
+          {`From ${TENSIONS.reduce((a, t) => a + t.items.length, 0)} scenarios and 9 staff voices · interviews, shadowing, and workshops · clustered by affinity mapping`}
+        </text>
         {Object.entries(VOICE).map(([id, v]) => (
           <text key={id} className={s.voice} x={v.x} y={v.y} textAnchor={v.a} fill={PLUM}>
             {v.t.map((l, i) => <tspan key={l} x={v.x} dy={i ? 32 : 0}>{l}</tspan>)}

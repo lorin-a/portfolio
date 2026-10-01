@@ -34,10 +34,12 @@
 .dot[data-landed] text { opacity: 0; }
 
 .theme { font-family: var(--font-heading); font-size: 30px; text-anchor: middle; }
-.thesis { font-family: var(--font-heading); font-size: 32px; text-anchor: middle; }
+.thesis { font-family: var(--font-heading); font-size: 28px; text-anchor: middle; }
 .voidKicker { font-family: var(--font-body); font-size: 22px; letter-spacing: 0.14em; text-transform: uppercase; text-anchor: middle; }
 .pill { font-family: var(--font-heading); font-size: 28px; text-anchor: middle; }
 .voice { font-family: var(--font-body); font-size: 24px; }
+.count { font-family: var(--font-body); font-size: 22px; font-weight: 600; text-anchor: middle; }
+.prov { font-family: var(--font-body); font-size: 21px; letter-spacing: 0.04em; text-anchor: middle; opacity: 0.75; }
 
 /* tension pills are buttons */
 .pillBtn { cursor: pointer; outline: none; }
