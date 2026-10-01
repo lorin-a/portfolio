@@ -24,6 +24,19 @@
 3. Make the Groundswell-only modules opt-in.
 4. Start with BirthStory, the richest source.
 
+
+**Found while building the source packs (hers to settle tomorrow):**
+- **Whelm:** no outcome or cover facts yet (unfinished). Its tagline exists in three versions. Several site-copy passages are Claude placeholders, not hers.
+- **Transition Design:**
+  - The homepage link goes to the Medium publication's front page, which shows no stories; it should point to her five articles.
+  - Medium marks the work as theoretical and AI-assisted; the homepage doesn't say so.
+- **BirthStory:**
+  - `content/projects` and the old site claim the professors and client went on to build it; her own Q15 answer says that isn't supported.
+  - The client is named four different ways.
+- **SomeBuddy:** the client is listed as CMU Student Affairs, though they only “expressed interest”.
+- **Bridging:** the project ran 4 weeks (Medium) or 5 (elsewhere).
+- **Original media:** the local files live in `~/Desktop/NEW 2026 Portfolio Files Cloudinary/<Project>/`. Some mapped Cloudinary assets go unused (listed in each inventory).
+
 **Release recipe:** never merge this branch whole. Build `release/*` from origin/main and overlay site code only (see FS289).
 
 ## ▶ RESUME HERE (2026-10-01, night): THE GROUNDSWELL SHEET IS LIVE (FS289)
@@ -360,7 +373,7 @@ funding, captions, card note).
 | FS294 | "all other projects besides Groundswell should have their previous buttons click to see medium or whatever, Groundswell is the only finished case study open project. I am glad you prepped the draft of the other projects but that should behind the scenes for now." (2026-10-01, live site) | ✅ FIXED + LIVE: only a project with finished sheet content opens as a sheet (Groundswell); BirthStory, SomeBuddy, Transition Design, and Bridging the G.A.P. are back to “Read on Medium →”. Their draft sheets stay in the code, out of view |
 | FS295 | "Tomorrow's session will be about replicating this open project full view template for the other case studies, they may not be as robust as Groundswell so we will need to customize to what the project content available is. Are the drafts in the right place for this next step?" (2026-10-01) | 💬 ANSWERED + PLAN SAVED (resume block): partly. Folder previews are in place; the source material is scattered; no other sheet content files exist yet (the hidden drafts were empty prompt cards); the template has a few Groundswell-only pieces to make optional |
 | FS296 | "is there anything we can do now or in a new chat to set the next round of work up for successs? The projects have cloudinary connections. It should follow as closely as possible to the groundswell \"template\"" (2026-10-01) | ✅ PREP DONE (not published; no visible change): (1) the sheet now resolves media keys from EVERY project map in lib/cloudinary.js (it only knew Groundswell’s, so any other project’s galleries would have rendered empty) and accepts a direct Cloudinary public ID (`id`); (2) Groundswell-only pieces made opt-in: system.exhibit: 'maps' for the three-map exhibit (otherwise a normal gallery), card-deck label from content; (3) content/sheets/_template.js: the Groundswell shape field by field with the rules; (4) per-project source packs being gathered into docs/case-study-editorial/sources/ (Medium text verbatim, mapped Cloudinary assets, coverage vs. the template). Groundswell verified unchanged. Cloudinary: only mapped assets are visible (no admin key) |
-| FS297 | "We have also answered the hiring manager questions somewhere in project history for certain projects and there should be excess copy files and old portfolio squarespace material to work from" (2026-10-01) | ⏳ FOLDED INTO THE SOURCE PACKS: hiring-manager answers (docs/deck-system/rehearsal/groundswell-answers.md is the reference set; BIRTHSTORY_NOTES.md, BIRTHSTORY-interview.md, JOURNAL.md searched for the rest), the old Squarespace site scrape (~/Desktop/Portfolio-all-copy.md, 15.5k words; same as docs/case-study-editorial/PORTFOLIO-all-copy-RAW.md), and Whelm’s site copy (~/Desktop/whelm/docs/). Per project: answers.md, squarespace.md |
+| FS297 | "We have also answered the hiring manager questions somewhere in project history for certain projects and there should be excess copy files and old portfolio squarespace material to work from" (2026-10-01) | ✅ SOURCE PACKS DONE: docs/case-study-editorial/sources/<slug>/ for birthstory, somebuddy, transition-design, bridging-the-gap, whelm (medium.md verbatim via real Chrome after Cloudflare 403s; squarespace.md; answers.md; inventory.md with HAVE/PARTIAL/MISSING per sheet section) + sources/README.md. HM answers exist only for BirthStory (BIRTHSTORY-interview.md); no project has per-component ‘My Contribution’ lines (lead: a ‘MY PART.docx’ named in BIRTHSTORY-copy-plan.md:11, not found on this machine). Conflicts for her, listed in the NEXT SESSION block |
 =======
 | FS193 | "i need this to look 50% neater, better orgnanized and simple" (2026-10-01), read as the Acknowledgements | ⏳ IN PROGRESS |
 >>>>>>> parent of f51f3e4 (feat(sheet): acknowledgements in one format: name over one-line role, three labelled lines (FS193))
