@@ -97,8 +97,8 @@ export default function CloseLab() {
       <p className={s.kicker}>Groundswell · FS238 lab · private</p>
 
       <section className={s.variant}>
-        <h2 className={s.labH}>Three maps, one exhibit (FS249)</h2>
-        <p className={s.labNote}>What we found · what we value · what we built. The synthesis is redrawn in the same hand as the values and ecosystem maps.</p>
+        <h2 className={s.labH}>Mapping the system (FS249–FS251)</h2>
+        <p className={s.labNote}>Proposed section copy (DRAFT, from her FS250 brief): The research pointed to a system, not a single problem, so we didn’t design a single intervention. We brought our strongest ideas together into one ecosystem, held by a shared narrative of culture change and working at several scales at once: practical support inside the workday, care beyond it, and the slower work of rebuilding relationships and communication across the unit.</p>
         <div style={{ maxWidth: '64rem' }}><SheetMaps /></div>
         <h2 className={s.labH} style={{ marginTop: '4rem' }}>Previous: the evidence chain (FS248)</h2>
         <p className={s.labNote}>Read left to right, the way the method ran: heard, coded, modeled, concluded, designed. The coding matrix carries the evidence; the tetrahedron summarises it.</p>

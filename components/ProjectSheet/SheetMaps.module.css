@@ -1,5 +1,4 @@
-/* FS249: three maps in one container: the chevron track on top (the
-   dashboard player's system), a cream stage, one caption. */
+/* FS249–FS251: three maps of one system, in one container. */
 
 .maps { margin: 0; }
 
@@ -11,25 +10,40 @@
   background: #F8EBE5;
 }
 
-.open {
-  display: block;
-  width: 100%;
+.canvas {
   padding: clamp(1rem, 2.5vw, 2rem);
-  border: 0;
-  background: none;
-  cursor: zoom-in;
   aspect-ratio: 1736 / 1080;
 }
 
-.open:focus-visible { outline: 2px solid var(--color-sage); outline-offset: 2px; border-radius: 2px; }
+.svg { display: block; width: 100%; height: 100%; overflow: visible; }
 
-.svg,
-.img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
+/* layers cross-fade; her maps arrive just after the circles land */
+.layer { opacity: 0; transition: opacity 400ms var(--ease-out); pointer-events: none; }
+.layer[data-on] { opacity: 1; transition: opacity 450ms var(--ease-out) 700ms; pointer-events: auto; }
+
+/* the four circles: they move, then hand over to the circles in her maps */
+.dot {
+  transition: transform 900ms cubic-bezier(0.65, 0, 0.35, 1), opacity 0ms;
 }
+
+.dot[data-landed] {
+  opacity: 0;
+  transition: transform 900ms cubic-bezier(0.65, 0, 0.35, 1), opacity 250ms var(--ease-out);
+}
+.dot text { transition: opacity 250ms var(--ease-out); }
+.dot[data-landed] text { opacity: 0; }
+
+.theme { font-family: var(--font-heading); font-size: 30px; text-anchor: middle; }
+.thesis { font-family: var(--font-heading); font-size: 32px; text-anchor: middle; }
+.voidKicker { font-family: var(--font-body); font-size: 22px; letter-spacing: 0.14em; text-transform: uppercase; text-anchor: middle; }
+.pill { font-family: var(--font-heading); font-size: 28px; text-anchor: middle; }
+.voice { font-family: var(--font-body); font-size: 24px; }
+
+/* tension pills are buttons */
+.pillBtn { cursor: pointer; outline: none; }
+.pillBtn rect { transition: fill var(--motion-fast) var(--ease-out); }
+@media (hover: hover) { .pillBtn:hover rect { fill: #EFDDD5; } }
+.pillBtn:focus-visible rect { stroke-dasharray: none; stroke-width: 7; }
 
 .enlarge {
   position: absolute;
@@ -37,17 +51,74 @@
   right: 0.75rem;
   display: grid;
   place-items: center;
-  width: 36px;
-  height: 36px;
+  width: 40px;
+  height: 40px;
+  border: 0;
   border-radius: 50%;
   background: rgba(85, 77, 101, 0.1);
   color: #554D65;
-  pointer-events: none;
+  cursor: pointer;
 }
 
 .enlarge svg { width: 13px; height: 13px; fill: none; stroke: currentColor; stroke-width: 1.6; }
+.enlarge:focus-visible { outline: 2px solid #554D65; outline-offset: 2px; }
+
+/* the reader: what staff said, over the map */
+.reader {
+  position: absolute;
+  left: 50%;
+  bottom: 1rem;
+  width: min(92%, 40rem);
+  max-height: 70%;
+  overflow: auto;
+  transform: translateX(-50%);
+  padding: 1.25rem 1.4rem 1.4rem;
+  border-radius: 6px;
+  background: #FFFBF8;
+  box-shadow: 0 0 0 2px #554D65, 0 18px 40px rgba(85, 77, 101, 0.25);
+  color: #554D65;
+}
+
+.readerHead {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.15rem 1rem;
+  align-items: start;
+  margin-bottom: 0.9rem;
+}
+
+.readerTitle { margin: 0; font-family: var(--font-heading); font-size: var(--step-body); }
+.readerTitle span { opacity: 0.6; }
+.readerCount { grid-column: 1; margin: 0; font-family: var(--font-body); font-size: var(--step-label); color: #6C625F; }
+.readerNav { grid-column: 2; grid-row: 1 / span 2; display: flex; gap: 0.35rem; }
+
+.readerNav button {
+  width: 40px;
+  height: 40px;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(85, 77, 101, 0.1);
+  color: #554D65;
+  font-size: var(--step-body);
+  cursor: pointer;
+}
+
+.readerNav button:focus-visible { outline: 2px solid #554D65; outline-offset: 2px; }
+
+.readerList { display: grid; gap: 0.75rem; margin: 0; padding: 0; list-style: none; }
+
+.readerList li {
+  padding-left: 0.9rem;
+  border-left: 2px solid rgba(85, 77, 101, 0.35);
+  font-family: var(--font-heading);
+  font-size: var(--step-small);
+  font-style: italic;
+  line-height: 1.5;
+  text-wrap: pretty;
+}
 
 .caption {
+  min-height: 3.2em;
   margin: 0.85rem 0.5rem 0.25rem;
   font-family: var(--font-body);
   font-size: var(--step-small);
@@ -55,13 +126,6 @@
   color: var(--color-ink);
   text-wrap: pretty;
 }
-
-/* the synthesis, in her diagram's type */
-.theme { font-family: var(--font-heading); font-size: 30px; text-anchor: middle; }
-.thesis { font-family: var(--font-heading); font-size: 32px; text-anchor: middle; }
-.voidKicker { font-family: var(--font-body); font-size: 22px; letter-spacing: 0.14em; text-transform: uppercase; text-anchor: middle; }
-.pill { font-family: var(--font-heading); font-size: 28px; text-anchor: middle; }
-.voice { font-family: var(--font-body); font-size: 24px; }
 
 /* full screen */
 .dialog {
@@ -94,3 +158,7 @@
 
 .close svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 1.8; }
 .close:focus-visible { outline: 2px solid #554D65; outline-offset: 2px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .dot, .dot text, .layer, .layer[data-on] { transition: none; }
+}
