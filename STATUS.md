@@ -5,7 +5,7 @@
 **What we're doing: THE GROUNDSWELL FOLDER SHEET, near final.** Branch `feat/folder-expand`,
 pushed to the PRIVATE mirror only (`git push private feat/folder-expand`; `origin` is public).
 See it: `npm run dev -- -p 3005`, scroll to Groundswell, **Open project** (hard-refresh).
-Ledger FS20–FS227 below. Final-touches round open from FS156.
+Ledger FS20–FS228 below. Final-touches round open from FS156.
 
 **Next move (updated 2026-10-01):** the reflection is live in the sheet (FS186). Then: Lorin's final touches (her words: "I will make final touches tomorrow"). Take
 her notes one at a time, ledger-first.
@@ -253,6 +253,7 @@ funding, captions, card note).
 | FS225 | "I am not happy with the copy on the page itself, you took my verbatim and I wanted you to copyedit and combine with what was there already and make it more sophisticated, I may have made a copyedit rule too strict. I always want you to use my draft but you can always improve the copy and make it perfect." (2026-10-01) | ✅ SHIPPED + standing rule saved to project memory (DECISIONS.md): her draft is the source, Claude refines it to finished quality and combines it with existing copy. Body rewritten, combining her draft and the previous body: “Built on the belief that data are stories, the dashboard gathers what every component collected into one interactive account, where qualitative voices and quantitative measures read together. It deepens with engagement: an overview anyone can grasp at first glance, the people behind each number on interaction, and traditional charts for the researchers and administrators who need the evidence.” Captions refined to match each new clip |
 | FS226 | "This is great. Show me a few options for the navigation of this gallery not sold on the top toggle" (2026-10-01) | 💬 OPTIONS in the lab (/projects/groundswell/close-lab), awaiting her pick; the sheet still uses the toggle. A · Chapter bar: a segmented progress bar under the clip, segment width = clip length, labels beneath, “Overview … Deeper engagement →” axis (Claude’s pick: it reads as a video player and draws the depth idea) · B · Depth ladder: a stepped list beside the clip, each rung indented one step deeper · C · Arrows and dots: arrows on the clip, dots + “01 / 04 · At a glance” beneath · D · the current toggle. All keyboard-reachable, 44px targets; verified 1440 + 390 |
 | FS227 | "Nothing is hitting the mark" (2026-10-01), re: FS226 nav options A–D | ⏳ ASKING what she is reaching for before another round |
+| FS228 | "None of these are working" (2026-10-01), re: nav options + the four directions proposed | ⏳ PAUSED soloing; asked for a reference she likes before another build. Sheet still ships the toggle (FS220) |
 =======
 | FS193 | "i need this to look 50% neater, better orgnanized and simple" (2026-10-01), read as the Acknowledgements | ⏳ IN PROGRESS |
 >>>>>>> parent of f51f3e4 (feat(sheet): acknowledgements in one format: name over one-line role, three labelled lines (FS193))
