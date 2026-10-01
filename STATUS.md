@@ -5,7 +5,7 @@
 **What we're doing: THE GROUNDSWELL FOLDER SHEET, near final.** Branch `feat/folder-expand`,
 pushed to the PRIVATE mirror only (`git push private feat/folder-expand`; `origin` is public).
 See it: `npm run dev -- -p 3005`, scroll to Groundswell, **Open project** (hard-refresh).
-Ledger FS20–FS178 below. Final-touches round open from FS156.
+Ledger FS20–FS179 below. Final-touches round open from FS156.
 
 **Next move:** Lorin's final touches (her words: "I will make final touches tomorrow"). Take
 her notes one at a time, ledger-first.
@@ -203,6 +203,7 @@ funding, captions, card note).
 | FS176 | "I don't mind as along as they all match, first lets get the copy right then we can redesign the cards but each should have the same balanced amount of copy. This sounds too AI \"Relationships carried it: \" and this is the right tone make sure the others match it should feel embeded in the project not like a robot spewing results \"With subject matter this emotional, \"" (2026-10-01) | 💬 REWRITTEN in the lab, awaiting her verdict on the COPY (cards redesign after). Her tone applied throughout: every bullet opens inside the project (“With subject matter this emotional,” · “Pre-existing relationships opened the door,” · “In the research phase,” · “When production began,” · “Once the study was running,” · “With enough respite to stop drowning,” · “Throughout the pilot,” · “The next iteration builds on both,”); no label-and-colon run-ins. Balanced: one statement (10–12 words) + three bullets per card, ~73–77 words a card. Additions with receipts: “the late call for doors” (R Q6), “the one component I led” (R Q3), “conversations their days rarely allowed” (research: no time to grieve), “beyond the pilot” (R Q8) |
 | FS177 | "instead of who I became, do how I grew? or what would better fit with \"weave\" and what that metaphorically implies" (2026-10-01) | ✅ ANSWERED + applied in the lab: “What I brought together”. Weave = her definition “synthesis, connection-making… finding how truths relate”, and the homepage’s Weave pairs (stories & systems, empathy & evidence, details & dreams): her growth IS a weave of two threads, research and building, which the statement and three bullets already show. Keeps the row’s parallel “What…” (What I learned · What I brought together · What’s next); “How I grew” is honest but generic and breaks the pattern |
 | FS178 | "give me more options i dont like that one" (2026-10-01) — re: the Weave label (“What I brought together” rejected) | 💬 OPTIONS GIVEN, awaiting her pick (lab still shows the rejected label until she chooses) |
+| FS179 | "how it changed me is the right tenor what else like that" (2026-10-01) | 💬 OPTIONS GIVEN in that tenor, awaiting her pick |
 
 ### ⟢ OPEN NOTES LEDGER — Folder sheet (2026-09-06, her verdict on the rebuilt sheet)
 
