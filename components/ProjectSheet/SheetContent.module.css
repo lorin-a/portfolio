@@ -66,47 +66,6 @@
   text-wrap: pretty;
 }
 
-/* ══ MAPPING THE SYSTEM — label and intro, then the exhibit full width ══ */
-
-.system {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: var(--flow-3);
-  margin-top: var(--hero-gap);
-  padding: var(--hero-gap) 0 0;
-  border-top: var(--rule);
-  border-image: var(--rule-grad) 1;
-}
-
-@media (min-width: 900px) {
-  .system { grid-template-columns: var(--grid); column-gap: var(--gap-col); }
-  .systemText { grid-column: 1 / span 8; }
-  .systemMap { grid-column: 1 / -1; }
-}
-
-.systemLabel {
-  display: block;
-  margin: 0 0 var(--flow-1);
-  font-family: var(--font-body);
-  font-size: var(--step-label);
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--color-sage);
-}
-
-.systemText p {
-  margin: 0;
-  font-family: var(--font-heading);
-  font-size: var(--step-statement);
-  font-weight: 300;
-  line-height: 1.45;
-  color: var(--color-ink);
-  text-wrap: pretty;
-}
-
-.systemMap { min-width: 0; }
-
 /* EQUAL BREAKS (FS132): every page-break rule in the folder has the same
    space above it and below it, --hero-gap (64px), with no section adding
    its own margin beneath; adjacent margins collapse to that one value. */

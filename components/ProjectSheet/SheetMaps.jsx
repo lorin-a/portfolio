@@ -74,7 +74,7 @@ const VSAY = {
   rec: { t: ['We’re not just providers—', 'we’re people too.'], x: 570, y: 118 },
   cul: { t: ['We check in, even', 'with just a nod.'], x: 1590, y: 545 },
   env: { t: ['Grief is a natural part of', 'caring, and it has a place here'], x: 1275, y: 960 },
-  sys: { t: ['We care deeply—that’s not', 'a flaw, it’s our strength'], x: 178, y: 545 },
+  sys: { t: ['We care deeply—that’s not', 'a flaw, it’s our strength'], x: 205, y: 545 },
 }
 const CYCLE = ['rec', 'cul', 'env', 'sys'] /* clockwise, as her arrows run */
 
@@ -187,13 +187,13 @@ function Stage({ view, focus, setFocus, interactive, uid, ready = true, hint = n
           <text className={s.voidName} x={(vpt('rec')[0] + vpt('sys')[0] + vpt('env')[0]) / 3} y={(vpt('rec')[1] + vpt('sys')[1] + vpt('env')[1]) / 3 + 12}>The void</text>
         </g>
         {TENSIONS.map((t, i) => {
-          const w = Math.max(...t.pill.map((l) => l.length)) * 12.6 + 70, on = isF('t', i), dim = anyF('t', 'void') && !on
+          const w = Math.max(...t.pill.map((l) => l.length)) * 14.8 + 70, on = isF('t', i), dim = anyF('t', 'void') && !on
           return (
             <g key={t.pill} className={`${s.fade} ${s.pillG}`} data-dim={dim || undefined} data-on={on || undefined}
               data-back={t.back || undefined} aria-label={`${THEME[t.a]} and ${THEME[t.b]}: ${t.pill.join(' ')}`}
               {...(view === 0 ? act({ kind: 't', id: i }) : {})}>
-              <rect x={t.x - w / 2} y={t.y - 50} width={w} height="100" rx="50" />
-              <text className={s.pill2} x={t.x} y={t.y - 6}>{lines(t.pill, t.x, 32)}</text>
+              <rect x={t.x - w / 2} y={t.y - 54} width={w} height="108" rx="54" />
+              <text className={s.pill2} x={t.x} y={t.y - 7}>{lines(t.pill, t.x, 36)}</text>
             </g>
           )
         })}
@@ -216,7 +216,7 @@ function Stage({ view, focus, setFocus, interactive, uid, ready = true, hint = n
           const v = VSAY[id], on = isF('v', id), dim = anyF('v') && !on
           return (
             <text key={id} className={`${s.fade} ${s.say}`} data-dim={dim || undefined} data-on={on || undefined} x={v.x} y={v.y}>
-              {lines(v.t, v.x, 34)}
+              {lines(v.t, v.x, 38)}
             </text>
           )
         })}
@@ -274,7 +274,7 @@ function Stage({ view, focus, setFocus, interactive, uid, ready = true, hint = n
         const c = view === 0
           ? [(vpt('rec')[0] + vpt('sys')[0] + vpt('env')[0]) / 3 + 40, (vpt('rec')[1] + vpt('sys')[1] + vpt('env')[1]) / 3 + 52]
           : view === 1 ? [1045, 325] : [330, 1040]
-        const label = `${hint} to explore`, w = label.length * 15.5 + 52
+        const label = `${hint} to explore`, w = label.length * 17.5 + 56
         return (
           <g key={view} className={s.hintG} transform={`translate(${c[0]} ${c[1]})`} aria-hidden="true">
             <circle className={s.ripple} r="16" />
@@ -282,8 +282,8 @@ function Stage({ view, focus, setFocus, interactive, uid, ready = true, hint = n
               <path d="M0 0l0 34 9-8 7 15 6-3-7-15 12-1z" />
             </g>
             <g transform="translate(44 14)">
-              <rect x="0" y="0" width={w} height="54" rx="27" />
-              <text x={w / 2} y="36">{label}</text>
+              <rect x="0" y="0" width={w} height="60" rx="30" />
+              <text x={w / 2} y="40">{label}</text>
             </g>
           </g>
         )

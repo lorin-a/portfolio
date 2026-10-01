@@ -134,12 +134,15 @@ export default function SheetContent({ sheet, num, title, tagline, titleId }) {
       {/* MAPPING THE SYSTEM (FS249–FS280): found → value → built, the same
           four circles carried through three maps, before the components. */}
       {sheet.system && (
-        <section className={styles.system} data-reveal="0" aria-labelledby="sheet-system">
-          <div className={styles.systemText}>
-            <h3 id="sheet-system" className={styles.systemLabel}>{sheet.system.label}</h3>
-            <p>{sheet.system.intro}</p>
+        <section id="sheet-system" className={styles.component} data-reveal="0" aria-labelledby="sheet-system-name">
+          <div className={styles.rail}>
+            <div className={styles.railInner}>
+              <span className={styles.componentNum}>{sheet.system.kicker}</span>
+              <h3 id="sheet-system-name" className={styles.componentName}>{sheet.system.label}</h3>
+              <p className={styles.componentBody}>{sheet.system.intro}</p>
+            </div>
           </div>
-          <div className={styles.systemMap}><SheetMaps /></div>
+          <div className={styles.work}><SheetMaps /></div>
         </section>
       )}
 

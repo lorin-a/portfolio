@@ -55,12 +55,12 @@
 .name {
   fill: #2A2624;
   font-family: var(--font-heading);
-  font-size: 32px;
+  font-size: 33px;
   text-anchor: middle;
   animation: name-in 380ms var(--ease-out) 760ms both;
 }
 
-.name[data-size='l'] { font-size: 38px; }
+.name[data-size='l'] { font-size: 40px; }
 
 @keyframes name-in {
   from { opacity: 0; transform: translateY(6px); }
@@ -85,7 +85,7 @@
 .voidG[data-on] .voidFront { fill: rgba(197, 207, 166, 0.24); }
 .voidG[data-on] .voidSide { fill: rgba(197, 207, 166, 0.34); }
 .voidG:focus-visible .voidFront { stroke-width: 5; }
-.voidName { fill: #C5CFA6; font-family: var(--font-heading); font-size: 30px; font-style: italic; text-anchor: middle; }
+.voidName { fill: #C5CFA6; font-family: var(--font-heading); font-size: 34px; font-style: italic; text-anchor: middle; }
 
 /* pills: tensions and moments */
 .pillG { outline: none; cursor: default; }
@@ -99,23 +99,24 @@
   transition: fill var(--motion-fast) var(--ease-out), stroke var(--motion-fast) var(--ease-out);
 }
 
-.pillG text { fill: #F4F1EC; font-family: var(--font-heading); font-size: 28px; text-anchor: middle; }
-.pillG .pill2 { font-family: var(--font-body); font-size: 23px; }
+.pillG text { fill: #F4F1EC; font-family: var(--font-heading); font-size: 32px; text-anchor: middle; }
+.pillG .pill2 { font-family: var(--font-body); font-size: 27px; }
 .pillG[data-back] rect { stroke: rgba(244, 241, 236, 0.35); }
 .pillG[data-on] rect { fill: #F4F1EC; stroke: #F79C7E; stroke-width: 4; stroke-dasharray: none; }
 .pillG[data-on] text { fill: #2A2624; }
 .pillG:focus-visible rect { stroke-width: 6; }
 
-.say { fill: rgba(244, 241, 236, 0.85); font-family: var(--font-body); font-size: 24px; text-anchor: middle; }
+.say { fill: rgba(244, 241, 236, 0.85); font-family: var(--font-body); font-size: 28px; text-anchor: middle; }
 .say[data-on] { fill: #F4F1EC; }
 
 /* ── the footer, inside the frame ── */
 .foot {
-  min-height: 13.5rem;   /* steady across states, so the nav never jumps */
+  min-height: 15rem;   /* the tallest state, measured (FS281), so the nav never jumps */
   margin: 0 clamp(1rem, 2.5vw, 2rem);
   padding: 1.1rem 0 1.4rem;
   border-top: 1px solid rgba(244, 241, 236, 0.14);
   color: var(--color-ink);
+  container-type: inline-size;
 }
 
 .footIn { animation: foot-in 320ms var(--ease-out) both; }
@@ -176,7 +177,7 @@
   list-style: none;
 }
 
-@media (min-width: 800px) {
+@container (min-width: 600px) {
   .heard[data-n='2'] { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .heard[data-n='3'] { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
@@ -205,6 +206,10 @@
 
 .node[data-wait] { opacity: 0; transform: scale(0.9); }
 
+/* below ~1300px the map column narrows and the footer stacks: the
+   tallest stacked state measured 287px of content */
+@media (max-width: 1300px) { .foot { min-height: 20.5rem; } }
+
 /* FS271: every state fills the footer: statement left, evidence right */
 .fSplit {
   display: grid;
@@ -212,7 +217,7 @@
   gap: 1.25rem 2.5rem;
 }
 
-@media (min-width: 800px) {
+@container (min-width: 560px) {
   .fSplit { grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); }
 }
 
@@ -262,7 +267,7 @@
 /* FS270: the instruction, on the diagram */
 .hintG { pointer-events: none; animation: hint-in 500ms var(--ease-out) both; }
 .hintG rect { fill: var(--color-plum-soft); }
-.hintG text { fill: #23211F; font-family: var(--font-body); font-size: 26px; font-weight: 600; text-anchor: middle; }
+.hintG text { fill: #23211F; font-family: var(--font-body); font-size: 30px; font-weight: 600; text-anchor: middle; }
 .cursor path { fill: var(--color-plum-soft); stroke: #2A2624; stroke-width: 2.5; stroke-linejoin: round; }
 .cursor { animation: tap 2.2s var(--ease-in-out) infinite; }
 .ripple { fill: none; stroke: var(--color-plum-soft); stroke-width: 3; transform-box: fill-box; transform-origin: center; animation: ripple 2.2s var(--ease-out) infinite; }
