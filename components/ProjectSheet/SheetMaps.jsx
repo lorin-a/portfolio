@@ -91,7 +91,7 @@ const LINKS = [['sys', 'env', false], ['env', 'rec', true], ['rec', 'cul', true]
 
 const VIEWS = [
   { view: 'What we found', caption: '' },
-  { view: 'What we value', caption: 'Each theme became a value the work would hold. Point to a value to see the theme it answers.' },
+  { view: 'What we value', caption: 'Each theme became a value to guide the work. Point to a value to see the theme it answers.' },
   { view: 'What we built', caption: 'Each value became a component, met across a shift. Point to a moment or a component to trace its connections.' },
 ]
 

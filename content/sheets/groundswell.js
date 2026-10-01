@@ -107,7 +107,7 @@ export const groundswell = {
   system: {
     kicker: 'Synthesis',
     label: 'Mapping the System',
-    intro: 'The research pointed to a system, not a single problem, so we didn’t design a single intervention. We brought our strongest ideas together into one ecosystem, held by a shared narrative of culture change and working at several scales at once: practical support inside the workday, care beyond it, and the slower work of rebuilding relationships and communication across the unit.',
+    intro: 'The research pointed to a system, not a single problem, so we didn’t design a single intervention. We brought our strongest ideas together into one ecosystem, united by a shared narrative of culture change and working at several scales at once: practical support inside the workday, care beyond it, and the slower work of rebuilding relationships and communication across the unit.',
   },
 
   frame: {
