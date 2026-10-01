@@ -24,7 +24,13 @@ const CARDS = [
   {
     id: 'sense', verb: 'Sense', title: 'The biggest lesson',
     line: 'Honor the work already being done, and find ways to uplift\u00a0it.',
-    note: 'The “cold” email we set out to redesign was a senior staff member’s own innovation. We learned it when she broke down in tears during a content\u00a0review.',
+    /* FS168: bullets. The reframe is her case-study copy,
+       content/projects/groundswell.md:207. */
+    list: [
+      'The “cold” email we set out to redesign was a senior staff member’s own\u00a0innovation',
+      'We learned it when she broke down in tears during a content\u00a0review',
+      'We reframed from “the system has let you down” to “you have already created a beautiful culture of\u00a0care”',
+    ],
   },
   {
     /* FS167, her words (2026-10-01): “through this project I grew into a
@@ -51,7 +57,11 @@ const CARDS = [
     id: 'shape', verb: 'Shape', title: 'What changed',
     line: '“The most impactful thing I have witnessed in my time at\u00a0Magee.”',
     cite: 'Kendyl Grant, Director of Operations, Gynecologic Oncology, UPMC',
-    note: 'Clinical partners measured six validated scales before, during, and after the pilot. Results are held for\u00a0publication.',
+    list: [
+      'Clinical partners measured six validated scales: burnout, exhaustion, turnover intention, compassion fatigue, well-being, and perceived\u00a0support',
+      'Surveyed before, during, and after the\u00a0pilot',
+      'Results are held for\u00a0publication',
+    ],
   },
 ]
 
