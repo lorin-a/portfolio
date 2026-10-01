@@ -272,7 +272,10 @@ export const groundswell = {
                        cards, opening on the two most used. */
                     /* FS152: four cards, two contradicting pairs, alternating
                        so each next card answers the last. */
-                    deck: ['grateful', 'exhausted', 'joyful', 'heartbroken'],
+                    /* FS240: grateful and exhausted share a palette, so they sit
+                       opposite each other in the four-card cycle (never
+                       neighbours, even when the deck wraps). */
+                    deck: ['grateful', 'heartbroken', 'exhausted', 'joyful'],
                     note: 'Four of the nine reflection cards. Turn one over for its somatic exercise.' },
       },
       name: 'Groundswell Mindfulness Library',
@@ -341,7 +344,7 @@ export const groundswell = {
             caption: 'Six validated measures as small multiples on one scale, then the themes in staff’s written answers beside the data behind them. Values are blurred while the study is under review.' },
         ],
       },
-      name: 'The data dashboard',
+      name: 'The Data Dashboard',  /* FS239: title case, like the other four */
       /* FS225: her FS216 draft combined with the previous body and refined
          (her standing rule: use her draft, make it perfect). Sources kept:
          the previous body (see FS217 note history) and her draft, “we believe
@@ -483,7 +486,7 @@ export const groundswell = {
         /* FS190: makers and artists together; photography moves here */
         title: 'Art & Making',
         people: [
-          ['Carolyn Gavin', '“Blue Garden,” the artwork that threads through every component'],
+          ['Carolyn Gavin', 'Artwork, “Blue Garden”'],  /* FS237: plain, as she asked */
           ['Catherine Liggett & Mark Staley', 'Custom guided meditations and poetry'],
           ['Ryan Thompson', 'Walnut tabletop, from wood donated by Eleanor Mackie Pigma'],
           ['Kevin Lorenzi', 'Photography'],

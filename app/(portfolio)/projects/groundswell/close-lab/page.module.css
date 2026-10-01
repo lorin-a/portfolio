@@ -342,3 +342,27 @@
   color: var(--color-sage);
   font-style: italic;
 }
+
+/* ══ FS238 synthesis mockups ═══════════════════════════════════════════ */
+.synth, .pair {
+  margin: 0;
+  padding: 0.75rem;
+  border-radius: 3px;
+  background:
+    linear-gradient(135deg, rgba(197, 207, 166, 0.16) 5%, rgba(199, 170, 209, 0.13) 45%, rgba(247, 156, 126, 0.11) 88%),
+    rgba(28, 26, 30, 0.35);
+  box-shadow: inset 0 0 0 1px rgba(244, 241, 236, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.22), 0 18px 38px rgba(0, 0, 0, 0.3);
+}
+.synthHead { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.25rem 1rem; padding: 0.5rem 0.5rem 0.9rem; }
+.synthLabel { display: block; font-family: var(--font-body); font-size: var(--step-label); font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-sage); }
+.synthTitle { font-family: var(--font-heading); font-size: var(--step-body); color: var(--color-ink); }
+.synthMat { padding: clamp(1rem, 3vw, 2.5rem); border-radius: 2px; background: #f7efe9; }
+.synthMat img { display: block; width: 100%; height: auto; }
+.pair { display: grid; grid-template-columns: minmax(0, 1fr); gap: 0.75rem; align-items: center; }
+@media (min-width: 900px) { .pair { grid-template-columns: minmax(0, 1fr) 2rem minmax(0, 1fr); } }
+.pairItem { display: grid; gap: 0.6rem; }
+.pairItem .synthLabel { padding: 0.25rem 0.25rem 0; }
+.pairItem .synthMat { padding: 1rem; aspect-ratio: 16 / 10; display: grid; place-items: center; }
+.pairItem .synthMat img { max-height: 100%; object-fit: contain; }
+.pairArrow { width: 28px; height: 28px; justify-self: center; color: var(--color-sage); }
+@media (max-width: 899px) { .pairArrow { transform: rotate(90deg); } }

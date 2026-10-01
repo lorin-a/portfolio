@@ -3,6 +3,7 @@ import s from './page.module.css'
 import DarkTheme from './DarkTheme'
 import Triptych from './Triptych'
 import MotionLibrary from '@/components/ProjectSheet/SheetMotionLibrary'
+import ResearchStage from './ResearchStage'
 import { groundswell } from '@/content/sheets/groundswell'
 
 /* FS171 LAB (2026-10-01): the reflection, edited to what earns its place.
@@ -89,7 +90,44 @@ export default function CloseLab() {
   return (
     <div className={`${sheet.inner} ${s.page}`}>
       <DarkTheme />
-      <p className={s.kicker}>Groundswell · FS230 lab · private</p>
+      <p className={s.kicker}>Groundswell · FS238 lab · private</p>
+
+      {/* FS238 mockups: the synthesis artifacts */}
+      <section className={s.variant}>
+        <h2 className={s.labH}>1 · Recommended: the ecosystem map, before the components</h2>
+        <p className={s.labNote}>On brand already (the plum circles match the dashboard). Sits between the three-column row and component 01, as the map of what follows. Answers “why an ecosystem” at a glance.</p>
+        <figure className={s.synth}>
+          <figcaption className={s.synthHead}>
+            <span className={s.synthLabel}>The ecosystem</span>
+            <span className={s.synthTitle}>Four components, met at every point in the workday</span>
+          </figcaption>
+          <div className={s.synthMat}><img src="/images/groundswell/gs-ecosystem-diagram-purple.svg" alt="Ecosystem map: the CTB email, the pod, the Garden art wall, and the reflection cards, each linked to the moments of a shift, from arriving at work to taking a break to leaving." /></div>
+        </figure>
+      </section>
+
+      <section className={s.variant}>
+        <h2 className={s.labH}>2 · Recommended: the synthesis map, first in Behind the scenes</h2>
+        <p className={s.labNote}>A still exported from the Figma board (not an embed). Off brand, but that reads as honest working material inside Behind the scenes, beside the affinity-mapping photos. Opens full screen to read.</p>
+        <div style={{ maxWidth: '54rem' }}>
+          <ResearchStage />
+        </div>
+      </section>
+
+      <section className={s.variant}>
+        <h2 className={s.labH}>3 · Alternative: research to design, as a pair</h2>
+        <p className={s.labNote}>Both artifacts side by side, one glass frame: what the research found, then what was designed in answer. Stronger story, more space.</p>
+        <figure className={s.pair}>
+          <div className={s.pairItem}>
+            <span className={s.synthLabel}>What the research found</span>
+            <div className={s.synthMat}><img src="/images/groundswell/synthesis-void-map.jpg" alt="Research synthesis map: four themes around The Void." /></div>
+          </div>
+          <svg className={s.pairArrow} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M4 12h16M14 6l6 6-6 6" /></svg>
+          <div className={s.pairItem}>
+            <span className={s.synthLabel}>What was designed in answer</span>
+            <div className={s.synthMat}><img src="/images/groundswell/gs-ecosystem-diagram-purple.svg" alt="Ecosystem map of the four components across a workday." /></div>
+          </div>
+        </figure>
+      </section>
 
       {[['flow', 'The dashboard player (shipped)']].map(([nav, name]) => (
         <section key={nav} className={s.variant} style={{ maxWidth: '54rem' }}>

@@ -1,14 +1,22 @@
 # Project Status
 
-## ▶ RESUME HERE (2026-10-01, session close)
+## ▶ RESUME HERE (2026-10-01, evening: she stepped away)
 
-**What we're doing: THE GROUNDSWELL FOLDER SHEET, near final.** Branch `feat/folder-expand`,
+**What we're doing: THE GROUNDSWELL FOLDER SHEET, final touches.** Branch `feat/folder-expand`,
 pushed to the PRIVATE mirror only (`git push private feat/folder-expand`; `origin` is public).
 See it: `npm run dev -- -p 3005`, scroll to Groundswell, **Open project** (hard-refresh).
-Ledger FS20–FS241 below. Final-touches round open from FS156.
+Ledger now runs FS20–FS241.
 
-**Next move (updated 2026-10-01):** the reflection is live in the sheet (FS186). Then: Lorin's final touches (her words: "I will make final touches tomorrow"). Take
-her notes one at a time, ledger-first.
+**Waiting on her when she returns:** FS238, the synthesis mockups in the lab
+(`/projects/groundswell/close-lab`, gate password): (1) ecosystem map before the components,
+(2) Figma synthesis map as the first Research slide, (3) the two as a pair. Claude recommends 1 + 2.
+Also open: FS157 (Close pill overlaps text), survey quotes readable in the dashboard's
+"Over time" clip (FS224/FS116), Kendyl's spreadsheet quote (not on file), $30k vs $40k.
+
+**Today's big pieces (all live in the sheet):** the reflection (Sense · Weave · Shape cards),
+acknowledgements as a 3 × 3, the dashboard as a glass player with a chevron user-flow track
+(clips in public/video/gs-dashboard, re-recordable with the scripts noted in FS213/FS221).
+Standing copy rule (project memory DECISIONS.md): her draft is the source; Claude refines it.
 
 **Shipped (as of today):**
 - Cover: glass loose-leaf sheet with the name, fitted tagline and facts on its rules (Context,
@@ -261,12 +269,12 @@ funding, captions, card note).
 | FS233 | "This is getting closer but reads novice, scattered design lacks sophistication but inside the glass is good, user flow concept is good. lets get rid of the extra context copy at the bottom keep it high level overview we may not even need labels on the arrows. but it needs to look balanced, play with the shapes, layout of the content in the bottom section, make this senior level brilliant. Ensure user knows to engage with the interaction" (2026-10-01) | ✅ SHIPPED: bottom section reduced to one shape: a single interlocking chevron track (the UX-flow arrow form), four equal steps, rounded ends, icon + view name in each; steps deepen in tone left to right so the track itself reads deeper; the active step fills sage and a lighter band sweeps across it as the clip plays. Caption copy and arrow labels removed (each step’s audience + caption kept for screen readers). Engagement cue: “Select a view” with the pointing hand above the track, plus hover states. Phones: icon over name inside each chevron. Also: another edit left a stray JSX fragment that broke the build for about a minute; fixed and re-verified (200, plays at 1440 / 390 / reduced motion) |
 | FS234 | "well done. use regular body typeface for button labels. on select a view, use down arrow or carrot rather than pointer finger." (2026-10-01) | ✅ SHIPPED: step labels in the body face (Open Sans, regular); the “Select a view” cue ends with a down ARROW (her follow-up: “use arrow not carrot, carrot looks like drop down menu button”) |
 | FS235 | "this is ready to be integrated to main page" (2026-10-01) | ✅ It already runs in the homepage’s Groundswell folder; finished the integration by removing the abandoned nav variants (toggle, chapters, ladder, arrows) from the component and CSS so only the shipped chevron track remains; lab page now shows only it. Not merged to the main branch: the site hold + private-branch rules stand |
-| FS236 | "This is so close to finished. Ensure our progress is saved." (2026-10-01; she stepped away) | ⏳ IN PROGRESS |
-| FS237 | "This is to AI poetic just be straight forward that this is the artwork \"the artwork that threads through every component\"." (2026-10-01; she stepped away) | ⏳ IN PROGRESS |
-| FS238 | "The last thing I think this might need is the ecosystem map and official tetrahedron which I realize are not in Cloudinary, the void lives on this figma board we could embed? https://www.figma.com/design/qmXOejgmdOtExNJVkXRvT8/Groundswell-Synthesis?node-id=0-1 perhaps behind the scenes could show the figma? You can push back on this if you feel it does not belong. In some ways the figma map looks out of place because it is off brand but it also shows research synthesis and diagramming...I have to step away so first only make a recommendation if you are saying yes to including something, mock it up for me to see when I return. If something is not certain show my examples in the lab of how it could be integrated." (2026-10-01; she stepped away) | ⏳ IN PROGRESS |
-| FS239 | "oh and Data Dashboard header needs to be case sensitive." (2026-10-01; she stepped away) | ⏳ IN PROGRESS |
-| FS240 | "Also reorder flip cards so grateful and exhausted are not next to one another -- their color scheme is too similar." (2026-10-01; she stepped away) | ⏳ IN PROGRESS |
-| FS241 | "Add a visual que to play the poem on the digital library - previously you did a ring that animated that worked." (2026-10-01; she stepped away) | ⏳ IN PROGRESS |
+| FS236 | "This is so close to finished. Ensure our progress is saved." (2026-10-01; she stepped away) | ✅ SAVED: every change committed and pushed to the private mirror (feat/folder-expand); resume block updated |
+| FS237 | "This is to AI poetic just be straight forward that this is the artwork \"the artwork that threads through every component\"." (2026-10-01; she stepped away) | ✅ SHIPPED: Carolyn Gavin’s credit now reads “Artwork, “Blue Garden”” |
+| FS238 | "The last thing I think this might need is the ecosystem map and official tetrahedron which I realize are not in Cloudinary, the void lives on this figma board we could embed? https://www.figma.com/design/qmXOejgmdOtExNJVkXRvT8/Groundswell-Synthesis?node-id=0-1 perhaps behind the scenes could show the figma? You can push back on this if you feel it does not belong. In some ways the figma map looks out of place because it is off brand but it also shows research synthesis and diagramming...I have to step away so first only make a recommendation if you are saying yes to including something, mock it up for me to see when I return. If something is not certain show my examples in the lab of how it could be integrated." (2026-10-01; she stepped away) | 💬 RECOMMENDED + MOCKED in the lab (/projects/groundswell/close-lab, top three sections), awaiting her pick. Found: the Figma board holds ONE map, the tetrahedron synthesis (Recognition · Environment · Culture · Systemic Issues around The Void, with staff quotes); the ECOSYSTEM map is already in the repo, on brand (public/images/groundswell/gs-ecosystem-diagram-purple.svg, from the old case study). Recommendation: YES to both, as stills, NOT a Figma embed (an embed needs the whole board shared publicly, staff quotes included, is heavy, scroll-traps, and brings Figma’s chrome). (1) Ecosystem map before component 01, framed on a cream mat in glass: “Four components, met at every point in the workday”. (2) Synthesis map exported from Figma (public/images/groundswell/synthesis-void-map.jpg, 2400px) as the FIRST slide of the Research gallery in Behind the scenes, where off-brand working material reads as honest. (3) Alternative: both as a research → design pair in one frame |
+| FS239 | "oh and Data Dashboard header needs to be case sensitive." (2026-10-01; she stepped away) | ✅ SHIPPED: “The Data Dashboard” |
+| FS240 | "Also reorder flip cards so grateful and exhausted are not next to one another -- their color scheme is too similar." (2026-10-01; she stepped away) | ✅ SHIPPED: deck order grateful · heartbroken · exhausted · joyful (grateful and exhausted opposite each other in the four-card cycle, so never neighbours even when the fan wraps) |
+| FS241 | "Add a visual que to play the poem on the digital library - previously you did a ring that animated that worked." (2026-10-01; she stepped away) | ✅ SHIPPED: the round-three breathing ring is back on the poem’s play button (stops while playing; static ring under reduced motion) |
 =======
 | FS193 | "i need this to look 50% neater, better orgnanized and simple" (2026-10-01), read as the Acknowledgements | ⏳ IN PROGRESS |
 >>>>>>> parent of f51f3e4 (feat(sheet): acknowledgements in one format: name over one-line role, three labelled lines (FS193))
