@@ -1,0 +1,96 @@
+/* FS249: three maps in one container: the chevron track on top (the
+   dashboard player's system), a cream stage, one caption. */
+
+.maps { margin: 0; }
+
+.top { margin-bottom: 0.75rem; }
+
+.stage {
+  position: relative;
+  border-radius: 2px;
+  background: #F8EBE5;
+}
+
+.open {
+  display: block;
+  width: 100%;
+  padding: clamp(1rem, 2.5vw, 2rem);
+  border: 0;
+  background: none;
+  cursor: zoom-in;
+  aspect-ratio: 1736 / 1080;
+}
+
+.open:focus-visible { outline: 2px solid var(--color-sage); outline-offset: 2px; border-radius: 2px; }
+
+.svg,
+.img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.enlarge {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(85, 77, 101, 0.1);
+  color: #554D65;
+  pointer-events: none;
+}
+
+.enlarge svg { width: 13px; height: 13px; fill: none; stroke: currentColor; stroke-width: 1.6; }
+
+.caption {
+  margin: 0.85rem 0.5rem 0.25rem;
+  font-family: var(--font-body);
+  font-size: var(--step-small);
+  line-height: 1.6;
+  color: var(--color-ink);
+  text-wrap: pretty;
+}
+
+/* the synthesis, in her diagram's type */
+.theme { font-family: var(--font-heading); font-size: 30px; text-anchor: middle; }
+.thesis { font-family: var(--font-heading); font-size: 32px; text-anchor: middle; }
+.voidKicker { font-family: var(--font-body); font-size: 22px; letter-spacing: 0.14em; text-transform: uppercase; text-anchor: middle; }
+.pill { font-family: var(--font-heading); font-size: 28px; text-anchor: middle; }
+.voice { font-family: var(--font-body); font-size: 24px; }
+
+/* full screen */
+.dialog {
+  width: min(96vw, 155vh);
+  max-width: none;
+  max-height: 96vh;
+  padding: 3rem 2rem 2rem;
+  border: 0;
+  border-radius: 4px;
+  background: #F8EBE5;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
+}
+
+.dialog::backdrop { background: rgba(10, 9, 12, 0.78); }
+
+.close {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(85, 77, 101, 0.1);
+  color: #554D65;
+  cursor: pointer;
+}
+
+.close svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 1.8; }
+.close:focus-visible { outline: 2px solid #554D65; outline-offset: 2px; }
