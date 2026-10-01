@@ -328,28 +328,27 @@ export const groundswell = {
            silent loops recorded from the live dashboard, each a different
            meeting of qual and quant, numbers frosted throughout. The
            blurred recordings below stay as the fallback record. */
-        /* FS217–FS220: four views recorded to match their depth, each cut
-           at the first frame its visualization draws. Her thesis moved to
-           the rail (the component body, FS217). Captions are drafts. */
+        /* FS221–FS225: each view recorded from its first frame of drawing,
+           showing every interaction she named. Captions refined (FS225). */
         motion: [
-          { view: 'At a glance', audience: 'For everyone', duration: 7.4, src: '/video/gs-dashboard/view-glance.mp4', poster: '/video/gs-dashboard/view-glance.jpg',
-            caption: 'Each emotion blooms as a watercolor, sized by how often staff chose it: an overview with no chart to\u00a0decode.' },
-          { view: 'With a tap', audience: 'For the curious', duration: 6.0, src: '/video/gs-dashboard/view-tap.mp4', poster: '/video/gs-dashboard/view-tap.jpg',
-            caption: 'One tap opens the handwritten words behind a count, so no number stands apart from the people who made\u00a0it.' },
-          { view: 'In depth', audience: 'For researchers and administrators', duration: 9.1, src: '/video/gs-dashboard/view-depth.mp4', poster: '/video/gs-dashboard/view-depth.jpg',
-            caption: 'A traditional timeline of pod use; toggling session lengths isolates how staff actually used the\u00a0space.' },
-          { view: 'Over time', audience: 'For researchers and administrators', duration: 6.0, src: '/video/gs-dashboard/view-time.mp4', poster: '/video/gs-dashboard/view-time.jpg',
-            caption: 'Six validated measures drawn as small multiples on one scale, values blurred while the study is under\u00a0review.' },
+          { view: 'At a glance', audience: 'For everyone', duration: 9.6, src: '/video/gs-dashboard/view-glance.mp4', poster: '/video/gs-dashboard/view-glance.jpg',
+            caption: 'Emotions bloom onto the screen as watercolors, each sized by how often staff chose it, and can be dragged into new arrangements. There is no chart to decode.' },
+          { view: 'With a tap', audience: 'For the curious', duration: 12.5, src: '/video/gs-dashboard/view-tap.mp4', poster: '/video/gs-dashboard/view-tap.jpg',
+            caption: 'Every count opens into the handwritten responses behind it, and any single response can be read up close.' },
+          { view: 'In depth', audience: 'For researchers and administrators', duration: 14.5, src: '/video/gs-dashboard/view-depth.mp4', poster: '/video/gs-dashboard/view-depth.jpg',
+            caption: 'Pod use as a summary and a timeline: tap a session length for its breakdown, or isolate one across nine months.' },
+          { view: 'Over time', audience: 'For researchers and administrators', duration: 10.2, src: '/video/gs-dashboard/view-time.mp4', poster: '/video/gs-dashboard/view-time.jpg',
+            caption: 'Six validated measures as small multiples on one scale, then the themes in staff’s written answers beside the data behind them. Values are blurred while the study is under review.' },
         ],
       },
       name: 'The data dashboard',
-      /* FS217: her thesis (FS216, her words lightly edited) moves here from
-         above the player. The previous body, kept: "An interactive platform
-         that turns the data collected from each component into an immersive
-         story, translating lived experience into actionable metrics. It
-         brings qualitative and quantitative findings together in one place
-         to tell a well-rounded story." */
-      body: 'Data are stories, and when qualitative and quantitative work together they tell a more holistic one. The dashboard deepens with engagement to serve every stakeholder: an overview at first glance, details on interaction, and traditional charts for scientific minds and the public\u00a0alike.',
+      /* FS225: her FS216 draft combined with the previous body and refined
+         (her standing rule: use her draft, make it perfect). Sources kept:
+         the previous body (see FS217 note history) and her draft, “we believe
+         data are stories and that when qual and quant work together they
+         tell a more holistic story… designed to increase details with deeper
+         engagement and serve multiple stakeholders…” */
+      body: 'Built on the belief that data are stories, the dashboard gathers what every component collected into one interactive account, where qualitative voices and quantitative measures read together. It deepens with engagement: an overview anyone can grasp at first glance, the people behind each number on interaction, and traditional charts for the researchers and administrators who need the evidence.',
       /* FS140, PROVISIONAL: her notes, phrased from the dashboard repo
          (~/Desktop/groundswell-digital-wall-with-admin, 226 commits,
          2026-01-21 → 2026-07-22). Verified terms: Next.js/React on Vercel,
