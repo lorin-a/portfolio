@@ -328,24 +328,22 @@ export const groundswell = {
            silent loops recorded from the live dashboard, each a different
            meeting of qual and quant, numbers frosted throughout. The
            blurred recordings below stay as the fallback record. */
+        /* FS215: ordered by her own framework, the three registers, from the
+           dashboard's design doc (groundswell-digital-wall-with-admin/
+           CLAUDE.md): “Surface (The Story): What everyone receives with zero
+           interaction… Structure (The Pattern): The same marks reorganize
+           into readable charts and timelines… Substance (The Evidence): Full
+           data provenance on interaction.” Purposes drafted, hers to edit. */
+        motionIntro: 'Every data moment works at three levels at once: the story anyone can feel, the pattern an analyst can read, and the evidence behind\u00a0both.',
         motion: [
-        { kind: 'Quant → Qual', title: 'Size, then stories', src: '/video/gs-dashboard/1-size-to-stories.mp4', poster: '/video/gs-dashboard/1-size-to-stories.jpg',
-          text: 'Each emotion is sized by how often staff chose it. Tap one to read the handwritten tags behind the\u00a0count.' },
-        { kind: 'Quant', title: 'Filter the patterns', src: '/video/gs-dashboard/2-filter-the-patterns.mp4', poster: '/video/gs-dashboard/2-filter-the-patterns.jpg',
-          text: 'Nine months of pod sessions by length. Toggle the bands to see how staff actually used the\u00a0space.' },
-        { kind: 'Quant, over time', title: 'How six measures moved', src: '/video/gs-dashboard/3-words-and-data.mp4', poster: '/video/gs-dashboard/3-words-and-data.jpg',
-          text: 'Six validated scales, surveyed three times across the pilot, drawn as small multiples. Values are blurred while the study is under\u00a0review.' },
-        { kind: 'Qual, by touch', title: 'Arrange the feelings', src: '/video/gs-dashboard/4-arrange-the-feelings.mp4', poster: '/video/gs-dashboard/4-arrange-the-feelings.jpg',
-          text: 'On the unit’s display, staff drag the emotions and open them to read each\u00a0other’s\u00a0words.' },
-      ],
-        lead:    { type: 'video', key: 'gs-intro-artwall', blur: true, alt: 'The data dashboard’s opening screen.' },
-        also:    [
-          { type: 'video', key: 'gs-display-view', blur: 5, alt: 'The art wall view: each emotion as a painted bubble, sized by how often it was chosen.' },
-          { type: 'video', key: 'gs-pod-data', blur: true, alt: 'The pod view: minutes of use by month.' },
-          { type: 'video', key: 'gs-new-meditations', blur: true, alt: 'The mindfulness library view: listens for each meditation.' },
-          /* FS201: the staff surveys view. Survey results are study data
-             (FS116), so it blurs at the art wall's stronger 5px */
-          { type: 'video', key: 'gs-surveys-view', blur: 5, alt: 'The staff surveys view in the interactive data dashboard.' },
+          { register: 'Surface', title: 'Arrange the feelings', duration: 13.3, src: '/video/gs-dashboard/4-arrange-the-feelings.mp4', poster: '/video/gs-dashboard/4-arrange-the-feelings.jpg',
+            purpose: 'The story, with zero interaction required. On the unit’s display, staff meet each emotion as watercolor and move it by touch; there is no chart to decode, so anyone passing can take it\u00a0in.' },
+          { register: 'Structure', title: 'Filter the patterns', duration: 18.5, src: '/video/gs-dashboard/2-filter-the-patterns.mp4', poster: '/video/gs-dashboard/2-filter-the-patterns.jpg',
+            purpose: 'The same data, reorganized into a pattern. Toggling session lengths lets an administrator isolate how staff actually used the pod, without leaving the\u00a0timeline.' },
+          { register: 'Structure', title: 'How six measures moved', duration: 14.3, src: '/video/gs-dashboard/3-words-and-data.mp4', poster: '/video/gs-dashboard/3-words-and-data.jpg',
+            purpose: 'Six measures as small multiples on one shared scale, so change reads across all of them at a glance. Values are blurred while the study is under\u00a0review.' },
+          { register: 'Substance', title: 'Size, then stories', duration: 17.9, src: '/video/gs-dashboard/1-size-to-stories.mp4', poster: '/video/gs-dashboard/1-size-to-stories.jpg',
+            purpose: 'The evidence, one tap away. Each circle is sized by count, and a tap opens the handwritten words behind the number, so no figure stands apart from the people who made\u00a0it.' },
         ],
       },
       name: 'The data dashboard',
