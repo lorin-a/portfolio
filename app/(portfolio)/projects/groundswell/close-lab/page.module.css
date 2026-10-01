@@ -1,440 +1,158 @@
-/* FS160 lab. Consumes the sheet system (ProjectSheet .inner tokens):
-   six type steps, the 12-column grid, the flow values, the glass. */
+/* FS164 + FS165 lab: the About practice card, carried into the sheet.
+   Same border, same painted mark, same accent names; the sheet's own
+   type steps and grid. */
 
 .page {
   padding-top: 8rem;
   color: var(--color-ink);
 }
 
-.head {
-  max-width: 52rem;
-  margin-bottom: var(--flow-4);
+.kicker {
+  margin: 0 0 var(--flow-3);
+  font-family: var(--font-body);
+  font-size: var(--step-label);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.7;
 }
 
-.kicker,
-.label {
-  margin: 0 0 var(--flow-1);
+.close {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--gap-col);
+}
+
+@media (min-width: 900px) {
+  .close { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 0;
+  padding: var(--flow-3) var(--flow-2) var(--flow-2);
+  text-align: center;
+  background:
+    linear-gradient(var(--color-cream), var(--color-cream)) padding-box,
+    linear-gradient(135deg,
+      var(--color-sage-soft) 5%,
+      var(--color-plum-soft) 50%,
+      var(--color-terracotta-soft) 92%) border-box;
+  border: 2px solid transparent;
+  border-radius: var(--radius-lg);
+}
+
+.card[data-practice='sense'] { --accent: var(--color-sage-soft); }
+.card[data-practice='weave'] { --accent: var(--color-plum-soft); }
+.card[data-practice='shape'] { --accent: var(--color-terracotta-soft); }
+
+.mark {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 84px;
+  height: 84px;
+  margin-bottom: var(--flow-2);
+}
+
+.verb {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: clamp(1.25rem, 1.8vw, 1.5rem);
+  font-variation-settings: 'SOFT' 50, 'WONK' 0;
+  line-height: 1.2;
+  color: var(--accent);
+}
+
+.title {
+  margin: 0.35rem 0 var(--flow-2);
   font-family: var(--font-body);
   font-size: var(--step-label);
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--color-sage);
-}
-
-.h1 {
-  margin: 0 0 var(--flow-2);
   color: var(--color-ink);
-  font-family: var(--font-heading);
-  font-size: var(--step-heading);
-  font-weight: 400;
 }
 
-.intro,
-.optionNote {
+.line {
+  max-width: 22ch;
   margin: 0;
-  font-family: var(--font-body);
-  font-size: var(--step-small);
-  line-height: 1.65;
-  text-wrap: pretty;
-}
-
-.option {
-  padding-top: var(--flow-3);
-  margin-bottom: var(--flow-4);
-  border-top: 1px solid;
-  border-image: var(--rule-grad) 1;
-}
-
-.optionHead {
-  display: grid;
-  grid-template-columns: var(--grid);
-  gap: var(--gap-col);
-  margin-bottom: var(--flow-3);
-}
-
-.h2 {
-  grid-column: span 4;
-  margin: 0;
-  color: var(--color-ink);
-  font-family: var(--font-heading);
-  font-size: var(--step-statement);
-  font-weight: 400;
-}
-
-.optionNote {
-  grid-column: span 8;
-  max-width: 46rem;
-}
-
-/* ══ THE SHARED ANATOMY ═══════════════════════════════════════════════
-   Five rows: label · figure · statement · support · source. Each card is
-   a subgrid over the row's five tracks, so every slot lines up across
-   the three columns whatever its length. */
-
-.row {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  grid-template-rows: auto 15.5rem auto auto 1fr;
-  column-gap: var(--gap-col);
-}
-
-.card {
-  display: grid;
-  grid-row: span 5;
-  grid-template-rows: subgrid;
-  row-gap: 0;
-  min-width: 0;
-}
-
-.card .label { margin-bottom: var(--flow-2); }
-
-.slotFig {
-  display: flex;
-  align-items: center;
-  min-height: 0;
-  margin-bottom: var(--flow-2);
-}
-
-.statement {
-  margin: 0 0 var(--flow-1);
-  color: var(--color-ink);
   font-family: var(--font-heading);
   font-size: var(--step-statement);
   line-height: 1.3;
+  color: var(--color-ink);
   text-wrap: balance;
 }
 
-.support {
-  margin: 0 0 var(--flow-2);
-  font-family: var(--font-body);
-  font-size: var(--step-small);
-  line-height: 1.6;
-  text-wrap: pretty;
-}
-
-.source {
-  align-self: end;
-  margin: 0;
-  padding-top: var(--flow-1);
+.cite {
+  max-width: 28ch;
+  margin: var(--flow-1) 0 0;
   font-family: var(--font-body);
   font-size: var(--step-label);
   line-height: 1.5;
   opacity: 0.85;
-  text-wrap: pretty;
-}
-
-.source::before {
-  content: '';
-  display: block;
-  width: 1.5rem;
-  height: 1px;
-  margin-bottom: 0.6rem;
-  background: var(--color-sage);
-}
-
-/* ══ A · glass cards (the sheet's own glass) ═════════════════════════ */
-
-.cardA {
-  padding: var(--flow-2);
-  border-radius: 3px;
-  background:
-    linear-gradient(135deg,
-      rgba(197, 207, 166, 0.16) 5%,
-      rgba(199, 170, 209, 0.13) 45%,
-      rgba(247, 156, 126, 0.11) 88%),
-    rgba(28, 26, 30, 0.35);
-  box-shadow:
-    inset 0 0 0 1px rgba(244, 241, 236, 0.2),
-    inset 0 1px 0 rgba(255, 255, 255, 0.22),
-    0 18px 38px rgba(0, 0, 0, 0.3);
-}
-
-/* ══ B · one field ════════════════════════════════════════════════════ */
-
-.rowB {
-  padding: var(--flow-3) var(--flow-2);
-  background:
-    linear-gradient(135deg,
-      rgba(197, 207, 166, 0.1) 5%,
-      rgba(199, 170, 209, 0.08) 50%,
-      rgba(247, 156, 126, 0.07) 95%);
-  border-radius: 3px;
-}
-
-.cardB + .cardB {
-  position: relative;
-}
-
-.cardB + .cardB::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: calc(var(--gap-col) / -2);
-  width: 1px;
-  background: var(--sheet-hair);
-}
-
-/* ══ C · statements first, figures as a shared band ═══════════════════ */
-
-.rowC {
-  grid-template-rows: auto auto auto 1fr auto;
-}
-
-.cardC .statement {
-  font-size: clamp(1.5rem, 2vw, 1.875rem);
-  line-height: 1.25;
-  margin-bottom: var(--flow-2);
-}
-
-.cardC .source { align-self: start; margin-bottom: var(--flow-3); }
-
-.cardC .slotFig {
-  align-items: flex-start;
-  margin: 0;
-  padding-top: var(--flow-2);
-  border-top: 1px solid var(--sheet-hair);
-}
-
-/* ══ D · the lesson leads ═════════════════════════════════════════════ */
-
-.lead {
-  display: grid;
-  grid-template-columns: var(--grid);
-  gap: var(--gap-col);
-  align-items: center;
-  margin-bottom: var(--gap-col);
-  padding: var(--flow-3);
-  border-radius: 3px;
-  background:
-    linear-gradient(135deg,
-      rgba(197, 207, 166, 0.16) 5%,
-      rgba(199, 170, 209, 0.13) 45%,
-      rgba(247, 156, 126, 0.11) 88%),
-    rgba(28, 26, 30, 0.35);
-  box-shadow:
-    inset 0 0 0 1px rgba(244, 241, 236, 0.2),
-    inset 0 1px 0 rgba(255, 255, 255, 0.22),
-    0 18px 38px rgba(0, 0, 0, 0.3);
-}
-
-.leadText { grid-column: span 7; }
-.leadFig { grid-column: span 5; }
-
-.leadStatement {
-  margin: 0 0 var(--flow-2);
-  color: var(--color-ink);
-  font-family: var(--font-heading);
-  font-size: clamp(1.75rem, 2.6vw, 2.5rem);
-  line-height: 1.2;
   text-wrap: balance;
 }
 
-.rowDPair {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-}
-
-/* ══ FIGURES — one grammar: ink lines and labels, sage = her work / the
-   change. Nothing else is coloured. ════════════════════════════════════ */
-
-.fig {
-  width: 100%;
-  margin: 0;
-}
-
-/* the study */
-.studyAxis {
-  position: relative;
-  display: flex;
-  justify-content: space-between;
-}
-
-.studyAxis::before {
-  content: '';
-  position: absolute;
-  left: 0.5rem;
-  right: 0.5rem;
-  top: 0.5rem;
-  height: 1px;
-  background: var(--color-ink);
-  opacity: 0.5;
-}
-
-.studyNode {
-  position: relative;
-  display: grid;
-  justify-items: center;
-  gap: 0.5rem;
+.toggle {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  margin-top: auto;
+  padding: var(--flow-2) 0.25rem 0;
+  border: 0;
+  background: none;
   font-family: var(--font-body);
   font-size: var(--step-label);
-}
-
-.studyNode i {
-  width: 1rem;
-  height: 1rem;
-  border-radius: 50%;
-  border: 1.5px solid var(--color-sage);
-  background: var(--sheet-mat, #2a2a2a);
-}
-
-.studyNode b { font-weight: 600; }
-
-.studyEnds {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 0.25rem;
-  font-family: var(--font-body);
-  font-size: 0.75rem;
-  opacity: 0.75;
-}
-
-.scales {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0.35rem 0.75rem;
-  margin: var(--flow-2) 0 0;
-  padding: 0;
-  list-style: none;
-  font-family: var(--font-body);
-  font-size: 0.8125rem;
-  line-height: 1.3;
-}
-
-.scales li {
-  padding-left: 0.6rem;
-  border-left: 2px solid var(--color-sage);
-}
-
-/* the contribution map */
-.map {
-  display: grid;
-  grid-template-columns: 6.5rem repeat(5, minmax(0, 1fr));
-  align-items: center;
-  row-gap: 0.45rem;
-  font-family: var(--font-body);
-  font-size: 0.75rem;
-}
-
-.mapLine { display: contents; }
-
-.mapCol {
-  text-align: center;
-  font-weight: 600;
-  padding-bottom: 0.25rem;
-}
-
-.mapLedCol { color: var(--color-sage); }
-
-.mapRow { font-size: 0.8125rem; }
-
-.mapBand {
-  grid-column: 2 / -1;
-  padding: 0.2rem 0;
-  text-align: center;
-  font-size: 0.75rem;
-  border-radius: 2px;
-  background: color-mix(in srgb, var(--color-sage) 22%, transparent);
-}
-
-.mapCell {
-  display: grid;
-  place-items: center;
-  height: 1.25rem;
-  border-bottom: 1px solid var(--sheet-hair);
-}
-
-.dot {
-  display: inline-block;
-  width: 0.625rem;
-  height: 0.625rem;
-  border-radius: 50%;
-  background: var(--color-sage);
-  vertical-align: middle;
-}
-
-.dotLed {
-  width: 1rem;
-  height: 1rem;
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-sage) 30%, transparent);
-}
-
-.mapKey {
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
-  margin-top: 0.75rem;
-  font-family: var(--font-body);
-  font-size: 0.75rem;
-}
-
-.mapKey { gap: 1.25rem; }
-.mapKey span { display: inline-flex; align-items: center; gap: 0.4rem; }
-
-/* from → to */
-.shift {
-  display: grid;
-  justify-items: start;
-  gap: 0.5rem;
-  font-family: var(--font-heading);
-}
-
-.from,
-.to {
-  display: grid;
-  gap: 0.2rem;
-  width: 100%;
-  padding: 0.75rem 1rem;
-  border-radius: 2px;
-}
-
-.from b,
-.to b {
-  font-family: var(--font-body);
-  font-size: 0.75rem;
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
+  color: var(--accent);
+  cursor: pointer;
 }
 
-.from {
-  border: 1px dashed var(--sheet-hair);
-  opacity: 0.75;
-  font-size: 1rem;
+.toggle::after { content: '+'; margin-left: 0.5rem; font-weight: 400; }
+.card[data-open] .toggle::after { content: '−'; }
+
+.toggle:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
 }
 
-.to {
-  background: color-mix(in srgb, var(--color-sage) 22%, transparent);
-  font-size: 1.125rem;
+.panel {
+  margin-top: var(--gap-col);
+  padding: var(--flow-3);
+  border: 2px solid var(--accent);
+  border-radius: var(--radius-lg);
 }
 
-.to b { color: var(--color-sage); }
+.panel[data-practice='sense'] { --accent: var(--color-sage-soft); }
+.panel[data-practice='weave'] { --accent: var(--color-plum-soft); }
+.panel[data-practice='shape'] { --accent: var(--color-terracotta-soft); }
 
-.arrow {
-  width: 1rem;
-  height: 1.25rem;
-  margin-left: 1rem;
-  color: var(--color-sage);
+.panelHead {
+  margin: 0 0 var(--flow-2);
+  font-family: var(--font-body);
+  font-size: var(--step-label);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
 }
 
-/* ══ Below 900px: one column, slots stacked ═══════════════════════════ */
-@media (max-width: 899px) {
-  .optionHead,
-  .lead { grid-template-columns: minmax(0, 1fr); }
-  .h2, .optionNote, .leadText, .leadFig { grid-column: auto; }
+.panelText {
+  columns: 2 22rem;
+  column-gap: var(--gap-col);
+}
 
-  .row,
-  .rowDPair {
-    grid-template-columns: minmax(0, 1fr);
-    grid-template-rows: none;
-    row-gap: var(--flow-3);
-  }
-
-  .card {
-    grid-row: auto;
-    grid-template-rows: none;
-  }
-
-  .slotFig { min-height: 0; }
-  .cardB + .cardB::before { display: none; }
+.panelText p {
+  margin: 0 0 1rem;
+  font-family: var(--font-body);
+  font-size: var(--step-body);
+  line-height: 1.65;
+  color: var(--color-ink);
+  text-wrap: pretty;
+  break-inside: avoid-column;
 }
