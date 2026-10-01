@@ -5,7 +5,7 @@
 **What we're doing: THE GROUNDSWELL FOLDER SHEET, near final.** Branch `feat/folder-expand`,
 pushed to the PRIVATE mirror only (`git push private feat/folder-expand`; `origin` is public).
 See it: `npm run dev -- -p 3005`, scroll to Groundswell, **Open project** (hard-refresh).
-Ledger FS20–FS220 below. Final-touches round open from FS156.
+Ledger FS20–FS225 below. Final-touches round open from FS156.
 
 **Next move (updated 2026-10-01):** the reflection is live in the sheet (FS186). Then: Lorin's final touches (her words: "I will make final touches tomorrow"). Take
 her notes one at a time, ledger-first.
@@ -246,6 +246,11 @@ funding, captions, card note).
 | FS218 | "But the videos need work they are cut at weird points and repetitive at times. Lets redo them to TRULY match the \"view\"'s depth, interaction, etc." (2026-10-01) | ✅ SHIPPED: four clips re-recorded, each showing only its depth: At a glance (the display blooms in, no cursor, 7.4s) · With a tap (circles on screen, one tap, entries draw in, 6.0s) · In depth (pod timeline from its tab, bands toggled, 9.1s) · Over time (six survey measures draw in, 6.0s). No repeated material |
 | FS219 | "When I said load animations, it should start as soon as the new visualization is loading on the screen not the glitchy transition between screen views." (2026-10-01) | ✅ SHIPPED: each trigger was timestamped during recording and every clip cut at the first frame its visualization draws; views triggered in place (a tab or a tap), never by a screen-to-screen transition |
 | FS220 | "I also feel bottom area of the gallery has confusing text, user won't know where to look use a more simplified \"caption\" explainer system and view toggle" (2026-10-01) | ✅ SHIPPED: bottom area reduced to ONE caption (“For [audience]. [why]”); the thumbnail cards replaced by a segmented view toggle above the clip (the dashboard’s own lens-switch idiom), a hairline filling inside the selected pill as it plays; a chosen view always plays. Also: the clips were never in git (*.mp4 ignored; no Cloudinary upload key on this machine) so a narrow .gitignore exception now tracks the four 1.2 MB web encodes. Verified 1440 / 390 / reduced motion |
+| FS221 | "At a glance: I want to see the full page load animation of the circles going on screen. And show how to drag the circles." (2026-10-01) | ⏳ IN PROGRESS |
+| FS222 | "With a tap: same, I want to see the purple circles animate on screen. Also show clicking on a single response to view it up close." (2026-10-01) | ⏳ IN PROGRESS |
+| FS223 | "In Depth: Show an interaction on the summary page and the timeline page." (2026-10-01) | ⏳ IN PROGRESS |
+| FS224 | "Over time: also show a view of \"themes\" view." (2026-10-01) | ⏳ IN PROGRESS |
+| FS225 | "I am not happy with the copy on the page itself, you took my verbatim and I wanted you to copyedit and combine with what was there already and make it more sophisticated, I may have made a copyedit rule too strict. I always want you to use my draft but you can always improve the copy and make it perfect." (2026-10-01) | ⏳ IN PROGRESS |
 =======
 | FS193 | "i need this to look 50% neater, better orgnanized and simple" (2026-10-01), read as the Acknowledgements | ⏳ IN PROGRESS |
 >>>>>>> parent of f51f3e4 (feat(sheet): acknowledgements in one format: name over one-line role, three labelled lines (FS193))
