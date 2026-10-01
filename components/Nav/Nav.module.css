@@ -169,3 +169,18 @@
     font-size: var(--text-body-small);
   }
 }
+
+/* FS292: while a project sheet is open, the name steps aside so the
+   folder's tab reads clean against the dark (it peeked out beside the
+   tab, most of all on phones where it wraps to two lines). */
+.navName {
+  transition: opacity var(--motion-fast) var(--ease-out), visibility 0s linear 0s;
+}
+
+/* stylelint-disable-next-line selector-pseudo-class-no-unknown -- CSS Modules :global */
+:global(html[data-sheet-open]) .navName {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity var(--motion-fast) var(--ease-out), visibility 0s linear var(--motion-fast);
+}
