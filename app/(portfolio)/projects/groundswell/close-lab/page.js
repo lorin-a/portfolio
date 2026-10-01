@@ -27,39 +27,33 @@ export const metadata = {
    R Q8 (contract with named asset ownership; a staff-led stewardship
    program). Kendyl’s quote moves to The Outcome column (impact, not
    reflection). */
-/* FS174: distilled from her freestyle above (free rein for this exercise,
-   FS172). Kept to the four-part grammar: symbol · label · statement · two
-   bullets. Cut (hers to restore): the three resonance criteria (speak to
-   their experience, trust across hierarchy, tangible solutions); the FS173
-   Q8 items (contract, stewardship program), which her new “next” replaces.
-   The relationships lesson moved from her Shape paragraph to Learned,
-   where it is a lesson. */
+/* FS175: the insights the FS174 distillation traded for brevity, restored
+   in plain words (her freestyle above is the source for every line). Up to
+   three bullets where the insight needs them; no flourishes of Claude’s. */
 const CARDS = [
   {
     id: 'sense', verb: 'Sense', title: 'What I learned',
     line: 'Honor staff-led innovation from the start, rather than imposing designer-led\u00a0solutions.',
     list: [
-      'Trust ran on relationships: a transdisciplinary team, and a senior advocate to\u00a0leadership',
-      'We couldn’t fix pay, time off, or staffing, but the data platform carried staff voices to\u00a0administrators',
+      'With subject matter this emotional, the work had to speak to staff experience, build trust across hierarchy, and solve urgent\u00a0problems',
+      'Relationships carried it: a transdisciplinary team with access to both leadership and staff realities, and respected doctors and administrative fellows who bridged the\u00a0gaps',
+      'We couldn’t change what matters most (pay, time off, staffing), but research and the data platform carried staff voices to administrators who might not have heard\u00a0them',
     ],
   },
   {
-    /* Her question: “what story should this tell about me?” Answer: the
-       rare thing, research AND production. Statement is Claude’s phrasing
-       of her “I moved from theoretical to tangible design experience”. */
     id: 'weave', verb: 'Weave', title: 'Who I became',
-    line: 'A design researcher who builds what the research asks\u00a0for.',
+    line: 'I moved from theoretical to tangible design: a researcher who also\u00a0builds.',
     list: [
-      'Research: ran workshops and feedback sessions, synthesized, and pitched to\u00a0stakeholders',
-      'Build: prototyped to production deadlines, and led the data\u00a0dashboard',
+      'As a researcher: designed and facilitated workshops, feedback sessions, synthesis, and ideation, and pitched to\u00a0stakeholders',
+      'As a designer: prototyped, adapted to production timelines and constraints, and led new solutions like the data\u00a0dashboard',
     ],
   },
   {
     id: 'shape', verb: 'Shape', title: 'What’s next',
-    line: 'The installation was a starting point: enough respite to stop drowning, start talking, and solve problems\u00a0together.',
+    line: 'The installation alone was never the solution. It was the starting point: enough respite to stop drowning, start conversations, and innovate\u00a0together.',
     list: [
-      'Creative workshops drew strong turnout, so the next iteration expands\u00a0programming',
-      'More staff involvement, so Groundswell is carried by the people it\u00a0serves',
+      'Creative expression workshops drew strong turnout and showed the potential for more\u00a0programming',
+      'The next iteration expands programming and staff\u00a0involvement',
     ],
   },
 ]
@@ -68,7 +62,7 @@ export default function CloseLab() {
   return (
     <div className={`${sheet.inner} ${s.page}`}>
       <DarkTheme />
-      <p className={s.kicker}>Groundswell · FS174 lab · private</p>
+      <p className={s.kicker}>Groundswell · FS175 lab · private</p>
 
       <h2 className={s.labH}>The reflection</h2>
       <Triptych cards={CARDS} />
