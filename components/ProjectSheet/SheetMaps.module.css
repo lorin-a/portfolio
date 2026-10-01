@@ -4,6 +4,29 @@
 
 .maps { margin: 0; }
 
+/* FS286: one color per stage of the story, so a color always says where
+   a thing comes from: terracotta = what we found (the strain), plum =
+   what we value, sage = what we built (and the void it was built to
+   fill). The tabs carry the key; the footer chain repeats it. */
+.maps[data-view='0'] { --accent: #F79C7E; }
+.maps[data-view='1'] { --accent: #C7AAD1; }
+.maps[data-view='2'] { --accent: #C5CFA6; }
+
+.stageDot {
+  display: inline-block;
+  flex: none;
+  width: 9px;
+  height: 9px;
+  margin-right: 0.55rem;
+  border-radius: 50%;
+  background: var(--dot);
+  box-shadow: 0 0 0 1.5px rgba(30, 28, 27, 0.55);
+}
+
+.cFound { color: #F79C7E; }
+.cValue { color: #C7AAD1; }
+.cBuilt { color: #C5CFA6; }
+
 .stage {
   position: relative;
   border-radius: 3px;
@@ -46,7 +69,7 @@
 }
 
 .node[data-back] .disc { fill: #C9C0B6; stroke: #C9C0B6; }
-.node[data-on] .disc { fill: #F4F1EC; stroke: #F79C7E; stroke-width: 6; }
+.node[data-on] .disc { fill: #F4F1EC; stroke: var(--accent); stroke-width: 6; }
 .node[data-dim] { opacity: 0.55; }
 .node[role='button'] { cursor: pointer; }
 .node:focus-visible .disc { stroke-width: 4; }
@@ -70,9 +93,9 @@
 /* ── structure ── */
 .line { fill: none; stroke: rgba(244, 241, 236, 0.55); stroke-linecap: round; }
 .line[data-back] { stroke: rgba(244, 241, 236, 0.32); }
-.lineOn { fill: none; stroke: #F79C7E; stroke-linecap: round; }
+.lineOn { fill: none; stroke: var(--accent); stroke-linecap: round; }
 .mark { stroke: rgba(244, 241, 236, 0.7); }
-.markOn { stroke: #F79C7E; }
+.markOn { stroke: var(--accent); }
 .hit { stroke: transparent; stroke-width: 40; cursor: pointer; }
 
 .fade { transition: opacity var(--motion-fast) var(--ease-out); }
@@ -106,8 +129,8 @@
 .pillG text { fill: #F4F1EC; font-family: var(--font-heading); font-size: 32px; text-anchor: middle; }
 .pillG .pill2 { font-family: var(--font-body); font-size: 27px; }
 .pillG[data-back] rect { stroke: rgba(244, 241, 236, 0.35); }
-.pillG[data-on] rect { fill: #5C3D35; stroke: #F79C7E; stroke-width: 4; stroke-dasharray: none; }
-.pillG[data-on] text { fill: #FBE3DA; }
+.pillG[data-on] rect { fill: color-mix(in srgb, var(--accent) 28%, #1E1C1B); stroke: var(--accent); stroke-width: 4; stroke-dasharray: none; }
+.pillG[data-on] text { fill: #F7F3EE; }
 .pillG:focus-visible rect { stroke-width: 6; }
 
 .say { fill: rgba(244, 241, 236, 0.85); font-family: var(--font-body); font-size: 28px; text-anchor: middle; }
@@ -203,7 +226,7 @@
   font-size: var(--step-label);
   font-weight: 600;
   letter-spacing: 0.06em;
-  color: #F79C7E;
+  color: var(--accent);
 }
 
 .heard { gap: 1.25rem 2rem; }
@@ -252,6 +275,8 @@
 }
 
 .fList b { font-weight: 600; }
+.fList[data-stage='found'] li::before { background: #F79C7E; }
+.fList[data-stage='built'] li::before { background: #C5CFA6; }
 
 .fDefs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.7rem 1.5rem; margin: 0; }
 .fDefs dt { font-family: var(--font-heading); font-size: var(--step-body); }
@@ -266,7 +291,7 @@
   opacity: 0.8;
 }
 
-.fChain span { margin: 0 0.35rem; color: var(--color-sage); }
+.fChain .arrow { margin: 0 0.35rem; opacity: 0.6; }
 
 /* FS270: the instruction, on the diagram */
 .hintG { pointer-events: none; animation: hint-in 500ms var(--ease-out) both; }

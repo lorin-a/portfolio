@@ -95,6 +95,7 @@ const VIEWS = [
   { view: 'What we built', caption: 'Each value became a component, met across a shift. Point to a moment or a component to trace its connections.' },
 ]
 
+const STAGE = ['#F79C7E', '#C7AAD1', '#C5CFA6']
 const DEMO = [{ kind: 'void', id: 0 }, { kind: 'v', id: 'rec' }, { kind: 'm', id: 'loss' }]
 const HINT = ['the void or a tension', 'a value', 'a moment or a component']
 
@@ -346,7 +347,7 @@ export default function SheetMaps() {
   const answers = (id) => (
     <div className={s.fSide}>
       <p className={s.fKick}>Answers what we heard</p>
-      <ul className={s.fList}>
+      <ul className={s.fList} data-stage="found">
         {TENSIONS.filter((t) => t.a === id || t.b === id).map((t) => <li key={t.pill[0]}>{t.pill.join(' ')}</li>)}
       </ul>
     </div>
@@ -371,7 +372,7 @@ export default function SheetMaps() {
           <p className={s.fKick}>{THEME[id]} became</p>
           <p className={s.fBig}>{VALUE[id]}</p>
           <p className={s.fNote}>“{VSAY[id].t.join(' ').replace(/— /g, '—')}”</p>
-          <p className={s.fChain}>{THEME[id]} <span>→</span> {VALUE[id]} <span>→</span> {COMP[id]}</p>
+          <p className={s.fChain}><span className={s.cFound}>{THEME[id]}</span><span className={s.arrow}>→</span><span className={s.cValue}>{VALUE[id]}</span><span className={s.arrow}>→</span><span className={s.cBuilt}>{COMP[id]}</span></p>
         </div>
         {answers(id)}
       </div>
@@ -387,7 +388,7 @@ export default function SheetMaps() {
         </div>
         <div className={s.fSide}>
           <p className={s.fKick}>Met by</p>
-          <ul className={s.fList}>{mo.to.map((c) => <li key={c}><b>{COMP[c]}</b>, built on {VALUE[c].toLowerCase()}</li>)}</ul>
+          <ul className={s.fList} data-stage="built">{mo.to.map((c) => <li key={c}><b>{COMP[c]}</b>, built on {VALUE[c].toLowerCase()}</li>)}</ul>
         </div>
       </div>
     )
@@ -400,7 +401,7 @@ export default function SheetMaps() {
           <p className={s.fKick}>Built on {VALUE[id].toLowerCase()}</p>
           <p className={s.fBig}>{COMP[id]}</p>
           <p className={s.fNote}>Reached at {list(from)}.</p>
-          <p className={s.fChain}>{THEME[id]} <span>→</span> {VALUE[id]} <span>→</span> {COMP[id]}</p>
+          <p className={s.fChain}><span className={s.cFound}>{THEME[id]}</span><span className={s.arrow}>→</span><span className={s.cValue}>{VALUE[id]}</span><span className={s.arrow}>→</span><span className={s.cBuilt}>{COMP[id]}</span></p>
         </div>
         {answers(id)}
       </div>
@@ -423,7 +424,7 @@ export default function SheetMaps() {
   } else foot = <p className={s.fNote}>{VIEWS[view].caption}</p>
 
   return (
-    <figure className={`${m.glass} ${s.maps}`}>
+    <figure className={`${m.glass} ${s.maps}`} data-view={view}>
       <div id="gs-maps" role="tabpanel" className={s.stage} ref={root} onMouseLeave={() => { if (touched.current) setFocus({ ...DEMO[view], rest: true }) }}>
         <div className={s.canvas}>
           <Stage view={view} focus={focus} setFocus={take} interactive uid="gsm-a" ready={ready}
@@ -444,6 +445,7 @@ export default function SheetMaps() {
           {VIEWS.map((x, i) => (
             <li key={x.view} style={{ '--depth': i }}>
               <button type="button" role="tab" aria-selected={i === view} aria-controls="gs-maps" className={m.seg} onClick={() => pick(i)}>
+                <span className={s.stageDot} style={{ '--dot': STAGE[i] }} aria-hidden="true" />
                 <span className={m.segView}>{x.view}</span>
               </button>
             </li>
