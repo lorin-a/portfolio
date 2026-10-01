@@ -5,7 +5,7 @@
 **What we're doing: THE GROUNDSWELL FOLDER SHEET, near final.** Branch `feat/folder-expand`,
 pushed to the PRIVATE mirror only (`git push private feat/folder-expand`; `origin` is public).
 See it: `npm run dev -- -p 3005`, scroll to Groundswell, **Open project** (hard-refresh).
-Ledger FS20–FS191 below. Final-touches round open from FS156.
+Ledger FS20–FS192 below. Final-touches round open from FS156.
 
 **Next move (updated 2026-10-01):** the reflection is live in the sheet (FS186). Then: Lorin's final touches (her words: "I will make final touches tomorrow"). Take
 her notes one at a time, ledger-first.
@@ -216,6 +216,7 @@ funding, captions, card note).
 | FS189 | "Im not liking the header, what is its value?" (2026-10-01) | ✅ ANSWERED + APPLIED: the lead line had little value. It restated the sheet’s thesis (the project column and the reflection already say staff voices shaped it) and added a third serif statement to a page budgeted for about two. The partners line DOES earn its place: it is the only spot on the sheet naming the three institutions. So: lead removed; the label and the institutions now share one quiet line above the columns |
 | FS190 | "how would a senior designer improve this section?" (2026-10-01) | ✅ SHIPPED, a senior pass: (1) every credit has a home: three columns of people (Leadership 5 · Design & Production 6 · Art & Making 4; photography joins the makers, so the columns balance) and a second row giving donors and funders their own labelled lists instead of one run-on sentence (donors in three quiet columns, funders stacked, official names exact); (2) the artist credited as artists are: name + work, “Carolyn Gavin · “Blue Garden,” the artwork that threads through every component” (title verified in middleware.js); (3) hairlines under column titles removed (containment over lines); (4) bug fixed on the way: React leaves no spaces between list items, so an inline list could not wrap and ran into the next column. Verified zero escaping names at 1440 / 1024 / 390. Flagged: the Close pill still covers text as the sheet scrolls (FS157, hers) |
 | FS191 | "what is necessary to show in this portfolio, are we showing too much?" (2026-10-01) | 💬 ANSWERED, awaiting her pick. Measured at 1440: sheet 10,092px (~11 screens), 1,263 words. Cover 764 · frame 378 · components 828 / 817 / 1,788 (library) / 833 / 769 · reflection 722 · behind the scenes 740 · acknowledgements 852 · press 753. Verdict against her own rubric (decisions · role clarity · impact; 2–3 min screens; “process dump” the #2 failure): the work is right-sized; the ENDING is heavy: four closing blocks of ~750–850px each (3,067px, 30% of the sheet) after the last component. Proposed, in order: (1) acknowledgements to ~half (people + artist stay as they are; donors + funders compressed to one small paragraph); (2) behind the scenes to one gallery; (3) library trimmed toward the others’ ~800px. Keep: cover, frame, components, reflection, press |
+| FS192 | "go ahead with all three" (2026-10-01): (1) acknowledgements to ~half; (2) behind the scenes to one gallery; (3) library trimmed toward ~800px | ⏳ IN PROGRESS |
 
 ### ⟢ OPEN NOTES LEDGER — Folder sheet (2026-09-06, her verdict on the rebuilt sheet)
 
