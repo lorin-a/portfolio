@@ -641,7 +641,7 @@ export default function GroundswellArchive() {
           <div className={styles.stickyContentLight}>
             <h2 className={styles.stickyTitleLight}>The Making</h2>
             <p className={styles.stickyBodyLightBold}>
-              Over a 10-week production sprint, we turned concept into installation. Working hybrid between remote coordination and on-site collaboration, the team managed donor outreach, copywriting, and strategic partnerships that secured approximately $30,000 worth of donated materials and services.
+              Over a 10-week production sprint, we turned concept into installation. Working hybrid between remote coordination and on-site collaboration, the team managed donor outreach, copywriting, and strategic partnerships that secured over $40,000 worth of donated materials and services.
             </p>
             <p className={styles.stickyBodyLight}>
               The project required constant adaptation. Early staff feedback shifted our language from &ldquo;grief&rdquo; to &ldquo;restoration,&rdquo; reframing the messaging. Halfway through production, hospital administration required lockable doors on the pod. Our solution provided engagement, privacy, and emotional safety without surveillance&mdash;turning a constraint into an asset.
