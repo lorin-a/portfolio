@@ -5,7 +5,7 @@
 **What we're doing: THE GROUNDSWELL FOLDER SHEET, near final.** Branch `feat/folder-expand`,
 pushed to the PRIVATE mirror only (`git push private feat/folder-expand`; `origin` is public).
 See it: `npm run dev -- -p 3005`, scroll to Groundswell, **Open project** (hard-refresh).
-Ledger FS20–FS166 below. Final-touches round open from FS156.
+Ledger FS20–FS167 below. Final-touches round open from FS156.
 
 **Next move:** Lorin's final touches (her words: "I will make final touches tomorrow"). Take
 her notes one at a time, ledger-first.
@@ -191,6 +191,7 @@ funding, captions, card note).
 | FS164 | "I do not like any of the close-lab examples. It feels far from my site-wide brand. If anything we coudl call back to sense weave shape icons?" (2026-10-01) | 💬 BUILT in the lab, awaiting her verdict: the four FS160 options retired. Her own definitions map the cards: Sense (discovering what’s true) = the lesson · Weave (how truths relate) = her role across components · Shape (giving form) = what changed. Built on the About section’s practice-card pattern exactly (gradient border, the painted marks drawing on with the brand gradient, accent name, small-caps title) |
 | FS165 | "Or if you redo what you did just make it SO simple like elegant minimalist straight to the point can understand it in 10 seconds" (2026-10-01) | 💬 BUILT with FS164: one line per card (lesson in her words; role line PROVISIONAL; Kendyl’s quote, needs her OK). Her full paragraphs kept, behind “Read more”, opening in one panel under the row so the cards never stretch. Verified 1440 + 390, zero overflow, zero console errors |
 | FS166 | "This is much closer but we need to think about what this is telling us that other sections have not, and we don't want the user to have to dig for information, is there a version of this that is still simple with no read more?" (2026-10-01) | 💬 BUILT in the lab, awaiting her verdict. AUDIT: the close repeated the sheet: What changed’s qualitative = The outcome column; My role = the cover’s Role titles + the five My Contribution strips + the dashboard strip. Found nowhere else: the lesson, Kendyl’s quote, the study method, and two role facts (she named Groundswell; she designed the grief workshop trauma-informed). So each card now says only those, all visible: Sense “Honor the work already being done, and find ways to uplift it.” + the CTB story in one line · Weave “I named Groundswell and led its grief workshop.” + the trauma-informed design (her words) · Shape Kendyl’s quote + the six-scale method. No Read more. Notes aligned on one line across the row (subgrid). Verified 1440 + 390. If adopted: the old role/qualitative paragraphs leave the sheet (kept in the content file); the dashboard stack detail lives only in the dashboard strip |
+| FS167 | "Maybe my role is more like my personal lesson or growth? through this project I grew into a data viz designer, navigated my first production of a installation, coordinated and secured donors, pitched to hospital admin, coordinated with stakeholders etc? Transformed a concept from start to finish, iterated through two brand identities, play tested etc etc" (2026-10-01) | ⏳ BUILDING in the lab: the Weave card becomes her growth |
 
 ### ⟢ OPEN NOTES LEDGER — Folder sheet (2026-09-06, her verdict on the rebuilt sheet)
 
