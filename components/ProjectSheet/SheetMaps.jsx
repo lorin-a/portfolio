@@ -106,7 +106,11 @@ function Stage({ view, focus, setFocus, interactive, uid, ready = true, hint = n
     tabIndex: 0, role: 'button', onMouseEnter: () => setFocus(f), onFocus: () => setFocus(f), onClick: () => setFocus(f),
   } : {})
   const isF = (kind, id) => !!focus && focus.kind === kind && focus.id === id
-  const anyF = (...kinds) => !!focus && kinds.includes(focus.kind)
+  /* FS283: the resting state (the guided default, or the default the map
+     returns to) shows everything in full color; only a reader's own hover
+     or focus dims the rest */
+  const soft = !!focus && (focus.auto || focus.rest)
+  const anyF = (...kinds) => !!focus && !soft && kinds.includes(focus.kind)
   const momentOn = (cid) => focus?.kind === 'm' && MOMENTS.find((mo) => mo.id === focus.id)?.to.includes(cid)
 
   /* found: one edge, weighted by its scenarios */
@@ -254,7 +258,7 @@ function Stage({ view, focus, setFocus, interactive, uid, ready = true, hint = n
         const [x, y, r] = POS[id][view]
         const on = (view === 1 && isF('v', id)) || (view === 2 && (isF('c', id) || momentOn(id)))
           || (view === 0 && focus?.kind === 't' && (TENSIONS[focus.id].a === id || TENSIONS[focus.id].b === id))
-        const dim = !!focus && !on && focus.kind !== 'void'
+        const dim = !!focus && !soft && !on && focus.kind !== 'void'
         const back = false
         return (
           <g key={id} className={s.node} data-wait={!ready || undefined} data-dim={dim || undefined} data-on={on || undefined} data-back={back || undefined}
@@ -420,7 +424,7 @@ export default function SheetMaps() {
 
   return (
     <figure className={`${m.glass} ${s.maps}`}>
-      <div id="gs-maps" role="tabpanel" className={s.stage} ref={root} onMouseLeave={() => { if (touched.current) setFocus(DEMO[view]) }}>
+      <div id="gs-maps" role="tabpanel" className={s.stage} ref={root} onMouseLeave={() => { if (touched.current) setFocus({ ...DEMO[view], rest: true }) }}>
         <div className={s.canvas}>
           <Stage view={view} focus={focus} setFocus={take} interactive uid="gsm-a" ready={ready}
             hint={focus?.auto ? (canHover ? 'Hover' : 'Tap') : null} />
