@@ -313,6 +313,7 @@ funding, captions, card note).
 | FS277 | "don't make culture circle darker." (2026-10-01) | ✅ FIXED: Culture is the same cream as the other three circles |
 | FS278 | "make one side of the tetrahedron have more foggy faded color look to add dimension." (2026-10-01) | 💬 SHIPPED: the side face (Recognition–Environment–Culture), turned away from the light, now holds a soft fog: a haze that thickens toward its far edge, softened with a wide blur and clipped to the face. The front face stays clear, so the solid reads in 3D |
 | FS279 | "the expand button is not working" (2026-10-01) | ✅ FIXED: the button did open, but the site’s CSS reset stripped the dialog’s centering, so the full-screen view rendered pinned to the top-left and spilling off-screen. Now centered (inset 0 + margin auto), sized to fit the viewport, on the same brand glass |
+| FS280 | "when hovering on the void, make the other text bubbles dim so it looks like something is happening keep the 4 theme circles. then its ready to go on main" (2026-10-01) | ⏳ IN PROGRESS |
 =======
 | FS193 | "i need this to look 50% neater, better orgnanized and simple" (2026-10-01), read as the Acknowledgements | ⏳ IN PROGRESS |
 >>>>>>> parent of f51f3e4 (feat(sheet): acknowledgements in one format: name over one-line role, three labelled lines (FS193))

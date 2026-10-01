@@ -187,7 +187,7 @@ function Stage({ view, focus, setFocus, interactive, uid, ready = true, hint = n
           <text className={s.voidName} x={(vpt('rec')[0] + vpt('sys')[0] + vpt('env')[0]) / 3} y={(vpt('rec')[1] + vpt('sys')[1] + vpt('env')[1]) / 3 + 12}>The void</text>
         </g>
         {TENSIONS.map((t, i) => {
-          const w = Math.max(...t.pill.map((l) => l.length)) * 12.6 + 70, on = isF('t', i), dim = anyF('t') && !on
+          const w = Math.max(...t.pill.map((l) => l.length)) * 12.6 + 70, on = isF('t', i), dim = anyF('t', 'void') && !on
           return (
             <g key={t.pill} className={`${s.fade} ${s.pillG}`} data-dim={dim || undefined} data-on={on || undefined}
               data-back={t.back || undefined} aria-label={`${THEME[t.a]} and ${THEME[t.b]}: ${t.pill.join(' ')}`}
