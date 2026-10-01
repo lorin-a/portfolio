@@ -357,11 +357,48 @@
   color: var(--color-sage);
 }
 
-.thanksColTitle {
-  margin-bottom: var(--flow-2);
-  padding-bottom: var(--flow-1);
-  border-bottom: 1px solid var(--sheet-hair);
+/* FS190: no rule under the column titles; space and the sage label group
+   each column (containment over lines) */
+.thanksColTitle { margin-bottom: var(--flow-2); }
+
+/* donors and funders: their own row, names set inline with a quiet dot */
+.thanksRow {
+  min-width: 0;
+  padding-top: var(--flow-3);
+  border-top: 1px solid var(--sheet-hair);
 }
+
+@media (min-width: 900px) {
+  .thanksRow { grid-column: 3; }
+  .thanksRow[data-wide] { grid-column: 1 / 3; }
+}
+
+.thanksInline {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-family: var(--font-body);
+  font-size: var(--step-small);
+  line-height: 1.5;
+  color: var(--color-ink);
+}
+
+.thanksInline li {
+  min-width: 0;
+  break-inside: avoid;
+  text-wrap: pretty;
+}
+
+.thanksInline li + li { margin-top: 0.4rem; }
+
+/* donors: a quiet list in columns, no separators to strand at line starts */
+.thanksRow[data-wide] .thanksInline {
+  columns: 3 10rem;
+  column-gap: var(--gap-col);
+}
+
+.thanksRow[data-wide] .thanksInline li + li { margin-top: 0; }
+.thanksRow[data-wide] .thanksInline li { padding-bottom: 0.4rem; }
 
 .thanksLead {
   margin: 0 0 var(--flow-1);

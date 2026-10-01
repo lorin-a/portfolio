@@ -246,6 +246,14 @@ export default function SheetContent({ sheet, num, title, tagline, titleId }) {
               {col.note && <p className={styles.thanksNote}>{col.note}</p>}
             </div>
           ))}
+          {acknowledgements.footer?.map((row, i) => (
+            <div key={row.title} className={styles.thanksRow} data-wide={i === 0 || undefined}>
+              <h4 className={styles.thanksColTitle}>{row.title}</h4>
+              <ul className={styles.thanksInline}>
+                {row.names.map((n) => <li key={n}>{n}</li>)}
+              </ul>
+            </div>
+          ))}
           {acknowledgements.closing && <p className={styles.thanksClosing}>{acknowledgements.closing}</p>}
         </section>
       ) : credits.length > 0 && (() => {

@@ -462,19 +462,23 @@ export const groundswell = {
           ['Robertus Sucahyo, MBA', 'Development, research'],
           ['Greg Baltus, Hardware Assembly', 'Design, engineering, fabrication'],
           ['Su Hong & Mia Jeong', 'Research assistants'],
-          ['Kevin Lorenzi', 'Photography'],
         ],
       },
       {
-        title: 'Art, Donors & Funding',
+        /* FS190: makers and artists together; photography moves here */
+        title: 'Art & Making',
         people: [
-          ['Carolyn Gavin', 'Artwork, the visual thread through every component'],
+          ['Carolyn Gavin', '“Blue Garden,” the artwork that threads through every component'],
           ['Catherine Liggett & Mark Staley', 'Custom guided meditations and poetry'],
-          ['NookPod', 'The restorative pod structure'],
           ['Ryan Thompson', 'Walnut tabletop, from wood donated by Eleanor Mackie Pigma'],
+          ['Kevin Lorenzi', 'Photography'],
         ],
-        note: 'With Fox Woodworks, Schlage, Density, Dixie&Grace, Z9 Machinings, EHC Industries, Deborah Linhart, Pamela Meadowcroft, Marge Petruska, and Mark Baskinger. Funded by the College of Fine Arts at CMU, the UPMC Magee-Womens Hospital Medical Staff Fund, and the Paul D. Schurgot Foundation.',
       },
+    ],
+    /* FS190: donors and funders get their own row, every name scannable */
+    footer: [
+      { title: 'Donors & Partners', names: ['NookPod, the pod structure', 'Schlage', 'Density', 'Fox Woodworks', 'Dixie&Grace', 'Z9 Machinings', 'EHC Industries', 'Deborah Linhart', 'Pamela Meadowcroft', 'Marge Petruska', 'Mark Baskinger'] },
+      { title: 'Funding', names: ['College of Fine Arts, CMU', 'UPMC Magee-Womens Hospital Medical Staff Fund', 'Paul D. Schurgot Foundation'] },
     ],
     /* FS188: the closing thank-you removed at her request. */
   },
