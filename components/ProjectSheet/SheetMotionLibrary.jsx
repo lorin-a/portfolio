@@ -56,7 +56,7 @@ export default function SheetMotionLibrary({ items = [], nav = 'toggle' }) {
     style={{ '--dur': `${x.duration}s` }} aria-hidden="true" />
 
   return (
-    <div ref={wrap} className={s.player}>
+    <div ref={wrap} className={`${s.player} ${nav === 'flow' ? s.glass : ''}`}>
       {nav === 'toggle' && <div className={s.toggle} role="tablist" aria-label="Dashboard views">
         {items.map((x, i) => (
           <button key={x.view} type="button" role="tab" className={s.tab}
@@ -126,10 +126,6 @@ export default function SheetMotionLibrary({ items = [], nav = 'toggle' }) {
                   <svg className={s.edgeHead} viewBox="0 0 8 12"><path d="M1 1l5.5 5L1 11" /></svg>
                 </span>
               )}
-            </li>
-          ))}
-        </ol>
-      )}
             </li>
           ))}
         </ol>
