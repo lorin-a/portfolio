@@ -5,7 +5,7 @@
 **What we're doing: THE GROUNDSWELL FOLDER SHEET, near final.** Branch `feat/folder-expand`,
 pushed to the PRIVATE mirror only (`git push private feat/folder-expand`; `origin` is public).
 See it: `npm run dev -- -p 3005`, scroll to Groundswell, **Open project** (hard-refresh).
-Ledger FS20–FS165 below. Final-touches round open from FS156.
+Ledger FS20–FS166 below. Final-touches round open from FS156.
 
 **Next move:** Lorin's final touches (her words: "I will make final touches tomorrow"). Take
 her notes one at a time, ledger-first.
@@ -190,6 +190,7 @@ funding, captions, card note).
 | FS163 | "remove": gs-context-03, gs-workshop-flower-02 | ✅ SHIPPED: both gone from the folder sheet. The older Groundswell case-study pages still use them; untouched |
 | FS164 | "I do not like any of the close-lab examples. It feels far from my site-wide brand. If anything we coudl call back to sense weave shape icons?" (2026-10-01) | 💬 BUILT in the lab, awaiting her verdict: the four FS160 options retired. Her own definitions map the cards: Sense (discovering what’s true) = the lesson · Weave (how truths relate) = her role across components · Shape (giving form) = what changed. Built on the About section’s practice-card pattern exactly (gradient border, the painted marks drawing on with the brand gradient, accent name, small-caps title) |
 | FS165 | "Or if you redo what you did just make it SO simple like elegant minimalist straight to the point can understand it in 10 seconds" (2026-10-01) | 💬 BUILT with FS164: one line per card (lesson in her words; role line PROVISIONAL; Kendyl’s quote, needs her OK). Her full paragraphs kept, behind “Read more”, opening in one panel under the row so the cards never stretch. Verified 1440 + 390, zero overflow, zero console errors |
+| FS166 | "This is much closer but we need to think about what this is telling us that other sections have not, and we don't want the user to have to dig for information, is there a version of this that is still simple with no read more?" (2026-10-01) | ⏳ AUDITING for what only the close says |
 
 ### ⟢ OPEN NOTES LEDGER — Folder sheet (2026-09-06, her verdict on the rebuilt sheet)
 
