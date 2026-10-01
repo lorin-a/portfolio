@@ -5,7 +5,7 @@
 **What we're doing: THE GROUNDSWELL FOLDER SHEET, near final.** Branch `feat/folder-expand`,
 pushed to the PRIVATE mirror only (`git push private feat/folder-expand`; `origin` is public).
 See it: `npm run dev -- -p 3005`, scroll to Groundswell, **Open project** (hard-refresh).
-Ledger FS20–FS172 below. Final-touches round open from FS156.
+Ledger FS20–FS173 below. Final-touches round open from FS156.
 
 **Next move:** Lorin's final touches (her words: "I will make final touches tomorrow"). Take
 her notes one at a time, ledger-first.
@@ -197,6 +197,7 @@ funding, captions, card note).
 | FS170 | "yes draft those in the lab" (2026-10-01): items 2 + 3 of FS169 (an evidence line per component; the “do differently” bullets), plus the role-honesty line | 💬 DRAFTED in the lab, awaiting her edit: (1) close: Sense retitled “Lessons” with two “Next time” bullets (her Q8), Weave opens “Led the data dashboard; every other component was a team effort”, Shape adds the launch miss (her Q7). (2) a “Why an ecosystem” line (her Q2: the midterm ideas, “string the pearls”) and a “What shaped it” block per component, 2–3 bullets each, all from her rehearsal answers / case-study copy with receipts in close-lab/evidence.js. Her open ask kept: better phrasing for “bigger bodies” (drafted as “larger bodies”) |
 | FS171 | "Its not reading well and it looks overcrowded, lets think about what REALLY matters here, someone skimming needs to quickly understand my reflection and each bullet needs to EARN its place. Think of the content but also the visual design and how to improve it" (2026-10-01) | 💬 REBUILT in the lab, awaiting her verdict. One job per card (lesson · growth · proof) and a hard budget: a statement + at most three bullets. CONTENT: Sense “Honor the work…” + one context line (the CTB email) + “Next time” ×2 (her Q8) · Weave “I grew into a data visualization designer.” + 3 (dashboard + team honesty · first installation concept to build · donors + hospital leadership); dropped, hers to restore: stakeholders, two brand identities, playtested · Shape Kendyl + 2 (scales/results held · the launch miss). Per component: ONE decision line each (doors in acrylic · grief → restoration · small change, no added work · the Density audit), art wall [LORIN TO WRITE]. VISUAL: left-aligned, three reading levels, compact header (mark beside verb + job), slots aligned across the row (subgrid), 1.5px gradient border. ~25–30 words a card (was ~60) |
 | FS172 | "you have free reign to edit my copy" → clarified: "i only meant free reign on copy for this exercise" (2026-10-01) | ✅ SCOPED: free rein covers only the FS169–FS171 close/decision drafts. NOT a standing permission; removed from project memory. Everywhere else the standing rule (concision, her voice kept) still governs |
+| FS173 | "2 is not good. 1 is better but it is not a unified system. Is it too crowded to do symbol + title + subtitle + quote + subcontext + bullet points Should all bullet points be next time's? what would make this sing?" (2026-10-01) | ⏳ REBUILDING |
 
 ### ⟢ OPEN NOTES LEDGER — Folder sheet (2026-09-06, her verdict on the rebuilt sheet)
 
