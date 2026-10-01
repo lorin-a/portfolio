@@ -1,26 +1,33 @@
 # Project Status
 
-## ▶ RESUME HERE (2026-09-30, paused by Lorin)
+## ▶ RESUME HERE (2026-10-01, session close)
 
-**What we're doing: THE GROUNDSWELL FOLDER SHEET**, on `feat/folder-expand` (pushed to
-the PRIVATE mirror `private`, not the public `origin`). Look at it: `npm run dev -- -p 3005`,
-scroll to Groundswell, **Open project** (hard-refresh). Ledger: FS20–FS144 below, all closed
-or answered.
+**What we're doing: THE GROUNDSWELL FOLDER SHEET, near final.** Branch `feat/folder-expand`,
+pushed to the PRIVATE mirror only (`git push private feat/folder-expand`; `origin` is public).
+See it: `npm run dev -- -p 3005`, scroll to Groundswell, **Open project** (hard-refresh).
+Ledger FS20–FS155 below: every note closed or answered.
 
-**Where it stands (shipped):** the cover is a glass loose-leaf sheet (name + tagline on it,
-facts on the rules: Context, Role titles, Collaborators, Tools, Timeline) beside an evenly
-distributed pile of four glass polaroids (click advances). Brand-glass material throughout
-(galleries as framed objects with built-in caption bars, “My Contribution” strips, close
-cards, press clippings). Gradient page-break rules, 64px either side. Library: two audio
-bars (poem, Coming Home to Yourself) under My Contribution; a full-width row of four flip
-cards around the plain phone recording. Behind the scenes = Research + Production galleries.
-Dashboard recordings lightly blurred; each component's gallery ends with its dashboard view.
+**Next move:** Lorin's final touches (her words: "I will make final touches tomorrow"). Take
+her notes one at a time, ledger-first.
 
-**Open, hers to decide:** $30k vs $40k (role line + Funding credit); “fundraising” wording in
-My role, in full; the qualitative paragraph in “What changed” overlapping the outcome line;
-Context line vs “quality improvement study”; Su Hong & Mia Jeong in credits; a written OK
-from the meditation teachers; confirm with UPMC before any study data goes public; the
-provisional copy (outcome, dashboard contribution + role paragraph, funding, captions).
+**Shipped (as of today):**
+- Cover: glass loose-leaf sheet with the name, fitted tagline and facts on its rules (Context,
+  Role titles, Collaborators, Tools Used, Timeline), beside four glass polaroids that are picked
+  up and set down in place at a fresh angle.
+- One material, brand glass, across galleries (framed, caption bar built in), My Contribution
+  strips (no “I”), the three close cards, press clippings, the library pair.
+- Gradient page-break rules, 64px either side. Three-column frame row (8·8·8 lines).
+- Library: a pair of frames, the phone recording with the poem player, and four contradicting
+  cards in a fan with centred controls. Dashboard recordings blurred (art wall 5px, others
+  2.5px); each component's gallery ends with its dashboard view.
+- Behind the scenes: Research + Production galleries. Team: three columns incl. Funding.
+
+**Open, hers to decide:** $30k vs $40k (her role line + the Funding credit); “fundraising”
+wording in My role, in full; the qualitative paragraph in What changed overlapping the outcome
+line; whether Context should add “quality improvement study”; Su Hong & Mia Jeong in credits;
+a written OK from the meditation teachers for the poem; confirm with UPMC before any study
+data is public; review the provisional copy (outcome, dashboard contribution + role paragraph,
+funding, captions, card note).
 
 ### Standing context (from 2026-08-27, still true)
 
