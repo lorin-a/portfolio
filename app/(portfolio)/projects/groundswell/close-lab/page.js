@@ -91,10 +91,10 @@ export default function CloseLab() {
       <DarkTheme />
       <p className={s.kicker}>Groundswell · FS230 lab · private</p>
 
-      {[['flow', 'E · User flow (FS230)'], ['toggle', 'D · Current toggle']].map(([nav, name]) => (
+      {[['flow', 'The dashboard player (shipped)']].map(([nav, name]) => (
         <section key={nav} className={s.variant} style={{ maxWidth: '54rem' }}>
           <h2 className={s.labH}>{name}</h2>
-          <MotionLibrary nav={nav} items={groundswell.components.find((c) => c.key === 'dashboard').media.motion} />
+          <MotionLibrary items={groundswell.components.find((c) => c.key === 'dashboard').media.motion} />
         </section>
       ))}
 
