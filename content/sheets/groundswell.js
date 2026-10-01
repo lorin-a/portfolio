@@ -442,49 +442,47 @@ export const groundswell = {
      from her FS93 clinical team. Dollar values left out while $30k vs $40k
      is open. The `credits` above stay as the record. */
   acknowledgements: {
-    /* FS189: the lead line removed (restated the sheet’s thesis) */
-    /* FS188: tightened to sit beside the one-line lead */
-    partners: 'With Carnegie Mellon’s School of Design, Pitt’s Schools of Medicine and Nursing, and UPMC Magee-Womens Gynecologic Oncology.',
+    /* FS193: one format only. Every entry is a name and a ONE-LINE role,
+       so rows align across the columns; everything else is three short
+       labelled lines below. Roles shortened from the FS187/FS190 versions
+       (the hidden page's fuller titles stay in GroundswellContent.js). */
     columns: [
       {
         title: 'Leadership',
         people: [
-          ['Kristin Hughes, MFA', 'Project Lead and Principal Investigator, CMU'],
-          ['Sarah E. Taylor, MD, PhD', 'Principal Investigator, UPMC Hillman Cancer Center'],
-          ['Grace Campbell, PhD, MSW, RN', 'Supervising Faculty, Duquesne University'],
-          ['Heidi Donovan, PhD, RN', 'Supervising Faculty, Pitt School of Nursing'],
-          ['Kendyl Grant', 'Director of Operations, Gynecologic Oncology, UPMC'],
+          ['Kristin Hughes, MFA', 'Project Lead and PI, CMU'],
+          ['Sarah E. Taylor, MD, PhD', 'Principal Investigator, UPMC'],
+          ['Grace Campbell, PhD, MSW, RN', 'Supervising Faculty, Duquesne'],
+          ['Heidi Donovan, PhD, RN', 'Supervising Faculty, Pitt Nursing'],
+          ['Kendyl Grant', 'Director of Operations, UPMC'],
         ],
       },
       {
         title: 'Design & Production',
         people: [
-          ['Lorin Anderberg, MA', 'Design, development, research, production, coordination, donor outreach'],
-          ['Elijah Benzon, MA', 'Design, development, research, production'],
-          ['Kelly McDowell', 'Design, development, research'],
+          ['Lorin Anderberg, MA', 'Design, research, production'],
+          ['Elijah Benzon, MA', 'Design, research, production'],
+          ['Kelly McDowell', 'Design, research'],
           ['Robertus Sucahyo, MBA', 'Development, research'],
-          ['Greg Baltus, Hardware Assembly', 'Design, engineering, fabrication'],
+          ['Greg Baltus', 'Fabrication, Hardware Assembly'],
           ['Su Hong & Mia Jeong', 'Research assistants'],
         ],
       },
       {
-        /* FS190: makers and artists together; photography moves here */
         title: 'Art & Making',
         people: [
-          ['Carolyn Gavin', '“Blue Garden,” the artwork that threads through every component'],
-          ['Catherine Liggett & Mark Staley', 'Custom guided meditations and poetry'],
-          ['Ryan Thompson', 'Walnut tabletop, from wood donated by Eleanor Mackie Pigma'],
+          ['Carolyn Gavin', 'Artwork, “Blue Garden”'],
+          ['Catherine Liggett & Mark Staley', 'Meditations and poetry'],
+          ['Ryan Thompson', 'Walnut tabletop'],
           ['Kevin Lorenzi', 'Photography'],
         ],
       },
     ],
-    /* FS192: donors and funders compressed to one small paragraph
-       (everyone still named; official names exact) */
     supporters: [
-      ['Donors and partners', 'NookPod (the pod structure), Schlage, Density, Fox Woodworks, Dixie&Grace, Z9 Machinings, EHC Industries, Deborah Linhart, Pamela Meadowcroft, Marge Petruska, and Mark Baskinger.'],
-      ['Funded by', 'the College of Fine Arts at CMU, the UPMC Magee-Womens Hospital Medical Staff Fund, and the Paul D. Schurgot Foundation.'],
+      ['In collaboration with', 'Carnegie Mellon School of Design · University of Pittsburgh Schools of Medicine and Nursing · UPMC Magee-Womens Gynecologic Oncology'],
+      ['Donors and partners', 'NookPod · Schlage · Density · Fox Woodworks · Dixie&Grace · Z9 Machinings · EHC Industries · Eleanor Mackie Pigma · Deborah Linhart · Pamela Meadowcroft · Marge Petruska · Mark Baskinger'],
+      ['Funded by', 'College of Fine Arts, CMU · UPMC Magee-Womens Hospital Medical Staff Fund · Paul D. Schurgot Foundation'],
     ],
-    /* FS188: the closing thank-you removed at her request. */
   },
 
   /* THE REFLECTION (FS164–FS186, 2026-10-01): replaces the old close
