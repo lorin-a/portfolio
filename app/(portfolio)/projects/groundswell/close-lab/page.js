@@ -78,8 +78,8 @@ const MOTION = [
     text: 'Each emotion is sized by how often staff chose it. Tap one to read the handwritten tags behind the\u00a0count.' },
   { kind: 'Quant', title: 'Filter the patterns', src: '/video/gs-dashboard/2-filter-the-patterns.mp4', poster: '/video/gs-dashboard/2-filter-the-patterns.jpg',
     text: 'Nine months of pod sessions by length. Toggle the bands to see how staff actually used the\u00a0space.' },
-  { kind: 'Qual + Quant', title: 'In their words, in the data', src: '/video/gs-dashboard/3-words-and-data.mp4', poster: '/video/gs-dashboard/3-words-and-data.jpg',
-    text: 'Each survey theme pairs what staff wrote with the measure that backs\u00a0it.' },
+  { kind: 'Quant, over time', title: 'How six measures moved', src: '/video/gs-dashboard/3-words-and-data.mp4', poster: '/video/gs-dashboard/3-words-and-data.jpg',
+    text: 'Six validated scales, surveyed three times across the pilot, drawn as small multiples. Values are blurred while the study is under\u00a0review.' },
   { kind: 'Qual, by touch', title: 'Arrange the feelings', src: '/video/gs-dashboard/4-arrange-the-feelings.mp4', poster: '/video/gs-dashboard/4-arrange-the-feelings.jpg',
     text: 'On the unit’s display, staff drag the emotions and open them to read each\u00a0other’s\u00a0words.' },
 ]
