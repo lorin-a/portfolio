@@ -100,6 +100,15 @@ export const groundswell = {
     ['Funding', 'The College of Fine Arts at CMU, the UPMC Magee-Womens Hospital Medical Staff Fund, and the Paul D. Schurgot Foundation, with over $30,000 in material donations, including the restorative pod structure from NookPod ($13,000 value).'],
   ],
 
+  /* FS250 + FS280: the three-map exhibit (SheetMaps). Intro drafted from
+     her FS250 brief (her words: “rather than design one singular
+     intervention … a multi-scale intervention … housed under one unified
+     culture change narrative”), refined per the standing copy rule. */
+  system: {
+    label: 'Mapping the system',
+    intro: 'The research pointed to a system, not a single problem, so we didn’t design a single intervention. We brought our strongest ideas together into one ecosystem, held by a shared narrative of culture change and working at several scales at once: practical support inside the workday, care beyond it, and the slower work of rebuilding relationships and communication across the unit.',
+  },
+
   frame: {
     /* Her copy 2026-08-27, verbatim. */
     why: 'Groundswell is a 9-month pilot program designed to support the emotional well-being of UPMC Magee-Womens Cancer Services staff by introducing resources that honor the emotional complexities of oncology care. Groundswell fosters a culture where grief is acknowledged, isolation transforms into belonging, and self-care is honored as essential to delivering excellent patient care.',

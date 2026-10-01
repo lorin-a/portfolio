@@ -6,6 +6,7 @@ import { SheetStage, SheetLibraryKit, slidesFor, sheetImg } from './SheetMedia'
 import SheetCover from './SheetCover'
 import SheetReflection from './SheetReflection'
 import SheetMotionLibrary from './SheetMotionLibrary'
+import SheetMaps from './SheetMaps'
 import styles from './SheetContent.module.css'
 import paper from './Paper.module.css'
 
@@ -128,6 +129,18 @@ export default function SheetContent({ sheet, num, title, tagline, titleId }) {
             </section>
           )}
         </div>
+      )}
+
+      {/* MAPPING THE SYSTEM (FS249–FS280): found → value → built, the same
+          four circles carried through three maps, before the components. */}
+      {sheet.system && (
+        <section className={styles.system} data-reveal="0" aria-labelledby="sheet-system">
+          <div className={styles.systemText}>
+            <h3 id="sheet-system" className={styles.systemLabel}>{sheet.system.label}</h3>
+            <p>{sheet.system.intro}</p>
+          </div>
+          <div className={styles.systemMap}><SheetMaps /></div>
+        </section>
       )}
 
       {components.map((c, i) => {
