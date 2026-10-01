@@ -27,42 +27,42 @@ export const metadata = {
    R Q8 (contract with named asset ownership; a staff-led stewardship
    program). Kendyl’s quote moves to The Outcome column (impact, not
    reflection). */
-/* FS176: copy first. Her tone, set by her own line “With subject matter
-   this emotional,”: every bullet opens inside the project (a condition, a
-   phase, a moment), never a label and a colon. Equal budget per card: one
-   statement (~12 words) + three bullets (~16–25 words). Every line traces
-   to her freestyle (above) or her rehearsal answers (R). */
+/* FS181: her nine two-word heads (verbatim), each bullet rewritten so its
+   sentence proves its head. Sources: her freestyle (above) and R = her
+   rehearsal answers. Heads render on their own line, not as “Head: …”. */
 const CARDS = [
   {
     id: 'sense', verb: 'Sense', title: 'What I learned',
     line: 'Honor staff-led innovation from the start, rather than imposing designer-led\u00a0solutions.',
     list: [
-      'With subject matter this emotional, the work had to speak to staff experience, build trust across hierarchy, and solve urgent\u00a0problems.',
-      'Pre-existing relationships opened the door, and respected doctors and administrative fellows bridged the gaps between staff and\u00a0leadership.',
-      'We couldn’t change what matters most, like pay, time off, and staffing, but the data platform carried staff voices to administrators who might not have heard\u00a0them.',
+      { head: 'Build Trust', text: 'With subject matter this emotional, the work had to speak to staff experience and earn trust across hierarchy before it could solve\u00a0anything.' },
+      { head: 'Be Relational', text: 'Pre-existing relationships opened the door, and a transdisciplinary team of designers, clinicians, makers, artists, and donors kept it\u00a0moving.' },
+      { head: 'Bridge Gaps', text: 'We couldn’t change what matters most, like pay, time off, and staffing, but respected doctors and administrative fellows carried staff realities to\u00a0leadership.' },
     ],
   },
   {
-    id: 'weave', verb: 'Weave', title: 'What I brought together',
-    line: 'I moved from theoretical to tangible design, as a researcher who also\u00a0builds.',
+    id: 'weave', verb: 'Weave', title: 'What I’ll carry forward',
+    line: 'Moving from theoretical to tangible design gave me practices I’ll\u00a0keep.',
     list: [
-      'In the research phase, I designed and facilitated workshops, feedback sessions, synthesis, and ideation, and pitched the concept to hospital\u00a0leadership.',
-      'When production began, I prototyped, adapted to timelines and constraints like the late call for doors, and coordinated with\u00a0stakeholders.',
-      /* R Q3: “Once the study was running, I led data visualization of the
-         collected data for an internal reporting visualization site” + “I
-         did not own any specific component” */
-      'Once the study was running, I designed and built the data dashboard, the one component I led, to report what staff were telling\u00a0us.',
+      /* R Q3: “I specifically drafted the workshop to be trauma-informed and
+         responsive by providing a worksheet for mindfulness and wellbeing
+         with journal prompts and somatic exercises so as to not be
+         extractive in collecting emotional data.” */
+      { head: 'Practice Reciprocity', text: 'In the grief workshop I led, staff left with a worksheet of journal prompts and somatic exercises, so we gave back as much as we\u00a0asked.' },
+      /* R Q6: doors required late; redesigned; playtesters confirmed. */
+      { head: 'Embrace Constraints', text: 'When admin required doors late in production, we redesigned in acrylic, and playtesters found the pod private without feeling closed\u00a0off.' },
+      /* R Q3: the dashboard she led; freestyle: voices to administrators. */
+      { head: 'Innovate Intentionally', text: 'I designed and built the data dashboard, the one component I led, so what staff told us reached the administrators who could act on\u00a0it.' },
     ],
   },
   {
     id: 'shape', verb: 'Shape', title: 'What’s next',
     line: 'The installation alone was never the solution; it was the starting\u00a0point.',
     list: [
-      /* “conversations their days rarely allowed”: the research’s “There is no time to grieve” and R Q1’s “difficult to sneak away” */
-      'With enough respite to stop drowning, staff could start the conversations their days rarely allowed and innovate together on\u00a0solutions.',
-      'Throughout the pilot, creative expression workshops drew strong turnout and showed the potential for expanded programming alongside the\u00a0installation.',
-      /* “beyond the pilot”: R Q8, “staff-led and structurally supported beyond the components” */
-      'The next iteration builds on both, expanding the programming and involving more staff in shaping it, so it continues beyond the\u00a0pilot.',
+      { head: 'Build Capacity', text: 'With enough respite to stop drowning, staff could start the conversations their days rarely allowed and innovate together on\u00a0solutions.' },
+      { head: 'Expand Engagement', text: 'Creative expression workshops drew strong turnout throughout the pilot, so programming will grow beyond the\u00a0installation.' },
+      /* R Q8: “staff-led and structurally supported beyond the components” */
+      { head: 'Community Ownership', text: 'The next iteration involves more staff in shaping it, so Groundswell becomes staff-led and continues beyond the\u00a0pilot.' },
     ],
   },
 ]
@@ -71,7 +71,7 @@ export default function CloseLab() {
   return (
     <div className={`${sheet.inner} ${s.page}`}>
       <DarkTheme />
-      <p className={s.kicker}>Groundswell · FS176 lab · private</p>
+      <p className={s.kicker}>Groundswell · FS181 lab · private</p>
 
       <h2 className={s.labH}>The reflection</h2>
       <Triptych cards={CARDS} />
