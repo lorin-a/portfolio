@@ -5,7 +5,7 @@
 **What we're doing: THE GROUNDSWELL FOLDER SHEET, near final.** Branch `feat/folder-expand`,
 pushed to the PRIVATE mirror only (`git push private feat/folder-expand`; `origin` is public).
 See it: `npm run dev -- -p 3005`, scroll to Groundswell, **Open project** (hard-refresh).
-Ledger FS20–FS211 below. Final-touches round open from FS156.
+Ledger FS20–FS212 below. Final-touches round open from FS156.
 
 **Next move (updated 2026-10-01):** the reflection is live in the sheet (FS186). Then: Lorin's final touches (her words: "I will make final touches tomorrow"). Take
 her notes one at a time, ledger-first.
@@ -237,6 +237,7 @@ funding, captions, card note).
 | FS209 | "there are more pages with different designs to show, the pod brakdown, the survey page, keep exploring the site to make sure we show it all" (2026-10-01) | 💬 FULL SET, awaiting her pick: crawled every lens × mode × sub-tab, hover/tap states, and routes; 19 distinct views frosted in docs/dashboard-redacted/full-set/ (01–05 art wall: circles, entries, bars, timeline, table · 06–09 pod: months w/ hover, time of day, breakdown, timeline · 10–12 meditations: circles, bars, timeline · 13–16 surveys: theme circles, responses, six scales, themes · 17 interactive display · 18 generative wall · 19 study report cover). Survey pages deep-frosted (plotted lines + staff quotes) because the shapes and quotes are study results. Zero real digits in all 19. Skipped: /styleguide (password page), admin hub (needs admin login) |
 | FS210 | "Im not sure how I feel about these, the motion is the most impressive part. I worry these screenshots will degrade the value of the design. Thanks for making them though. Are there any alternatives I have not thought of yet? If not, I might just keep 3 diverse screen recordings blured" (2026-10-01) | 💬 ANSWERED: two motion-keeping alternatives (frosted recordings from the live site; real motion on illustrative data via intercepted API responses); if she keeps blurred recordings, the blur must be baked into the files (CSS blur leaves the data downloadable) |
 | FS211 | "what are some even more creative ways to give someone a general overview of the data interaction? a 2x4 grid showcasing motion and interaction? I'm not that worried about data breeach" (2026-10-01) | 💬 ANSWERED with options; recommended her 2×4 grid as an “interaction index” with one tile playing at a time; awaiting her go |
+| FS212 | "oops i meant 2x2 but whatever works! Let's think about what we are showing the reader, my skill in qual + quant data storytelling which does make me think showcasing interactions would be the best, it could be s little library of interactions/motion hover to play or something?" (2026-10-01) | ⏳ BUILDING a 2×2 interaction library in the lab |
 =======
 | FS193 | "i need this to look 50% neater, better orgnanized and simple" (2026-10-01), read as the Acknowledgements | ⏳ IN PROGRESS |
 >>>>>>> parent of f51f3e4 (feat(sheet): acknowledgements in one format: name over one-line role, three labelled lines (FS193))
