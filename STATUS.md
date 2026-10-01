@@ -5,7 +5,7 @@
 **What we're doing: THE GROUNDSWELL FOLDER SHEET, near final.** Branch `feat/folder-expand`,
 pushed to the PRIVATE mirror only (`git push private feat/folder-expand`; `origin` is public).
 See it: `npm run dev -- -p 3005`, scroll to Groundswell, **Open project** (hard-refresh).
-Ledger FS20–FS204 below. Final-touches round open from FS156.
+Ledger FS20–FS205 below. Final-touches round open from FS156.
 
 **Next move (updated 2026-10-01):** the reflection is live in the sheet (FS186). Then: Lorin's final touches (her words: "I will make final touches tomorrow"). Take
 her notes one at a time, ledger-first.
@@ -230,6 +230,7 @@ funding, captions, card note).
 | FS202 | Change "The team talking through the synthesis wall." to "rehearsing a playtest of a generative workshop" (2026-10-01, gallery notes) | ✅ SHIPPED: “Rehearsing a playtest of a generative workshop.” |
 | FS203 | change "Two team members with a basket of paper orchids beside an orchid prompt poster." to "Women in White Coats generative workshop with female oncology leadership" (or something like that.) (2026-10-01, gallery notes) | ✅ SHIPPED, her “or something like that”: “The Women in White Coats generative workshop, with women leaders in oncology.” |
 | FS204 | Change "Laying out a printed mural panel." tp "Assembling the Groundswell Garden" (2026-10-01, gallery notes) | ✅ SHIPPED: “Assembling the Groundswell Garden.” |
+| FS205 | "for \"Practice Reciprocity.\" another time that we were reciprocal in generative research was creating thank you cards with hand painted orchid bouteniers for women in white coats, we could generalize that all generative research activities and workshops included offerings or something -- acknowledging that we did not have access to funds to pay for their time." (2026-10-01) | ⏳ IN PROGRESS |
 =======
 | FS193 | "i need this to look 50% neater, better orgnanized and simple" (2026-10-01), read as the Acknowledgements | ⏳ IN PROGRESS |
 >>>>>>> parent of f51f3e4 (feat(sheet): acknowledgements in one format: name over one-line role, three labelled lines (FS193))
