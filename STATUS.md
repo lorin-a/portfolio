@@ -2,6 +2,16 @@
 
 ## ▶ NEXT SESSION (planned 2026-10-01): THE SHEET FOR THE OTHER CASE STUDIES
 
+**Next move:** build BirthStory’s sheet. Copy `content/sheets/_template.js` to `content/sheets/birthstory.js`, fill it from `docs/case-study-editorial/sources/birthstory/` (her words; `[LORIN TO WRITE]` where none), pull more media from Cloudinary `portfolio/BirthStory/` (91 assets; admin key is in .env.local), wire `sheet={…}` on the BirthStory `<ProjectPreview>`, and review with her in the lab before anything ships.
+**Then:** SomeBuddy, Transition Design, Bridging the G.A.P., Whelm (thinnest; needs her facts first). Settle the source conflicts listed below as each project comes up.
+
+**Shipped live 2026-10-01 (lorin.work):**
+- the Groundswell folder sheet with Mapping the System (FS289)
+- folder tab labels centered (FS290)
+- nav name fades while a sheet is open (FS292)
+- hero word lands set after a window resize (FS293)
+- only Groundswell opens as a sheet; the others link to Medium again (FS294)
+
 **Her brief (FS295):** replicate the Groundswell open-project view for the other case studies, customized to whatever content each project actually has.
 
 **Where things stand (checked 2026-10-01):**
