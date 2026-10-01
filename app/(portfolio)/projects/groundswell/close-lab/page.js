@@ -27,29 +27,39 @@ export const metadata = {
    R Q8 (contract with named asset ownership; a staff-led stewardship
    program). Kendyl’s quote moves to The Outcome column (impact, not
    reflection). */
+/* FS174: distilled from her freestyle above (free rein for this exercise,
+   FS172). Kept to the four-part grammar: symbol · label · statement · two
+   bullets. Cut (hers to restore): the three resonance criteria (speak to
+   their experience, trust across hierarchy, tangible solutions); the FS173
+   Q8 items (contract, stewardship program), which her new “next” replaces.
+   The relationships lesson moved from her Shape paragraph to Learned,
+   where it is a lesson. */
 const CARDS = [
   {
     id: 'sense', verb: 'Sense', title: 'What I learned',
-    line: 'Honor the work already being done, and find ways to uplift\u00a0it.',
+    line: 'Honor staff-led innovation from the start, rather than imposing designer-led\u00a0solutions.',
     list: [
-      'The “cold” email we came to fix was a staff member’s own\u00a0work',
-      'Buy-in takes everyone: a launch that missed staff shrank the\u00a0study',
+      'Trust ran on relationships: a transdisciplinary team, and a senior advocate to\u00a0leadership',
+      'We couldn’t fix pay, time off, or staffing, but the data platform carried staff voices to\u00a0administrators',
     ],
   },
   {
+    /* Her question: “what story should this tell about me?” Answer: the
+       rare thing, research AND production. Statement is Claude’s phrasing
+       of her “I moved from theoretical to tangible design experience”. */
     id: 'weave', verb: 'Weave', title: 'Who I became',
-    line: 'I grew into a data visualization\u00a0designer.',
+    line: 'A design researcher who builds what the research asks\u00a0for.',
     list: [
-      'Took my first installation from concept to\u00a0build',
-      'Secured donors and pitched hospital\u00a0leadership',
+      'Research: ran workshops and feedback sessions, synthesized, and pitched to\u00a0stakeholders',
+      'Build: prototyped to production deadlines, and led the data\u00a0dashboard',
     ],
   },
   {
     id: 'shape', verb: 'Shape', title: 'What’s next',
-    line: 'Make Groundswell staff\u2011led, so it outlasts the\u00a0pilot.',
+    line: 'The installation was a starting point: enough respite to stop drowning, start talking, and solve problems\u00a0together.',
     list: [
-      'A stewardship program: workshop templates, onboarding, a language\u00a0guide',
-      'Agreements that name contributions and ownership from day\u00a0one',
+      'Creative workshops drew strong turnout, so the next iteration expands\u00a0programming',
+      'More staff involvement, so Groundswell is carried by the people it\u00a0serves',
     ],
   },
 ]
@@ -58,7 +68,7 @@ export default function CloseLab() {
   return (
     <div className={`${sheet.inner} ${s.page}`}>
       <DarkTheme />
-      <p className={s.kicker}>Groundswell · FS173 lab · private</p>
+      <p className={s.kicker}>Groundswell · FS174 lab · private</p>
 
       <h2 className={s.labH}>The reflection</h2>
       <Triptych cards={CARDS} />
