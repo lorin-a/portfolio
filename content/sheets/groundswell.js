@@ -179,11 +179,11 @@ export const groundswell = {
         stills:  [
           { key: 'gs-artwall',           alt: 'A staff member adds a contribution to the Groundswell Garden wall.' },
           { key: 'gs-artwall-detail-01', alt: 'Writing a response to one of the guided prompts at the wall.' },
-          { key: 'gs-artwall-detail-02', alt: 'Close detail of the painted flowers and pinned contributions.' },
+          { key: 'gs-artwall-detail-02', alt: 'Close detail of the spectrum of emotion tags.' }  /* FS196 */,
           { key: 'gs-artwall-detail-03', alt: 'A staff member points to a contribution on the wall.' },
           /* FS121: this component's own view in the data dashboard, lightly
              blurred (FS120) so the design reads and the numbers do not. */
-          { type: 'video', key: 'gs-display-view', blur: 5, alt: 'The art wall in the data dashboard: each emotion as a painted bubble, sized by how often it was chosen.' },
+          { type: 'video', key: 'gs-display-view', blur: 5, alt: 'The art wall in the interactive data dashboard.' },  /* FS197 */
         ],
       },
       name: 'Groundswell Garden Community Art Wall',
@@ -207,10 +207,10 @@ export const groundswell = {
         stills:  [
           { key: 'gs-pod',             alt: 'The Groundswell Restorative Pod in the hallway.' },
           { type: 'video', key: 'gs-walkthrough-video', alt: 'Walkthrough of the Groundswell Restorative Pod.' },
-          { key: 'gs-pod-detail-01',   alt: 'Two staff members at the table inside the pod.' },
+          { key: 'gs-pod-detail-01',   alt: 'Pod interior with two people engaging with materials.' },  /* FS198 */
           { key: 'gs-pod-detail-02',   alt: 'Reflection cards and the pod’s invitation to set down what you carry.' },
           { key: 'gs-pod-detail-03',   alt: 'Opening the mindfulness library on a phone inside the pod.' },
-          { key: 'gs-making-facade',   alt: 'The pod’s painted facade, redesigned when doors were required.' },
+          /* FS199: the painted-facade photo removed */
           { type: 'video', key: 'gs-pod-data', blur: true, alt: 'The pod in the data dashboard: minutes of use by month.' },
         ],
       },
@@ -301,7 +301,7 @@ export const groundswell = {
         stills:  [
           { key: 'gs-ctb-detail-01',     alt: 'The redesigned email template in a browser window.' },
           { key: 'gs-ctb-detail-02',     alt: 'The email template open on a laptop.' },
-          { key: 'gs-ctb-detail-03',     alt: 'Typing into the email template.' },
+          /* FS200: the typing photo removed */
           { key: 'groundswell-ctb-docs', alt: 'The email template open at a workstation in the office.' },
         ],
       },
@@ -329,6 +329,9 @@ export const groundswell = {
           { type: 'video', key: 'gs-display-view', blur: 5, alt: 'The art wall view: each emotion as a painted bubble, sized by how often it was chosen.' },
           { type: 'video', key: 'gs-pod-data', blur: true, alt: 'The pod view: minutes of use by month.' },
           { type: 'video', key: 'gs-new-meditations', blur: true, alt: 'The mindfulness library view: listens for each meditation.' },
+          /* FS201: the staff surveys view. Survey results are study data
+             (FS116), so it blurs at the art wall's stronger 5px */
+          { type: 'video', key: 'gs-surveys-view', blur: 5, alt: 'The staff surveys view in the interactive data dashboard.' },
         ],
       },
       name: 'The data dashboard',
@@ -365,13 +368,13 @@ export const groundswell = {
       title: 'Research',
       images: [
         { key: 'gs-sense-affinity-01', alt: 'Affinity mapping interview findings on the wall.' },
-        { key: 'gs-sense-affinity-02', alt: 'The team talking through the synthesis wall.' },
+        { key: 'gs-sense-affinity-02', alt: 'Rehearsing a playtest of a generative workshop.' },  /* FS202 */
         { key: 'gs-sense-affinity-03', alt: 'Mapping the tetrahedron analysis.' },
         { key: 'gs-workshop-grief-01', alt: 'The grief workshop with oncology staff.' },
         { key: 'gs-workshop-grief-02', alt: 'Staff working through prompts at the grief workshop.' },
         { key: 'gs-workshop-flower-01', alt: 'The flower workshop at the table.' },
         { key: 'gs-workshop-flower-04', alt: 'Staff coloring “Nourishing the Flower” worksheets at the flower workshop.' },
-        { key: 'gs-workshop-coats-01',  focus: '50% 15%',  /* portrait: keep the faces in the cover crop */ alt: 'Two team members with a basket of paper orchids beside an orchid prompt poster.' },
+        { key: 'gs-workshop-coats-01',  focus: '50% 15%',  /* portrait: keep the faces in the cover crop */ alt: 'The Women in White Coats generative workshop, with women leaders in oncology.' },  /* FS203 */
         { key: 'gs-workshop-coats-03',  alt: 'Paper orchids and “Thank you” cards inviting staff to share their experience.' },
       ],
     },
@@ -382,7 +385,7 @@ export const groundswell = {
         { key: 'gs-making-mockup-01',    alt: 'Design options for the pod’s painted facade.' },
         { key: 'gs-making-figma-01',     alt: 'Laying out the art wall’s pieces and signage in Figma.' },
         { key: 'gs-making-build-01',     alt: 'A thumbs-up beside the nearly finished pod in the studio.' },
-        { key: 'gs-making-build-04',     alt: 'Laying out a printed mural panel.' },
+        { key: 'gs-making-build-04',     alt: 'Assembling the Groundswell Garden.' },  /* FS204 */
         { key: 'gs-making-build-05',     alt: 'Fitting the facade panels.' },
         { key: 'gs-making-build-02',     alt: 'Assembling the pod’s interior.' },
         { key: 'gs-making-install-01',   alt: 'Installing the pod in the hallway.' },
