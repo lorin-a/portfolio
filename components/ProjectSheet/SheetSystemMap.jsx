@@ -157,7 +157,7 @@ export default function SheetSystemMap({ tone = 'paper' }) {
   const uid = useId().replace(/:/g, '')
   const [open, setOpen] = useState(false)
   const dlg = useRef(null)
-  const title = 'Synthesis system map. Four themes from affinity mapping, recognition, systemic issues, environment, and culture, each connected to the other three in a tetrahedron. Six numbered tensions carry the scenarios staff described. At the centre, the void: patient-centered care neglects the care worker. Beside each theme, what Groundswell built in answer.'
+  const title = 'Synthesis system map. Four themes from affinity mapping, recognition, systemic issues, environment, and culture, each connected to the other three in a tetrahedron. Six numbered tensions carry the scenarios staff described. At the center, the void: patient-centered care neglects the care worker. Beside each theme, what Groundswell built in answer.'
 
   useEffect(() => {
     const d = dlg.current

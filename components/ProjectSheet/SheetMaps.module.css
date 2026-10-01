@@ -125,7 +125,8 @@
   to { opacity: 1; transform: none; }
 }
 
-.fPair { display: grid; gap: 0.4rem; max-width: 48rem; }
+.fPair { display: grid; align-content: start; gap: 0.45rem; max-width: 34rem; }
+.fPair .fBig { margin-bottom: 0.1rem; }
 
 .fHead {
   display: flex;
@@ -160,8 +161,8 @@
   margin: 0;
   font-family: var(--font-body);
   font-size: var(--step-small);
-  line-height: 1.6;
-  text-wrap: pretty;
+  line-height: 1.55;
+  text-wrap: balance;
   opacity: 0.85;
 }
 
@@ -227,7 +228,7 @@
   font-family: var(--font-body);
   font-size: var(--step-small);
   line-height: 1.45;
-  text-wrap: pretty;
+  text-wrap: balance;
 }
 
 .fList li::before {
@@ -245,10 +246,10 @@
 
 .fDefs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.7rem 1.5rem; margin: 0; }
 .fDefs dt { font-family: var(--font-heading); font-size: var(--step-body); }
-.fDefs dd { margin: 0.1rem 0 0; font-family: var(--font-body); font-size: var(--step-small); line-height: 1.4; opacity: 0.8; }
+.fDefs dd { margin: 0.1rem 0 0; font-family: var(--font-body); font-size: var(--step-small); line-height: 1.4; text-wrap: balance; opacity: 0.8; }
 
 .fChain {
-  margin: 0.35rem 0 0;
+  margin: 0.4rem 0 0;
   font-family: var(--font-body);
   font-size: var(--step-label);
   font-weight: 600;
@@ -260,11 +261,11 @@
 
 /* FS270: the instruction, on the diagram */
 .hintG { pointer-events: none; animation: hint-in 500ms var(--ease-out) both; }
-.hintG rect { fill: #F4F1EC; }
-.hintG text { fill: #2A2624; font-family: var(--font-body); font-size: 26px; font-weight: 600; text-anchor: middle; }
-.cursor path { fill: #F4F1EC; stroke: #2A2624; stroke-width: 2.5; stroke-linejoin: round; }
+.hintG rect { fill: #C5CFA6; }
+.hintG text { fill: #23211F; font-family: var(--font-body); font-size: 26px; font-weight: 600; text-anchor: middle; }
+.cursor path { fill: #C5CFA6; stroke: #2A2624; stroke-width: 2.5; stroke-linejoin: round; }
 .cursor { animation: tap 2.2s var(--ease-in-out) infinite; }
-.ripple { fill: none; stroke: #F4F1EC; stroke-width: 3; transform-box: fill-box; transform-origin: center; animation: ripple 2.2s var(--ease-out) infinite; }
+.ripple { fill: none; stroke: #C5CFA6; stroke-width: 3; transform-box: fill-box; transform-origin: center; animation: ripple 2.2s var(--ease-out) infinite; }
 
 @keyframes hint-in { from { opacity: 0; } to { opacity: 1; } }
 

@@ -95,7 +95,7 @@ export default function SheetSynthesis() {
   return (
     <figure ref={wrap} className={`${m.glass} ${s.synth}`} data-reduced={reduced || undefined}>
       <svg className={s.canvas} viewBox="0 0 1200 700" role="img"
-        aria-label="Synthesis map. Staff quotes from field research; four themes from affinity mapping: recognition, environment, culture, and systemic issues; scenarios where they meet; and at the centre, the void: patient-centered care neglects the care worker. Groundswell's components answer each theme.">
+        aria-label="Synthesis map. Staff quotes from field research; four themes from affinity mapping: recognition, environment, culture, and systemic issues; scenarios where they meet; and at the center, the void: patient-centered care neglects the care worker. Groundswell's components answer each theme.">
         {/* 1 · what we heard */}
         <g style={{ opacity: step === 0 ? 1 : step === 3 ? 0 : 0.18 }} className={s.quotes}>
           {QUOTES.map((q, i) => <text key={i} x={q.x} y={q.y}>{lines(q.t, q.x, 34, q.a)}</text>)}

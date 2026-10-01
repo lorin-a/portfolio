@@ -35,7 +35,7 @@ const NAMES = {
   sys: [['Systemic', 'Issues'], ['Compassion'], ['CTB Email']],
 }
 /* the board's own one-line definitions of each theme */
-const THEME_SUB = { rec: 'Feeling valued and seen', sys: 'Daily tasks and structures', env: 'Benefits, funding, and space', cul: 'Grief and work-life balance' }
+const THEME_SUB = { rec: 'Feeling valued and seen', sys: 'Daily tasks and structures', env: 'Benefits, funding, and space', cul: 'Grief and work‑life balance' }
 const THEME = { rec: 'Recognition', env: 'Environment', cul: 'Culture', sys: 'Systemic Issues' }
 const VALUE = { rec: 'Humanity', env: 'Normalcy', cul: 'Together', sys: 'Compassion' }
 const COMP = { rec: 'Garden Art Wall', env: 'Restorative Pod', cul: 'Reflection Cards', sys: 'CTB Email' }
@@ -381,9 +381,10 @@ export default function SheetMaps() {
     foot = (
       <div className={s.fSplit}>
         <div className={s.fPair}>
-          <p className={s.fKick}>{THEME[id]} <span aria-hidden="true">→</span> {VALUE[id]} <span aria-hidden="true">→</span></p>
+          <p className={s.fKick}>Built on {VALUE[id].toLowerCase()}</p>
           <p className={s.fBig}>{COMP[id]}</p>
           <p className={s.fNote}>Reached at {list(from)}.</p>
+          <p className={s.fChain}>{THEME[id]} <span>→</span> {VALUE[id]} <span>→</span> {COMP[id]}</p>
         </div>
         {answers(id)}
       </div>
@@ -392,7 +393,7 @@ export default function SheetMaps() {
     foot = (
       <div className={s.fSplit}>
         <div className={s.fPair}>
-          <p className={s.fKick}>The void, at the centre</p>
+          <p className={s.fKick}>The void, at the center</p>
           <p className={s.fBig}>Patient-centered care neglects the people who give it.</p>
           <p className={s.fNote}>Line weight shows how many scenarios staff described.</p>
         </div>
