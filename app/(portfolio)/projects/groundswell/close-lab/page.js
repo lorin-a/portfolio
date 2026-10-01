@@ -2,6 +2,7 @@ import sheet from '@/components/ProjectSheet/ProjectSheet.module.css'
 import s from './page.module.css'
 import DarkTheme from './DarkTheme'
 import Triptych from './Triptych'
+import MotionLibrary from './MotionLibrary'
 
 /* FS171 LAB (2026-10-01): the reflection, edited to what earns its place.
    Each card has one job and one budget: a statement, then at most three
@@ -70,14 +71,32 @@ const CARDS = [
   },
 ]
 
+/* FS212: four interactions, each a different meeting of qual and quant.
+   Recorded from the live dashboard (groundswell-admin-test). */
+const MOTION = [
+  { kind: 'Quant → Qual', title: 'Size, then stories', src: '/video/gs-dashboard/1-size-to-stories.mp4', poster: '/video/gs-dashboard/1-size-to-stories.jpg',
+    text: 'Each emotion is sized by how often staff chose it. Tap one to read the handwritten tags behind the\u00a0count.' },
+  { kind: 'Quant', title: 'Filter the patterns', src: '/video/gs-dashboard/2-filter-the-patterns.mp4', poster: '/video/gs-dashboard/2-filter-the-patterns.jpg',
+    text: 'Nine months of pod sessions by length. Toggle the bands to see how staff actually used the\u00a0space.' },
+  { kind: 'Qual + Quant', title: 'In their words, in the data', src: '/video/gs-dashboard/3-words-and-data.mp4', poster: '/video/gs-dashboard/3-words-and-data.jpg',
+    text: 'Each survey theme pairs what staff wrote with the measure that backs\u00a0it.' },
+  { kind: 'Qual, by touch', title: 'Arrange the feelings', src: '/video/gs-dashboard/4-arrange-the-feelings.mp4', poster: '/video/gs-dashboard/4-arrange-the-feelings.jpg',
+    text: 'On the unit’s display, staff drag the emotions and open them to read each\u00a0other’s\u00a0words.' },
+]
+
 export default function CloseLab() {
   return (
     <div className={`${sheet.inner} ${s.page}`}>
       <DarkTheme />
-      <p className={s.kicker}>Groundswell · FS185 lab · private</p>
+      <p className={s.kicker}>Groundswell · FS212 lab · private</p>
 
       <section className={s.variant}>
-        <h2 className={s.labH}>C, refined</h2>
+        <h2 className={s.labH}>The data dashboard, as an interaction library (FS212)</h2>
+        <MotionLibrary items={MOTION} />
+      </section>
+
+      <section className={s.variant}>
+        <h2 className={s.labH}>The reflection (shipped)</h2>
         <Triptych cards={CARDS} variant="c" />
       </section>
     </div>
