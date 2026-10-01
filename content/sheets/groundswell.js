@@ -97,7 +97,7 @@ export const groundswell = {
        same doc's “over $30,000 in material donations”, and the case
        study's “NookPod donated the restorative pod structure ($13,000
        value)”. Hers to rewrite. */
-    ['Funding', 'The College of Fine Arts at CMU, the UPMC Magee-Womens Hospital Medical Staff Fund, and the Paul D. Schurgot Foundation, with over $30,000 in material donations, including the restorative pod structure from NookPod ($13,000 value).'],
+    ['Funding', 'The College of Fine Arts at CMU, the UPMC Magee-Womens Hospital Medical Staff Fund, and the Paul D. Schurgot Foundation, with over $40,000 in material and service donations, including the restorative pod structure from NookPod ($13,000 value).'],
   ],
 
   /* FS250 + FS280: the three-map exhibit (SheetMaps). Intro drafted from
@@ -135,7 +135,7 @@ export const groundswell = {
        participated in collective feedback, strategizing, prototyping, but I
        did not own any specific component. The exception is the data
        dashboard, which I led: production and design." */
-      'Generative research, content copywriting, project management, fundraising (securing over $30k in donations), and the production and design of the data dashboard. I found the Groundswell name through research into nature metaphors and oncology symbolism. I drafted the workshop scripts and led the grief workshop, designing it to be trauma-informed and responsive so it would not be extractive in collecting emotional data. I applied my knowledge of somatic bodywork to draft the reflection cards. We all took part in feedback, strategy, and prototyping, and I did not own any one component. The exception was the data dashboard, whose production and design I led.',
+      'Generative research, content copywriting, project management, fundraising (securing over $40k in material and service donations), and the production and design of the data dashboard. I found the Groundswell name through research into nature metaphors and oncology symbolism. I drafted the workshop scripts and led the grief workshop, designing it to be trauma-informed and responsive so it would not be extractive in collecting emotional data. I applied my knowledge of somatic bodywork to draft the reflection cards. We all took part in feedback, strategy, and prototyping, and I did not own any one component. The exception was the data dashboard, whose production and design I led.',
 
     /* SHORT VERSIONS for the three-column row (her note FS33, 2026-09-30:
        "shorten text to all match (lorin will edit later)"). PROVISIONAL.

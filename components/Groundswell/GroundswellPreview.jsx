@@ -533,7 +533,7 @@ export default function GroundswellPreview() {
         <Index n="07" label="Ten weeks, four phases" />
         <div className={styles.zMainW}>
           <Reveal as="p" className={styles.body} style={{ maxWidth: '62ch' }}>
-            Over a 10-week production sprint, we turned concept into installation, backed by roughly $30,000 in donated materials and services. I led donor outreach and secured the pod, woodworking, the sensor, the ceramic finger labyrinths, and the door locks. Working remotely, I focused on coordination, documentation, and strategy.
+            Over a 10-week production sprint, we turned concept into installation, backed by over $40,000 in donated materials and services. I led donor outreach and secured the pod, woodworking, the sensor, the ceramic finger labyrinths, and the door locks. Working remotely, I focused on coordination, documentation, and strategy.
           </Reveal>
           <ol className={styles.track}>
             {TIMELINE.map((t, i) => (

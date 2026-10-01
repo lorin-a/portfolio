@@ -364,7 +364,7 @@ export default function GroundswellSpine({ connectorsSvg }) {
                 <div><dt>Outcome</dt><dd>12-month pilot, launched Oct 2025</dd></div>
               </dl>
               <div className={styles.metaStats}>
-                {[['$30k+', 'in donations'], ['30', 'playtesters'], ['Live', '12-mo QI study']].map(([n, c]) => (
+                {[['$40k+', 'in donations'], ['30', 'playtesters'], ['Live', '12-mo QI study']].map(([n, c]) => (
                   <div key={c} className={styles.stat}><span className={styles.statNum}>{n}</span><span className={styles.statCap}>{c}</span></div>
                 ))}
               </div>
@@ -437,7 +437,7 @@ export default function GroundswellSpine({ connectorsSvg }) {
             <Reveal as="p" className={styles.beatKicker}>Outcome</Reveal>
             <Statement>Installed, and live as a <em>grant-funded</em> 12-month study.</Statement>
             <Reveal className={styles.statBand}>
-              {[['$30k+', 'in donations secured'], ['Oct 2025', 'launched at UPMC Magee']].map(([n, c]) => (
+              {[['$40k+', 'in donations secured'], ['Oct 2025', 'launched at UPMC Magee']].map(([n, c]) => (
                 <div key={c} className={styles.statBig}><span className={styles.statBigNum}>{n}</span><span className={styles.statBigCap}>{c}</span></div>
               ))}
             </Reveal>
