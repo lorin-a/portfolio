@@ -230,11 +230,9 @@ export default function SheetContent({ sheet, num, title, tagline, titleId }) {
           revised from the old Groundswell page’s “In gratitude” section. */}
       {acknowledgements ? (
         <section className={styles.thanks} data-reveal="0" aria-labelledby="sheet-thanks">
-          <div className={styles.thanksIntro}>
-            <h3 id="sheet-thanks" className={styles.thanksLabel}>Acknowledgements</h3>
-            {acknowledgements.intro && <p className={styles.thanksLead}>{acknowledgements.intro}</p>}
-            <p className={styles.thanksPartners}>{acknowledgements.partners}</p>
-          </div>
+          {/* FS195: 3 × 3 — people in the first row; Acknowledgements,
+              Donors & Partners, and Funding in the second */}
+          <h3 id="sheet-thanks" className={styles.srOnly}>Acknowledgements</h3>
           {acknowledgements.columns.map((col) => (
             <div key={col.title} className={styles.thanksCol}>
               <h4 className={styles.thanksColTitle}>{col.title}</h4>
@@ -246,12 +244,10 @@ export default function SheetContent({ sheet, num, title, tagline, titleId }) {
               {col.note && <p className={styles.thanksNote}>{col.note}</p>}
             </div>
           ))}
-          {acknowledgements.footer?.map((row, i) => (
-            <div key={row.title} className={styles.thanksRow} data-wide={i === 0 || undefined}>
+          {acknowledgements.footer?.map((row) => (
+            <div key={row.title} className={styles.thanksRow}>
               <h4 className={styles.thanksColTitle}>{row.title}</h4>
-              <ul className={styles.thanksInline}>
-                {row.names.map((n) => <li key={n}>{n}</li>)}
-              </ul>
+              <p className={styles.thanksText}>{row.text}</p>
             </div>
           ))}
           {acknowledgements.closing && <p className={styles.thanksClosing}>{acknowledgements.closing}</p>}

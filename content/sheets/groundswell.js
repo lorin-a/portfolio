@@ -440,7 +440,7 @@ export const groundswell = {
      is open. The `credits` above stay as the record. */
   acknowledgements: {
     /* FS189: the lead line removed (restated the sheet’s thesis) */
-    /* FS188: tightened to sit beside the one-line lead */
+    /* FS195: now inside the Acknowledgements cell below */
     partners: 'With Carnegie Mellon’s School of Design, Pitt’s Schools of Medicine and Nursing, and UPMC Magee-Womens Gynecologic Oncology.',
     columns: [
       {
@@ -475,10 +475,17 @@ export const groundswell = {
         ],
       },
     ],
-    /* FS190: donors and funders get their own row, every name scannable */
+    /* FS195: a second row of three under the three columns of people:
+       Acknowledgements · Donors & Partners · Funding, each a label and a
+       short paragraph of matched length. Acknowledgements opens with her
+       own line from the hidden page (“This project is a tribute to the
+       quiet strength, deep compassion, and collective spirit of those who
+       provide oncology care.”); Funding uses her docs/groundswell.md
+       “generous support”. Donors: names only, as she asked. */
     footer: [
-      { title: 'Donors & Partners', names: ['NookPod, the pod structure', 'Schlage', 'Density', 'Fox Woodworks', 'Dixie&Grace', 'Z9 Machinings', 'EHC Industries', 'Deborah Linhart', 'Pamela Meadowcroft', 'Marge Petruska', 'Mark Baskinger'] },
-      { title: 'Funding', names: ['College of Fine Arts, CMU', 'UPMC Magee-Womens Hospital Medical Staff Fund', 'Paul D. Schurgot Foundation'] },
+      { title: 'Acknowledgements', text: 'This project is a tribute to the quiet strength, deep compassion, and collective spirit of those who provide oncology care, made with CMU’s School of Design, Pitt’s Schools of Medicine and Nursing, and UPMC Magee-Womens Gynecologic Oncology.' },
+      { title: 'Donors & Partners', text: 'NookPod, Schlage, Density, Fox Woodworks, Dixie&Grace, Z9 Machinings, EHC Industries, Deborah Linhart, Pamela Meadowcroft, Marge Petruska, and Mark Baskinger.' },
+      { title: 'Funding', text: 'With gratitude for the generous support of the College of Fine Arts at Carnegie Mellon University, the UPMC Magee-Womens Hospital Medical Staff Fund, and the Paul D. Schurgot Foundation, which made the pilot possible.' },
     ],
     /* FS188: the closing thank-you removed at her request. */
   },
