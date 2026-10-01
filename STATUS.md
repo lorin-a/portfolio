@@ -302,6 +302,9 @@ funding, captions, card note).
 | FS266 | "I am also still not convinced of the placement of the void as a circle off center inside, try a triangle that mirrors the inside of the tetrahedron playing into the 3D shape." (2026-10-01) | 💬 SHIPPED: the void is no longer a circle. It is a smaller tetrahedron nested inside the solid, the same form at 30% scale, sage dashed edges, its side face a shade deeper and its hidden edge dashed, centred in the form and clear of every label: the hollow at the heart of the system |
 | FS267 | "Color-wise you are using purple." (2026-10-01) | 💬 SHIPPED: purple removed. Circles are warm charcoal with cream outlines, the side face a cream tint, pills and the stage warm neutral. Colour now carries meaning only: sage = the void, terracotta = what you point at |
 | FS268 | "The what we heard number labeling looks to grandiose" (2026-10-01) | ✅ FIXED: the 01 · 02 · 03 numbers are now small terracotta label-size figures inline with each finding, no longer large italic serif |
+| FS269 | "its looking very dark with a lot of orange, can you improve use of color?" (2026-10-01) | ⏳ IN PROGRESS |
+| FS270 | "I am not happy with the instruction to hover it gets lost as a lebel it should be on the diagram somehow maybe even animated." (2026-10-01) | ⏳ IN PROGRESS |
+| FS271 | "I am finding the bottomw portion where text goes to look rather empty and too much white space" (2026-10-01) | ⏳ IN PROGRESS |
 =======
 | FS193 | "i need this to look 50% neater, better orgnanized and simple" (2026-10-01), read as the Acknowledgements | ⏳ IN PROGRESS |
 >>>>>>> parent of f51f3e4 (feat(sheet): acknowledgements in one format: name over one-line role, three labelled lines (FS193))
