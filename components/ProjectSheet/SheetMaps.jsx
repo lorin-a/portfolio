@@ -183,7 +183,7 @@ function Stage({ view, focus, setFocus, interactive, uid, ready = true, hint = n
         </g>
         <polygon points={['rec', 'sys', 'env'].map((k) => POS[k][0].slice(0, 2).join(',')).join(' ')} fill={`url(#${uid}-front)`} />
         {TENSIONS.map(edge)}
-        <g className={`${s.fade} ${s.voidG}`} data-on={isF('void', 0) || undefined} data-dim={(anyF('t') && !isF('void', 0)) || undefined}
+        <g className={`${s.fade} ${s.voidG}`} data-on={(isF('void', 0) && !soft) || undefined} data-dim={(anyF('t') && !isF('void', 0)) || undefined}
           aria-label="The void: patient-centered care neglects the people who give it" {...(view === 0 ? act({ kind: 'void', id: 0 }) : {})}>
           <polygon className={s.voidSide} points={['rec', 'env', 'cul'].map((k) => vpt(k).join(',')).join(' ')} />
           <polygon className={s.voidFront} points={['rec', 'sys', 'env'].map((k) => vpt(k).join(',')).join(' ')} />
@@ -409,7 +409,7 @@ export default function SheetMaps() {
     foot = (
       <div className={s.fSplit}>
         <div className={s.fPair}>
-          <p className={s.fKick}>The void, at the center</p>
+          <p className={s.fKick}>The Void: The Core Thesis</p>
           <p className={s.fBig}>Patient-centered care neglects the people who give it.</p>
         </div>
         <div className={s.fSide}>

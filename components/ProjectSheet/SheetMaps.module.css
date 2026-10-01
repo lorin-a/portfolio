@@ -82,10 +82,14 @@
 .voidFront { fill: rgba(197, 207, 166, 0.1); stroke: #C5CFA6; stroke-width: 3; stroke-dasharray: 11.78 11.78; stroke-linejoin: round; transition: fill var(--motion-fast) var(--ease-out); }
 .voidSide { fill: rgba(197, 207, 166, 0.18); stroke: #C5CFA6; stroke-width: 3; stroke-dasharray: 11.78 11.78; stroke-linejoin: round; transition: fill var(--motion-fast) var(--ease-out); }
 .voidBack { stroke: rgba(197, 207, 166, 0.5); stroke-width: 2; stroke-dasharray: 6 9; }
-.voidG[data-on] .voidFront { fill: rgba(197, 207, 166, 0.24); }
-.voidG[data-on] .voidSide { fill: rgba(197, 207, 166, 0.34); }
+.voidG { transition: filter var(--motion-fast) var(--ease-out); }
+.voidG[data-on] { filter: drop-shadow(0 0 22px rgba(197, 207, 166, 0.55)); }
+.voidG[data-on] .voidFront { fill: rgba(197, 207, 166, 0.45); stroke-dasharray: none; stroke-width: 4; }
+.voidG[data-on] .voidBack { stroke: rgba(197, 207, 166, 0.85); }
+.voidG[data-on] .voidName { fill: #F4F7E8; }
+.voidG[data-on] .voidSide { fill: rgba(197, 207, 166, 0.62); stroke-dasharray: none; stroke-width: 4; }
 .voidG:focus-visible .voidFront { stroke-width: 5; }
-.voidName { fill: #C5CFA6; font-family: var(--font-heading); font-size: 34px; font-style: italic; text-anchor: middle; }
+.voidName { transition: fill var(--motion-fast) var(--ease-out); fill: #C5CFA6; font-family: var(--font-heading); font-size: 34px; font-style: italic; text-anchor: middle; }
 
 /* pills: tensions and moments */
 .pillG { outline: none; cursor: default; }
@@ -102,8 +106,8 @@
 .pillG text { fill: #F4F1EC; font-family: var(--font-heading); font-size: 32px; text-anchor: middle; }
 .pillG .pill2 { font-family: var(--font-body); font-size: 27px; }
 .pillG[data-back] rect { stroke: rgba(244, 241, 236, 0.35); }
-.pillG[data-on] rect { fill: #F4F1EC; stroke: #F79C7E; stroke-width: 4; stroke-dasharray: none; }
-.pillG[data-on] text { fill: #2A2624; }
+.pillG[data-on] rect { fill: #5C3D35; stroke: #F79C7E; stroke-width: 4; stroke-dasharray: none; }
+.pillG[data-on] text { fill: #FBE3DA; }
 .pillG:focus-visible rect { stroke-width: 6; }
 
 .say { fill: rgba(244, 241, 236, 0.85); font-family: var(--font-body); font-size: 28px; text-anchor: middle; }
