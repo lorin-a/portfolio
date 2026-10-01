@@ -5,7 +5,7 @@
 **What we're doing: THE GROUNDSWELL FOLDER SHEET, near final.** Branch `feat/folder-expand`,
 pushed to the PRIVATE mirror only (`git push private feat/folder-expand`; `origin` is public).
 See it: `npm run dev -- -p 3005`, scroll to Groundswell, **Open project** (hard-refresh).
-Ledger FS20–FS186 below. Final-touches round open from FS156.
+Ledger FS20–FS187 below. Final-touches round open from FS156.
 
 **Next move (updated 2026-10-01):** the reflection is live in the sheet (FS186). Then: Lorin's final touches (her words: "I will make final touches tomorrow"). Take
 her notes one at a time, ledger-first.
@@ -211,6 +211,7 @@ funding, captions, card note).
 | FS184 | "i like C build off that" (2026-10-01) | ✅ C kept as the base; A, B, D removed from the lab |
 | FS185 | "How would a senior graphic designer make this perfect?" (2026-10-01) | 💬 REFINED in the lab, awaiting her verdict: no grey text (her FS7; the from-word at full ink, the to-word in the practice colour, so the destination glows) · the band a vertical wash of the practice colour fading into the card, not a flat block · one 8px spacing rhythm (32 / 24 / 16) · 1px border · the three marks optically matched in weight · arrow nudged to the words’ centre line · the visible Sense/Weave/Shape word dropped (the mark already says it; kept for screen readers) so every label is one line. Measured: shifts one line, zero short last lines, zero overflow at 1440 / 1024 / 390 |
 | FS186 | "Very good, go with this on the main page but make sure your Sense icon is correct it looks off" (2026-10-01) | ✅ SHIPPED to the sheet: the reflection (lab C, refined) replaces the old close cards (What changed / My role, in full / The biggest lesson), via components/ProjectSheet/SheetReflection.jsx + .module.css, content in groundswell.js `reflection` (old `close` fields kept as the record; the sheet falls back to them when a sheet has no reflection). SENSE MARK FIXED: the shared mark style’s 48px minimum height stretched the Sense dots to 34×55 in a 34px slot; the mark is now held square (34×34 · 45×45 · 40×40). Marks draw on when the row scrolls into view; reduced motion shows them painted. Verified 1440 / 1024 / 390 + reduced motion: shifts one line, zero overflow, zero console errors. NOT moved: Kendyl’s quote (not on the sheet; needs her OK for public use) |
+| FS187 | "I feel that the team/funding session is lacking and not accurelty respecting all involved we need to credit the artist too. Can you locate the acknowledgements section of the old Groundswell product page that we hid from the public? it gave the best description, from there you can revise it to be concise for this." (2026-10-01) | ⏳ LOCATING the old acknowledgements |
 
 ### ⟢ OPEN NOTES LEDGER — Folder sheet (2026-09-06, her verdict on the rebuilt sheet)
 
