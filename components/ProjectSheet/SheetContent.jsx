@@ -232,7 +232,7 @@ export default function SheetContent({ sheet, num, title, tagline, titleId }) {
         <section className={styles.thanks} data-reveal="0" aria-labelledby="sheet-thanks">
           <div className={styles.thanksIntro}>
             <h3 id="sheet-thanks" className={styles.thanksLabel}>Acknowledgements</h3>
-            <p className={styles.thanksLead}>{acknowledgements.intro}</p>
+            {acknowledgements.intro && <p className={styles.thanksLead}>{acknowledgements.intro}</p>}
             <p className={styles.thanksPartners}>{acknowledgements.partners}</p>
           </div>
           {acknowledgements.columns.map((col) => (

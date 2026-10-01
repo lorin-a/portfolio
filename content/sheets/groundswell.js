@@ -439,8 +439,7 @@ export const groundswell = {
      from her FS93 clinical team. Dollar values left out while $30k vs $40k
      is open. The `credits` above stay as the record. */
   acknowledgements: {
-    /* FS188: shortened to hold one line beside the partners line */
-    intro: 'Shaped by the voices of Magee’s oncology staff.',
+    /* FS189: the lead line removed (restated the sheet’s thesis) */
     /* FS188: tightened to sit beside the one-line lead */
     partners: 'With Carnegie Mellon’s School of Design, Pitt’s Schools of Medicine and Nursing, and UPMC Magee-Womens Gynecologic Oncology.',
     columns: [
