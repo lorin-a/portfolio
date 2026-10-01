@@ -34,6 +34,8 @@ const NAMES = {
   cul: [['Culture'], ['Together'], ['Reflection', 'Cards']],
   sys: [['Systemic', 'Issues'], ['Compassion'], ['CTB Email']],
 }
+/* the board's own one-line definitions of each theme */
+const THEME_SUB = { rec: 'Feeling valued and seen', sys: 'Daily tasks and structures', env: 'Benefits, funding, and space', cul: 'Grief and work-life balance' }
 const THEME = { rec: 'Recognition', env: 'Environment', cul: 'Culture', sys: 'Systemic Issues' }
 const VALUE = { rec: 'Humanity', env: 'Normalcy', cul: 'Together', sys: 'Compassion' }
 const COMP = { rec: 'Garden Art Wall', env: 'Restorative Pod', cul: 'Reflection Cards', sys: 'CTB Email' }
@@ -99,7 +101,7 @@ const HINT = ['the void or a tension', 'a value', 'a moment or a component']
 const lines = (arr, x, lh) => arr.map((l, i) => <tspan key={l} x={x} dy={i ? lh : 0}>{l}</tspan>)
 const list = (arr) => arr.join(', ').replace(/, ([^,]*)$/, arr.length > 2 ? ', and $1' : ' and $1')
 
-function Stage({ view, focus, setFocus, interactive, uid, ready = true }) {
+function Stage({ view, focus, setFocus, interactive, uid, ready = true, hint = null }) {
   const act = (f) => (interactive ? {
     tabIndex: 0, role: 'button', onMouseEnter: () => setFocus(f), onFocus: () => setFocus(f), onClick: () => setFocus(f),
   } : {})
@@ -254,6 +256,26 @@ function Stage({ view, focus, setFocus, interactive, uid, ready = true }) {
           </g>
         )
       })}
+
+      {/* FS270: the instruction lives on the diagram, at the highlighted part */}
+      {hint && (() => {
+        const c = view === 0
+          ? [(vpt('rec')[0] + vpt('sys')[0] + vpt('env')[0]) / 3 + 40, (vpt('rec')[1] + vpt('sys')[1] + vpt('env')[1]) / 3 + 52]
+          : view === 1 ? [1045, 325] : [330, 1040]
+        const label = `${hint} to explore`, w = label.length * 15.5 + 52
+        return (
+          <g key={view} className={s.hintG} transform={`translate(${c[0]} ${c[1]})`} aria-hidden="true">
+            <circle className={s.ripple} r="16" />
+            <g className={s.cursor}>
+              <path d="M0 0l0 34 9-8 7 15 6-3-7-15 12-1z" />
+            </g>
+            <g transform="translate(44 14)">
+              <rect x="0" y="0" width={w} height="54" rx="27" />
+              <text x={w / 2} y="36">{label}</text>
+            </g>
+          </g>
+        )
+      })()}
     </svg>
   )
 }
@@ -304,6 +326,16 @@ export default function SheetMaps() {
     guide(i, window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 2000)
   }
 
+
+  const answers = (id) => (
+    <div className={s.fSide}>
+      <p className={s.fKick}>Answers what we heard</p>
+      <ul className={s.fList}>
+        {TENSIONS.filter((t) => t.a === id || t.b === id).map((t) => <li key={t.pill[0]}>{t.pill.join(' ')}</li>)}
+      </ul>
+    </div>
+  )
+
   let foot
   if (focus?.kind === 't') {
     const T = TENSIONS[focus.id]
@@ -318,52 +350,71 @@ export default function SheetMaps() {
   } else if (focus?.kind === 'v') {
     const id = focus.id
     foot = (
-      <div className={s.fPair}>
-        <p className={s.fHead}><span className={s.fKick}>{THEME[id]} became</span></p>
-        <p className={s.fBig}>{VALUE[id]}: “{VSAY[id].t.join(' ').replace(/— /g, '—')}”</p>
+      <div className={s.fSplit}>
+        <div className={s.fPair}>
+          <p className={s.fKick}>{THEME[id]} became</p>
+          <p className={s.fBig}>{VALUE[id]}</p>
+          <p className={s.fNote}>“{VSAY[id].t.join(' ').replace(/— /g, '—')}”</p>
+          <p className={s.fChain}>{THEME[id]} <span>→</span> {VALUE[id]} <span>→</span> {COMP[id]}</p>
+        </div>
+        {answers(id)}
       </div>
     )
   } else if (focus?.kind === 'm') {
     const mo = MOMENTS.find((x) => x.id === focus.id)
     foot = (
-      <div className={s.fPair}>
-        <p className={s.fHead}><span className={s.fKick}>A moment in the shift</span>{mo.t}</p>
-        <p className={s.fBig}>Met by {list(mo.to.map((c) => COMP[c]))}.</p>
+      <div className={s.fSplit}>
+        <div className={s.fPair}>
+          <p className={s.fKick}>A moment in the shift</p>
+          <p className={s.fBig}>{mo.t}</p>
+          <p className={s.fNote}>{mo.to.length === 4 ? 'Met by all four components.' : `Met by ${['', 'one', 'two', 'three'][mo.to.length]} of the four components.`}</p>
+        </div>
+        <div className={s.fSide}>
+          <p className={s.fKick}>Met by</p>
+          <ul className={s.fList}>{mo.to.map((c) => <li key={c}><b>{COMP[c]}</b>, built on {VALUE[c].toLowerCase()}</li>)}</ul>
+        </div>
       </div>
     )
   } else if (focus?.kind === 'c') {
     const id = focus.id
     const from = MOMENTS.filter((mo) => mo.to.includes(id)).map((mo) => mo.t.toLowerCase())
     foot = (
-      <div className={s.fPair}>
-        <p className={s.fHead}><span className={s.fKick}>{THEME[id]} · {VALUE[id]}</span>{COMP[id]}</p>
-        <p className={s.fBig}>Reached at {list(from)}.</p>
+      <div className={s.fSplit}>
+        <div className={s.fPair}>
+          <p className={s.fKick}>{THEME[id]} <span aria-hidden="true">→</span> {VALUE[id]} <span aria-hidden="true">→</span></p>
+          <p className={s.fBig}>{COMP[id]}</p>
+          <p className={s.fNote}>Reached at {list(from)}.</p>
+        </div>
+        {answers(id)}
       </div>
     )
   } else if (view === 0 || focus?.kind === 'void') {
     foot = (
-      <div className={s.fPair}>
-        <p className={s.fHead}><span className={s.fKick}>The void, at the centre</span></p>
-        <p className={s.fBig}>Patient-centered care neglects the people who give it.</p>
-        <p className={s.fNote}>Four themes from affinity mapping enclose it; line weight shows how many scenarios staff described.</p>
+      <div className={s.fSplit}>
+        <div className={s.fPair}>
+          <p className={s.fKick}>The void, at the centre</p>
+          <p className={s.fBig}>Patient-centered care neglects the people who give it.</p>
+          <p className={s.fNote}>Line weight shows how many scenarios staff described.</p>
+        </div>
+        <div className={s.fSide}>
+          <p className={s.fKick}>Four themes enclose it</p>
+          <dl className={s.fDefs}>
+            {['rec', 'sys', 'env', 'cul'].map((k) => <div key={k}><dt>{THEME[k]}</dt><dd>{THEME_SUB[k]}</dd></div>)}
+          </dl>
+        </div>
       </div>
     )
   } else foot = <p className={s.fNote}>{VIEWS[view].caption}</p>
 
   return (
     <figure className={`${m.glass} ${s.maps}`}>
-      <div id="gs-maps" role="tabpanel" className={s.stage} ref={root} onMouseLeave={() => { if (touched.current) setFocus(null) }}>
+      <div id="gs-maps" role="tabpanel" className={s.stage} ref={root} onMouseLeave={() => { if (touched.current) setFocus(DEMO[view]) }}>
         <div className={s.canvas}>
-          <Stage view={view} focus={focus} setFocus={take} interactive uid="gsm-a" ready={ready} />
+          <Stage view={view} focus={focus} setFocus={take} interactive uid="gsm-a" ready={ready}
+            hint={focus?.auto ? (canHover ? 'Hover' : 'Tap') : null} />
         </div>
         <div className={s.foot} aria-live="polite">
           <div key={`${view}-${focus?.kind}-${focus?.id}`} className={s.footIn}>
-            {focus?.auto && (
-              <p className={s.hint}>
-                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3l14 7-6 2-3 6z" /></svg>
-                {canHover ? 'Hover' : 'Tap'} {HINT[view]} to see more
-              </p>
-            )}
             {foot}
           </div>
         </div>
