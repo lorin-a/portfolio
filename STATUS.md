@@ -5,7 +5,7 @@
 **What we're doing: THE GROUNDSWELL FOLDER SHEET, near final.** Branch `feat/folder-expand`,
 pushed to the PRIVATE mirror only (`git push private feat/folder-expand`; `origin` is public).
 See it: `npm run dev -- -p 3005`, scroll to Groundswell, **Open project** (hard-refresh).
-Ledger FS20–FS194 below. Final-touches round open from FS156.
+Ledger FS20–FS195 below. Final-touches round open from FS156.
 
 **Next move (updated 2026-10-01):** the reflection is live in the sheet (FS186). Then: Lorin's final touches (her words: "I will make final touches tomorrow"). Take
 her notes one at a time, ledger-first.
@@ -220,6 +220,7 @@ funding, captions, card note).
 <<<<<<< HEAD
 | FS193 | "i need this to look 50% neater, better orgnanized and simple" (2026-10-01), read as the Acknowledgements | ↩︎ REVERTED (FS194) · was: ✅ SHIPPED: one format only. The label alone; three columns where every entry is exactly a name over a ONE-LINE role (rows align across columns; no role wraps, measured at 1440 / 1024 / 768 / 390); then three labelled lines on a label | text grid: In collaboration with · Donors and partners · Funded by (names separated by quiet dots; official names exact). Roles shortened to fit one line, hers to check: Kristin “Project Lead and PI, CMU”, Taylor “Principal Investigator, UPMC”, Campbell “Supervising Faculty, Duquesne”, Donovan “Supervising Faculty, Pitt Nursing”, Kendyl “Director of Operations, UPMC”, Lorin + Elijah “Design, research, production” (dropped from Lorin: development, coordination, donor outreach; those live on the cover and in her strips), Kelly “Design, research”, Greg “Fabrication, Hardware Assembly”, Gavin “Artwork, “Blue Garden””, Ryan “Walnut tabletop” (Eleanor Mackie Pigma moved to donors) |
 | FS194 | "No i was only talking about the acknowledgement section...revert your changes" (2026-10-01) | ✅ REVERTED, her pick “Everything since the trims”: FS192 (library in one row, one behind-the-scenes gallery, compact supporters) and FS193 (acknowledgements rebuild) undone; code verified identical to the pre-FS192 state (3f82047). Ledger rows kept as the record |
+| FS195 | "Make acknowledgements 3x3 columns, Donors & Partners just a comma list of names remove \"the pod structure\" and make funding + Acknowledgements have enough length of copy to look balanced" (2026-10-01) | ⏳ IN PROGRESS |
 =======
 | FS193 | "i need this to look 50% neater, better orgnanized and simple" (2026-10-01), read as the Acknowledgements | ⏳ IN PROGRESS |
 >>>>>>> parent of f51f3e4 (feat(sheet): acknowledgements in one format: name over one-line role, three labelled lines (FS193))
