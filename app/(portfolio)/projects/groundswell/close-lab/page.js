@@ -27,33 +27,42 @@ export const metadata = {
    R Q8 (contract with named asset ownership; a staff-led stewardship
    program). Kendyl’s quote moves to The Outcome column (impact, not
    reflection). */
-/* FS175: the insights the FS174 distillation traded for brevity, restored
-   in plain words (her freestyle above is the source for every line). Up to
-   three bullets where the insight needs them; no flourishes of Claude’s. */
+/* FS176: copy first. Her tone, set by her own line “With subject matter
+   this emotional,”: every bullet opens inside the project (a condition, a
+   phase, a moment), never a label and a colon. Equal budget per card: one
+   statement (~12 words) + three bullets (~16–25 words). Every line traces
+   to her freestyle (above) or her rehearsal answers (R). */
 const CARDS = [
   {
     id: 'sense', verb: 'Sense', title: 'What I learned',
     line: 'Honor staff-led innovation from the start, rather than imposing designer-led\u00a0solutions.',
     list: [
-      'With subject matter this emotional, the work had to speak to staff experience, build trust across hierarchy, and solve urgent\u00a0problems',
-      'Relationships carried it: a transdisciplinary team with access to both leadership and staff realities, and respected doctors and administrative fellows who bridged the\u00a0gaps',
-      'We couldn’t change what matters most (pay, time off, staffing), but research and the data platform carried staff voices to administrators who might not have heard\u00a0them',
+      'With subject matter this emotional, the work had to speak to staff experience, build trust across hierarchy, and solve urgent\u00a0problems.',
+      'Pre-existing relationships opened the door, and respected doctors and administrative fellows bridged the gaps between staff and\u00a0leadership.',
+      'We couldn’t change what matters most, like pay, time off, and staffing, but the data platform carried staff voices to administrators who might not have heard\u00a0them.',
     ],
   },
   {
     id: 'weave', verb: 'Weave', title: 'Who I became',
-    line: 'I moved from theoretical to tangible design: a researcher who also\u00a0builds.',
+    line: 'I moved from theoretical to tangible design, as a researcher who also\u00a0builds.',
     list: [
-      'As a researcher: designed and facilitated workshops, feedback sessions, synthesis, and ideation, and pitched to\u00a0stakeholders',
-      'As a designer: prototyped, adapted to production timelines and constraints, and led new solutions like the data\u00a0dashboard',
+      'In the research phase, I designed and facilitated workshops, feedback sessions, synthesis, and ideation, and pitched the concept to hospital\u00a0leadership.',
+      'When production began, I prototyped, adapted to timelines and constraints like the late call for doors, and coordinated with\u00a0stakeholders.',
+      /* R Q3: “Once the study was running, I led data visualization of the
+         collected data for an internal reporting visualization site” + “I
+         did not own any specific component” */
+      'Once the study was running, I designed and built the data dashboard, the one component I led, to report what staff were telling\u00a0us.',
     ],
   },
   {
     id: 'shape', verb: 'Shape', title: 'What’s next',
-    line: 'The installation alone was never the solution. It was the starting point: enough respite to stop drowning, start conversations, and innovate\u00a0together.',
+    line: 'The installation alone was never the solution; it was the starting\u00a0point.',
     list: [
-      'Creative expression workshops drew strong turnout and showed the potential for more\u00a0programming',
-      'The next iteration expands programming and staff\u00a0involvement',
+      /* “conversations their days rarely allowed”: the research’s “There is no time to grieve” and R Q1’s “difficult to sneak away” */
+      'With enough respite to stop drowning, staff could start the conversations their days rarely allowed and innovate together on\u00a0solutions.',
+      'Throughout the pilot, creative expression workshops drew strong turnout and showed the potential for expanded programming alongside the\u00a0installation.',
+      /* “beyond the pilot”: R Q8, “staff-led and structurally supported beyond the components” */
+      'The next iteration builds on both, expanding the programming and involving more staff in shaping it, so it continues beyond the\u00a0pilot.',
     ],
   },
 ]
@@ -62,7 +71,7 @@ export default function CloseLab() {
   return (
     <div className={`${sheet.inner} ${s.page}`}>
       <DarkTheme />
-      <p className={s.kicker}>Groundswell · FS175 lab · private</p>
+      <p className={s.kicker}>Groundswell · FS176 lab · private</p>
 
       <h2 className={s.labH}>The reflection</h2>
       <Triptych cards={CARDS} />
