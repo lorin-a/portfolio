@@ -74,20 +74,12 @@ export default function CloseLab() {
   return (
     <div className={`${sheet.inner} ${s.page}`}>
       <DarkTheme />
-      <p className={s.kicker}>Groundswell · FS183 lab · private</p>
+      <p className={s.kicker}>Groundswell · FS185 lab · private</p>
 
-      {[
-        ['a', 'A · Compact header', 'Small mark beside the label on one row; the shift on one line below; bullet heads on their own line.'],
-        ['b', 'B · Mark in the corner', 'The mark steps out of the reading line into the corner, so the card reads label → shift → bullets.'],
-        ['c', 'C · Tinted header band', 'Mark, label, and shift share a soft band in the practice colour; bullet heads run into their sentence.'],
-        ['d', 'D · Open columns, no boxes', 'No card borders: the marks and the space between columns do the grouping; bullet heads run in.'],
-      ].map(([v, name, note]) => (
-        <section key={v} className={s.variant}>
-          <h2 className={s.labH}>{name}</h2>
-          <p className={s.labNote}>{note}</p>
-          <Triptych cards={CARDS} variant={v} />
-        </section>
-      ))}
+      <section className={s.variant}>
+        <h2 className={s.labH}>C, refined</h2>
+        <Triptych cards={CARDS} variant="c" />
+      </section>
     </div>
   )
 }

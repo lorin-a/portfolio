@@ -209,23 +209,69 @@
 }
 .vb .head { padding-right: 3.25rem; }
 
-/* C · a tinted header band */
-.vc .card { padding: 0; overflow: hidden; }
+/* C · a tinted header band, refined to the senior bar (FS185):
+   · no grey text (her FS7): the from-word stays at full ink, the to-word
+     takes the practice colour, so the destination is what glows;
+   · the band is a vertical wash of the practice colour, the brand's
+     gradient language, not a flat muddy block;
+   · one 8px rhythm; one 1px border; marks balanced to the same weight. */
+.vc .card {
+  padding: 0;
+  overflow: hidden;
+  border-width: 1px;
+}
+
 .vc .head {
   display: grid;
-  grid-template-columns: 2.25rem 1fr;
+  grid-template-columns: 2.5rem 1fr;
   column-gap: 0.75rem;
   align-items: center;
-  padding: var(--flow-3) var(--flow-3) var(--flow-2);
-  background: color-mix(in srgb, var(--accent) 13%, transparent);
+  padding: 2rem 2rem 1.5rem;
+  background: linear-gradient(180deg,
+    color-mix(in srgb, var(--accent) 20%, transparent) 0%,
+    color-mix(in srgb, var(--accent) 7%, transparent) 70%,
+    transparent 100%);
 }
-.vc .mark { width: 2.25rem; height: 2.25rem; }
-.vc .shift { grid-column: 1 / -1; margin-top: var(--flow-2); }
-.vc .list { margin: 0; padding: var(--flow-2) var(--flow-3) var(--flow-3); }
+
+.vc .mark {
+  width: 2.5rem;
+  height: 2.5rem;
+  scale: var(--mark-scale, 1);
+}
+
+.vc .card[data-practice='sense'] { --mark-scale: 0.86; }
+.vc .card[data-practice='weave'] { --mark-scale: 1.12; }
+.vc .card[data-practice='shape'] { --mark-scale: 1; }
+
+.vc .shift {
+  grid-column: 1 / -1;
+  margin-top: 1.5rem;
+}
+
+.vc .from { opacity: 1; }
+.vc .to { color: var(--accent); }
+
+.vc .arrow {
+  translate: 0 -0.06em;   /* optical: sit on the words’ centre line */
+  font-size: 0.85em;
+}
+
+.vc .list {
+  margin: 0;
+  padding: 1.5rem 2rem 2rem;
+}
+
+.vc .list li + li { margin-top: 1rem; }
+
+.vc .list li::before {
+  top: 0.62em;
+  width: 0.375rem;
+  height: 0.375rem;
+}
 
 @media (max-width: 599px) {
-  .vc .head { padding: var(--flow-2); }
-  .vc .list { padding: var(--flow-2); }
+  .vc .head { padding: 1.5rem 1.5rem 1.25rem; }
+  .vc .list { padding: 1.25rem 1.5rem 1.5rem; }
 }
 
 /* D · open columns, no boxes */
