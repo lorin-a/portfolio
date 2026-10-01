@@ -5,7 +5,7 @@
 **What we're doing: THE GROUNDSWELL FOLDER SHEET, near final.** Branch `feat/folder-expand`,
 pushed to the PRIVATE mirror only (`git push private feat/folder-expand`; `origin` is public).
 See it: `npm run dev -- -p 3005`, scroll to Groundswell, **Open project** (hard-refresh).
-Ledger FS20–FS181 below. Final-touches round open from FS156.
+Ledger FS20–FS182 below. Final-touches round open from FS156.
 
 **Next move:** Lorin's final touches (her words: "I will make final touches tomorrow"). Take
 her notes one at a time, ledger-first.
@@ -206,6 +206,7 @@ funding, captions, card note).
 | FS179 | "how it changed me is the right tenor what else like that" (2026-10-01) | 💬 OPTIONS GIVEN in that tenor, awaiting her pick |
 | FS180 | "How I evolved? How I expanded? Experience I gained?" (2026-10-01) | 💬 ANSWERED: Claude’s pick “How I evolved” (matches the statement’s from → to); “How I expanded” fits the range idea but reads ambiguous alone; “Experience I gained” is résumé register. Awaiting her pick |
 | FS181 | "lets give a two word start to every bullet point like : Build Trust, Be Relational, Bridge Gaps. Practice Reciprocity, Embrace Constraints, Innovate Intentionally. Build Capacity, Expand Engagement, Community Ownership. But then the context has to match the phrase. As for the weave, lets do What I'll Carry Forward? Idk" (2026-10-01) | 💬 BUILT in the lab, awaiting her verdict. Her nine heads verbatim, each on its own line above a sentence rewritten to prove it. Sense: Build Trust (emotional subject matter → trust across hierarchy) · Be Relational (pre-existing relationships; the transdisciplinary team) · Bridge Gaps (couldn’t change pay/time off/staffing; doctors + admin fellows carried staff realities to leadership). Weave, now “What I’ll Carry Forward” (fits: her heads are practices): statement “Moving from theoretical to tangible design gave me practices I’ll keep.” · Practice Reciprocity (the grief workshop’s worksheet, R Q3) · Embrace Constraints (the doors, R Q6) · Innovate Intentionally (the dashboard she led). Shape: Build Capacity (respite → conversations) · Expand Engagement (workshop turnout) · Community Ownership (staff-led beyond the pilot, R Q8). The data-platform-voices line now lives under Innovate Intentionally |
+| FS182 | "What if we made the header of each VERY simplified like \"Honor Community Wisdom\" or \"Start With What's Working\" and \"Theoretical-->Tangible\" and \" Designer Led-->Community-Led\" or if they are all arrows maybe the first one is \"Designer Innovations-->Community Wisdom\" something like that?" (2026-10-01) | ⏳ BUILDING the all-arrows version in the lab |
 
 ### ⟢ OPEN NOTES LEDGER — Folder sheet (2026-09-06, her verdict on the rebuilt sheet)
 
