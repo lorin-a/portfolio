@@ -5,7 +5,7 @@
 **What we're doing: THE GROUNDSWELL FOLDER SHEET, near final.** Branch `feat/folder-expand`,
 pushed to the PRIVATE mirror only (`git push private feat/folder-expand`; `origin` is public).
 See it: `npm run dev -- -p 3005`, scroll to Groundswell, **Open project** (hard-refresh).
-Ledger FS20–FS185 below. Final-touches round open from FS156.
+Ledger FS20–FS186 below. Final-touches round open from FS156.
 
 **Next move:** Lorin's final touches (her words: "I will make final touches tomorrow"). Take
 her notes one at a time, ledger-first.
@@ -210,6 +210,7 @@ funding, captions, card note).
 | FS183 | "good but visually that is not working for me how can it be one line? and now it looks crowded with the symbols and headers, try a few iterative visual designs of the card content" (2026-10-01) | ✅ BUILT four treatments (A compact header · B mark in corner · C tinted header band · D open columns), every shift on ONE line via a container query; cards stack below 1100px so the shift never shrinks below a readable size. Her pick: C (FS184) |
 | FS184 | "i like C build off that" (2026-10-01) | ✅ C kept as the base; A, B, D removed from the lab |
 | FS185 | "How would a senior graphic designer make this perfect?" (2026-10-01) | 💬 REFINED in the lab, awaiting her verdict: no grey text (her FS7; the from-word at full ink, the to-word in the practice colour, so the destination glows) · the band a vertical wash of the practice colour fading into the card, not a flat block · one 8px spacing rhythm (32 / 24 / 16) · 1px border · the three marks optically matched in weight · arrow nudged to the words’ centre line · the visible Sense/Weave/Shape word dropped (the mark already says it; kept for screen readers) so every label is one line. Measured: shifts one line, zero short last lines, zero overflow at 1440 / 1024 / 390 |
+| FS186 | "Very good, go with this on the main page but make sure your Sense icon is correct it looks off" (2026-10-01) | ⏳ BUILDING into the sheet; checking the Sense mark |
 
 ### ⟢ OPEN NOTES LEDGER — Folder sheet (2026-09-06, her verdict on the rebuilt sheet)
 
