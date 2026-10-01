@@ -308,6 +308,7 @@ funding, captions, card note).
 | FS272 | "You keep doing UK english you need to log universally that I am American USA English not \"centre\"." (2026-10-01) | ✅ LOGGED UNIVERSALLY (global CLAUDE.md inviolable + memory): American English always. Fixed every visible ‘centre’ (maps footer, two synthesis aria labels) |
 | FS273 | "hover to explore button should be green or purple." (2026-10-01) | ✅ FIXED: the on-diagram ‘Hover to explore’ tag, its cursor, and its ripple are sage green |
 | FS274 | "some of the spacing on what we build copy area looks off, there seem to be extra arrows on the left heder and the wrapping of longer lines could look more balanced" (2026-10-01) | ✅ FIXED: the built footer’s stray arrows removed: a component now reads ‘Built on normalcy · Restorative Pod · Reached at … · Environment → Normalcy → Restorative Pod’, the same rhythm as the value footer. Every left column shares one spacing and a narrower measure (34rem); notes, list items, and definitions wrap balanced; ‘work-life’ no longer breaks at its hyphen |
+| FS275 | "do site purple for hover instruction" (2026-10-01) | ✅ FIXED: the hint tag, cursor, and ripple use the site’s plum (--color-plum-soft) |
 =======
 | FS193 | "i need this to look 50% neater, better orgnanized and simple" (2026-10-01), read as the Acknowledgements | ⏳ IN PROGRESS |
 >>>>>>> parent of f51f3e4 (feat(sheet): acknowledgements in one format: name over one-line role, three labelled lines (FS193))

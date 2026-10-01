@@ -261,11 +261,11 @@
 
 /* FS270: the instruction, on the diagram */
 .hintG { pointer-events: none; animation: hint-in 500ms var(--ease-out) both; }
-.hintG rect { fill: #C5CFA6; }
+.hintG rect { fill: var(--color-plum-soft); }
 .hintG text { fill: #23211F; font-family: var(--font-body); font-size: 26px; font-weight: 600; text-anchor: middle; }
-.cursor path { fill: #C5CFA6; stroke: #2A2624; stroke-width: 2.5; stroke-linejoin: round; }
+.cursor path { fill: var(--color-plum-soft); stroke: #2A2624; stroke-width: 2.5; stroke-linejoin: round; }
 .cursor { animation: tap 2.2s var(--ease-in-out) infinite; }
-.ripple { fill: none; stroke: #C5CFA6; stroke-width: 3; transform-box: fill-box; transform-origin: center; animation: ripple 2.2s var(--ease-out) infinite; }
+.ripple { fill: none; stroke: var(--color-plum-soft); stroke-width: 3; transform-box: fill-box; transform-origin: center; animation: ripple 2.2s var(--ease-out) infinite; }
 
 @keyframes hint-in { from { opacity: 0; } to { opacity: 1; } }
 
