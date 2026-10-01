@@ -61,7 +61,11 @@ export default function ProjectPreview({
   const [sheetOpen, setSheetOpen] = useState(false)
   /* The sheet grows out of the folder, so it only exists where a folder
      does — the other card variants keep the plain case-study link. */
-  const canExpand = cardVariant === 'file' && contributions.length > 0
+  /* FS294: only a FINISHED case study opens as a sheet, and a case study is
+     finished when it has sheet content (Groundswell, today). Every other
+     folder keeps its original link (Medium, the feature) on the homepage;
+     their draft sheets stay in the code, out of public view. */
+  const canExpand = cardVariant === 'file' && contributions.length > 0 && !!sheet
 
   const getOrigin = useCallback(() => {
     const api = stackApiRef.current
