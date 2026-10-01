@@ -95,9 +95,11 @@ export default function CloseLab() {
       <p className={s.kicker}>Groundswell · FS238 lab · private</p>
 
       <section className={s.variant}>
-        <h2 className={s.labH}>The synthesis as a system map (FS246)</h2>
-        <p className={s.labNote}>Static and widescreen. Tap the map to view it full screen.</p>
+        <h2 className={s.labH}>The synthesis map, in the dashboard’s language (FS247)</h2>
+        <p className={s.labNote}>Cream ground, plum ink, the dashboard’s own data colours: each theme a colour, each tension the blend of its two themes, line weight = how many scenarios it holds.</p>
         <SheetSystemMap />
+        <h2 className={s.labH} style={{ marginTop: '4rem' }}>Previous: dark (FS246)</h2>
+        <SheetSystemMap tone="dark" />
       </section>
 
       <section className={s.variant}>
