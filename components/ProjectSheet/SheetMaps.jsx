@@ -39,7 +39,10 @@ const VALUE = { rec: 'Humanity', env: 'Normalcy', cul: 'Together', sys: 'Compass
 const COMP = { rec: 'Garden Art Wall', env: 'Restorative Pod', cul: 'Reflection Cards', sys: 'CTB Email' }
 
 /* ── view 1 · what we found ─────────────────────────────────────────── */
-const VOID = { x: 796, y: 632, r: 125 }
+/* FS266: the void is the hollow inside the solid, drawn as a smaller
+   tetrahedron nested within it, the same form at a third of the size */
+const VOID = { x: 850, y: 628, k: 0.3 }
+const vpt = (id) => [VOID.x + (POS[id][0][0] - 868 + 0) * VOID.k, VOID.y + (POS[id][0][1] - 607) * VOID.k]
 const TENSIONS = [
   { a: 'rec', b: 'sys', pill: ['Admin displaces care work;', 'staff voices go unheard'], x: 612, y: 392, items: [
     'Interruptions make staff feel unrecognized, as if their work is unimportant.',
@@ -90,8 +93,8 @@ const VIEWS = [
   { view: 'What we built', caption: 'Each value became a component, met across a shift. Point to a moment or a component to trace its connections.' },
 ]
 
-const DEMO = [{ kind: 't', id: 0 }, { kind: 'v', id: 'rec' }, { kind: 'm', id: 'loss' }]
-const HINT = ['a tension', 'a value', 'a moment or a component']
+const DEMO = [{ kind: 'void', id: 0 }, { kind: 'v', id: 'rec' }, { kind: 'm', id: 'loss' }]
+const HINT = ['the void or a tension', 'a value', 'a moment or a component']
 
 const lines = (arr, x, lh) => arr.map((l, i) => <tspan key={l} x={x} dy={i ? lh : 0}>{l}</tspan>)
 const list = (arr) => arr.join(', ').replace(/, ([^,]*)$/, arr.length > 2 ? ', and $1' : ' and $1')
@@ -147,7 +150,7 @@ function Stage({ view, focus, setFocus, interactive, uid, ready = true }) {
           <stop offset="0" stopColor="#F4F1EC" stopOpacity="0.03" /><stop offset="1" stopColor="#F4F1EC" stopOpacity="0.09" />
         </linearGradient>
         <linearGradient id={`${uid}-side`} x1="0" y1="0" x2="1" y2="0.6">
-          <stop offset="0" stopColor="#C7AAD1" stopOpacity="0.1" /><stop offset="1" stopColor="#C7AAD1" stopOpacity="0.17" />
+          <stop offset="0" stopColor="#F4F1EC" stopOpacity="0.06" /><stop offset="1" stopColor="#F4F1EC" stopOpacity="0.12" />
         </linearGradient>
         {['arr', 'arrOn'].map((k) => (
           <marker key={k} id={`${uid}-${k}`} viewBox="0 0 12 12" refX="10" refY="6" markerWidth="24" markerHeight="24"
@@ -162,8 +165,13 @@ function Stage({ view, focus, setFocus, interactive, uid, ready = true }) {
         <polygon points={['rec', 'env', 'cul'].map((k) => POS[k][0].slice(0, 2).join(',')).join(' ')} fill={`url(#${uid}-side)`} />
         <polygon points={['rec', 'sys', 'env'].map((k) => POS[k][0].slice(0, 2).join(',')).join(' ')} fill={`url(#${uid}-front)`} />
         {TENSIONS.map(edge)}
-        <circle cx={VOID.x} cy={VOID.y} r={VOID.r} className={s.void} />
-        <text className={s.voidName} x={VOID.x} y={VOID.y + 10}>The void</text>
+        <g className={`${s.fade} ${s.voidG}`} data-on={isF('void', 0) || undefined} data-dim={(anyF('t') && !isF('void', 0)) || undefined}
+          aria-label="The void: patient-centered care neglects the people who give it" {...(view === 0 ? act({ kind: 'void', id: 0 }) : {})}>
+          <polygon className={s.voidSide} points={['rec', 'env', 'cul'].map((k) => vpt(k).join(',')).join(' ')} />
+          <polygon className={s.voidFront} points={['rec', 'sys', 'env'].map((k) => vpt(k).join(',')).join(' ')} />
+          <line className={s.voidBack} x1={vpt('sys')[0]} y1={vpt('sys')[1]} x2={vpt('cul')[0]} y2={vpt('cul')[1]} />
+          <text className={s.voidName} x={(vpt('rec')[0] + vpt('sys')[0] + vpt('env')[0]) / 3} y={(vpt('rec')[1] + vpt('sys')[1] + vpt('env')[1]) / 3 + 12}>The void</text>
+        </g>
         {TENSIONS.map((t, i) => {
           const w = Math.max(...t.pill.map((l) => l.length)) * 12.6 + 70, on = isF('t', i), dim = anyF('t') && !on
           return (
@@ -232,7 +240,7 @@ function Stage({ view, focus, setFocus, interactive, uid, ready = true }) {
         const [x, y, r] = POS[id][view]
         const on = (view === 1 && isF('v', id)) || (view === 2 && (isF('c', id) || momentOn(id)))
           || (view === 0 && focus?.kind === 't' && (TENSIONS[focus.id].a === id || TENSIONS[focus.id].b === id))
-        const dim = !!focus && !on
+        const dim = !!focus && !on && focus.kind !== 'void'
         const back = view === 0 && id === 'cul'
         return (
           <g key={id} className={s.node} data-wait={!ready || undefined} data-dim={dim || undefined} data-on={on || undefined} data-back={back || undefined}
@@ -332,7 +340,7 @@ export default function SheetMaps() {
         <p className={s.fBig}>Reached at {list(from)}.</p>
       </div>
     )
-  } else if (view === 0) {
+  } else if (view === 0 || focus?.kind === 'void') {
     foot = (
       <div className={s.fPair}>
         <p className={s.fHead}><span className={s.fKick}>The void, at the centre</span></p>

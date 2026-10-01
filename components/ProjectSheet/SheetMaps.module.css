@@ -7,7 +7,7 @@
 .stage {
   position: relative;
   border-radius: 3px;
-  background: rgba(16, 14, 20, 0.42);
+  background: rgba(18, 17, 16, 0.42);
   box-shadow: inset 0 0 0 1px rgba(244, 241, 236, 0.1);
 }
 
@@ -37,14 +37,14 @@
 }
 
 .disc {
-  fill: #3B3442;   /* opaque: lines never show through a circle */
-  stroke: #C7AAD1;
+  fill: #2E2A28;   /* opaque: lines never show through a circle */
+  stroke: rgba(244, 241, 236, 0.75);
   stroke-width: 2;
   transition: r 900ms cubic-bezier(0.65, 0, 0.35, 1), fill var(--motion-fast) var(--ease-out), stroke var(--motion-fast) var(--ease-out);
 }
 
-.node[data-back] .disc { fill: #2E2934; stroke-opacity: 0.7; }
-.node[data-on] .disc { fill: #5A3F3B; stroke: #F79C7E; }
+.node[data-back] .disc { fill: #282422; stroke-opacity: 0.55; }
+.node[data-on] .disc { fill: #4A332C; stroke: #F79C7E; }
 .node[data-dim] { opacity: 0.45; }
 .node[role='button'] { cursor: pointer; }
 .node:focus-visible .disc { stroke-width: 4; }
@@ -76,21 +76,21 @@
 .fade { transition: opacity var(--motion-fast) var(--ease-out); }
 .fade[data-dim] { opacity: 0.22; }
 
-.void {
-  fill: rgba(197, 207, 166, 0.06);
-  stroke: #C5CFA6;
-  stroke-width: 3;
-  stroke-dasharray: 11.78 11.78;
-}
-
-.voidName { fill: #C5CFA6; font-family: var(--font-heading); font-size: 32px; font-style: italic; text-anchor: middle; }
+.voidG { outline: none; cursor: pointer; }
+.voidFront { fill: rgba(197, 207, 166, 0.1); stroke: #C5CFA6; stroke-width: 3; stroke-dasharray: 11.78 11.78; stroke-linejoin: round; transition: fill var(--motion-fast) var(--ease-out); }
+.voidSide { fill: rgba(197, 207, 166, 0.18); stroke: #C5CFA6; stroke-width: 3; stroke-dasharray: 11.78 11.78; stroke-linejoin: round; transition: fill var(--motion-fast) var(--ease-out); }
+.voidBack { stroke: rgba(197, 207, 166, 0.5); stroke-width: 2; stroke-dasharray: 6 9; }
+.voidG[data-on] .voidFront { fill: rgba(197, 207, 166, 0.24); }
+.voidG[data-on] .voidSide { fill: rgba(197, 207, 166, 0.34); }
+.voidG:focus-visible .voidFront { stroke-width: 5; }
+.voidName { fill: #C5CFA6; font-family: var(--font-heading); font-size: 30px; font-style: italic; text-anchor: middle; }
 
 /* pills: tensions and moments */
 .pillG { outline: none; cursor: default; }
 .pillG[role='button'] { cursor: pointer; }
 
 .pillG rect {
-  fill: #24212A;
+  fill: #22201E;
   stroke: rgba(244, 241, 236, 0.6);
   stroke-width: 3;
   stroke-dasharray: 11.78 11.78;
@@ -100,7 +100,6 @@
 .pillG text { fill: #F4F1EC; font-family: var(--font-heading); font-size: 28px; text-anchor: middle; }
 .pillG .pill2 { font-family: var(--font-body); font-size: 23px; }
 .pillG[data-back] rect { stroke: rgba(244, 241, 236, 0.35); }
-.pillG[data-back] text { fill: rgba(244, 241, 236, 0.7); }
 .pillG[data-on] rect { fill: #F79C7E; stroke: #F79C7E; stroke-dasharray: none; }
 .pillG[data-on] text { fill: #23211F; }
 .pillG:focus-visible rect { stroke-width: 6; }
@@ -183,7 +182,7 @@
   display: grid;
   grid-template-columns: auto minmax(0, 1fr);
   align-items: baseline;
-  gap: 0.75rem;
+  gap: 0.6rem;
   font-family: var(--font-body);
   font-size: var(--step-small);
   line-height: 1.55;
@@ -192,10 +191,10 @@
 
 /* the number carries the grouping: no card, no stripe (FS261) */
 .heardN {
-  font-family: var(--font-heading);
-  font-size: var(--step-heading);
-  font-style: italic;
-  line-height: 1;
+  font-family: var(--font-body);
+  font-size: var(--step-label);
+  font-weight: 600;
+  letter-spacing: 0.06em;
   color: #F79C7E;
 }
 
@@ -255,7 +254,7 @@
   padding: 3rem 2rem 2rem;
   border: 0;
   border-radius: 4px;
-  background: #24212A;
+  background: #22201E;
   box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
 }
 
