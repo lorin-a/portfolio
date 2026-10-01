@@ -432,6 +432,52 @@ export const groundswell = {
       'A senior staff member broke down in tears during a content review and revealed that she felt deeply hurt by the language surrounding the Ceased to Breathe email. It had been framed to us as a cold clinical protocol that lacked human touch. Unbeknownst to us, a person had created it: the very person in the room, reading our description of her work as a flaw. It was a thoughtful staff innovation, developed only as far as it could go while staying manageable in roles that were already drowning. We had been framing the system as a problem and a common enemy. What we needed instead was to highlight the immense strength, innovation, and support that had kept this system alive for decades.',
   },
 
+  /* THE REFLECTION (FS164–FS186, 2026-10-01): replaces the old close
+     cards on the sheet. Built in the lab (/projects/groundswell/close-lab),
+     her pick C. Every card: mark · label · a from → to shift · three
+     bullets, each led by her own two-word head (FS181). Sources: her
+     freestyle (FS174, verbatim in close-lab/page.js) and her rehearsal
+     answers (R). The old `close` fields above stay as the record. */
+  reflection: [
+  {
+    id: 'sense', verb: 'Sense', title: 'What I learned',
+    /* FS182: arrows. Her “Start With What’s Working”, as a shift. Not her
+       “Designer Innovations → Community Wisdom”: it would say the same
+       thing as Shape’s Designer-Led → Community-Led. */
+    shift: ['What’s Broken', 'What’s Working'],
+    list: [
+      { head: 'Build Trust', text: 'With subject matter this emotional, the work had to speak to staff experience and earn trust across hierarchy before it could solve\u00a0anything.' },
+      { head: 'Be Relational', text: 'Pre-existing relationships opened the door, and a transdisciplinary team of designers, clinicians, makers, artists, and donors kept it\u00a0moving.' },
+      { head: 'Bridge Gaps', text: 'We couldn’t change what matters most, like pay, time off, and staffing, but respected doctors and administrative fellows carried staff realities to\u00a0leadership.' },
+    ],
+  },
+  {
+    id: 'weave', verb: 'Weave', title: 'What I’ll carry forward',
+    shift: ['Theoretical', 'Tangible'],  /* hers, FS182 */
+    list: [
+      /* R Q3: “I specifically drafted the workshop to be trauma-informed and
+         responsive by providing a worksheet for mindfulness and wellbeing
+         with journal prompts and somatic exercises so as to not be
+         extractive in collecting emotional data.” */
+      { head: 'Practice Reciprocity', text: 'In the grief workshop I led, staff left with a worksheet of journal prompts and somatic exercises, so we gave back as much as we\u00a0asked.' },
+      /* R Q6: doors required late; redesigned; playtesters confirmed. */
+      { head: 'Embrace Constraints', text: 'When admin required doors late in production, we redesigned in acrylic, and playtesters found the pod private without feeling closed\u00a0off.' },
+      /* R Q3: the dashboard she led; freestyle: voices to administrators. */
+      { head: 'Innovate Intentionally', text: 'I designed and built the data dashboard, the one component I led, so what staff told us reached the administrators who could act on\u00a0it.' },
+    ],
+  },
+  {
+    id: 'shape', verb: 'Shape', title: 'What’s next',
+    shift: ['Designer-Led', 'Community-Led'],  /* hers, FS182 */
+    list: [
+      { head: 'Build Capacity', text: 'With enough respite to stop drowning, staff could start the conversations their days rarely allowed and innovate together on\u00a0solutions.' },
+      { head: 'Expand Engagement', text: 'Creative expression workshops drew strong turnout throughout the pilot, so programming will grow beyond the\u00a0installation.' },
+      /* R Q8: “staff-led and structurally supported beyond the components” */
+      { head: 'Community Ownership', text: 'The next iteration involves more staff in shaping it, so Groundswell becomes staff-led and continues beyond the\u00a0pilot.' },
+    ],
+  },
+],
+
   /* OPEN, and hers to settle. Logged here so none of it gets lost.
      1. She wrote "4 core components" and then named five (Garden, Pod,
         Library, CTB, dashboard). Which is the canonical count, and is the

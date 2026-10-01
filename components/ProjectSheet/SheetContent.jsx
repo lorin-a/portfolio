@@ -4,6 +4,7 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import Lightbox from '@/components/Lightbox/Lightbox'
 import { SheetStage, SheetLibraryKit, slidesFor, sheetImg } from './SheetMedia'
 import SheetCover from './SheetCover'
+import SheetReflection from './SheetReflection'
 import styles from './SheetContent.module.css'
 import paper from './Paper.module.css'
 
@@ -61,7 +62,7 @@ function useSheetReveal(rootRef) {
  * Gated media never enters the gallery.
  */
 export default function SheetContent({ sheet, num, title, tagline, titleId }) {
-  const { outcome, meta = [], frame = {}, components = [], close = {}, process = [], processTitle, credit, credits = [] } = sheet
+  const { outcome, meta = [], frame = {}, components = [], close = {}, process = [], processTitle, credit, credits = [], reflection = [] } = sheet
 
   /* The folder's images, flat and in reading order, for the overlay. */
   const images = useMemo(() => {
@@ -174,30 +175,36 @@ export default function SheetContent({ sheet, num, title, tagline, titleId }) {
         )
       })}
 
-      {/* THE CLOSE (FS129): three glass cards on the 4 · 4 · 4 grid, the
-          same brand glass as the cover. */}
-      <section className={styles.close} data-reveal="0">
-        {close.outcomes && (
-          <div className={styles.closeCard}>
-            <h3>What changed</h3>
-            <p>{close.outcomes}</p>
-            {close.qualitative && <p>{close.qualitative}</p>}
-          </div>
-        )}
-        {frame.role && (
-          <div className={styles.closeCard}>
-            <h3>My role, in full</h3>
-            <p>{frame.role}</p>
-            {frame.roleMore && <p>{frame.roleMore}</p>}
-          </div>
-        )}
-        {close.takeaway && (
-          <div className={`${styles.closeCard} ${styles.lessonCard}`}>
-            <h3>The biggest lesson</h3>
-            <p>{close.takeaway}</p>
-          </div>
-        )}
-      </section>
+      {/* THE REFLECTION (FS164–FS186): replaces the FS129 close cards.
+          Falls back to the old close when a sheet has no reflection. */}
+      {reflection.length > 0 ? (
+        <SheetReflection cards={reflection} />
+      ) : (
+        /* THE CLOSE (FS129): three glass cards on the 4 · 4 · 4 grid, the
+           same brand glass as the cover. */
+        <section className={styles.close} data-reveal="0">
+          {close.outcomes && (
+            <div className={styles.closeCard}>
+              <h3>What changed</h3>
+              <p>{close.outcomes}</p>
+              {close.qualitative && <p>{close.qualitative}</p>}
+            </div>
+          )}
+          {frame.role && (
+            <div className={styles.closeCard}>
+              <h3>My role, in full</h3>
+              <p>{frame.role}</p>
+              {frame.roleMore && <p>{frame.roleMore}</p>}
+            </div>
+          )}
+          {close.takeaway && (
+            <div className={`${styles.closeCard} ${styles.lessonCard}`}>
+              <h3>The biggest lesson</h3>
+              <p>{close.takeaway}</p>
+            </div>
+          )}
+        </section>
+      )}
 
       {/* BEHIND THE SCENES (FS131): two framed galleries, research and
           production, side by side on 6 | 6. */}
