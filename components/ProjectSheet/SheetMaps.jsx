@@ -41,24 +41,24 @@ const COMP = { rec: 'Garden Art Wall', env: 'Restorative Pod', cul: 'Reflection 
 /* ── view 1 · what we found ─────────────────────────────────────────── */
 const VOID = { x: 796, y: 632, r: 125 }
 const TENSIONS = [
-  { a: 'rec', b: 'sys', pill: 'Admin crowds out care', x: 652, y: 369, items: [
+  { a: 'rec', b: 'sys', pill: ['Admin displaces care work;', 'staff voices go unheard'], x: 612, y: 392, items: [
     'Interruptions make staff feel unrecognized, as if their work is unimportant.',
     'Administrative tasks crowd out the work they trained for, the reason they came into the field.',
     'Top-down decisions and poor communication leave staff feeling unheard and unmotivated to advocate for change.' ] },
-  { a: 'rec', b: 'cul', pill: 'Guilt over breaks', x: 1210, y: 333, items: [
+  { a: 'rec', b: 'cul', pill: ['Staff must prove their worth', 'and feel guilt for resting'], x: 1196, y: 300, items: [
     'Staff feel they must prove themselves to higher-status coworkers, and feel guilty about taking breaks.',
     'Patient-centered care neglects the needs of the people who give it.' ] },
-  { a: 'sys', b: 'env', pill: 'Profit over people', x: 760, y: 902, items: [
+  { a: 'sys', b: 'env', pill: ['Profit is prioritized', 'over staff well-being'], x: 760, y: 905, items: [
     'Healthcare is run as a commodity; a focus on profit disregards employee well-being.',
     'Executives do not see care workers’ needs as worth investing in, so staff feel replaceable.' ] },
-  { a: 'env', b: 'cul', pill: 'No place to grieve', x: 1406, y: 682, items: [
+  { a: 'env', b: 'cul', pill: ['No space to rest,', 'gather, or grieve'], x: 1425, y: 735, items: [
     'No windows, poor lighting, and too little space take a toll on happiness at work.',
     'There is no space to take a real break, find quiet, or gather with colleagues.',
     'On a bad day there is nowhere to go to express grief, so staff just want to get home.' ] },
-  { a: 'rec', b: 'env', pill: 'Breaks in name only', x: 1037, y: 465, items: [
+  { a: 'rec', b: 'env', pill: ['Breaks are encouraged', 'but not protected'], x: 1080, y: 455, items: [
     'Paying for parking and a shuttle to work leaves staff feeling undervalued.',
     'Breaks are encouraged by management, but nothing protects staff from overwork.' ] },
-  { a: 'sys', b: 'cul', back: true, pill: 'Overwork as norm', x: 506, y: 790, items: [
+  { a: 'sys', b: 'cul', back: true, pill: ['No systems for breaks,', 'roles, or feedback'], x: 545, y: 775, items: [
     'There is no system to support breaks and no working feedback loop, so faith in management is low.',
     'Unclear and overlapping roles create dysfunction, exhaustion, and frustration.',
     'A “do the work, don’t complain” culture leaves many suffering in silence.' ] },
@@ -90,10 +90,13 @@ const VIEWS = [
   { view: 'What we built', caption: 'Each value became a component, met across a shift. Point to a moment or a component to trace its connections.' },
 ]
 
+const DEMO = [{ kind: 't', id: 0 }, { kind: 'v', id: 'rec' }, { kind: 'm', id: 'loss' }]
+const HINT = ['a tension', 'a value', 'a moment or a component']
+
 const lines = (arr, x, lh) => arr.map((l, i) => <tspan key={l} x={x} dy={i ? lh : 0}>{l}</tspan>)
 const list = (arr) => arr.join(', ').replace(/, ([^,]*)$/, arr.length > 2 ? ', and $1' : ' and $1')
 
-function Stage({ view, focus, setFocus, interactive, uid }) {
+function Stage({ view, focus, setFocus, interactive, uid, ready = true }) {
   const act = (f) => (interactive ? {
     tabIndex: 0, role: 'button', onMouseEnter: () => setFocus(f), onFocus: () => setFocus(f), onClick: () => setFocus(f),
   } : {})
@@ -155,27 +158,27 @@ function Stage({ view, focus, setFocus, interactive, uid }) {
       </defs>
 
       {/* ── found ── */}
-      <g className={s.layer} data-on={view === 0 || undefined}>
+      <g className={s.layer} data-on={(ready && view === 0) || undefined}>
         <polygon points={['rec', 'env', 'cul'].map((k) => POS[k][0].slice(0, 2).join(',')).join(' ')} fill={`url(#${uid}-side)`} />
         <polygon points={['rec', 'sys', 'env'].map((k) => POS[k][0].slice(0, 2).join(',')).join(' ')} fill={`url(#${uid}-front)`} />
         {TENSIONS.map(edge)}
         <circle cx={VOID.x} cy={VOID.y} r={VOID.r} className={s.void} />
         <text className={s.voidName} x={VOID.x} y={VOID.y + 10}>The void</text>
         {TENSIONS.map((t, i) => {
-          const w = t.pill.length * 15 + 70, on = isF('t', i), dim = anyF('t') && !on
+          const w = Math.max(...t.pill.map((l) => l.length)) * 12.6 + 70, on = isF('t', i), dim = anyF('t') && !on
           return (
             <g key={t.pill} className={`${s.fade} ${s.pillG}`} data-dim={dim || undefined} data-on={on || undefined}
-              data-back={t.back || undefined} aria-label={`${THEME[t.a]} and ${THEME[t.b]}: ${t.pill}`}
+              data-back={t.back || undefined} aria-label={`${THEME[t.a]} and ${THEME[t.b]}: ${t.pill.join(' ')}`}
               {...(view === 0 ? act({ kind: 't', id: i }) : {})}>
-              <rect x={t.x - w / 2} y={t.y - 40} width={w} height="80" rx="40" />
-              <text x={t.x} y={t.y + 10}>{t.pill}</text>
+              <rect x={t.x - w / 2} y={t.y - 50} width={w} height="100" rx="50" />
+              <text className={s.pill2} x={t.x} y={t.y - 6}>{lines(t.pill, t.x, 32)}</text>
             </g>
           )
         })}
       </g>
 
       {/* ── value ── */}
-      <g className={s.layer} data-on={view === 1 || undefined}>
+      <g className={s.layer} data-on={(ready && view === 1) || undefined}>
         {CYCLE.map((id, i) => {
           const next = CYCLE[(i + 1) % 4]
           const a0 = Math.atan2(POS[id][1][1] - 554, POS[id][1][0] - 917)
@@ -198,7 +201,7 @@ function Stage({ view, focus, setFocus, interactive, uid }) {
       </g>
 
       {/* ── built ── */}
-      <g className={s.layer} data-on={view === 2 || undefined}>
+      <g className={s.layer} data-on={(ready && view === 2) || undefined}>
         {MOMENTS.flatMap((mo) => mo.to.filter((cid) => !(mo.id === 'loss' && cid === 'sys')).map((cid) => conn(mo, cid)))}
         {(() => {
           const on = isF('m', 'loss') || isF('c', 'sys'), dim = anyF('m', 'c') && !on
@@ -232,7 +235,7 @@ function Stage({ view, focus, setFocus, interactive, uid }) {
         const dim = !!focus && !on
         const back = view === 0 && id === 'cul'
         return (
-          <g key={id} className={s.node} data-dim={dim || undefined} data-on={on || undefined} data-back={back || undefined}
+          <g key={id} className={s.node} data-wait={!ready || undefined} data-dim={dim || undefined} data-on={on || undefined} data-back={back || undefined}
             style={{ transform: `translate(${x}px, ${y}px)` }}
             {...(view === 1 ? act({ kind: 'v', id }) : view === 2 ? act({ kind: 'c', id }) : {})}
             aria-label={view === 1 ? `${VALUE[id]}, from ${THEME[id]}` : view === 2 ? COMP[id] : THEME[id]}>
@@ -251,7 +254,33 @@ export default function SheetMaps() {
   const [view, setView] = useState(0)
   const [focus, setFocus] = useState(null)
   const [open, setOpen] = useState(false)
+  const [ready, setReady] = useState(false)
+  const [canHover, setCanHover] = useState(true)
   const dlg = useRef(null)
+  const root = useRef(null)
+  const timer = useRef(null)
+  const touched = useRef(false)
+
+  /* FS263: each map draws in whole, then settles on one highlighted
+     section with an instruction, until the reader takes over */
+  const guide = (v, delay) => {
+    clearTimeout(timer.current)
+    if (touched.current) return
+    timer.current = setTimeout(() => setFocus({ ...DEMO[v], auto: true }), delay)
+  }
+
+  useEffect(() => {
+    setCanHover(window.matchMedia('(hover: hover)').matches)
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    const io = new IntersectionObserver(([e]) => {
+      if (!e.isIntersecting) return
+      io.disconnect(); setReady(true); guide(0, reduce ? 0 : 2000)
+    }, { threshold: 0.4 })
+    if (root.current) io.observe(root.current)
+    return () => { io.disconnect(); clearTimeout(timer.current) }
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
+
+  const take = (f) => { touched.current = true; clearTimeout(timer.current); setFocus(f) }
 
   useEffect(() => {
     const d = dlg.current
@@ -260,7 +289,12 @@ export default function SheetMaps() {
     if (!open && d.open) d.close()
   }, [open])
 
-  const pick = (i) => { if (i !== view) { setFocus(null); setView(i) } }
+  const pick = (i) => {
+    if (i === view) return
+    setFocus(null); setView(i)
+    touched.current = false
+    guide(i, window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 2000)
+  }
 
   let foot
   if (focus?.kind === 't') {
@@ -269,7 +303,7 @@ export default function SheetMaps() {
       <>
         <p className={s.fHead}><span className={s.fKick}>What we heard</span>{THEME[T.a]} × {THEME[T.b]}</p>
         <ol className={s.heard} data-n={T.items.length}>
-          {T.items.map((q, k) => <li key={q}><span className={s.heardN}>{String(k + 1).padStart(2, '0')}</span>{q}</li>)}
+          {T.items.map((q, k) => <li key={q}><span className={s.heardN}>{String(k + 1).padStart(2, '0')}</span><span>{q}</span></li>)}
         </ol>
       </>
     )
@@ -303,19 +337,27 @@ export default function SheetMaps() {
       <div className={s.fPair}>
         <p className={s.fHead}><span className={s.fKick}>The void, at the centre</span></p>
         <p className={s.fBig}>Patient-centered care neglects the people who give it.</p>
-        <p className={s.fNote}>Four themes from affinity mapping enclose it; line weight shows how many scenarios staff described. Point to a tension to see what we heard.</p>
+        <p className={s.fNote}>Four themes from affinity mapping enclose it; line weight shows how many scenarios staff described.</p>
       </div>
     )
   } else foot = <p className={s.fNote}>{VIEWS[view].caption}</p>
 
   return (
     <figure className={`${m.glass} ${s.maps}`}>
-      <div id="gs-maps" role="tabpanel" className={s.stage} onMouseLeave={() => setFocus(null)}>
+      <div id="gs-maps" role="tabpanel" className={s.stage} ref={root} onMouseLeave={() => { if (touched.current) setFocus(null) }}>
         <div className={s.canvas}>
-          <Stage view={view} focus={focus} setFocus={setFocus} interactive uid="gsm-a" />
+          <Stage view={view} focus={focus} setFocus={take} interactive uid="gsm-a" ready={ready} />
         </div>
         <div className={s.foot} aria-live="polite">
-          <div key={`${view}-${focus?.kind}-${focus?.id}`} className={s.footIn}>{foot}</div>
+          <div key={`${view}-${focus?.kind}-${focus?.id}`} className={s.footIn}>
+            {focus?.auto && (
+              <p className={s.hint}>
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3l14 7-6 2-3 6z" /></svg>
+                {canHover ? 'Hover' : 'Tap'} {HINT[view]} to see more
+              </p>
+            )}
+            {foot}
+          </div>
         </div>
         <button type="button" className={s.enlarge} onClick={() => setOpen(true)} aria-label="View this map full screen">
           <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 6V2h4M10 2h4v4M14 10v4h-4M6 14H2v-4" /></svg>
