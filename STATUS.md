@@ -5,7 +5,7 @@
 **What we're doing: THE GROUNDSWELL FOLDER SHEET, near final.** Branch `feat/folder-expand`,
 pushed to the PRIVATE mirror only (`git push private feat/folder-expand`; `origin` is public).
 See it: `npm run dev -- -p 3005`, scroll to Groundswell, **Open project** (hard-refresh).
-Ledger FS20–FS167 below. Final-touches round open from FS156.
+Ledger FS20–FS168 below. Final-touches round open from FS156.
 
 **Next move:** Lorin's final touches (her words: "I will make final touches tomorrow"). Take
 her notes one at a time, ledger-first.
@@ -192,6 +192,7 @@ funding, captions, card note).
 | FS165 | "Or if you redo what you did just make it SO simple like elegant minimalist straight to the point can understand it in 10 seconds" (2026-10-01) | 💬 BUILT with FS164: one line per card (lesson in her words; role line PROVISIONAL; Kendyl’s quote, needs her OK). Her full paragraphs kept, behind “Read more”, opening in one panel under the row so the cards never stretch. Verified 1440 + 390, zero overflow, zero console errors |
 | FS166 | "This is much closer but we need to think about what this is telling us that other sections have not, and we don't want the user to have to dig for information, is there a version of this that is still simple with no read more?" (2026-10-01) | 💬 BUILT in the lab, awaiting her verdict. AUDIT: the close repeated the sheet: What changed’s qualitative = The outcome column; My role = the cover’s Role titles + the five My Contribution strips + the dashboard strip. Found nowhere else: the lesson, Kendyl’s quote, the study method, and two role facts (she named Groundswell; she designed the grief workshop trauma-informed). So each card now says only those, all visible: Sense “Honor the work already being done, and find ways to uplift it.” + the CTB story in one line · Weave “I named Groundswell and led its grief workshop.” + the trauma-informed design (her words) · Shape Kendyl’s quote + the six-scale method. No Read more. Notes aligned on one line across the row (subgrid). Verified 1440 + 390. If adopted: the old role/qualitative paragraphs leave the sheet (kept in the content file); the dashboard stack detail lives only in the dashboard strip |
 | FS167 | "Maybe my role is more like my personal lesson or growth? through this project I grew into a data viz designer, navigated my first production of a installation, coordinated and secured donors, pitched to hospital admin, coordinated with stakeholders etc? Transformed a concept from start to finish, iterated through two brand identities, play tested etc etc" (2026-10-01) | 💬 BUILT in the lab, awaiting her verdict. It survives the FS166 audit: growth is said nowhere else on the sheet. Weave · My growth: “Through this project, I grew into a data visualization designer.” + her list as seven items, her wording (edits: “data viz” → data visualization, her cover title; “a installation” → an installation; “play tested” → playtested), plum dots, wrapped items hang. Hers to finish (“etc etc”), and “Coordinated” opens two items |
+| FS168 | "lets make them all have bullet points those are easier to skim" (2026-10-01) | ⏳ IN PROGRESS |
 
 ### ⟢ OPEN NOTES LEDGER — Folder sheet (2026-09-06, her verdict on the rebuilt sheet)
 
