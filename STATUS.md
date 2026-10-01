@@ -5,7 +5,7 @@
 **What we're doing: THE GROUNDSWELL FOLDER SHEET, near final.** Branch `feat/folder-expand`,
 pushed to the PRIVATE mirror only (`git push private feat/folder-expand`; `origin` is public).
 See it: `npm run dev -- -p 3005`, scroll to Groundswell, **Open project** (hard-refresh).
-Ledger FS20–FS180 below. Final-touches round open from FS156.
+Ledger FS20–FS181 below. Final-touches round open from FS156.
 
 **Next move:** Lorin's final touches (her words: "I will make final touches tomorrow"). Take
 her notes one at a time, ledger-first.
@@ -205,6 +205,7 @@ funding, captions, card note).
 | FS178 | "give me more options i dont like that one" (2026-10-01) — re: the Weave label (“What I brought together” rejected) | 💬 OPTIONS GIVEN, awaiting her pick (lab still shows the rejected label until she chooses) |
 | FS179 | "how it changed me is the right tenor what else like that" (2026-10-01) | 💬 OPTIONS GIVEN in that tenor, awaiting her pick |
 | FS180 | "How I evolved? How I expanded? Experience I gained?" (2026-10-01) | 💬 ANSWERED: Claude’s pick “How I evolved” (matches the statement’s from → to); “How I expanded” fits the range idea but reads ambiguous alone; “Experience I gained” is résumé register. Awaiting her pick |
+| FS181 | "lets give a two word start to every bullet point like : Build Trust, Be Relational, Bridge Gaps. Practice Reciprocity, Embrace Constraints, Innovate Intentionally. Build Capacity, Expand Engagement, Community Ownership. But then the context has to match the phrase. As for the weave, lets do What I'll Carry Forward? Idk" (2026-10-01) | ⏳ BUILDING in the lab |
 
 ### ⟢ OPEN NOTES LEDGER — Folder sheet (2026-09-06, her verdict on the rebuilt sheet)
 
