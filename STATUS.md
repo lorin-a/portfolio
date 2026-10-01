@@ -5,7 +5,7 @@
 **What we're doing: THE GROUNDSWELL FOLDER SHEET, near final.** Branch `feat/folder-expand`,
 pushed to the PRIVATE mirror only (`git push private feat/folder-expand`; `origin` is public).
 See it: `npm run dev -- -p 3005`, scroll to Groundswell, **Open project** (hard-refresh).
-Ledger FS20–FS190 below. Final-touches round open from FS156.
+Ledger FS20–FS191 below. Final-touches round open from FS156.
 
 **Next move (updated 2026-10-01):** the reflection is live in the sheet (FS186). Then: Lorin's final touches (her words: "I will make final touches tomorrow"). Take
 her notes one at a time, ledger-first.
@@ -215,6 +215,7 @@ funding, captions, card note).
 | FS188 | "remove \"Groundswell grew from trust built over years between earlier cohorts, Professor Kristin Hughes, and UPMC staff. To everyone who helped bring it to life, thank you.\" and make header one line like somehow put the subhead to the right of the header" (2026-10-01) | ✅ SHIPPED: closing thank-you removed. Header row: the lead shortened to hold ONE line (“Shaped by the voices of Magee’s oncology staff.”) across columns 1–2, the partners line beside it in column 3, tightened to three lines (“With Carnegie Mellon’s School of Design, Pitt’s Schools of Medicine and Nursing, and UPMC Magee-Womens Gynecologic Oncology.”), centre-aligned and sitting on the columns below. One line at 1440 + 1024; stacks on phones |
 | FS189 | "Im not liking the header, what is its value?" (2026-10-01) | ✅ ANSWERED + APPLIED: the lead line had little value. It restated the sheet’s thesis (the project column and the reflection already say staff voices shaped it) and added a third serif statement to a page budgeted for about two. The partners line DOES earn its place: it is the only spot on the sheet naming the three institutions. So: lead removed; the label and the institutions now share one quiet line above the columns |
 | FS190 | "how would a senior designer improve this section?" (2026-10-01) | ✅ SHIPPED, a senior pass: (1) every credit has a home: three columns of people (Leadership 5 · Design & Production 6 · Art & Making 4; photography joins the makers, so the columns balance) and a second row giving donors and funders their own labelled lists instead of one run-on sentence (donors in three quiet columns, funders stacked, official names exact); (2) the artist credited as artists are: name + work, “Carolyn Gavin · “Blue Garden,” the artwork that threads through every component” (title verified in middleware.js); (3) hairlines under column titles removed (containment over lines); (4) bug fixed on the way: React leaves no spaces between list items, so an inline list could not wrap and ran into the next column. Verified zero escaping names at 1440 / 1024 / 390. Flagged: the Close pill still covers text as the sheet scrolls (FS157, hers) |
+| FS191 | "what is necessary to show in this portfolio, are we showing too much?" (2026-10-01) | ⏳ MEASURING + answering |
 
 ### ⟢ OPEN NOTES LEDGER — Folder sheet (2026-09-06, her verdict on the rebuilt sheet)
 
