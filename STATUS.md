@@ -2,7 +2,7 @@
 
 ## ▶ NEXT SESSION (planned 2026-10-01): THE SHEET FOR THE OTHER CASE STUDIES
 
-**2026-10-02: four draft sheets are built, dev only, waiting on her review together** (FS299 BirthStory, FS300 SomeBuddy, Transition Design, Bridging the G.A.P.; `npm run dev -- -p 3005`, Open project on each). Her decisions per project are in the FS300 row. Then: Whelm interview.
+**▶ RESUME (2026-10-02, end of day): FOUR DRAFT SHEETS BUILT, SAVED, NOT PUBLISHED.** BirthStory (FS299 + FS301: plays the case study's working prototypes and IA diagrams), SomeBuddy, Transition Design, Bridging the G.A.P. (FS300 + FS303). All four open only in local dev (`DRAFT_SHEETS` in app/(portfolio)/page.js), so no release can publish them before she approves. See them: `npm run dev -- -p 3005`, Open project on each folder. Her open decisions per project are in the FS299–FS303 rows of the ledger. **Next:** her review of all four; then Whelm (study /projects/whelm first, FS302); Homi and Seeds of Transformation are hers to decide. Saved to the private mirror only (`git push private feat/folder-expand`), never origin.
 
 **Was the next move:** build BirthStory’s sheet. Copy `content/sheets/_template.js` to `content/sheets/birthstory.js`, fill it from `docs/case-study-editorial/sources/birthstory/` (her words; `[LORIN TO WRITE]` where none), pull more media from Cloudinary `portfolio/BirthStory/` (91 assets; admin key is in .env.local), wire `sheet={…}` on the BirthStory `<ProjectPreview>`, and review with her in the lab before anything ships.
 **Then:** SomeBuddy, Transition Design, Bridging the G.A.P., Whelm (thinnest; needs her facts first). Settle the source conflicts listed below as each project comes up.
