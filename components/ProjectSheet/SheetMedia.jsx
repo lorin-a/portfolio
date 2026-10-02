@@ -6,6 +6,9 @@ import {
   GS_IMAGES, GS_VIDEOS, GS_AUDIO, GS_CARDS,
   HOME_IMAGES, HOME_VIDEOS, OTHER_VIDEOS, WHELM_IMAGES, WHELM_VIDEOS, BIRTHSTORY_PHOTOS, BS_IMAGES,
 } from '@/lib/cloudinary'
+import { SB_IMAGES, SB_VIDEOS } from '@/content/sheets/media/somebuddy'
+import { TD_IMAGES } from '@/content/sheets/media/transition-design'
+import { BG_IMAGES } from '@/content/sheets/media/bridging-the-gap'
 import { useSharedAudio } from '@/lib/useSharedAudio'
 import { POEM_CREDIT } from '@/content/poems/groundswell'
 import GalleryNav from '@/components/GalleryNav/GalleryNav'
@@ -18,8 +21,8 @@ import styles from './SheetMedia.module.css'
    of media is skipped rather than rendering a broken box. */
 /* BIRTHSTORY_PHOTOS holds { id, by, o } records, not bare public IDs. */
 const BS_PEXELS = Object.fromEntries(Object.entries(BIRTHSTORY_PHOTOS).map(([k, v]) => [k, v.id]))
-const IMAGES = { ...BS_PEXELS, ...BS_IMAGES, ...WHELM_IMAGES, ...HOME_IMAGES, ...GS_IMAGES }
-const VIDEOS = { ...OTHER_VIDEOS, ...WHELM_VIDEOS, ...HOME_VIDEOS, ...GS_VIDEOS }
+const IMAGES = { ...BS_PEXELS, ...BS_IMAGES, ...SB_IMAGES, ...TD_IMAGES, ...BG_IMAGES, ...WHELM_IMAGES, ...HOME_IMAGES, ...GS_IMAGES }
+const VIDEOS = { ...SB_VIDEOS, ...OTHER_VIDEOS, ...WHELM_VIDEOS, ...HOME_VIDEOS, ...GS_VIDEOS }
 const img = (k, w) => (IMAGES[k] ? cloudImg(IMAGES[k], w) : null)
 const vid = (k, w) => (VIDEOS[k] ? cloudVideo(VIDEOS[k], w) : null)
 const aud = (k) => (GS_AUDIO[k] ? cloudAudio(GS_AUDIO[k]) : null)

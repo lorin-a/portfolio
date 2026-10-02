@@ -1,6 +1,9 @@
 import Hero from '@/components/Hero/HeroScatter'
 import groundswellSheet from '@/content/sheets/groundswell'
 import birthstorySheet from '@/content/sheets/birthstory'
+import somebuddySheet from '@/content/sheets/somebuddy'
+import transitionDesignSheet from '@/content/sheets/transition-design'
+import bridgingSheet from '@/content/sheets/bridging-the-gap'
 import ProjectPreview from '@/components/ProjectPreview/ProjectPreview'
 import AboutSection from '@/components/AboutSection/AboutSection'
 import { cloudImg, cloudVideo, HOME_IMAGES, HOME_VIDEOS, GS_IMAGES, GS_VIDEOS, WHELM_IMAGES, WHELM_VIDEOS } from '@/lib/cloudinary'
@@ -251,6 +254,7 @@ export default function Home() {
             { src: cloudVideo(HOME_VIDEOS['somebuddy-reel-2'], 1200), type: 'video', alt: 'SomeBuddy reel continued' },
           ]}
           cardVariant="file"
+          sheet={DRAFT_SHEETS ? somebuddySheet : null}
           href="https://medium.com/ma-in-design-carnegie-mellon/somebuddy-a-social-app-for-busy-grad-students-60c22c579d78"
           external
           flip
@@ -291,6 +295,7 @@ export default function Home() {
             { src: cloudImg(HOME_IMAGES['td-stakeholders'], 1200), type: 'image', alt: 'Stakeholder relations map' },
           ]}
           cardVariant="file"
+          sheet={DRAFT_SHEETS ? transitionDesignSheet : null}
           href="https://medium.com/transition-design-seminar-spring-25-carnegie"
           external
         />
@@ -342,6 +347,7 @@ export default function Home() {
             { src: cloudImg(HOME_IMAGES['btg-33'], 1200), type: 'image', alt: 'Bridging the G.A.P. campaign detail' },
           ]}
           cardVariant="file"
+          sheet={DRAFT_SHEETS ? bridgingSheet : null}
           href="https://medium.com/ma-in-design-carnegie-mellon/cmu-design-ma-visual-comms-studio-project-4-communications-rebrand-4ddc692dec05"
           external
           flip

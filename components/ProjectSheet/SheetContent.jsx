@@ -238,11 +238,12 @@ export default function SheetContent({ sheet, num, title, tagline, titleId }) {
 
       {/* BEHIND THE SCENES (FS131): two framed galleries, research and
           production, side by side on 6 | 6. */}
-      {process.length > 0 && (
+      {process.some((ph) => slidesFor({ stills: ph.images }).length) && (
         <section className={styles.process} data-reveal="0">
           <h3 className={styles.processTitle}>{processTitle || 'Behind the scenes'}</h3>
           <div className={styles.processRow}>
-            {process.map((ph) => (
+            {/* a phase whose media has not resolved is left out (FS300) */}
+            {process.filter((ph) => slidesFor({ stills: ph.images }).length).map((ph) => (
               <div key={ph.title} className={styles.phase}>
                 <span className={styles.phaseLabel}>{ph.title}</span>
                 {/* `fit: 'contain'` on a phase keeps slides whole (FS299) */}
