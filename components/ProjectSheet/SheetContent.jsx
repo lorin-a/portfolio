@@ -245,7 +245,8 @@ export default function SheetContent({ sheet, num, title, tagline, titleId }) {
             {process.map((ph) => (
               <div key={ph.title} className={styles.phase}>
                 <span className={styles.phaseLabel}>{ph.title}</span>
-                <SheetStage slides={slidesFor({ stills: ph.images })} fit="cover"
+                {/* `fit: 'contain'` on a phase keeps slides whole (FS299) */}
+                <SheetStage slides={slidesFor({ stills: ph.images })} fit={ph.fit === 'contain' ? undefined : 'cover'}
                   onImage={openImage} label={`${ph.title} gallery`} />
               </div>
             ))}
@@ -284,11 +285,16 @@ export default function SheetContent({ sheet, num, title, tagline, titleId }) {
         </section>
       ) : credits.length > 0 && (() => {
         const find = (label) => credits.find(([k]) => k === label)
-        const columns = [
-          [find('Design Team'), credit && ['Photography', credit.replace(/^Photography by\s*/i, '').replace(/\.$/, '')]],
+        const photo = credit && ['Photography', credit.replace(/^Photography by\s*/i, '').replace(/\.$/, '')]
+        /* Groundswell's three named columns; any other sheet (FS299) sets
+           its credits as rows of [label, text] and gets one column per
+           row, the photography credit joining the first. */
+        const columns = (find('Clinical Team') || find('Funding') ? [
+          [find('Design Team'), photo],
           [find('Clinical Team'), frame.partners && ['Partners', frame.partners]],
           [find('Funding')],
-        ].map((col) => col.filter(Boolean)).filter((col) => col.length)
+        ] : credits.map((row, i) => (i === 0 ? [row, photo] : [row])))
+          .map((col) => col.filter(Boolean)).filter((col) => col.length)
         return (
           <div className={styles.colophon}>
             {columns.map((col) => (

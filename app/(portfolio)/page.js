@@ -1,9 +1,15 @@
 import Hero from '@/components/Hero/HeroScatter'
 import groundswellSheet from '@/content/sheets/groundswell'
+import birthstorySheet from '@/content/sheets/birthstory'
 import ProjectPreview from '@/components/ProjectPreview/ProjectPreview'
 import AboutSection from '@/components/AboutSection/AboutSection'
 import { cloudImg, cloudVideo, HOME_IMAGES, HOME_VIDEOS, GS_IMAGES, GS_VIDEOS, WHELM_IMAGES, WHELM_VIDEOS } from '@/lib/cloudinary'
 import styles from './page.module.css'
+
+/* FS299: a sheet in review opens only in local dev, so a release overlay
+   can never publish it before she approves it. Move a sheet out of this
+   gate (pass it directly) once she signs off. */
+const DRAFT_SHEETS = process.env.NODE_ENV !== 'production'
 
 export default function Home() {
   return (
@@ -145,6 +151,7 @@ export default function Home() {
             { src: cloudImg(HOME_IMAGES['bs'], 1200), type: 'image', alt: 'BirthStory cover' },
           ]}
           cardVariant="file"
+          sheet={DRAFT_SHEETS ? birthstorySheet : null}
           href="https://medium.com/ma-in-design-carnegie-mellon/client-project-birthstory-a-micro-app-for-birthing-parents-to-record-reflect-on-their-138849c42a38"
           external
           flip

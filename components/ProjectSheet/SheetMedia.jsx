@@ -4,7 +4,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import {
   cloudImg, cloudVideo, cloudAudio,
   GS_IMAGES, GS_VIDEOS, GS_AUDIO, GS_CARDS,
-  HOME_IMAGES, HOME_VIDEOS, OTHER_VIDEOS, WHELM_IMAGES, WHELM_VIDEOS, BIRTHSTORY_PHOTOS,
+  HOME_IMAGES, HOME_VIDEOS, OTHER_VIDEOS, WHELM_IMAGES, WHELM_VIDEOS, BIRTHSTORY_PHOTOS, BS_IMAGES,
 } from '@/lib/cloudinary'
 import { useSharedAudio } from '@/lib/useSharedAudio'
 import { POEM_CREDIT } from '@/content/poems/groundswell'
@@ -16,7 +16,9 @@ import styles from './SheetMedia.module.css'
    maps win on a shared key). A media item may also name a Cloudinary
    public ID directly with `id`. A missing key returns null and the piece
    of media is skipped rather than rendering a broken box. */
-const IMAGES = { ...BIRTHSTORY_PHOTOS, ...WHELM_IMAGES, ...HOME_IMAGES, ...GS_IMAGES }
+/* BIRTHSTORY_PHOTOS holds { id, by, o } records, not bare public IDs. */
+const BS_PEXELS = Object.fromEntries(Object.entries(BIRTHSTORY_PHOTOS).map(([k, v]) => [k, v.id]))
+const IMAGES = { ...BS_PEXELS, ...BS_IMAGES, ...WHELM_IMAGES, ...HOME_IMAGES, ...GS_IMAGES }
 const VIDEOS = { ...OTHER_VIDEOS, ...WHELM_VIDEOS, ...HOME_VIDEOS, ...GS_VIDEOS }
 const img = (k, w) => (IMAGES[k] ? cloudImg(IMAGES[k], w) : null)
 const vid = (k, w) => (VIDEOS[k] ? cloudVideo(VIDEOS[k], w) : null)
