@@ -1,0 +1,116 @@
+/* The ground a prototype plays on: the BirthStory identity gradient,
+   washed, exactly as the case study's feature stages draw it. The tokens
+   the prototypes read (normally set by the case study's `.case`) are set
+   here, so they render the same inside the sheet. */
+.ground {
+  --bs-teal: #1A434D;
+  --bs-teal-soft: #466F7B;
+  --bs-rule: rgba(26, 67, 77, 0.3);
+  --bs-hairline: rgba(26, 67, 77, 0.12);
+  --bs-accent: var(--bs-teal);
+  --bs-paper: #fafafa;
+
+  position: absolute;
+  inset: 0;
+  display: grid;
+  /* a defined row, so a child's height: 100% always resolves */
+  grid-template: minmax(0, 1fr) / minmax(0, 1fr);
+  place-items: center;
+  padding: 4% 5%;
+  background:
+    linear-gradient(rgba(250, 250, 250, 0.66), rgba(250, 250, 250, 0.66)),
+    linear-gradient(126deg, #e7c3c8 0%, #b9c2ec 48%, #1a434d 100%);
+}
+
+/* A phone sized by the mat's height, so the whole screen always shows.
+   442 × 944 is the phone frame: the 430 × 932 screen plus its bezel. */
+.phoneFit {
+  height: 100%;
+  min-height: 0;
+  max-width: 100%;
+  aspect-ratio: 442 / 944;
+}
+
+.phoneFit > figure { width: 100%; }
+
+/* The Book: her two real screens, side by side. */
+.pair {
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  gap: 4%;
+  height: 100%;
+}
+
+.pairPhone {
+  box-sizing: border-box;
+  position: relative;
+  display: block;
+  height: 100%;
+  aspect-ratio: 442 / 944;
+  padding: 6px;
+  border-radius: 22px;
+  background: #1d1d1f;
+  box-shadow: 0 24px 48px -28px rgba(26, 67, 77, 0.55);
+}
+
+.notch {
+  position: absolute;
+  top: 11px;
+  left: 50%;
+  z-index: 2;
+  width: 26%;
+  height: 10px;
+  border-radius: 999px;
+  background: #1d1d1f;
+  transform: translateX(-50%);
+}
+
+.screen {
+  display: block;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 17px;
+}
+
+.screen img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* A native diagram, scaled down whole to fit the mat. */
+.diagram {
+  width: 100%;
+  height: 100%;
+}
+
+.fitBox {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* Laid out at the width the diagrams have on the case study page, then
+   centered and scaled whole into the mat. */
+.fitInner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: block;
+  width: 64rem;
+  transform-origin: center;
+}
+
+/* the phone fallback: her deck slide, whole */
+.fallback {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: var(--sheet-mat);
+}

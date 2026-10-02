@@ -46,6 +46,14 @@
   background: var(--sheet-mat);
 }
 
+/* FS301: on a narrow screen a working prototype gets a taller mat, so the
+   phone inside stays large enough to read. */
+@media (max-width: 699px) {
+  .mat[data-proto] {
+    aspect-ratio: 4 / 5;
+  }
+}
+
 .matButton {
   display: block;
   width: 100%;

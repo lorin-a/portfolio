@@ -166,6 +166,15 @@ export default function SheetContent({ sheet, num, title, tagline, titleId }) {
                 <h3 className={styles.componentName}>{c.name}</h3>
                 {c.gated && <span className={styles.gated}>Confidential</span>}
                 <p className={styles.componentBody}>{c.body}</p>
+                {/* FS301: the case study's paired annotations, one short
+                    label and a line each */}
+                {c.notes?.length > 0 && (
+                  <dl className={styles.notes}>
+                    {c.notes.map((n) => (
+                      <div key={n.label}><dt>{n.label}</dt><dd>{n.text}</dd></div>
+                    ))}
+                  </dl>
+                )}
                 {c.mine && (
                   <div className={`${paper.paper} ${styles.mine}`}>
                     <span className={paper.holes} aria-hidden="true"><i /><i /><i /></span>

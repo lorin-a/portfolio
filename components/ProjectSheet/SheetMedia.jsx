@@ -12,6 +12,7 @@ import { BG_IMAGES } from '@/content/sheets/media/bridging-the-gap'
 import { useSharedAudio } from '@/lib/useSharedAudio'
 import { POEM_CREDIT } from '@/content/poems/groundswell'
 import GalleryNav from '@/components/GalleryNav/GalleryNav'
+import SheetPrototype, { hasPrototype } from './SheetPrototype'
 import styles from './SheetMedia.module.css'
 
 /* Cloudinary keys resolve through every project's map in lib/cloudinary.js
@@ -40,6 +41,12 @@ export function slidesFor(media = {}) {
   const out = []
   const add = (item) => {
     if (!item || item.type === 'audio') return
+    /* FS301: a built piece of the case study (SheetPrototype), not media */
+    if (item.type === 'prototype') {
+      if (hasPrototype(item.name)) out.push({ key: `proto-${item.name}`, type: 'prototype', name: item.name, alt: item.alt || '',
+        fallback: item.fallback ? img(item.fallback, 1200) : null })
+      return
+    }
     const type = item.type || 'image'
     const src = item.id
       ? (type === 'video' ? cloudVideo(item.id, 1600) : cloudImg(item.id, 1800))
@@ -81,7 +88,11 @@ export function SheetStage({ slides, gated, onImage, label, fit }) {
     if (e.key === 'ArrowLeft') { e.preventDefault(); go(-1) }
   }
 
-  const mediaEl = s.type === 'video' ? (
+  const mediaEl = s.type === 'prototype' ? (
+    <div key={s.key} className={styles.stageMedia} role="img" aria-label={s.alt}>
+      <SheetPrototype name={s.name} fallback={s.fallback} fallbackAlt={s.alt} />
+    </div>
+  ) : s.type === 'video' ? (
     <video key={s.key} src={s.src} muted loop playsInline autoPlay preload="metadata"
       aria-label={s.alt} className={styles.stageMedia} data-blur={s.blur || undefined}
       style={typeof s.blur === 'number' ? { '--data-blur': `${s.blur}px` } : undefined} />
@@ -101,7 +112,7 @@ export function SheetStage({ slides, gated, onImage, label, fit }) {
       aria-label={label}
       onKeyDown={onKey}
     >
-      <div className={styles.mat} data-fit={fit || undefined}>
+      <div className={styles.mat} data-fit={fit || undefined} data-proto={s.type === 'prototype' || undefined}>
         {s.type === 'image' && onImage && !gated ? (
           <button type="button" className={styles.matButton}
             onClick={(e) => onImage(s.key, e.currentTarget)}
