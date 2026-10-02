@@ -1,7 +1,12 @@
 /* Transition Design — the sheet's media (FS300). Public IDs as uploaded to
    Cloudinary portfolio/Transition-Design/images. The six maps were
    there already (their PDF twins are skipped); the deck slides were
-   uploaded 2026-10-02 from her local folder under their file names. */
+   uploaded 2026-10-02 from her local folder under their file names.
+   FS303 added the intervention images, the ecosystem-map zooms, the team
+   at the wall, and the stakeholder process images (td-* IDs).
+   Left out on purpose: AI images with garbled text baked in, TD_5
+   (“BASRET”), TD_6 (“Consciious”), TD_7 (“ACCESSS”), TD_8 (“JUSTUCE”),
+   and TD_16 (“Inititative” in its caption strip). */
 
 export const TD_IMAGES = {
   'td-wicked-map':   'TD-Map-1',                                       // the Wicked Problem Map: STEEP categories around food insecurity, with its linked factors
@@ -33,4 +38,26 @@ export const TD_IMAGES = {
   'td-ch-roots':       'TD_33',   // chapter slide: Digging Into the Roots
   'td-ch-possibilities': 'TD_38',   // chapter slide: Sowing New Possibilities
   'td-ch-change':      'TD_45',   // chapter slide: Cultivating Change
+  /* FS303, uploaded 2026-10-02 with the key as the public ID. Deck slides
+     from her local folder (TD_n noted), photos and process images from
+     public/images/projects/transition design (Medium's images). */
+  'td-cover':          'td-cover',          // TD_1: the deck cover, Roots to Resilience: A Food Secure Pittsburgh in 2050
+  'td-vision-2050':    'td-vision-2050',    // TD_2: Vision Pittsburgh 2050, a woman on a balcony over a green city
+  'td-kitchen-garden': 'td-kitchen-garden', // TD_3: Personal Kitchen Garden
+  'td-peoples-table':  'td-peoples-table',  // TD_4: The People’s Table, elders cooking and youth gardening
+  'td-food-forest':    'td-food-forest',    // TD_9: Roots & Resilience, a community food forest
+  'td-drive-2050':     'td-drive-2050',     // TD_10: Vision Pittsburgh 2050, driving past mills turned to greenhouses
+  'td-commons-trust':  'td-commons-trust',  // TD_12: Pittsburgh Food Commons Trust, a family harvesting fruit
+  'td-urban-rural':    'td-urban-rural',    // TD_14: Urban Rural Food Alliance, farmers loading produce trucks
+  'td-growback':       'td-growback',       // TD_17: GrowBack Tax Credit, icon illustration
+  'td-zoom-commons':   'td-zoom-commons',   // TD_46: ecosystem map, circled: the Food Forest and the Food Commons Trust
+  'td-zoom-steel':     'td-zoom-steel',     // TD_49: ecosystem map, circled: the Food Forest and Steel to Sustenance
+  'td-zoom-household': 'td-zoom-household', // TD_51: ecosystem map, circled: Home Harvest, the Harvesting Pittsburgh App, Farm to Institution
+  'td-zoom-growback':  'td-zoom-growback',  // TD_53: ecosystem map, circled: GrowBack Credit and the Urban-Rural Food Alliance
+  'td-wall-team-01':   'td-wall-team-01',   // photo: two teammates adding sticky notes at the whiteboard
+  'td-wall-team-02':   'td-wall-team-02',   // photo: a teammate standing on a chair to reach the top of the wall
+  'td-stakeholder-groups': 'td-stakeholder-groups', // Medium M2: stakeholders sorted into four groups
+  'td-mindsets':       'td-mindsets',       // Medium M2: mindset characteristics of each stakeholder group
+  'td-power-spectrum': 'td-power-spectrum', // Medium M2: mapping stakeholders on a power spectrum
+  'td-relations-draft': 'td-relations-draft', // Medium M2: the three stakeholders and their relations, first draft
 }

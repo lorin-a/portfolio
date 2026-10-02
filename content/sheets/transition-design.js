@@ -23,7 +23,10 @@
  *
  * MEDIA: media/transition-design.js (TD_IMAGES): the six maps, plus the
  * deck's slides, the affinity wall, and the AI-generated intervention
- * pictures, uploaded from her local folder on 2026-10-02.
+ * pictures, uploaded from her local folder on 2026-10-02. FS303 added the
+ * team at the wall, the stakeholder process images, the ecosystem-map
+ * zooms, and the 2050 story's pictures. Intervention captions are the
+ * words printed on each slide, verbatim.
  *
  * OPEN, hers to settle (also in STATUS):
  *   · the homepage CTA points to the Medium publication's front page,
@@ -36,8 +39,15 @@
  *     vision map is titled “for 2075.” The sheet follows her prose (2100);
  *   · the team name: the map files say “Autopoesis,” the deck and Medium
  *     say “Autopoiesis.” The sheet uses Autopoiesis;
- *   · one AI-generated slide (TD_7, Food Is Freedom) reads “FOOD ACCESSS”
- *     in its image; it is left out until fixed.
+ *   · five AI-generated slides have garbled text baked into the picture and
+ *     are left out until fixed: TD_5 Local Harvest Basket (“BASRET”), TD_6
+ *     Our Local Produce (“Consciious”), TD_7 Food Is Freedom (“ACCESSS”),
+ *     TD_8 Root Cause Food Justice (“JUSTUCE”), TD_16 Cooperative Economy
+ *     (“Inititative” in its caption strip). TD_4 The People’s Table is in,
+ *     though a T-shirt in the background carries AI gibberish;
+ *   · M5 embeds the full final presentation on YouTube
+ *     (https://www.youtube.com/watch?v=qObw2qPiEmM); the sheet has no video
+ *     embed, so it isn't on the sheet yet.
  */
 
 export const transitionDesign = {
@@ -49,9 +59,9 @@ export const transitionDesign = {
   /* Range: the wall, the first map, the vision, the future pictured.
      Captions and alts are furniture, hers to rewrite. */
   prints: [
-    { key: 'td-affinity-wall', caption: 'Affinity Clusters', alt: 'A whiteboard of sticky notes clustered by theme around food insecurity.' },
+    { key: 'td-wall-team-01', caption: 'At the Wall', alt: 'Two teammates adding sticky notes to the affinity clusters on the whiteboard.' },
     { key: 'td-wicked-map', caption: 'The Wicked Problem', alt: 'The Wicked Problem Map: food insecurity at the center, linked to five categories and their factors.' },
-    { key: 'td-vision', caption: 'Living Land Vision', alt: 'The Living Land Vision map, from the household to the planet.' },
+    { key: 'td-roots', caption: 'Roots to Resilience', alt: 'The intervention ecosystem across scales, from the household to the planet.' },
     { key: 'td-vision-2050', caption: 'Pittsburgh 2050', alt: 'AI-generated imagery: a woman on a balcony looking over a green Pittsburgh in 2050.' },
   ],
 
@@ -90,7 +100,7 @@ export const transitionDesign = {
     media: {
       stills: [
         { key: 'td-wicked-map', alt: 'The Wicked Problem Map: food insecurity at the center, its five categories, and other wicked problems at the edges.' },
-        { key: 'td-affinity-wall', alt: 'The in-person brainstorm: sticky notes clustered into the categories that became the map.' },
+        { key: 'td-affinity-wall', alt: 'We preferred an in-person brainstorming session, to make affinity clusters of our research that would reveal subcategories for our map.' },
         { key: 'td-map-detail', alt: 'Detail: food insecurity linked to legal, social, environmental, and economic factors.' },
         { key: 'td-map-thread', alt: 'Detail: one thread, from corporate consolidation to inflation.' },
       ],
@@ -106,10 +116,16 @@ export const transitionDesign = {
       name: 'Mapping Stakeholder Relations',
       /* sq, verbatim, two sentences */
       body: 'Key stakeholders were selected to represent different ends of the power spectrum and analyzed using the Power Cube Framework to identify opposing needs, values, and power dynamics that exacerbate food insecurity. Despite being most affected by food insecurity, the single Black mother has the least power to influence change.',
+      /* M2, verbatim */
+      notes: [
+        { label: 'Four groups', text: 'Those most affected, those in positions of power, those with the ability to create change, and those who benefit from maintaining the status quo.' },
+        { label: 'The Power Cube', text: 'This analysis examines the visible, hidden, and invisible forms of power exercised by each stakeholder.' },
+      ],
       mine: '[LORIN TO WRITE: your part in the stakeholder map: which stakeholder you researched, and whether you laid out the map]',
       media: {
         stills: [
           { key: 'td-stakeholders', alt: 'The stakeholder map: a Giant Eagle CEO, a food policy program manager, and a low-income single mother, each with fears and hopes.' },
+          { key: 'td-power-spectrum', alt: 'Mapping stakeholders on a power spectrum, from corporate food supply chains to the African American low-income minority.' },
           { key: 'td-power-cube', alt: 'The Power Cube: spaces, levels, and forms of power.' },
           { key: 'td-mother', alt: 'Detail: the low-income single mother’s fears and hopes.' },
           { key: 'td-ceo', alt: 'Detail: the Giant Eagle CEO’s fears and hopes.' },
@@ -163,17 +179,52 @@ export const transitionDesign = {
       name: 'Roots to Resilience 2050',
       /* sq, verbatim, first sentence + the Max-Neef sentence trimmed */
       body: '“Roots to Resilience 2050” lays out a phased, system-wide roadmap for transforming Pittsburgh’s food landscape from one marked by scarcity and fragmentation into a regenerative, community-owned ecosystem. Each intervention intentionally maps to Max-Neef’s fundamental human needs.',
+      /* M5, verbatim */
+      notes: [
+        { label: 'At the heart', text: 'The Roots and Resilience Community Food Forest, a place where cultural and nutritional justice take root through community-driven, perennial food systems.' },
+        { label: 'Human needs', text: 'Every aspect of our ecosystem touches upon at least two of Max Neef’s Fundamental Human Needs and follows key themes of education, distribution, cultivation, and consumption.' },
+      ],
       mine: '[LORIN TO WRITE: your part in the interventions: which ones you developed, and the ecosystem map’s information design]',
       media: {
         stills: [
           { key: 'td-roots', alt: 'The intervention ecosystem across scales, each intervention tagged with the human needs it meets.' },
+          { key: 'td-zoom-commons', alt: 'At the heart: the Roots and Resilience Community Food Forest, which gives rise to the Pittsburgh Food Commons Trust.' },
+          { key: 'td-zoom-steel', alt: 'An offshoot: the Steel to Sustenance Innovation Hub, former steel mill sites turned into centers of food production.' },
+          { key: 'td-zoom-household', alt: 'At the household level: the HOME Harvest Basket and the Harvesting Pittsburgh App, connected to Farm to Institution Pennsylvania.' },
+          { key: 'td-zoom-growback', alt: 'The Grow Back Credit evolves into the Urban-Rural Food Alliance model.' },
           { key: 'td-phases', alt: 'The interventions sorted into immediate and mid-to-long-term.' },
-          { key: 'td-app', alt: 'AI-generated imagery: the Harvesting Pittsburgh app, on a watch and a phone.' },
-          { key: 'td-steel', alt: 'AI-generated imagery: Steel to Sustenance, a former steel mill turned indoor farm.' },
-          { key: 'td-peoples-table', alt: 'AI-generated imagery: The People’s Table, elders and youth cooking together.' },
-          { key: 'td-home-harvest', alt: 'AI-generated imagery: the Home Harvest Initiative’s rooftop gardens.' },
-          { key: 'td-wisdom-circle', alt: 'AI-generated imagery: the Food Sovereignty Wisdom Circle.' },
-          { key: 'td-farm-institution', alt: 'Farm to Institution Pennsylvania: regional farms supplying schools and hospitals.' },
+        ],
+      },
+    },
+    {
+      key: 'morning-2050',
+      name: 'A Morning in Pittsburgh, 2050',
+      /* M5 opens the final presentation with a 2050 story narrated in
+         turn: Alisha first (“Lorin’s picking me up soon”), then the
+         driving section in Lorin's first person (“I head to pick up
+         Alisha”). The first sentence is a PROVISIONAL frame; the rest is
+         her section, verbatim, trimmed. */
+      body: 'The final presentation opened in 2050, a story we narrated in turn. My part: “I drive through morning-lit streets that blend Pittsburgh’s industrial past with its green future as I head to pick up Alisha for our Wisdom Circle meeting. The former steel mills that once stood abandoned now pulse with vertical gardens and aquaponic systems.”',
+      notes: [
+        { label: 'The app', text: '“What began as a simple coordination tool has become the nervous system of our local food network.”' },
+        { label: 'The circle', text: '“Here, Pittsburgh’s past and future converge as we continue the story of how a hungry city learned to feed itself with dignity.”' },
+      ],
+      mine: '[LORIN TO WRITE: confirm you wrote and narrated the driving section of the 2050 story, and anything else you made for it]',
+      media: {
+        /* the story's pictures in its order; captions are the words printed
+           on each slide, verbatim */
+        stills: [
+          { key: 'td-vision-2050', alt: 'AI-generated imagery. Vision Pittsburgh 2050: a thriving green city where community, culture, and nature grow side by side.' },
+          { key: 'td-peoples-table', alt: 'AI-generated imagery. The People’s Table: a community-powered learning network that teaches how to grow and cook culturally relevant foods.' },
+          { key: 'td-food-forest', alt: 'AI-generated imagery. Roots & Resilience: community-led food forests in Pittsburgh providing free, culturally relevant food and fostering education and connection.' },
+          { key: 'td-drive-2050', alt: 'AI-generated imagery. Vision Pittsburgh 2050: the drive past the old mills.' },
+          { key: 'td-steel', alt: 'AI-generated imagery. Steel to Sustenance: transform former steel mills into indoor farming facilities.' },
+          { key: 'td-commons-trust', alt: 'AI-generated imagery. Pittsburgh Food Commons Trust: protects and transforms vacant urban properties into community food production hubs.' },
+          { key: 'td-app', alt: 'AI-generated imagery. Harvesting Pittsburgh App: links growers, pantries, and communities to share surplus food and resources.' },
+          { key: 'td-urban-rural', alt: 'AI-generated imagery. Urban Rural Food Alliance: a nationwide network linking urban communities with nearby rural farms.' },
+          { key: 'td-home-harvest', alt: 'AI-generated imagery. Home Harvest Initiative: micro-grants to families in food deserts to establish home gardens.' },
+          { key: 'td-farm-institution', alt: 'Farm to Institution Pennsylvania: a program that mandates local institutions source 40% local food from regional farms.' },
+          { key: 'td-wisdom-circle', alt: 'AI-generated imagery. Food Sovereignty Wisdom Circle: cross-disciplinary local food councils with Indigenous leadership shape inclusive, sustainable food plans.' },
         ],
       },
     },
@@ -199,9 +250,21 @@ export const transitionDesign = {
     },
   ],
 
-  /* BEHIND THE SCENES: the final presentation's deck slides. */
+  /* BEHIND THE SCENES: the working sessions (photos and process images
+     from Medium M1 and M2), then the final presentation's deck slides. */
   processTitle: 'Behind the scenes',
   process: [
+    {
+      title: 'Working Sessions',
+      images: [
+        { key: 'td-wall-team-01', focus: '50% 35%', alt: 'Two teammates adding sticky notes to the affinity clusters.' },
+        { key: 'td-wall-team-02', focus: '50% 30%', alt: 'Standing on a chair to reach the top of the wall.' },
+        { key: 'td-affinity-wall', alt: 'The finished wall: research clustered into STEEP categories and subcategories.' },
+        { key: 'td-stakeholder-groups', alt: 'Stakeholders sorted into four groups, from those most affected to those who benefit from the status quo.' },
+        { key: 'td-mindsets', alt: 'The mindset characteristics of each stakeholder group.' },
+        { key: 'td-relations-draft', alt: 'A first draft of the stakeholder relations: the food council, the corporate supply chains, and the low-income community.' },
+      ],
+    },
     {
       title: 'The Final Presentation',
       fit: 'contain',  /* deck slides: keep them whole */

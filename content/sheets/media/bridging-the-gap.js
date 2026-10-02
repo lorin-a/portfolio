@@ -59,4 +59,38 @@ export const BG_IMAGES = {
   'bg-app-ride':         'BTG_48',   // riding: data tracking, audio tour, alerts
   'bg-app-selfies':      'BTG_49',   // in-app selfies along the trail
   'bg-app-recap':        'BTG_50',   // the trip recap: attractions, photos, miles toward merch
+  /* FS303: uploaded 2026-10-02 from her local folder (NEW 2026 Portfolio
+     Files Cloudinary/Bridging the Gap) and, for the process images, from
+     her Medium article. Public ID = key. */
+  // field research at Ohiopyle and Smithton (her phone photos)
+  'bg-field-board':        'bg-field-board',        // “What would get you to go bike touring?” board beside a loaded touring bike
+  'bg-field-bridge':       'bg-field-bridge',       // two riders crossing the trail bridge over the river
+  'bg-field-team':         'bg-field-team',         // Lorin, Michael, and Rui, a selfie at the Ohiopyle falls
+  'bg-field-town-map':     'bg-field-town-map',     // the existing Smithton town map and directory sign
+  'bg-field-mile-post':    'bg-field-mile-post',    // the existing mileage post at Smithton
+  'bg-field-local-board':  'bg-field-local-board',  // a “Support Local Business” bulletin board in a trail town
+  // the app shoot (files named Zo_Lorin_Anderberg)
+  'bg-app-shoot-maps':     'bg-app-shoot-maps',     // planning at a window table spread with paper trail maps
+  'bg-app-shoot-planning': 'bg-app-shoot-planning', // overhead: maps, a laptop, and the app on a phone
+  'bg-app-shoot-phone':    'bg-app-shoot-phone',    // overhead: the app held over the maps
+  // the guide, panel by panel (flat artwork)
+  'bg-guide-panel-cover':  'bg-guide-panel-cover',  // cover: “Discover the Joy of Bike Touring the Great Allegheny Passage!”
+  'bg-guide-panel-gear':   'bg-guide-panel-gear',   // the illustrated gear guide
+  'bg-guide-panel-faq':    'bg-guide-panel-faq',    // FAQ panel
+  'bg-guide-panel-2days':  'bg-guide-panel-2days',  // a two-day itinerary, Connellsville to Cumberland
+  'bg-guide-panel-route':  'bg-guide-panel-route',  // a stretch of the route map with its attractions
+  'bg-guide-panel-know':   'bg-guide-panel-know',   // “Know Before You Go”
+  // signage and trail art mockups
+  'bg-trail-art-park':     'bg-trail-art-park',     // a branded sign and painted mileage line on a park path
+  'bg-trail-art-forest':   'bg-trail-art-forest',   // painted mileage lines and the GAP star on a forest road
+  // apparel, single mockups
+  'bg-merch-tote':         'bg-merch-tote',         // the Bridging the GAP tote on blue
+  'bg-merch-cap':          'bg-merch-cap',          // a blue Great Allegheny Passage cap
+  'bg-merch-socks':        'bg-merch-socks',        // GAP socks with the road-line pattern
+  'bg-merch-bottle-lake':  'bg-merch-bottle-lake',  // a GAP sport bottle held up over the water
+  // process, from her Medium article (captions hers)
+  'bg-logo-iterations':    'bg-logo-iterations',    // “Early iterations of the logo”: the bike-letter GAP
+  'bg-sticker-badges':     'bg-sticker-badges',     // her first sticker badges of trail attractions
+  'bg-app-sketches':       'bg-app-sketches',       // “Early sketches of web/app UX”: an elevation route sketch
+  'bg-guide-layout':       'bg-guide-layout',       // “Exploring the layout”: whiteboard sketches of the guide
 }

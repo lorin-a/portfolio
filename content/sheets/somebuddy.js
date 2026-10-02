@@ -99,6 +99,10 @@ export const somebuddy = {
       name: 'Orientation Bingo',
       /* sq, verbatim but for a comma after “orientation” */
       body: 'Students discover the SomeBuddy brand and app at CMU’s grad student orientation, where they play a game of bingo to get to know their new peers and add them as buddies within the app for future connection.',
+      notes: [
+        /* med “Ask”, verbatim */
+        { label: 'The ask', text: 'Develop a design ecosystem with at least one off-screen element that solves a practical problem. The project must include primary research and user feedback.' },
+      ],
       mine: '[LORIN TO WRITE: your part in the orientation touchpoints: the bingo card, banners, booth, and QR code]',
       media: {
         stills: [
@@ -112,6 +116,12 @@ export const somebuddy = {
       name: 'The SomeBuddy App',
       /* sq, condensed from four paragraphs; wording hers. */
       body: 'Finding someone to do something with is fast and low-pressure. Instead of filling out a bunch of forms, students pick an activity, choose a general time and location, and post. The app surfaces nearby matches, filtered by distance, age, gender, and shared interests. They can send a request from a pre-filled template or chat first with conversation starters, and replies are simple accept or decline buttons.',
+      notes: [
+        /* med, verbatim */
+        { label: 'The goal', text: 'Make the experience fast, effortless, and low-pressure.' },
+        /* med, lightly trimmed (“craving for espresso or having a casual chat”) */
+        { label: 'A second layer', text: 'Filters change with the activity, so if you’re looking for someone craving espresso or a casual chat over coffee, you can narrow it down even more.' },
+      ],
       mine: '[LORIN TO WRITE: your part in the app: flows, screens, the message templates]',
       media: {
         stills: [
@@ -125,6 +135,10 @@ export const somebuddy = {
       name: 'Badges and Patches',
       /* sq, two passages joined and lightly condensed. */
       body: 'Earning a first badge at orientation bingo introduces students to the physical patch element of the ecosystem and inspires a collection throughout the year. Each badge, earned by doing something together with another SomeBuddy, can be customized in color, text, shape, and type color, and the “My badge collection” page holds them all.',
+      notes: [
+        /* med, lightly trimmed */
+        { label: 'CMU references', text: 'The illustrations tie in CMU references through a straightforward and approachable illustrative style.' },
+      ],
       mine: '[LORIN TO WRITE: your part in the badges: the illustrations, the patches, the customization flow]',
       media: {
         stills: [
@@ -152,7 +166,13 @@ export const somebuddy = {
       key: 'brand',
       name: 'Brand Identity',
       /* med + sq, three passages joined, wording hers. */
-      body: 'We wanted the brand to feel bright, soft, and welcoming. The logo is simple and metaphorical, playing with language and shapes to convey that SomeBuddy helps you find and message fellow students; the smile lets you know it is safe and friendly. The Quicksand typeface is playful and eye-catching but also softens the intensity of the color palette.',
+      body: 'We wanted the brand to feel bright, soft, and welcoming. The logo is simple and metaphorical, playing with language and shapes to convey that SomeBuddy helps you find and message fellow students. The Quicksand typeface is playful and eye-catching but also softens the intensity of the color palette.',
+      notes: [
+        /* med, two passages joined, wording hers */
+        { label: 'Trust, then warmth', text: 'Users told us trust and CMU verification mattered, so we tried colors adjacent to the CMU brand. Class feedback confirmed that a bright, exciting, soft, and welcoming brand fit best.' },
+        /* med, verbatim */
+        { label: 'From afar', text: 'The smile lets you know it is safe and friendly, while the shapes draw you in from afar.' },
+      ],
       mine: '[LORIN TO WRITE: your part in the brand: logo, type and color, illustrations]',
       media: {
         stills: [
