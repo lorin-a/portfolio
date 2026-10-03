@@ -108,7 +108,9 @@ export const birthstory = {
     kicker: 'The Ecosystem',
     label: 'Individual and Shared',
     wide: true,  /* the words above, the four screens across the whole sheet */
-    intro: 'Birth is both an individual and a shared experience, and the two are intertwined when it comes to processing, documenting, and reflecting on it. So the app meets different people at different moments: loved ones keep track during the birth, the parent reflects in private after it, and a book they curate carries it forward.',
+    /* FS315: the ecosystem and product copy, combined (the product half
+       is the live ProductAct opener, trimmed). */
+    intro: 'Birth is both an individual and a shared experience, and the two are intertwined when it comes to processing, documenting, and reflecting on it. So the app meets different people at different moments: loved ones keep track during the birth, the parent reflects in private after it, and a book they curate carries it forward. Because birth is unpredictable, the app is deliberately simple: it opens into documenting and reaches everything else in a tap or two. Each feature below plays as a working prototype I rebuilt from the wireframes.',
     screens: [
       { name: 'Documentation', tag: 'Shared · during the birth', text: 'A partner or loved one keeps track of events and details, leading up to, during, and just after.',
         src: '/images/birthstory/bs-doc-medical.png', alt: 'The notes timeline with a medical entry opened: an ibuprofen prescription and a voice memo.' },
@@ -140,8 +142,6 @@ export const birthstory = {
   components: [
     {
       key: 'documentation',
-      /* live ProductAct opener: statement + lede + note, trimmed */
-      chapter: { kicker: 'Part one', title: 'The Product', line: 'Birth is unpredictable, so the app is deliberately simple. It opens into documenting and reaches everything else in a tap or two. Each feature plays as a working prototype I rebuilt from the wireframes.' },
       name: 'Documentation',
       /* live prose + v3's closing sentence */
       body: 'Parents told me they wanted to land on the main task, so that’s what the app does. Even if nothing else gets used, there’s a timeline of whatever they or a loved one managed to add. A note from the delivery room, a prescription, and a voice memo land on the same timeline, the moment they happen.',
@@ -221,7 +221,7 @@ export const birthstory = {
     {
       key: 'research',
       /* PROVISIONAL chapter line */
-      chapter: { kicker: 'Part two', title: 'How It Came Together', line: 'Six weeks of research, three rounds of wireframes, and the words and look that hold it together.' },
+      chapter: { kicker: 'The process', title: 'How It Came Together', line: 'Six weeks of research, three rounds of wireframes, and the words and look that hold it together.' },
       name: 'Research',
       /* Q6, refined */
       body: 'We interviewed seven parents: two think-aloud walkthroughs of our wireframes over Zoom, with parents our client connected us with, and video interviews I ran with three family members and two friends. I also read birth forums and blogs.',
