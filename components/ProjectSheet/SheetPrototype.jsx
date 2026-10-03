@@ -2,6 +2,7 @@
 
 import dynamic from 'next/dynamic'
 import { useLayoutEffect, useRef, useState } from 'react'
+import { cloudVideo } from '@/lib/cloudinary'
 import styles from './SheetPrototype.module.css'
 
 /* A built piece of a case study, playing inside a sheet gallery (FS301).
@@ -83,6 +84,18 @@ function useNarrow() {
   return narrow
 }
 
+/* a looping film on a project's ground; still (poster frame) under reduced motion */
+function Film({ piece }) {
+  const [reduced, setReduced] = useState(false)
+  useLayoutEffect(() => { setReduced(window.matchMedia('(prefers-reduced-motion: reduce)').matches) }, [])
+  return (
+    <div className={styles.filmGround} style={{ background: piece.ground }}>
+      <video className={styles.film} src={cloudVideo(piece.film, 1600)} muted loop playsInline
+        autoPlay={!reduced} preload="metadata" aria-label={piece.alt} />
+    </div>
+  )
+}
+
 const PIECES = {
   doc: { phone: true, el: <DocReveal /> },
   carepod: { phone: true, el: <CarePodFlow /> },
@@ -93,6 +106,9 @@ const PIECES = {
   'ia-final': { diagram: true, el: <IaFinal compact /> },
   /* the case study's hero stage, for a sheet's cover (FS310) */
   'bs-hero': { hero: true, el: <HeroStage /> },
+  /* SomeBuddy's cover (FS346): the concept video's kinetic opening on the
+     brand blue, looping, muted */
+  'sb-hero': { film: 'somebuddy-reel-2', ground: '#4747DC', alt: 'The SomeBuddy concept video: “Social” and “solo” in kinetic type, then “Spontaneous. Simple. Social.”' },
 }
 
 export const hasPrototype = (name) => !!PIECES[name]
@@ -109,6 +125,7 @@ export default function SheetPrototype({ name, fallback, fallbackAlt, bare }) {
   if (piece.diagram && narrow && fallback) {
     return <img className={styles.fallback} src={fallback} alt={fallbackAlt || ''} />
   }
+  if (piece.film) return <Film piece={piece} />
   if (piece.hero) {
     return (
       <div className={styles.heroGround}>

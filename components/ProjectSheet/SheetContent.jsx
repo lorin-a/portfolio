@@ -157,7 +157,11 @@ export default function SheetContent({ sheet, num, title, tagline, titleId }) {
   useSheetReveal(rootRef)
 
   return (
-    <div ref={rootRef}>
+    /* FS346: a project's own band gradient and step-tile colors */
+    <div ref={rootRef} style={{
+      ...(sheet.band && { '--sheet-band': sheet.band }),
+      ...Object.fromEntries((sheet.tiles || []).map((c, i) => [`--tile-${i + 1}`, c])),
+    }}>
       {/* THE COVER — a pile of content inside the folder: the name and the
           facts on loose-leaf, the photographs as a pile of prints. */}
       <SheetCover sheet={sheet} num={num} title={title} tagline={tagline} titleId={titleId} />
@@ -223,7 +227,7 @@ export default function SheetContent({ sheet, num, title, tagline, titleId }) {
               {/* FS317: the chapter's map: every step, when, and its outcome,
                   each a link down to its section */}
               {c.chapter.steps?.length > 0 && (
-                <ol className={styles.chapterSteps}>
+                <ol className={styles.chapterSteps} style={{ '--steps': c.chapter.steps.length }}>
                   {c.chapter.steps.map((st) => (
                     <li key={st.key}>
                       <a href={`#sheet-${st.key}`} className={styles.chapterStep}>

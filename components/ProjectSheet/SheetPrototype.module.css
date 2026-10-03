@@ -146,3 +146,20 @@
   width: 42rem;
   height: 680px;
 }
+
+/* a film cover (FS346) */
+.filmGround {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  box-shadow: inset 0 0 0 1px rgba(244, 241, 236, 0.18);
+}
+
+.film {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
