@@ -419,6 +419,7 @@ funding, captions, card note).
 | FS327 | “I preferred the visual identity area housed inside a color block to mirror the other images.” (2026-10-03) | ✅ DONE: the whole Visual Identity exhibit (gradient, palette, type, moodboard) now sits inside the washed identity color block like the other exhibits, with teal inks on it |
 | FS328 | “Remote consent at the bottom.” (read as: remove the Consent credit) | ✅ DONE: the Consent credit removed from the BirthStory sheet |
 | FS329 | “If user clicks the link at the bottom ensure it opens in a new tab not same tab.” | ✅ DONE: “Read the full … case study” opens in a new tab (target _blank, rel noopener) on every sheet, with screen-reader text “(opens in a new tab)”; verified in the browser |
+| FS330 | “Iteration gallery is far too visually complex, find a simpler more elegant format - does it need to be a full bleed section?” (2026-10-03) | 🟡 IN PROGRESS. Answer: not full bleed (only the cover breaks the folder), but full sheet width with the words above, like the overview |
 =======
 | FS193 | "i need this to look 50% neater, better orgnanized and simple" (2026-10-01), read as the Acknowledgements | ⏳ IN PROGRESS |
 >>>>>>> parent of f51f3e4 (feat(sheet): acknowledgements in one format: name over one-line role, three labelled lines (FS193))
