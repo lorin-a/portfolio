@@ -256,3 +256,75 @@ export function WhatTestingChanged() {
     </div>
   )
 }
+
+/* ════════════════════════════════════════════════════════════════════
+   E · FROM THE REFERENCES (FS341). Komoot (Ellen Covey) and Rokt (Gloria
+   Lo): iteration as one static row of versions, decisions as stacked
+   beats with full-sentence headings, 2–3 sentences, Before | After side
+   by side; no galleries (Buck). One visual vocabulary: the gradient
+   band, phones, sage labels, the heading face.
+   Receipts: Q3 (fidelity lesson), Q9 (rounds), Q7, Q12, the sister
+   synthesis (summary), the parent-tester quote from her research doc. */
+
+const DECISIONS = [
+  {
+    head: 'Remove the home menu, so parents land on the task.',
+    body: <>Version 2 asked parents to choose from a menu of four before they could write anything. A parent tester put it plainly: <i>“Too many menus.”</i> The app now opens straight into note-taking, and the other features stay in the nav bar.</>,
+    before: { src: `${E}/screens/v2-3.png`, alt: 'Version 2: a home menu with four choices.', label: 'Before · Version 2' },
+    after: { src: `${E}/screens/v3-2.png`, alt: 'Version 3: the app opens on the notes timeline.', label: 'After · Version 3' },
+  },
+  {
+    head: 'Fold separate tools into one timeline.',
+    body: <>Version 1 kept voice notes, notes, photos, and the timeline in separate places. Parents were less interested in medical records and more interested in photos and an outline of what happened, so everything now lands on one timeline, organized by tags.</>,
+    before: { src: `${E}/screens/v1-4.png`, alt: 'Version 1: voice note, notes, photos, and timeline as separate tools.', label: 'Before · Version 1' },
+    after: { src: '/images/birthstory/bs-doc-medical.png', alt: 'Version 3: a medical entry as a tagged card on the timeline.', label: 'After · Version 3' },
+  },
+  {
+    head: 'Rewrite the copy that assumed a hard birth.',
+    body: <>A parent didn’t connect with “reclaim,” and the careful, compassionate copy read as assuming a negative experience. I shifted the tone to care-centered and neutral, and “Find Strength & Support” became the Care Pod.</>,
+    before: { src: `${E}/screens/v2-6.png`, alt: 'Version 2: Find Strength & Support in the menu.', label: 'Before · Version 2' },
+    after: { src: '/images/birthstory/bs-carepod.png', alt: 'Version 3: the Care Pod.', label: 'After · Version 3' },
+  },
+]
+
+function Shot({ x }) {
+  return (
+    <figure className={s.eShot}>
+      <span className={s.eLabel}>{x.label}</span>
+      <span className={s.ePhone}><img src={x.src} alt={x.alt} /></span>
+    </figure>
+  )
+}
+
+export function FromTheReferences() {
+  return (
+    <div className={s.e}>
+      {/* 1 · iteration: the three rounds, one static row */}
+      <section className={s.eBeat}>
+        <h4 className={s.eHead}>Three rounds of wireframes, each simpler than the last.</h4>
+        <p className={s.eBody}>I started by fitting in every feature I could, then narrowed. To keep testers focused on the flow, I took my image-heavy first prototype down to color blocks and simple icons.</p>
+        <div className={s.eRow3}>
+          {ROUNDS.map((r) => (
+            <figure key={r.v} className={s.eShot}>
+              <span className={s.ePhone}><img src={r.src} alt={r.alt} /></span>
+              <figcaption className={s.eCap}><span className={s.eLabel}>{r.v} · {r.when}</span>{r.fidelity}</figcaption>
+            </figure>
+          ))}
+        </div>
+      </section>
+
+      {/* 2 · the decisions, one at a time */}
+      {DECISIONS.map((d) => (
+        <section key={d.head} className={s.eBeat}>
+          <h4 className={s.eHead}>{d.head}</h4>
+          <p className={s.eBody}>{d.body}</p>
+          <div className={s.eRow2}>
+            <Shot x={d.before} />
+            <span className={s.eArrow} aria-hidden="true">→</span>
+            <Shot x={d.after} />
+          </div>
+        </section>
+      ))}
+    </div>
+  )
+}
