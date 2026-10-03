@@ -25,17 +25,24 @@ const EXHIBITS = {
 function Work({ media, label, gated, onImage }) {
   if (media?.annotated) return <SheetAnnotated {...media.annotated} />
   /* FS319: one image, whole and uncropped, with its caption */
-  if (media?.photo) {
-    const src = sheetImg(media.photo.key, 2000)
-    return src ? (
-      <figure className={styles.photo}>
-        <button type="button" className={styles.photoButton} onClick={(e) => onImage?.(media.photo.key, e.currentTarget)}
-          aria-label={`View full screen: ${media.photo.alt}`}>
-          <img src={src} alt="" />
-        </button>
-        <figcaption className={styles.photoCap}>{media.photo.alt}</figcaption>
-      </figure>
-    ) : null
+  const photos = media?.photos || (media?.photo ? [media.photo] : null)
+  if (photos) {
+    return (
+      <div className={styles.photos}>
+        {photos.map((ph) => {
+          const src = sheetImg(ph.key, 2000)
+          return src && (
+            <figure key={ph.key} className={styles.photo}>
+              <button type="button" className={styles.photoButton} onClick={(e) => onImage?.(ph.key, e.currentTarget)}
+                aria-label={`View full screen: ${ph.alt}`}>
+                <img src={src} alt="" />
+              </button>
+              <figcaption className={styles.photoCap}>{ph.alt}</figcaption>
+            </figure>
+          )
+        })}
+      </div>
+    )
   }
   if (media?.compare) return <SheetCompare slides={media.compare} label={label} />
   if (media?.screens) return <SheetScreens items={media.screens} />
@@ -122,7 +129,7 @@ export default function SheetContent({ sheet, num, title, tagline, titleId }) {
     components.forEach((c) => {
       if (c.gated) return
       slidesFor(c.media).forEach((sl) => { if (sl.type === 'image') push(sl.key, sl.alt) })
-      if (c.media?.photo) push(c.media.photo.key, c.media.photo.alt)
+      ;(c.media?.photos || (c.media?.photo ? [c.media.photo] : [])).forEach((ph) => push(ph.key, ph.alt))
     })
     process.forEach((ph) => ph.images.forEach((i) => push(i.key, i.alt)))
     return list

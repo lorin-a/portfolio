@@ -114,14 +114,16 @@ export const birthstory = {
        features that are also easily accessible via the nav bar at all
        times”); the prototype line removed. */
     intro: 'Birth is both an individual and a shared experience, and the two are intertwined when it comes to processing, documenting, and reflecting on it. So the app meets different people at different moments: loved ones keep track during the birth, the parent reflects in private after it, and a book they curate carries it forward. Because birth is unpredictable, the app is deliberately simple: it opens straight into note-taking, and the other features are always in the navigation bar.',
+    /* FS321: her own annotations, verbatim from her deck slides (bs-9,
+       bs-45, bs-43/44, bs-47; CMU IXD Studio Spring 2025), not new copy. */
     screens: [
-      { name: 'Documentation', tag: 'Shared · during the birth', text: 'A partner or loved one keeps track of events and details, leading up to, during, and just after.',
+      { name: 'Home Timeline', text: 'Home page is the collective timeline that is auto populated by entries.',
         src: '/images/birthstory/bs-doc-medical.png', alt: 'The notes timeline with a medical entry opened: an ibuprofen prescription and a voice memo.' },
-      { name: 'Care Pod', tag: 'Shared · the birth and the newborn weeks', text: 'Easy updates out to the circle, and their replies saved into the story.',
+      { name: 'Care Pod Updates', text: 'Easy messaging with pre-selected care pod members for live labor communication.',
         src: '/images/birthstory/bs-carepod.png', alt: 'The Care Pod: loved ones in a circle around the parent, with a Send Update button.' },
-      { name: 'Reflection', tag: 'Private · after the birth', muted: true, text: 'Prompts that center the birth parent’s experience, in a private, safe space.',
+      { name: 'Journal Prompts', text: 'Shuffle through thoughtful journal prompts.',
         src: '/images/birthstory/bs-reflect-card.png', alt: 'A reflection prompt card dealt in the journal, above a new entry.' },
-      { name: 'The Book', tag: 'Shared · in the end', text: 'Curated to mark this moment and what they choose to carry forward.',
+      { name: 'Export Your Story', text: 'Download and share a free PDF or order a physical booklet as a keepsake.',
         src: '/images/birthstory/bs-book-order.png', alt: 'The Birth Story Book: order a printed keepsake or download a free PDF.' },
     ],
   },
@@ -153,8 +155,12 @@ export const birthstory = {
         annotated: {
           prototype: 'doc',
           alt: 'The working prototype: a medical entry opens on the timeline, an ibuprofen prescription with its pickup note and a voice memo.',
-          left: [{ label: 'One timeline', text: 'Medical, contextual, narrative, and feelings in one place, because a birth isn’t lived in separate files.' }],
-          right: [{ label: 'Calm by default', text: 'Entries stay closed until you open one, so a tired parent meets a surface, not a wall of clinical detail.' }],
+          /* FS321: her deck annotations, verbatim (bs-43 Note Taking) */
+          left: [
+            { label: 'Home', text: 'Suggested prompts for ease of use + toggle menu between Notes and Journal.' },
+            { label: 'New Entry', text: 'Button for easy access to pop-up window.' },
+          ],
+          right: [{ label: 'Timeline', text: 'Collapsible cards self organize + can be edited as needed.' }],
         },
       },
     },
@@ -171,8 +177,15 @@ export const birthstory = {
         annotated: {
           prototype: 'carepod',
           alt: 'The working prototype: the Care Pod circle loads, Send Update opens the compose sheet, and replies land on the live message board.',
-          left: [{ label: 'You don’t carry it', text: 'One person you designate sends the updates, photos, and voice memos, not the laboring parent.' }],
-          right: [{ label: 'Nothing is lost', text: 'Loved ones reply, and it all saves into the story: the detail you’d have forgotten, kept.' }],
+          /* FS321: her deck annotations, verbatim (bs-45, bs-46) */
+          left: [
+            { label: 'Updates', text: 'Easy messaging with pre-selected care pod members for live labor communication.' },
+            { label: 'Pod Updates', text: 'Designate a loved one to send updates on your behalf with easy multimedia UI.' },
+          ],
+          right: [
+            { label: 'Message Board', text: 'Receive real time support messages from Care Pod members, allow others to communicate on your behalf.' },
+            { label: 'Care Pod Stories', text: 'Invite Care Pod members to send their own updates of their experience waiting for you to give birth + add these to the final book for a holistic narrative.' },
+          ],
         },
       },
     },
@@ -185,8 +198,9 @@ export const birthstory = {
         annotated: {
           prototype: 'journal',
           alt: 'The working prototype: the prompt deck shuffles and settles on “Letter to Past Self,” then the reflection writes itself in and the mood tags land.',
-          left: [{ label: 'No blank page', text: 'The deck deals a prompt, because the parents who don’t already journal don’t know where to start.' }],
-          right: [{ label: 'Tag how it felt', text: 'So a memory can be found later by its emotion, not only its date.' }],
+          /* FS321: her deck annotations, verbatim (bs-44 Journaling) */
+          left: [{ label: 'Prompts', text: 'Shuffle through thoughtful journal prompts.' }],
+          right: [{ label: 'Tags', text: 'Option to tag entries and add media.' }],
         },
       },
     },
@@ -200,8 +214,9 @@ export const birthstory = {
         annotated: {
           prototype: 'search',
           alt: 'The working prototype: the search panel slides in over the home screen, with filters by emotion and category.',
-          left: [{ label: 'A swipe from anywhere', text: 'Reachable over any screen, so brain fog never means digging through the app for one memory.' }],
-          right: [{ label: 'Filter by feeling', text: 'A parent recalls a memory by how it felt, not when it was logged.' }],
+          /* FS321: her deck annotations, verbatim (bs-42 Onboarding) */
+          left: [{ label: 'Discoverable', text: 'Swipe or tap to view search window.' }],
+          right: [{ label: 'Search', text: 'Search via tags.' }],
         },
       },
     },
@@ -216,8 +231,9 @@ export const birthstory = {
           prototype: 'book',
           alt: 'Order a printed keepsake or download a free PDF, and drag entries to curate the story together.',
           /* v3: verbatim tester quote */
-          left: [{ label: 'A parent said', text: '*“It would be tragic to lose these moments if the app went away.”*' }],
-          right: [{ label: 'Curated together', text: 'Built from what’s already there, open to the people who were part of it.' }],
+          /* FS321: her deck annotations, verbatim (bs-47 Birth Story Book) */
+          left: [{ label: 'Export Your Story', text: 'Download and share a free PDF or order a physical booklet as a keepsake.' }],
+          right: [{ label: 'Curate Your Story', text: 'Easily organize entries and media for your book.' }],
         },
       },
     },
@@ -229,13 +245,13 @@ export const birthstory = {
       chapter: {
         kicker: 'Six weeks · Spring 2025',
         title: 'The Process',
-        line: 'Five steps, from the first interviews to the final screens. Each one changed the design.',
+        line: 'Five steps, from the first interviews to the final screens.',
         steps: [
-          { key: 'research', when: 'Weeks 1–2', name: 'Research', outcome: 'Seven parents, and a shift from logging everything to keeping it simple.' },
-          { key: 'architecture', when: 'Week 3', name: 'Architecture', outcome: 'No home screen and nothing to answer first.' },
-          { key: 'iteration', when: 'Weeks 3–5', name: 'Iteration', outcome: 'Three versions, each with fewer options.' },
-          { key: 'ux-writing', when: 'Week 5', name: 'UX Writing', outcome: 'Trauma-informed, without assuming trauma.' },
-          { key: 'identity', when: 'Week 5', name: 'Visual Identity', outcome: 'Calm and non-clinical, for a parent awake in the middle of the night.' },
+          { key: 'research', when: 'Weeks 1–2', name: 'Research', outcome: 'Seven parent interviews and two think-aloud tests.' },
+          { key: 'architecture', when: 'Week 3', name: 'Architecture', outcome: 'Removed the home menu and the intake questions.' },
+          { key: 'iteration', when: 'Weeks 3–5', name: 'Iteration', outcome: 'Three wireframe rounds, each with fewer options.' },
+          { key: 'ux-writing', when: 'Week 5', name: 'UX Writing', outcome: 'Rewrote copy that assumed a traumatic birth.' },
+          { key: 'identity', when: 'Week 5', name: 'Visual Identity', outcome: 'A gradient, palette, and type paired with Myana.' },
         ],
       },
       step: 'Step 1 · Weeks 1–2',
@@ -263,7 +279,12 @@ export const birthstory = {
         ],
       },
       media: {
-        photo: { key: 'bs-tap-figma', alt: 'A think-aloud walkthrough over Zoom: a parent talks through the reflection wireframe while we listen.' },
+        /* FS322: both think-aloud sessions, stacked, so the images run
+           longer than the copy */
+        photos: [
+          { key: 'bs-tap-figma', alt: 'A think-aloud walkthrough over Zoom: a parent talks through the reflection wireframe.' },
+          { key: 'bs-tap-zoom', alt: 'A second think-aloud session over Zoom, the parent blurred for privacy.' },
+        ],
       },
     },
     {
@@ -313,51 +334,51 @@ export const birthstory = {
       media: {
         compare: [
           {
-            title: 'The way in.',
-            line: 'From three doors to none: the app now opens on the main task.',
+            title: 'Entry point.',
+            line: 'Versions 1 and 2 opened on a menu. Version 3 opens on the notes timeline.',
             versions: [
               { tag: 'Version 1 · Week 3', src: '/images/birthstory/evolution/screens/v1-3.png', alt: 'Version 1 home: three doors, Reflect, Document, and Connect.',
-                text: 'Three doors to choose from before anything else.', quote: '“Onboarding is nice, but there are too many buttons and options.”' },
+                text: 'Home menu with three options: Reflect, Document, Connect.', quote: '“Onboarding is nice, but there are too many buttons and options.”' },
               { tag: 'Version 2 · Week 4', src: '/images/birthstory/evolution/screens/v2-3.png', alt: 'Version 2 menu: Reflect & Reclaim, Document the Details, Find Strength & Support, View Collections.',
-                text: 'Four doors in one menu. Clearer, but still too many options.', quote: '“Why ‘reclaim’? I’m not sure what it even means.”' },
+                text: 'Home menu with four options.', quote: '“Why ‘reclaim’? I’m not sure what it even means.”' },
               { tag: 'Version 3 · Week 5', src: '/images/birthstory/evolution/screens/v3-2.png', alt: 'Version 3: the notes timeline, with prompts for memorable events, the experience, and medical events.',
-                text: 'No home menu. The app opens straight into note-taking.' },
+                text: 'No home menu. Opens on the notes timeline; the other features are in the navigation bar.' },
             ],
           },
           {
-            title: 'Documenting.',
-            line: 'From separate tools to one timeline.',
+            title: 'Documentation.',
+            line: 'Separate tools became one timeline organized by tags.',
             versions: [
               { tag: 'Version 1', src: '/images/birthstory/evolution/screens/v1-4.png', alt: 'Version 1 reflect: voice note, notes, photos, and timeline, each its own tool.',
-                text: 'Voice notes, notes, photos, and the timeline each in a place of their own.' },
+                text: 'Separate tools for voice notes, notes, photos, and the timeline.' },
               { tag: 'Version 2', src: '/images/birthstory/evolution/reflect-v2.png', alt: 'Version 2 notes: an entry open above a list of timed entries.',
-                text: 'One notes section, filtered by topic, instead of medical details in one place and memories in another.' },
+                text: 'One notes section, filterable by topic.' },
               { tag: 'Version 3', src: '/images/birthstory/bs-doc-medical.png', alt: 'Version 3: a medical entry opened on the timeline, with tags and a voice memo.',
-                text: 'Medical details become tags on the same timeline as everything else.' },
+                text: 'Notes, medical events, and media on one timeline, organized by tags.' },
             ],
           },
           {
             title: 'Onboarding.',
-            line: 'From a tour before you start to tips on the real screens.',
+            line: 'A tour before use became tips on the live screens.',
             versions: [
               { tag: 'Version 1', src: '/images/birthstory/evolution/screens/v1-1.png', alt: 'Version 1 welcome: speech bubbles explaining the app before the first entry.',
-                text: 'Welcome messages to read before the first entry.' },
+                text: 'Text welcome screens before the first entry.' },
               { tag: 'Version 2', src: '/images/birthstory/evolution/screens/v2-4.png', alt: 'Version 2 tour: Reflect, highlighted in a swipe-through menu.',
-                text: 'A swipe-through tour of four features.' },
+                text: 'Swipe-through tour, one feature per screen.' },
               { tag: 'Version 3', src: '/images/birthstory/evolution/screens/v3-3.png', alt: 'Version 3: a tip pointing to the Care Pod tab in the navigation bar.',
-                text: 'Tips over the real screens point to the other features, always in the navigation bar.' },
+                text: 'Tips over the live screens point to each feature in the navigation bar.' },
             ],
           },
           {
             title: 'Sharing.',
-            line: 'From a door called Connect to the Care Pod.',
+            line: 'Connect became the Care Pod, one of five tabs.',
             versions: [
               { tag: 'Version 1', src: '/images/birthstory/evolution/v1-hub.png', alt: 'Version 1 home, with Connect as one of three doors.',
-                text: 'Connect, one of three doors.' },
+                text: 'Connect, one of three home options.' },
               { tag: 'Version 2', src: '/images/birthstory/evolution/screens/v2-6.png', alt: 'Version 2 tour with Find Strength & Support highlighted.',
-                text: '“Find strength & support” positioned the new mother in a negative light.' },
+                text: 'Find Strength & Support, renamed after testing because it positioned the new mother in a negative light.' },
               { tag: 'Version 3', src: '/images/birthstory/bs-carepod.png', alt: 'Version 3: the Care Pod, loved ones in a circle around the parent.',
-                text: 'The Care Pod: loved ones in a circle around the parent, one of five tabs.' },
+                text: 'Care Pod: a tab for live updates between the parent and chosen loved ones.' },
             ],
           },
         ],

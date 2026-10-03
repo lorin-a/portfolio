@@ -692,17 +692,18 @@
   border-image: var(--rule-grad) 1;
 }
 
-/* FS319: HALF AND HALF. Copy on the left, the image whole on the right,
-   6 | 6 on the sheet grid; the image stays in view while the copy runs. */
+/* FS319: copy left, images whole on the right (see FS323 below). */
+/* FS323: the copy keeps the sheet's rail width (4 of 12, the same line
+   as every section's copy), so its measure matches the grid; the images
+   take the other 8, whole and stacked, running longer than the copy. */
 @media (min-width: 1000px) {
-  .componentHalf .rail { grid-column: span 6; }
-  .componentHalf .work {
-    grid-column: span 6;
-    position: sticky;
-    top: var(--flow-2);
-    align-self: start;
-  }
-  .componentHalf .railInner { position: static; }
+  .componentHalf .rail { grid-column: span 4; }
+  .componentHalf .work { grid-column: span 8; }
+}
+
+.photos {
+  display: grid;
+  gap: var(--flow-3);
 }
 
 .photo {
