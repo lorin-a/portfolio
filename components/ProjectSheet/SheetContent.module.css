@@ -202,14 +202,18 @@
   text-wrap: pretty;
 }
 
-/* FS317: the chapter's map of steps, five across on desktop */
+/* FS318: the chapter's map as shapes, not lines. Five filled tiles in a
+   row, stepping along the brand gradient (blush → periwinkle → teal) so
+   the sequence reads at a glance; a numbered disc on each, the step's
+   name, its weeks, and one line. No rules anywhere in the map. */
 .chapterSteps {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
-  gap: var(--flow-2);
+  gap: 0.75rem;
   margin: var(--flow-3) 0 0;
   padding: 0;
   list-style: none;
+  counter-reset: step;
 }
 
 @media (min-width: 700px) {
@@ -220,45 +224,86 @@
   .chapterSteps { grid-template-columns: repeat(5, minmax(0, 1fr)); }
 }
 
+.chapterSteps > li:nth-child(1) { --tile: #DBADAD; }
+.chapterSteps > li:nth-child(2) { --tile: #C6B7DA; }
+.chapterSteps > li:nth-child(3) { --tile: #B1C1F4; }
+.chapterSteps > li:nth-child(4) { --tile: #7E98B4; }
+.chapterSteps > li:nth-child(5) { --tile: #4C6F7B; --disc-ink: #fff; }  /* white on teal: 5.4:1 */
+
 .chapterStep {
   display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  grid-template-areas: 'disc when' 'disc name' 'out out';
   align-content: start;
-  gap: 0.4rem;
+  column-gap: 0.75rem;
+  row-gap: 0.15rem;
   height: 100%;
-  padding: var(--flow-2) 0 0;
-  border-top: 2px solid rgba(197, 207, 166, 0.45);
+  padding: 1.1rem 1.1rem 1.25rem;
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--tile) 22%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--tile) 45%, transparent);
   color: inherit;
   text-decoration: none;
-  transition: border-color var(--motion-fast) var(--ease-out);
+  transition: background var(--motion-fast) var(--ease-out), transform var(--motion-fast) var(--ease-out);
+}
+
+/* the disc: the step's number on its own color */
+.chapterStep::before {
+  counter-increment: step;
+  content: counter(step);
+  grid-area: disc;
+  align-self: center;
+  display: grid;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  background: var(--tile);
+  font-family: var(--font-heading);
+  font-size: var(--step-body);
+  font-weight: 600;
+  color: var(--disc-ink, #1a2a30);   /* dark ink on the four lighter discs: 4.9:1 or more */
 }
 
 .chapterStep:focus-visible {
   outline: 2px solid var(--color-sage);
-  outline-offset: 4px;
+  outline-offset: 3px;
 }
 
 @media (hover: hover) {
-  .chapterStep:hover { border-top-color: #c5cfa6; }
-  .chapterStep:hover .stepName { text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 1px; }
+  .chapterStep:hover {
+    background: color-mix(in srgb, var(--tile) 32%, transparent);
+    transform: translateY(-2px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chapterStep { transition: none; }
+  .chapterStep:hover { transform: none; }
 }
 
 .stepWhen {
+  grid-area: when;
   font-family: var(--font-body);
   font-size: var(--step-label);
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--color-sage);
+  color: var(--color-ink);
+  opacity: 0.8;
 }
 
 .stepName {
+  grid-area: name;
   font-family: var(--font-heading);
   font-size: var(--step-statement);
-  line-height: 1.2;
+  line-height: 1.15;
   color: var(--color-ink);
 }
 
 .stepOut {
+  grid-area: out;
+  margin-top: 0.75rem;
   font-family: var(--font-body);
   font-size: var(--step-small);
   line-height: 1.5;
@@ -296,8 +341,7 @@
 }
 
 .notes > div {
-  padding-top: var(--flow-1, 0.6rem);
-  border-top: 1px solid var(--sheet-hair);
+  padding-top: 0;   /* FS318: spacing, not hairlines, between notes */
 }
 
 .notes dt {
@@ -646,4 +690,120 @@
   padding-top: var(--hero-gap);
   border-top: var(--rule);
   border-image: var(--rule-grad) 1;
+}
+
+/* FS319: HALF AND HALF. Copy on the left, the image whole on the right,
+   6 | 6 on the sheet grid; the image stays in view while the copy runs. */
+@media (min-width: 1000px) {
+  .componentHalf .rail { grid-column: span 6; }
+  .componentHalf .work {
+    grid-column: span 6;
+    position: sticky;
+    top: var(--flow-2);
+    align-self: start;
+  }
+  .componentHalf .railInner { position: static; }
+}
+
+.photo {
+  margin: 0;
+}
+
+.photoButton {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: zoom-in;
+}
+
+.photoButton:focus-visible {
+  outline: 2px solid var(--color-sage);
+  outline-offset: 3px;
+}
+
+.photo img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.photoCap {
+  margin: var(--flow-1) 0 0;
+  font-family: var(--font-body);
+  font-size: var(--step-small);
+  line-height: 1.5;
+  color: var(--color-ink);
+  opacity: 0.85;
+}
+
+/* FS319: the voice in the copy column */
+.pull {
+  margin: var(--flow-3) 0 0;
+}
+
+.pull p {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: var(--step-statement);
+  font-style: italic;
+  line-height: 1.35;
+  color: var(--color-ink);
+  text-wrap: pretty;
+}
+
+.pull cite {
+  display: block;
+  margin-top: var(--flow-1);
+  font-family: var(--font-body);
+  font-size: var(--step-label);
+  font-style: normal;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-sage);
+}
+
+.list {
+  margin: var(--flow-3) 0 0;
+}
+
+.listLabel {
+  margin: 0 0 var(--flow-1);
+  font-family: var(--font-body);
+  font-size: var(--step-label);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-sage);
+}
+
+.list ul {
+  display: grid;
+  gap: var(--flow-1);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.list li {
+  position: relative;
+  padding-left: 1.35rem;
+  font-family: var(--font-body);
+  font-size: var(--step-body);
+  line-height: 1.5;
+  color: var(--color-ink);
+  text-wrap: pretty;
+}
+
+.list li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.6em;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #c5cfa6;
 }

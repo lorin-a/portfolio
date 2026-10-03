@@ -250,21 +250,20 @@ export const birthstory = {
       ],
       /* Q2 + Q6, PROVISIONAL */
       mine: 'Interviews and synthesis co-facilitated with Michael Juan, and the five family and friend interviews on my own.',
+      /* FS319: half and half; the voice and the asks join the copy
+         (live, verbatim), the think-aloud session whole on the right */
+      layout: 'half',
+      pull: { quote: '“None of our births went according to plan and they were traumatizing, and it doesn’t get discussed enough.”', cite: 'One of my sisters' },
+      list: {
+        label: 'What parents asked for',
+        items: [
+          'Less medical documentation. More photos, and an outline of what actually happened.',
+          'Recognition for doing something this amazing and this hard.',
+          'A space that doesn’t assume a “normal” birth: other people’s stories, resources.',
+        ],
+      },
       media: {
-        exhibit: 'bs-voices',
-        data: {
-          /* live: the quote and the asks, verbatim; the asks are her
-             summary of what her sisters, mom, and friend asked for */
-          quote: '“None of our births went according to plan and they were traumatizing, and it doesn’t get discussed enough.”',
-          cite: 'One of my sisters',
-          asksLabel: 'What parents asked for',
-          asks: [
-            'Less medical documentation. More photos, and an outline of what actually happened.',
-            'Recognition for doing something this amazing and this hard.',
-            'A space that doesn’t assume a “normal” birth: other people’s stories, resources.',
-          ],
-          photo: { key: 'bs-tap-zoom', alt: 'A think-aloud walkthrough over Zoom, the parent blurred for privacy.' },
-        },
+        photo: { key: 'bs-tap-figma', alt: 'A think-aloud walkthrough over Zoom: a parent talks through the reflection wireframe while we listen.' },
       },
     },
     {

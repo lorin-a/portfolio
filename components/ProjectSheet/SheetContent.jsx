@@ -23,6 +23,19 @@ const EXHIBITS = {
    prototype, a row of key screens, a built exhibit, or the gallery. */
 function Work({ media, label, gated, onImage }) {
   if (media?.annotated) return <SheetAnnotated {...media.annotated} />
+  /* FS319: one image, whole and uncropped, with its caption */
+  if (media?.photo) {
+    const src = sheetImg(media.photo.key, 2000)
+    return src ? (
+      <figure className={styles.photo}>
+        <button type="button" className={styles.photoButton} onClick={(e) => onImage?.(media.photo.key, e.currentTarget)}
+          aria-label={`View full screen: ${media.photo.alt}`}>
+          <img src={src} alt="" />
+        </button>
+        <figcaption className={styles.photoCap}>{media.photo.alt}</figcaption>
+      </figure>
+    ) : null
+  }
   if (media?.screens) return <SheetScreens items={media.screens} />
   const Ex = EXHIBITS[media?.exhibit]
   if (Ex) return <Ex data={media.data} />
@@ -107,6 +120,7 @@ export default function SheetContent({ sheet, num, title, tagline, titleId }) {
     components.forEach((c) => {
       if (c.gated) return
       slidesFor(c.media).forEach((sl) => { if (sl.type === 'image') push(sl.key, sl.alt) })
+      if (c.media?.photo) push(c.media.photo.key, c.media.photo.alt)
     })
     process.forEach((ph) => ph.images.forEach((i) => push(i.key, i.alt)))
     return list
@@ -200,10 +214,10 @@ export default function SheetContent({ sheet, num, title, tagline, titleId }) {
                   each a link down to its section */}
               {c.chapter.steps?.length > 0 && (
                 <ol className={styles.chapterSteps}>
-                  {c.chapter.steps.map((st, k) => (
+                  {c.chapter.steps.map((st) => (
                     <li key={st.key}>
                       <a href={`#sheet-${st.key}`} className={styles.chapterStep}>
-                        <span className={styles.stepWhen}>{String(k + 1).padStart(2, '0')} · {st.when}</span>
+                        <span className={styles.stepWhen}>{st.when}</span>
                         <span className={styles.stepName}>{st.name}</span>
                         <span className={styles.stepOut}>{rich(st.outcome)}</span>
                       </a>
@@ -213,7 +227,7 @@ export default function SheetContent({ sheet, num, title, tagline, titleId }) {
               )}
             </header>
           )}
-          <section id={`sheet-${c.key}`} className={styles.component} data-reveal="0">
+          <section id={`sheet-${c.key}`} className={`${styles.component} ${c.layout === 'half' ? styles.componentHalf : ''}`} data-reveal="0">
             {/* The rail: name, what it is, what I did. Narrow and sticky,
                 so the words stay beside the work while the work leads. */}
             <div className={styles.rail}>
@@ -226,6 +240,19 @@ export default function SheetContent({ sheet, num, title, tagline, titleId }) {
                 {/* FS317: the finding or decision, said first and large */}
                 {c.takeaway && <p className={styles.takeaway}>{rich(c.takeaway)}</p>}
                 <p className={styles.componentBody}>{rich(c.body)}</p>
+                {/* FS319: a voice and a short list, set in the copy column */}
+                {c.pull && (
+                  <blockquote className={styles.pull}>
+                    <p>{c.pull.quote}</p>
+                    <cite>{c.pull.cite}</cite>
+                  </blockquote>
+                )}
+                {c.list && (
+                  <div className={styles.list}>
+                    <p className={styles.listLabel}>{c.list.label}</p>
+                    <ul>{c.list.items.map((it) => <li key={it}>{rich(it)}</li>)}</ul>
+                  </div>
+                )}
                 {/* FS301: the case study's paired annotations, one short
                     label and a line each */}
                 {c.notes?.length > 0 && (
