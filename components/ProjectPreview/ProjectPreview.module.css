@@ -380,14 +380,35 @@
   align-self: flex-start;
   width: fit-content;
   margin-top: var(--space-sm);
+  position: relative;
+  isolation: isolate;
   display: inline-flex;
   align-items: center;
   gap: 0.55rem;
   min-height: var(--min-touch-target, 44px);
-  padding: 0.55rem 1rem;
-  background: transparent;
-  color: var(--color-ink);
-  border: 1.5px solid var(--color-ink);
+  padding: 0.55rem 1.1rem;
+  /* FS304: the folder's brand glass, as a breadcrumb of what opens. The
+     same recipe as the cover prints and loose-leaf (SheetCover .brandFrame,
+     Paper glass): the logo's gradient (sage, lavender, coral at 135°) as a
+     whisper over a smoky base, one soft sheen, a fine light edge and a lit
+     top. On the homepage's flat charcoal there is nothing behind it to
+     frost, so the tint, edge and sheen carry it; the blur is there for
+     whatever passes beneath. */
+  background:
+    linear-gradient(115deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 40%),
+    linear-gradient(135deg,
+      rgba(197, 207, 166, 0.2) 5%,
+      rgba(199, 170, 209, 0.17) 45%,
+      rgba(247, 156, 126, 0.15) 88%),
+    rgba(28, 26, 30, 0.5);
+  backdrop-filter: blur(14px) saturate(1.25);
+  -webkit-backdrop-filter: blur(14px) saturate(1.25);
+  color: var(--color-ink);  /* the light ink on the dark ground */
+  border: 0;
+  box-shadow:
+    inset 0 0 0 1px rgba(244, 241, 236, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    0 12px 28px rgba(0, 0, 0, 0.35);
   border-radius: var(--radius-pill);
   font-family: var(--font-body);
   font-size: 0.8125rem;
@@ -396,8 +417,25 @@
   text-transform: uppercase;
   cursor: pointer;
   transition:
-    background var(--motion-fast) var(--ease-out),
-    color var(--motion-fast) var(--ease-out);
+    box-shadow var(--motion-fast) var(--ease-out),
+    transform var(--motion-fast) var(--ease-out);
+}
+
+/* hover brightens the glass rather than filling it: the tint lifts as a
+   layer over the base, the edge sharpens, the pill rises a hair */
+.expand::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(135deg,
+    rgba(197, 207, 166, 0.22) 5%,
+    rgba(199, 170, 209, 0.2) 45%,
+    rgba(247, 156, 126, 0.18) 88%);
+  z-index: -1;  /* under the label, over the glass */
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--motion-fast) var(--ease-out);
 }
 
 .expand svg {
@@ -416,9 +454,14 @@
 
 @media (hover: hover) {
   .expand:hover {
-    background: var(--color-ink);
-    color: var(--color-cream);
+    transform: translateY(-1px);
+    box-shadow:
+      inset 0 0 0 1px rgba(244, 241, 236, 0.5),
+      inset 0 1px 0 rgba(255, 255, 255, 0.4),
+      0 16px 34px rgba(0, 0, 0, 0.42);
   }
+
+  .expand:hover::before { opacity: 1; }
 
   .expand:hover .c1 { transform: translate(-2px, -2px); }
   .expand:hover .c2 { transform: translate(2px, -2px); }
@@ -433,10 +476,13 @@
 
 @media (prefers-reduced-motion: reduce) {
   .expand,
+  .expand::before,
   .expand .c1,
   .expand .c2,
   .expand .c3,
   .expand .c4 {
     transition: none;
+    transform: none;
   }
+  .expand:hover { transform: none; }
 }
