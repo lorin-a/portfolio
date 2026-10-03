@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { Fragment, useState } from 'react'
 import { rich } from './SheetContent'
 import styles from './SheetCompare.module.css'
 import ml from './SheetMotionLibrary.module.css'
@@ -77,51 +77,40 @@ export default function SheetCompare({ slides = [], untested, label }) {
           ))}
         </ol>
       </div>
+      {/* FS336: words left, the visual right, one tight composition */}
       <div id="cmp-panel" role="tabpanel" aria-labelledby={`cmp-tab-${at}`} key={at} className={styles.panel}>
-        {/* FS335: the decision first, so the reader knows what to look for */}
-        {s.decision && <h4 className={styles.decision}>{s.decision}</h4>}
-        {s.delta && <span className={`${styles.delta} ${styles.deltaSmall}`}>{s.delta}</span>}
-        {/* the screens on the color band */}
-        <div className={styles.band} style={{ '--n': s.versions.length }}>
+        <div className={styles.words}>
+          {s.decision && <h4 className={styles.decision}>{s.decision}</h4>}
+          {s.delta && <p className={styles.delta}>{s.delta}</p>}
+          {s.heard && (
+            <p className={styles.note}>
+              <span className={styles.marker} aria-hidden="true">1</span>
+              <span className={styles.noteBody}><Heard h={s.heard} /></span>
+            </p>
+          )}
+          {s.line && <p className={styles.reason}>{rich(s.line)}</p>}
+        </div>
+
+        <div className={styles.band}>
           {s.versions.map((v, i) => (
-            <div key={v.tag} className={styles.step}>
-              {i > 0 && (
-                <span className={styles.arrow}>
-                  {s.delta && <span className={styles.delta}>{s.delta}</span>}
-                  <span aria-hidden="true">→</span>
+            <Fragment key={v.tag}>
+              {i > 0 && <span className={styles.arrow} aria-hidden="true">→</span>}
+              <figure className={styles.version}>
+                <span className={styles.phone}>
+                  <span className={styles.notch} aria-hidden="true" />
+                  <span className={styles.screen}><img src={v.src} alt={v.alt} loading="lazy" draggable="false" /></span>
+                  {s.heard && s.heardAt === i && <span className={`${styles.marker} ${styles.pin}`} aria-hidden="true">1</span>}
                 </span>
-              )}
-              <span className={styles.phone}>
-                <span className={styles.notch} aria-hidden="true" />
-                <span className={styles.screen}><img src={v.src} alt={v.alt} loading="lazy" draggable="false" /></span>
-                {/* FS334: the feedback, pinned on the screen it explains */}
-                {s.heard && s.heardAt === i && (
-                  <span className={styles.pin} data-side={s.versions.length === 2 ? (i === 0 ? 'left' : 'right') : (i === s.versions.length - 1 ? 'left' : 'right')}>
-                    <span className={styles.pinDot} aria-hidden="true" />
-                    <span className={styles.pinLeader} aria-hidden="true" />
-                    <span className={styles.callout}><Heard h={s.heard} /></span>
-                  </span>
-                )}
-              </span>
-            </div>
+                <figcaption className={styles.cap}>
+                  <span className={styles.tag}>{v.tag}</span>
+                  <span className={styles.capText}>{rich(v.text)}</span>
+                </figcaption>
+              </figure>
+            </Fragment>
           ))}
         </div>
-        {/* the text, inside the glass, under the image */}
-        <div className={styles.text}>
-          <div className={styles.caps} style={{ '--n': s.versions.length }}>
-            {s.versions.map((v) => (
-              <p key={v.tag} className={styles.cap}>
-                <span className={styles.tag}>{v.tag}</span>
-                <span className={styles.capText}>{rich(v.text)}</span>
-              </p>
-            ))}
-          </div>
-          {s.line && <p className={styles.foot}>{rich(s.line)}</p>}
-          {/* phones: the callout can't sit beside a small screen, so the
-              feedback reads here instead */}
-          {s.heard && <p className={styles.footHeard}><Heard h={s.heard} /></p>}
-        </div>
       </div>
+
       {/* FS335: what the rounds could not show, said plainly */}
       {untested && (
         <p className={styles.untested}>

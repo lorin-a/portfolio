@@ -1,76 +1,158 @@
-/* The compare (FS331): the visual is the hero. Tabs on top, then one
-   band of the identity gradient carrying three large phones with an arrow
-   between each, captions on the band beneath each phone, and a quiet
-   footnote under the band. */
+/* The decisions gallery (FS333–FS336), in Groundswell's glass with its
+   chevron track on top. Inside: one composition, words left (decision,
+   change, what we heard, reasoning), the visual right (before → after,
+   close together on the color band, captions directly beneath). The
+   evidence is a numbered pin on the before screen that matches the
+   numbered note in the words. */
 
-.compare {
-  margin: 0;
-}
+.compare { margin: 0; }
+
+.top { margin: 0 0 var(--flow-2); }
 
 .panel {
+  display: grid;
+  gap: var(--flow-3);
   animation: in var(--motion-medium) var(--ease-out);
 }
 
-@keyframes in {
-  from { opacity: 0; }
-  to { opacity: 1; }
+@media (min-width: 1000px) {
+  .panel {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    align-items: center;
+    gap: clamp(1.5rem, 3vw, 3rem);
+  }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .panel { animation: none; }
-  .tab { transition: none; }
-}
+@keyframes in { from { opacity: 0; } to { opacity: 1; } }
 
-/* THE BAND: the hero */
-.band {
-  --phone-w: min(14rem, 23vh);
+@media (prefers-reduced-motion: reduce) { .panel { animation: none; } }
+
+/* THE WORDS */
+.words {
   display: grid;
-  grid-template-columns: repeat(var(--n, 3), minmax(0, 1fr));
-  padding: clamp(1.75rem, 3.5vw, 3rem) clamp(1rem, 3vw, 3rem);
+  gap: var(--flow-2);
+  align-content: center;
+  padding: 0.25rem 0.5rem;
+}
+
+.decision {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: var(--step-heading);
+  font-weight: 400;
+  line-height: 1.2;
+  color: var(--color-ink);
+  text-wrap: balance;
+}
+
+.delta {
+  justify-self: start;
+  margin: 0;
+  padding: 0.3rem 0.75rem;
+  border-radius: 999px;
+  background: rgba(197, 207, 166, 0.16);
+  box-shadow: inset 0 0 0 1px rgba(197, 207, 166, 0.45);
+  font-family: var(--font-body);
+  font-size: var(--step-small);
+  font-weight: 600;
+  color: var(--color-ink);
+}
+
+.note {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 0.75rem;
+  align-items: start;
+  margin: 0;
+}
+
+.noteBody { display: grid; gap: 0.25rem; }
+
+.marker {
+  display: grid;
+  place-items: center;
+  width: 1.6rem;
+  height: 1.6rem;
+  border-radius: 50%;
+  background: #c7aad1;
+  font-family: var(--font-body);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: #1f2430;
+}
+
+.heardWho {
+  font-family: var(--font-body);
+  font-size: var(--step-label);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #d9b8e0;
+}
+
+.heardQuote {
+  font-family: var(--font-heading);
+  font-size: var(--step-statement);
+  font-style: italic;
+  line-height: 1.3;
+  color: var(--color-ink);
+}
+
+.heardSummary {
+  font-family: var(--font-body);
+  font-size: var(--step-body);
+  line-height: 1.5;
+  color: var(--color-ink);
+}
+
+.reason {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--step-small);
+  line-height: 1.6;
+  color: var(--color-ink);
+  opacity: 0.88;
+  text-wrap: pretty;
+}
+
+/* THE VISUAL: before → after, close together */
+.band {
+  --phone-w: min(12.5rem, 30vh);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: clamp(1rem, 2.5vw, 2rem);
+  padding: clamp(1.75rem, 3vw, 2.5rem) clamp(1rem, 2.5vw, 2rem) clamp(1.25rem, 2.5vw, 2rem);
   background:
     linear-gradient(rgba(250, 250, 250, 0.62), rgba(250, 250, 250, 0.62)),
     linear-gradient(126deg, #e7c3c8 0%, #b9c2ec 48%, #1a434d 100%);
 }
 
-.step {
-  position: relative;
-  display: grid;
-  justify-items: center;
-  min-width: 0;
-}
-
-/* between two phones, at the phone's middle */
 .arrow {
-  position: absolute;
-  left: 0;
-  top: calc(var(--phone-w) * 1.08);
-  transform: translate(-50%, -50%);
+  align-self: center;
+  margin-top: calc(var(--phone-w) * -0.35);
   font-family: var(--font-body);
-  display: grid;
-  justify-items: center;
-  gap: 0.4rem;
   font-size: var(--step-heading);
-  line-height: 1;
   color: #466F7B;
 }
 
 .version {
   display: grid;
-  align-content: start;   /* a longer caption elsewhere never stretches this phone */
   justify-items: center;
-  gap: var(--flow-2);
+  align-content: start;
+  gap: 0.85rem;
+  width: var(--phone-w);
   margin: 0;
 }
 
 .phone {
   position: relative;
   display: block;
-  width: var(--phone-w);
-  max-width: 100%;
+  width: 100%;
   padding: 6px;
   border-radius: 24px;
   background: #1d1d1f;
-  box-shadow: 0 28px 56px -28px rgba(26, 67, 77, 0.65);
+  box-shadow: 0 26px 52px -28px rgba(26, 67, 77, 0.65);
 }
 
 .notch {
@@ -88,7 +170,7 @@
 .screen {
   display: block;
   overflow: hidden;
-  aspect-ratio: 430 / 932;   /* the frame sets the size, not the image file */
+  aspect-ratio: 430 / 932;
   border-radius: 18px;
 }
 
@@ -100,10 +182,18 @@
   object-position: top;
 }
 
+/* the pin: the same numbered marker, on the screen */
+.pin {
+  position: absolute;
+  top: 38%;
+  right: -0.8rem;
+  z-index: 3;
+  box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.9), 0 6px 14px rgba(26, 67, 77, 0.35);
+}
+
 .cap {
   display: grid;
-  gap: 0.25rem;
-  max-width: 16rem;
+  gap: 0.2rem;
   text-align: center;
 }
 
@@ -113,179 +203,23 @@
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--color-sage);
+  color: #2f5560;
 }
 
 .capText {
   font-family: var(--font-body);
   font-size: var(--step-small);
-  line-height: 1.45;
-  color: var(--color-ink);
+  line-height: 1.4;
+  color: #1f2f35;
   text-wrap: pretty;
 }
-
-/* THE TEXT, inside the glass under the band */
-.text {
-  padding: var(--flow-2) 0.5rem 0.25rem;
-}
-
-.caps {
-  display: grid;
-  grid-template-columns: repeat(var(--n, 3), minmax(0, 1fr));
-  column-gap: clamp(1rem, 3vw, 3rem);
-  padding-inline: clamp(1rem, 3vw, 3rem);
-}
-
-.cap { justify-self: center; }
-
-.foot {
-  max-width: 52rem;
-  margin: var(--flow-2) 0 0;
-  padding-top: var(--flow-2);
-  border-top: 1px solid rgba(244, 241, 236, 0.14);
-  font-family: var(--font-body);
-  font-size: var(--step-small);
-  line-height: 1.55;
-  color: var(--color-ink);
-}
-
-/* phones: three across, smaller; no arrows */
-@media (max-width: 599px) {
-  .band { --phone-w: 100%; padding-inline: 0.5rem; column-gap: 0.75rem; }
-  .arrow { display: none; }
-  .caps { padding-inline: 0; column-gap: 0.5rem; }
-  .capText { font-size: var(--step-label); }
-}
-
-/* FS333: the chevron labels can't fit on a phone; there the track is
-   icons only and the hint names the selected feature */
-.hintNow { display: none; }
-
-@media (max-width: 599px) {
-  .hint { display: block; }
-  .hint svg { display: inline-block; vertical-align: -2px; margin-left: 0.35rem; }
-  .hintNow { display: inline; }
-  .compare [role='tab'] > span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
-  .compare [role='tab'] svg { width: 22px; height: 22px; }
-}
-
-/* FS334: the track on top */
-.top { margin: 0 0 0.75rem; }
-
-/* FS334: THE ANNOTATION. A pin on the screen, a dotted leader out to a
-   lavender callout card that overlaps the band beside the phone. */
-.phone { position: relative; }
-
-.pin {
-  position: absolute;
-  top: 34%;
-  z-index: 3;
-  display: flex;
-  align-items: center;
-}
-
-.pin[data-side='right'] { left: 70%; }
-.pin[data-side='left'] { right: 70%; flex-direction: row-reverse; }
-
-.pinDot {
-  flex: none;
-  width: 14px;
-  height: 14px;
-  border-radius: 50%;
-  background: #8089C2;
-  box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.85), 0 0 0 9px rgba(128, 137, 194, 0.3);
-}
-
-.pinLeader {
-  flex: none;
-  width: clamp(1.25rem, 2vw, 2rem);
-  border-top: 2px dotted #8089C2;
-}
-
-.callout {
-  display: grid;
-  gap: 0.3rem;
-  width: clamp(9.5rem, 12vw, 11.5rem);
-  padding: 0.8rem 0.95rem;
-  border-radius: 10px;
-  background: #fff;
-  box-shadow: 0 14px 30px -14px rgba(26, 67, 77, 0.55), inset 0 0 0 1px rgba(128, 137, 194, 0.35);
-  text-align: left;
-}
-
-.heardWho {
-  font-family: var(--font-body);
-  font-size: var(--step-label);
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: #5d5f99;   /* 6.2:1 on white */
-}
-
-.heardQuote {
-  font-family: var(--font-heading);
-  font-size: var(--step-body);
-  font-style: italic;
-  line-height: 1.3;
-  color: #1A434D;
-}
-
-.heardSummary {
-  font-family: var(--font-body);
-  font-size: var(--step-small);
-  line-height: 1.45;
-  color: #1f2f35;
-}
-
-.footHeard { display: none; }
-
-/* phones: no room beside the screens; the feedback reads under the band */
-@media (max-width: 899px) {
-  .pin { display: none; }
-  .footHeard {
-    display: grid;
-    gap: 0.3rem;
-    margin: var(--flow-2) 0 0;
-    padding: 0.8rem 0.95rem;
-    border-radius: 10px;
-    background: #fff;
-  }
-}
-
-/* FS335: the measurable change rides the arrow */
-.delta {
-  padding: 0.3rem 0.7rem;
-  border-radius: 999px;
-  background: #1A434D;
-  font-family: var(--font-body);
-  font-size: var(--step-label);
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  white-space: nowrap;
-  color: #fff;
-}
-
-/* the decision, as the headline under the screens */
-.decision {
-  margin: 0 0 var(--flow-2);
-  padding: 0.25rem 0.5rem 0;
-  font-family: var(--font-heading);
-  font-size: var(--step-heading);
-  font-weight: 400;
-  line-height: 1.2;
-  color: var(--color-ink);
-}
-
 
 .untested {
   display: grid;
   gap: 0.35rem;
-  max-width: 52rem;
-  margin: var(--flow-1) 0.5rem 0.25rem;
-  padding: 0.85rem 1rem;
-  border-radius: 10px;
-  background: rgba(244, 241, 236, 0.06);
-  box-shadow: inset 0 0 0 1px rgba(244, 241, 236, 0.16);
+  margin: var(--flow-3) 0.5rem 0.25rem;
+  padding-top: var(--flow-2);
+  border-top: 1px solid rgba(244, 241, 236, 0.14);
   font-family: var(--font-body);
   font-size: var(--step-small);
   line-height: 1.55;
@@ -300,14 +234,22 @@
   color: var(--color-sage);
 }
 
+/* the chevron labels can't fit on a phone: icons only, the hint names it */
+.hintNow { display: none; }
+
 @media (max-width: 599px) {
-  .delta { white-space: normal; text-align: center; }
+  .hint { display: block; }
+  .hint svg { display: inline-block; vertical-align: -2px; margin-left: 0.35rem; }
+  .hintNow { display: inline; }
+  .compare [role='tab'] > span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  .compare [role='tab'] svg { width: 22px; height: 22px; }
+  .band { --phone-w: 40%; gap: 0.5rem; padding-inline: 0.5rem; }
+  .capText { font-size: var(--step-label); }
   .decision { font-size: var(--step-statement); }
 }
 
-/* phones: the arrow is hidden, so the change sits under the decision */
-.deltaSmall { display: none; }
-
-@media (max-width: 599px) {
-  .deltaSmall { display: inline-block; margin: 0 0.5rem var(--flow-2); }
+/* stacked: the visual leads, the words follow */
+@media (max-width: 999px) {
+  .band { order: -1; }
+  .arrow { margin-top: 0; }
 }
