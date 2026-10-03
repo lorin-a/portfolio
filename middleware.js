@@ -76,6 +76,11 @@ export function middleware(request) {
 
   if (PUBLIC_PATHS.has(pathname)) return NextResponse.next()
 
+  /* FS338: design labs open on the local dev server only, so Lorin can
+     review them without the hold password on her machine. Production
+     builds never run in development, so these stay sealed there. */
+  if (process.env.NODE_ENV === 'development' && pathname.startsWith('/lab/')) return NextResponse.next()
+
   if (hasPrefix(pathname, GROUNDSWELL_PREFIXES)) {
     return check(
       request,

@@ -1,0 +1,371 @@
+/* FS338 lab: three Iteration options, each set as it would sit in the
+   folder sheet (the sheet's tokens come from ProjectSheet .inner). */
+
+.page {
+  padding-top: 8rem;
+  padding-bottom: 8rem;
+  color: var(--color-ink);
+}
+
+.kicker {
+  display: block;
+  margin: 0 0 var(--flow-1);
+  font-family: var(--font-body);
+  font-size: var(--step-label);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-sage);
+}
+
+.head { max-width: 46rem; margin-bottom: var(--flow-4); }
+
+.title {
+  color: var(--color-ink);
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: var(--step-display);
+  font-weight: 400;
+  line-height: 1.05;
+}
+
+.intro {
+  margin: var(--flow-2) 0 0;
+  font-family: var(--font-body);
+  font-size: var(--step-body);
+  line-height: 1.6;
+}
+
+.option {
+  margin-top: var(--flow-4);
+  padding-top: var(--flow-3);
+  border-top: 1px solid rgba(244, 241, 236, 0.18);
+}
+
+.optHead { max-width: 46rem; margin-bottom: var(--flow-3); }
+
+.optName {
+  color: var(--color-ink);
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: var(--step-heading);
+  font-weight: 400;
+}
+
+.optWhy {
+  margin: var(--flow-1) 0 0;
+  font-family: var(--font-body);
+  font-size: var(--step-small);
+  line-height: 1.55;
+  opacity: 0.85;
+}
+
+/* the section mock, on the sheet ground */
+.mock {
+  padding: clamp(1.5rem, 3vw, 3rem);
+  border-radius: 14px;
+  background: #222;
+  box-shadow: inset 0 0 0 1px rgba(244, 241, 236, 0.12);
+}
+
+.secName {
+  color: var(--color-ink);
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: var(--step-heading);
+  font-weight: 400;
+}
+
+.takeaway {
+  max-width: 40rem;
+  margin: var(--flow-1) 0 var(--flow-3);
+  font-family: var(--font-heading);
+  font-size: var(--step-statement);
+  line-height: 1.3;
+}
+
+.untested {
+  max-width: 46rem;
+  margin: var(--flow-3) 0 0;
+  font-family: var(--font-body);
+  font-size: var(--step-small);
+  line-height: 1.55;
+}
+
+/* the shared phone */
+.phone {
+  position: relative;
+  display: block;
+  padding: 5px;
+  border-radius: 22px;
+  background: #1d1d1f;
+  box-shadow: 0 26px 52px -28px rgba(26, 67, 77, 0.65);
+}
+
+.notch {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  z-index: 2;
+  width: 26%;
+  height: 8px;
+  border-radius: 999px;
+  background: #1d1d1f;
+  transform: translateX(-50%);
+}
+
+.screen {
+  display: block;
+  overflow: hidden;
+  aspect-ratio: 430 / 932;
+  border-radius: 17px;
+}
+
+.screen img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+}
+
+.band {
+  background:
+    linear-gradient(rgba(250, 250, 250, 0.62), rgba(250, 250, 250, 0.62)),
+    linear-gradient(126deg, #e7c3c8 0%, #b9c2ec 48%, #1a434d 100%);
+}
+
+/* ── A · THE STRIP ─────────────────────────────────────────────── */
+.strip { margin: 0; }
+
+.stripBand {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  padding: clamp(2rem, 4vw, 3.5rem) clamp(1rem, 4vw, 4rem);
+  background:
+    linear-gradient(rgba(250, 250, 250, 0.62), rgba(250, 250, 250, 0.62)),
+    linear-gradient(126deg, #e7c3c8 0%, #b9c2ec 48%, #1a434d 100%);
+}
+
+.stripItem {
+  position: relative;
+  display: grid;
+  justify-items: center;
+}
+
+.stripItem .phone { width: min(100%, 13rem); }
+
+.stripArrow {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-size: var(--step-heading);
+  color: #466F7B;
+}
+
+.stripCaps {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--flow-2);
+  padding: var(--flow-2) clamp(1rem, 4vw, 4rem) 0;
+}
+
+.stripCap {
+  display: grid;
+  gap: 0.35rem;
+  text-align: center;
+  font-family: var(--font-body);
+  font-size: var(--step-small);
+  line-height: 1.5;
+}
+
+.lesson {
+  max-width: 46rem;
+  margin: var(--flow-3) auto 0;
+  padding-left: var(--flow-2);
+  border-left: 2px solid #c5cfa6;
+  font-family: var(--font-heading);
+  font-size: var(--step-body);
+  font-style: italic;
+  line-height: 1.5;
+}
+
+/* ── B · THE NARROWING ─────────────────────────────────────────── */
+.narrow {
+  display: grid;
+  gap: var(--flow-3);
+  margin: 0;
+}
+
+@media (min-width: 1000px) {
+  .narrow { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); align-items: center; }
+}
+
+.fan {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: 34rem;
+  background:
+    linear-gradient(rgba(250, 250, 250, 0.62), rgba(250, 250, 250, 0.62)),
+    linear-gradient(126deg, #e7c3c8 0%, #b9c2ec 48%, #1a434d 100%);
+  overflow: hidden;
+}
+
+.fanCard {
+  grid-area: 1 / 1;
+  width: 13rem;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  transition: transform var(--motion-medium) var(--ease-out), filter var(--motion-medium) var(--ease-out);
+}
+
+.fanCard[data-pos='0'] { transform: translateX(-62%) rotate(-8deg) scale(0.9); }
+.fanCard[data-pos='1'] { transform: translateX(0) rotate(0) scale(0.9); }
+.fanCard[data-pos='2'] { transform: translateX(62%) rotate(8deg) scale(0.9); }
+.fanCard:not([data-front]) { filter: saturate(0.7) brightness(0.92); }
+.fanCard[data-front] { z-index: 3; }
+.fanCard[data-pos='0'][data-front] { transform: translateX(-52%) rotate(-4deg) scale(1.02); }
+.fanCard[data-pos='1'][data-front] { transform: translateX(0) scale(1.04); }
+.fanCard[data-pos='2'][data-front] { transform: translateX(52%) rotate(4deg) scale(1.02); }
+
+.fanCard:focus-visible { outline: 2px solid #1A434D; outline-offset: 4px; border-radius: 22px; }
+
+@media (prefers-reduced-motion: reduce) { .fanCard { transition: none; } }
+
+.narrowWords { display: grid; gap: var(--flow-1); align-content: center; }
+
+.steps { display: flex; gap: 0.5rem; margin-bottom: var(--flow-2); }
+
+.stepBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 44px;
+  padding: 0.4rem 0.9rem 0.4rem 0.45rem;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(244, 241, 236, 0.06);
+  box-shadow: inset 0 0 0 1px rgba(244, 241, 236, 0.22);
+  font-family: var(--font-body);
+  font-size: var(--step-small);
+  font-weight: 600;
+  color: var(--color-ink);
+  cursor: pointer;
+}
+
+.stepBtn[aria-pressed='true'] { background: var(--color-sage); color: #23211f; box-shadow: none; }
+
+.stepNum {
+  display: grid;
+  place-items: center;
+  width: 1.7rem;
+  height: 1.7rem;
+  border-radius: 50%;
+  background: rgba(244, 241, 236, 0.14);
+  font-size: 0.8125rem;
+}
+
+.stepBtn[aria-pressed='true'] .stepNum { background: rgba(35, 33, 31, 0.15); }
+
+.big {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: var(--step-statement);
+  line-height: 1.3;
+  text-wrap: pretty;
+}
+
+.small {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--step-small);
+  line-height: 1.55;
+}
+
+.small b { font-weight: 600; color: var(--color-sage); }
+
+/* ── C · THE ROUND LOG ─────────────────────────────────────────── */
+.log {
+  display: grid;
+  gap: var(--flow-2);
+  margin: 0;
+}
+
+.logRow {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--flow-2);
+  align-items: center;
+}
+
+@media (min-width: 800px) {
+  .logRow { grid-template-columns: 15rem minmax(0, 1fr); gap: var(--flow-3); }
+}
+
+.logShot {
+  position: relative;
+  display: grid;
+  place-items: center;
+  padding: 1.5rem 0;
+  background:
+    linear-gradient(rgba(250, 250, 250, 0.62), rgba(250, 250, 250, 0.62)),
+    linear-gradient(126deg, #e7c3c8 0%, #b9c2ec 48%, #1a434d 100%);
+}
+
+.logPhone { width: 9rem; }
+
+.logNum {
+  position: absolute;
+  left: 0.75rem;
+  top: 0.75rem;
+  display: grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background: #1A434D;
+  font-family: var(--font-heading);
+  color: #fff;
+}
+
+.logFacts {
+  display: grid;
+  gap: var(--flow-2);
+  margin: 0;
+}
+
+@media (min-width: 1000px) {
+  .logFacts { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+.logFacts dt {
+  margin-bottom: 0.3rem;
+  font-family: var(--font-body);
+  font-size: var(--step-label);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #d9b8e0;
+}
+
+.logFacts dd {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--step-small);
+  line-height: 1.55;
+  text-wrap: pretty;
+}
+
+/* phones */
+@media (max-width: 599px) {
+  .stripBand { padding-inline: 0.5rem; column-gap: 0.5rem; }
+  .stripArrow { display: none; }
+  .stripCaps { grid-template-columns: minmax(0, 1fr); text-align: left; }
+  .stripCap { text-align: left; }
+  .fan { min-height: 24rem; }
+  .fanCard { width: 8.5rem; }
+}
