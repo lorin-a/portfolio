@@ -321,7 +321,7 @@ export const birthstory = {
       name: 'Iteration',
       /* v3 04 lead, verbatim */
       takeaway: 'Each round removed options the previous one had added.',
-      body: 'Three versions, tested through critique, a client check-in, and think-aloud sessions with parents. Pick a feature to see it change.',
+      body: 'Three versions, tested through critique, a client check-in, and think-aloud sessions with parents. Select a feature below to see it change.',
       /* Q3, PROVISIONAL */
       /* FS320: a gallery of the features that changed most, one per
          slide, V1 · V2 · V3 side by side in the sheet's glass frame.
@@ -360,20 +360,6 @@ export const birthstory = {
             ],
           },
           {
-            title: 'Documentation',
-            /* Q9, her words, trimmed */
-            line: 'I was isolating interactions that could be housed in one feature: a single notes section filtered by topic, instead of medical documentation in one place and memories in another.',
-            heard: { quote: 'Document details should be first', who: 'A parent tester' },
-            versions: [
-              { tag: 'Version 1', src: '/images/birthstory/evolution/screens/v1-4.png', alt: 'Version 1 reflect: voice note, notes, photos, and timeline, each its own tool.',
-                text: 'Voice notes, notes, photos, and the timeline as separate tools.' },
-              { tag: 'Version 2', src: '/images/birthstory/evolution/reflect-v2.png', alt: 'Version 2 notes: an entry open above a list of timed entries.',
-                text: 'One notes section, filtered by topic.' },
-              { tag: 'Version 3', src: '/images/birthstory/bs-doc-medical.png', alt: 'Version 3: a medical entry opened on the timeline, with tags and a voice memo.',
-                text: 'Notes, medical events, and media on one timeline, organized by tags.' },
-            ],
-          },
-          {
             title: 'Onboarding',
             /* Q3 + Q7, her words, trimmed */
             line: 'I simplified my image-heavy first prototype into color blocks and simple icons, so feedback went to the flow. By the end, onboarding showed the other features while the user was already in the app.',
@@ -385,6 +371,20 @@ export const birthstory = {
                 text: 'A swipe-through tour, one feature per screen.' },
               { tag: 'Version 3', src: '/images/birthstory/evolution/screens/v3-3.png', alt: 'Version 3: a tip pointing to the Care Pod tab in the navigation bar.',
                 text: 'Tips over the real screens, pointing to each feature in the nav bar.' },
+            ],
+          },
+          {
+            title: 'Documentation',
+            /* Q9, her words, trimmed */
+            line: 'I was isolating interactions that could be housed in one feature: a single notes section filtered by topic, instead of medical documentation in one place and memories in another.',
+            heard: { quote: 'Document details should be first', who: 'A parent tester' },
+            versions: [
+              { tag: 'Version 1', src: '/images/birthstory/evolution/screens/v1-4.png', alt: 'Version 1 reflect: voice note, notes, photos, and timeline, each its own tool.',
+                text: 'Voice notes, notes, photos, and the timeline as separate tools.' },
+              { tag: 'Version 2', src: '/images/birthstory/evolution/reflect-v2.png', alt: 'Version 2 notes: an entry open above a list of timed entries.',
+                text: 'One notes section, filtered by topic.' },
+              { tag: 'Version 3', src: '/images/birthstory/bs-doc-medical.png', alt: 'Version 3: a medical entry opened on the timeline, with tags and a voice memo.',
+                text: 'Notes, medical events, and media on one timeline, organized by tags.' },
             ],
           },
           {

@@ -3,18 +3,13 @@
 import { useState } from 'react'
 import { rich } from './SheetContent'
 import styles from './SheetCompare.module.css'
+import ml from './SheetMotionLibrary.module.css'
 
-/* THE COMPARE (FS331: the visual is the hero). One feature at a time
-   across its versions. The screens are large on the color band with an
-   arrow between each step; the features are named tabs above, so the
-   reader picks what to compare instead of paging blind. Words are kept
-   to a version tag and one line under each screen, and the statement
-   with its feedback as a quiet footnote.
-
-   What we heard (FS326): a verbatim quote ({ quote, who }) in quotation
-   marks, or a summary ({ summary }) without. Never invent or reword.
-
-   slides: [{ title, line?, heard?, versions: [{ tag, src, alt, text }] }] */
+/* THE COMPARE (FS331, FS333). One feature at a time across its
+   versions, in Groundswell's dashboard gallery: one brand-glass container,
+   the screens large on the color band, the text inside the glass beneath,
+   and the chevron track to choose a feature (styles shared from
+   SheetMotionLibrary.module.css so the two galleries stay one design).*/
 
 function Heard({ h }) {
   if (!h) return null
@@ -29,6 +24,19 @@ function Heard({ h }) {
   )
 }
 
+/* FS333: one stroke glyph per feature, in the dashboard track's idiom */
+const GLYPH = {
+  'Entry point': <><path d="M14 4h4a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-4" /><path d="M10 16l4-4-4-4" /><path d="M14 12H3" /></>,
+  'Onboarding': <><path d="M12 3l1.8 4.2L18 9l-4.2 1.8L12 15l-1.8-4.2L6 9l4.2-1.8z" /><path d="M18.5 15.5l.9 2.1 2.1.9-2.1.9-.9 2.1-.9-2.1-2.1-.9 2.1-.9z" /></>,
+  'Documentation': <><path d="M6 3v18" /><circle cx="6" cy="7" r="1.6" /><circle cx="6" cy="17" r="1.6" /><path d="M10 7h10M10 17h10M10 12h7" /></>,
+  'Sharing': <><circle cx="12" cy="12" r="2.4" /><circle cx="12" cy="12" r="8" strokeDasharray="2.5 2.5" /><circle cx="12" cy="4" r="1.6" /><circle cx="19" cy="15.5" r="1.6" /><circle cx="5" cy="15.5" r="1.6" /></>,
+}
+
+/* FS333: the Groundswell dashboard gallery, carried over so the site has
+   one gallery grammar: everything inside one brand-glass container; the
+   screens on the color band; the text inside the glass beneath them; a
+   chevron track of the features, ordered along the parent's path through
+   the app (enter, learn it, document, share), so the arrows mean a flow. */
 export default function SheetCompare({ slides = [], label }) {
   const [at, setAt] = useState(0)
   if (!slides.length) return null
@@ -37,51 +45,64 @@ export default function SheetCompare({ slides = [], label }) {
   const onKey = (e) => {
     if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return
     e.preventDefault()
-    const d = e.key === 'ArrowRight' ? 1 : -1
-    const next = (at + d + slides.length) % slides.length
+    const next = (at + (e.key === 'ArrowRight' ? 1 : -1) + slides.length) % slides.length
     setAt(next)
     e.currentTarget.querySelectorAll('[role=tab]')[next]?.focus()
   }
 
   return (
-    <figure className={styles.compare} aria-label={label}>
-      {/* the features, as tabs */}
-      <div className={styles.tabs} role="tablist" aria-label="Feature" onKeyDown={onKey}>
-        {slides.map((sl, i) => (
-          <button key={sl.title} type="button" role="tab" id={`cmp-tab-${i}`}
-            aria-selected={i === at} aria-controls="cmp-panel" tabIndex={i === at ? 0 : -1}
-            className={styles.tab} onClick={() => setAt(i)}>
-            {sl.title}
-          </button>
-        ))}
-      </div>
-
+    <figure className={`${ml.player} ${ml.glass} ${styles.compare}`} aria-label={label}>
       <div id="cmp-panel" role="tabpanel" aria-labelledby={`cmp-tab-${at}`} key={at} className={styles.panel}>
-        {/* the hero: the screens, large, one step to the next */}
+        {/* the screens on the color band */}
         <div className={styles.band}>
           {s.versions.map((v, i) => (
             <div key={v.tag} className={styles.step}>
               {i > 0 && <span className={styles.arrow} aria-hidden="true">→</span>}
-              <figure className={styles.version}>
-                <span className={styles.phone}>
-                  <span className={styles.notch} aria-hidden="true" />
-                  <span className={styles.screen}><img src={v.src} alt={v.alt} loading="lazy" draggable="false" /></span>
-                </span>
-                <figcaption className={styles.cap}>
-                  <span className={styles.tag}>{v.tag}</span>
-                  <span className={styles.capText}>{rich(v.text)}</span>
-                </figcaption>
-              </figure>
+              <span className={styles.phone}>
+                <span className={styles.notch} aria-hidden="true" />
+                <span className={styles.screen}><img src={v.src} alt={v.alt} loading="lazy" draggable="false" /></span>
+              </span>
             </div>
           ))}
         </div>
+        {/* the text, inside the glass, under the image */}
+        <div className={styles.text}>
+          <div className={styles.caps}>
+            {s.versions.map((v) => (
+              <p key={v.tag} className={styles.cap}>
+                <span className={styles.tag}>{v.tag}</span>
+                <span className={styles.capText}>{rich(v.text)}</span>
+              </p>
+            ))}
+          </div>
+          {(s.line || s.heard) && (
+            <p className={styles.foot}>
+              {s.line && <span>{rich(s.line)}</span>}
+              <Heard h={s.heard} />
+            </p>
+          )}
+        </div>
+      </div>
 
-        {(s.line || s.heard) && (
-          <p className={styles.foot}>
-            {s.line && <span className={styles.footLine}>{rich(s.line)}</span>}
-            <Heard h={s.heard} />
-          </p>
-        )}
+      {/* the arrow labels: Groundswell's chevron track */}
+      <div className={ml.flowWrap}>
+        <p className={`${ml.flowHint} ${styles.hint}`} aria-hidden="true">
+          Select a feature
+          <span className={styles.hintNow}>: {s.title}</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 4v16M6 14l6 6 6-6" /></svg>
+        </p>
+        <ol className={ml.chev} role="tablist" aria-label="Features, along the parent's path through the app" onKeyDown={onKey}
+          style={{ gridTemplateColumns: `repeat(${slides.length}, minmax(0, 1fr))` }}>
+          {slides.map((x, i) => (
+            <li key={x.title} style={{ '--depth': i }}>
+              <button type="button" role="tab" id={`cmp-tab-${i}`} aria-selected={i === at} aria-controls="cmp-panel"
+                tabIndex={i === at ? 0 : -1} className={ml.seg} onClick={() => setAt(i)}>
+                {GLYPH[x.title] && <svg className={ml.segIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">{GLYPH[x.title]}</svg>}
+                <span className={ml.segView}>{x.title}</span>
+              </button>
+            </li>
+          ))}
+        </ol>
       </div>
     </figure>
   )
