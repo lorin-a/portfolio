@@ -1,0 +1,132 @@
+/* The compare gallery (FS320): versions side by side inside the sheet's
+   brand-glass gallery frame. The mat is the BirthStory identity band,
+   washed; the copy under each screen sits on it in the case study's teal
+   ink (measured AA in FS314). */
+
+.mat {
+  position: relative;
+  padding: clamp(1.25rem, 2.5vw, 2rem) clamp(1rem, 2vw, 1.75rem);
+  background:
+    linear-gradient(rgba(250, 250, 250, 0.62), rgba(250, 250, 250, 0.62)),
+    linear-gradient(126deg, #e7c3c8 0%, #b9c2ec 48%, #1a434d 100%);
+}
+
+.slide {
+  animation: in var(--motion-medium) var(--ease-out);
+}
+
+@keyframes in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .slide { animation: none; }
+}
+
+.row {
+  display: grid;
+  grid-template-columns: repeat(var(--n, 3), minmax(0, 1fr));
+  gap: clamp(0.75rem, 2vw, 1.75rem);
+  align-items: start;
+}
+
+.version {
+  display: grid;
+  justify-items: center;
+  gap: var(--flow-2);
+  margin: 0;
+  min-width: 0;
+}
+
+.phone {
+  position: relative;
+  display: block;
+  width: min(100%, 12.5rem);
+  padding: 5px;
+  border-radius: 20px;
+  background: #1d1d1f;
+  box-shadow: 0 22px 44px -26px rgba(26, 67, 77, 0.6);
+}
+
+.notch {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  z-index: 2;
+  width: 26%;
+  height: 8px;
+  border-radius: 999px;
+  background: #1d1d1f;
+  transform: translateX(-50%);
+}
+
+.screen {
+  display: block;
+  overflow: hidden;
+  border-radius: 15px;
+}
+
+.screen img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 430 / 932;
+  object-fit: cover;
+  object-position: top;
+}
+
+.words {
+  display: grid;
+  gap: 0.35rem;
+  max-width: 18rem;
+  text-align: center;
+}
+
+.tag {
+  font-family: var(--font-body);
+  font-size: var(--step-label);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #2f5560;
+}
+
+.text {
+  font-family: var(--font-body);
+  font-size: var(--step-small);
+  line-height: 1.5;
+  color: #1f2f35;
+  text-wrap: pretty;
+}
+
+.quote {
+  font-family: var(--font-heading);
+  font-size: var(--step-small);
+  font-style: italic;
+  line-height: 1.45;
+  color: #1A434D;
+  text-wrap: pretty;
+}
+
+.title strong {
+  font-weight: 600;
+}
+
+/* phones: each version a row, the phone beside its words */
+@media (max-width: 599px) {
+  .row {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--flow-2);
+  }
+
+  .version {
+    grid-template-columns: 38% minmax(0, 1fr);
+    align-items: center;
+    justify-items: start;
+    gap: var(--flow-2);
+  }
+
+  .words {
+    text-align: left;
+  }
+}

@@ -9,6 +9,7 @@ import SheetMotionLibrary from './SheetMotionLibrary'
 import SheetMaps from './SheetMaps'
 import SheetAnnotated from './SheetAnnotated'
 import SheetScreens from './SheetScreens'
+import SheetCompare from './SheetCompare'
 import dynamic from 'next/dynamic'
 
 /* Built exhibits for a sheet's system section (FS311), loaded on demand. */
@@ -36,6 +37,7 @@ function Work({ media, label, gated, onImage }) {
       </figure>
     ) : null
   }
+  if (media?.compare) return <SheetCompare slides={media.compare} label={label} />
   if (media?.screens) return <SheetScreens items={media.screens} />
   const Ex = EXHIBITS[media?.exhibit]
   if (Ex) return <Ex data={media.data} />

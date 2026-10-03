@@ -300,16 +300,66 @@ export const birthstory = {
       body: 'We took three versions through critique, a client check-in, and think-aloud testing with parents, and changed direction based on what we heard.',
       /* Q3, PROVISIONAL */
       mine: 'Three rounds of wireframes, and the switch from image-heavy screens to color-block wireframes so feedback went to the flow.',
+      /* FS320: a gallery of the features that changed most, one per
+         slide, V1 · V2 · V3 side by side in the sheet's glass frame.
+         Screens are her wireframes (public/images/birthstory/evolution)
+         and her final screens. Copy, by receipt: Q7 (no home menu; opens
+         into note-taking; onboarding shows the other features, always in
+         the nav bar), Q9 (V1 too many decisions, sub-menus; isolated
+         medical documentation and memories; one notes section filterable
+         by topic), Q12 (“reclaim”; “Find strength & support” positioned
+         the new mother negatively), the live SecIteration round lines,
+         and the v3 tester quotes, verbatim. */
       media: {
-        screens: [
-          { name: 'Version 1', tag: 'Week 3', text: 'A tool for every situation, sub-menus inside menus.',
-            quote: '“Onboarding is nice, but there are too many buttons and options.”',
-            src: '/images/birthstory/evolution/v1-hub.png', alt: 'Version 1: a hub of three choices, Reflect, Document, and Connect.' },
-          { name: 'Version 2', tag: 'Week 4', text: 'One filterable notes section and two actions; clearer, but still too many options.',
-            quote: '“Why ‘reclaim’? I’m not sure what it even means.”',
-            src: '/images/birthstory/evolution/v2-hub.png', alt: 'Version 2: a gray color-block menu, Reflect & Reclaim, Document the Details, Find Strength & Support, View Collections.' },
-          { name: 'Version 3', tag: 'Week 5', text: 'Only the features parents came back to, opening straight into the timeline.',
-            src: '/images/birthstory/evolution/v3-home.png', alt: 'Version 3: the notes timeline, with prompts for memorable events, the experience, and medical events.' },
+        compare: [
+          {
+            title: 'The way in.',
+            line: 'From three doors to none: the app now opens on the main task.',
+            versions: [
+              { tag: 'Version 1 · Week 3', src: '/images/birthstory/evolution/screens/v1-3.png', alt: 'Version 1 home: three doors, Reflect, Document, and Connect.',
+                text: 'Three doors to choose from before anything else.', quote: '“Onboarding is nice, but there are too many buttons and options.”' },
+              { tag: 'Version 2 · Week 4', src: '/images/birthstory/evolution/screens/v2-3.png', alt: 'Version 2 menu: Reflect & Reclaim, Document the Details, Find Strength & Support, View Collections.',
+                text: 'Four doors in one menu. Clearer, but still too many options.', quote: '“Why ‘reclaim’? I’m not sure what it even means.”' },
+              { tag: 'Version 3 · Week 5', src: '/images/birthstory/evolution/screens/v3-2.png', alt: 'Version 3: the notes timeline, with prompts for memorable events, the experience, and medical events.',
+                text: 'No home menu. The app opens straight into note-taking.' },
+            ],
+          },
+          {
+            title: 'Documenting.',
+            line: 'From separate tools to one timeline.',
+            versions: [
+              { tag: 'Version 1', src: '/images/birthstory/evolution/screens/v1-4.png', alt: 'Version 1 reflect: voice note, notes, photos, and timeline, each its own tool.',
+                text: 'Voice notes, notes, photos, and the timeline each in a place of their own.' },
+              { tag: 'Version 2', src: '/images/birthstory/evolution/reflect-v2.png', alt: 'Version 2 notes: an entry open above a list of timed entries.',
+                text: 'One notes section, filtered by topic, instead of medical details in one place and memories in another.' },
+              { tag: 'Version 3', src: '/images/birthstory/bs-doc-medical.png', alt: 'Version 3: a medical entry opened on the timeline, with tags and a voice memo.',
+                text: 'Medical details become tags on the same timeline as everything else.' },
+            ],
+          },
+          {
+            title: 'Onboarding.',
+            line: 'From a tour before you start to tips on the real screens.',
+            versions: [
+              { tag: 'Version 1', src: '/images/birthstory/evolution/screens/v1-1.png', alt: 'Version 1 welcome: speech bubbles explaining the app before the first entry.',
+                text: 'Welcome messages to read before the first entry.' },
+              { tag: 'Version 2', src: '/images/birthstory/evolution/screens/v2-4.png', alt: 'Version 2 tour: Reflect, highlighted in a swipe-through menu.',
+                text: 'A swipe-through tour of four features.' },
+              { tag: 'Version 3', src: '/images/birthstory/evolution/screens/v3-3.png', alt: 'Version 3: a tip pointing to the Care Pod tab in the navigation bar.',
+                text: 'Tips over the real screens point to the other features, always in the navigation bar.' },
+            ],
+          },
+          {
+            title: 'Sharing.',
+            line: 'From a door called Connect to the Care Pod.',
+            versions: [
+              { tag: 'Version 1', src: '/images/birthstory/evolution/v1-hub.png', alt: 'Version 1 home, with Connect as one of three doors.',
+                text: 'Connect, one of three doors.' },
+              { tag: 'Version 2', src: '/images/birthstory/evolution/screens/v2-6.png', alt: 'Version 2 tour with Find Strength & Support highlighted.',
+                text: '“Find strength & support” positioned the new mother in a negative light.' },
+              { tag: 'Version 3', src: '/images/birthstory/bs-carepod.png', alt: 'Version 3: the Care Pod, loved ones in a circle around the parent.',
+                text: 'The Care Pod: loved ones in a circle around the parent, one of five tabs.' },
+            ],
+          },
         ],
       },
     },
