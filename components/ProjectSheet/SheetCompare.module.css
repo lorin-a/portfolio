@@ -1,8 +1,6 @@
-/* The compare gallery (FS320, FS325). Band: the BirthStory identity
-   gradient with the screens only. Text area: on the gallery's glass,
-   three columns aligned under the screens. What we heard is its own
-   object: a quote gets a large mark and the heading face; a summary gets
-   a lavender rule and plain body type, no quotation marks. */
+/* The compare gallery, simplified (FS330). Three tiers only: the
+   statement and its feedback, the screens on the color band, a short
+   caption under each screen. Nothing boxed but the band. */
 
 .slide {
   animation: in var(--motion-medium) var(--ease-out);
@@ -17,28 +15,79 @@
   .slide { animation: none; }
 }
 
+/* 1. the statement and the feedback behind it */
+.head {
+  display: grid;
+  gap: var(--flow-1);
+  max-width: 46rem;
+  padding: clamp(1rem, 2vw, 1.5rem) clamp(0.25rem, 1vw, 0.75rem) var(--flow-3);
+}
+
+.line {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: var(--step-statement);
+  line-height: 1.35;
+  color: var(--color-ink);
+  text-wrap: pretty;
+}
+
+.heard {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.25rem 0.75rem;
+  margin: 0;
+}
+
+.heardQuote {
+  font-family: var(--font-heading);
+  font-size: var(--step-body);
+  font-style: italic;
+  color: #e3cdea;
+}
+
+.heardSummary {
+  font-family: var(--font-body);
+  font-size: var(--step-small);
+  line-height: 1.5;
+  color: var(--color-ink);
+}
+
+.heardWho {
+  font-family: var(--font-body);
+  font-size: var(--step-label);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #d9b8e0;
+}
+
+/* 2. the band */
 .row {
   display: grid;
   grid-template-columns: repeat(var(--n, 3), minmax(0, 1fr));
-  column-gap: clamp(1rem, 2.5vw, 2rem);
+  column-gap: clamp(1rem, 3vw, 3rem);
 }
 
-/* THE BAND */
 .band {
-  padding: clamp(1.5rem, 3vw, 2.25rem) clamp(1rem, 2vw, 1.75rem);
+  padding: clamp(1.75rem, 3.5vw, 2.75rem) clamp(1rem, 3vw, 3rem);
   background:
     linear-gradient(rgba(250, 250, 250, 0.62), rgba(250, 250, 250, 0.62)),
     linear-gradient(126deg, #e7c3c8 0%, #b9c2ec 48%, #1a434d 100%);
 }
 
-.band .row {
+.version {
+  display: grid;
   justify-items: center;
+  margin: 0;
 }
 
 .phone {
   position: relative;
   display: block;
-  width: min(100%, 12.5rem);
+  /* sized so the whole slide fits one screen */
+  width: min(100%, 11rem, 22vh);
   padding: 5px;
   border-radius: 20px;
   background: #1d1d1f;
@@ -71,43 +120,26 @@
   object-position: top;
 }
 
-/* THE TEXT AREA */
-.text {
-  padding: clamp(1.25rem, 2.5vw, 2rem) clamp(1rem, 2vw, 1.75rem) var(--flow-2);
+/* 3. one caption under each screen */
+.caps {
+  padding: var(--flow-2) clamp(1rem, 3vw, 3rem) var(--flow-1);
 }
 
-.head {
-  margin-bottom: var(--flow-3);
-  max-width: 44rem;
-}
-
-.title {
+.cap {
+  display: grid;
+  gap: 0.3rem;
   margin: 0;
-  font-family: var(--font-heading);
-  font-size: var(--step-heading);
-  font-weight: 400;
-  line-height: 1.15;
-  color: var(--color-ink);
-}
-
-.line {
-  margin: var(--flow-1) 0 0;
+  max-width: 17rem;
+  justify-self: center;
+  text-align: center;
   font-family: var(--font-body);
-  font-size: var(--step-body);
-  line-height: 1.55;
+  font-size: var(--step-small);
+  line-height: 1.5;
   color: var(--color-ink);
   text-wrap: pretty;
 }
 
-.col {
-  display: grid;
-  align-content: start;
-  gap: var(--flow-1);
-  min-width: 0;
-}
-
 .tag {
-  font-family: var(--font-body);
   font-size: var(--step-label);
   font-weight: 600;
   letter-spacing: 0.08em;
@@ -115,77 +147,8 @@
   color: var(--color-sage);
 }
 
-.change {
-  margin: 0;
-  font-family: var(--font-body);
-  font-size: var(--step-small);
-  line-height: 1.55;
-  color: var(--color-ink);
-  text-wrap: pretty;
-}
-
-/* WHAT WE HEARD */
-.heardLabel {
-  display: block;
-  margin-bottom: 0.4rem;
-  font-family: var(--font-body);
-  font-size: var(--step-label);
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: #d9b8e0;   /* lavender: the testers' voice */
-}
-
-/* a verbatim quote: a large mark, the heading face */
-.quote {
-  position: relative;
-  margin: var(--flow-1) 0 0;
-  padding: var(--flow-2) var(--flow-2) var(--flow-2) calc(var(--flow-2) + 1.6rem);
-  border-radius: 10px;
-  background: rgba(199, 170, 209, 0.12);
-}
-
-.quote::before {
-  content: '“';
-  position: absolute;
-  left: 0.8rem;
-  top: 0.35rem;
-  font-family: var(--font-heading);
-  font-size: 3.2rem;
-  line-height: 1;
-  color: #c7aad1;
-}
-
-.quote p {
-  margin: 0;
-  font-family: var(--font-heading);
-  font-size: var(--step-statement);
-  font-style: italic;
-  line-height: 1.3;
-  color: var(--color-ink);
-}
-
-/* a summary of what we heard: no quotation marks */
-.summary {
-  margin: var(--flow-1) 0 0;
-  padding: 0.15rem 0 0.15rem var(--flow-2);
-  border-left: 2px solid #c7aad1;
-}
-
-.summary p {
-  margin: 0;
-  font-family: var(--font-body);
-  font-size: var(--step-small);
-  line-height: 1.55;
-  color: var(--color-ink);
-  text-wrap: pretty;
-}
-
-/* phones: each version a row in the band; the text columns stack */
 @media (max-width: 599px) {
-  .band .row { column-gap: 0.5rem; }
-  .text .row {
-    grid-template-columns: minmax(0, 1fr);
-    row-gap: var(--flow-3);
-  }
+  .row { column-gap: 0.5rem; }
+  .band, .caps { padding-inline: 0.5rem; }
+  .cap { font-size: var(--step-label); }
 }

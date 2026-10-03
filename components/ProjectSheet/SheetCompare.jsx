@@ -16,23 +16,24 @@ import styles from './SheetCompare.module.css'
    a quotation, or a summary ({ summary }) set without quotation marks.
    Never invent or reword a quote.
 
-   slides: [{ title, line?, versions: [{ tag, src, alt, text, heard? }] }] */
+   FS330, simplified: per slide one line and one heard above the screens,
+   one short caption under each screen.
+   slides: [{ title, line, heard?, versions: [{ tag, src, alt, text }] }] */
 
+/* FS330: one line, no box. A verbatim quote in quotation marks with who
+   said it; a summary of what we heard with no quotation marks. */
 function Heard({ h }) {
   if (!h) return null
-  if (h.quote) {
-    return (
-      <blockquote className={styles.quote}>
-        <span className={styles.heardLabel}>{h.who || 'What we heard'}</span>
-        <p>{h.quote}</p>
-      </blockquote>
-    )
-  }
-  return (
-    <div className={styles.summary}>
-      <span className={styles.heardLabel}>What we heard</span>
-      <p>{rich(h.summary)}</p>
-    </div>
+  return h.quote ? (
+    <p className={styles.heard}>
+      <span className={styles.heardQuote}>“{h.quote}”</span>
+      <span className={styles.heardWho}>{h.who}</span>
+    </p>
+  ) : (
+    <p className={styles.heard}>
+      <span className={styles.heardWho}>What we heard</span>
+      <span className={styles.heardSummary}>{rich(h.summary)}</span>
+    </p>
   )
 }
 
@@ -52,33 +53,32 @@ export default function SheetCompare({ slides = [], label }) {
   return (
     <div className={stage.stage} role="group" aria-roledescription="gallery" aria-label={label} onKeyDown={onKey}>
       <div key={at} className={styles.slide}>
-        {/* the color band: the screens and nothing else */}
+        {/* FS330: one statement and the one piece of feedback behind it */}
+        <div className={styles.head}>
+          <p className={styles.line}>{rich(s.line)}</p>
+          <Heard h={s.heard} />
+        </div>
+        {/* the screens, alone on the color band */}
         <div className={styles.band}>
           <div className={styles.row} style={{ '--n': s.versions.length }}>
             {s.versions.map((v) => (
-              <span key={v.tag} className={styles.phone}>
-                <span className={styles.notch} aria-hidden="true" />
-                <span className={styles.screen}><img src={v.src} alt={v.alt} loading="lazy" draggable="false" /></span>
-              </span>
+              <figure key={v.tag} className={styles.version}>
+                <span className={styles.phone}>
+                  <span className={styles.notch} aria-hidden="true" />
+                  <span className={styles.screen}><img src={v.src} alt={v.alt} loading="lazy" draggable="false" /></span>
+                </span>
+              </figure>
             ))}
           </div>
         </div>
-
-        {/* the text area */}
-        <div className={styles.text}>
-          <div className={styles.head}>
-            <h4 className={styles.title}>{s.title}</h4>
-            {s.line && <p className={styles.line}>{rich(s.line)}</p>}
-          </div>
-          <div className={styles.row} style={{ '--n': s.versions.length }}>
-            {s.versions.map((v) => (
-              <div key={v.tag} className={styles.col}>
-                <span className={styles.tag}>{v.tag}</span>
-                <p className={styles.change}>{rich(v.text)}</p>
-                <Heard h={v.heard} />
-              </div>
-            ))}
-          </div>
+        {/* one short caption under each screen */}
+        <div className={`${styles.row} ${styles.caps}`} style={{ '--n': s.versions.length }}>
+          {s.versions.map((v) => (
+            <p key={v.tag} className={styles.cap}>
+              <span className={styles.tag}>{v.tag}</span>
+              {rich(v.text)}
+            </p>
+          ))}
         </div>
       </div>
 

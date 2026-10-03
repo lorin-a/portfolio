@@ -236,7 +236,7 @@ export default function SheetContent({ sheet, num, title, tagline, titleId }) {
               )}
             </header>
           )}
-          <section id={`sheet-${c.key}`} className={`${styles.component} ${c.layout === 'half' ? styles.componentHalf : ''}`} data-reveal="0">
+          <section id={`sheet-${c.key}`} className={`${styles.component} ${c.layout === 'half' ? styles.componentHalf : ''} ${c.wide ? styles.componentWide : ''}`} data-reveal="0">
             {/* The rail: name, what it is, what I did. Narrow and sticky,
                 so the words stay beside the work while the work leads. */}
             <div className={styles.rail}>

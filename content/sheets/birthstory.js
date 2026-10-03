@@ -315,6 +315,7 @@ export const birthstory = {
     },
     {
       key: 'iteration',
+      wide: true,  /* FS330: words above, the gallery across the sheet */
       /* live SecIteration, condensed; tester quotes verbatim (v3) */
       step: 'Step 3 · Weeks 3–5',
       name: 'Iteration',
@@ -349,43 +350,40 @@ export const birthstory = {
             title: 'Entry point',
             /* Q7, her words, trimmed */
             line: 'The think-aloud interviews showed us we did not need a home menu page at all. Users wanted to jump right in.',
+            heard: { quote: 'Too many menus', who: 'A parent tester' },
             versions: [
               { tag: 'Version 1 · Week 3', src: '/images/birthstory/evolution/screens/v1-3.png', alt: 'Version 1 home: three choices, Reflect, Document, and Connect.',
-                text: 'A home menu with three choices: Reflect, Document, and Connect.',
-                heard: { quote: 'Too many menus', who: 'A parent tester' } },
+                text: 'A home menu with three choices: Reflect, Document, and Connect.' },
               { tag: 'Version 2 · Week 4', src: '/images/birthstory/evolution/screens/v2-3.png', alt: 'Version 2 menu: Reflect & Reclaim, Document the Details, Find Strength & Support, View Collections.',
-                text: 'A home menu with four choices.',
-                heard: { summary: 'Onboarding was nice, but there were still too many buttons and options.' } },
+                text: 'A home menu with four choices.' },
               { tag: 'Version 3 · Week 5', src: '/images/birthstory/evolution/screens/v3-2.png', alt: 'Version 3: the notes timeline, with prompts for memorable events, the experience, and medical events.',
-                text: 'No home menu. The app opens into note-taking, and the other features stay in the nav bar.',
-                heard: { summary: 'Our client saw all three iterations and was very happy with the final.' } },
+                text: 'No home menu. The app opens into note-taking, and the other features stay in the nav bar.' },
             ],
           },
           {
             title: 'Documentation',
             /* Q9, her words, trimmed */
             line: 'I was isolating interactions that could be housed in one feature: a single notes section filtered by topic, instead of medical documentation in one place and memories in another.',
+            heard: { quote: 'Document details should be first', who: 'A parent tester' },
             versions: [
               { tag: 'Version 1', src: '/images/birthstory/evolution/screens/v1-4.png', alt: 'Version 1 reflect: voice note, notes, photos, and timeline, each its own tool.',
-                text: 'Voice notes, notes, photos, and the timeline as separate tools.',
-                heard: { summary: 'Parents were less interested in medical records and more interested in photos and an outline of what happened.' } },
+                text: 'Voice notes, notes, photos, and the timeline as separate tools.' },
               { tag: 'Version 2', src: '/images/birthstory/evolution/reflect-v2.png', alt: 'Version 2 notes: an entry open above a list of timed entries.',
                 text: 'One notes section, filtered by topic.' },
               { tag: 'Version 3', src: '/images/birthstory/bs-doc-medical.png', alt: 'Version 3: a medical entry opened on the timeline, with tags and a voice memo.',
-                text: 'Notes, medical events, and media on one timeline, organized by tags.',
-                heard: { quote: 'Document details should be first', who: 'A parent tester' } },
+                text: 'Notes, medical events, and media on one timeline, organized by tags.' },
             ],
           },
           {
             title: 'Onboarding',
             /* Q3 + Q7, her words, trimmed */
             line: 'I simplified my image-heavy first prototype into color blocks and simple icons, so feedback went to the flow. By the end, onboarding showed the other features while the user was already in the app.',
+            heard: { summary: 'Onboarding was nice, but there were too many buttons and options.' },
             versions: [
               { tag: 'Version 1', src: '/images/birthstory/evolution/screens/v1-1.png', alt: 'Version 1 welcome: speech bubbles explaining the app before the first entry.',
                 text: 'Welcome screens to read before the first entry.' },
               { tag: 'Version 2', src: '/images/birthstory/evolution/screens/v2-4.png', alt: 'Version 2 tour: Reflect, highlighted in a swipe-through menu.',
-                text: 'A swipe-through tour, one feature per screen.',
-                heard: { summary: 'Onboarding was nice, but there were too many buttons and options.' } },
+                text: 'A swipe-through tour, one feature per screen.' },
               { tag: 'Version 3', src: '/images/birthstory/evolution/screens/v3-3.png', alt: 'Version 3: a tip pointing to the Care Pod tab in the navigation bar.',
                 text: 'Tips over the real screens, pointing to each feature in the nav bar.' },
             ],
@@ -394,15 +392,14 @@ export const birthstory = {
             title: 'Sharing',
             /* Q12, her words */
             line: '“Find strength & support” positioned the new mother in a negative light, when in fact most are empowered by doing an amazing and hard thing.',
+            heard: { summary: 'One parent wished she had asked everyone around her to add their memories of the birth while they were fresh.' },
             versions: [
               { tag: 'Version 1', src: '/images/birthstory/evolution/v1-hub.png', alt: 'Version 1 home, with Connect as one of three choices.',
                 text: 'Connect, one of three home choices.' },
               { tag: 'Version 2', src: '/images/birthstory/evolution/screens/v2-6.png', alt: 'Version 2 tour with Find Strength & Support highlighted.',
-                text: 'Find Strength & Support.',
-                heard: { summary: 'A parent did not connect with “reclaim,” and the compassionate copy read as assuming a negative experience.' } },
+                text: 'Find Strength & Support.' },
               { tag: 'Version 3', src: '/images/birthstory/bs-carepod.png', alt: 'Version 3: the Care Pod, loved ones in a circle around the parent.',
-                text: 'Care Pod: live updates between the parent and chosen loved ones, one of five tabs.',
-                heard: { summary: 'One parent wished she had asked everyone around her to add their memories of the birth while they were fresh.' } },
+                text: 'Care Pod: live updates between the parent and chosen loved ones, one of five tabs.' },
             ],
           },
         ],
