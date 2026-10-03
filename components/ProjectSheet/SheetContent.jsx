@@ -44,7 +44,7 @@ function Work({ media, label, gated, onImage }) {
       </div>
     )
   }
-  if (media?.compare) return <SheetCompare slides={media.compare} label={label} />
+  if (media?.compare) return <SheetCompare slides={media.compare} untested={media.untested} label={label} />
   if (media?.screens) return <SheetScreens items={media.screens} />
   const Ex = EXHIBITS[media?.exhibit]
   if (Ex) return <Ex data={media.data} />
