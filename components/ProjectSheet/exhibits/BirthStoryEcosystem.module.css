@@ -1,177 +1,141 @@
-/* The Birth Story ecosystem (FS311). Desktop: a timeline in two lanes,
-   shared above the line, private below it, four stops in time order.
-   Phone: one vertical line, the lane named on each stop. Cards wear the
-   folder's brand glass (FS304/FS305); type uses the sheet's six steps. */
+/* Four key screens, side by side (FS313). One continuous band of the
+   identity gradient runs behind the phones (each stage shows its slice of
+   the same gradient, so the four read as one ground); beneath each phone
+   a dotted leader drops to its annotation on the sheet. Phones: 2 × 2. */
 
 .eco {
   margin: 0;
 }
 
-.srOnly {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  clip: rect(0 0 0 0);
-  white-space: nowrap;
-}
-
-.board {
-  position: relative;
-}
-
-.stops {
+.screens {
   display: grid;
-  gap: var(--flow-2);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   margin: 0;
   padding: 0;
   list-style: none;
+  row-gap: var(--flow-3);
 }
 
-.stop {
-  position: relative;
+@media (min-width: 900px) {
+  .screens {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.item {
+  display: grid;
+  grid-template-rows: auto auto 1fr;
   min-width: 0;
 }
 
-/* THE CARD: the brand glass, the real screen, the words */
-.card {
+/* THE BAND: the case study's washed identity gradient, one sheet wide.
+   Each stage is a slice: the gradient is sized to the whole row and
+   shifted by the item's place in it. */
+.stage {
   display: grid;
-  grid-template-columns: 4rem minmax(0, 1fr);
-  gap: 0.9rem;
-  align-items: start;
-  padding: 1rem;
-  border-radius: 4px;
+  place-items: center;
+  padding: 9% 0;
   background:
-    linear-gradient(115deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0) 40%),
-    linear-gradient(135deg,
-      rgba(197, 207, 166, 0.16) 5%,
-      rgba(199, 170, 209, 0.14) 45%,
-      rgba(247, 156, 126, 0.12) 88%),
-    rgba(28, 26, 30, 0.62);
-  box-shadow:
-    inset 0 0 0 1px rgba(244, 241, 236, 0.22),
-    inset 0 1px 0 rgba(255, 255, 255, 0.22),
-    0 16px 34px rgba(0, 0, 0, 0.35);
+    linear-gradient(rgba(250, 250, 250, 0.62), rgba(250, 250, 250, 0.62)),
+    linear-gradient(126deg, #e7c3c8 0%, #b9c2ec 48%, #1a434d 100%);
+  background-size: 200% 100%;
 }
 
+.item:nth-child(odd) .stage { background-position: 0 0; }
+.item:nth-child(even) .stage { background-position: 100% 0; }
+
+@media (min-width: 900px) {
+  .stage {
+    background-size: 400% 100%;
+  }
+
+  .item:nth-child(1) .stage { background-position: 0 0; }
+  .item:nth-child(2) .stage { background-position: 33.333% 0; }
+  .item:nth-child(3) .stage { background-position: 66.667% 0; }
+  .item:nth-child(4) .stage { background-position: 100% 0; }
+}
+
+/* the phone: the case study's frame, her real screen */
 .phone {
+  position: relative;
   display: block;
-  padding: 3px;
-  border-radius: 10px;
+  width: 66%;
+  padding: 5px;
+  border-radius: 20px;
   background: #1d1d1f;
+  box-shadow: 0 24px 48px -26px rgba(26, 67, 77, 0.6);
 }
 
-.phone img {
+.notch {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  z-index: 2;
+  width: 26%;
+  height: 8px;
+  border-radius: 999px;
+  background: #1d1d1f;
+  transform: translateX(-50%);
+}
+
+.screen {
+  display: block;
+  overflow: hidden;
+  border-radius: 15px;
+}
+
+.screen img {
   display: block;
   width: 100%;
   aspect-ratio: 430 / 932;
   object-fit: cover;
-  border-radius: 7px;
 }
 
-.words {
-  min-width: 0;
+/* the leader: dotted, from the band down to the words */
+.leader {
+  justify-self: center;
+  width: 0;
+  height: var(--flow-3);
+  border-left: 2px dotted rgba(197, 207, 166, 0.7);
 }
 
-.lane {
-  display: block;
-  margin: 0 0 0.35rem;
-  font-family: var(--font-body);
-  font-size: var(--step-label);
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--color-sage);
+.item[data-private] .leader {
+  border-left-color: rgba(199, 170, 209, 0.75);
 }
 
-.stop[data-lane='private'] .lane {
-  color: #d9b8e0;  /* lavender, the gradient's private middle; 8:1 on the card */
+.note {
+  padding: 0 clamp(0.5rem, 1.4vw, 1.25rem);
+  text-align: center;
 }
 
 .name {
   margin: 0;
   font-family: var(--font-heading);
-  /* body step in the heading face: “Documentation” has to fit a card a
-     quarter of the sheet wide, or a phone's column */
-  font-size: var(--step-body);
-  font-weight: 600;
+  font-size: var(--step-statement);
+  font-weight: var(--weight-title, 400);
   line-height: 1.2;
   color: var(--color-ink);
-  overflow-wrap: anywhere;
+  text-wrap: balance;
 }
 
-.when {
-  margin: 0.35rem 0 0;
-  font-family: var(--font-body);
-  font-size: var(--step-small);
-  font-style: italic;
-  line-height: 1.45;
-  color: var(--color-ink);
-  opacity: 0.85;
-  text-wrap: pretty;
-}
-
-.text {
-  margin: 0.5rem 0 0;
-  font-family: var(--font-body);
-  font-size: var(--step-small);
-  line-height: 1.55;
-  color: var(--color-ink);
-  text-wrap: pretty;
-}
-
-/* the timeline: on a phone a vertical dashed line down the left */
-.axis {
-  position: absolute;
-  top: 0.5rem;
-  bottom: 0.5rem;
-  left: 0.45rem;
-  border-left: 1.5px dashed rgba(244, 241, 236, 0.32);
-}
-
-.stops {
-  padding-left: 1.75rem;
-}
-
-.dot {
-  position: absolute;
-  top: 1.6rem;
-  left: calc(-1.75rem + 0.45rem - 6px);
-  width: 13px;
-  height: 13px;
-  border-radius: 50%;
-  background: #c5cfa6;
-  box-shadow: 0 0 0 5px rgba(197, 207, 166, 0.14);
-}
-
-.stop[data-lane='private'] .dot {
-  background: #c7aad1;
-  box-shadow: 0 0 0 5px rgba(199, 170, 209, 0.16);
-}
-
-.laneLabel {
-  display: none;
-}
-
-/* SEARCH: under all of it */
-.search {
-  display: grid;
-  gap: 0.25rem;
-  margin-top: var(--flow-3);
-  padding: var(--flow-2) 0 0;
-  border-top: 1.5px dashed rgba(244, 241, 236, 0.32);
-}
-
-.searchName {
+.who {
+  margin: 0.45rem 0 0;
   font-family: var(--font-body);
   font-size: var(--step-label);
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--color-sage);
+  text-wrap: balance;
 }
 
-.searchText {
+.item[data-private] .who {
+  color: #d9b8e0;  /* lavender: the one private moment */
+}
+
+.text {
+  margin: 0.6rem auto 0;
+  max-width: 26ch;
   font-family: var(--font-body);
   font-size: var(--step-small);
   line-height: 1.55;
@@ -179,96 +143,14 @@
   text-wrap: pretty;
 }
 
-/* DESKTOP: two lanes across a horizontal timeline */
-@media (min-width: 900px) {
-  .stops {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    grid-template-rows: auto 4.5rem auto;
-    column-gap: var(--flow-2);
-    row-gap: 0;
-    padding: 2.4rem 0;
-  }
+/* a long name never widens its column (the 2 × 2 on phones) */
+.note,
+.stage {
+  min-width: 0;
+}
 
-  /* cards in a lane share one height, so their tops and stems line up */
-  .stop {
-    grid-column: var(--col);
-    grid-row: 1;
-    display: grid;
-  }
-
-  .stop[data-lane='private'] {
-    grid-row: 3;
-  }
-
-  .card {
-    grid-template-columns: 5rem minmax(0, 1fr);
-    gap: 1rem;
-  }
-
-  /* the lane is said once, by the board, on desktop */
-  .lane {
-    display: none;
-  }
-
-  /* the line lives in the grid's middle row, so it sits exactly between
-     the lanes whatever their heights */
-  .axis {
-    display: none;
-  }
-
-  .stops::before {
-    content: '';
-    grid-column: 1 / -1;
-    grid-row: 2;
-    align-self: center;
-    border-top: 1.5px dashed rgba(244, 241, 236, 0.32);
-  }
-
-  /* each stop's dot sits on the line, joined to its card by a stem */
-  .dot {
-    top: auto;
-    bottom: calc(-2.25rem - 6px);
-    left: 50%;
-    margin-left: -6px;
-  }
-
-  .stop[data-lane='private'] .dot {
-    top: calc(-2.25rem - 7px);
-    bottom: auto;
-  }
-
-  .stop::after {
-    content: '';
-    position: absolute;
-    left: 50%;
-    bottom: -2.25rem;
-    height: 2.25rem;
-    border-left: 1px solid rgba(244, 241, 236, 0.28);
-  }
-
-  .stop[data-lane='private']::after {
-    top: -2.25rem;
-    bottom: auto;
-  }
-
-  .laneLabel {
-    position: absolute;
-    left: 0;
-    display: block;
-    font-family: var(--font-body);
-    font-size: var(--step-label);
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-  }
-
-  .laneShared {
-    top: 0;
-    color: var(--color-sage);
-  }
-
-  .lanePrivate {
-    bottom: 0;
-    color: #d9b8e0;
+@media (max-width: 899px) {
+  .name {
+    font-size: var(--step-body);
   }
 }

@@ -19,8 +19,8 @@
  * draft is the source; Claude refines it). Lines marked PROVISIONAL are
  * assembled for this sheet and are hers to rewrite.
  *
- * THE SHAPE (FS310–FS312): the cover plays the case study's hero
- * animation; the ecosystem (her thesis, drawn) gives the overview; then
+ * THE SHAPE (FS310–FS313): the cover plays the case study's hero
+ * animation; the ecosystem (four key screens, annotated) gives the overview; then
  * Part one, The Product (each feature opens on its working prototype,
  * FS301) and Part two, How It Came Together (Research, Architecture with
  * her native IA diagrams, Iteration, UX Writing, Visual Identity). No
@@ -90,8 +90,9 @@ export const birthstory = {
     },
   },
 
-  /* THE ECOSYSTEM (FS311): the overview before the work. Her thesis
-     (2026-08-03), drawn as a timeline in two lanes by the exhibit
+  /* THE ECOSYSTEM (FS311): the overview before the work. FS313: four key
+     screens side by side with annotations (who each serves and when, from
+     her thesis, 2026-08-03), drawn by the exhibit
      components/ProjectSheet/exhibits/BirthStoryEcosystem.jsx. The intro's
      first sentence is her thesis, trimmed; the second is PROVISIONAL,
      assembled from the same note (who each feature serves, and when). */
@@ -99,7 +100,7 @@ export const birthstory = {
     kicker: 'The Ecosystem',
     label: 'Individual and Shared',
     exhibit: 'bs-ecosystem',
-    wide: true,  /* the words above, the timeline across the whole sheet */
+    wide: true,  /* the words above, the four screens across the whole sheet */
     intro: 'Birth is both an individual and a shared experience, and the two are intertwined when it comes to processing, documenting, and reflecting on it. So the app meets different people at different moments: loved ones keep track during the birth, the parent reflects in private after it, and a book they curate carries it forward.',
   },
 
