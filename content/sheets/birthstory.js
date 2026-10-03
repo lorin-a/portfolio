@@ -108,9 +108,12 @@ export const birthstory = {
     kicker: 'The Ecosystem',
     label: 'Individual and Shared',
     wide: true,  /* the words above, the four screens across the whole sheet */
-    /* FS315: the ecosystem and product copy, combined (the product half
-       is the live ProductAct opener, trimmed). */
-    intro: 'Birth is both an individual and a shared experience, and the two are intertwined when it comes to processing, documenting, and reflecting on it. So the app meets different people at different moments: loved ones keep track during the birth, the parent reflects in private after it, and a book they curate carries it forward. Because birth is unpredictable, the app is deliberately simple: it opens into documenting and reaches everything else in a tap or two. Each feature below plays as a working prototype I rebuilt from the wireframes.',
+    /* FS315: the ecosystem and product copy, combined. FS316: the product
+       sentence made explicit from Q7 (“have the app open into … note
+       taking, with an onboarding flow that showed the other optional
+       features that are also easily accessible via the nav bar at all
+       times”); the prototype line removed. */
+    intro: 'Birth is both an individual and a shared experience, and the two are intertwined when it comes to processing, documenting, and reflecting on it. So the app meets different people at different moments: loved ones keep track during the birth, the parent reflects in private after it, and a book they curate carries it forward. Because birth is unpredictable, the app is deliberately simple: it opens straight into note-taking, and the other features are always in the navigation bar.',
     screens: [
       { name: 'Documentation', tag: 'Shared · during the birth', text: 'A partner or loved one keeps track of events and details, leading up to, during, and just after.',
         src: '/images/birthstory/bs-doc-medical.png', alt: 'The notes timeline with a medical entry opened: an ibuprofen prescription and a voice memo.' },
