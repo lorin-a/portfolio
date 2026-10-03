@@ -22,7 +22,26 @@
      no "held" or other AI tells (memory: design-pass-bar).
 
    The title, number, and tagline come from the homepage <ProjectPreview>
-   props, not from this file. */
+   props, not from this file.
+
+   ADAPTING THE TEMPLATE TO THE PROJECT (FS301, FS310–FS312). Shape each
+   sheet around what the project actually is; these are all optional:
+   - hero: '<name>'        a built hero in the cover instead of the photo
+                           pile (registry: components/ProjectSheet/
+                           SheetPrototype.jsx, e.g. 'bs-hero')
+   - system.exhibit        a built overview for the system section
+                           ('maps' = Groundswell; others registered in
+                           SheetContent.jsx EXHIBITS, e.g. 'bs-ecosystem');
+     system.wide: true     words above, the exhibit across all 12 columns
+   - components[].chapter  { kicker, title, line } opens a group of
+                           sections (e.g. Part one: The Product, Part
+                           two: How It Came Together)
+   - components[].notes    [{ label, text }] short annotations in the rail
+   - stills: { type: 'prototype', name, fallback?, alt } a working
+                           prototype as a gallery slide (fallback = an
+                           image key shown on phones for diagrams)
+   - *asterisks* in any copy set that phrase in italics (e.g. a quote)
+   See content/sheets/birthstory.js for all of these in use. */
 
 export const template = {
   /* COVER ─────────────────────────────────────────────────────────── */

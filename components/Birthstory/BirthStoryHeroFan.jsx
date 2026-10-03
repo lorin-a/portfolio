@@ -74,6 +74,28 @@ function Lead() {
   )
 }
 
+/* The stage alone (FS310): the fan, the Care Pod circle and the turning
+   care-ring, for the folder sheet's cover. It runs the same reveal on
+   mount and holds composed under reduced motion. */
+export function HeroStage() {
+  const [on, setOn] = useState(false)
+  useEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) { setOn(true); return }
+    const t = setTimeout(() => setOn(true), 260)
+    return () => clearTimeout(t)
+  }, [])
+  return (
+    <div className={on ? s.on : ''}>
+      <div className={s.stage} aria-label="Three Birth Story screens fanning open: the cover, the Care Pod, and the live message board." role="img">
+        <Accent />
+        <Phone src={WING_L} className={s.wingL} />
+        <ScreenPhone className={s.wingR}><MessageBoardScreen /></ScreenPhone>
+        <ScreenPhone className={s.center}><CarePodScreen /></ScreenPhone>
+      </div>
+    </div>
+  )
+}
+
 export default function BirthStoryHeroFan() {
   const [on, setOn] = useState(false)
 

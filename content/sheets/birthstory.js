@@ -19,11 +19,13 @@
  * draft is the source; Claude refines it). Lines marked PROVISIONAL are
  * assembled for this sheet and are hers to rewrite.
  *
- * THE BUILT PIECES PLAY HERE (FS301): each feature's gallery opens on its
- * working prototype from the case study (type: 'prototype', mounted by
- * components/ProjectSheet/SheetPrototype.jsx), and the architecture
- * section shows her two native IA diagrams (on phones, her deck slides of
- * the same two architectures). Deck slides follow.
+ * THE SHAPE (FS310–FS312): the cover plays the case study's hero
+ * animation; the ecosystem (her thesis, drawn) gives the overview; then
+ * Part one, The Product (each feature opens on its working prototype,
+ * FS301) and Part two, How It Came Together (Research, Architecture with
+ * her native IA diagrams, Iteration, UX Writing, Visual Identity). No
+ * separate behind-the-scenes gallery: the studio photos live in the
+ * sections they belong to.
  *
  * OPEN, hers to settle (also in STATUS):
  *   · the client is named four ways across her sources; this sheet uses the
@@ -35,19 +37,17 @@
  */
 
 export const birthstory = {
-  /* Q15 + live Outcome, refined; the quote is the client's (live). No build
-     claim (standing correction, BIRTHSTORY-copy-plan.md). */
+  /* Q15 + live Outcome, refined; the quote is the client's (live), set in
+     italics (FS308). The close is her FS309 direction, “student project
+     for real client concept pitch only at this stage”, made a sentence.
+     No build claim (standing correction, BIRTHSTORY-copy-plan.md). */
   outcome:
-    'The client had praise and almost no notes: “I wish this could be real right now!” There’s no real signal the app will get built, but it gave the concept a real starting point.',
+    'The client had praise and almost no notes: *“I wish this could be real right now!”* Birth Story was a student project pitched to a real client, and at this stage it is a concept only.',
 
-  /* Four prints for range: the product, the research, the critique, the
-     review. Captions and alts are furniture, hers to rewrite. */
-  prints: [
-    { key: 'bs-collage', caption: 'The App', alt: 'The final Birth Story screens arranged around the gradient splash screen.' },
-    { key: 'bs-mock-carepod', caption: 'Care Pod', alt: 'The Care Pod circle, the live message board, and a story with photos, on three phones.' },
-    { key: 'bs-crit-wall', caption: 'The Crit Wall', alt: 'Printed screens taped to a whiteboard and marked up in red.' },
-    { key: 'bs-final-review', caption: 'Final Review', alt: 'The studio team in front of the projector, with the client on the video call behind them.' },
-  ],
+  /* THE COVER HERO (FS310): the case study's hero animation (the fan of
+     screens, the Care Pod circle and the turning ring of dots) takes the
+     photo pile's place. The pile's photographs live in the galleries. */
+  hero: 'bs-hero',
 
   meta: [
     /* live Overview: Context */
@@ -76,26 +76,31 @@ export const birthstory = {
        research: v3 02's finding (“They wanted recognition for doing
        something difficult”) + her live finding, verbatim. */
     short: {
-      why: 'Giving birth is the part of the perinatal experience that goes unsupported once a newborn arrives. Birth Story is a concept for Myana’s companion app that helps parents document, reflect on, and make sense of it.',
-      research: 'Parents asked for less medical logging and more recognition. If we did not learn about the importance of the collective experience of the birth as well as the individual, we may have missed a crucial aspect of the ecosystem.',
+      /* FS306, her wording: “helps parents with documentation, reflection,
+         and sense-making”. */
+      why: 'Giving birth is the part of the perinatal experience that goes unsupported once a newborn arrives. Birth Story is a concept for Myana’s companion app that helps parents with documentation, reflection, and sense-making.',
+      /* FS307: what parents said they wanted, directly. Her list: “easy
+         simple not overwhelming, validating language, inclusion of loved
+         ones as well as private reflection, secure output”, made a
+         sentence. Receipts: Q3 (little to no capacity), Q12 + the sister
+         synthesis (validation; “reclaim” assumed trauma), Q4 + Q10 (the
+         collective memory; journaling private), Q10 (the Book: “would not
+         trust the app … no guarantee that the info would not be lost”). */
+      research: 'Parents wanted it easy and never overwhelming, with language that validates instead of assuming, room for loved ones alongside private reflection, and a record secure enough to outlast the app.',
     },
   },
 
-  /* THE ARCHITECTURE: the live 02 aria (“the first answer · what it
-     actually did · what shipped”), told in one paragraph, with her two
-     native diagrams. The live page's device: “4 → 0 questions before the
-     first entry”. */
+  /* THE ECOSYSTEM (FS311): the overview before the work. Her thesis
+     (2026-08-03), drawn as a timeline in two lanes by the exhibit
+     components/ProjectSheet/exhibits/BirthStoryEcosystem.jsx. The intro's
+     first sentence is her thesis, trimmed; the second is PROVISIONAL,
+     assembled from the same note (who each feature serves, and when). */
   system: {
-    kicker: 'Architecture',
-    label: 'Four Questions to Zero',
-    intro: 'Our first attempt met the parent in the moment: an opening menu asked what phase they were in and where, to pick the right feature. It did the opposite of what we intended. Meant to lower cognitive load, it gate-kept features, a form at the front desk while you’re still catching your breath. The final app asks nothing first. It opens straight into notes on a timeline, and the brief’s four kinds of capture (medical, contextual, narrative, and feelings) feed that one timeline.',
-    media: {
-      stills: [
-        { type: 'prototype', name: 'ia-v1', fallback: 'bs-v1-ia', alt: 'The first answer: a branching questionnaire, with four questions before the first entry.' },
-        { type: 'prototype', name: 'ia-final', fallback: 'bs-ia-final', alt: 'What shipped: five tabs, one add button at the center, and nothing to answer first.' },
-        { key: 'bs-onboard-ui', alt: 'Onboarding: a minimal interface walks the parent through the app, and the timeline builds itself from tags.' },
-      ],
-    },
+    kicker: 'The Ecosystem',
+    label: 'Individual and Shared',
+    exhibit: 'bs-ecosystem',
+    wide: true,  /* the words above, the timeline across the whole sheet */
+    intro: 'Birth is both an individual and a shared experience, and the two are intertwined when it comes to processing, documenting, and reflecting on it. So the app meets different people at different moments: loved ones keep track during the birth, the parent reflects in private after it, and a book they curate carries it forward.',
   },
 
   /* THE FEATURES, in her order of weight (Q11: notes are the core, Care Pod
@@ -107,6 +112,8 @@ export const birthstory = {
   components: [
     {
       key: 'documentation',
+      /* live ProductAct opener: statement + lede + note, trimmed */
+      chapter: { kicker: 'Part one', title: 'The Product', line: 'Birth is unpredictable, so the app is deliberately simple. It opens into documenting and reaches everything else in a tap or two. Each feature opens on a working prototype I rebuilt from the wireframes.' },
       name: 'Documentation',
       /* live prose + v3's closing sentence */
       body: 'Parents told me they wanted to land on the main task, so that’s what the app does. Even if nothing else gets used, there’s a timeline of whatever they or a loved one managed to add. A note from the delivery room, a prescription, and a voice memo land on the same timeline, the moment they happen.',
@@ -199,6 +206,76 @@ export const birthstory = {
       },
     },
     {
+      key: 'research',
+      /* PROVISIONAL chapter line */
+      chapter: { kicker: 'Part two', title: 'How It Came Together', line: 'Six weeks of research, three rounds of wireframes, and the words and look that hold it together.' },
+      name: 'Research',
+      /* Q6, refined */
+      body: 'We interviewed seven parents: two think-aloud walkthroughs of our wireframes over Zoom, with parents our client connected us with, and video interviews I ran with three family members and two friends. I also read birth forums and blogs.',
+      notes: [
+        /* live, verbatim */
+        { label: 'One of my sisters said', text: '“None of our births went according to plan and they were traumatizing, and it doesn’t get discussed enough.”' },
+        { label: 'Why it was personal', text: 'I come from a matriarchal family that has a history of complicated births. While interviewing my family, I understood for the first time how traumatic their experiences were.' },
+        { label: 'My thinking', text: 'Rooted in those experiences, I took a trauma-informed approach, and left medical documentation optional so the design could center on events on a timeline.' },
+      ],
+      /* Q2 + Q6, PROVISIONAL */
+      mine: 'Interviews and synthesis co-facilitated with Michael Juan, and the five family and friend interviews on my own.',
+      media: {
+        stills: [
+          { key: 'bs-tap-figma', alt: 'A think-aloud walkthrough of the reflection wireframe over Zoom.' },
+          { key: 'bs-tap-zoom', alt: 'A think-aloud session, the parent blurred for privacy.' },
+          { key: 'bs-process', alt: 'The ask, the requirements, and our approach.' },
+          { key: 'bs-v1-approach', alt: 'What the app had to do, and how it had to feel.' },
+          { key: 'bs-v2-feedback', alt: 'What parents told us about Version 2, in four themes.' },
+        ],
+      },
+    },
+    {
+      key: 'architecture',
+      /* the live 02 aria (“the first answer · what it actually did · what
+         shipped”), told in one paragraph; notes are v2's principles */
+      name: 'Architecture',
+      body: 'Our first attempt met the parent in the moment: an opening menu asked four questions about their phase and place, to pick the right feature. It did the opposite of what we intended. Meant to lower cognitive load, it gate-kept features, a form at the front desk while you’re still catching your breath. The final app asks nothing first and opens straight into notes on a timeline.',
+      notes: [
+        { label: 'Does not disorient', text: 'A parent recovering on little sleep can’t afford a maze.' },
+        { label: 'Integrate facts and feelings', text: 'The brief split capture four ways, but a birth isn’t lived in parts, so one timeline holds them together.' },
+      ],
+      /* Q2: “I led … user flows/architecture” */
+      mine: 'The user flows and information architecture, from research co-run with Michael Juan.',
+      media: {
+        stills: [
+          { type: 'prototype', name: 'ia-v1', fallback: 'bs-v1-ia', alt: 'The first answer: a branching questionnaire, with four questions before the first entry.' },
+          { type: 'prototype', name: 'ia-final', fallback: 'bs-ia-final', alt: 'What shipped: five tabs, one add button at the center, and nothing to answer first.' },
+          { key: 'bs-onboard-ui', alt: 'Onboarding: a minimal interface walks the parent through the app, and the timeline builds itself from tags.' },
+        ],
+      },
+    },
+    {
+      key: 'iteration',
+      /* live SecIteration, condensed; tester quotes verbatim (v3) */
+      name: 'Iteration',
+      body: 'We took three versions through critique, a client check-in, and think-aloud testing with parents, and changed direction based on what we heard. Each round made the app simpler.',
+      notes: [
+        { label: 'Version 1 · Week 3', text: 'A tool for every situation, sub-menus inside menus. *“Onboarding is nice, but there are too many buttons and options.”*' },
+        { label: 'Version 2 · Week 4', text: 'One filterable notes section and two actions, clearer but still too many options, and the copy drew a flag: *“Why ‘reclaim’? I’m not sure what it even means.”*' },
+        { label: 'Version 3 · Week 5', text: 'Only the features parents came back to, with room to go deeper.' },
+      ],
+      /* Q3, PROVISIONAL */
+      mine: 'Three rounds of wireframes, and the switch from image-heavy screens to color-block wireframes so feedback went to the flow.',
+      media: {
+        stills: [
+          { key: 'bs-v1-reflect', alt: 'Version 1, week 3: a tool for every situation.' },
+          { key: 'bs-v1-document', alt: 'Version 1 document: a step-by-step recall of who, what, when, and where.' },
+          { key: 'bs-v1-addons', alt: 'Version 1 add-ons: labor mode, a checklist, a symptom tracker. Both trackers were cut.' },
+          { key: 'bs-v2-timeline', alt: 'Version 2, week 4: one filterable notes section, simplified to color blocks.' },
+          { key: 'bs-mock-timeline', alt: 'Version 3, week 5: only the features parents came back to.' },
+          { key: 'bs-crit-wall', alt: 'Every screen printed and marked up, gradient and color block side by side.' },
+          { key: 'bs-crit-zoom', alt: 'The client joins a studio critique over video.' },
+          { key: 'bs-final-review', alt: 'The team and our client, Sarah Burns, at the final review.' },
+        ],
+      },
+    },
+    {
       key: 'ux-writing',
       name: 'UX Writing',
       /* live 04 statement + prose, condensed (Q12) */
@@ -281,36 +358,10 @@ export const birthstory = {
     },
   ],
 
-  /* BEHIND THE SCENES: the research, then the three rounds. The tester
-     quotes in the captions are verbatim (v3). */
-  processTitle: 'Behind the scenes',
-  process: [
-    {
-      title: 'Research and Critique',
-      fit: 'contain',
-      images: [
-        { key: 'bs-crit-wall', alt: 'Every screen printed and marked up, gradient and color block side by side.' },
-        { key: 'bs-tap-figma', alt: 'A think-aloud walkthrough of the reflection wireframe over Zoom.' },
-        { key: 'bs-process', alt: 'The ask, the requirements, and our approach.' },
-        { key: 'bs-v2-feedback', alt: 'Feedback on Version 2, in four themes.' },
-        { key: 'bs-crit-zoom', alt: 'The client joins a studio critique over video.' },
-        { key: 'bs-final-review', alt: 'The team and our client, Sarah Burns, at the final review.' },
-      ],
-    },
-    {
-      title: 'Three Rounds',
-      fit: 'contain',  /* deck slides: annotations run to the edges */
-      images: [
-        { key: 'bs-v1-approach', alt: 'Version 1’s approach: function and feel.' },
-        { key: 'bs-v1-reflect', alt: 'Version 1, week 3: a tool for every situation. “Onboarding is nice, but there are too many buttons and options.”' },
-        { key: 'bs-v1-document', alt: 'Version 1 document: a step-by-step recall of who, what, when, and where.' },
-        { key: 'bs-v1-dataviz', alt: 'Version 1 data visualization, cut from the final design.' },
-        { key: 'bs-v1-addons', alt: 'Version 1 add-ons: labor mode, a checklist, a symptom tracker. Both trackers were cut.' },
-        { key: 'bs-v2-timeline', alt: 'Version 2, week 4: one filterable notes section. “Why ‘reclaim’? I’m not sure what it even means.”' },
-        { key: 'bs-mock-timeline', alt: 'Version 3, week 5: only the features parents came back to.' },
-      ],
-    },
-  ],
+  /* BEHIND THE SCENES: none for BirthStory (FS311). Research and the
+     three rounds are sections of their own, and the studio photographs
+     (the crit wall, the client's critique, the final review) live in
+     them, so a lone gallery would only repeat them. */
 
   /* CREDITS: one column each. Names from sq; consent from live. */
   credits: [

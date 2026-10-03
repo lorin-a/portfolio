@@ -148,6 +148,67 @@
   text-wrap: pretty;
 }
 
+/* A WIDE section (FS311): the words above, the exhibit across all twelve
+   columns, for an overview that needs the room (BirthStory's ecosystem). */
+@media (min-width: 1000px) {
+  .componentWide .rail,
+  .componentWide .work {
+    grid-column: 1 / -1;
+  }
+
+  .componentWide .railInner {
+    position: static;
+    max-width: 52rem;
+  }
+}
+
+/* A CHAPTER (FS311): opens a group of sections, on the frame row's rule,
+   the title at the heading step and one line beneath it. */
+.chapter {
+  margin-top: var(--hero-gap);
+  padding-top: var(--hero-gap);
+  border-top: var(--rule);
+  border-image: var(--rule-grad) 1;
+}
+
+.chapterKicker {
+  display: block;
+  margin: 0 0 var(--flow-1);
+  font-family: var(--font-body);
+  font-size: var(--step-label);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-sage);
+}
+
+.chapterTitle {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: var(--step-heading);
+  font-weight: var(--weight-title, 400);
+  line-height: 1.15;
+  color: var(--color-ink);
+  text-wrap: balance;
+}
+
+.chapterLine {
+  max-width: 46rem;
+  margin: var(--flow-2) 0 0;
+  font-family: var(--font-body);
+  font-size: var(--step-body);
+  line-height: 1.6;
+  color: var(--color-ink);
+  text-wrap: pretty;
+}
+
+/* the section a chapter opens sits under the chapter's rule, not its own */
+.chapter + .component {
+  margin-top: var(--flow-3);
+  padding-top: 0;
+  border-top: 0;
+}
+
 /* The paired annotations (FS301): a short label and a line each, under a
    hairline, the case study's note device set in the sheet's type scale. */
 .notes {

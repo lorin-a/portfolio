@@ -546,3 +546,18 @@
     animation: none;
   }
 }
+
+/* FS310: the hero slot. It takes the pile's grid place; on its own it
+   needs a height, so it keeps a frame shape when the cover stacks. */
+.hero {
+  position: relative;
+  min-height: 0;
+  aspect-ratio: 4 / 3;
+}
+
+@media (min-width: 1000px) {
+  .hero {
+    aspect-ratio: auto;
+    min-height: 32rem;
+  }
+}

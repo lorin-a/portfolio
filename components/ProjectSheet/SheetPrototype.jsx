@@ -19,6 +19,7 @@ const JournalFlow = dynamic(() => import('@/components/Birthstory/JournalFlow'))
 const SearchReveal = dynamic(() => import('@/components/Birthstory/SearchReveal'))
 const IaV1 = dynamic(() => import('@/components/Birthstory/IaDiagrams').then((m) => m.IaV1))
 const IaFinal = dynamic(() => import('@/components/Birthstory/IaDiagrams').then((m) => m.IaFinal))
+const HeroStage = dynamic(() => import('@/components/Birthstory/BirthStoryHeroFan').then((m) => m.HeroStage))
 
 /* The Book has no loop on the case study either: two of her real screens. */
 function BookPair() {
@@ -41,7 +42,7 @@ function BookPair() {
 /* A diagram is laid out at a fixed desktop width and scaled down whole to
    fit the mat, never cropped. Measured from its layout size (offset sizes
    ignore the transform), re-fitted when either box changes. */
-function Fit({ children }) {
+function Fit({ children, innerClass }) {
   const box = useRef(null)
   const inner = useRef(null)
   const [s, setS] = useState(1)
@@ -62,7 +63,7 @@ function Fit({ children }) {
   }, [])
   return (
     <span ref={box} className={styles.fitBox}>
-      <span ref={inner} className={styles.fitInner} style={{ transform: `translate(-50%, -50%) scale(${s})` }}>{children}</span>
+      <span ref={inner} className={`${styles.fitInner} ${innerClass || ''}`} style={{ transform: `translate(-50%, -50%) scale(${s})` }}>{children}</span>
     </span>
   )
 }
@@ -90,6 +91,8 @@ const PIECES = {
   book: { el: <BookPair /> },
   'ia-v1': { diagram: true, el: <IaV1 compact /> },
   'ia-final': { diagram: true, el: <IaFinal compact /> },
+  /* the case study's hero stage, for a sheet's cover (FS310) */
+  'bs-hero': { hero: true, el: <HeroStage /> },
 }
 
 export const hasPrototype = (name) => !!PIECES[name]
@@ -100,6 +103,13 @@ export default function SheetPrototype({ name, fallback, fallbackAlt }) {
   if (!piece) return null
   if (piece.diagram && narrow && fallback) {
     return <img className={styles.fallback} src={fallback} alt={fallbackAlt || ''} />
+  }
+  if (piece.hero) {
+    return (
+      <div className={styles.heroGround}>
+        <Fit innerClass={styles.heroInner}>{piece.el}</Fit>
+      </div>
+    )
   }
   return (
     <div className={styles.ground}>

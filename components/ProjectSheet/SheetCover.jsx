@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 import { sheetImg } from './SheetMedia'
+import SheetPrototype from './SheetPrototype'
 import styles from './SheetCover.module.css'
 import paper from './Paper.module.css'
 
@@ -159,7 +160,10 @@ export default function SheetCover({ sheet, num, title, tagline, titleId }) {
           </div>
         </div>
       </div>
-      {sheet.prints?.length > 0 && <Pile prints={sheet.prints} />}
+      {/* FS310: a built hero takes the pile's place when the sheet names one */}
+      {sheet.hero ? (
+        <div className={`${styles.pile} ${styles.hero}`}><SheetPrototype name={sheet.hero} /></div>
+      ) : sheet.prints?.length > 0 && <Pile prints={sheet.prints} />}
     </header>
   )
 }

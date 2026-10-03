@@ -1,12 +1,26 @@
 'use client'
 
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { Fragment, useEffect, useMemo, useRef, useState } from 'react'
 import Lightbox from '@/components/Lightbox/Lightbox'
 import { SheetStage, SheetLibraryKit, slidesFor, sheetImg } from './SheetMedia'
 import SheetCover from './SheetCover'
 import SheetReflection from './SheetReflection'
 import SheetMotionLibrary from './SheetMotionLibrary'
 import SheetMaps from './SheetMaps'
+import dynamic from 'next/dynamic'
+
+/* Built exhibits for a sheet's system section (FS311), loaded on demand. */
+const EXHIBITS = {
+  'bs-ecosystem': dynamic(() => import('./exhibits/BirthStoryEcosystem')),
+}
+
+/* Copy may set a phrase in italics with *asterisks* (FS308), so a quote
+   can read as a quote without the content files carrying markup. */
+export function rich(text) {
+  if (typeof text !== 'string' || !text.includes('*')) return text
+  return text.split(/(\*[^*]+\*)/).map((part, i) =>
+    part.startsWith('*') && part.endsWith('*') ? <em key={i}>{part.slice(1, -1)}</em> : part)
+}
 import styles from './SheetContent.module.css'
 import paper from './Paper.module.css'
 
@@ -82,6 +96,8 @@ export default function SheetContent({ sheet, num, title, tagline, titleId }) {
     return list
   }, [components, process, sheet.system])
 
+  const Exhibit = EXHIBITS[sheet.system?.exhibit]
+
   const [lightboxAt, setLightboxAt] = useState(-1)
 
   const openerRef = useRef(null)
@@ -114,19 +130,19 @@ export default function SheetContent({ sheet, num, title, tagline, titleId }) {
           {frame.why && (
             <section className={styles.frameBlock}>
               <h3>The project</h3>
-              <p>{frame.short?.why || frame.why}</p>
+              <p>{rich(frame.short?.why || frame.why)}</p>
             </section>
           )}
           {frame.research && (
             <section className={styles.frameBlock}>
               <h3>What the research told us</h3>
-              <p>{frame.short?.research || frame.research}</p>
+              <p>{rich(frame.short?.research || frame.research)}</p>
             </section>
           )}
           {outcome && (
             <section className={styles.frameBlock}>
               <h3>The outcome</h3>
-              <p>{outcome}</p>
+              <p>{rich(outcome)}</p>
             </section>
           )}
         </div>
@@ -135,18 +151,18 @@ export default function SheetContent({ sheet, num, title, tagline, titleId }) {
       {/* MAPPING THE SYSTEM (FS249–FS280): found → value → built, the same
           four circles carried through three maps, before the components. */}
       {sheet.system && (
-        <section id="sheet-system" className={styles.component} data-reveal="0" aria-labelledby="sheet-system-name">
+        <section id="sheet-system" className={`${styles.component} ${sheet.system.wide ? styles.componentWide : ''}`} data-reveal="0" aria-labelledby="sheet-system-name">
           <div className={styles.rail}>
             <div className={styles.railInner}>
               <span className={styles.componentNum}>{sheet.system.kicker}</span>
               <h3 id="sheet-system-name" className={styles.componentName}>{sheet.system.label}</h3>
-              <p className={styles.componentBody}>{sheet.system.intro}</p>
+              <p className={styles.componentBody}>{rich(sheet.system.intro)}</p>
             </div>
           </div>
           <div className={styles.work}>
             {/* FS296: the three-map exhibit is Groundswell's; any other sheet
                 shows its own system media here in the standard gallery. */}
-            {sheet.system.exhibit === 'maps' ? <SheetMaps /> : (
+            {sheet.system.exhibit === 'maps' ? <SheetMaps /> : Exhibit ? <Exhibit /> : (
               <SheetStage slides={slidesFor(sheet.system.media)} onImage={openImage} label={`${sheet.system.label}, gallery`} />
             )}
           </div>
@@ -157,7 +173,16 @@ export default function SheetContent({ sheet, num, title, tagline, titleId }) {
         const slides = slidesFor(c.media)
         const phone = c.media?.phone
         return (
-          <section key={c.key} id={`sheet-${c.key}`} className={styles.component} data-reveal="0">
+          <Fragment key={c.key}>
+          {/* FS311: a chapter heading opens a group of sections */}
+          {c.chapter && (
+            <header className={styles.chapter} data-reveal="0">
+              <span className={styles.chapterKicker}>{c.chapter.kicker}</span>
+              <h3 className={styles.chapterTitle}>{c.chapter.title}</h3>
+              {c.chapter.line && <p className={styles.chapterLine}>{rich(c.chapter.line)}</p>}
+            </header>
+          )}
+          <section id={`sheet-${c.key}`} className={styles.component} data-reveal="0">
             {/* The rail: name, what it is, what I did. Narrow and sticky,
                 so the words stay beside the work while the work leads. */}
             <div className={styles.rail}>
@@ -165,13 +190,13 @@ export default function SheetContent({ sheet, num, title, tagline, titleId }) {
                 <span className={styles.componentNum}>{String(i + 1).padStart(2, '0')}</span>
                 <h3 className={styles.componentName}>{c.name}</h3>
                 {c.gated && <span className={styles.gated}>Confidential</span>}
-                <p className={styles.componentBody}>{c.body}</p>
+                <p className={styles.componentBody}>{rich(c.body)}</p>
                 {/* FS301: the case study's paired annotations, one short
                     label and a line each */}
                 {c.notes?.length > 0 && (
                   <dl className={styles.notes}>
                     {c.notes.map((n) => (
-                      <div key={n.label}><dt>{n.label}</dt><dd>{n.text}</dd></div>
+                      <div key={n.label}><dt>{n.label}</dt><dd>{rich(n.text)}</dd></div>
                     ))}
                   </dl>
                 )}
@@ -211,6 +236,7 @@ export default function SheetContent({ sheet, num, title, tagline, titleId }) {
               </div>
             )}
           </section>
+          </Fragment>
         )
       })}
 
