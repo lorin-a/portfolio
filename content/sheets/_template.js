@@ -37,6 +37,12 @@
                            sections (e.g. Part one: The Product, Part
                            two: How It Came Together)
    - components[].notes    [{ label, text }] short annotations in the rail
+   - media.annotated       { prototype, left, right, alt } one working
+                           prototype on the gradient band, annotations
+                           either side (SheetAnnotated)
+   - media.screens / system.screens  key screens side by side, each with
+                           a leader to its note (SheetScreens)
+   - media.exhibit + data  a built exhibit (EXHIBITS in SheetContent.jsx)
    - stills: { type: 'prototype', name, fallback?, alt } a working
                            prototype as a gallery slide (fallback = an
                            image key shown on phones for diagrams)

@@ -1,0 +1,415 @@
+/* BirthStory, part two exhibits (FS314). The sheet's six type steps; the
+   identity gradient for grounds; sage labels on the dark sheet. */
+
+.kicker {
+  margin: 0 0 var(--flow-1);
+  font-family: var(--font-body);
+  font-size: var(--step-label);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-sage);
+}
+
+.caption {
+  margin: var(--flow-1) 0 0;
+  font-family: var(--font-body);
+  font-size: var(--step-small);
+  line-height: 1.5;
+  color: var(--color-ink);
+  opacity: 0.85;
+  text-wrap: pretty;
+}
+
+/* ── RESEARCH ─────────────────────────────────────────────────────── */
+.voices {
+  display: grid;
+  gap: var(--flow-3);
+  margin: 0;
+}
+
+@media (min-width: 1000px) {
+  .voices {
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+    align-items: start;
+  }
+}
+
+.bigQuote {
+  margin: 0 0 var(--flow-3);
+  padding-left: var(--flow-2);
+  border-left: 2px solid #c5cfa6;
+}
+
+.bigQuote p {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: var(--step-heading);
+  line-height: 1.25;
+  color: var(--color-ink);
+  text-wrap: balance;
+}
+
+.bigQuote cite {
+  display: block;
+  margin-top: var(--flow-1);
+  font-family: var(--font-body);
+  font-size: var(--step-label);
+  font-style: normal;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-sage);
+}
+
+.asks {
+  display: grid;
+  gap: var(--flow-1);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.asks li {
+  position: relative;
+  padding-left: 1.35rem;
+  font-family: var(--font-body);
+  font-size: var(--step-body);
+  line-height: 1.5;
+  color: var(--color-ink);
+  text-wrap: pretty;
+}
+
+.asks li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.62em;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #c5cfa6;
+}
+
+.voicesPhoto img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  background: var(--sheet-mat);
+}
+
+/* ── ARCHITECTURE ─────────────────────────────────────────────────── */
+.ia {
+  display: grid;
+  gap: var(--flow-2);
+  margin: 0;
+}
+
+.iaFrame {
+  position: relative;
+  width: 100%;
+}
+
+.iaV1 { aspect-ratio: 16 / 9; }
+.iaFinal { aspect-ratio: 16 / 6; }
+
+@media (max-width: 699px) {
+  .iaV1, .iaFinal { aspect-ratio: 16 / 9; }
+}
+
+.iaV1 > * { opacity: 0.92; }
+
+.count {
+  display: grid;
+  justify-items: center;
+  gap: 0.2rem;
+  padding: var(--flow-1) 0;
+}
+
+.countFig {
+  font-family: var(--font-heading);
+  font-size: var(--step-display);
+  line-height: 1;
+  color: var(--color-ink);
+}
+
+.countArrow {
+  margin: 0 0.15em;
+  color: #c7aad1;
+}
+
+.countLabel {
+  font-family: var(--font-body);
+  font-size: var(--step-label);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-sage);
+}
+
+/* ── UX WRITING ───────────────────────────────────────────────────── */
+.rev {
+  display: grid;
+  gap: var(--flow-3);
+  margin: 0;
+  padding: var(--flow-3);
+  background:
+    linear-gradient(rgba(250, 250, 250, 0.62), rgba(250, 250, 250, 0.62)),
+    linear-gradient(126deg, #e7c3c8 0%, #b9c2ec 48%, #1a434d 100%);
+}
+
+@media (min-width: 1000px) {
+  .rev {
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: center;
+    gap: clamp(2rem, 4vw, 3.5rem);
+  }
+}
+
+.revScreen {
+  justify-self: center;
+  width: min(15rem, 70%);
+}
+
+@media (min-width: 1000px) {
+  .revScreen { width: clamp(13rem, 17vw, 16rem); }
+}
+
+.phone {
+  position: relative;
+  display: block;
+  padding: 5px;
+  border-radius: 20px;
+  background: #1d1d1f;
+  box-shadow: 0 24px 48px -26px rgba(26, 67, 77, 0.6);
+}
+
+.notch {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  z-index: 2;
+  width: 26%;
+  height: 8px;
+  border-radius: 999px;
+  background: #1d1d1f;
+  transform: translateX(-50%);
+}
+
+.screen {
+  display: block;
+  overflow: hidden;
+  border-radius: 15px;
+}
+
+.screen img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 430 / 932;
+  object-fit: cover;
+}
+
+/* on the light band the words take the case study's teal ink */
+.rev .kicker { color: #2f5560; }
+.rev .caption { color: #1f2f35; opacity: 1; text-align: center; }
+
+.said {
+  margin: 0 0 var(--flow-3);
+}
+
+.said p {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: var(--step-statement);
+  font-style: italic;
+  line-height: 1.35;
+  color: #1A434D;
+  text-wrap: pretty;
+}
+
+.revList {
+  display: grid;
+  gap: var(--flow-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.revRow {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-items: center;
+  gap: var(--flow-2);
+  padding-top: var(--flow-2);
+  border-top: 1px solid rgba(26, 67, 77, 0.18);
+}
+
+.from {
+  font-family: var(--font-heading);
+  font-size: var(--step-body);
+  color: #46555a;   /* struck, but still AA on the band */
+  text-decoration: line-through;
+  text-decoration-color: #8089C2;
+  text-decoration-thickness: 1.5px;
+}
+
+.arrow {
+  font-family: var(--font-body);
+  color: #8089C2;
+  line-height: 1;
+}
+
+/* side by side once there is room for both lines */
+@media (min-width: 700px) {
+  .revRow {
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 699px) {
+  .arrow { transform: rotate(90deg); justify-self: start; }
+  .rev { padding: var(--flow-2); }
+}
+
+.to {
+  font-family: var(--font-heading);
+  font-size: var(--step-body);
+  font-weight: 600;
+  color: #1A434D;
+}
+
+/* ── VISUAL IDENTITY ──────────────────────────────────────────────── */
+.id {
+  display: grid;
+  gap: var(--flow-3);
+  margin: 0;
+}
+
+.gradient {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--flow-1) var(--flow-2);
+  min-height: clamp(9rem, 16vw, 12rem);
+  padding: var(--flow-2) var(--flow-3);
+  /* the brand gradient, pure; the wordmark and its note sit at the teal
+     end, where white is native (the case study's own arrangement) */
+  flex-direction: row-reverse;
+  background: linear-gradient(110deg, #DBADAD 0%, #B1C1F4 52%, #1A434D 100%);
+}
+
+.wordmark {
+  display: block;
+  width: auto;
+  height: clamp(2.2rem, 3.4vw, 3.2rem);
+  filter: brightness(0) invert(1);
+}
+
+.gradientNote {
+  max-width: 30ch;
+  color: #1A434D;   /* teal on the blush end: the note reads the gradient it names */
+  text-wrap: balance;
+  font-family: var(--font-body);
+  font-size: var(--step-label);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.idLower {
+  display: grid;
+  gap: var(--flow-3);
+}
+
+@media (min-width: 1000px) {
+  .idLower {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr);
+    align-items: start;
+  }
+}
+
+.swatches {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: var(--flow-2) var(--flow-1);
+  margin: 0 0 var(--flow-3);
+  padding: 0;
+  list-style: none;
+}
+
+.swatch {
+  display: grid;
+  gap: 0.2rem;
+  min-width: 0;
+}
+
+/* phones: hex codes need more room than a fifth of the column */
+@media (max-width: 599px) {
+  .swatches {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .sHex {
+    font-size: 0.75rem;
+  }
+}
+
+.chip {
+  display: block;
+  aspect-ratio: 1;
+  border-radius: 3px;
+  box-shadow: inset 0 0 0 1px rgba(244, 241, 236, 0.18);
+}
+
+.sName {
+  font-family: var(--font-body);
+  font-size: var(--step-small);
+  color: var(--color-ink);
+}
+
+.sHex {
+  font-family: var(--font-body);
+  font-size: var(--step-label);
+  letter-spacing: 0.02em;
+  color: var(--color-ink);
+  opacity: 0.75;
+}
+
+.types {
+  display: grid;
+  gap: var(--flow-1);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.typeRow {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--flow-2);
+  padding-top: var(--flow-1);
+  border-top: 1px solid var(--sheet-hair);
+}
+
+.face {
+  font-family: var(--font-heading);
+  font-size: var(--step-statement);
+  color: var(--color-ink);
+}
+
+.use {
+  font-family: var(--font-body);
+  font-size: var(--step-small);
+  color: var(--color-ink);
+  opacity: 0.85;
+}
+
+.board img {
+  display: block;
+  width: 100%;
+  height: auto;
+  background: #fff;
+}

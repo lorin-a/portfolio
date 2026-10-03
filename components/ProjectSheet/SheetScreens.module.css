@@ -1,4 +1,4 @@
-/* Four key screens, side by side (FS313). One continuous band of the
+/* Key screens, side by side (FS313; SheetScreens, FS314). One continuous band of the
    identity gradient runs behind the phones (each stage shows its slice of
    the same gradient, so the four read as one ground); beneath each phone
    a dotted leader drops to its annotation on the sheet. Phones: 2 × 2. */
@@ -18,7 +18,7 @@
 
 @media (min-width: 900px) {
   .screens {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(var(--n, 4), minmax(0, 1fr));
   }
 }
 
@@ -45,14 +45,11 @@
 .item:nth-child(even) .stage { background-position: 100% 0; }
 
 @media (min-width: 900px) {
+  /* each stage shows its slice of one gradient sized to the whole row */
   .stage {
-    background-size: 400% 100%;
+    background-size: calc(var(--n, 4) * 100%) 100%;
+    background-position: calc(var(--i) / max(var(--n, 4) - 1, 1) * 100%) 0;
   }
-
-  .item:nth-child(1) .stage { background-position: 0 0; }
-  .item:nth-child(2) .stage { background-position: 33.333% 0; }
-  .item:nth-child(3) .stage { background-position: 66.667% 0; }
-  .item:nth-child(4) .stage { background-position: 100% 0; }
 }
 
 /* the phone: the case study's frame, her real screen */
@@ -152,5 +149,25 @@
 @media (max-width: 899px) {
   .name {
     font-size: var(--step-body);
+  }
+}
+
+.quote {
+  font-style: italic;
+}
+
+/* three or fewer on a phone: one column, so no item is ever cut off */
+@media (max-width: 899px) {
+  .screens:has(> :nth-child(3):last-child) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    column-gap: 0.5rem;
+  }
+
+  .screens:has(> :nth-child(3):last-child) .phone {
+    width: 82%;
+  }
+
+  .screens:has(> :nth-child(3):last-child) .text {
+    font-size: var(--step-label);
   }
 }

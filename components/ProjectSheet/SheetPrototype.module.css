@@ -31,6 +31,21 @@
   aspect-ratio: 442 / 944;
 }
 
+/* in a stage that sizes by height (SheetAnnotated), say the width outright:
+   a phone built from live screens (Care Pod) has no image to give the
+   aspect-ratio a width to work from, and collapsed to its tap dot */
+.phoneFit[data-bare] {
+  width: auto;
+  height: 100%;
+}
+
+.phoneFit[data-bare] > figure,
+.phoneFit[data-bare] > figure > span {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
 .phoneFit > figure { width: 100%; }
 
 /* The Book: her two real screens, side by side. */

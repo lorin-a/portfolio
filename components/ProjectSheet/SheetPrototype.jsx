@@ -97,10 +97,15 @@ const PIECES = {
 
 export const hasPrototype = (name) => !!PIECES[name]
 
-export default function SheetPrototype({ name, fallback, fallbackAlt }) {
+export default function SheetPrototype({ name, fallback, fallbackAlt, bare }) {
   const piece = PIECES[name]
   const narrow = useNarrow()
   if (!piece) return null
+  /* bare (FS314): just the device, sized by its parent's height, for a
+     stage that draws its own ground (SheetAnnotated) */
+  if (bare) {
+    return piece.phone ? <div className={styles.phoneFit} data-bare>{piece.el}</div> : piece.el
+  }
   if (piece.diagram && narrow && fallback) {
     return <img className={styles.fallback} src={fallback} alt={fallbackAlt || ''} />
   }

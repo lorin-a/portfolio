@@ -7,11 +7,27 @@ import SheetCover from './SheetCover'
 import SheetReflection from './SheetReflection'
 import SheetMotionLibrary from './SheetMotionLibrary'
 import SheetMaps from './SheetMaps'
+import SheetAnnotated from './SheetAnnotated'
+import SheetScreens from './SheetScreens'
 import dynamic from 'next/dynamic'
 
 /* Built exhibits for a sheet's system section (FS311), loaded on demand. */
 const EXHIBITS = {
-  'bs-ecosystem': dynamic(() => import('./exhibits/BirthStoryEcosystem')),
+  'bs-voices': dynamic(() => import('./exhibits/BirthStoryProcess').then((m) => m.Voices)),
+  'bs-4to0': dynamic(() => import('./exhibits/BirthStoryProcess').then((m) => m.FourToZero)),
+  'bs-revisions': dynamic(() => import('./exhibits/BirthStoryProcess').then((m) => m.Revisions)),
+  'bs-identity': dynamic(() => import('./exhibits/BirthStoryProcess').then((m) => m.Identity)),
+}
+
+/* A section's work column, by what it carries (FS314): an annotated
+   prototype, a row of key screens, a built exhibit, or the gallery. */
+function Work({ media, label, gated, onImage }) {
+  if (media?.annotated) return <SheetAnnotated {...media.annotated} />
+  if (media?.screens) return <SheetScreens items={media.screens} />
+  const Ex = EXHIBITS[media?.exhibit]
+  if (Ex) return <Ex data={media.data} />
+  if (media?.motion) return <SheetMotionLibrary items={media.motion} />
+  return <SheetStage slides={slidesFor(media)} gated={gated} onImage={gated ? null : onImage} label={label} />
 }
 
 /* Copy may set a phrase in italics with *asterisks* (FS308), so a quote
@@ -162,7 +178,7 @@ export default function SheetContent({ sheet, num, title, tagline, titleId }) {
           <div className={styles.work}>
             {/* FS296: the three-map exhibit is Groundswell's; any other sheet
                 shows its own system media here in the standard gallery. */}
-            {sheet.system.exhibit === 'maps' ? <SheetMaps /> : Exhibit ? <Exhibit /> : (
+            {sheet.system.exhibit === 'maps' ? <SheetMaps /> : sheet.system.screens ? <SheetScreens items={sheet.system.screens} /> : Exhibit ? <Exhibit data={sheet.system.data} /> : (
               <SheetStage slides={slidesFor(sheet.system.media)} onImage={openImage} label={`${sheet.system.label}, gallery`} />
             )}
           </div>
@@ -213,13 +229,7 @@ export default function SheetContent({ sheet, num, title, tagline, titleId }) {
             </div>
 
             <div className={styles.work}>
-              {c.media?.motion ? (
-                /* FS214: the dashboard as an interaction library */
-                <SheetMotionLibrary items={c.media.motion} />
-              ) : (
-                <SheetStage slides={slides} gated={c.gated}
-                  onImage={c.gated ? null : openImage} label={`${c.name}, gallery`} />
-              )}
+              <Work media={c.media} label={`${c.name}, gallery`} gated={c.gated} onImage={openImage} />
             </div>
 
             {/* The deck: the phone (the digital library, with the poem
