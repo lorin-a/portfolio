@@ -6,12 +6,35 @@ import { rich } from './SheetContent'
 import stage from './SheetMedia.module.css'
 import styles from './SheetCompare.module.css'
 
-/* THE COMPARE GALLERY (FS320): one feature at a time across its versions,
-   side by side, in the same brand-glass frame and footer as every sheet
-   gallery (SheetStage). Next changes the feature: the title, the screens,
-   and the copy under each screen change; the format stays.
+/* THE COMPARE GALLERY (FS320, re-laid FS325): one feature at a time across
+   its versions, in the sheet's brand-glass gallery frame. The color band
+   holds only the screens. Beneath it, a formatted text area: the
+   feature's heading and line, then a column under each screen with what
+   changed and what we heard. Next changes everything; the format stays.
 
-   slides: [{ title, line?, versions: [{ tag, src, alt, text, quote? }] }] */
+   What we heard (FS326) is either a verbatim quote ({ quote, who }) set as
+   a quotation, or a summary ({ summary }) set without quotation marks.
+   Never invent or reword a quote.
+
+   slides: [{ title, line?, versions: [{ tag, src, alt, text, heard? }] }] */
+
+function Heard({ h }) {
+  if (!h) return null
+  if (h.quote) {
+    return (
+      <blockquote className={styles.quote}>
+        <span className={styles.heardLabel}>{h.who || 'What we heard'}</span>
+        <p>{h.quote}</p>
+      </blockquote>
+    )
+  }
+  return (
+    <div className={styles.summary}>
+      <span className={styles.heardLabel}>What we heard</span>
+      <p>{rich(h.summary)}</p>
+    </div>
+  )
+}
 
 export default function SheetCompare({ slides = [], label }) {
   const [at, setAt] = useState(0)
@@ -28,21 +51,32 @@ export default function SheetCompare({ slides = [], label }) {
 
   return (
     <div className={stage.stage} role="group" aria-roledescription="gallery" aria-label={label} onKeyDown={onKey}>
-      <div className={styles.mat}>
-        <div key={at} className={styles.slide}>
+      <div key={at} className={styles.slide}>
+        {/* the color band: the screens and nothing else */}
+        <div className={styles.band}>
           <div className={styles.row} style={{ '--n': s.versions.length }}>
             {s.versions.map((v) => (
-              <figure key={v.tag} className={styles.version}>
-                <span className={styles.phone}>
-                  <span className={styles.notch} aria-hidden="true" />
-                  <span className={styles.screen}><img src={v.src} alt={v.alt} loading="lazy" draggable="false" /></span>
-                </span>
-                <figcaption className={styles.words}>
-                  <span className={styles.tag}>{v.tag}</span>
-                  <span className={styles.text}>{rich(v.text)}</span>
-                  {v.quote && <span className={styles.quote}>{v.quote}</span>}
-                </figcaption>
-              </figure>
+              <span key={v.tag} className={styles.phone}>
+                <span className={styles.notch} aria-hidden="true" />
+                <span className={styles.screen}><img src={v.src} alt={v.alt} loading="lazy" draggable="false" /></span>
+              </span>
+            ))}
+          </div>
+        </div>
+
+        {/* the text area */}
+        <div className={styles.text}>
+          <div className={styles.head}>
+            <h4 className={styles.title}>{s.title}</h4>
+            {s.line && <p className={styles.line}>{rich(s.line)}</p>}
+          </div>
+          <div className={styles.row} style={{ '--n': s.versions.length }}>
+            {s.versions.map((v) => (
+              <div key={v.tag} className={styles.col}>
+                <span className={styles.tag}>{v.tag}</span>
+                <p className={styles.change}>{rich(v.text)}</p>
+                <Heard h={v.heard} />
+              </div>
             ))}
           </div>
         </div>
@@ -56,9 +90,7 @@ export default function SheetCompare({ slides = [], label }) {
             <span className={stage.srOnly}> of </span>
             {String(n).padStart(2, '0')}
           </span>
-          <span className={`${stage.captionText} ${styles.title}`}>
-            <strong>{s.title}</strong>{s.line && <> {rich(s.line)}</>}
-          </span>
+          <span className={stage.captionText}>{s.title}</span>
         </p>
         <GalleryNav className={stage.stageNav} count={n} index={at}
           onPrev={() => go(-1)} onNext={() => go(1)} onSelect={setAt} label={label} />

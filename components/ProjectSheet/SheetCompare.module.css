@@ -1,15 +1,8 @@
-/* The compare gallery (FS320): versions side by side inside the sheet's
-   brand-glass gallery frame. The mat is the BirthStory identity band,
-   washed; the copy under each screen sits on it in the case study's teal
-   ink (measured AA in FS314). */
-
-.mat {
-  position: relative;
-  padding: clamp(1.25rem, 2.5vw, 2rem) clamp(1rem, 2vw, 1.75rem);
-  background:
-    linear-gradient(rgba(250, 250, 250, 0.62), rgba(250, 250, 250, 0.62)),
-    linear-gradient(126deg, #e7c3c8 0%, #b9c2ec 48%, #1a434d 100%);
-}
+/* The compare gallery (FS320, FS325). Band: the BirthStory identity
+   gradient with the screens only. Text area: on the gallery's glass,
+   three columns aligned under the screens. What we heard is its own
+   object: a quote gets a large mark and the heading face; a summary gets
+   a lavender rule and plain body type, no quotation marks. */
 
 .slide {
   animation: in var(--motion-medium) var(--ease-out);
@@ -27,16 +20,19 @@
 .row {
   display: grid;
   grid-template-columns: repeat(var(--n, 3), minmax(0, 1fr));
-  gap: clamp(0.75rem, 2vw, 1.75rem);
-  align-items: start;
+  column-gap: clamp(1rem, 2.5vw, 2rem);
 }
 
-.version {
-  display: grid;
+/* THE BAND */
+.band {
+  padding: clamp(1.5rem, 3vw, 2.25rem) clamp(1rem, 2vw, 1.75rem);
+  background:
+    linear-gradient(rgba(250, 250, 250, 0.62), rgba(250, 250, 250, 0.62)),
+    linear-gradient(126deg, #e7c3c8 0%, #b9c2ec 48%, #1a434d 100%);
+}
+
+.band .row {
   justify-items: center;
-  gap: var(--flow-2);
-  margin: 0;
-  min-width: 0;
 }
 
 .phone {
@@ -75,11 +71,39 @@
   object-position: top;
 }
 
-.words {
+/* THE TEXT AREA */
+.text {
+  padding: clamp(1.25rem, 2.5vw, 2rem) clamp(1rem, 2vw, 1.75rem) var(--flow-2);
+}
+
+.head {
+  margin-bottom: var(--flow-3);
+  max-width: 44rem;
+}
+
+.title {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: var(--step-heading);
+  font-weight: 400;
+  line-height: 1.15;
+  color: var(--color-ink);
+}
+
+.line {
+  margin: var(--flow-1) 0 0;
+  font-family: var(--font-body);
+  font-size: var(--step-body);
+  line-height: 1.55;
+  color: var(--color-ink);
+  text-wrap: pretty;
+}
+
+.col {
   display: grid;
-  gap: 0.35rem;
-  max-width: 18rem;
-  text-align: center;
+  align-content: start;
+  gap: var(--flow-1);
+  min-width: 0;
 }
 
 .tag {
@@ -88,45 +112,80 @@
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: #2f5560;
+  color: var(--color-sage);
 }
 
-.text {
+.change {
+  margin: 0;
   font-family: var(--font-body);
   font-size: var(--step-small);
-  line-height: 1.5;
-  color: #1f2f35;
+  line-height: 1.55;
+  color: var(--color-ink);
   text-wrap: pretty;
 }
 
-.quote {
-  font-family: var(--font-heading);
-  font-size: var(--step-small);
-  font-style: italic;
-  line-height: 1.45;
-  color: #1A434D;
-  text-wrap: pretty;
-}
-
-.title strong {
+/* WHAT WE HEARD */
+.heardLabel {
+  display: block;
+  margin-bottom: 0.4rem;
+  font-family: var(--font-body);
+  font-size: var(--step-label);
   font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #d9b8e0;   /* lavender: the testers' voice */
 }
 
-/* phones: each version a row, the phone beside its words */
+/* a verbatim quote: a large mark, the heading face */
+.quote {
+  position: relative;
+  margin: var(--flow-1) 0 0;
+  padding: var(--flow-2) var(--flow-2) var(--flow-2) calc(var(--flow-2) + 1.6rem);
+  border-radius: 10px;
+  background: rgba(199, 170, 209, 0.12);
+}
+
+.quote::before {
+  content: '“';
+  position: absolute;
+  left: 0.8rem;
+  top: 0.35rem;
+  font-family: var(--font-heading);
+  font-size: 3.2rem;
+  line-height: 1;
+  color: #c7aad1;
+}
+
+.quote p {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: var(--step-statement);
+  font-style: italic;
+  line-height: 1.3;
+  color: var(--color-ink);
+}
+
+/* a summary of what we heard: no quotation marks */
+.summary {
+  margin: var(--flow-1) 0 0;
+  padding: 0.15rem 0 0.15rem var(--flow-2);
+  border-left: 2px solid #c7aad1;
+}
+
+.summary p {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--step-small);
+  line-height: 1.55;
+  color: var(--color-ink);
+  text-wrap: pretty;
+}
+
+/* phones: each version a row in the band; the text columns stack */
 @media (max-width: 599px) {
-  .row {
+  .band .row { column-gap: 0.5rem; }
+  .text .row {
     grid-template-columns: minmax(0, 1fr);
-    gap: var(--flow-2);
-  }
-
-  .version {
-    grid-template-columns: 38% minmax(0, 1fr);
-    align-items: center;
-    justify-items: start;
-    gap: var(--flow-2);
-  }
-
-  .words {
-    text-align: left;
+    row-gap: var(--flow-3);
   }
 }

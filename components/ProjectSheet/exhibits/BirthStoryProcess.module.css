@@ -235,9 +235,10 @@
 
 .said p {
   margin: 0;
-  font-family: var(--font-heading);
-  font-size: var(--step-statement);
-  font-style: italic;
+  padding-left: var(--flow-2);
+  border-left: 2px solid #8089C2;   /* a summary: rule, no quotation marks */
+  font-family: var(--font-body);
+  font-size: var(--step-body);
   line-height: 1.35;
   color: #1A434D;
   text-wrap: pretty;
