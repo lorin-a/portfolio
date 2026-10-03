@@ -109,6 +109,7 @@ const PIECES = {
   /* SomeBuddy's cover (FS346): the concept video's kinetic opening on the
      brand blue, looping, muted */
   'sb-hero': { film: 'somebuddy-reel-2', ground: '#4747DC', alt: 'The SomeBuddy concept video: “Social” and “solo” in kinetic type, then “Spontaneous. Simple. Social.”' },
+  'bg-hero': { film: 'Logos_1', ground: '#1c2f6e', alt: 'The Bridging the G.A.P. logo animating in.' },
 }
 
 export const hasPrototype = (name) => !!PIECES[name]

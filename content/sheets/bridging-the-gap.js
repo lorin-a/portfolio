@@ -16,7 +16,14 @@
  * her sources for this sheet and are hers to rewrite.
  *
  * Media keys: BG_IMAGES in content/sheets/media/bridging-the-gap.js; the
- * videos use the existing HOME_VIDEOS keys.
+ * videos use the existing HOME_VIDEOS keys. The app screens are cropped
+ * live from her deck slides (crop() below), nothing new uploaded.
+ *
+ * THE SHAPE (FS347, the BirthStory/SomeBuddy bar): the deliverables map
+ * as the overview; the five deliverables, the app as four annotated
+ * screens with HER deck annotations verbatim (BTG_47–50); then The
+ * Process: Field Research (words left, photos right), Synthesis, and
+ * Iteration and Feedback. Behind-the-scenes gallery folded into the steps.
  *
  * OPEN, hers to settle (also in STATUS):
  *   · DURATION: Medium says 4 weeks; cp and Squarespace say 5 (and the
@@ -34,7 +41,17 @@
  *     (the logo animations are assumed, not confirmed).
  */
 
+/* one phone screen, cut from a deck slide (6182 × 3477) */
+const crop = (id, x, y, w, h) => `https://res.cloudinary.com/dc17mvdyv/image/upload/c_crop,x_${x},y_${y},w_${w},h_${h}/f_auto,q_auto,w_600/${id}`
+
 export const bridgingTheGap = {
+  /* the logo animation as the cover, like SomeBuddy's film hero */
+  hero: 'bg-hero',
+  /* FS347: the brand's own colors (mint, blue, navy) for the bands, and
+     mint, sun, coral for the step tiles (from the style guide, BTG_29) */
+  band: 'linear-gradient(126deg, #a8ecd0 0%, #9dbcf7 50%, #1c2f6e 100%)',
+  tiles: ['#7FE0B5', '#F6DD77', '#F48B6E'],
+
   /* sq, verbatim. The only stated outcome; there is no client (a class
      brief), and the GAP association conversation was research, not a
      commission. */
@@ -72,19 +89,17 @@ export const bridgingTheGap = {
     research: 'We drove out to Ohiopyle, the trail’s most popular trail town, to observe signage and talk to people on the trail, and spoke to 30 friends, family members, and CMU students about bike touring. Only one said they were not interested at all.',
   },
 
-  /* md User Research + Reflection: the synthesis that chose the four
-     deliverables. Intro is md, verbatim but for “user’s” → users’. */
+  /* THE OVERVIEW (FS347): what the research said each deliverable had to
+     do, as her own map (BTG_17). Intro: md Reflection's deliverables list,
+     verbatim in substance, set as one sentence. */
   system: {
-    kicker: 'Synthesis',
-    label: 'From Pain Points to Deliverables',
-    intro: 'We developed personas and mapped out their journeys while planning a bike tour to identify key pain points and opportunities for our deliverables to be positive interventions. We translated the most important pain points into key deliverables that would serve our users’ needs at every stage of their journey.',
+    kicker: 'The System',
+    label: 'Four Deliverables, One Journey',
+    intro: 'Our research led us to four main deliverables, each with a job along a rider’s journey: apparel for awareness and nostalgia; signage and a trail mural for awareness and wayfinding; the GAP Guide pamphlet for awareness, education, and initiation; and the GAP Map App as trip planner, tool, education, and community.',
     media: {
       stills: [
-        { key: 'bg-pain-points', alt: 'Three kinds of pain points: awareness, logistics, and knowledge.' },
         { key: 'bg-deliverables', alt: 'Each pain point mapped to the deliverables: apparel, signage, the GAP Guide, and the GAP Map App.' },
-        { key: 'bg-personas', alt: 'Personas, each with a goal, a challenge, and a job to be done.' },
-        { key: 'bg-journey', alt: 'Journey maps from planning a bike tour through the ride and after.' },
-        { key: 'bg-market', alt: 'Market research: what AllTrails, Strava, and Gaia GPS do well.' },
+        { key: 'bg-pain-points', alt: 'Three kinds of pain points: awareness, logistics, and knowledge.' },
       ],
     },
   },
@@ -111,8 +126,6 @@ export const bridgingTheGap = {
       media: {
         stills: [
           { type: 'video', key: 'bridging-default', alt: 'The Bridging the GAP logo animating in, the river wave drawing through the letters.' },
-          /* md caption, verbatim */
-          { key: 'bg-logo-iterations', alt: 'Early iterations of the logo: the letters of GAP drawn as a bike.' },
           { key: 'bg-style-guide', alt: 'The style guide: logos, merch, colors, fonts, and graphics.' },
           { type: 'video', key: 'bridging-gap-logo', alt: 'The GAP logo drawing itself, each letter ending in an arrow.' },
           { type: 'video', key: 'bridging-logos-2', alt: 'The Bridging the GAP lockup animating in.' },
@@ -136,16 +149,19 @@ export const bridgingTheGap = {
         { label: 'Market research', text: 'We assessed pros and cons of their user experience and decided to focus our efforts on playful design and customizable trip planning with strong imagery.' },
       ],
       mine: 'The selfie slides, and collaboration on the features. Rui Ying owned the app and its prototypes.',
+      /* FS347: four screens, each named with her annotation from the
+         deck (BTG_47–50), verbatim; the line under each is md's feature
+         list, verbatim but for typos. */
       media: {
-        stills: [
-          { type: 'video', key: 'bridging-clip-1', alt: 'Planning a trip in the app at a desk covered in trail maps.' },
-          { key: 'bg-app-planner', alt: 'A customized trip planner, a route’s details, and supportive reminders along the way.' },
-          { key: 'bg-app-ride', alt: 'On the ride: data tracking, motivational messages, a historical audio tour, and alerts for upcoming attractions.' },
-          { key: 'bg-app-selfies', alt: 'In-app selfies, encouraged along the trail and compiled at the end.' },
-          { type: 'video', key: 'bridging-clip-2', alt: 'The trip recap appearing on a phone as a rider finishes the trail.' },
-          { key: 'bg-app-recap', alt: 'The recap: attractions passed, trail memories, and miles that earn merch.' },
-          /* md caption, verbatim */
-          { key: 'bg-app-sketches', alt: 'Early sketches of web/app UX: a route by elevation, with attractions pinned along it.' },
+        screens: [
+          { name: 'Customized trip planner', text: 'Addresses questions about distance, elevation, difficulty level, and lets users choose routes that feature attractions they are interested in.',
+            src: crop('BTG_47', 1805, 736, 1156, 2448), alt: 'The trip planner: duration, distance, elevation gain, difficulty, attractions, and sleeping type.' },
+          { name: 'Motivational messages', text: 'GPS with highlighted attractions, alerts for local riders, and an optional historical audio tour.',
+            src: crop('BTG_48', 1261, 705, 1125, 2426), alt: 'On the ride: “3 miles to next stop, Keep Going!” over the trail map.' },
+          { name: 'In-app selfies', text: 'In-app selfies encouraged throughout your trip + compiled at the end.',
+            src: crop('BTG_49', 1289, 550, 1119, 2374), alt: 'A rider’s selfie in a playful GAP frame.' },
+          { name: 'Mileage earns you merch!', text: 'Apparel can be won by trail users who use the GAP Map App to log miles on the trail.',
+            src: crop('BTG_50', 4664, 695, 1156, 2451), alt: '32.6 miles: keep going, 27.4 miles to the gift, with the merch to claim.' },
         ],
       },
     },
@@ -163,9 +179,9 @@ export const bridgingTheGap = {
          but for “Gap” → GAP. */
       notes: [
         { label: 'Its job', text: 'Awareness, education, and initiation.' },
-        { label: 'Passport badges', text: 'My first iteration of a series of sticker badges featuring trail attractions to be added to the GAP Guide pamphlet as a passport-style checklist.' },
       ],
-      mine: '[LORIN TO WRITE: your part in the GAP Guide. On file: you drafted the first sticker badges of trail attractions, a passport-style checklist; Medium credits Michael Juan with the illustrations.]',
+      /* md image 44 caption, her words, recast without “I” */
+      mine: 'The first iteration of the sticker badges: trail attractions as a passport-style checklist.',
       /* FS303: the photo, then the flat panels one by one (her artwork,
          legible at last), then the badges. */
       media: {
@@ -176,8 +192,7 @@ export const bridgingTheGap = {
           { key: 'bg-guide-panel-2days', alt: 'A two-day itinerary, Connellsville to Cumberland, with its climb and mileage.' },
           { key: 'bg-guide-panel-gear', alt: 'The illustrated gear guide: what to wear and pack for a bike tour.' },
           { key: 'bg-guide-panel-faq', alt: 'The FAQ: what the GAP is, whether you can tour with no experience, and what the GAP Map App does.' },
-          { key: 'bg-sticker-badges', alt: 'Her first sticker badges: trail attractions as a passport-style checklist.' },
-        ],
+          ],
       },
     },
     {
@@ -191,7 +206,6 @@ export const bridgingTheGap = {
         { label: 'Its job', text: 'Awareness and wayfinding.' },
         { label: 'Steel history', text: 'Michael’s talented sketches showcase some metal trail art that would pay homage to Pittsburgh’s steel history.' },
       ],
-      mine: '[LORIN TO WRITE: your part in the signage and mural, if any. Medium credits Michael Juan with the signage and the icon system.]',
       /* FS303: what the trail has now (her field photo), then the proposal. */
       media: {
         stills: [
@@ -214,7 +228,6 @@ export const bridgingTheGap = {
         { label: 'Its job', text: 'Awareness and nostalgia.' },
         { label: 'A backup plan', text: 'We decided to incorporate apparel in case our signage or mural idea didn’t pan out.' },
       ],
-      mine: '[LORIN TO WRITE: your part in the apparel. On file: the logos on it are yours.]',
       media: {
         stills: [
           { key: 'bg-apparel', alt: 'A tote, caps, a tee, and socks in the Bridging the GAP colors.' },
@@ -223,6 +236,76 @@ export const bridgingTheGap = {
           { key: 'bg-merch-socks', alt: 'Socks patterned with the trail’s dashed road line.' },
           { key: 'bg-merch-bottle-lake', alt: 'A GAP sport bottle held up over the water.' },
           { key: 'bg-apparel-bottles', alt: 'A tote, water bottles, and tees, and a bottle held up at the river.' },
+        ],
+      },
+    },
+    {
+      key: 'field-research',
+      /* FS347: the process. Week labels: Medium gives 4 weeks with no
+         per-phase dates, so steps are labeled by phase, not by week. */
+      chapter: {
+        kicker: 'Four weeks',
+        title: 'The Process',
+        line: 'From the trail to the four deliverables, and the feedback that pulled them into one system.',
+        steps: [
+          { key: 'field-research', when: 'Step 1', name: 'Field Research', outcome: 'Ohiopyle, and 30 conversations about bike touring.' },
+          { key: 'synthesis', when: 'Step 2', name: 'Synthesis', outcome: 'Personas and journeys, pain points to deliverables.' },
+          { key: 'iteration', when: 'Step 3', name: 'Iteration and Feedback', outcome: 'One line-art style across every deliverable.' },
+        ],
+      },
+      step: 'Step 1 · Research',
+      name: 'Field Research',
+      /* md Field Research, verbatim in substance */
+      takeaway: 'Of 30 people we spoke to about bike touring the GAP, only one said they were not interested at all.',
+      body: 'We drove out to Ohiopyle, the trail’s most popular trail town, to observe signage and speak to folks on the trail about bike touring. We also spoke to 30 friends, family members, and CMU students. This confirmed the potential that these solutions would be useful to our target users.',
+      notes: [
+        /* md Approach, trimmed */
+        { label: 'The focus', text: 'The existing website and brand are good, so we narrowed our focus to bike touring the trail as a beginner.' },
+      ],
+      layout: 'half',
+      media: {
+        photos: [
+          { key: 'bg-field-board', alt: 'At Ohiopyle: “What would get you to go bike touring?” on a board beside a loaded touring bike.' },
+          { key: 'bg-field-bridge', alt: 'Riders crossing the trail bridge over the river at Ohiopyle.' },
+          { key: 'bg-field-town-map', alt: 'Observing the existing signage: the Smithton town map and directory.' },
+        ],
+      },
+    },
+    {
+      key: 'synthesis',
+      step: 'Step 2 · Synthesis',
+      name: 'Synthesis',
+      /* md User Research, verbatim but for “user’s” */
+      takeaway: 'We translated the most important pain points into key deliverables that would serve our users’ needs at every stage of their journey.',
+      body: 'We developed personas and mapped out their journeys while planning a bike tour, to identify key pain points and opportunities for our deliverables to be positive interventions.',
+      notes: [
+        /* md Market Research, trimmed; names corrected */
+        { label: 'Market research', text: 'We looked at AllTrails, Strava, Komoot, Trailforks, FarOut, and Gaia GPS, and decided to focus our efforts on playful design and customizable trip planning with strong imagery.' },
+      ],
+      media: {
+        stills: [
+          { key: 'bg-personas', alt: 'Personas, each with a goal, a challenge, and a job to be done.' },
+          { key: 'bg-journey', alt: 'Journey maps from planning a bike tour through the ride and after.' },
+          { key: 'bg-market', alt: 'Market research: what AllTrails, Strava, and Gaia GPS do well.' },
+          { key: 'bg-what-would-help', alt: 'What would get people to go bike touring, from our interviews.' },
+        ],
+      },
+    },
+    {
+      key: 'iteration',
+      step: 'Step 3 · Refinement',
+      name: 'Iteration and Feedback',
+      /* md Iterations and Feedback, verbatim */
+      takeaway: 'The main feedback was to get our style aligned and go for a line-art approach, and to make sure everything felt cohesive.',
+      body: 'Each of us had a different illustration style and skill set. Line art kept every deliverable in line with the logo, our true north, and Michael’s icons filled in the gaps and tied everything together.',
+      media: {
+        stills: [
+          /* md captions, verbatim */
+          { key: 'bg-logo-iterations', alt: 'Early iterations of the logo.' },
+          { key: 'bg-guide-layout', alt: 'Exploring the layout.' },
+          { key: 'bg-sticker-badges', alt: 'My first iteration of a series of sticker badges featuring trail attractions, as a passport-style checklist.' },
+          { key: 'bg-app-sketches', alt: 'Early sketches of web/app UX.' },
+          { key: 'bg-graphics', alt: 'Final icons.' },
         ],
       },
     },
@@ -264,43 +347,12 @@ export const bridgingTheGap = {
         { head: 'Real Results', text: 'The GAP association told us they had explored an app in the past, and we felt an enormous amount of potential for real world results.' },
         /* md Finale: “there is more work to do and many edits that could make
            it even better”, with nothing named */
-        { head: '[Next Edit]', text: '[LORIN TO WRITE: one edit you would make next, if the project continued.]' },
         { head: '[Next Step]', text: '[LORIN TO WRITE: what it would take to bring this to the GAP association.]' },
       ],
     },
   ],
 
-  /* BEHIND THE SCENES (FS303): the field research trip and the research
-     slides, then the photo shoots for the guide and the app. Captions
-     describe what each shows; hers to rewrite. */
-  processTitle: 'Behind the scenes',
-  process: [
-    {
-      title: 'Field Research',
-      fit: 'contain',  /* phone photos and deck slides: keep both whole */
-      images: [
-        { key: 'bg-field-board', alt: 'At Ohiopyle: “What would get you to go bike touring?” on a board beside a loaded touring bike.' },
-        { key: 'bg-field-bridge', alt: 'Riders crossing the trail bridge over the river at Ohiopyle.' },
-        { key: 'bg-field-town-map', alt: 'Observing the existing signage: the Smithton town map and directory.' },
-        { key: 'bg-field-local-board', alt: 'A trail-town bulletin board: “Support Local Business.”' },
-        { key: 'bg-what-would-help', alt: 'What would get people to go bike touring, from our interviews.' },
-        { key: 'bg-problem', alt: 'The problem and the opportunity.' },
-        { key: 'bg-guide-layout', alt: 'Exploring the layout: whiteboard sketches of the guide.' },
-      ],
-    },
-    {
-      title: 'The Shoots',
-      images: [
-        { key: 'bg-app-shoot-maps', alt: 'Planning a tour at a table spread with paper trail maps.' },
-        { key: 'bg-app-shoot-phone', alt: 'The app held over the maps, from above.' },
-        { key: 'bg-guide-pocket', alt: 'The guide in a cyclist’s pocket beside a red bike.' },
-        { key: 'bg-guide-handlebars', alt: 'Reading the route over the handlebars.' },
-        { key: 'bg-guide-held', alt: 'The folded guide held up outdoors.' },
-        { key: 'bg-guide-grass', alt: 'The route side unfolded on the grass.' },
-        { key: 'bg-guide-standing', alt: 'Folded guides standing on a ledge.' },
-      ],
-    },
-  ],
+  /* BEHIND THE SCENES: folded into the process steps (FS347). */
 
   /* CREDITS: one column each. md Team + Class; sq Credits and thanks. */
   credits: [

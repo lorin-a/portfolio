@@ -16,6 +16,10 @@
  * Nothing exists for her per-exercise contribution or a reflection, so
  * those are [LORIN TO WRITE].
  *
+ * SHAPE (FS347): the roadmap first (the overview), the 2050 story it
+ * pictures, then The Process: the five Medium assignments as five steps,
+ * each opening on her own takeaway line from the final presentation (M5).
+ *
  * WRITTEN AS A TEAM. Every source speaks as “we” (Team Autopoiesis), and sq
  * says roles were split “equally and independently before doing group
  * analysis,” with one claim of hers: “I played a key role in the
@@ -91,128 +95,54 @@ export const transitionDesign = {
     },
   },
 
-  /* The first exercise, as the system section: the map everything after
-     it builds on. Intro: sq STEEP passage, verbatim, trimmed. */
+  /* FS347: the project's own colors, sampled from her maps: sage,
+     seafoam, terracotta, olive, deep green (tile 5 takes white ink). */
+  band: 'linear-gradient(126deg, #e7efed 0%, #b2cac7 50%, #4f6b5a 100%)',
+  tiles: ['#D4DACA', '#B2CAC7', '#D28F67', '#918F80', '#4F6B5A'],
+
+  /* THE OVERVIEW (FS347): what it all built to, first. The Roots to
+     Resilience ecosystem, the final exercise's deliverable, across the
+     sheet; the process below walks back to how we got here. Intro: sq,
+     verbatim, first sentence + the Max-Neef sentence trimmed. The zoom
+     captions are M5's map walkthrough, compressed. */
   system: {
-    kicker: 'Synthesis',
-    label: 'Mapping a Wicked Problem',
-    intro: 'We quickly recognized that this wasn’t a problem with a simple solution. It was a classic example of a “wicked problem,” tangled in layers of historical, social, economic, and environmental factors. We organized our research into five categories (Infrastructure, Technology and Science; Economics and Business; Policy and Legal; Social; and Environmental) and mapped the interconnections to find leverage points.',
+    kicker: 'The Roadmap',
+    label: 'Roots to Resilience 2050',
+    wide: true,
+    intro: '“Roots to Resilience 2050” lays out a phased, system-wide roadmap for transforming Pittsburgh’s food landscape from one marked by scarcity and fragmentation into a regenerative, community-owned ecosystem. Each intervention intentionally maps to Max-Neef’s fundamental human needs.',
     media: {
       stills: [
-        { key: 'td-wicked-map', alt: 'The Wicked Problem Map: food insecurity at the center, its five categories, and other wicked problems at the edges.' },
-        { key: 'td-affinity-wall', alt: 'We preferred an in-person brainstorming session, to make affinity clusters of our research that would reveal subcategories for our map.' },
-        { key: 'td-map-detail', alt: 'Detail: food insecurity linked to legal, social, environmental, and economic factors.' },
-        { key: 'td-map-thread', alt: 'Detail: one thread, from corporate consolidation to inflation.' },
+        { key: 'td-roots', alt: 'The intervention ecosystem across scales, from the household to the planet, each intervention tagged with the human needs it meets.' },
+        { key: 'td-zoom-commons', alt: 'At the heart: the Roots and Resilience Community Food Forest, which gives rise to the Pittsburgh Food Commons Trust.' },
+        { key: 'td-zoom-steel', alt: 'An offshoot: the Steel to Sustenance Innovation Hub, former steel mill sites turned into centers of food production.' },
+        { key: 'td-zoom-household', alt: 'At the household level: the HOME Harvest Basket and the Harvesting Pittsburgh App, connected to Farm to Institution Pennsylvania.' },
+        { key: 'td-zoom-growback', alt: 'The Grow Back Credit evolves into the Urban-Rural Food Alliance model.' },
+        { key: 'td-phases', alt: 'The interventions sorted into immediate and mid-to-long-term.' },
       ],
     },
   },
 
-  /* THE EXERCISES, after the first: each is one artifact. Bodies are her
-     words (sq / Medium), trimmed. `mine` is [LORIN TO WRITE] throughout:
-     no source gives her part in any single exercise. */
+  /* THE VISION PICTURED, then THE PROCESS. Bodies are her words (M1–M5,
+     sq), trimmed. Every source speaks as “we”; sq says roles were split
+     equally, so “My Contribution” appears once, on her one stated claim
+     (“I played a key role in the information design on our Miro board”). */
   components: [
-    {
-      key: 'stakeholders',
-      name: 'Mapping Stakeholder Relations',
-      /* sq, verbatim, two sentences */
-      body: 'Key stakeholders were selected to represent different ends of the power spectrum and analyzed using the Power Cube Framework to identify opposing needs, values, and power dynamics that exacerbate food insecurity. Despite being most affected by food insecurity, the single Black mother has the least power to influence change.',
-      /* M2, verbatim */
-      notes: [
-        { label: 'Four groups', text: 'Those most affected, those in positions of power, those with the ability to create change, and those who benefit from maintaining the status quo.' },
-        { label: 'The Power Cube', text: 'This analysis examines the visible, hidden, and invisible forms of power exercised by each stakeholder.' },
-      ],
-      mine: '[LORIN TO WRITE: your part in the stakeholder map: which stakeholder you researched, and whether you laid out the map]',
-      media: {
-        stills: [
-          { key: 'td-stakeholders', alt: 'The stakeholder map: a Giant Eagle CEO, a food policy program manager, and a low-income single mother, each with fears and hopes.' },
-          { key: 'td-power-spectrum', alt: 'Mapping stakeholders on a power spectrum, from corporate food supply chains to the African American low-income minority.' },
-          { key: 'td-power-cube', alt: 'The Power Cube: spaces, levels, and forms of power.' },
-          { key: 'td-mother', alt: 'Detail: the low-income single mother’s fears and hopes.' },
-          { key: 'td-ceo', alt: 'Detail: the Giant Eagle CEO’s fears and hopes.' },
-        ],
-      },
-    },
-    {
-      key: 'history',
-      name: 'Mapping the Evolution',
-      /* sq MLP sentence + M5 “Path dependency is real.”, verbatim */
-      body: 'The Multi-Level Perspective framework maps Pittsburgh’s food insecurity across landscape, regime, and niche. Path dependency is real. The 1930s redlining map still predicts where the food deserts are. That tells us new grocery tech won’t stick unless zoning and transit change with it.',
-      mine: '[LORIN TO WRITE: your part in the historical timeline: research eras, the visualization, or both]',
-      media: {
-        stills: [
-          { key: 'td-timeline', alt: 'The timeline from the 1700s to the present, across landscape, regime, and niche.' },
-          { key: 'td-era-1900', alt: 'Detail: 1900 to 1945.' },
-          { key: 'td-era-1970', alt: 'Detail: 1970 to the present.' },
-        ],
-      },
-    },
-    {
-      key: 'vision',
-      name: 'The Living Land Vision',
-      /* M5, verbatim, and its levels paragraph compressed */
-      body: 'As a team, we first envisioned what Pittsburgh could look like in 2100 through our Living Land Vision: a future where food systems are rooted in mutual care, regenerative practices, and local abundance. The vision works at the household, neighborhood, city, and planetary levels.',
-      mine: '[LORIN TO WRITE: your part in the vision: writing, mapping, or the imagery]',
-      media: {
-        stills: [
-          { key: 'td-vision', alt: 'The Living Land Vision map, rings from the household to the planet.' },
-          { key: 'td-household', alt: 'Detail: the household and the neighborhood.' },
-          { key: 'td-planet', alt: 'Detail: the city, the region, and the planet.' },
-        ],
-      },
-    },
-    {
-      key: 'transition',
-      name: 'Designing a Transition',
-      /* M5 “From this aspirational future…” + sq dismantle / sustain /
-         innovate sentence, verbatim */
-      body: 'From this aspirational future, we worked backward, identifying tangible interventions and milestones across decades. The roadmap dismantles harmful structures (like distant corporate grocery stores and discriminatory policies), sustains what works (community co-ops, urban agriculture, safety net programs), and innovates new solutions.',
-      mine: '[LORIN TO WRITE: your part in the transition map]',
-      media: {
-        stills: [
-          { key: 'td-transition', alt: 'The transition map: what to dismantle, maintain, and innovate, set against near, mid, and long-term milestones.' },
-          { key: 'td-backcast', alt: 'Detail: milestones from near casting to backcasting.' },
-        ],
-      },
-    },
-    {
-      key: 'roots',
-      name: 'Roots to Resilience 2050',
-      /* sq, verbatim, first sentence + the Max-Neef sentence trimmed */
-      body: '“Roots to Resilience 2050” lays out a phased, system-wide roadmap for transforming Pittsburgh’s food landscape from one marked by scarcity and fragmentation into a regenerative, community-owned ecosystem. Each intervention intentionally maps to Max-Neef’s fundamental human needs.',
-      /* M5, verbatim */
-      notes: [
-        { label: 'At the heart', text: 'The Roots and Resilience Community Food Forest, a place where cultural and nutritional justice take root through community-driven, perennial food systems.' },
-        { label: 'Human needs', text: 'Every aspect of our ecosystem touches upon at least two of Max Neef’s Fundamental Human Needs and follows key themes of education, distribution, cultivation, and consumption.' },
-      ],
-      mine: '[LORIN TO WRITE: your part in the interventions: which ones you developed, and the ecosystem map’s information design]',
-      media: {
-        stills: [
-          { key: 'td-roots', alt: 'The intervention ecosystem across scales, each intervention tagged with the human needs it meets.' },
-          { key: 'td-zoom-commons', alt: 'At the heart: the Roots and Resilience Community Food Forest, which gives rise to the Pittsburgh Food Commons Trust.' },
-          { key: 'td-zoom-steel', alt: 'An offshoot: the Steel to Sustenance Innovation Hub, former steel mill sites turned into centers of food production.' },
-          { key: 'td-zoom-household', alt: 'At the household level: the HOME Harvest Basket and the Harvesting Pittsburgh App, connected to Farm to Institution Pennsylvania.' },
-          { key: 'td-zoom-growback', alt: 'The Grow Back Credit evolves into the Urban-Rural Food Alliance model.' },
-          { key: 'td-phases', alt: 'The interventions sorted into immediate and mid-to-long-term.' },
-        ],
-      },
-    },
     {
       key: 'morning-2050',
       name: 'A Morning in Pittsburgh, 2050',
       /* M5 opens the final presentation with a 2050 story narrated in
-         turn: Alisha first (“Lorin’s picking me up soon”), then the
-         driving section in Lorin's first person (“I head to pick up
-         Alisha”). The first sentence is a PROVISIONAL frame; the rest is
+         turn; her section is in her first person (“I head to pick up
+         Alisha”). The first sentence is a PROVISIONAL frame; the quote is
          her section, verbatim, trimmed. */
       body: 'The final presentation opened in 2050, a story we narrated in turn. My part: “I drive through morning-lit streets that blend Pittsburgh’s industrial past with its green future as I head to pick up Alisha for our Wisdom Circle meeting. The former steel mills that once stood abandoned now pulse with vertical gardens and aquaponic systems.”',
+      /* M5, verbatim */
       notes: [
         { label: 'The app', text: '“What began as a simple coordination tool has become the nervous system of our local food network.”' },
         { label: 'The circle', text: '“Here, Pittsburgh’s past and future converge as we continue the story of how a hungry city learned to feed itself with dignity.”' },
       ],
-      mine: '[LORIN TO WRITE: confirm you wrote and narrated the driving section of the 2050 story, and anything else you made for it]',
       media: {
         /* the story's pictures in its order; captions are the words printed
-           on each slide, verbatim */
+           on each slide, verbatim; the AI-imagery disclosure on each */
         stills: [
           { key: 'td-vision-2050', alt: 'AI-generated imagery. Vision Pittsburgh 2050: a thriving green city where community, culture, and nature grow side by side.' },
           { key: 'td-peoples-table', alt: 'AI-generated imagery. The People’s Table: a community-powered learning network that teaches how to grow and cook culturally relevant foods.' },
@@ -225,6 +155,109 @@ export const transitionDesign = {
           { key: 'td-home-harvest', alt: 'AI-generated imagery. Home Harvest Initiative: micro-grants to families in food deserts to establish home gardens.' },
           { key: 'td-farm-institution', alt: 'Farm to Institution Pennsylvania: a program that mandates local institutions source 40% local food from regional farms.' },
           { key: 'td-wisdom-circle', alt: 'AI-generated imagery. Food Sovereignty Wisdom Circle: cross-disciplinary local food councils with Indigenous leadership shape inclusive, sustainable food plans.' },
+        ],
+      },
+    },
+    {
+      key: 'wicked-problem',
+      /* FS347: the five Medium assignments are the five steps; durations
+         are each article's own “Timeline” line (sources conflict on the
+         total; see OPEN). Takeaways are her lines, verbatim. Step 5 is the
+         roadmap above. */
+      chapter: {
+        kicker: 'Five exercises · Spring 2025',
+        title: 'The Process',
+        line: 'Each Transition Design exercise built on the one before, from a map of the problem to the roadmap above.',
+        steps: [
+          { key: 'wicked-problem', when: '2 weeks', name: 'The Wicked Problem', outcome: 'Five categories of research, mapped for leverage points.' },
+          { key: 'stakeholders', when: '2.5 weeks', name: 'Stakeholders', outcome: 'Power, mapped across three opposing stakeholders.' },
+          { key: 'history', when: '2.5 weeks', name: 'History', outcome: 'Pittsburgh’s food story, 1900 to today.' },
+          { key: 'transition', when: '2.5 weeks', name: 'Vision and Transition', outcome: 'A 2100 vision, backcast to milestones.' },
+          { key: 'system', when: '2.5 weeks', name: 'Interventions', outcome: 'The Roots to Resilience roadmap.' },
+        ],
+      },
+      step: 'Step 1 · 2 weeks',
+      name: 'Mapping a Wicked Problem',
+      /* M5, verbatim */
+      takeaway: 'It was a classic example of a “wicked problem,” tangled in layers of historical, social, economic, and environmental factors.',
+      /* M5 + sq, verbatim, trimmed */
+      body: 'We dove into extensive secondary research and organized our insights into five overarching categories: Infrastructure, Technology and Science; Economics and Business; Policy and Legal; Social; and Environmental. By mapping these interdependent systems, we aimed to identify leverage points where long-term interventions could make a difference.',
+      notes: [
+        /* M1 “The Fight for Food Sovereignty”, verbatim */
+        { label: 'What we found', text: 'Food insecurity is often framed as a problem of affordability or supply, but at its core, it is a systemic issue of power and control.' },
+      ],
+      /* sq, her one stated claim, recast without “I” */
+      mine: 'Information design on the team’s Miro board.',
+      layout: 'half',
+      media: {
+        photos: [
+          { key: 'td-wicked-map', alt: 'The Wicked Problem Map: food insecurity at the center, its five categories, and other wicked problems at the edges.' },
+          { key: 'td-wall-team-01', alt: 'We preferred an in-person brainstorming session, clustering our research on the wall to reveal subcategories for the map.' },
+        ],
+      },
+    },
+    {
+      key: 'stakeholders',
+      step: 'Step 2 · 2.5 weeks',
+      name: 'Mapping Stakeholder Relations',
+      /* M5, verbatim */
+      takeaway: 'The challenge isn’t just ‘feed people,’ it’s broker trust where power is uneven and use that trust to turn shared hopes into quick pilots that prove systemic change is possible.',
+      /* M5, verbatim, trimmed */
+      body: 'In the stakeholder map, we see the single Black mother who feels every price bump at the checkout line, Giant Eagle’s executive team that decides which neighborhoods get a store, and the Pittsburgh Food Policy Council that sits somewhere in the middle, trying to translate community pain into policy language.',
+      /* M5, verbatim, trimmed */
+      notes: [
+        { label: 'The quick win', text: 'The Food Policy Council and Giant Eagle want to spotlight local produce and polish their public image: a ‘Local‑First Aisle’ co‑branded by nonprofits and the grocer could launch tomorrow.' },
+        { label: 'The hard knot', text: 'Giant Eagle’s fear of shrinking margins collides head‑on with the single mother’s fear of skyrocketing prices.' },
+      ],
+      media: {
+        stills: [
+          { key: 'td-stakeholders', alt: 'The stakeholder map: a Giant Eagle CEO, a food policy program manager, and a low-income single mother, with green lines for shared hopes and red for conflicts.' },
+          { key: 'td-power-spectrum', alt: 'Mapping stakeholders on a power spectrum, from corporate food supply chains to the African American low-income minority.' },
+          { key: 'td-power-cube', alt: 'The Power Cube: spaces, levels, and forms of power.' },
+          { key: 'td-stakeholder-groups', alt: 'Stakeholders sorted into four groups, from those most affected to those who benefit from the status quo.' },
+          { key: 'td-mother', alt: 'Detail: the low-income single mother’s fears and hopes.' },
+        ],
+      },
+    },
+    {
+      key: 'history',
+      step: 'Step 3 · 2.5 weeks',
+      name: 'Mapping the Evolution',
+      /* M5, verbatim */
+      takeaway: 'The timeline isn’t a history lesson; it’s a strategic forecast.',
+      /* M5, verbatim, trimmed */
+      body: 'Using the Multi‑Level Perspective, we layered Pittsburgh’s food story from 1900 to today. Each era traded one form of dependency for another: Indigenous reciprocity for colonial rations, farm gardens for factory paychecks, corner markets for highways that bypassed them.',
+      /* M5, verbatim */
+      notes: [
+        { label: 'Path dependency is real', text: 'The 1930s redlining map still predicts where the food deserts are. That tells us new grocery tech won’t stick unless zoning and transit change with it.' },
+        { label: 'Windows of opportunity keep cycling', text: 'Every crisis births community innovation like soup kitchens in the ’30s, food banks in the ’80s, 412 Food Rescue post‑2015.' },
+      ],
+      media: {
+        stills: [
+          { key: 'td-timeline', alt: 'The timeline from the 1700s to the present, across landscape, regime, and niche.' },
+          { key: 'td-era-1900', alt: 'Detail: 1900 to 1945.' },
+          { key: 'td-era-1970', alt: 'Detail: 1970 to the present.' },
+        ],
+      },
+    },
+    {
+      key: 'transition',
+      step: 'Step 4 · 2.5 weeks',
+      name: 'Designing a Transition',
+      /* M5, verbatim, trimmed */
+      takeaway: 'From this aspirational future, we worked backward to build the Roots to Resilience Roadmap.',
+      /* M5, verbatim, trimmed */
+      body: 'As a team, we first envisioned what Pittsburgh could look like in 2100 through our Living Land Vision: a future where food systems are rooted in mutual care, regenerative practices, and local abundance. We focused on what systems need to be dismantled and what needs to be maintained to get there.',
+      /* M5, verbatim */
+      notes: [
+        { label: 'Dismantle and maintain', text: 'We explored dismantling the stigma around food assistance programs like SNAP and EBT, and maintaining food co-ops from the current system.' },
+      ],
+      media: {
+        stills: [
+          { key: 'td-vision', alt: 'The Living Land Vision map, rings from the household to the planet.' },
+          { key: 'td-transition', alt: 'The transition map: what to dismantle, maintain, and innovate, set against near, mid, and long-term milestones.' },
+          { key: 'td-household', alt: 'Detail: the household and the neighborhood.' },
+          { key: 'td-backcast', alt: 'Detail: milestones from near casting to backcasting.' },
         ],
       },
     },
@@ -250,34 +283,8 @@ export const transitionDesign = {
     },
   ],
 
-  /* BEHIND THE SCENES: the working sessions (photos and process images
-     from Medium M1 and M2), then the final presentation's deck slides. */
-  processTitle: 'Behind the scenes',
-  process: [
-    {
-      title: 'Working Sessions',
-      images: [
-        { key: 'td-wall-team-01', focus: '50% 35%', alt: 'Two teammates adding sticky notes to the affinity clusters.' },
-        { key: 'td-wall-team-02', focus: '50% 30%', alt: 'Standing on a chair to reach the top of the wall.' },
-        { key: 'td-affinity-wall', alt: 'The finished wall: research clustered into STEEP categories and subcategories.' },
-        { key: 'td-stakeholder-groups', alt: 'Stakeholders sorted into four groups, from those most affected to those who benefit from the status quo.' },
-        { key: 'td-mindsets', alt: 'The mindset characteristics of each stakeholder group.' },
-        { key: 'td-relations-draft', alt: 'A first draft of the stakeholder relations: the food council, the corporate supply chains, and the low-income community.' },
-      ],
-    },
-    {
-      title: 'The Final Presentation',
-      fit: 'contain',  /* deck slides: keep them whole */
-      images: [
-        { key: 'td-cover', alt: 'The deck cover: Roots to Resilience, a food-secure Pittsburgh in 2050.' },
-        { key: 'td-ch-land', alt: 'Chapter one: The Lay of the Land, mapping the terrain through STEEP analysis.' },
-        { key: 'td-ch-ecosystem', alt: 'Chapter two: Nurturing the Ecosystem, mapping relationships through stakeholder analysis.' },
-        { key: 'td-ch-roots', alt: 'Chapter three: Digging Into the Roots, revealing patterns through historical analysis.' },
-        { key: 'td-ch-possibilities', alt: 'Chapter four: Sowing New Possibilities, envisioning the future through imagination.' },
-        { key: 'td-ch-change', alt: 'Chapter five: Cultivating Change, designing the intervention ecosystem.' },
-      ],
-    },
-  ],
+  /* FS347: no separate behind-the-scenes gallery; the working photos and
+     process images now sit in the steps they belong to. */
 
   /* CREDITS: names from M1; the method note is M1/M5's own disclaimer,
      verbatim. */
