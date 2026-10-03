@@ -249,7 +249,7 @@ export const birthstory = {
         steps: [
           { key: 'research', when: 'Weeks 1–2', name: 'Research', outcome: 'Seven parent interviews and two think-aloud tests.' },
           { key: 'architecture', when: 'Week 3', name: 'Architecture', outcome: 'Removed the home menu and the intake questions.' },
-          { key: 'iteration', when: 'Weeks 3–5', name: 'Iteration', outcome: 'Three wireframe rounds and three decisions.' },
+          { key: 'iteration', when: 'Weeks 3–5', name: 'Iteration', outcome: 'Three wireframe rounds, each simpler than the last.' },
           { key: 'ux-writing', when: 'Week 5', name: 'UX Writing', outcome: 'Rewrote copy that assumed a traumatic birth.' },
           { key: 'identity', when: 'Week 5', name: 'Visual Identity', outcome: 'A gradient, palette, and type paired with Myana.' },
         ],
@@ -315,92 +315,53 @@ export const birthstory = {
     },
     {
       key: 'iteration',
-      wide: true,  /* FS330: words above, the gallery across the sheet */
-      /* live SecIteration, condensed; tester quotes verbatim (v3) */
+      wide: true,
       step: 'Step 3 · Weeks 3–5',
       name: 'Iteration',
-      /* v3 04 lead, verbatim */
-      takeaway: 'Three decisions that made the app simpler.',
-      body: 'Three wireframe rounds, tested through studio critique, a client check-in, and think-aloud sessions with parents. Each decision below shows the screen before, what we heard, and the screen after.',
-      /* Q3, PROVISIONAL */
-      /* FS320: a gallery of the features that changed most, one per
-         slide, V1 · V2 · V3 side by side in the sheet's glass frame.
-         Screens are her wireframes (public/images/birthstory/evolution)
-         and her final screens. Copy, by receipt: Q7 (no home menu; opens
-         into note-taking; onboarding shows the other features, always in
-         the nav bar), Q9 (V1 too many decisions, sub-menus; isolated
-         medical documentation and memories; one notes section filterable
-         by topic), Q12 (“reclaim”; “Find strength & support” positioned
-         the new mother negatively), the live SecIteration round lines,
-         and the v3 tester quotes, verbatim. */
+      /* the first beat is the section's opening, so no takeaway or body
+         here (they read as a second opening) */
+      /* FS343: lab Option E, built the way her reference case studies show
+         iteration (Komoot, Rokt): one static row of the versions, then each
+         decision as its own beat, Before and After side by side.
+         Receipts: Q3 (narrowing; fidelity lesson), Q9 (rounds), Q7 (the
+         menu), Q12 (the copy), the sister synthesis (summary, no quotation
+         marks), “Too many menus” (parent tester, her research doc), the
+         live “what I couldn't test” (verbatim). Headings and joining
+         sentences are PROVISIONAL, tightened from her words. */
       media: {
-        /* FS324–FS326: lines in her voice, from her interview; every
-           “what we heard” traced. Verbatim quotes only where a verbatim
-           source exists: “Too many menus” and “Document details should be
-           first” (parent testers, from her research doc, per
-           BIRTHSTORY-interview.md line 37). Everything else is a summary
-           with no quotation marks: her V2 slide feedback notes (bs-22:
-           “Onboarding is nice, too many buttons/options”; “Reconsider
-           language, why ‘reclaim’? Compassionate copy may be indicating
-           negative experience”), Q3 (client saw all three iterations),
-           Q10 (the Care Pod interview), the sister synthesis. */
-        /* FS335: decisions, not versions. Each slide is one decision:
-           before → after, the evidence pinned on the before screen, the
-           measurable change on the arrow, the decision as the headline,
-           her reasoning in her words. Receipts: Q9 (unify), Q7 + the
-           parent-tester quotes from her research doc, which she named as
-           grounding for the IA decision (open on the task), Q12 (reframe),
-           sister synthesis (summary). The closing line is the live
-           “what I couldn't test”, verbatim. */
-        compare: [
-          {
-            title: 'Unify',
-            decision: 'Unify the tools into one notes section.',
-            /* Q9, her words */
-            line: 'I realized I was isolating interactions that could be housed uniformly in one feature, such as a singular notes section that can be filtered by topic, rather than isolating medical documentation in one place and memories in another.',
-            delta: '4 tools → 1 section',
-            heardAt: 0,
-            heard: { summary: 'Parents were less interested in medical records and more interested in photos and an outline of what happened.' },
-            versions: [
-              { tag: 'Before · Version 1', src: '/images/birthstory/evolution/screens/v1-4.png', alt: 'Version 1: voice note, notes, photos, and timeline, each its own tool.',
-                text: 'Voice notes, notes, photos, and the timeline as separate tools.' },
-              { tag: 'After · Version 2', src: '/images/birthstory/evolution/reflect-v2.png', alt: 'Version 2: one notes section, an entry open above a list of timed entries.',
-                text: 'One notes section, filtered by topic.' },
-            ],
+        exhibit: 'bs-iteration',
+        data: {
+          intro: {
+            head: 'Three rounds of wireframes, each simpler than the last.',
+            body: 'We tested through studio critique, a client check-in, and think-aloud sessions with parents. I started by fitting in every feature I could, then narrowed, and took my image-heavy first prototype down to color blocks and simple icons so testers focused on the flow.',
           },
-          {
-            title: 'Open on the task',
-            decision: 'Remove the home menu. Open on note-taking.',
-            /* Q7, her words */
-            line: 'The think-aloud interviews created the a-ha moment that we did not need a home menu page at all. Users wanted to jump right in, so the app opens into the most desired feature, note-taking, with the other features in the nav bar at all times.',
-            delta: '4 menu options → 0',
-            heardAt: 0,
-            heard: { quote: 'Too many menus', who: 'A parent tester' },
-            versions: [
-              { tag: 'Before · Version 2', src: '/images/birthstory/evolution/screens/v2-3.png', alt: 'Version 2 home menu: Reflect & Reclaim, Document the Details, Find Strength & Support, View Collections.',
-                text: 'A home menu with four choices.' },
-              { tag: 'After · Version 3', src: '/images/birthstory/evolution/screens/v3-2.png', alt: 'Version 3: the notes timeline, with prompts for memorable events, the experience, and medical events.',
-                text: 'Opens on the notes timeline. Everything else is in the nav bar.' },
-            ],
-          },
-          {
-            title: 'Reframe the language',
-            decision: 'Rename the support feature. Make it the Care Pod.',
-            /* Q12, her words */
-            line: '“Find strength & support” positioned the new mother in a negative light, when in fact most are empowered by doing an amazing and hard thing.',
-            delta: 'Rename + new tab',
-            heardAt: 0,
-            heard: { summary: 'A parent did not connect with “reclaim,” and the compassionate copy read as assuming a negative experience.' },
-            versions: [
-              { tag: 'Before · Version 2', src: '/images/birthstory/evolution/screens/v2-6.png', alt: 'Version 2 tour with Find Strength & Support highlighted.',
-                text: 'Find Strength & Support, one of four menu choices.' },
-              { tag: 'After · Version 3', src: '/images/birthstory/bs-carepod.png', alt: 'Version 3: the Care Pod, loved ones in a circle around the parent.',
-                text: 'Care Pod: live updates between the parent and chosen loved ones, one of five tabs.' },
-            ],
-          },
-        ],
-        /* live SecIteration, verbatim */
-        untested: 'A six-week studio can’t show whether parents come back weeks later, once the fog has lifted. That return is the whole promise of the product, so it’s the part I most wish I had been able to test.',
+          rounds: [
+            { tag: 'Version 1 · Week 3', fidelity: 'Image-heavy', src: '/images/birthstory/evolution/screens/v1-3.png', alt: 'Version 1 home: three choices, Reflect, Document, and Connect, in a purple, image-heavy style.' },
+            { tag: 'Version 2 · Week 4', fidelity: 'Color block', src: '/images/birthstory/evolution/screens/v2-3.png', alt: 'Version 2 menu in gray color blocks with four choices.' },
+            { tag: 'Version 3 · Week 5', fidelity: 'Final', src: '/images/birthstory/evolution/screens/v3-2.png', alt: 'Version 3: the final notes timeline in deep teal.' },
+          ],
+          decisions: [
+            {
+              head: 'Remove the home menu, so parents land on the task.',
+              body: 'Version 2 asked parents to choose from a menu of four before they could write anything. A parent tester put it plainly: *“Too many menus.”* The app now opens straight into note-taking, and the other features stay in the nav bar.',
+              before: { label: 'Before · Version 2', src: '/images/birthstory/evolution/screens/v2-3.png', alt: 'Version 2: a home menu with four choices.' },
+              after: { label: 'After · Version 3', src: '/images/birthstory/evolution/screens/v3-2.png', alt: 'Version 3: the app opens on the notes timeline.' },
+            },
+            {
+              head: 'Fold separate tools into one timeline.',
+              body: 'Version 1 kept voice notes, notes, photos, and the timeline in separate places. Parents were less interested in medical records and more interested in photos and an outline of what happened, so everything now lands on one timeline, organized by tags.',
+              before: { label: 'Before · Version 1', src: '/images/birthstory/evolution/screens/v1-4.png', alt: 'Version 1: voice note, notes, photos, and timeline as separate tools.' },
+              after: { label: 'After · Version 3', src: '/images/birthstory/bs-doc-medical.png', alt: 'Version 3: a medical entry as a tagged card on the timeline.' },
+            },
+            {
+              head: 'Rewrite the copy that assumed a hard birth.',
+              body: 'A parent didn’t connect with “reclaim,” and the careful, compassionate copy read as assuming a negative experience. I shifted the tone to care-centered and neutral, and “Find Strength & Support” became the Care Pod.',
+              before: { label: 'Before · Version 2', src: '/images/birthstory/evolution/screens/v2-6.png', alt: 'Version 2: Find Strength & Support in the menu.' },
+              after: { label: 'After · Version 3', src: '/images/birthstory/bs-carepod.png', alt: 'Version 3: the Care Pod.' },
+            },
+          ],
+          untested: 'A six-week studio can’t show whether parents come back weeks later, once the fog has lifted. That return is the whole promise of the product, so it’s the part I most wish I had been able to test.',
+        },
       },
     },
     {

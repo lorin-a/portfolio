@@ -17,6 +17,7 @@ const EXHIBITS = {
   'bs-voices': dynamic(() => import('./exhibits/BirthStoryProcess').then((m) => m.Voices)),
   'bs-4to0': dynamic(() => import('./exhibits/BirthStoryProcess').then((m) => m.FourToZero)),
   'bs-revisions': dynamic(() => import('./exhibits/BirthStoryProcess').then((m) => m.Revisions)),
+  'bs-iteration': dynamic(() => import('./exhibits/BirthStoryIteration')),
   'bs-identity': dynamic(() => import('./exhibits/BirthStoryProcess').then((m) => m.Identity)),
 }
 
@@ -248,7 +249,7 @@ export default function SheetContent({ sheet, num, title, tagline, titleId }) {
                 {c.gated && <span className={styles.gated}>Confidential</span>}
                 {/* FS317: the finding or decision, said first and large */}
                 {c.takeaway && <p className={styles.takeaway}>{rich(c.takeaway)}</p>}
-                <p className={styles.componentBody}>{rich(c.body)}</p>
+                {c.body && <p className={styles.componentBody}>{rich(c.body)}</p>}
                 {/* FS319: a voice and a short list, set in the copy column */}
                 {c.pull && (
                   <blockquote className={styles.pull}>
