@@ -420,6 +420,8 @@ funding, captions, card note).
 | FS328 | “Remote consent at the bottom.” (read as: remove the Consent credit) | ✅ DONE: the Consent credit removed from the BirthStory sheet |
 | FS329 | “If user clicks the link at the bottom ensure it opens in a new tab not same tab.” | ✅ DONE: “Read the full … case study” opens in a new tab (target _blank, rel noopener) on every sheet, with screen-reader text “(opens in a new tab)”; verified in the browser |
 | FS330 | “Iteration gallery is far too visually complex, find a simpler more elegant format - does it need to be a full bleed section?” (2026-10-03) | ✅ DONE: not full bleed (only the cover leaves the folder), but now full sheet width with the words above, like the overview. Each slide cut to three tiers: her statement with the one piece of feedback behind it in a single line (a verbatim quote with who said it, or a summary without quotation marks); the three screens alone on the color band; one short caption under each (version + what changed). No boxes except the band. Phones sized so a whole slide fits one desktop screen (865px at 1440); no overflow at 390 |
+| FS331 | “Not a fan of the iteration section, try again, visual should be the hero” (2026-10-03) | 🟡 IN PROGRESS |
+| FS332 | “maybe some sections don't need a my contribution don't force those.” | 🟡 IN PROGRESS |
 =======
 | FS193 | "i need this to look 50% neater, better orgnanized and simple" (2026-10-01), read as the Acknowledgements | ⏳ IN PROGRESS |
 >>>>>>> parent of f51f3e4 (feat(sheet): acknowledgements in one format: name over one-line role, three labelled lines (FS193))
