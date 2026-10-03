@@ -50,8 +50,11 @@
     linear-gradient(126deg, #e7c3c8 0%, #b9c2ec 48%, #1a434d 100%);
 }
 
-.row3 { grid-template-columns: repeat(3, minmax(0, 12rem)); gap: clamp(1rem, 3vw, 3rem); }
-.row2 { grid-template-columns: minmax(0, 12rem) auto minmax(0, 12rem); gap: clamp(1rem, 4vw, 4rem); }
+.row3 { grid-template-columns: repeat(3, minmax(0, 11rem)); gap: clamp(1rem, 3vw, 3rem); }
+/* FS345: every band the same height as the feature stages, device centered */
+.band { min-height: clamp(26rem, 34vw, 32rem); align-content: center; }
+
+.pair { display: grid; grid-template-columns: minmax(0, 12rem) auto minmax(0, 12rem); gap: clamp(1rem, 4vw, 4rem); align-items: start; justify-content: center; }
 
 .shot { display: grid; gap: 0.85rem; justify-items: center; margin: 0; min-width: 0; }
 
@@ -67,6 +70,7 @@
 .phone img {
   display: block;
   width: 100%;
+  height: 100%;
   aspect-ratio: 430 / 932;
   object-fit: cover;
   object-position: top;
@@ -116,6 +120,73 @@
 
 @media (max-width: 599px) {
   .row3 { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.6rem; padding-inline: 0.6rem; }
-  .row2 { grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); gap: 0.6rem; padding-inline: 0.6rem; }
   .label { font-size: 0.75rem; letter-spacing: 0.04em; text-align: center; }
+}
+
+/* FS345: one phone that plays before → after */
+.morph { display: grid; justify-items: center; gap: var(--flow-2); margin: 0; }
+.morph .phone { width: clamp(12rem, 15vw, 14.5rem); }
+
+.screen { position: relative; display: block; overflow: hidden; border-radius: 17px; }
+.screen img { display: block; }
+
+.after {
+  position: absolute;
+  inset: 0;
+  transform: translateX(100%);
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.after[data-on] { transform: none; }
+
+.tap {
+  position: absolute;
+  left: 50%;
+  top: 46%;
+  width: 16%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.55);
+  transform: translate(-50%, -50%) scale(0.4);
+  opacity: 0;
+  pointer-events: none;
+}
+.tap[data-on] { animation: tap 0.5s ease-out; }
+@keyframes tap {
+  0% { opacity: 0.9; transform: translate(-50%, -50%) scale(0.4); }
+  100% { opacity: 0; transform: translate(-50%, -50%) scale(1.6); }
+}
+
+/* the switch: the sheet's pill vocabulary, on the light band */
+.switch { display: inline-flex; gap: 0.35rem; padding: 0.3rem; border-radius: 999px; background: rgba(26, 67, 77, 0.08); }
+.switchBtn {
+  min-height: 44px;
+  padding: 0.4rem 0.95rem;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  font-family: var(--font-body);
+  font-size: var(--step-label);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #2f5560;
+  cursor: pointer;
+  transition: background var(--motion-fast) var(--ease-out), color var(--motion-fast) var(--ease-out);
+}
+.switchBtn[aria-pressed='true'] { background: #1A434D; color: #fff; }
+.switchBtn:focus-visible { outline: 2px solid #1A434D; outline-offset: 2px; }
+
+/* the version row rises in, one phone at a time */
+.rise { opacity: 0; transform: translateY(18px); transition: opacity 0.7s var(--ease-out), transform 0.7s var(--ease-out); transition-delay: var(--d, 0ms); }
+[data-in] .rise { opacity: 1; transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .rise { opacity: 1; transform: none; transition: none; }
+  .after, .switchBtn { transition: none; }
+}
+
+@media (max-width: 599px) {
+  .band { min-height: 0; }
+  .morph .phone { width: 58%; }
+  .pair { grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); gap: 0.6rem; }
 }
