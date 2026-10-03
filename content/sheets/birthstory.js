@@ -349,6 +349,7 @@ export const birthstory = {
             title: 'Entry point',
             /* Q7, her words, trimmed */
             line: 'The think-aloud interviews showed us we did not need a home menu page at all. Users wanted to jump right in.',
+            heardAt: 0,  /* FS334: pinned on this version's screen */
             heard: { quote: 'Too many menus', who: 'A parent tester' },
             versions: [
               { tag: 'Version 1 · Week 3', src: '/images/birthstory/evolution/screens/v1-3.png', alt: 'Version 1 home: three choices, Reflect, Document, and Connect.',
@@ -363,6 +364,7 @@ export const birthstory = {
             title: 'Onboarding',
             /* Q3 + Q7, her words, trimmed */
             line: 'I simplified my image-heavy first prototype into color blocks and simple icons, so feedback went to the flow. By the end, onboarding showed the other features while the user was already in the app.',
+            heardAt: 1,  /* FS334: pinned on this version's screen */
             heard: { summary: 'Onboarding was nice, but there were too many buttons and options.' },
             versions: [
               { tag: 'Version 1', src: '/images/birthstory/evolution/screens/v1-1.png', alt: 'Version 1 welcome: speech bubbles explaining the app before the first entry.',
@@ -377,6 +379,7 @@ export const birthstory = {
             title: 'Documentation',
             /* Q9, her words, trimmed */
             line: 'I was isolating interactions that could be housed in one feature: a single notes section filtered by topic, instead of medical documentation in one place and memories in another.',
+            heardAt: 2,  /* FS334: pinned on this version's screen */
             heard: { quote: 'Document details should be first', who: 'A parent tester' },
             versions: [
               { tag: 'Version 1', src: '/images/birthstory/evolution/screens/v1-4.png', alt: 'Version 1 reflect: voice note, notes, photos, and timeline, each its own tool.',
@@ -391,6 +394,7 @@ export const birthstory = {
             title: 'Sharing',
             /* Q12, her words */
             line: '“Find strength & support” positioned the new mother in a negative light, when in fact most are empowered by doing an amazing and hard thing.',
+            heardAt: 2,  /* FS334: pinned on this version's screen */
             heard: { summary: 'One parent wished she had asked everyone around her to add their memories of the birth while they were fresh.' },
             versions: [
               { tag: 'Version 1', src: '/images/birthstory/evolution/v1-hub.png', alt: 'Version 1 home, with Connect as one of three choices.',

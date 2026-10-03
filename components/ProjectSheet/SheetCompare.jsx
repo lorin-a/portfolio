@@ -14,13 +14,15 @@ import ml from './SheetMotionLibrary.module.css'
 function Heard({ h }) {
   if (!h) return null
   return h.quote ? (
-    <span className={styles.heard}>
-      <span className={styles.heardQuote}>“{h.quote}”</span> <span className={styles.heardWho}>{h.who}</span>
-    </span>
+    <>
+      <span className={styles.heardWho}>{h.who}</span>
+      <span className={styles.heardQuote}>“{h.quote}”</span>
+    </>
   ) : (
-    <span className={styles.heard}>
-      <span className={styles.heardWho}>What we heard:</span> {rich(h.summary)}
-    </span>
+    <>
+      <span className={styles.heardWho}>What we heard</span>
+      <span className={styles.heardSummary}>{rich(h.summary)}</span>
+    </>
   )
 }
 
@@ -52,40 +54,8 @@ export default function SheetCompare({ slides = [], label }) {
 
   return (
     <figure className={`${ml.player} ${ml.glass} ${styles.compare}`} aria-label={label}>
-      <div id="cmp-panel" role="tabpanel" aria-labelledby={`cmp-tab-${at}`} key={at} className={styles.panel}>
-        {/* the screens on the color band */}
-        <div className={styles.band}>
-          {s.versions.map((v, i) => (
-            <div key={v.tag} className={styles.step}>
-              {i > 0 && <span className={styles.arrow} aria-hidden="true">→</span>}
-              <span className={styles.phone}>
-                <span className={styles.notch} aria-hidden="true" />
-                <span className={styles.screen}><img src={v.src} alt={v.alt} loading="lazy" draggable="false" /></span>
-              </span>
-            </div>
-          ))}
-        </div>
-        {/* the text, inside the glass, under the image */}
-        <div className={styles.text}>
-          <div className={styles.caps}>
-            {s.versions.map((v) => (
-              <p key={v.tag} className={styles.cap}>
-                <span className={styles.tag}>{v.tag}</span>
-                <span className={styles.capText}>{rich(v.text)}</span>
-              </p>
-            ))}
-          </div>
-          {(s.line || s.heard) && (
-            <p className={styles.foot}>
-              {s.line && <span>{rich(s.line)}</span>}
-              <Heard h={s.heard} />
-            </p>
-          )}
-        </div>
-      </div>
-
-      {/* the arrow labels: Groundswell's chevron track */}
-      <div className={ml.flowWrap}>
+      {/* the arrow labels: Groundswell's chevron track, on top (FS334) */}
+      <div className={`${ml.flowWrap} ${styles.top}`}>
         <p className={`${ml.flowHint} ${styles.hint}`} aria-hidden="true">
           Select a feature
           <span className={styles.hintNow}>: {s.title}</span>
@@ -104,6 +74,44 @@ export default function SheetCompare({ slides = [], label }) {
           ))}
         </ol>
       </div>
+      <div id="cmp-panel" role="tabpanel" aria-labelledby={`cmp-tab-${at}`} key={at} className={styles.panel}>
+        {/* the screens on the color band */}
+        <div className={styles.band}>
+          {s.versions.map((v, i) => (
+            <div key={v.tag} className={styles.step}>
+              {i > 0 && <span className={styles.arrow} aria-hidden="true">→</span>}
+              <span className={styles.phone}>
+                <span className={styles.notch} aria-hidden="true" />
+                <span className={styles.screen}><img src={v.src} alt={v.alt} loading="lazy" draggable="false" /></span>
+                {/* FS334: the feedback, pinned on the screen it explains */}
+                {s.heard && s.heardAt === i && (
+                  <span className={styles.pin} data-side={i === s.versions.length - 1 ? 'left' : 'right'}>
+                    <span className={styles.pinDot} aria-hidden="true" />
+                    <span className={styles.pinLeader} aria-hidden="true" />
+                    <span className={styles.callout}><Heard h={s.heard} /></span>
+                  </span>
+                )}
+              </span>
+            </div>
+          ))}
+        </div>
+        {/* the text, inside the glass, under the image */}
+        <div className={styles.text}>
+          <div className={styles.caps}>
+            {s.versions.map((v) => (
+              <p key={v.tag} className={styles.cap}>
+                <span className={styles.tag}>{v.tag}</span>
+                <span className={styles.capText}>{rich(v.text)}</span>
+              </p>
+            ))}
+          </div>
+          {s.line && <p className={styles.foot}>{rich(s.line)}</p>}
+          {/* phones: the callout can't sit beside a small screen, so the
+              feedback reads here instead */}
+          {s.heard && <p className={styles.footHeard}><Heard h={s.heard} /></p>}
+        </div>
+      </div>
+
     </figure>
   )
 }
