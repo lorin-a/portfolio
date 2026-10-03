@@ -131,3 +131,128 @@ export function RoundLog() {
     </figure>
   )
 }
+
+/* ════════════════════════════════════════════════════════════════════
+   D · WHAT TESTING CHANGED (FS339). Merges Architecture, Iteration, and
+   UX Writing into one evidence chain, built on her Question Map: Q5 (how
+   evidence became decisions, before/after), Q4 (what she rejected), Q6/
+   Q8 (honest limits), rubric #1 (the why). Her thinking pattern is the
+   thesis (Q16, verbatim) and the narrowing is drawn to scale.
+   Receipts: counts from the live IaAria / IaDiagrams (4 intake questions,
+   2 home pages, “4 → 0”), V2 menu (4 choices), V3 (opens on the timeline,
+   5 tabs); requirements A–E (BIRTHSTORY-requirements-source.txt); Q3,
+   Q7, Q9, Q12, Q16; tester quotes from her research doc; summaries carry
+   no quotation marks. */
+
+const THESIS = 'My pattern as a big dreamer is to try to do everything at first, and I almost always end up narrowing down further and further until I get to the heart of a product.'
+
+const NARROW = [
+  { v: 'Version 1', when: 'Week 3', count: '4 intake questions', unit: 'Then a choice of two home pages, before the first entry.', src: `${E}/v1-hub.png`, alt: 'Version 1 home with three choices.', w: 100 },
+  { v: 'Version 2', when: 'Week 4', count: '4 menu choices', unit: 'One menu before the first entry.', src: `${E}/screens/v2-3.png`, alt: 'Version 2 menu with four choices.', w: 66 },
+  { v: 'Version 3', when: 'Week 5', count: 'Nothing first', unit: 'Opens on the notes timeline; the other features are 5 tabs in the nav bar.', src: `${E}/screens/v3-2.png`, alt: 'Version 3: the notes timeline.', w: 34 },
+]
+
+const CHAIN = [
+  {
+    heard: { quote: 'Too many menus', who: 'A parent tester' },
+    decided: 'Remove the home menu. The app opens into the most desired feature, note-taking, and the other features stay in the nav bar.',
+    after: { src: `${E}/screens/v3-2.png`, alt: 'Version 3 opening on the notes timeline.' },
+    delta: '4 menu choices → 0',
+  },
+  {
+    heard: { summary: 'Parents were less interested in medical records and more interested in photos and an outline of what happened.' },
+    decided: 'One notes section filtered by topic, instead of medical documentation in one place and memories in another.',
+    after: { src: '/images/birthstory/bs-doc-medical.png', alt: 'Version 3: a medical entry as a tagged card on the same timeline.' },
+    delta: '4 tools → 1 timeline',
+  },
+  {
+    heard: { summary: 'A parent did not connect with “reclaim,” and the compassionate copy read as assuming a negative experience.' },
+    decided: 'Shift the copy to be care-centered and neutral, and rename “Find strength & support,” which positioned the new mother in a negative light.',
+    after: { src: '/images/birthstory/bs-carepod.png', alt: 'Version 3: the Care Pod.' },
+    delta: 'Copy rewritten + feature renamed',
+  },
+]
+
+const SCOPE = [
+  { name: 'Sharing', state: 'kept', note: 'Became the Care Pod' },
+  { name: 'Partner participation', state: 'kept', note: 'Became the Care Pod' },
+  { name: 'Baby book', state: 'kept', note: 'The Birth Story Book' },
+  { name: 'Trackers', state: 'cut', note: 'Too much for a parent with little to no capacity' },
+  { name: 'Birth plan', state: 'cut', note: 'Too much for a parent with little to no capacity' },
+  { name: 'Search', state: 'added', note: 'Not in the brief; for brain fog' },
+]
+
+function HeardLine({ h }) {
+  return h.quote
+    ? <p className={s.dHeard}><span className={s.dWho}>{h.who}</span><span className={s.dQuote}>“{h.quote}”</span></p>
+    : <p className={s.dHeard}><span className={s.dWho}>What we heard</span><span>{h.summary}</span></p>
+}
+
+export function WhatTestingChanged() {
+  return (
+    <div className={s.d}>
+      <blockquote className={s.dThesis}><p>{THESIS}</p></blockquote>
+
+      {/* 1 · the narrowing, to scale */}
+      <figure className={s.dBlock}>
+        <span className={s.kicker}>1 · The narrowing</span>
+        <div className={s.funnel}>
+          {NARROW.map((n) => (
+            <div key={n.v} className={s.fStep}>
+              <div className={s.fBar} style={{ '--w': `${n.w}%` }}>
+                <span className={s.fCount}>{n.count}</span>
+              </div>
+              <div className={s.fBody}>
+                <span className={s.fPhone}><img src={n.src} alt={n.alt} /></span>
+                <p className={s.fText}><b>{n.v} · {n.when}</b>{n.unit}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+        <figcaption className={s.dNote}>
+          <b>How I ran the tests:</b> I simplified my image-heavy first prototype into a color-block and simple-icon wireframe, which directed the feedback to the flow itself.
+        </figcaption>
+      </figure>
+
+      {/* 2 · evidence → decision → built */}
+      <div className={s.dBlock}>
+        <span className={s.kicker}>2 · What we heard, what I decided</span>
+        <ol className={s.chain}>
+          <li className={s.chainHead} aria-hidden="true"><span>Evidence</span><span /><span>Decision</span><span>Built</span></li>
+          {CHAIN.map((c, i) => (
+            <li key={i} className={s.chainRow}>
+              <HeardLine h={c.heard} />
+              <span className={s.chainArrow} aria-hidden="true">→</span>
+              <p className={s.chainDecided}>{c.decided}</p>
+              <div className={s.chainAfter}>
+                <span className={s.fPhone}><img src={c.after.src} alt={c.after.alt} /></span>
+                <span className={s.chainDelta}>{c.delta}</span>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </div>
+
+      {/* 3 · scope: kept, cut, added */}
+      <div className={s.dBlock}>
+        <span className={s.kicker}>3 · The brief’s optional features: kept, cut, added</span>
+        <ul className={s.scope}>
+          {SCOPE.map((x) => (
+            <li key={x.name} className={s.scopeItem} data-state={x.state}>
+              <span className={s.scopeState}>{x.state}</span>
+              <span className={s.scopeName}>{x.name}</span>
+              <span className={s.scopeNote}>{x.note}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      {/* 4 · limits */}
+      <div className={`${s.dBlock} ${s.limits}`}>
+        <span className={s.kicker}>4 · What I couldn’t test</span>
+        <p>We were not able to show an A/B to the parents we interviewed; our client did see all three iterations and was very happy with the final.</p>
+        <p>{UNTESTED}</p>
+      </div>
+    </div>
+  )
+}
