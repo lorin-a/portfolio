@@ -19,8 +19,10 @@ export default function BirthStoryIteration({ data }) {
   return (
     <div className={s.e}>
       <section className={s.beat}>
-        <h4 className={s.head}>{intro.head}</h4>
-        <p className={s.body}>{rich(intro.body)}</p>
+        <div className={s.words}>
+          <h4 className={s.head}>{intro.head}</h4>
+          <p className={s.body}>{rich(intro.body)}</p>
+        </div>
         <div className={`${s.band} ${s.row3}`}>
           {rounds.map((r) => (
             <figure key={r.tag} className={s.shot}>
@@ -33,8 +35,10 @@ export default function BirthStoryIteration({ data }) {
 
       {decisions.map((d) => (
         <section key={d.head} className={s.beat}>
-          <h4 className={s.head}>{d.head}</h4>
-          <p className={s.body}>{rich(d.body)}</p>
+          <div className={s.words}>
+            <h4 className={s.head}>{d.head}</h4>
+            <p className={s.body}>{rich(d.body)}</p>
+          </div>
           <div className={`${s.band} ${s.row2}`}>
             <figure className={s.shot}><span className={s.label}>{d.before.label}</span><Phone {...d.before} /></figure>
             <span className={s.arrow} aria-hidden="true">→</span>
