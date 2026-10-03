@@ -141,6 +141,9 @@ export const birthstory = {
      screen per version), UX Writing (struck and rewritten), Visual
      Identity (the system drawn live).
 
+     FS332: “My Contribution” only where it says something the section
+     doesn't: Care Pod (the rename), Search (her addition), Research (the
+     split with Michael Juan), Architecture (she led it). The rest dropped.
      `mine` lines are PROVISIONAL: Q2 gives only the project-level split
      (“I led UX/UI, visual identity, user flows/architecture, mockup
      designs”; research shared with Michael Juan). */
@@ -150,7 +153,6 @@ export const birthstory = {
       name: 'Documentation',
       /* live prose + v3's closing sentence */
       body: 'Parents told me they wanted to land on the main task, so that’s what the app does. Even if nothing else gets used, there’s a timeline of whatever they or a loved one managed to add. A note from the delivery room, a prescription, and a voice memo land on the same timeline, the moment they happen.',
-      mine: 'UX/UI, mockups, and the flow that opens straight into note-taking, a decision from the think-aloud tests co-facilitated with Michael Juan.',
       media: {
         annotated: {
           prototype: 'doc',
@@ -193,7 +195,6 @@ export const birthstory = {
       key: 'reflection',
       name: 'Reflection',
       body: 'Every parent wanted to reflect, whether their birth was traumatic or not, but the ones who don’t already journal often don’t know where to start. So instead of a blank page, the journal hands them gentle prompts: a letter to a past self, the needs that are hard to name, the senses worth keeping.',
-      mine: 'UX/UI, mockups, and the reflection prompts, rewritten to be trauma-informed without assuming trauma.',
       media: {
         annotated: {
           prototype: 'journal',
@@ -225,7 +226,6 @@ export const birthstory = {
       name: 'The Birth Story Book',
       /* live prose + Q10's “free PDF or a real book to order” */
       body: 'We took the book seriously the moment a parent told me she wouldn’t trust an app with something this precious unless she knew it couldn’t disappear. It’s available as a free PDF or a real book to order.',
-      mine: 'UX/UI and mockups for ordering, downloading, and curating the book.',
       media: {
         annotated: {
           prototype: 'book',
@@ -321,9 +321,8 @@ export const birthstory = {
       name: 'Iteration',
       /* v3 04 lead, verbatim */
       takeaway: 'Each round removed options the previous one had added.',
-      body: 'We took three versions through critique, a client check-in, and think-aloud testing with parents, and changed direction based on what we heard.',
+      body: 'Three versions, tested through critique, a client check-in, and think-aloud sessions with parents. Pick a feature to see it change.',
       /* Q3, PROVISIONAL */
-      mine: 'Three rounds of wireframes, and the switch from image-heavy screens to color-block wireframes so feedback went to the flow.',
       /* FS320: a gallery of the features that changed most, one per
          slide, V1 · V2 · V3 side by side in the sheet's glass frame.
          Screens are her wireframes (public/images/birthstory/evolution)
@@ -412,7 +411,6 @@ export const birthstory = {
       /* live 04 statement (takeaway) + prose, condensed (Q12) */
       takeaway: 'The copy is trauma-informed without assuming trauma.',
       body: 'Because births can be traumatic, I wrote the first copy in a careful tone, and a parent I interviewed showed me I had gone too far. I rewrote toward connection and left room for people to bring their own tone.',
-      mine: 'The UX writing throughout, revised through testing.',
       media: {
         exhibit: 'bs-revisions',
         data: {
@@ -442,7 +440,6 @@ export const birthstory = {
         /* live Insight, verbatim */
         { label: 'My thinking', text: 'I chose a lighter pink into a darker teal because it let me hold two things at once: a gender spectrum, and the emotional range of the day itself.' },
       ],
-      mine: 'The visual identity: the gradient, palette, type, and components.',
       media: {
         exhibit: 'bs-identity',
         data: {

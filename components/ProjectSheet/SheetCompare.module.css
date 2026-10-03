@@ -1,8 +1,50 @@
-/* The compare gallery, simplified (FS330). Three tiers only: the
-   statement and its feedback, the screens on the color band, a short
-   caption under each screen. Nothing boxed but the band. */
+/* The compare (FS331): the visual is the hero. Tabs on top, then one
+   band of the identity gradient carrying three large phones with an arrow
+   between each, captions on the band beneath each phone, and a quiet
+   footnote under the band. */
 
-.slide {
+.compare {
+  margin: 0;
+}
+
+/* THE TABS: glass pills, the selected one filled */
+.tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: var(--flow-2);
+}
+
+.tab {
+  min-height: 44px;
+  padding: 0.5rem 1.1rem;
+  border: 0;
+  border-radius: var(--radius-pill, 999px);
+  background: rgba(244, 241, 236, 0.06);
+  box-shadow: inset 0 0 0 1px rgba(244, 241, 236, 0.22);
+  font-family: var(--font-body);
+  font-size: var(--step-small);
+  font-weight: 600;
+  color: var(--color-ink);
+  cursor: pointer;
+  transition: background var(--motion-fast) var(--ease-out), box-shadow var(--motion-fast) var(--ease-out);
+}
+
+.tab[aria-selected='true'] {
+  background: linear-gradient(135deg, rgba(219, 173, 173, 0.32), rgba(177, 193, 244, 0.32) 55%, rgba(70, 111, 123, 0.4));
+  box-shadow: inset 0 0 0 1px rgba(244, 241, 236, 0.55);
+}
+
+@media (hover: hover) {
+  .tab:hover { box-shadow: inset 0 0 0 1px rgba(244, 241, 236, 0.5); }
+}
+
+.tab:focus-visible {
+  outline: 2px solid var(--color-sage);
+  outline-offset: 3px;
+}
+
+.panel {
   animation: in var(--motion-medium) var(--ease-out);
 }
 
@@ -12,95 +54,66 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .slide { animation: none; }
+  .panel { animation: none; }
+  .tab { transition: none; }
 }
 
-/* 1. the statement and the feedback behind it */
-.head {
-  display: grid;
-  gap: var(--flow-1);
-  max-width: 46rem;
-  padding: clamp(1rem, 2vw, 1.5rem) clamp(0.25rem, 1vw, 0.75rem) var(--flow-3);
-}
-
-.line {
-  margin: 0;
-  font-family: var(--font-heading);
-  font-size: var(--step-statement);
-  line-height: 1.35;
-  color: var(--color-ink);
-  text-wrap: pretty;
-}
-
-.heard {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: 0.25rem 0.75rem;
-  margin: 0;
-}
-
-.heardQuote {
-  font-family: var(--font-heading);
-  font-size: var(--step-body);
-  font-style: italic;
-  color: #e3cdea;
-}
-
-.heardSummary {
-  font-family: var(--font-body);
-  font-size: var(--step-small);
-  line-height: 1.5;
-  color: var(--color-ink);
-}
-
-.heardWho {
-  font-family: var(--font-body);
-  font-size: var(--step-label);
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: #d9b8e0;
-}
-
-/* 2. the band */
-.row {
-  display: grid;
-  grid-template-columns: repeat(var(--n, 3), minmax(0, 1fr));
-  column-gap: clamp(1rem, 3vw, 3rem);
-}
-
+/* THE BAND: the hero */
 .band {
-  padding: clamp(1.75rem, 3.5vw, 2.75rem) clamp(1rem, 3vw, 3rem);
+  --phone-w: min(15rem, 27vh);
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  padding: clamp(2rem, 4vw, 3.5rem) clamp(1rem, 3vw, 3rem) clamp(1.5rem, 3vw, 2.5rem);
   background:
     linear-gradient(rgba(250, 250, 250, 0.62), rgba(250, 250, 250, 0.62)),
     linear-gradient(126deg, #e7c3c8 0%, #b9c2ec 48%, #1a434d 100%);
 }
 
-.version {
+.step {
+  position: relative;
   display: grid;
   justify-items: center;
+  min-width: 0;
+}
+
+/* between two phones, at the phone's middle */
+.arrow {
+  position: absolute;
+  left: 0;
+  top: calc(var(--phone-w) * 1.08);
+  transform: translate(-50%, -50%);
+  font-family: var(--font-body);
+  font-size: var(--step-heading);
+  line-height: 1;
+  color: #466F7B;
+}
+
+.version {
+  display: grid;
+  align-content: start;   /* a longer caption elsewhere never stretches this phone */
+  justify-items: center;
+  gap: var(--flow-2);
   margin: 0;
 }
 
 .phone {
   position: relative;
   display: block;
-  /* sized so the whole slide fits one screen */
-  width: min(100%, 11rem, 22vh);
-  padding: 5px;
-  border-radius: 20px;
+  width: var(--phone-w);
+  max-width: 100%;
+  padding: 6px;
+  border-radius: 24px;
   background: #1d1d1f;
-  box-shadow: 0 22px 44px -26px rgba(26, 67, 77, 0.6);
+  box-shadow: 0 28px 56px -28px rgba(26, 67, 77, 0.65);
 }
 
 .notch {
   position: absolute;
-  top: 10px;
+  top: 11px;
   left: 50%;
   z-index: 2;
   width: 26%;
-  height: 8px;
+  height: 9px;
   border-radius: 999px;
   background: #1d1d1f;
   transform: translateX(-50%);
@@ -109,46 +122,72 @@
 .screen {
   display: block;
   overflow: hidden;
-  border-radius: 15px;
+  aspect-ratio: 430 / 932;   /* the frame sets the size, not the image file */
+  border-radius: 18px;
 }
 
 .screen img {
   display: block;
   width: 100%;
-  aspect-ratio: 430 / 932;
+  height: 100%;
   object-fit: cover;
   object-position: top;
 }
 
-/* 3. one caption under each screen */
-.caps {
-  padding: var(--flow-2) clamp(1rem, 3vw, 3rem) var(--flow-1);
-}
-
 .cap {
   display: grid;
-  gap: 0.3rem;
-  margin: 0;
-  max-width: 17rem;
-  justify-self: center;
+  gap: 0.25rem;
+  max-width: 16rem;
   text-align: center;
-  font-family: var(--font-body);
-  font-size: var(--step-small);
-  line-height: 1.5;
-  color: var(--color-ink);
-  text-wrap: pretty;
 }
 
 .tag {
+  font-family: var(--font-body);
   font-size: var(--step-label);
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--color-sage);
+  color: #2f5560;
 }
 
+.capText {
+  font-family: var(--font-body);
+  font-size: var(--step-small);
+  line-height: 1.45;
+  color: #1f2f35;
+  text-wrap: pretty;
+}
+
+/* THE FOOTNOTE */
+.foot {
+  display: grid;
+  gap: 0.35rem;
+  max-width: 52rem;
+  margin: var(--flow-2) 0 0;
+  font-family: var(--font-body);
+  font-size: var(--step-small);
+  line-height: 1.55;
+  color: var(--color-ink);
+}
+
+.heardQuote {
+  font-family: var(--font-heading);
+  font-style: italic;
+  color: #e3cdea;
+}
+
+.heardWho {
+  font-size: var(--step-label);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #d9b8e0;
+}
+
+/* phones: three across, smaller; no arrows */
 @media (max-width: 599px) {
-  .row { column-gap: 0.5rem; }
-  .band, .caps { padding-inline: 0.5rem; }
-  .cap { font-size: var(--step-label); }
+  .band { --phone-w: 100%; padding-inline: 0.5rem; column-gap: 0.75rem; }
+  .arrow { display: none; }
+  .capText { font-size: var(--step-label); }
+  .tab { padding-inline: 0.85rem; }
 }
