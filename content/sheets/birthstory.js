@@ -223,8 +223,24 @@ export const birthstory = {
     },
     {
       key: 'research',
-      /* PROVISIONAL chapter line */
-      chapter: { kicker: 'The process', title: 'How It Came Together', line: 'Six weeks of research, three rounds of wireframes, and the words and look that hold it together.' },
+      /* FS317: the chapter says plainly what it is and maps its five
+         steps. Weeks from the live case study's section tags; each
+         outcome is that step's takeaway, shortened. */
+      chapter: {
+        kicker: 'Six weeks · Spring 2025',
+        title: 'The Process',
+        line: 'Five steps, from the first interviews to the final screens. Each one changed the design.',
+        steps: [
+          { key: 'research', when: 'Weeks 1–2', name: 'Research', outcome: 'Seven parents, and a shift from logging everything to keeping it simple.' },
+          { key: 'architecture', when: 'Week 3', name: 'Architecture', outcome: 'No home screen and nothing to answer first.' },
+          { key: 'iteration', when: 'Weeks 3–5', name: 'Iteration', outcome: 'Three versions, each with fewer options.' },
+          { key: 'ux-writing', when: 'Week 5', name: 'UX Writing', outcome: 'Trauma-informed, without assuming trauma.' },
+          { key: 'identity', when: 'Week 5', name: 'Visual Identity', outcome: 'Calm and non-clinical, for a parent awake in the middle of the night.' },
+        ],
+      },
+      step: 'Step 1 · Weeks 1–2',
+      /* v3 02 lead, verbatim */
+      takeaway: 'Seven parent interviews reframed the project from comprehensive logging to deliberate simplicity.',
       name: 'Research',
       /* Q6, refined */
       body: 'We interviewed seven parents: two think-aloud walkthroughs of our wireframes over Zoom, with parents our client connected us with, and video interviews I ran with three family members and two friends. I also read birth forums and blogs.',
@@ -253,9 +269,12 @@ export const birthstory = {
     },
     {
       key: 'architecture',
+      step: 'Step 2 · Week 3',
       name: 'Architecture',
+      /* v3 03 lead, verbatim */
+      takeaway: 'The app opens directly into documentation. There is no home screen, and nothing to answer before you begin.',
       /* the live 02 aria, condensed */
-      body: 'Our first attempt met the parent in the moment: an opening menu asked four questions about their phase and place, to pick the right feature. Meant to lower cognitive load, it gate-kept features instead, a form at the front desk while you’re still catching your breath. The final app asks nothing first.',
+      body: 'Our first attempt met the parent in the moment: an opening menu asked four questions about their phase and place, to pick the right feature. Meant to lower cognitive load, it gate-kept features instead, a form at the front desk while you’re still catching your breath.',
       notes: [
         /* v2 principles, verbatim */
         { label: 'Does not disorient', text: 'A parent recovering on little sleep can’t afford a maze.' },
@@ -275,8 +294,11 @@ export const birthstory = {
     {
       key: 'iteration',
       /* live SecIteration, condensed; tester quotes verbatim (v3) */
+      step: 'Step 3 · Weeks 3–5',
       name: 'Iteration',
-      body: 'We took three versions through critique, a client check-in, and think-aloud testing with parents, and changed direction based on what we heard. Each round made the app simpler.',
+      /* v3 04 lead, verbatim */
+      takeaway: 'Each round removed options the previous one had added.',
+      body: 'We took three versions through critique, a client check-in, and think-aloud testing with parents, and changed direction based on what we heard.',
       /* Q3, PROVISIONAL */
       mine: 'Three rounds of wireframes, and the switch from image-heavy screens to color-block wireframes so feedback went to the flow.',
       media: {
@@ -294,9 +316,11 @@ export const birthstory = {
     },
     {
       key: 'ux-writing',
+      step: 'Step 4 · Week 5',
       name: 'UX Writing',
-      /* live 04 statement + prose, condensed (Q12) */
-      body: 'The copy is trauma-informed without assuming trauma. Because births can be traumatic, I wrote the first copy in a careful tone, and a parent I interviewed showed me I had gone too far. I rewrote toward connection and left room for people to bring their own tone.',
+      /* live 04 statement (takeaway) + prose, condensed (Q12) */
+      takeaway: 'The copy is trauma-informed without assuming trauma.',
+      body: 'Because births can be traumatic, I wrote the first copy in a careful tone, and a parent I interviewed showed me I had gone too far. I rewrote toward connection and left room for people to bring their own tone.',
       mine: 'The UX writing throughout, revised through testing.',
       media: {
         exhibit: 'bs-revisions',
@@ -314,9 +338,11 @@ export const birthstory = {
     },
     {
       key: 'identity',
+      step: 'Step 5 · Week 5',
       name: 'Visual Identity',
-      /* live 04 Visual Design: statement + prose (Q14) */
-      body: 'Calm, emotionally intelligent, and deliberately non-clinical. Myana already used a gradient, so I built one here to tie the two together. Parents told me they’d mostly reach for this in the small hours between feedings, so everything had to read gently to someone exhausted in the middle of the night.',
+      /* live 04 Visual Design: statement (takeaway) + prose (Q14) */
+      takeaway: 'Calm, emotionally intelligent, and deliberately non-clinical.',
+      body: 'Myana already used a gradient, so I built one here to tie the two together. Parents told me they’d mostly reach for this in the small hours between feedings, so everything had to read gently to someone exhausted in the middle of the night.',
       notes: [
         /* live Insight, verbatim */
         { label: 'My thinking', text: 'I chose a lighter pink into a darker teal because it let me hold two things at once: a gender spectrum, and the emotional range of the day itself.' },

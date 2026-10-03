@@ -196,6 +196,21 @@ export default function SheetContent({ sheet, num, title, tagline, titleId }) {
               <span className={styles.chapterKicker}>{c.chapter.kicker}</span>
               <h3 className={styles.chapterTitle}>{c.chapter.title}</h3>
               {c.chapter.line && <p className={styles.chapterLine}>{rich(c.chapter.line)}</p>}
+              {/* FS317: the chapter's map: every step, when, and its outcome,
+                  each a link down to its section */}
+              {c.chapter.steps?.length > 0 && (
+                <ol className={styles.chapterSteps}>
+                  {c.chapter.steps.map((st, k) => (
+                    <li key={st.key}>
+                      <a href={`#sheet-${st.key}`} className={styles.chapterStep}>
+                        <span className={styles.stepWhen}>{String(k + 1).padStart(2, '0')} · {st.when}</span>
+                        <span className={styles.stepName}>{st.name}</span>
+                        <span className={styles.stepOut}>{rich(st.outcome)}</span>
+                      </a>
+                    </li>
+                  ))}
+                </ol>
+              )}
             </header>
           )}
           <section id={`sheet-${c.key}`} className={styles.component} data-reveal="0">
@@ -203,9 +218,13 @@ export default function SheetContent({ sheet, num, title, tagline, titleId }) {
                 so the words stay beside the work while the work leads. */}
             <div className={styles.rail}>
               <div className={styles.railInner}>
-                <span className={styles.componentNum}>{String(i + 1).padStart(2, '0')}</span>
+                {/* FS317: a process step says which step and when, instead of
+                    a number running on from the features */}
+                <span className={styles.componentNum}>{c.step || String(i + 1).padStart(2, '0')}</span>
                 <h3 className={styles.componentName}>{c.name}</h3>
                 {c.gated && <span className={styles.gated}>Confidential</span>}
+                {/* FS317: the finding or decision, said first and large */}
+                {c.takeaway && <p className={styles.takeaway}>{rich(c.takeaway)}</p>}
                 <p className={styles.componentBody}>{rich(c.body)}</p>
                 {/* FS301: the case study's paired annotations, one short
                     label and a line each */}

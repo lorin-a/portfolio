@@ -28,11 +28,26 @@
   margin: 0;
 }
 
+/* FS317: the quote across the top; what parents asked for and the
+   session photo side by side beneath it */
 @media (min-width: 1000px) {
-  .voices {
-    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
-    align-items: start;
+  .voicesWords {
+    display: contents;
   }
+
+  .voices {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-areas: 'quote quote' 'kicker photo' 'asks photo';
+    grid-template-rows: auto auto 1fr;
+    align-items: start;
+    column-gap: var(--flow-3);
+    row-gap: 0;
+  }
+
+  .bigQuote { grid-area: quote; }
+  .voicesWords > .kicker { grid-area: kicker; }
+  .asks { grid-area: asks; }
+  .voicesPhoto { grid-area: photo; }
 }
 
 .bigQuote {
