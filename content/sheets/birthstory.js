@@ -513,12 +513,11 @@ export const birthstory = {
      (the crit wall, the client's critique, the final review) live in
      them, so a lone gallery would only repeat them. */
 
-  /* CREDITS: one column each. Names from sq; consent from live. */
+  /* CREDITS: one column each. Names from sq. FS328: the Consent line removed. */
   credits: [
     ['Design Team', 'Lorin Anderberg, Michael Juan'],
     ['Client', 'Sarah Burns, MSW, LSW, and Tamar Krishnamurti, PhD, for Myana'],
     ['Studio', 'CMU MA in Design, Studio II: Introduction to IXD, taught by the founders of Dezudio'],
-    ['Consent', 'Participant quotes appear with their consent; names are withheld.'],
   ],
 }
 

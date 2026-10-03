@@ -426,7 +426,11 @@ export default function ProjectSheet({
             ) : href ? (
               <div className={styles.deeper}>
                 <span className={styles.deeperLabel}>Go further</span>
-                <a href={href}>{hrefLabel || `Read the full ${title} case study`}</a>
+                {/* FS329: always a new tab, so the folder stays open behind it */}
+                <a href={href} target="_blank" rel="noopener noreferrer">
+                  {hrefLabel || `Read the full ${title} case study`}
+                  <span className={styles.srOnly}> (opens in a new tab)</span>
+                </a>
               </div>
             ) : null}
           </div>

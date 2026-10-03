@@ -296,11 +296,28 @@
 }
 
 /* ── VISUAL IDENTITY ──────────────────────────────────────────────── */
+/* FS327: the whole identity sits inside the color block, like every
+   other exhibit; on the washed band the words take the teal inks */
 .id {
   display: grid;
   gap: var(--flow-3);
   margin: 0;
+  padding: clamp(1.25rem, 2.5vw, 2rem);
+  background:
+    linear-gradient(rgba(250, 250, 250, 0.62), rgba(250, 250, 250, 0.62)),
+    linear-gradient(126deg, #e7c3c8 0%, #b9c2ec 48%, #1a434d 100%);
 }
+
+.id .kicker { color: #2f5560; }
+.id .sName,
+.id .face { color: #1A434D; }
+.id .sHex,
+.id .use { color: #2f5560; opacity: 1; }
+.id .caption { color: #1f2f35; opacity: 1; }
+.id .typeRow { border-top-color: rgba(26, 67, 77, 0.2); }
+.id .chip { box-shadow: inset 0 0 0 1px rgba(26, 67, 77, 0.15); }
+.id .gradient { box-shadow: 0 14px 30px -18px rgba(26, 67, 77, 0.5); }
+.id .board img { box-shadow: 0 14px 30px -18px rgba(26, 67, 77, 0.45); }
 
 .gradient {
   display: flex;
