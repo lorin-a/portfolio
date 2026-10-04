@@ -457,6 +457,7 @@ funding, captions, card note).
 | FS365 | “I also want to show more BTS I believe we have storyboards and mockups and such. if you dont let me know and I will locate them.” (2026-10-04, SomeBuddy notes, round two) | 🟠 PARTLY: no storyboards or lo-fi mockups exist in any source checked (the “Animation Storyboard.pdf” found is her Sept 2024 UN video). Found the full concept video locally (SomeBuddy Video.mp4, 2:56). Asked her for the storyboards/mockups or the Figma link (Figma MCP can read it) |
 | FS366 | “also showing the user journey slides are important. I can give you access to the figma file or there should be more project content in folders or CLoudinary.” (2026-10-04, SomeBuddy notes, round two) | ✅ DONE: the two User Flow slides now have their own step, “Step 3 · Week 3 · User Flows” (sq Ideation copy), shown whole and stacked, out of the persona gallery; The Process is five steps (tile 5 brand blue, white ink) |
 | FS367 | “I just plugged in my harddrive search there and for other project's that might be stored there” (2026-10-04) | 🟡 IN PROGRESS |
+| FS368 | “show me first what you think about using because they might be old versions” (2026-10-04, on the LaCie finds) | 🟡 IN PROGRESS: nothing from the drive goes on a sheet until she picks |
 =======
 | FS193 | "i need this to look 50% neater, better orgnanized and simple" (2026-10-01), read as the Acknowledgements | ⏳ IN PROGRESS |
 >>>>>>> parent of f51f3e4 (feat(sheet): acknowledgements in one format: name over one-line role, three labelled lines (FS193))
