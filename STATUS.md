@@ -480,12 +480,12 @@ SomeBuddy
 - D12 Concept video: YouTube, or self-host her local 2:56 file — ✅ HER ANSWER: keep YouTube
 - D13 Busy-Buddies: keep the hyphen? — ✅ HER ANSWER: “Busy Students” → tagline “Approachable Socialization for Busy Students”
 BirthStory
-- D14 Outcome: “concept only” vs old site “eventual creation… by the professors and the client” — 
-- D15 Add the parent quote “It would be tragic to lose those moments if the app disappeared someday.” — 
-- D16 Client naming (Myana, co-developed by Pitt researchers) — 
-- D17 Method count: 7 parents vs 5 interviews + 3 think-alouds — 
+- D14 Outcome: “concept only” vs old site “eventual creation… by the professors and the client” — ✅ SETTLED BY HER EARLIER (FS309: “student project for real client concept pitch only at this stage”); old-site claim is outdated, not asked
+- D15 Add the parent quote “It would be tragic to lose those moments if the app disappeared someday.” — ✅ HER ANSWER: add as a pull quote, keep the paragraph
+- D16 Client naming (Myana, co-developed by Pitt researchers) — ✅ HER ANSWER: add the people + full names: Myana (Mothers You Are Not Alone), University of Pittsburgh Center for Research on Healthcare; client Sarah Burns, MSW, LSW, and Tamar Krishnamurti, PhD
+- D17 Method count: 7 parents vs 5 interviews + 3 think-alouds — ✅ SETTLED BY EVIDENCE: old site “We interviewed 7 parents” + her Q6 agree; sheet already says seven; not asked
 Transition Design
-- D18 Six or five exercises (sheet says both) — 
+- D18 Six or five exercises (sheet says both) — ✅ HER ANSWER: “Six exercises” everywhere; five tiles, step 4 = “Futures I and II: Vision and Transition”
 - D19 Duration: 15-week sprint vs 18 vs per-step durations — 
 - D20 Her part in the 2050 story (“My part:”) — 
 - D21 Homepage link → Assignment #5? — 
