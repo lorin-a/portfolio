@@ -256,49 +256,6 @@
 }
 
 /* ===========================================
-   CONTRIBUTIONS (FS350)
-   Metadata, not controls. They were pills: four rounded, filled, bordered
-   shapes stacked over the Open project button, so the button's glass had
-   three look-alikes beside it and the eye couldn't tell which one acts.
-   Now one line of text, a step up in size, set off by a middle dot. The
-   column then holds a single shape, the one that opens the project.
-   =========================================== */
-.roles {
-  list-style: none;
-  margin: 0 0 var(--space-sm);
-  padding: 0;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  row-gap: 0.25rem;
-  column-gap: 0.6em;
-  font-family: var(--font-body);
-  font-size: clamp(15px, 1.15vw, 17px);
-  font-weight: 500;
-  line-height: 1.5;
-  letter-spacing: 0.01em;
-  color: var(--color-ink);
-}
-
-.roles li {
-  white-space: nowrap;
-}
-
-/* the dot rides on the end of the item before it, so a wrapped line
-   never opens on a stray dot */
-.roles li:not(:last-child)::after {
-  content: '·';
-  display: inline-block;
-  margin-left: 0.6em;
-  opacity: 0.45;
-}
-
-:global(:root[data-theme="dark"]) .roles {
-  color: #ffffff;
-  opacity: 0.88;
-}
-
-/* ===========================================
    CTA
    =========================================== */
 .cta {

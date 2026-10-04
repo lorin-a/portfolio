@@ -320,15 +320,6 @@ export default function ProjectPreview({
         <h2 className={styles.title}>{title}</h2>
         {tagline && <p className={styles.tagline}>{tagline}</p>}
         {description && <p className={styles.description}>{description}</p>}
-        {contributions.length > 0 && (
-          /* FS350: her contributions as a quiet line of text, not pills;
-             the only shape in the column is the control that opens */
-          <ul className={styles.roles} aria-label="My contributions">
-            {contributions.map(c => (
-              <li key={c.label}>{c.label}</li>
-            ))}
-          </ul>
-        )}
         {canExpand && (
           <button
             type="button"
