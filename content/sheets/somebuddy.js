@@ -77,7 +77,7 @@ export const somebuddy = {
   /* FS356: the phones stand on the brand blue at full strength, as in her
      deck, not on the washed pastel band (“too pastel easter vibes”) */
   screenBand: 'linear-gradient(126deg, #5b5bea 0%, #4747dc 50%, #3434a8 100%)',
-  tiles: ['#D4F25A', '#F6A6E8', '#C4C2FF', '#9D9AF7'],
+  tiles: ['#D4F25A', '#F6A6E8', '#A9DCFF', '#C4C2FF', '#4747DC'],  /* tile 5 takes white ink (6.6:1) */
 
   meta: [
     /* med “About”, verbatim */
@@ -107,6 +107,9 @@ export const somebuddy = {
   system: {
     kicker: 'The Ecosystem',
     label: 'Social-ish',
+    /* FS363, her note: “credit Yaezi with patch illustrations and Rui +
+       Yaezi for App UXUI design” */
+    credit: 'App UX/UI design by Rui Ying and Yaezi Lee; patch illustrations by Yaezi Lee.',
     wide: true,
     intro: 'The research revealed a need for opt-in, opt-out, low-stakes, and lightweight opportunities for connection that give the user autonomy to express their desired level of engagement. Our ecosystem involves a social app, branding, pop-up events, and collectibles that create a movement called “social-ish,” connecting students from orientation to ongoing campus life through tasks, badges, and bingo.',
     screens: [
@@ -141,6 +144,7 @@ export const somebuddy = {
       name: 'The SomeBuddy App',
       /* sq + med, condensed; wording hers. FS357: “The goal” and “A
          second layer” folded in here rather than set as labeled notes. */
+      credit: 'App UX/UI design by Rui Ying and Yaezi Lee.',
       body: 'Finding someone to do something with is fast, effortless, and low-pressure. Instead of filling out a bunch of forms, students post an activity, find nearby matches, and reach out in two ways: send a request, or chat first. Filters change with the activity, so someone craving espresso can narrow it down even more.',
       media: {
         /* sq/med lines for the request flow, trimmed */
@@ -158,6 +162,7 @@ export const somebuddy = {
       key: 'badges',
       name: 'Badges and Patches',
       /* sq, two passages joined and lightly condensed. */
+      credit: 'Patch illustrations by Yaezi Lee; app UX/UI design by Rui Ying and Yaezi Lee.',
       body: 'Earning a first badge at orientation bingo introduces students to the physical patch element of the ecosystem and inspires a collection throughout the year. Each badge, earned by doing something together with another SomeBuddy, can be customized in color, text, shape, and type color.',
       media: {
         stills: [
@@ -171,6 +176,7 @@ export const somebuddy = {
       key: 'bingo',
       name: 'Bingo Cards',
       /* sq, verbatim but for typos (“or and”, “the own”, “social moment”). */
+      credit: 'App UX/UI design by Rui Ying and Yaezi Lee.',
       body: 'The bingo card started as our Orientation Bingo Card, and students can keep the fun going by joining new cards organized by theme, like outdoor, thrifting, or food. They can create their own custom card, set their own challenges, and share it with others. It’s a light, playful way to turn everyday activities into social moments.',
       media: {
         stills: [
@@ -202,10 +208,11 @@ export const somebuddy = {
       chapter: {
         kicker: 'Five weeks · Spring 2025',
         title: 'The Process',
-        line: 'Four steps, from the first interviews to the final brand.',
+        line: 'Five steps, from the first interviews to the final brand.',
         steps: [
           { key: 'research', when: 'Weeks 1–2', name: 'Research', outcome: 'Eight interviews and five design principles.' },
-          { key: 'synthesis', when: 'Week 2', name: 'Synthesis', outcome: 'Three personas and two user flows.' },
+          { key: 'synthesis', when: 'Week 2', name: 'Synthesis', outcome: 'Three personas anyone can move between.' },
+          { key: 'journey', when: 'Week 3', name: 'User Flows', outcome: 'From orientation to a year of use.' },
           { key: 'testing', when: 'Week 4', name: 'Testing', outcome: 'Speed dating the concept with classmates.' },
           { key: 'brand', when: 'Weeks 3–4', name: 'Brand Identity', outcome: 'A bright, soft, welcoming brand.' },
         ],
@@ -214,24 +221,20 @@ export const somebuddy = {
       name: 'Research',
       /* sq “Concept”, trimmed: the pivot the research forced */
       takeaway: 'Research changed the concept: what grad students want varies greatly with their schedule, workload, and interests.',
-      /* sq “Research”, condensed */
-      body: 'We began with a service design approach, mapped the ecosystem of social isolation at CMU to surface our own assumptions, and conducted eight interviews with grad students.',
+      /* FS361: the principles as her slide, not a list, and the copy says
+         how the interviews led to them. sq: “We formalized our research
+         objectives, conducted 8 user interviews, and defined our principles
+         based on what we heard in our interviews.” The second half is
+         PROVISIONAL, each principle tied to the finding behind it (sq). */
+      body: 'We began with a service design approach, mapped the ecosystem of social isolation at CMU to surface our own assumptions, and conducted eight interviews with grad students. We defined our principles from what we heard: packed schedules called for spontaneity and effortless coordination; wanting to know more before personal activities called for low-pressure interactions with clear expectations; and busy weeks meant accommodating exhaustion.',
       layout: 'half',
-      list: {
-        /* sq, verbatim */
-        label: 'Design principles',
-        items: [
-          'Support Spontaneity: Enable last-minute plans with minimal friction.',
-          'Simplify Coordination: Make scheduling and connecting feel effortless.',
-          'Normalize Low-Stakes Interaction: Encourage casual, drop-in-style meetups.',
-          'Accommodate Exhaustion: Make participation time-efficient for busy students.',
-          'Avoid Awkwardness: Set clear expectations to reduce social pressure.',
-        ],
-      },
       media: {
+        /* the chain, in order: assumptions mapped, what we heard, the
+           principles it gave us */
         photos: [
-          { key: 'sb-ecosystem-map', alt: 'The ecosystem map of social isolation at CMU, beside our assumptions about it.' },
-          { key: 'sb-what-we-heard', alt: 'Three things grad students told us, from busy schedules to fragmented clubs.' },
+          { key: 'sb-ecosystem-map', alt: 'First, the ecosystem map of social isolation at CMU, beside our assumptions about it.' },
+          { key: 'sb-what-we-heard', alt: 'Then what grad students told us, from busy schedules to fragmented clubs.' },
+          { key: 'sb-design-principles', alt: 'The five design principles it gave us: support spontaneity, low-effort coordination, low-pressure interactions, accommodate exhaustion, avoid awkwardness.' },
         ],
       },
     },
@@ -239,22 +242,37 @@ export const somebuddy = {
       key: 'synthesis',
       step: 'Step 2 · Week 2',
       name: 'Synthesis',
-      /* sq, trimmed */
-      takeaway: 'Three personas, and one stance: a flexible solution simple enough to work for all of them.',
-      body: 'We combined what we heard into three user categories: the Logistical Taskmate, the Casual Connector, and the Friendship Seeker. Our professors encouraged us to take a strong stance rooted in research, which meant simplifying a flexible solution that worked for very different users. Then we mapped how a student would discover the app, get onboarded, and keep using it.',
+      /* FS362: her point, in her words, replaces “Three personas, and one
+         stance…” (“The synthesis title does not make sense”) */
+      takeaway: 'Anyone can embody any of these personas at different times, depending on the activity and their capacity.',
+      /* sq, trimmed; the middle sentence is PROVISIONAL, from her FS362 note */
+      body: 'We combined what we heard into three personas: the Logistical Taskmate, the Casual Connector, and the Friendship Seeker. They are modes, not types: the same student can be a Taskmate on an errand and a Friendship Seeker on a weekend hike. Our professors encouraged us to take a strong stance rooted in research, which meant one flexible solution simple enough to work for all three.',
       media: {
         stills: [
           { key: 'sb-persona-taskmate', alt: 'Persona: the Logistical Taskmate, who wants spontaneous help getting things done.' },
           { key: 'sb-persona-connector', alt: 'Persona: the Casual Connector, who wants low-effort company amid a busy schedule.' },
           { key: 'sb-persona-seeker', alt: 'Persona: the Friendship Seeker, who wants depth but struggles to find the time.' },
-          { key: 'sb-user-flow-1', alt: 'The user flow from discovering the app at orientation to completing bingo with others.' },
-          { key: 'sb-user-flow-2', alt: 'The user flow for sustained use: badges, partnered events, and re-engagement.' },
+        ],
+      },
+    },
+    {
+      key: 'journey',
+      step: 'Step 3 · Week 3',
+      name: 'User Flows',
+      /* FS366: the user-flow slides out of the persona gallery and into
+         their own step. Takeaway and body: sq “Ideation”, trimmed. */
+      takeaway: 'We looked at what sustained use would look like over time, and how recurring features like bingo cards could keep students engaged.',
+      body: 'We mapped a user flow that outlined the key interactions: discovering the app at orientation, onboarding, engaging with its features, and coming back over the year.',
+      media: {
+        photos: [
+          { key: 'sb-user-flow-1', alt: 'From orientation to first use: discover the app, onboard and set preferences, complete bingo activities with others.' },
+          { key: 'sb-user-flow-2', alt: 'Sustained use: use the app beyond orientation, customize and collect badges, join partnered events, re-engage over the year.' },
         ],
       },
     },
     {
       key: 'testing',
-      step: 'Step 3 · Week 4',
+      step: 'Step 4 · Week 4',
       name: 'Testing',
       /* med, trimmed */
       takeaway: 'Speed dating showed what was working and where to expand: trust, connection, and adaptability.',
@@ -269,13 +287,14 @@ export const somebuddy = {
     },
     {
       key: 'brand',
-      step: 'Step 4 · Weeks 3–4',
+      step: 'Step 5 · Weeks 3–4',
       name: 'Brand Identity',
       /* med + sq, wording hers */
       takeaway: 'Class feedback confirmed that a bright, exciting, soft, and welcoming brand fit best.',
       /* FS357's rule, applied here too: the two labeled notes folded into
          the paragraph (med, lightly trimmed), so nothing is stacked */
       body: 'Users told us trust and CMU verification mattered, so we first tried colors adjacent to the CMU brand, alongside palettes that could feel inviting but also academic. The logo plays with language and shapes: the smile lets you know it is safe and friendly, while the shapes draw you in from afar. The Quicksand typeface softens the intensity of the color palette, and the badge illustrations tie in CMU references.',
+      credit: 'Patch and badge illustrations by Yaezi Lee.',
       media: {
         stills: [
           { type: 'video', key: 'sb-logo-motion', alt: 'The SomeBuddy logo animation: the speech-bubble D drops in and smiles.' },
@@ -326,6 +345,9 @@ export const somebuddy = {
   /* CREDITS: one column each (med, sq). */
   credits: [
     ['Design Team', 'Lorin Anderberg, Yaezi Lee, Rui Ying'],
+    /* FS363 */
+    ['App UX/UI Design', 'Rui Ying and Yaezi Lee', 'join'],
+    ['Patch Illustrations', 'Yaezi Lee', 'join'],
     ['Instructors', 'Ashley Deal and Raelynn O’Leary, CMU MA in Design, Studio II: Introduction to IXD'],
     ['Image Credits', 'Icons from SVG Repo; images from Unsplash and CMU'],
   ],

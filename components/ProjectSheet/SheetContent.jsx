@@ -202,6 +202,7 @@ export default function SheetContent({ sheet, num, title, tagline, titleId }) {
               <span className={styles.componentNum}>{sheet.system.kicker}</span>
               <h3 id="sheet-system-name" className={styles.componentName}>{sheet.system.label}</h3>
               <p className={styles.componentBody}>{rich(sheet.system.intro)}</p>
+              {sheet.system.credit && <p className={styles.credit}>{sheet.system.credit}</p>}
             </div>
           </div>
           <div className={styles.work}>
@@ -255,6 +256,8 @@ export default function SheetContent({ sheet, num, title, tagline, titleId }) {
                 {/* FS317: the finding or decision, said first and large */}
                 {c.takeaway && <p className={styles.takeaway}>{rich(c.takeaway)}</p>}
                 {c.body && <p className={styles.componentBody}>{rich(c.body)}</p>}
+                {/* FS363: who made what, when it isn't the team as a whole */}
+                {c.credit && <p className={styles.credit}>{c.credit}</p>}
                 {/* FS319: a voice and a short list, set in the copy column */}
                 {c.pull && (
                   <blockquote className={styles.pull}>
@@ -400,7 +403,12 @@ export default function SheetContent({ sheet, num, title, tagline, titleId }) {
           [find('Design Team'), photo],
           [find('Clinical Team'), frame.partners && ['Partners', frame.partners]],
           [find('Funding')],
-        ] : credits.map((row, i) => (i === 0 ? [row, photo] : [row])))
+        ] : credits.reduce((cols, row, i) => {
+          /* FS363: a row marked 'join' stacks under the column before it */
+          if (row[2] === 'join' && cols.length) cols[cols.length - 1].push(row)
+          else cols.push(i === 0 ? [row, photo] : [row])
+          return cols
+        }, []))
           .map((col) => col.filter(Boolean)).filter((col) => col.length)
         return (
           <div className={styles.colophon}>

@@ -148,6 +148,18 @@
   text-wrap: pretty;
 }
 
+/* FS363: a maker credit under a section's words, quiet and small */
+.credit {
+  margin: var(--flow-1, 0.75rem) 0 0;
+  font-family: var(--font-body);
+  font-size: var(--step-small);
+  font-style: italic;
+  line-height: 1.5;
+  color: var(--color-ink);
+  opacity: 0.72;
+  text-wrap: pretty;
+}
+
 /* A WIDE section (FS311): the words above, the exhibit across all twelve
    columns, for an overview that needs the room (BirthStory's ecosystem). */
 @media (min-width: 1000px) {
