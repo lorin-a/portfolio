@@ -59,6 +59,31 @@ function Work({ media, label, gated, onImage }) {
       </figure>
     )
   }
+  /* FS371: a row of cards, each a photo, a label, a name, a few lines and
+     a quote (Groundswell's three workshops) */
+  if (media?.cards) {
+    return (
+      <ul className={styles.cards}>
+        {media.cards.map((cd) => {
+          const src = sheetImg(cd.key, 1200)
+          return (
+            <li key={cd.name} className={styles.cardItem}>
+              {src && (
+                <button type="button" className={styles.photoButton} onClick={(e) => onImage?.(cd.key, e.currentTarget)}
+                  aria-label={`View full screen: ${cd.alt}`}>
+                  <img src={src} alt="" className={styles.cardImg} style={cd.focus ? { objectPosition: cd.focus } : undefined} />
+                </button>
+              )}
+              {cd.label && <span className={styles.pairLabel}>{cd.label}</span>}
+              <h4 className={styles.cardName}>{cd.name}</h4>
+              {cd.text && <p className={styles.cardText}>{rich(cd.text)}</p>}
+              {cd.quote && <p className={styles.cardQuote}>{cd.quote}</p>}
+            </li>
+          )
+        })}
+      </ul>
+    )
+  }
   if (media?.annotated) return <SheetAnnotated {...media.annotated} />
   /* FS319: one image, whole and uncropped, with its caption */
   const photos = media?.photos || (media?.photo ? [media.photo] : null)
@@ -169,6 +194,7 @@ export default function SheetContent({ sheet, num, title, tagline, titleId }) {
         slidesFor(m).forEach((sl) => { if (sl.type === 'image') push(sl.key, sl.alt) })
         ;(m.photos || (m.photo ? [m.photo] : [])).forEach((ph) => push(ph.key, ph.alt))
         ;(m.pair || []).forEach((it) => it.key && push(it.key, it.alt))
+        ;(m.cards || []).forEach((cd) => push(cd.key, cd.alt))
       })
     })
     process.forEach((ph) => ph.images.forEach((i) => push(i.key, i.alt)))

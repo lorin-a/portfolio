@@ -191,6 +191,66 @@
   color: var(--color-sage);
 }
 
+/* FS371: a row of cards (photo, label, name, text, quote) */
+.cards {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--flow-3) var(--gap-col);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (min-width: 900px) {
+  .cards {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.cardItem {
+  display: grid;
+  align-content: start;
+  gap: 0.6rem;
+  min-width: 0;
+}
+
+.cardImg {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+
+.cardName {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: var(--step-statement);
+  font-weight: var(--weight-title, 400);
+  line-height: 1.2;
+  color: var(--color-ink);
+  text-wrap: balance;
+}
+
+.cardText {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--step-small);
+  line-height: 1.6;
+  color: var(--color-ink);
+  text-wrap: pretty;
+}
+
+.cardQuote {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: var(--step-small);
+  font-style: italic;
+  line-height: 1.5;
+  color: var(--color-ink);
+  opacity: 0.85;
+  text-wrap: pretty;
+}
+
 /* FS363: a maker credit under a section's words, quiet and small */
 .credit {
   margin: var(--flow-1, 0.75rem) 0 0;

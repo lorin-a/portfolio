@@ -380,48 +380,132 @@ export const groundswell = {
       mine: 'Full-stack design and development with Claude Code (three live data pipelines, a PostgreSQL backend, and an admin hub), a data audit with Density’s engineers, and playtests and co-design of the results visual with clinical staff.',
       gated: true,
     },
+
+    /* THE PROCESS (FS371, D31, 2026-10-04): her call, after asking whether
+       the three generative workshops get enough credit: the chapter the
+       other four sheets have. Every line is hers (rehearsal answers in
+       docs/deck-system/rehearsal/groundswell-answers.md, the approved
+       workshop copy in components/Groundswell/parts/WorkshopGrid.js, her
+       old site's Play Testing and Process sections), trimmed; PROVISIONAL
+       marks a join. The old “Behind the scenes” gallery is folded into
+       these steps. */
+    {
+      key: 'research',
+      chapter: {
+        kicker: 'January to October 2025',
+        title: 'The Process',
+        line: 'Four steps, from the first interviews to the pod in the hallway.',
+        steps: [
+          { key: 'research', when: 'Jan–Mar', name: 'Research', outcome: 'One thesis: care worker well-being is neglected.' },
+          { key: 'workshops', when: 'Feb–Apr', name: 'The Workshops', outcome: 'Three workshops; staff need permission and acknowledgement.' },
+          { key: 'playtest', when: 'August', name: 'The Playtest', outcome: '30 participants, and a shift in 10 minutes.' },
+          { key: 'making', when: 'June–Oct', name: 'Making It', outcome: 'Donations, doors with locks, and an install.' },
+        ],
+      },
+      step: 'Step 1 · January to March',
+      name: 'Research',
+      /* her thesis, verbatim (frame.short.research) */
+      takeaway: 'Care worker well-being is neglected in patient care standards.',
+      /* frame.research, her words, up to the synthesis */
+      body: 'A lit review, shadowing with AEIOU and contextual inquiry, and interviews across roles from front desk to nurse manager to chemo nurse. Affinity mapping and tetrahedron analysis synthesized it into one thesis.',
+      layout: 'half',
+      media: {
+        photos: [
+          { key: 'gs-sense-affinity-01', alt: 'Affinity mapping interview findings on the wall.' },
+          { key: 'gs-sense-affinity-03', alt: 'Mapping the tetrahedron analysis.' },
+        ],
+      },
+    },
+    {
+      key: 'workshops',
+      step: 'Step 2 · February to April',
+      name: 'The Workshops',
+      /* rehearsal Q3, her words, trimmed */
+      takeaway: 'Staff need permission, from peers who will cover their workload and from leaders that there will be no repercussions, and acknowledgement of the emotional toll of the work.',
+      /* old site (“We designed multiple participatory workshops… We
+         integrated our nature-based motif”) + Q3's grief-workshop pivot,
+         PROVISIONAL join */
+      body: 'We designed three participatory workshops around a nature-based motif, each ending in a vote on what resonated most. The grief workshop began as a superhero who could fix every workplace problem; we realized it would repeat what we already knew, and pivoted to a soft bunny in a coworker’s place to ask what meaningful grief support looks like.',
+      /* frame.role, her words */
+      mine: 'I drafted the workshop scripts and led the grief workshop, designing it to be trauma-informed and responsive so it would not be extractive in collecting emotional data.',
+      /* Q3: “Elijah and Robertus primarily led the flower workshop” */
+      credit: 'Elijah Benzon and Robertus Sucahyo led the flower workshop.',
+      wide: true,
+      media: {
+        /* the approved copy from WorkshopGrid.js, verbatim; Q1 addendum for the 50 */
+        cards: [
+          { key: 'gs-workshop-grief-01', label: 'Grief Scenarios', name: 'Grief Workshop',
+            alt: 'The grief workshop with oncology staff.',
+            text: 'We created a container for vulnerability, using a soft stuffed animal as a “puppet” to abstract the topic of grief. Staff were given scenarios and asked what they could do or say to support their colleague.',
+            quote: '“A manager or team member asking, what can I do to help? I’ve got you covered.”' },
+          { key: 'gs-workshop-flower-04', label: 'Coloring Culture', name: 'Nourishing the Flower',
+            alt: 'Staff coloring “Nourishing the Flower” worksheets at the flower workshop.',
+            text: 'Using the anatomy of a flower as a metaphor for workplace health, participants mapped their experiences onto two worksheets, one flourishing, one wilting. Kristin Hughes ran one session with 50 staff, and all department heads attended.',
+            quote: '“Positive atmosphere, positive energy. Team player. Support one another.”' },
+          { key: 'gs-workshop-coats-03', label: 'Participatory Poster', name: 'Women in White Coats',
+            alt: 'Paper orchids and “Thank you” cards inviting staff to share their experience.',
+            text: 'We partnered with CancerBridges to honor women in cancer care. Each participant received a hand-made orchid pin with a removable “leaf” to add to a shared poster answering: How has your approach to patient care evolved to help you balance compassion with self-care?',
+            quote: '“Self-care to me is gifting time. ‘Me’ time, ‘she’ time, and ‘we’ time.”' },
+        ],
+      },
+    },
+    {
+      key: 'playtest',
+      step: 'Step 3 · CMU playtest, August 2025',
+      name: 'The Playtest',
+      /* old site, verbatim */
+      takeaway: 'Every participant said that they felt a shift in their emotional state after just 10 minutes in the pod.',
+      /* old site Play Testing, trimmed; the changes are her Q3 follow-up,
+         PROVISIONAL phrasing (“shortening the table to make it more
+         comfortable for bigger bodies. (best way to say that?)”) */
+      body: 'Before installing at the hospital, we invited 30 participants to test the pod at CMU. We scheduled them through Calendly, set up the room with snacks and the elements of our project, gave each a scenario, and recorded feedback. We changed as we went: we shortened the table so it fits more bodies comfortably, tested where the centerpiece best invites people across the table, and rewrote the instructions to start with music, because music makes all the difference.',
+      pull: { quote: '“It’s remarkable what 10 minutes can do…”', cite: 'A playtest participant' },
+      /* Q3 follow-up + her D31 answer, her words */
+      mine: 'Elijah Benzon and I co-led the playtest: the schedule, prep, outline, scenarios, and interview questions.',
+      layout: 'half',
+      media: {
+        /* the session log is cropped to the protocol: no names, no answers */
+        stills: [
+          { key: 'gs-playtest-overhead', alt: 'Looking down into the pod during a playtest, a participant inside.' },
+          { key: 'gs-playtest-inside', alt: 'A participant seated in the pod with the door open.' },
+          { key: 'gs-playtest-01', alt: 'Setting out reflection cards beside the Groundswell signage for a playtest.' },
+          { key: 'gs-playtest-03', alt: 'Playtesting the pod with staff.' },
+          { key: 'gs-playtest-scenario', alt: 'Scenario 2, Decompressing, and the interview questions we asked after each session.' },
+          { key: 'gs-playtest-protocol', alt: 'The session log: each time slot, its scenario, and what each participant noticed and used.' },
+        ],
+      },
+    },
+    {
+      key: 'making',
+      step: 'Step 4 · June to October 2025',
+      name: 'Making It',
+      /* old site Process, verbatim */
+      takeaway: 'The biggest challenge was to navigate the rules and regulations of the hospital and their last minute request to ensure that the pod space had doors with locks.',
+      /* old site Process, trimmed; the tagline pivot is rehearsal Q3 */
+      body: 'As a small but mighty team of three, we iterated on the brand, the ecosystem flow, the service design of the program, the interior design of the pod, and the mindfulness resources. Our fabricator, Greg Baltus, took on the doors in stride, and donations, including Schlage locks, made it possible. A copy workshop with Kristin Hughes moved our tagline from grief to restoration, because the work is so much more than the grief.',
+      /* Q3, her words */
+      mine: 'Copy drafting, budget documentation, and over $40k in material and service donations and partnerships: the NookPod, the finger labyrinths, woodworking, Schlage locks, the Density sensor, and a meditation teacher.',
+      media: {
+        stills: [
+          { key: 'gs-making-prototype-01', alt: 'Early prototypes of the finger labyrinths and reflection cards.' },
+          { key: 'gs-making-mockup-01',    alt: 'Design options for the pod’s painted facade.' },
+          { key: 'gs-making-figma-01',     alt: 'Laying out the art wall’s pieces and signage in Figma.' },
+          { key: 'gs-making-build-01',     alt: 'A thumbs-up beside the nearly finished pod in the studio.' },
+          { key: 'gs-making-build-04',     alt: 'Assembling the Groundswell Garden.' },
+          { key: 'gs-making-build-05',     alt: 'Fitting the facade panels.' },
+          { key: 'gs-making-build-02',     alt: 'Assembling the pod’s interior.' },
+          { key: 'gs-making-install-01',   alt: 'Installing the pod in the hallway.' },
+          { key: 'gs-finale',              alt: 'A hug in front of the art wall at the finale.' },
+        ],
+      },
+    },
   ],
 
   /* FS161–FS163 (2026-10-01): her image edits. Research + flower-04, coats-01,
      coats-03; Production + build-01, playtest-01; removed context-03 and
      flower-02 (still used by the older case-study pages, untouched). New
      alts are described from the photos, hers to rewrite. */
-  /* BEHIND THE SCENES, in two phases (FS131): research, then production.
-     Photos chosen and sorted by what each shows; captions are furniture
-     (described from the photos), hers to rewrite. */
-  process: [
-    {
-      title: 'Research',
-      images: [
-        { key: 'gs-sense-affinity-01', alt: 'Affinity mapping interview findings on the wall.' },
-        { key: 'gs-sense-affinity-02', alt: 'Rehearsing a playtest of a generative workshop.' },  /* FS202 */
-        { key: 'gs-sense-affinity-03', alt: 'Mapping the tetrahedron analysis.' },
-        { key: 'gs-workshop-grief-01', alt: 'The grief workshop with oncology staff.' },
-        { key: 'gs-workshop-grief-02', alt: 'Staff working through prompts at the grief workshop.' },
-        { key: 'gs-workshop-flower-01', alt: 'The flower workshop at the table.' },
-        { key: 'gs-workshop-flower-04', alt: 'Staff coloring “Nourishing the Flower” worksheets at the flower workshop.' },
-        { key: 'gs-workshop-coats-01',  focus: '50% 15%',  /* portrait: keep the faces in the cover crop */ alt: 'The Women in White Coats generative workshop, with women leaders in oncology.' },  /* FS203 */
-        { key: 'gs-workshop-coats-03',  alt: 'Paper orchids and “Thank you” cards inviting staff to share their experience.' },
-      ],
-    },
-    {
-      title: 'Production',
-      images: [
-        { key: 'gs-making-prototype-01', alt: 'Early prototypes of the finger labyrinths and reflection cards.' },
-        { key: 'gs-making-mockup-01',    alt: 'Design options for the pod’s painted facade.' },
-        { key: 'gs-making-figma-01',     alt: 'Laying out the art wall’s pieces and signage in Figma.' },
-        { key: 'gs-making-build-01',     alt: 'A thumbs-up beside the nearly finished pod in the studio.' },
-        { key: 'gs-making-build-04',     alt: 'Assembling the Groundswell Garden.' },  /* FS204 */
-        { key: 'gs-making-build-05',     alt: 'Fitting the facade panels.' },
-        { key: 'gs-making-build-02',     alt: 'Assembling the pod’s interior.' },
-        { key: 'gs-making-install-01',   alt: 'Installing the pod in the hallway.' },
-        { key: 'gs-playtest-01',         alt: 'Setting out reflection cards beside the Groundswell signage for a playtest.' },
-        { key: 'gs-playtest-03',         alt: 'Playtesting the pod with staff.' },
-        { key: 'gs-finale',              alt: 'A hug in front of the art wall at the finale.' },
-      ],
-    },
-  ],
-  processTitle: 'Behind the scenes',
+  /* BEHIND THE SCENES (FS131) folded into The Process steps (FS371). */
 
 
   /* Her note 2026-09-06: "We need to credit Kevin Lorenzi photography."
