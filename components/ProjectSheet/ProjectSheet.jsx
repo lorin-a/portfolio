@@ -427,7 +427,7 @@ export default function ProjectSheet({
                   ))}
                 </ul>
               </section>
-            ) : href ? (
+            ) : href && !sheet?.series ? (  /* FS379: a series replaces the single link */
               <div className={styles.deeper}>
                 <span className={styles.deeperLabel}>Go further</span>
                 {/* FS329: always a new tab, so the folder stays open behind it */}

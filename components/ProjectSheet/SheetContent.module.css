@@ -251,6 +251,92 @@
   text-wrap: pretty;
 }
 
+/* FS378: links out (a map's PDF), set small under the words */
+.links {
+  margin: var(--flow-2) 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 0.25rem;
+}
+
+.links a,
+.seriesList a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  min-height: 44px;
+  font-family: var(--font-body);
+  font-size: var(--step-small);
+  color: var(--color-ink);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+}
+
+.links a:focus-visible,
+.seriesList a:focus-visible {
+  outline: 2px solid var(--color-sage);
+  outline-offset: 2px;
+}
+
+/* FS379: the documentation series, a numbered list of articles */
+.series {
+  margin-top: var(--hero-gap);
+  padding-top: var(--hero-gap);
+  border-top: 1px solid var(--sheet-hair);
+  border-image: var(--rule-grad) 1;
+}
+
+.series .componentBody {
+  max-width: 62ch;
+}
+
+.seriesList {
+  margin: var(--flow-2) 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0 var(--gap-col);
+}
+
+@media (min-width: 900px) {
+  .seriesList {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.seriesList li {
+  border-bottom: 1px solid var(--sheet-hair);
+}
+
+.seriesList a {
+  width: 100%;
+  padding: 0.6rem 0;
+  text-decoration: none;
+  font-size: var(--step-body);
+}
+
+.seriesNum {
+  font-size: var(--step-label);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--color-sage);
+}
+
+.seriesTitle {
+  flex: 1;
+  text-wrap: pretty;
+}
+
+@media (hover: hover) {
+  .seriesList a:hover .seriesTitle {
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+}
+
 /* FS363: a maker credit under a section's words, quiet and small */
 .credit {
   margin: var(--flow-1, 0.75rem) 0 0;

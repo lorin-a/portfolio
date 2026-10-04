@@ -113,6 +113,24 @@ function Work({ media, label, gated, onImage }) {
   return <SheetStage slides={slidesFor(media)} gated={gated} onImage={gated ? null : onImage} label={label} />
 }
 
+/* FS378: source files a section links out to (e.g. a map's full-res PDF);
+   always a new tab, and said so */
+function Links({ links }) {
+  if (!links?.length) return null
+  return (
+    <ul className={styles.links}>
+      {links.map((l) => (
+        <li key={l.href}>
+          <a href={l.href} target="_blank" rel="noopener noreferrer">
+            {l.label}<span aria-hidden="true"> ↗</span>
+            <span className={styles.srOnly}> (opens in a new tab)</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  )
+}
+
 /* Copy may set a phrase in italics with *asterisks* (FS308), so a quote
    can read as a quote without the content files carrying markup. */
 export function rich(text) {
@@ -268,6 +286,16 @@ export default function SheetContent({ sheet, num, title, tagline, titleId }) {
               <h3 id="sheet-system-name" className={styles.componentName}>{sheet.system.label}</h3>
               <p className={styles.componentBody}>{rich(sheet.system.intro)}</p>
               {sheet.system.credit && <p className={styles.credit}>{sheet.system.credit}</p>}
+              {sheet.system.mine && (
+                <div className={`${paper.paper} ${styles.mine}`}>
+                  <span className={paper.holes} aria-hidden="true"><i /><i /><i /></span>
+                  <p className={styles.mineText}>
+                    <span className={paper.label}>My Contribution</span>
+                    <span className={`${styles.mineBody} ${paper.ink}`}>{sheet.system.mine}</span>
+                  </p>
+                </div>
+              )}
+              <Links links={sheet.system.links} />
             </div>
           </div>
           <div className={styles.work}>
@@ -354,6 +382,7 @@ export default function SheetContent({ sheet, num, title, tagline, titleId }) {
                     </p>
                   </div>
                 )}
+                <Links links={c.links} />
               </div>
             </div>
 
@@ -434,6 +463,28 @@ export default function SheetContent({ sheet, num, title, tagline, titleId }) {
           team's; funding stands alone. */}
       {/* ACKNOWLEDGEMENTS (FS187): everyone named, the artist included,
           revised from the old Groundswell page’s “In gratitude” section. */}
+      {/* FS379: the project's full documentation, when it lives elsewhere
+          (Transition Design's Medium publication, one article per exercise) */}
+      {sheet.series && (
+        <section className={styles.series} aria-labelledby="sheet-series">
+          <span className={styles.componentNum}>{sheet.series.kicker}</span>
+          <h3 id="sheet-series" className={styles.componentName}>{sheet.series.title}</h3>
+          {sheet.series.intro && <p className={styles.componentBody}>{rich(sheet.series.intro)}</p>}
+          <ol className={styles.seriesList}>
+            {sheet.series.items.map((it, k) => (
+              <li key={it.href}>
+                <a href={it.href} target="_blank" rel="noopener noreferrer">
+                  <span className={styles.seriesNum}>{String(k + 1).padStart(2, '0')}</span>
+                  <span className={styles.seriesTitle}>{it.title}</span>
+                  <span aria-hidden="true" className={styles.seriesArrow}>↗</span>
+                  <span className={styles.srOnly}> (opens in a new tab)</span>
+                </a>
+              </li>
+            ))}
+          </ol>
+        </section>
+      )}
+
       {acknowledgements ? (
         <section className={styles.thanks} data-reveal="0" aria-labelledby="sheet-thanks">
           {/* FS195: 3 × 3 — people in the first row; Acknowledgements,

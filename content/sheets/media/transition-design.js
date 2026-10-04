@@ -41,6 +41,12 @@ export const TD_IMAGES = {
   /* FS303, uploaded 2026-10-02 with the key as the public ID. Deck slides
      from her local folder (TD_n noted), photos and process images from
      public/images/projects/transition design (Medium's images). */
+  /* FS377: affinity mapping, from her LaCie (Transition Design folder) */
+  'td-bts-wall-full':  'td-bts-wall-full',  // the finished whiteboard: STEEP clusters around food insecurity
+  'td-bts-table':      'td-bts-table',      // the team at the table, writing notes
+  'td-bts-placing':    'td-bts-placing',    // a teammate on a chair placing notes high on the board
+  'td-bts-sorting':    'td-bts-sorting',    // the first sort, notes in rows by theme
+  'td-bts-closeup':    'td-bts-closeup',    // close-up: existing food programs, SNAP, redlining notes
   'td-cover':          'td-cover',          // TD_1: the deck cover, Roots to Resilience: A Food Secure Pittsburgh in 2050
   'td-vision-2050':    'td-vision-2050',    // TD_2: Vision Pittsburgh 2050, a woman on a balcony over a green city
   'td-kitchen-garden': 'td-kitchen-garden', // TD_3: Personal Kitchen Garden

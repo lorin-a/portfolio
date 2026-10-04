@@ -58,7 +58,7 @@ export const transitionDesign = {
   /* Range: the wall, the first map, the vision, the future pictured.
      Captions and alts are furniture, hers to rewrite. */
   prints: [
-    { key: 'td-wall-team-01', caption: 'At the Wall', alt: 'Two teammates adding sticky notes to the affinity clusters on the whiteboard.' },
+    { key: 'td-wall-team-01', caption: 'Affinity Mapping', alt: 'Two teammates adding sticky notes to the affinity clusters on the whiteboard.' },
     { key: 'td-wicked-map', caption: 'The Wicked Problem', alt: 'The Wicked Problem Map: food insecurity at the center, linked to five categories and their factors.' },
     { key: 'td-roots', caption: 'Roots to Resilience', alt: 'The intervention ecosystem across scales, from the household to the planet.' },
     { key: 'td-vision-2050', caption: 'Pittsburgh 2050', alt: 'AI-generated imagery: a woman on a balcony looking over a green Pittsburgh in 2050.' },
@@ -67,11 +67,14 @@ export const transitionDesign = {
   meta: [
     /* M1/M5 header (course, founders) + the publication's disclaimer,
        lightly refined. The disclosure is required on this sheet. */
-    ['Context', ['Transition Design Seminar at Carnegie Mellon, Spring 2025, taught by Terry Irwin and Gideon Kossoff, founders of the Transition Design Institute.', 'Theoretical, with AI-assisted writing, research, and imagery.']],
+    /* FS374: rewritten clear and concise, in even lines; the instructors
+       move to Collaborators (as on SomeBuddy), their full title stays in
+       the credits, and Spring 2025 is on the Timeline line */
+    ['Context', ['Transition Design Seminar', 'at Carnegie Mellon.', 'Theoretical, with AI-assisted', 'research, writing, and imagery.']],
     /* md:8 + sq, her line */
     ['Role', ['Research, Copywriting,', 'Information Design, Data Visualization']],
     /* M1 Team line; the team name from the deck and Medium */
-    ['Collaborators', 'Team Autopoiesis: Diane Hu, Shama Patwardhan, Alisha Saxena'],
+    ['Collaborators', ['Team Autopoiesis: Diane Hu,', 'Shama Patwardhan, Alisha Saxena;', 'Instructors: Terry Irwin', 'and Gideon Kossoff']],
     /* sq Tools + Credits */
     ['Tools Used', 'Miro, Figma Slides, Google Docs, Canva, Midjourney'],
     /* sq's six exercises, paired; D19, her pick: 15 weeks, no per-step weeks */
@@ -103,6 +106,12 @@ export const transitionDesign = {
   system: {
     kicker: 'The Roadmap',
     label: 'Roots to Resilience 2050',
+    /* FS376: her standing rule: “My contribution will always include my
+       assigned portion of the research for the board in addition to the
+       design of the board.” */
+    mine: 'My assigned portion of the research for the roadmap, and its information design.',
+    /* FS378: the full-res PDF from M5 */
+    links: [{ label: 'Roots to Resilience, full-resolution PDF', href: 'https://drive.google.com/file/d/1xt2x0SqwE2EqkcuugkU_2Tczkfam5uIJ/view' }],
     wide: true,
     intro: '“Roots to Resilience 2050” lays out a phased, system-wide roadmap for transforming Pittsburgh’s food landscape from one marked by scarcity and fragmentation into a regenerative, community-owned ecosystem. Each intervention intentionally maps to Max-Neef’s fundamental human needs.',
     media: {
@@ -185,20 +194,33 @@ export const transitionDesign = {
         /* M1 “The Fight for Food Sovereignty”, verbatim */
         { label: 'What we found', text: 'Food insecurity is often framed as a problem of affordability or supply, but at its core, it is a systemic issue of power and control.' },
       ],
-      /* sq, her one stated claim, recast without “I” */
-      mine: 'Information design on the team’s Miro board.',
+      /* FS376: her standing rule (see the roadmap) */
+      mine: 'My assigned portion of the research for the map, and its information design on the team’s Miro board.',
+      links: [{ label: 'Wicked Problem Map, full-resolution PDF', href: 'https://drive.google.com/file/d/1hOt4edN-LIc4aXabGm9v9FrEGa_HI2uh/view' }],
       layout: 'half',
       media: {
         photos: [
           { key: 'td-wicked-map', alt: 'The Wicked Problem Map: food insecurity at the center, its five categories, and other wicked problems at the edges.' },
-          { key: 'td-wall-team-01', alt: 'We preferred an in-person brainstorming session, clustering our research on the wall to reveal subcategories for the map.' },
+          /* FS377: the affinity map that became it (her LaCie photos) */
+          { key: 'td-bts-wall-full', alt: 'Affinity mapping our research on the whiteboard: clusters for each STEEP category around food insecurity.' },
         ],
+        plus: {
+          stills: [
+            { key: 'td-bts-table', alt: 'Writing up research findings as sticky notes.' },
+            { key: 'td-bts-sorting', alt: 'The first sort: notes in rows by theme.' },
+            { key: 'td-bts-placing', alt: 'Placing notes into the clusters, high on the board.' },
+            { key: 'td-wall-team-01', alt: 'We preferred an in-person brainstorming session, clustering our research on the wall to reveal subcategories for the map.' },
+            { key: 'td-bts-closeup', alt: 'Close-up: existing food programs, SNAP, and redlining, linked across clusters.' },
+          ],
+        },
       },
     },
     {
       key: 'stakeholders',
       step: 'Exercise 2',
       name: 'Mapping Stakeholder Relations',
+      mine: 'My assigned portion of the research for the board, and its information design.',
+      links: [{ label: 'Stakeholder Relations board, full-resolution PDF', href: 'https://drive.google.com/file/d/1RlzRwyT_Yv5E6uIwuQWEFw63HB3Vp867/view' }],
       /* M5, verbatim */
       takeaway: 'The challenge isn’t just ‘feed people,’ it’s broker trust where power is uneven and use that trust to turn shared hopes into quick pilots that prove systemic change is possible.',
       /* M5, verbatim, trimmed */
@@ -222,6 +244,8 @@ export const transitionDesign = {
       key: 'history',
       step: 'Exercise 3',
       name: 'Mapping the Evolution',
+      mine: 'My assigned portion of the research for the timeline, and its information design.',
+      links: [{ label: 'Evolution Timeline, full-resolution PDF', href: 'https://drive.google.com/file/d/11IxzlyLALKVjdvlqNCiPhM95jRPF4dlY/view' }],
       /* M5, verbatim */
       takeaway: 'The timeline isn’t a history lesson; it’s a strategic forecast.',
       /* M5, verbatim, trimmed */
@@ -243,6 +267,11 @@ export const transitionDesign = {
       key: 'transition',
       step: 'Exercises 4–5',
       name: 'Futures I and II: Vision and Transition',
+      mine: 'My assigned portion of the research for both maps, and their information design.',
+      links: [
+        { label: 'Living Land Vision, full-resolution PDF', href: 'https://drive.google.com/file/d/1IDNo_lSE1OJr90m7Jdpr3T2-9X6mCjgx/view' },
+        { label: 'Transition map, full-resolution PDF', href: 'https://drive.google.com/file/d/1Jn3ogTjDdXWWuHkrPgiaEAHHLBA8yqTK/view' },
+      ],
       /* M5, verbatim, trimmed */
       takeaway: 'From this aspirational future, we worked backward to build the Roots to Resilience Roadmap.',
       /* M5, verbatim, trimmed */
@@ -284,6 +313,24 @@ export const transitionDesign = {
 
   /* FS347: no separate behind-the-scenes gallery; the working photos and
      process images now sit in the steps they belong to. */
+
+  /* FS379: the Medium publication she set up for the project, one article
+     per exercise. Intro PROVISIONAL, from her note (“I made a medium
+     project folder that contains all of these”); titles are the articles'
+     own, without the shared “Transition Design: Food Insecurity in
+     Pittsburgh” prefix. */
+  series: {
+    kicker: 'On Medium',
+    title: 'The Full Documentation',
+    intro: 'I set up a Medium publication for the project, with an article for each exercise: the research behind every map, the full write-up, and the high-resolution maps.',
+    items: [
+      { title: 'Mapping a Wicked Problem', href: 'https://medium.com/transition-design-seminar-spring-25-carnegie/transition-design-seminar-2025-team-autopoiesis-food-insecurity-in-pittsburgh-626ecdf1fa97' },
+      { title: 'Mapping Stakeholder Relations', href: 'https://medium.com/transition-design-seminar-spring-25-carnegie/transition-design-seminar-2025-team-autopoiesis-food-insecurity-in-pittsburgh-mapping-be40de7856e8' },
+      { title: 'Mapping the Evolution of a Wicked Problem', href: 'https://medium.com/transition-design-seminar-spring-25-carnegie/transition-design-seminar-2025-team-autopoiesis-food-insecurity-in-pittsburgh-mapping-the-c62e7d4cf91f' },
+      { title: 'Designing a Transition', href: 'https://medium.com/transition-design-seminar-spring-25-carnegie/transition-design-seminar-2025-team-autopoiesis-food-insecurity-in-pittsburgh-designing-a-8323898246ee' },
+      { title: 'Designing Systems Interventions', href: 'https://medium.com/transition-design-seminar-spring-25-carnegie/transition-design-seminar-2025-team-autopoiesis-food-insecurity-in-pittsburgh-designing-systems-b41f38a9cd4b' },
+    ],
+  },
 
   /* CREDITS: names from M1; the method note is M1/M5's own disclaimer,
      verbatim. */
