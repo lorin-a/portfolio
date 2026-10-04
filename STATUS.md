@@ -493,9 +493,9 @@ Transition Design
 Bridging the G.A.P.
 - D23 Duration: 4 or 5 weeks; season and year — ✅ HER ANSWER: 5 weeks, Fall 2024
 - D24 Logo animations: hers? — ✅ HER ANSWER: yes, all of them
-- D25 Her part in signage / mural / apparel — 
-- D26 Photo credit for the guide and app shoots (“Zo”?) — 
-- D27 Last What’s next bullet → her words — 
+- D25 Her part in signage / mural / apparel — ✅ HER ANSWER: “these were collaborative” → no individual line; sections stay in the team’s “we” (Michael’s sketches/icons credit stays)
+- D26 Photo credit for the guide and app shoots (“Zo”?) — ✅ HER ANSWER: she took them; no separate photo credit
+- D27 Last What’s next bullet → her words — ✅ HER ANSWER: “Lets not mention anything” → read as: drop the What’s next card entirely (no GAP-association line, no empty item); confirm with her when shown
 Groundswell (live)
 - D28 9-month vs 12-month pilot — 
 - D29 Donations: $30k vs $40k — 
