@@ -306,6 +306,20 @@ export const somebuddy = {
         ],
       },
     },
+    {
+      key: 'pitch',
+      /* FS369: the pitch, her photo from the old site; words are sq
+         “Outcomes”, verbatim */
+      step: 'After the studio · May 2025',
+      name: 'The Pitch',
+      body: 'We shared our concept with Carnegie Mellon’s Department of Student Affairs and presented the full vision to their team. It was met with sincere interest, especially around incorporating SomeBuddy into Fall 2025 orientation.',
+      layout: 'half',
+      media: {
+        photos: [
+          { key: 'sb-pitch', alt: 'Presenting SomeBuddy to CMU’s Department of Student Affairs over Zoom, with Yaezi Lee, Rui Ying, and Raelynn O’Leary.' },
+        ],
+      },
+    },
   ],
 
   /* REFLECTION. Sense is PROVISIONAL, from the team's own lessons in sq and

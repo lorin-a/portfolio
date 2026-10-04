@@ -34,6 +34,9 @@ export const SB_IMAGES = {
   'sb-moodboard':          'sb-moodboard',  // Medium image 18: the mood board
   'sb-color-theory':       'sb-color-theory',  // Medium image 19: color and logo explorations
   'sb-brand-feedback':     'sb-brand-feedback',  // Medium image 20: crit notes on the explorations
+  /* FS369: the Zoom pitch to Student Affairs, 12 May 2025 (her old site;
+     original on the LaCie root), cropped above Zoom's recording banner */
+  'sb-pitch':              'sb-pitch-call',
 }
 
 export const SB_VIDEOS = {
