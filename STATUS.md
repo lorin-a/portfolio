@@ -486,9 +486,9 @@ BirthStory
 - D17 Method count: 7 parents vs 5 interviews + 3 think-alouds — ✅ SETTLED BY EVIDENCE: old site “We interviewed 7 parents” + her Q6 agree; sheet already says seven; not asked
 Transition Design
 - D18 Six or five exercises (sheet says both) — ✅ HER ANSWER: “Six exercises” everywhere; five tiles, step 4 = “Futures I and II: Vision and Transition”
-- D19 Duration: 15-week sprint vs 18 vs per-step durations — 
-- D20 Her part in the 2050 story (“My part:”) — 
-- D21 Homepage link → Assignment #5? — 
+- D19 Duration: 15-week sprint vs 18 vs per-step durations — ✅ HER ANSWER: 15 weeks (Spring 2025), drop per-step week counts
+- D20 Her part in the 2050 story (“My part:”) — ✅ HER ANSWER (after asking “What would you do?”; Claude advised): drop “My part”; the team’s story, one framing line, the pictures, and the YouTube recording (qObw2qPiEmM) behind a play button
+- D21 Homepage link → Assignment #5? — ✅ HER ANSWER: Assignment #5
 - D22 Reflection cards → her words — 
 Bridging the G.A.P.
 - D23 Duration: 4 or 5 weeks; season and year — 
