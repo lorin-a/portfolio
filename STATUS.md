@@ -469,6 +469,18 @@ funding, captions, card note).
 | FS377 | “We might have even better BTS imagery to use also.” (2026-10-04, Transition Design feedback) | ✅ DONE: five affinity-mapping photos from her LaCie (Transition Design folder) uploaded; Exercise 1 shows the map + the finished whiteboard, then a gallery of the process |
 | FS378 | “Should we link to the the HiRes PDFs of the final maps? I think yes. Those can be found in Medium.” (2026-10-04, Transition Design feedback) | ✅ DONE: full-resolution PDF links (public Google Drive, verified) on every map: Wicked Problem, Stakeholder Relations, Evolution Timeline, Living Land Vision (4A), Transition map (4B), Roots to Resilience |
 | FS379 | “There is also a lot of copy/context in medium. Maybe worth showing that I made a medium project folder that contains all of these.” (2026-10-04, Transition Design feedback) | ✅ DONE: “The Full Documentation” block lists her five Medium articles (intro PROVISIONAL, from her note); replaces the single Go further link |
+| FS380 | “The app polaroid should show more of the GPS feature not he photo frames as those are a minor function.” (2026-10-04, Bridging feedback) | 🟡 IN PROGRESS |
+| FS381 | “Use a product photo of the guide rather than man holding it.” (2026-10-04, Bridging feedback) | 🟡 IN PROGRESS |
+| FS382 | “The professor on this project is Brett Yasko.” (2026-10-04, Bridging feedback) | 🟡 IN PROGRESS |
+| FS383 | “The paragraph rag on \"the project\" needs to be smoothed out, copy edit if necessary to get a clean edge.” (2026-10-04, Bridging feedback) | 🟡 IN PROGRESS |
+| FS384 | “Currently a user has to click in to see the breadth of my brand work and animation which is my most impressive contribution should we do a section or visualization that highlights these more?” (2026-10-04, Bridging feedback) | 🟡 IN PROGRESS |
+| FS385 | “Michael illustrated the gap guide bike gear and icon design, Rui did the app's UXUI” (2026-10-04, Bridging feedback) | 🟡 IN PROGRESS |
+| FS386 | “The guide's gallery could be better, would it be more impressive to literally BUILD a digital pamphlet that can be explored and opened and fliped etc?” (2026-10-04, Bridging feedback) | 🟡 IN PROGRESS |
+| FS387 | “Signeage and trail mural also needs a different set up, the work is hiding behind the gallery and its leading with old signeage, we should be highlighting the work and its context.” (2026-10-04, Bridging feedback) | 🟡 IN PROGRESS |
+| FS388 | “Images are taking a little long to load on first click.” (2026-10-04, Bridging feedback) | 🟡 IN PROGRESS |
+| FS389 | “There are some things you isolated that look stronger alongside other things all at once. Consider how the current design is not serving the work.” (2026-10-04, Bridging feedback) | 🟡 IN PROGRESS |
+| FS390 | “Early iteration photos are not good and it should focus on my work not Michaels I did the brand iteration. you can show Rui's lo-fi app wireframes, you could show iterations of the icons, you could also show my unrelated unused sticker design.” (2026-10-04, Bridging feedback) | 🟡 IN PROGRESS |
+| FS391 | “We can name that one of the biggest challenges was finding a universal illustration style that worked for us as a team and the product.” (2026-10-04, Bridging feedback) | 🟡 IN PROGRESS |
 =======
 | FS193 | "i need this to look 50% neater, better orgnanized and simple" (2026-10-01), read as the Acknowledgements | ⏳ IN PROGRESS |
 >>>>>>> parent of f51f3e4 (feat(sheet): acknowledgements in one format: name over one-line role, three labelled lines (FS193))
