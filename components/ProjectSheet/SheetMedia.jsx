@@ -53,7 +53,7 @@ export function slidesFor(media = {}) {
     if (item.type === 'youtube') {
       out.push({ key: `yt-${item.youtube}`, type: 'youtube', youtube: item.youtube, alt: item.alt || '',
         poster: item.posterSrc || (item.poster ? (item.posterVideo ? cloudVideoFrame(VIDEOS[item.poster], item.at) : img(item.poster, 1800)) : null),
-        length: item.length })
+        length: item.length, playAt: item.playAt })
       return
     }
     const type = item.type || 'image'
@@ -113,7 +113,7 @@ export function SheetStage({ slides, gated, onImage, label, fit }) {
       <SheetPrototype name={s.name} fallback={s.fallback} fallbackAlt={s.alt} />
     </div>
   ) : s.type === 'youtube' ? (
-    <YouTubeFilm key={s.key} id={s.youtube} poster={s.poster} title={s.alt} length={s.length} />
+    <YouTubeFilm key={s.key} id={s.youtube} poster={s.poster} title={s.alt} length={s.length} playAt={s.playAt} />
   ) : s.type === 'video' ? (
     /* FS358: plays from the top when it comes into view, pauses when it leaves */
     <InViewVideo key={s.key} src={s.src} ref={videoRef} holdRef={holdRef}
@@ -193,7 +193,7 @@ function cloudVideoFrame(id, at = 2) {
  * poster and a play button; nothing loads from YouTube until it is asked
  * for, then the no-cookie player takes the frame and starts with sound.
  */
-function YouTubeFilm({ id, poster, title, length }) {
+function YouTubeFilm({ id, poster, title, length, playAt }) {
   const [on, setOn] = useState(false)
   if (on) {
     return (
@@ -206,7 +206,8 @@ function YouTubeFilm({ id, poster, title, length }) {
     <button type="button" className={styles.film} onClick={() => setOn(true)}
       aria-label={`Play the video: ${title}${length ? ` (${length})` : ''}`}>
       {poster && <img src={poster} alt="" className={styles.stageMedia} />}
-      <span className={styles.filmPlay} aria-hidden="true">
+      {/* playAt nudges the button into a clear spot on a busy poster */}
+      <span className={styles.filmPlay} aria-hidden="true" style={playAt ? { left: playAt } : undefined}>
         <svg viewBox="0 0 24 24"><path d="M8 5.5v13l10.5-6.5z" fill="currentColor" /></svg>
       </span>
       {length && <span className={styles.filmLength} aria-hidden="true">{length}</span>}

@@ -27,6 +27,9 @@
  * is her Medium/Squarespace wording, trimmed. “My Contribution” is
  * dropped everywhere: no source says what was hers per section, and six
  * [LORIN TO WRITE] boxes read as unfinished. Ask her once instead.
+ * FS373 (2026-10-04) she answered: hers are the concept video (animated,
+ * edited, narrated), the logo animation, and the app animations; she led
+ * copywriting; orientation, patches, and research were team work.
  *
  * MEDIA: content/sheets/media/somebuddy.js. The research slides (ecosystem
  * map, personas, user flows, principles) came from her Medium article and
@@ -84,7 +87,8 @@ export const somebuddy = {
     ['Context', 'Final project for the Carnegie Mellon School of Design MA Interaction Design Studio II, Spring 2025'],
     /* FS354, her words (2026-10-04): “My role was research, brand,
        strategy, and animation. i did not make the app or UI mockups.” */
-    ['Role', ['Research, Brand Identity,', 'Strategy, Animation']],
+    /* FS373: + copywriting (“led copywriting for most things”) */
+    ['Role', ['Research, Brand Identity, Strategy,', 'Animation, Copywriting']],
     /* med “Team” and “Class” */
     ['Collaborators', ['Yaezi Lee and Rui Ying, design team;', 'Ashley Deal and Raelynn O’Leary, instructors']],
     /* md + sq */
@@ -173,6 +177,7 @@ export const somebuddy = {
       name: 'Badges and Patches',
       /* sq, two passages joined and lightly condensed. */
       credit: 'Patch illustrations by Yaezi Lee; app UX/UI design by Rui Ying and Yaezi Lee.',
+      mine: 'I animated the badge customization.',
       body: 'Earning a first badge at orientation bingo introduces students to the physical patch element of the ecosystem and inspires a collection throughout the year. Each badge, earned by doing something together with another SomeBuddy, can be customized in color, text, shape, and type color.',
       media: {
         stills: [
@@ -187,6 +192,7 @@ export const somebuddy = {
       name: 'Bingo Cards',
       /* sq, verbatim but for typos (“or and”, “the own”, “social moment”). */
       credit: 'App UX/UI design by Rui Ying and Yaezi Lee.',
+      mine: 'I animated the bingo card in use.',
       body: 'The bingo card started as our Orientation Bingo Card, and students can keep the fun going by joining new cards organized by theme, like outdoor, thrifting, or food. They can create their own custom card, set their own challenges, and share it with others. It’s a light, playful way to turn everyday activities into social moments.',
       media: {
         stills: [
@@ -202,13 +208,15 @@ export const somebuddy = {
          Board”; week 5: “Animation, Video Editing”). Hers to rewrite. */
       /* D9, her pick (2026-10-04) */
       body: 'We scripted and storyboarded the concept video in week four. I animated and edited it for the final presentation.',
+      /* FS373, her answer (2026-10-04): “Concept Video, Logo + app animations, 2 and 4 were group collaborations I also narrated and led copywriting for most things.” */
+      mine: 'I animated, edited, and narrated the concept video in After Effects, from the storyboard to the final cut.',
       /* FS360: one film behind one play button, not a gallery. The full
-         2:55 video, on her YouTube (med); the poster is a frame of her
-         animation (students in brand color on campus), chosen so the play
-         button sits on open ground, not on type. */
+         2:55 video, on her YouTube (med). FS373: the poster is the film's
+         tagline frame (“Spontaneous. Simple. Social.” and the SomeBuddy
+         flower over campus), so it says what this is before it plays. */
       media: {
         stills: [
-          { type: 'youtube', youtube: 'pdlaitoGycA', length: '2:55', poster: 'sb-backpack-collage', posterVideo: true, at: 3,
+          { type: 'youtube', youtube: 'pdlaitoGycA', length: '2:55', poster: 'sb-social-solo', posterVideo: true, at: 9, playAt: '53%',  /* the gap between “Simple.” and the flower */
             alt: 'SomeBuddy: A Social App for Grad Students, the concept video' },
         ],
         /* D1: the storyboard under the film, from storyboard to film */
@@ -316,6 +324,7 @@ export const somebuddy = {
          the paragraph (med, lightly trimmed), so nothing is stacked */
       body: 'Users told us trust and CMU verification mattered, so we first tried colors adjacent to the CMU brand, alongside palettes that could feel inviting but also academic. The logo plays with language and shapes: the smile lets you know it is safe and friendly, while the shapes draw you in from afar. The Quicksand typeface softens the intensity of the color palette, and the badge illustrations tie in CMU references.',
       credit: 'Patch and badge illustrations by Yaezi Lee.',
+      mine: 'I animated the logo and led the copywriting.',
       media: {
         stills: [
           { type: 'video', key: 'sb-logo-motion', alt: 'The SomeBuddy logo animation: the speech-bubble D drops in and smiles.' },

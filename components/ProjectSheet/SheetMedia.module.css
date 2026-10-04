@@ -970,7 +970,9 @@
 }
 
 .film .stageMedia {
-  object-fit: cover;
+  /* FS373: the whole frame, letterboxed on the film's black, so a poster's
+     words are never cut at the edges */
+  object-fit: contain;
 }
 
 .filmPlay {
