@@ -256,44 +256,46 @@
 }
 
 /* ===========================================
-   PILLS
+   CONTRIBUTIONS (FS350)
+   Metadata, not controls. They were pills: four rounded, filled, bordered
+   shapes stacked over the Open project button, so the button's glass had
+   three look-alikes beside it and the eye couldn't tell which one acts.
+   Now one line of text, a step up in size, set off by a middle dot. The
+   column then holds a single shape, the one that opens the project.
    =========================================== */
-.pills {
+.roles {
+  list-style: none;
+  margin: 0 0 var(--space-sm);
+  padding: 0;
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
-  margin-bottom: var(--space-sm);
+  align-items: baseline;
+  row-gap: 0.25rem;
+  column-gap: 0.6em;
+  font-family: var(--font-body);
+  font-size: clamp(15px, 1.15vw, 17px);
+  font-weight: 500;
+  line-height: 1.5;
+  letter-spacing: 0.01em;
+  color: var(--color-ink);
 }
 
-.pill {
-  font-family: var(--font-body);
-  font-size: 13px;
-  font-weight: 400;
-  padding: 4px 12px;
-  border-radius: var(--radius-pill);
-  border: 1.5px solid;
+.roles li {
   white-space: nowrap;
 }
 
-.pillSense {
-  composes: pill;
-  color: var(--pill-sense-text);
-  border-color: var(--pill-sense-border);
-  background: var(--pill-sense-bg);
+/* the dot rides on the end of the item before it, so a wrapped line
+   never opens on a stray dot */
+.roles li:not(:last-child)::after {
+  content: '·';
+  display: inline-block;
+  margin-left: 0.6em;
+  opacity: 0.45;
 }
 
-.pillWeave {
-  composes: pill;
-  color: var(--pill-weave-text);
-  border-color: var(--pill-weave-border);
-  background: var(--pill-weave-bg);
-}
-
-.pillShape {
-  composes: pill;
-  color: var(--pill-shape-text);
-  border-color: var(--pill-shape-border);
-  background: var(--pill-shape-bg);
+:global(:root[data-theme="dark"]) .roles {
+  color: #ffffff;
+  opacity: 0.88;
 }
 
 /* ===========================================

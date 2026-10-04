@@ -220,8 +220,6 @@ export default function ProjectPreview({
     composeObserver.observe(section)
   }, { scope: sectionRef, dependencies: [mediaSrc, mediaSequence.length] })
 
-  const pillClass = styles[`pill${pillVariant.charAt(0).toUpperCase() + pillVariant.slice(1)}`] || styles.pillWeave
-
   return (
     <section
       ref={sectionRef}
@@ -323,11 +321,13 @@ export default function ProjectPreview({
         {tagline && <p className={styles.tagline}>{tagline}</p>}
         {description && <p className={styles.description}>{description}</p>}
         {contributions.length > 0 && (
-          <div className={styles.pills}>
+          /* FS350: her contributions as a quiet line of text, not pills;
+             the only shape in the column is the control that opens */
+          <ul className={styles.roles} aria-label="My contributions">
             {contributions.map(c => (
-              <span key={c.label} className={`${styles.pill} ${pillClass}`}>{c.label}</span>
+              <li key={c.label}>{c.label}</li>
             ))}
-          </div>
+          </ul>
         )}
         {canExpand && (
           <button
