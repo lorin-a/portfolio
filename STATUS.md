@@ -466,14 +466,14 @@ funding, captions, card note).
 
 ### ⟢ DECISION QUEUE (FS370, 2026-10-04): one at a time, answers logged here
 SomeBuddy
-- D1 A1 concept-video storyboard → under the film in The Concept Video? — 
-- D2 E1 speed-dating storyboards → in Testing? — 
-- D3 E3 affinity map → in Synthesis before the personas? — 
-- D4 E2 research plan → in Research, or leave out? — 
-- D5 B lo-fi/mid-fi app screens (credited to Rui + Yaezi) → one before→after beat? — 
-- D6 C early badges → in Brand Identity? — 
-- D7 D CMU-palette boards (May 13) → were they the pitch? — 
-- D8 Pitch photo: blur the staff names / her email? — 
+- D1 A1 concept-video storyboard → under the film in The Concept Video? — ✅ HER ANSWER: under the film
+- D2 E1 speed-dating storyboards → in Testing? — ✅ HER ANSWER: yes, in Testing
+- D3 E3 affinity map → in Synthesis before the personas? — ✅ HER ANSWER: yes, before the personas
+- D4 E2 research plan → in Research, or leave out? — ✅ HER ANSWER: leave out
+- D5 B lo-fi/mid-fi app screens (credited to Rui + Yaezi) → one before→after beat? — ✅ HER ANSWER: one before→after in The App, credited
+- D6 C early badges → in Brand Identity? — ✅ HER ANSWER: yes, both (C1, C2)
+- D7 D CMU-palette boards (May 13) → were they the pitch? — 🟠 HER ANSWER: not sure; left out for now, open
+- D8 Pitch photo: blur the staff names / her email? — ✅ HER ANSWER: blur her email tag and the Otter notetaker tile; keep names
 - D9 Concept Video line (PROVISIONAL) → approve or rewrite — 
 - D10 Weave card (“What I’ll carry forward”) → her words — 
 - D11 Homepage folder tab “UX” → rename (Research? Strategy?) — 
