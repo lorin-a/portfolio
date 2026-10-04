@@ -52,7 +52,7 @@ export function slidesFor(media = {}) {
     /* FS360: one full film behind a play button (YouTube, no-cookie) */
     if (item.type === 'youtube') {
       out.push({ key: `yt-${item.youtube}`, type: 'youtube', youtube: item.youtube, alt: item.alt || '',
-        poster: item.poster ? (item.posterVideo ? cloudVideoFrame(VIDEOS[item.poster], item.at) : img(item.poster, 1800)) : null,
+        poster: item.posterSrc || (item.poster ? (item.posterVideo ? cloudVideoFrame(VIDEOS[item.poster], item.at) : img(item.poster, 1800)) : null),
         length: item.length })
       return
     }

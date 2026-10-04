@@ -25,20 +25,10 @@
  * Process: Field Research (words left, photos right), Synthesis, and
  * Iteration and Feedback. Behind-the-scenes gallery folded into the steps.
  *
- * OPEN, hers to settle (also in STATUS):
- *   · DURATION: Medium says 4 weeks; cp and Squarespace say 5 (and the
- *     Squarespace timeline lists five one-week phases). The sheet follows
- *     Medium, as asked, and lists the phases without week numbers.
- *   · Season and year are in none of the sources.
- *   · Who photographed the guide (the GAP_Pamphlet series) and the app
- *     shoot? No credit on file; the app-shoot files are named
- *     “Zo_Lorin_Anderberg”, which may name a photographer.
- *   · Her part in the Guide, Signage, and Apparel is not stated anywhere:
- *     Medium credits Michael with the pamphlet illustrations, icons, and
- *     signage, and Rui with the app; her stated parts are the brand
- *     identity, the first sticker badges, and the app's selfie slides.
- *   · Role says Animation, but no source says which animations are hers
- *     (the logo animations are assumed, not confirmed).
+ * SETTLED 2026-10-04 (FS370 decision queue): 5 weeks, Fall 2024 (D23);
+ *   the logo animations are hers (D24); signage, mural, and apparel were
+ *   collaborative, so no individual line (D25); she took the guide and app
+ *   photos (D26); no What's next card (D27).
  */
 
 /* one phone's display, cut from a deck slide just inside the slide's own
@@ -82,7 +72,9 @@ export const bridgingTheGap = {
     ['Tools Used', 'Figma, Adobe Illustrator, After Effects'],
     /* md Duration; phases from sq (Ideation, Research/Synthesis, Concept,
        Refinement, Presentation). See the duration conflict above. */
-    ['Timeline', ['4 weeks', 'Ideation, Research and Synthesis, Concept, Refinement, Presentation']],
+    /* D23, her pick (2026-10-04): 5 weeks, Fall 2024 (her old site, three
+       times; file dates Nov 2024) */
+    ['Timeline', ['5 weeks, Fall 2024', 'Ideation, Research and Synthesis, Concept, Refinement, Presentation']],
   ],
 
   frame: {
@@ -118,8 +110,7 @@ export const bridgingTheGap = {
       /* sq Concept (first sentence) + md brand paragraph, verbatim. */
       body: 'The campaign is called “Bridging the GAP,” referring to the knowledge gap between Pittsburgh residents and the Great Allegheny Passage Trail Association. I started crafting logo ideas that would incorporate movement and biking. We chose the National Park typeface, and I manually manipulated the letters to get a rounded shape with additional features. I also explored bridge and river shapes to bring home the metaphor.',
       /* md The Work (“I started drafting the brand identity”) + the brand
-         paragraph. PROVISIONAL: the animation clause assumes the logo
-         animations are hers (Role: Animation); hers to confirm. */
+         paragraph. The logo animations are all hers (D24, 2026-10-04). */
       /* FS303 notes: md, verbatim */
       notes: [
         { label: 'The tone', text: 'We gathered mood board inspiration of the playful, colorful, and inviting tone that we wanted Bridging the Gap to have.' },
@@ -247,7 +238,7 @@ export const bridgingTheGap = {
       /* FS347: the process. Week labels: Medium gives 4 weeks with no
          per-phase dates, so steps are labeled by phase, not by week. */
       chapter: {
-        kicker: 'Four weeks',
+        kicker: 'Five weeks · Fall 2024',
         title: 'The Process',
         line: 'From the trail to the four deliverables, and the feedback that pulled them into one system.',
         steps: [
@@ -342,17 +333,7 @@ export const bridgingTheGap = {
         { head: 'Split by Strength', text: 'We split up the work to suit our skill sets, and our diverse skills and shared interests made for a stellar team.' },
       ],
     },
-    {
-      id: 'shape', verb: 'Shape', title: 'What’s next',
-      shift: ['Proposal', 'Real World'],
-      list: [
-        /* md Reflection */
-        { head: 'Real Results', text: 'The GAP association told us they had explored an app in the past, and we felt an enormous amount of potential for real world results.' },
-        /* md Finale: “there is more work to do and many edits that could make
-           it even better”, with nothing named */
-        { head: '[Next Step]', text: '[LORIN TO WRITE: what it would take to bring this to the GAP association.]' },
-      ],
-    },
+    /* D27 (2026-10-04, “Lets not mention anything”): no What's next card */
   ],
 
   /* BEHIND THE SCENES: folded into the process steps (FS347). */

@@ -296,7 +296,7 @@ export default function Home() {
           ]}
           cardVariant="file"
           sheet={DRAFT_SHEETS ? transitionDesignSheet : null}
-          href="https://medium.com/transition-design-seminar-spring-25-carnegie"
+          href="https://medium.com/transition-design-seminar-spring-25-carnegie/transition-design-seminar-2025-team-autopoiesis-food-insecurity-in-pittsburgh-designing-systems-b41f38a9cd4b"
           external
         />
 

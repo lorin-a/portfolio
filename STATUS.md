@@ -460,43 +460,43 @@ funding, captions, card note).
 | FS368 | “show me first what you think about using because they might be old versions” (2026-10-04, on the LaCie finds) | 🟡 WAITING ON HER: a local review page shows A (storyboard), B (lo-fi/mid-fi app, credited to Rui + Yaezi), C (early badges), D (CMU-palette options, May 13) with Claude's picks; X items not recommended. Nothing goes on a sheet until she picks |
 | FS369 | “Study my old portfolio too: https://snail-squid-djta.squarespace.com/case-studies/somebuddy and all other projects on there for important content or copy. The image is there: https://images.squarespace-cdn.com/content/v1/6854b2c2e55b8c56313eb180/ec41f7bf-9fcc-4d19-b6a5-044ce1ad2997/aeb3b04f-5aaf-4407-80ab-aeebf226945b.JPG?format=2500w for the zoom pitch” (2026-10-04) | ✅ STUDIED. All 25 old-site pages scraped verbatim (text + image URLs, DOM order) to docs/case-study-editorial/sources/squarespace-full/ (local, gitignored), with compare-<project>.md for BirthStory, TD, GAP, Groundswell. SomeBuddy: The Pitch added (Zoom call, 12 May 2025, uploaded as sb-pitch-call, cropped above the recording banner; sq Outcomes copy). Found on the old site: the speed-dating storyboards, the affinity map, the research plan (added to her review page as E1–E3, awaiting picks). Top cross-project findings for her: BirthStory outcome wording vs the old site's “eventual creation… by the professors and the client”, and a missing parent quote; TD sheet says “Six” exercises in one line and “Five” in another (old site: six, 3 weeks each, 15-week sprint); GAP old site says 5 weeks three times; Groundswell (live) old site says 12-month pilot vs sheet 9-month, $30k vs $40k, research assistants and a few credit names differ, and the 30-participant playtest quotes are not on the sheet |
 | FS370 | “feed me the decisions to be made here one at a time and I will answer” (2026-10-04) | ✅ ALL 31 ANSWERED OR SETTLED (DECISION QUEUE block below). Open: D7 (CMU-palette boards, not sure), D10 (SomeBuddy Weave card), D22 (TD reflection). Next: build the answers; Groundswell Process chapter (D31) in dev |
-| FS371 | “go” (2026-10-04: build the D1–D31 answers) | 🟡 IN PROGRESS: SomeBuddy → BirthStory/TD/Bridging copy → Groundswell Process chapter |
+| FS371 | “go” (2026-10-04: build the D1–D31 answers) | 🟡 SomeBuddy, BirthStory, TD, Bridging answers BUILT (dev). Renderer: media.plus, media.pair, youtube posterSrc, reflection columns follow the card count. Next: Groundswell Process chapter (D31) |
 =======
 | FS193 | "i need this to look 50% neater, better orgnanized and simple" (2026-10-01), read as the Acknowledgements | ⏳ IN PROGRESS |
 >>>>>>> parent of f51f3e4 (feat(sheet): acknowledgements in one format: name over one-line role, three labelled lines (FS193))
 
 ### ⟢ DECISION QUEUE (FS370, 2026-10-04): one at a time, answers logged here
 SomeBuddy
-- D1 A1 concept-video storyboard → under the film in The Concept Video? — ✅ HER ANSWER: under the film
-- D2 E1 speed-dating storyboards → in Testing? — ✅ HER ANSWER: yes, in Testing
-- D3 E3 affinity map → in Synthesis before the personas? — ✅ HER ANSWER: yes, before the personas
+- D1 A1 concept-video storyboard → under the film in The Concept Video? — ✅ HER ANSWER: under the film · 🔨 BUILT (dev, FS371)
+- D2 E1 speed-dating storyboards → in Testing? — ✅ HER ANSWER: yes, in Testing · 🔨 BUILT (dev, FS371)
+- D3 E3 affinity map → in Synthesis before the personas? — ✅ HER ANSWER: yes, before the personas · 🔨 BUILT (dev, FS371)
 - D4 E2 research plan → in Research, or leave out? — ✅ HER ANSWER: leave out
-- D5 B lo-fi/mid-fi app screens (credited to Rui + Yaezi) → one before→after beat? — ✅ HER ANSWER: one before→after in The App, credited
-- D6 C early badges → in Brand Identity? — ✅ HER ANSWER: yes, both (C1, C2)
+- D5 B lo-fi/mid-fi app screens (credited to Rui + Yaezi) → one before→after beat? — ✅ HER ANSWER: one before→after in The App, credited · 🔨 BUILT (dev, FS371)
+- D6 C early badges → in Brand Identity? — ✅ HER ANSWER: yes, both (C1, C2) · 🔨 BUILT (dev, FS371)
 - D7 D CMU-palette boards (May 13) → were they the pitch? — 🟠 HER ANSWER: not sure; left out for now, open
-- D8 Pitch photo: blur the staff names / her email? — ✅ HER ANSWER: blur her email tag and the Otter notetaker tile; keep names
-- D9 Concept Video line (PROVISIONAL) → approve or rewrite — ✅ HER ANSWER: “We scripted and storyboarded the concept video in week four. I animated and edited it for the final presentation.”
+- D8 Pitch photo: blur the staff names / her email? — ✅ HER ANSWER: blur her email tag and the Otter notetaker tile; keep names · 🔨 BUILT (dev, FS371)
+- D9 Concept Video line (PROVISIONAL) → approve or rewrite — ✅ HER ANSWER: “We scripted and storyboarded the concept video in week four. I animated and edited it for the final presentation.” · 🔨 BUILT (dev, FS371)
 - D10 Weave card (“What I’ll carry forward”) → her words — 🟠 HER ANSWER: skip for now (open)
-- D11 Homepage folder tab “UX” → rename (Research? Strategy?) — ✅ HER ANSWER: Research (gallery: ecosystem map, what we heard, principles, affinity map)
+- D11 Homepage folder tab “UX” → rename (Research? Strategy?) — ✅ HER ANSWER: Research (gallery: ecosystem map, what we heard, principles, affinity map) · 🔨 BUILT (dev, FS371)
 - D12 Concept video: YouTube, or self-host her local 2:56 file — ✅ HER ANSWER: keep YouTube
-- D13 Busy-Buddies: keep the hyphen? — ✅ HER ANSWER: “Busy Students” → tagline “Approachable Socialization for Busy Students”
+- D13 Busy-Buddies: keep the hyphen? — ✅ HER ANSWER: “Busy Students” → tagline “Approachable Socialization for Busy Students” · 🔨 BUILT (dev, FS371)
 BirthStory
 - D14 Outcome: “concept only” vs old site “eventual creation… by the professors and the client” — ✅ SETTLED BY HER EARLIER (FS309: “student project for real client concept pitch only at this stage”); old-site claim is outdated, not asked
-- D15 Add the parent quote “It would be tragic to lose those moments if the app disappeared someday.” — ✅ HER ANSWER: add as a pull quote, keep the paragraph
-- D16 Client naming (Myana, co-developed by Pitt researchers) — ✅ HER ANSWER: add the people + full names: Myana (Mothers You Are Not Alone), University of Pittsburgh Center for Research on Healthcare; client Sarah Burns, MSW, LSW, and Tamar Krishnamurti, PhD
+- D15 Add the parent quote “It would be tragic to lose those moments if the app disappeared someday.” — ✅ HER ANSWER: add as a pull quote, keep the paragraph · 🔨 BUILT (dev, FS371)
+- D16 Client naming (Myana, co-developed by Pitt researchers) — ✅ HER ANSWER: add the people + full names: Myana (Mothers You Are Not Alone), University of Pittsburgh Center for Research on Healthcare; client Sarah Burns, MSW, LSW, and Tamar Krishnamurti, PhD · 🔨 BUILT (dev, FS371)
 - D17 Method count: 7 parents vs 5 interviews + 3 think-alouds — ✅ SETTLED BY EVIDENCE: old site “We interviewed 7 parents” + her Q6 agree; sheet already says seven; not asked
 Transition Design
-- D18 Six or five exercises (sheet says both) — ✅ HER ANSWER: “Six exercises” everywhere; five tiles, step 4 = “Futures I and II: Vision and Transition”
-- D19 Duration: 15-week sprint vs 18 vs per-step durations — ✅ HER ANSWER: 15 weeks (Spring 2025), drop per-step week counts
-- D20 Her part in the 2050 story (“My part:”) — ✅ HER ANSWER (after asking “What would you do?”; Claude advised): drop “My part”; the team’s story, one framing line, the pictures, and the YouTube recording (qObw2qPiEmM) behind a play button
-- D21 Homepage link → Assignment #5? — ✅ HER ANSWER: Assignment #5
+- D18 Six or five exercises (sheet says both) — ✅ HER ANSWER: “Six exercises” everywhere; five tiles, step 4 = “Futures I and II: Vision and Transition” · 🔨 BUILT (dev, FS371)
+- D19 Duration: 15-week sprint vs 18 vs per-step durations — ✅ HER ANSWER: 15 weeks (Spring 2025), drop per-step week counts · 🔨 BUILT (dev, FS371)
+- D20 Her part in the 2050 story (“My part:”) — ✅ HER ANSWER (after asking “What would you do?”; Claude advised): drop “My part”; the team’s story, one framing line, the pictures, and the YouTube recording (qObw2qPiEmM) behind a play button · 🔨 BUILT (dev, FS371)
+- D21 Homepage link → Assignment #5? — ✅ HER ANSWER: Assignment #5 · 🔨 BUILT (dev, FS371)
 - D22 Reflection cards → her words — 🟠 HER ANSWER: skip for now (open)
 Bridging the G.A.P.
-- D23 Duration: 4 or 5 weeks; season and year — ✅ HER ANSWER: 5 weeks, Fall 2024
-- D24 Logo animations: hers? — ✅ HER ANSWER: yes, all of them
-- D25 Her part in signage / mural / apparel — ✅ HER ANSWER: “these were collaborative” → no individual line; sections stay in the team’s “we” (Michael’s sketches/icons credit stays)
-- D26 Photo credit for the guide and app shoots (“Zo”?) — ✅ HER ANSWER: she took them; no separate photo credit
-- D27 Last What’s next bullet → her words — ✅ HER ANSWER: “Lets not mention anything” → read as: drop the What’s next card entirely (no GAP-association line, no empty item); confirm with her when shown
+- D23 Duration: 4 or 5 weeks; season and year — ✅ HER ANSWER: 5 weeks, Fall 2024 · 🔨 BUILT (dev, FS371)
+- D24 Logo animations: hers? — ✅ HER ANSWER: yes, all of them · 🔨 BUILT (dev, FS371)
+- D25 Her part in signage / mural / apparel — ✅ HER ANSWER: “these were collaborative” → no individual line; sections stay in the team’s “we” (Michael’s sketches/icons credit stays) · 🔨 BUILT (dev, FS371)
+- D26 Photo credit for the guide and app shoots (“Zo”?) — ✅ HER ANSWER: she took them; no separate photo credit · 🔨 BUILT (dev, FS371)
+- D27 Last What’s next bullet → her words — ✅ HER ANSWER: “Lets not mention anything” → read as: drop the What’s next card entirely (no GAP-association line, no empty item); confirm with her when shown · 🔨 BUILT (dev, FS371)
 Groundswell (live)
 - D28 9-month vs 12-month pilot — ✅ SETTLED BY HER EARLIER (FS107, her copy: “Groundswell is a 9-month pilot program…”); old site / docs/groundswell.md say 12 (older); not asked
 - D29 Donations: $30k vs $40k — ✅ SETTLED BY HER EARLIER (FS136/FS138: “over $40k … material and service donations”); not asked

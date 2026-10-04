@@ -54,8 +54,12 @@ export const birthstory = {
     ['Context', '6-week graduate studio at Carnegie Mellon, Spring 2025, taught by the founders of Dezudio, Myana’s design partner'],
     /* content/projects/birthstory.md + sq, her line */
     ['Role', ['UX/UI Design, UX Research,', 'Copywriting, Brand Identity']],
-    /* Q2 (Michael Juan) + live Overview: Client */
-    ['Collaborators', ['Michael Juan, design partner;', 'Myana, a maternal-health platform co-developed by researchers at the University of Pittsburgh']],
+    /* Q2 (Michael Juan) + D16, her pick (2026-10-04): the full names and
+       the people, from her old site (“A sister app concept to Myana
+       (Mothers You Are Not Alone)… University of Pittsburgh Center for
+       Research on Healthcare”; “Client: Sarah Burns, MSW, LSW; Tamar
+       Krishnamurti, PhD”) */
+    ['Collaborators', ['Michael Juan, design partner;', 'Myana (Mothers You Are Not Alone) and the University of Pittsburgh Center for Research on Healthcare;', 'clients Sarah Burns, MSW, LSW, and Tamar Krishnamurti, PhD']],
     /* live colophon */
     ['Tools Used', 'Figma, Claude Code'],
     /* sq phases (one week each: Research I, Research II, Ideation,
@@ -226,6 +230,9 @@ export const birthstory = {
       name: 'The Birth Story Book',
       /* live prose + Q10's “free PDF or a real book to order” */
       body: 'We took the book seriously the moment a parent told me she wouldn’t trust an app with something this precious unless she knew it couldn’t disappear. It’s available as a free PDF or a real book to order.',
+      /* D15, her pick: the parent's own words, from her old site (“One
+         parent noted:”), as the section's quote */
+      pull: { quote: '“It would be tragic to lose those moments if the app disappeared someday.”', cite: 'A parent we interviewed' },
       media: {
         annotated: {
           prototype: 'book',

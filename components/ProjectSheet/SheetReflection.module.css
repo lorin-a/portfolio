@@ -14,7 +14,8 @@
 /* three across only when each card can hold its shift on one line */
 @media (min-width: 1100px) {
   .reflection {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    /* as many columns as cards (FS371: Bridging has two) */
+    grid-template-columns: repeat(var(--n, 3), minmax(0, 1fr));
     grid-template-rows: auto 1fr;
     row-gap: 0;
   }

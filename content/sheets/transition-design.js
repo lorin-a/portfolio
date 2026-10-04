@@ -32,15 +32,11 @@
  * zooms, and the 2050 story's pictures. Intervention captions are the
  * words printed on each slide, verbatim.
  *
- * OPEN, hers to settle (also in STATUS):
- *   · the homepage CTA points to the Medium publication's front page,
- *     which shows no stories; it should point to the five articles (URLs at
- *     the top of sources/transition-design/medium.md);
- *   · the timeline: md says a 15-week sprint; sq says six exercises of 3
- *     weeks each (18); Medium says 2 weeks (M1) and 2.5 weeks (M2, M3, M5).
- *     The sheet lists the exercises and leaves out durations;
- *   · the vision's year: M4/M5 and sq say 2100 (“75 years ahead”); the
- *     vision map is titled “for 2075.” The sheet follows her prose (2100);
+ * SETTLED 2026-10-04 (FS370 decision queue): homepage link → Assignment
+ *   #5 (D21); 15 weeks, no per-step weeks (D19); six exercises, Futures I
+ *   and II paired as step 4 (D18); the 2050 story is the team's, with the
+ *   recording (D20). Vision year 2100 confirmed by her old site.
+ * OPEN, hers: the reflection cards (D22).
  *   · the team name: the map files say “Autopoesis,” the deck and Medium
  *     say “Autopoiesis.” The sheet uses Autopoiesis;
  *   · five AI-generated slides have garbled text baked into the picture and
@@ -49,9 +45,8 @@
  *     TD_8 Root Cause Food Justice (“JUSTUCE”), TD_16 Cooperative Economy
  *     (“Inititative” in its caption strip). TD_4 The People’s Table is in,
  *     though a T-shirt in the background carries AI gibberish;
- *   · M5 embeds the full final presentation on YouTube
- *     (https://www.youtube.com/watch?v=qObw2qPiEmM); the sheet has no video
- *     embed, so it isn't on the sheet yet.
+ *   · M5's full final presentation (YouTube qObw2qPiEmM) now plays in
+ *     A Morning in Pittsburgh, 2050 (D20).
  */
 
 export const transitionDesign = {
@@ -79,8 +74,8 @@ export const transitionDesign = {
     ['Collaborators', 'Team Autopoiesis: Diane Hu, Shama Patwardhan, Alisha Saxena'],
     /* sq Tools + Credits */
     ['Tools Used', 'Miro, Figma Slides, Google Docs, Canva, Midjourney'],
-    /* sq's six exercises, paired; durations left out (see OPEN) */
-    ['Timeline', ['Mapping: STEEP and Stakeholders', 'History: Multi-Level Perspective', 'Futures: Vision and Transition', 'Interventions: Roots to Resilience']],
+    /* sq's six exercises, paired; D19, her pick: 15 weeks, no per-step weeks */
+    ['Timeline', ['15 weeks, Spring 2025', 'Mapping: STEEP and Stakeholders', 'History: Multi-Level Perspective', 'Futures: Vision and Transition', 'Interventions: Roots to Resilience']],
   ],
 
   frame: {
@@ -130,21 +125,24 @@ export const transitionDesign = {
     {
       key: 'morning-2050',
       name: 'A Morning in Pittsburgh, 2050',
-      /* M5 opens the final presentation with a 2050 story narrated in
-         turn; her section is in her first person (“I head to pick up
-         Alisha”). The first sentence is a PROVISIONAL frame; the quote is
-         her section, verbatim, trimmed. */
-      body: 'The final presentation opened in 2050, a story we narrated in turn. My part: “I drive through morning-lit streets that blend Pittsburgh’s industrial past with its green future as I head to pick up Alisha for our Wisdom Circle meeting. The former steel mills that once stood abandoned now pulse with vertical gardens and aquaponic systems.”',
-      /* M5, verbatim */
-      notes: [
-        { label: 'The app', text: '“What began as a simple coordination tool has become the nervous system of our local food network.”' },
-        { label: 'The circle', text: '“Here, Pittsburgh’s past and future converge as we continue the story of how a hungry city learned to feed itself with dignity.”' },
-      ],
+      /* D20 (2026-10-04, her “What would you do?”; Claude advised): no “My
+         part” quote, since the script's “I” is a character, not her. The
+         team's story, one framing line (PROVISIONAL; the close is M5,
+         verbatim), the recording behind a play button, the pictures. */
+      body: 'The final presentation opened in 2050, with a story we wrote and read aloud in turn: how a hungry city learned to feed itself with dignity.',
       media: {
+        /* D20: the recording first, behind one play button (M5's embed) */
+        stills: [
+          /* poster: the 2050 picture cut above its caption strip, at the
+             mat's 3:2, so the play button sits on the garden, not on type
+             (the recording's own thumbnail is a title card) */
+          { type: 'youtube', youtube: 'qObw2qPiEmM', posterSrc: 'https://res.cloudinary.com/dc17mvdyv/image/upload/c_crop,x_1065,y_0,w_5550,h_3700/f_auto,q_auto,w_1800/td-vision-2050',
+            alt: 'The final presentation, read aloud by the team: a morning in Pittsburgh, 2050' },
+        ],
         /* the story's pictures in its order; captions are the words printed
            on each slide, verbatim; the AI-imagery disclosure on each */
-        stills: [
-          { key: 'td-vision-2050', alt: 'AI-generated imagery. Vision Pittsburgh 2050: a thriving green city where community, culture, and nature grow side by side.' },
+        /* the vision picture is the film's poster, so the gallery starts on the next */
+        plus: { stills: [
           { key: 'td-peoples-table', alt: 'AI-generated imagery. The People’s Table: a community-powered learning network that teaches how to grow and cook culturally relevant foods.' },
           { key: 'td-food-forest', alt: 'AI-generated imagery. Roots & Resilience: community-led food forests in Pittsburgh providing free, culturally relevant food and fostering education and connection.' },
           { key: 'td-drive-2050', alt: 'AI-generated imagery. Vision Pittsburgh 2050: the drive past the old mills.' },
@@ -155,7 +153,7 @@ export const transitionDesign = {
           { key: 'td-home-harvest', alt: 'AI-generated imagery. Home Harvest Initiative: micro-grants to families in food deserts to establish home gardens.' },
           { key: 'td-farm-institution', alt: 'Farm to Institution Pennsylvania: a program that mandates local institutions source 40% local food from regional farms.' },
           { key: 'td-wisdom-circle', alt: 'AI-generated imagery. Food Sovereignty Wisdom Circle: cross-disciplinary local food councils with Indigenous leadership shape inclusive, sustainable food plans.' },
-        ],
+        ] },
       },
     },
     {
@@ -165,18 +163,19 @@ export const transitionDesign = {
          total; see OPEN). Takeaways are her lines, verbatim. Step 5 is the
          roadmap above. */
       chapter: {
-        kicker: 'Five exercises · Spring 2025',
+        /* D18, her pick: six exercises; Futures I and II share step 4 */
+        kicker: 'Six exercises · Spring 2025',
         title: 'The Process',
         line: 'Each Transition Design exercise built on the one before, from a map of the problem to the roadmap above.',
         steps: [
-          { key: 'wicked-problem', when: '2 weeks', name: 'The Wicked Problem', outcome: 'Five categories of research, mapped for leverage points.' },
-          { key: 'stakeholders', when: '2.5 weeks', name: 'Stakeholders', outcome: 'Power, mapped across three opposing stakeholders.' },
-          { key: 'history', when: '2.5 weeks', name: 'History', outcome: 'Pittsburgh’s food story, 1900 to today.' },
-          { key: 'transition', when: '2.5 weeks', name: 'Vision and Transition', outcome: 'A 2100 vision, backcast to milestones.' },
-          { key: 'system', when: '2.5 weeks', name: 'Interventions', outcome: 'The Roots to Resilience roadmap.' },
+          { key: 'wicked-problem', when: 'Exercise 1', name: 'The Wicked Problem', outcome: 'Five categories of research, mapped for leverage points.' },
+          { key: 'stakeholders', when: 'Exercise 2', name: 'Stakeholders', outcome: 'Power, mapped across three opposing stakeholders.' },
+          { key: 'history', when: 'Exercise 3', name: 'History', outcome: 'Pittsburgh’s food story, 1900 to today.' },
+          { key: 'transition', when: 'Exercises 4–5', name: 'Futures I and II', outcome: 'A 2100 vision, backcast to milestones.' },
+          { key: 'system', when: 'Exercise 6', name: 'Interventions', outcome: 'The Roots to Resilience roadmap.' },
         ],
       },
-      step: 'Step 1 · 2 weeks',
+      step: 'Exercise 1',
       name: 'Mapping a Wicked Problem',
       /* M5, verbatim */
       takeaway: 'It was a classic example of a “wicked problem,” tangled in layers of historical, social, economic, and environmental factors.',
@@ -198,7 +197,7 @@ export const transitionDesign = {
     },
     {
       key: 'stakeholders',
-      step: 'Step 2 · 2.5 weeks',
+      step: 'Exercise 2',
       name: 'Mapping Stakeholder Relations',
       /* M5, verbatim */
       takeaway: 'The challenge isn’t just ‘feed people,’ it’s broker trust where power is uneven and use that trust to turn shared hopes into quick pilots that prove systemic change is possible.',
@@ -221,7 +220,7 @@ export const transitionDesign = {
     },
     {
       key: 'history',
-      step: 'Step 3 · 2.5 weeks',
+      step: 'Exercise 3',
       name: 'Mapping the Evolution',
       /* M5, verbatim */
       takeaway: 'The timeline isn’t a history lesson; it’s a strategic forecast.',
@@ -242,8 +241,8 @@ export const transitionDesign = {
     },
     {
       key: 'transition',
-      step: 'Step 4 · 2.5 weeks',
-      name: 'Designing a Transition',
+      step: 'Exercises 4–5',
+      name: 'Futures I and II: Vision and Transition',
       /* M5, verbatim, trimmed */
       takeaway: 'From this aspirational future, we worked backward to build the Roots to Resilience Roadmap.',
       /* M5, verbatim, trimmed */

@@ -32,6 +32,7 @@ export default function SheetReflection({ cards = [] }) {
   if (!cards.length) return null
   return (
     <section ref={ref} className={styles.reflection} data-reveal="0"
+      style={{ '--n': cards.length }}
       aria-label={cards.map((c) => c.title).join(', ')}>
       {cards.map(({ id, verb, title, shift, list }, i) => {
         const Mark = MARKS[id]
