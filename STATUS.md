@@ -459,9 +459,49 @@ funding, captions, card note).
 | FS367 | “I just plugged in my harddrive search there and for other project's that might be stored there” (2026-10-04) | ✅ SEARCHED (inventory for the other projects in docs/case-study-editorial/sources/LACIE-INVENTORY.md). Biggest finds elsewhere: BirthStory final documentation + presentation PDFs (IXD Studio/Myana Finals, Mar 2025) and lo-fi wireframes; Transition Design presentation recording (May 3, 2025) and the team PDF; Bridging logo iterations, trail art, Illustrator sources (Project 4); Groundswell deck, presentation recording, 9.25 photoshoot. SomeBuddy: Found on LaCie, /Volumes/LaCie/IXD Studio/SomeBuddy Video (saved 2025-04-24): STORYBOARD.pdf (10-panel concept-video storyboard with script), lo-fi wireframes Map 1/MAp 2/Chatting.pdf, mid-fi Interest.pdf (onboarding) and Bingo.pdf, early badges Badge Customize/collection.pdf and Mockups-1.pdf; and IXD Studio/Post Graduation (2025-05-13): SomeBuddy redone in CMU primary/secondary palettes, possibly for the Student Affairs pitch. Full concept video also at SomeBuddy_Final Video_V8.mp4. Still not found: a pitch photo, the speed-dating storyboards. Also seen: BirthStory Zoom UX-interview screenshots (Lorin-Mac-Backup/Desktop/CMU Photos/UX Interview*.jpg), Digital Self Care Mode boards (IXD Studio/1746304475*.jpg) |
 | FS368 | “show me first what you think about using because they might be old versions” (2026-10-04, on the LaCie finds) | 🟡 WAITING ON HER: a local review page shows A (storyboard), B (lo-fi/mid-fi app, credited to Rui + Yaezi), C (early badges), D (CMU-palette options, May 13) with Claude's picks; X items not recommended. Nothing goes on a sheet until she picks |
 | FS369 | “Study my old portfolio too: https://snail-squid-djta.squarespace.com/case-studies/somebuddy and all other projects on there for important content or copy. The image is there: https://images.squarespace-cdn.com/content/v1/6854b2c2e55b8c56313eb180/ec41f7bf-9fcc-4d19-b6a5-044ce1ad2997/aeb3b04f-5aaf-4407-80ab-aeebf226945b.JPG?format=2500w for the zoom pitch” (2026-10-04) | ✅ STUDIED. All 25 old-site pages scraped verbatim (text + image URLs, DOM order) to docs/case-study-editorial/sources/squarespace-full/ (local, gitignored), with compare-<project>.md for BirthStory, TD, GAP, Groundswell. SomeBuddy: The Pitch added (Zoom call, 12 May 2025, uploaded as sb-pitch-call, cropped above the recording banner; sq Outcomes copy). Found on the old site: the speed-dating storyboards, the affinity map, the research plan (added to her review page as E1–E3, awaiting picks). Top cross-project findings for her: BirthStory outcome wording vs the old site's “eventual creation… by the professors and the client”, and a missing parent quote; TD sheet says “Six” exercises in one line and “Five” in another (old site: six, 3 weeks each, 15-week sprint); GAP old site says 5 weeks three times; Groundswell (live) old site says 12-month pilot vs sheet 9-month, $30k vs $40k, research assistants and a few credit names differ, and the 30-participant playtest quotes are not on the sheet |
+| FS370 | “feed me the decisions to be made here one at a time and I will answer” (2026-10-04) | 🟡 IN PROGRESS: the queue is in the DECISION QUEUE block below; answers are logged against each D-number as they come |
 =======
 | FS193 | "i need this to look 50% neater, better orgnanized and simple" (2026-10-01), read as the Acknowledgements | ⏳ IN PROGRESS |
 >>>>>>> parent of f51f3e4 (feat(sheet): acknowledgements in one format: name over one-line role, three labelled lines (FS193))
+
+### ⟢ DECISION QUEUE (FS370, 2026-10-04): one at a time, answers logged here
+SomeBuddy
+- D1 A1 concept-video storyboard → under the film in The Concept Video? — 
+- D2 E1 speed-dating storyboards → in Testing? — 
+- D3 E3 affinity map → in Synthesis before the personas? — 
+- D4 E2 research plan → in Research, or leave out? — 
+- D5 B lo-fi/mid-fi app screens (credited to Rui + Yaezi) → one before→after beat? — 
+- D6 C early badges → in Brand Identity? — 
+- D7 D CMU-palette boards (May 13) → were they the pitch? — 
+- D8 Pitch photo: blur the staff names / her email? — 
+- D9 Concept Video line (PROVISIONAL) → approve or rewrite — 
+- D10 Weave card (“What I’ll carry forward”) → her words — 
+- D11 Homepage folder tab “UX” → rename (Research? Strategy?) — 
+- D12 Concept video: YouTube, or self-host her local 2:56 file — 
+- D13 Busy-Buddies: keep the hyphen? — 
+BirthStory
+- D14 Outcome: “concept only” vs old site “eventual creation… by the professors and the client” — 
+- D15 Add the parent quote “It would be tragic to lose those moments if the app disappeared someday.” — 
+- D16 Client naming (Myana, co-developed by Pitt researchers) — 
+- D17 Method count: 7 parents vs 5 interviews + 3 think-alouds — 
+Transition Design
+- D18 Six or five exercises (sheet says both) — 
+- D19 Duration: 15-week sprint vs 18 vs per-step durations — 
+- D20 Her part in the 2050 story (“My part:”) — 
+- D21 Homepage link → Assignment #5? — 
+- D22 Reflection cards → her words — 
+Bridging the G.A.P.
+- D23 Duration: 4 or 5 weeks; season and year — 
+- D24 Logo animations: hers? — 
+- D25 Her part in signage / mural / apparel — 
+- D26 Photo credit for the guide and app shoots (“Zo”?) — 
+- D27 Last What’s next bullet → her words — 
+Groundswell (live)
+- D28 9-month vs 12-month pilot — 
+- D29 Donations: $30k vs $40k — 
+- D30 Research assistants and credit spellings — 
+- D31 Add the 30-person playtest finding and quotes? — 
+
 
 ### ⟢ OPEN NOTES LEDGER — Folder sheet (2026-09-06, her verdict on the rebuilt sheet)
 
