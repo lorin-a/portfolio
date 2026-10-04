@@ -148,6 +148,49 @@
   text-wrap: pretty;
 }
 
+/* FS371: a second exhibit under the first */
+.plus {
+  margin-top: var(--flow-3);
+}
+
+/* FS371: before → after, two images side by side (stacked on phones) */
+.pair {
+  margin: 0;
+}
+
+.pairRow {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--flow-2);
+}
+
+@media (min-width: 700px) {
+  .pairRow {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.pairItem {
+  display: grid;
+  gap: 0.5rem;
+  min-width: 0;
+}
+
+.pairItem img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.pairLabel {
+  font-family: var(--font-body);
+  font-size: var(--step-label);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-sage);
+}
+
 /* FS363: a maker credit under a section's words, quiet and small */
 .credit {
   margin: var(--flow-1, 0.75rem) 0 0;

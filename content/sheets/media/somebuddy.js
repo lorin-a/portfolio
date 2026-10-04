@@ -36,7 +36,15 @@ export const SB_IMAGES = {
   'sb-brand-feedback':     'sb-brand-feedback',  // Medium image 20: crit notes on the explorations
   /* FS369: the Zoom pitch to Student Affairs, 12 May 2025 (her old site;
      original on the LaCie root), cropped above Zoom's recording banner */
-  'sb-pitch':              'sb-pitch-call',
+  'sb-pitch':              'sb-pitch-call-v2',  // D8: her email tag and the notetaker tile blurred
+  /* FS371 (her picks, D1–D6): from the LaCie (IXD Studio/SomeBuddy Video,
+     saved 2025-04-24) and her old Squarespace page */
+  'sb-storyboard-video':   'sb-storyboard-video',   // STORYBOARD.pdf: the concept video's ten panels with script
+  'sb-storyboards-speed':  'sb-storyboards-speed',  // old site: the three speed-dating storyboard sets
+  'sb-affinity':           'sb-affinity',           // old site: the synthesis affinity map
+  'sb-wire-chat':          'sb-wire-chat',          // Chatting.pdf: the request and chat flow in wireframe
+  'sb-badges-early':       'sb-badges-early',       // collection.pdf: the first badge collection (red hexagons)
+  'sb-bingo-early':        'sb-bingo-early',        // Mockups-1.pdf: the first bingo card and badges
 }
 
 export const SB_VIDEOS = {

@@ -24,6 +24,41 @@ const EXHIBITS = {
 /* A section's work column, by what it carries (FS314): an annotated
    prototype, a row of key screens, a built exhibit, or the gallery. */
 function Work({ media, label, gated, onImage }) {
+  /* FS371: a second exhibit under the first (`plus`), e.g. the film with
+     its storyboard beneath, or the screens with their wireframes */
+  if (media?.plus) {
+    const { plus, ...main } = media
+    return (
+      <>
+        <Work media={main} label={label} gated={gated} onImage={onImage} />
+        <div className={styles.plus}>
+          <Work media={plus} label={`${label}, more`} gated={gated} onImage={onImage} />
+        </div>
+      </>
+    )
+  }
+  /* FS371: before → after, side by side, one caption under the pair */
+  if (media?.pair) {
+    return (
+      <figure className={styles.pair}>
+        <div className={styles.pairRow}>
+          {media.pair.map((it) => {
+            const src = it.src || sheetImg(it.key, 1600)
+            return src && (
+              <div key={it.label} className={styles.pairItem}>
+                <span className={styles.pairLabel}>{it.label}</span>
+                <button type="button" className={styles.photoButton} onClick={(e) => it.key && onImage?.(it.key, e.currentTarget)}
+                  aria-label={`View full screen: ${it.alt}`}>
+                  <img src={src} alt="" />
+                </button>
+              </div>
+            )
+          })}
+        </div>
+        {media.caption && <figcaption className={styles.photoCap}>{media.caption}</figcaption>}
+      </figure>
+    )
+  }
   if (media?.annotated) return <SheetAnnotated {...media.annotated} />
   /* FS319: one image, whole and uncropped, with its caption */
   const photos = media?.photos || (media?.photo ? [media.photo] : null)
@@ -129,8 +164,12 @@ export default function SheetContent({ sheet, num, title, tagline, titleId }) {
     slidesFor(sheet.system?.exhibit ? {} : sheet.system?.media).forEach((sl) => { if (sl.type === 'image') push(sl.key, sl.alt) })
     components.forEach((c) => {
       if (c.gated) return
-      slidesFor(c.media).forEach((sl) => { if (sl.type === 'image') push(sl.key, sl.alt) })
-      ;(c.media?.photos || (c.media?.photo ? [c.media.photo] : [])).forEach((ph) => push(ph.key, ph.alt))
+      /* the section's media and its `plus` (FS371), in reading order */
+      ;[c.media, c.media?.plus].filter(Boolean).forEach((m) => {
+        slidesFor(m).forEach((sl) => { if (sl.type === 'image') push(sl.key, sl.alt) })
+        ;(m.photos || (m.photo ? [m.photo] : [])).forEach((ph) => push(ph.key, ph.alt))
+        ;(m.pair || []).forEach((it) => it.key && push(it.key, it.alt))
+      })
     })
     process.forEach((ph) => ph.images.forEach((i) => push(i.key, i.alt)))
     return list

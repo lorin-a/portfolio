@@ -212,7 +212,7 @@ export default function Home() {
         <ProjectPreview
           num="04"
           title="SomeBuddy"
-          tagline="Approachable Socialization for Busy-Buddies"
+          tagline="Approachable Socialization for Busy Students"
           description="A product and brand system for university campuses, helping busy students connect over shared values through low-effort socializing."
           contributions={[
             {
@@ -233,13 +233,13 @@ export default function Home() {
               ],
             },
             {
-              label: 'UX',
+              /* D11 (2026-10-04): Research, not UX; she didn't design the app */
+              label: 'Research',
               gallery: [
-                { src: cloudVideo(HOME_VIDEOS['somebuddy-ux'], 1200), type: 'video', alt: 'SomeBuddy UX flow' },
-                { src: cloudVideo(HOME_VIDEOS['somebuddy-ux-2'], 1200), type: 'video', alt: 'SomeBuddy UX flow detail' },
-                { src: cloudImg(HOME_IMAGES['somebuddy-28'], 1200), type: 'image', alt: 'SomeBuddy UX detail' },
-                { src: cloudImg(HOME_IMAGES['somebuddy-30'], 1200), type: 'image', alt: 'SomeBuddy UX detail' },
-                { src: cloudImg(HOME_IMAGES['somebuddy-31'], 1200), type: 'image', alt: 'SomeBuddy UX detail' },
+                { src: cloudImg('sb-ecosystem-map', 1200), type: 'image', alt: 'SomeBuddy ecosystem map of social isolation at CMU' },
+                { src: cloudImg('sb-what-we-heard', 1200), type: 'image', alt: 'What grad students told us' },
+                { src: cloudImg('sb-design-principles', 1200), type: 'image', alt: 'SomeBuddy design principles' },
+                { src: cloudImg('sb-affinity', 1200), type: 'image', alt: 'SomeBuddy affinity map' },
               ],
             },
           ]}

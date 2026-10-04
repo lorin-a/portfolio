@@ -156,6 +156,16 @@ export const somebuddy = {
           { name: 'Plan Made', text: 'An accepted invitation goes straight to the calendar.',
             src: crop('29', 1234), alt: 'Jessica accepted your invitation, 3 pm today, with Add to calendar.' },
         ],
+        /* D5: one before → after, the request flow in wireframe and final */
+        plus: {
+          pair: [
+            { label: 'Before', key: 'sb-wire-chat', alt: 'The request and chat flow in gray wireframes.' },
+            /* the final slide cut below its title bar, to the wireframe's proportions */
+            { label: 'After', src: 'https://res.cloudinary.com/dc17mvdyv/image/upload/c_crop,x_300,y_225,w_1321,h_855/f_auto,q_auto,w_1600/29',
+              alt: 'The same flow, final: request card, accept or decline, plan made.' },
+          ],
+          caption: 'The request flow, from wireframe to final.',
+        },
       },
     },
     {
@@ -190,7 +200,8 @@ export const somebuddy = {
       name: 'The Concept Video',
       /* PROVISIONAL, from sq's timeline (week 4: “Video Script/Story
          Board”; week 5: “Animation, Video Editing”). Hers to rewrite. */
-      body: 'We scripted and storyboarded the concept video in week four, then animated and edited it for the final presentation.',
+      /* D9, her pick (2026-10-04) */
+      body: 'We scripted and storyboarded the concept video in week four. I animated and edited it for the final presentation.',
       /* FS360: one film behind one play button, not a gallery. The full
          2:55 video, on her YouTube (med); the poster is a frame of her
          animation (students in brand color on campus), chosen so the play
@@ -200,6 +211,12 @@ export const somebuddy = {
           { type: 'youtube', youtube: 'pdlaitoGycA', length: '2:55', poster: 'sb-backpack-collage', posterVideo: true, at: 3,
             alt: 'SomeBuddy: A Social App for Grad Students, the concept video' },
         ],
+        /* D1: the storyboard under the film, from storyboard to film */
+        plus: {
+          photos: [
+            { key: 'sb-storyboard-video', alt: 'The storyboard: ten panels with the script, from the expectation of grad school to the closing message.' },
+          ],
+        },
       },
     },
     {
@@ -249,6 +266,8 @@ export const somebuddy = {
       body: 'We combined what we heard into three personas: the Logistical Taskmate, the Casual Connector, and the Friendship Seeker. They are modes, not types: the same student can be a Taskmate on an errand and a Friendship Seeker on a weekend hike. Our professors encouraged us to take a strong stance rooted in research, which meant one flexible solution simple enough to work for all three.',
       media: {
         stills: [
+          /* D3: the affinity map first, where the three modes came from */
+          { key: 'sb-affinity', alt: 'The affinity map: companionship, platform, time, activities and tasks, barriers, and the key themes.' },
           { key: 'sb-persona-taskmate', alt: 'Persona: the Logistical Taskmate, who wants spontaneous help getting things done.' },
           { key: 'sb-persona-connector', alt: 'Persona: the Casual Connector, who wants low-effort company amid a busy schedule.' },
           { key: 'sb-persona-seeker', alt: 'Persona: the Friendship Seeker, who wants depth but struggles to find the time.' },
@@ -280,6 +299,8 @@ export const somebuddy = {
       layout: 'half',
       media: {
         photos: [
+          /* D2: what we tested, then how */
+          { key: 'sb-storyboards-speed', alt: 'The storyboards we speed-dated: adaptive connections for changing needs, connections for friendship seekers, and spontaneous connections.' },
           { key: 'sb-feedback-photos', alt: 'Speed-dating the concept with classmates.' },
           { key: 'sb-feedback-asks', alt: 'What classmates asked: how trust fits in, and what if you don’t wear patches?' },
         ],
@@ -300,6 +321,9 @@ export const somebuddy = {
           { type: 'video', key: 'sb-logo-motion', alt: 'The SomeBuddy logo animation: the speech-bubble D drops in and smiles.' },
           { key: 'sb-color-theory', alt: 'Color and logo explorations, from CMU-adjacent to bright.' },
           { key: 'sb-brand-feedback', alt: 'Crit notes: the CMU brand may not feel inviting enough; try brighter colors; refine the logo.' },
+          /* D6: where the badges started */
+          { key: 'sb-badges-early', alt: 'Where the badges started: the first badge collection, red hexagons, and the first customizer.' },
+          { key: 'sb-bingo-early', alt: 'The first bingo cards and a backpack with plain flower badges.' },
           { key: 'sb-brand', alt: 'The final brand: logo lockups, flower marks, the palette, and the BINGO bar.' },
           { key: 'sb-type-color', alt: 'Quicksand for display, SF Pro for body, and four color ramps.' },
           { key: 'sb-badge-art', alt: 'The badge illustrations, with CMU references like the Scottie dog.' },
