@@ -45,8 +45,6 @@
 const crop = (id, x, y, w, h) => `https://res.cloudinary.com/dc17mvdyv/image/upload/c_crop,x_${x},y_${y},w_${w},h_${h}/f_auto,q_auto,w_600/${id}`
 
 export const bridgingTheGap = {
-  /* the logo animation as the cover, like SomeBuddy's film hero */
-  hero: 'bg-hero',
   /* FS347: the brand's own colors (mint, blue, navy) for the bands, and
      mint, sun, coral for the step tiles (from the style guide, BTG_29) */
   band: 'linear-gradient(126deg, #a8ecd0 0%, #9dbcf7 50%, #1c2f6e 100%)',
@@ -58,13 +56,14 @@ export const bridgingTheGap = {
   outcome:
     'We received feedback that this was one of the best projects this professor had seen for this assignment, as well as positive impressions from our audience.',
 
-  /* Four prints for range: the brand, the team in the field, the guide in
-     hand, the app (FS303: the Ohiopyle selfie replaces the signage slide).
-     Captions and alts are furniture, hers to rewrite. */
+  /* FS349: the cover pile is the four deliverables, one print each, in
+     the order a rider meets them (the brand shows on every one; the logo
+     animation opens Brand Identity). Captions and alts are furniture,
+     hers to rewrite. */
   prints: [
-    { key: 'bg-btg-logo', caption: 'The Brand', alt: 'The Bridging the GAP wordmark, a river wave running through the letters.' },
-    { key: 'bg-field-team', caption: 'Ohiopyle', alt: 'Lorin, Michael, and Rui at the Ohiopyle falls on their field research trip.' },
     { key: 'bg-guide-reading', caption: 'The GAP Guide', alt: 'A rider holds the GAP Guide open to its gear guide and itineraries.' },
+    { key: 'bg-trail-art-park', caption: 'Signage', alt: 'A branded trail sign and a painted mileage line on a park path.' },
+    { key: 'bg-merch-bottle-lake', caption: 'Apparel', alt: 'A Great Allegheny Passage bottle held up over the water.' },
     { key: 'bg-app-selfies', caption: 'The App', alt: 'In-app selfies along the trail, on three phones.' },
   ],
 

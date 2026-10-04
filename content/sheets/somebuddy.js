@@ -45,6 +45,8 @@
  */
 
 /* one phone screen, cropped from a 1920 × 1080 deck slide */
+/* a square print, cut from a deck slide */
+const square = (id, x, y, s) => `https://res.cloudinary.com/dc17mvdyv/image/upload/c_crop,x_${x},y_${y},w_${s},h_${s}/f_auto,q_auto,w_1000/${id}`
 const crop = (id, x) => `https://res.cloudinary.com/dc17mvdyv/image/upload/c_crop,x_${x},y_274,w_336,h_744/f_auto,q_auto,w_600/${id}`
 
 export const somebuddy = {
@@ -52,8 +54,20 @@ export const somebuddy = {
   outcome:
     'We presented the full vision to CMU’s Department of Student Affairs, and it was met with sincere interest, especially around bringing SomeBuddy into Fall 2025 orientation. No next steps have been taken yet.',
 
-  /* FS346: the concept video's kinetic opening as the cover */
-  hero: 'sb-hero',
+  /* FS349: the cover is the polaroid pile again, one print per part of
+     the ecosystem (sq: “a social app, branding, pop-up events, and
+     collectibles”). Square crops of her deck slides, below the title bar.
+     The concept video's opening lives on in The Concept Video. */
+  prints: [
+    { key: 'sb-print-brand', caption: 'The Brand', src: square('1', 500, 40, 920),
+      alt: 'The SomeBuddy wordmark, the D a smiling speech bubble.' },
+    { key: 'sb-print-orientation', caption: 'Orientation', src: square('26', 770, 225, 855),
+      alt: 'A hand holding the orientation bingo card beside the BINGO booth.' },
+    { key: 'sb-print-badges', caption: 'Badges', src: square('27', 1028, 225, 855),
+      alt: 'A backpack wearing embroidered SomeBuddy badges.' },
+    { key: 'sb-print-app', caption: 'The App', src: square('31', 830, 225, 855),
+      alt: 'Bingo in the app: a shuffled card and themes to start a new one.' },
+  ],
 
   /* FS346: SomeBuddy's own band (lime → lavender → brand blue, washed on
      the bands) and step-tile colors, from its palette */

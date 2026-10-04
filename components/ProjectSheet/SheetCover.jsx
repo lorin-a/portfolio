@@ -81,7 +81,8 @@ function FitPair({ title, tagline, titleId }) {
 }
 
 function Pile({ prints }) {
-  const items = prints.map((p) => ({ ...p, src: sheetImg(p.key, 1400) })).filter((p) => p.src)
+  /* a print names a media key, or a full `src` (e.g. a crop of a deck slide) */
+  const items = prints.map((p) => ({ ...p, src: p.src || sheetImg(p.key, 1400) })).filter((p) => p.src)
   /* Per-print crop: `zoom` scales the photo inside its frame, `focus` is
      the point it scales toward (e.g. to lose a table edge). */
   const crop = (p) => (p.zoom || p.focus)
