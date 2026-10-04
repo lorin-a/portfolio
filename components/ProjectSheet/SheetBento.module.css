@@ -1,0 +1,128 @@
+/* THE BENTO (FS384, FS387, FS389): a dense grid of pieces seen together.
+   Rows are a fixed height that tracks the width, so spans compose. */
+
+.bento {
+  position: relative;
+  margin: 0;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-auto-rows: clamp(120px, 26vw, 200px);
+  grid-auto-flow: dense;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (min-width: 900px) {
+  .grid {
+    grid-template-columns: repeat(var(--cols, 3), minmax(0, 1fr));
+    grid-auto-rows: clamp(140px, 13vw, 230px);
+  }
+}
+
+.cell {
+  position: relative;
+  min-width: 0;
+  overflow: hidden;
+  background: var(--sheet-mat, rgba(255, 255, 255, 0.04));
+}
+
+.cell[data-span='big'] {
+  grid-column: span 2;
+  grid-row: span 2;
+}
+
+.cell[data-span='wide'] {
+  grid-column: span 2;
+}
+
+.cell[data-span='tall'] {
+  grid-row: span 2;
+}
+
+.open {
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: zoom-in;
+}
+
+.open:disabled {
+  cursor: default;
+}
+
+.open:focus-visible {
+  outline: 2px solid var(--color-sage);
+  outline-offset: -2px;
+}
+
+.media {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--motion-medium) var(--ease-out);
+}
+
+@media (hover: hover) {
+  .open:hover .media {
+    transform: scale(1.02);
+  }
+}
+
+.label {
+  position: absolute;
+  left: 8px;
+  bottom: 8px;
+  padding: 0.2rem 0.55rem;
+  border-radius: var(--radius-pill);
+  background: rgba(20, 19, 22, 0.72);
+  color: #fff;
+  font-family: var(--font-body);
+  font-size: var(--step-label);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  pointer-events: none;
+}
+
+.pause {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  min-height: 44px;
+  margin-top: 0.5rem;
+  padding: 0 0.9rem 0 0.7rem;
+  border: 1px solid rgba(244, 241, 236, 0.3);
+  border-radius: var(--radius-pill);
+  background: none;
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  font-size: var(--step-label);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.pause svg {
+  width: 12px;
+  height: 12px;
+}
+
+.pause:focus-visible {
+  outline: 2px solid var(--color-sage);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .media {
+    transition: none;
+  }
+}

@@ -8,7 +8,7 @@ import {
 } from '@/lib/cloudinary'
 import { SB_IMAGES, SB_VIDEOS } from '@/content/sheets/media/somebuddy'
 import { TD_IMAGES } from '@/content/sheets/media/transition-design'
-import { BG_IMAGES } from '@/content/sheets/media/bridging-the-gap'
+import { BG_IMAGES, BG_FINALS, BG_VIDEOS } from '@/content/sheets/media/bridging-the-gap'
 import { useSharedAudio } from '@/lib/useSharedAudio'
 import InViewVideo from '@/lib/useInViewVideo'
 import { POEM_CREDIT } from '@/content/poems/groundswell'
@@ -23,8 +23,8 @@ import styles from './SheetMedia.module.css'
    of media is skipped rather than rendering a broken box. */
 /* BIRTHSTORY_PHOTOS holds { id, by, o } records, not bare public IDs. */
 const BS_PEXELS = Object.fromEntries(Object.entries(BIRTHSTORY_PHOTOS).map(([k, v]) => [k, v.id]))
-const IMAGES = { ...BS_PEXELS, ...BS_IMAGES, ...SB_IMAGES, ...TD_IMAGES, ...BG_IMAGES, ...WHELM_IMAGES, ...HOME_IMAGES, ...GS_IMAGES }
-const VIDEOS = { ...SB_VIDEOS, ...OTHER_VIDEOS, ...WHELM_VIDEOS, ...HOME_VIDEOS, ...GS_VIDEOS }
+const IMAGES = { ...BS_PEXELS, ...BS_IMAGES, ...SB_IMAGES, ...TD_IMAGES, ...BG_IMAGES, ...BG_FINALS, ...WHELM_IMAGES, ...HOME_IMAGES, ...GS_IMAGES }
+const VIDEOS = { ...BG_VIDEOS, ...SB_VIDEOS, ...OTHER_VIDEOS, ...WHELM_VIDEOS, ...HOME_VIDEOS, ...GS_VIDEOS }
 const img = (k, w) => (IMAGES[k] ? cloudImg(IMAGES[k], w) : null)
 const vid = (k, w) => (VIDEOS[k] ? cloudVideo(VIDEOS[k], w) : null)
 const aud = (k) => (GS_AUDIO[k] ? cloudAudio(GS_AUDIO[k]) : null)
@@ -99,6 +99,14 @@ export function SheetStage({ slides, gated, onImage, label, fit }) {
   const n = slides.length
   const go = useCallback((d) => setAt((i) => (i + d + n) % n), [n])
 
+  /* FS388: the next and previous slides load before they are asked for */
+  useEffect(() => {
+    if (n < 2) return
+    ;[slides[(at + 1) % n], slides[(at - 1 + n) % n]].forEach((sl) => {
+      if (sl?.type === 'image' && sl.src) { const im = new Image(); im.src = sl.src }
+    })
+  }, [at, n, slides])
+
   if (!n) return null
   const s = slides[at]
 
@@ -140,6 +148,7 @@ export function SheetStage({ slides, gated, onImage, label, fit }) {
         {s.type === 'image' && onImage && !gated ? (
           <button type="button" className={styles.matButton}
             onClick={(e) => onImage(s.key, e.currentTarget)}
+            onPointerEnter={() => preloadFull(s.key)} onFocus={() => preloadFull(s.key)}
             aria-label={s.alt ? `View full screen: ${s.alt}` : 'View full screen'}>
             {mediaEl}
           </button>
@@ -181,6 +190,17 @@ export function SheetStage({ slides, gated, onImage, label, fit }) {
       </div>
     </div>
   )
+}
+
+/* FS388: the full-screen size of an image, fetched ahead of a click */
+const preloaded = new Set()
+export function preloadFull(key) {
+  if (!key || preloaded.has(key)) return
+  const src = img(key, 2000)
+  if (!src) return
+  preloaded.add(key)
+  const im = new Image()
+  im.src = src
 }
 
 /* a still frame of a Cloudinary video, as a poster */

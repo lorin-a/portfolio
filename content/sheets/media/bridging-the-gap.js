@@ -94,3 +94,37 @@ export const BG_IMAGES = {
   'bg-app-sketches':       'bg-app-sketches',       // “Early sketches of web/app UX”: an elevation route sketch
   'bg-guide-layout':       'bg-guide-layout',       // “Exploring the layout”: whiteboard sketches of the guide
 }
+
+/* FS380–FS390 (2026-10-04): finals from her LaCie (Project 4 › FINAL ASSETS
+   FOR PRESENTATION), uploaded with the key as the public ID */
+export const BG_FINALS = {
+  'bg-guide-product':     'bg-guide-product',     // the folded guides standing on a ledge (product shot)
+  'bg-sign-trail':        'bg-sign-trail',        // the sign and the painted mileage line in the park (final)
+  'bg-sign-render':       'bg-sign-render',       // the trail sign, isolated render
+  'bg-mural-overhead':    'bg-mural-overhead',    // the asphalt mural from above, a rider for scale
+  'bg-sketch-7':          'bg-sketch-7',          // her hand-drawn lettering: Bridging the GAP, route line
+  'bg-sketch-8':          'bg-sketch-8',          // her hand-drawn lettering: the river through BRIDGING
+  'bg-sketch-9':          'bg-sketch-9',          // her hand-drawn GAP with arrow letterforms
+  'bg-lockups-explore':   'bg-lockups-explore',   // her lockup explorations, six Bridging the GAP variants
+  'bg-wordmark-explore':  'bg-wordmark-explore',  // her GAP and Great Allegheny Passage wordmark explorations
+  'bg-wordmark-explore-2': 'bg-wordmark-explore-2',
+  'bg-sticker-bike':      'bg-sticker-bike',      // her unused sticker: the bike with landscape wheels
+  'bg-sticker-bridge':    'bg-sticker-bridge',    // her unused sticker: the bridge arch
+  'bg-sticker-river':     'bg-sticker-river',     // her unused sticker: the waterfall arch
+  'bg-icons-1':           'bg-icons-1',           // Michael's packing-list icons, a later set
+  'bg-icons-3':           'bg-icons-3',           // Michael's packing-list icons, an earlier set
+  /* FS389: the final apparel cut-outs (transparent), shown together */
+  'bg-cut-tote':          'bg-cut-tote',
+  'bg-cut-shirt':         'bg-cut-shirt',
+  'bg-cut-hat':           'bg-cut-hat',
+  'bg-cut-socks':         'bg-cut-socks',
+  'bg-cut-bottle':        'bg-cut-bottle',
+  'bg-cut-bottles':       'bg-cut-bottles',
+  /* the guide's fourteen panels (Figma frames), seven a side */
+  ...Object.fromEntries([1, 2, 3, 4, 5, 6, 7].flatMap((i) => [[`bg-pam-gear-${i}`, `bg-pam-gear-${i}`], [`bg-pam-route-${i}`, `bg-pam-route-${i}`]])),
+}
+
+export const BG_VIDEOS = {
+  'bg-logos-4': 'Logos_4',  // the Great Allegheny Passage wordmark animating on white
+}
+

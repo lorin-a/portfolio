@@ -10,6 +10,8 @@ import SheetMaps from './SheetMaps'
 import SheetAnnotated from './SheetAnnotated'
 import SheetScreens from './SheetScreens'
 import SheetCompare from './SheetCompare'
+import SheetBento from './SheetBento'
+import { preloadFull } from './SheetMedia'
 import dynamic from 'next/dynamic'
 
 /* Built exhibits for a sheet's system section (FS311), loaded on demand. */
@@ -19,8 +21,13 @@ const EXHIBITS = {
   'bs-revisions': dynamic(() => import('./exhibits/BirthStoryProcess').then((m) => m.Revisions)),
   'bs-iteration': dynamic(() => import('./exhibits/BirthStoryIteration')),
   'bs-identity': dynamic(() => import('./exhibits/BirthStoryProcess').then((m) => m.Identity)),
+  /* FS386: Bridging's guide, foldable */
+  'pamphlet': dynamic(() => import('./exhibits/SheetPamphlet')),
 }
 
+/* FS388: warm the full-screen image the moment a reader points at or
+   focuses a picture, so the overlay opens on a loaded image */
+const warm = preloadFull
 /* A section's work column, by what it carries (FS314): an annotated
    prototype, a row of key screens, a built exhibit, or the gallery. */
 function Work({ media, label, gated, onImage }) {
@@ -70,6 +77,7 @@ function Work({ media, label, gated, onImage }) {
             <li key={cd.name} className={styles.cardItem}>
               {src && (
                 <button type="button" className={styles.photoButton} onClick={(e) => onImage?.(cd.key, e.currentTarget)}
+                  onPointerEnter={() => warm(cd.key)} onFocus={() => warm(cd.key)}
                   aria-label={`View full screen: ${cd.alt}`}>
                   <img src={src} alt="" className={styles.cardImg} style={cd.focus ? { objectPosition: cd.focus } : undefined} />
                 </button>
@@ -95,6 +103,7 @@ function Work({ media, label, gated, onImage }) {
           return src && (
             <figure key={ph.key} className={styles.photo}>
               <button type="button" className={styles.photoButton} onClick={(e) => onImage?.(ph.key, e.currentTarget)}
+                onPointerEnter={() => warm(ph.key)} onFocus={() => warm(ph.key)}
                 aria-label={`View full screen: ${ph.alt}`}>
                 <img src={src} alt="" />
               </button>
@@ -108,7 +117,8 @@ function Work({ media, label, gated, onImage }) {
   if (media?.compare) return <SheetCompare slides={media.compare} untested={media.untested} label={label} />
   if (media?.screens) return <SheetScreens items={media.screens} />
   const Ex = EXHIBITS[media?.exhibit]
-  if (Ex) return <Ex data={media.data} />
+  if (Ex) return <Ex data={media.data} onImage={onImage} />
+  if (media?.bento) return <SheetBento items={media.bento} cols={media.cols} onImage={onImage} label={label} />
   if (media?.motion) return <SheetMotionLibrary items={media.motion} />
   return <SheetStage slides={slidesFor(media)} gated={gated} onImage={gated ? null : onImage} label={label} />
 }
@@ -213,6 +223,8 @@ export default function SheetContent({ sheet, num, title, tagline, titleId }) {
         ;(m.photos || (m.photo ? [m.photo] : [])).forEach((ph) => push(ph.key, ph.alt))
         ;(m.pair || []).forEach((it) => it.key && push(it.key, it.alt))
         ;(m.cards || []).forEach((cd) => push(cd.key, cd.alt))
+        ;(m.bento || []).forEach((it) => it.type !== 'video' && it.key && push(it.key, it.alt))
+        if (m.exhibit === 'pamphlet') [...(m.data?.gear || []), ...(m.data?.route || [])].forEach((pn) => push(pn.key, pn.alt))
       })
     })
     process.forEach((ph) => ph.images.forEach((i) => push(i.key, i.alt)))
@@ -229,6 +241,12 @@ export default function SheetContent({ sheet, num, title, tagline, titleId }) {
     openerRef.current = el
     setLightboxAt(images.findIndex((i) => i.key === key))
   }
+  /* FS388: with an image open, its neighbors load in the background */
+  useEffect(() => {
+    if (lightboxAt < 0 || !images.length) return
+    ;[lightboxAt + 1, lightboxAt - 1].forEach((k) => warm(images[(k + images.length) % images.length]?.key))
+  }, [lightboxAt, images])
+
   const closeImage = () => {
     setLightboxAt(-1)
     /* The reader's place is sacred: the sheet never scrolled, and focus

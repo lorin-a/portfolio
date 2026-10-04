@@ -1,0 +1,182 @@
+/* THE GAP GUIDE, IN HAND (FS386). A stage with perspective; the strip
+   turns over on Y; each panel is a two-faced card that moves between the
+   folded stack and the open zigzag on one transition, staggered. */
+
+.wrap {
+  margin: 0;
+}
+
+.stage {
+  position: relative;
+  display: grid;
+  place-items: center;
+  padding: 20px 0;
+  perspective: 2200px;
+  perspective-origin: 50% 40%;
+  background:
+    radial-gradient(ellipse at 50% 85%, rgba(0, 0, 0, 0.35), transparent 60%),
+    var(--sheet-mat, rgba(255, 255, 255, 0.03));
+  overflow: hidden;
+}
+
+.strip {
+  position: relative;
+  transform-style: preserve-3d;
+  transition:
+    width 900ms var(--ease-out),
+    transform 1100ms var(--ease-in-out);
+}
+
+.panel {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform-style: preserve-3d;
+  transform-origin: left center;
+  transition: transform 900ms var(--ease-out);
+}
+
+.face {
+  position: absolute;
+  inset: 0;
+  display: block;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  background: #fff;
+  box-shadow:
+    inset 0 0 0 0.5px rgba(0, 0, 0, 0.12),
+    0 14px 30px -18px rgba(0, 0, 0, 0.6);
+}
+
+.face img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+}
+
+.back {
+  transform: rotateY(180deg);
+}
+
+/* the fold: a soft shade on panels that lean away, like light on paper */
+.strip[data-open] .panel:nth-child(even) .face::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0.14), rgba(0, 0, 0, 0.02));
+  pointer-events: none;
+}
+
+.bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem var(--flow-2);
+  padding: 0.75rem 0.25rem;
+}
+
+.caption {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--step-small);
+  color: var(--color-ink);
+}
+
+.sideLabel {
+  font-weight: 600;
+}
+
+.controls {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.btn {
+  min-height: 44px;
+  padding: 0 1.1rem;
+  border: 1px solid rgba(244, 241, 236, 0.35);
+  border-radius: var(--radius-pill);
+  background: rgba(28, 26, 30, 0.4);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  font-size: var(--step-label);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: border-color var(--motion-fast) var(--ease-out), opacity var(--motion-fast) var(--ease-out);
+}
+
+@media (hover: hover) {
+  .btn:not(:disabled):hover {
+    border-color: rgba(244, 241, 236, 0.7);
+  }
+}
+
+.btn:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.btn:focus-visible,
+.panelBtn:focus-visible {
+  outline: 2px solid var(--color-sage);
+  outline-offset: 2px;
+}
+
+/* every panel by name, so the whole guide reads by keyboard and to screen
+   readers, and any panel opens full screen */
+.panelList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 0.25rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.panelBtn {
+  min-height: 44px;
+  padding: 0 0.6rem;
+  border: 0;
+  background: none;
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  font-size: var(--step-small);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+  cursor: zoom-in;
+}
+
+.panelNum {
+  color: var(--color-sage);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+/* phones: the open guide scrolls sideways at a readable size */
+@media (max-width: 699px) {
+  .stage {
+    place-items: center start;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    padding-inline: 16px;
+  }
+}
+
+/* reduced motion: every change is instant */
+.wrap[data-reduced] .strip,
+.wrap[data-reduced] .panel {
+  transition: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .strip,
+  .panel {
+    transition: none;
+  }
+}

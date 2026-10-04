@@ -50,24 +50,26 @@ export const bridgingTheGap = {
   outcome:
     'We received feedback that this was one of the best projects this professor had seen for this assignment, as well as positive impressions from our audience.',
 
-  /* FS349: the cover pile is the four deliverables, one print each, in
-     the order a rider meets them (the brand shows on every one; the logo
-     animation opens Brand Identity). Captions and alts are furniture,
-     hers to rewrite. */
+  /* FS380/FS381 (2026-10-04): the brand first, animating (her strongest
+     work), then the guide as a product shot, the signage, and the app's
+     GPS, not the selfie frames (“a minor function”). */
   prints: [
-    { key: 'bg-guide-reading', caption: 'The GAP Guide', alt: 'A rider holds the GAP Guide open to its gear guide and itineraries.' },
-    { key: 'bg-trail-art-park', caption: 'Signage', alt: 'A branded trail sign and a painted mileage line on a park path.' },
-    { key: 'bg-merch-bottle-lake', caption: 'Apparel', alt: 'A Great Allegheny Passage bottle held up over the water.' },
-    { key: 'bg-app-selfies', caption: 'The App', alt: 'In-app selfies along the trail, on three phones.' },
+    { key: 'bridging-default', type: 'video', caption: 'The Brand', alt: 'The Bridging the GAP logo animating in, the river wave drawing through the letters.' },
+    { key: 'bg-guide-product', caption: 'The GAP Guide', alt: 'The folded GAP Guides standing on a ledge.' },
+    { key: 'bg-sign-trail', caption: 'Signage', alt: 'The trail sign and a painted mileage line on a park path.' },
+    { key: 'bg-print-gps', caption: 'The App', src: 'https://res.cloudinary.com/dc17mvdyv/image/upload/c_crop,x_1500,y_830,w_3120,h_3120/f_auto,q_auto,w_1000/BTG_48',
+      alt: 'The app’s GPS on the ride: three miles to the next stop, and the trip so far.' },
   ],
 
   meta: [
     /* sq opening + md Approach, joined. PROVISIONAL assembly, her words. */
-    ['Context', 'Final project for a graduate visual communications studio at Carnegie Mellon: a rebranding proposal for the Great Allegheny Passage, a 150-mile trail from Pittsburgh to Cumberland, MD.'],
+    /* FS382: the professor is Brett Yasko */
+    ['Context', ['Visual Communications Studio at', 'Carnegie Mellon, taught by Brett Yasko:', 'a rebrand proposal for the Great', 'Allegheny Passage, a 150-mile trail', 'from Pittsburgh to Cumberland, MD.']],
     /* cp + sq, her line */
     ['Role', 'UX Research, Brand Identity, Animation'],
     /* md Team */
-    ['Collaborators', 'Michael Juan, Rui Ying'],
+    /* FS385: who made what */
+    ['Collaborators', ['Michael Juan: guide illustrations, icons;', 'Rui Ying: app UX/UI']],
     /* cp */
     ['Tools Used', 'Figma, Adobe Illustrator, After Effects'],
     /* md Duration; phases from sq (Ideation, Research/Synthesis, Concept,
@@ -79,7 +81,9 @@ export const bridgingTheGap = {
 
   frame: {
     /* cp Tension + HMW (also sq Design Challenge), verbatim. */
-    why: 'Pittsburgh has a large transient student population, and most residents are unaware of the GAP trail or experience barriers to experiencing this historic nature trail. How might we rebrand the GAP trail to feel accessible and inviting to people with minimal experience in nature?',
+    /* FS383: copy-edited for a clean rag (“experience barriers to
+       experiencing” → face barriers to enjoying it) */
+    why: 'Pittsburgh has a large, transient student population, and most residents don’t know the GAP trail or face barriers to enjoying it. How might we rebrand the trail to feel accessible and inviting to people with little experience in nature?',
     /* md Field Research, trimmed. */
     research: 'We drove out to Ohiopyle, the trail’s most popular trail town, to observe signage and talk to people on the trail, and spoke to 30 friends, family members, and CMU students about bike touring. Only one said they were not interested at all.',
   },
@@ -106,24 +110,22 @@ export const bridgingTheGap = {
   components: [
     {
       key: 'brand',
-      name: 'Brand Identity',
-      /* sq Concept (first sentence) + md brand paragraph, verbatim. */
+      name: 'The Brand',
+      /* FS384: her strongest work, shown whole: every logo animating at
+         once, with the style guide, instead of one at a time behind arrows.
+         Body: sq Concept + md brand paragraph, verbatim. */
       body: 'The campaign is called “Bridging the GAP,” referring to the knowledge gap between Pittsburgh residents and the Great Allegheny Passage Trail Association. I started crafting logo ideas that would incorporate movement and biking. We chose the National Park typeface, and I manually manipulated the letters to get a rounded shape with additional features. I also explored bridge and river shapes to bring home the metaphor.',
-      /* md The Work (“I started drafting the brand identity”) + the brand
-         paragraph. The logo animations are all hers (D24, 2026-10-04). */
-      /* FS303 notes: md, verbatim */
-      notes: [
-        { label: 'The tone', text: 'We gathered mood board inspiration of the playful, colorful, and inviting tone that we wanted Bridging the Gap to have.' },
-        { label: 'Color research', text: 'We did some user research on colors that people associate with the outdoors.' },
-      ],
-      mine: 'The brand identity: logo concepts, hand-shaped lettering from the National Park typeface, the bridge and river forms, and the logo animations.',
+      mine: 'The brand identity and every logo animation: the concepts, the hand-shaped lettering from the National Park typeface, and the bridge and river forms.',
+      wide: true,
       media: {
-        stills: [
-          { type: 'video', key: 'bridging-default', alt: 'The Bridging the GAP logo animating in, the river wave drawing through the letters.' },
-          { key: 'bg-style-guide', alt: 'The style guide: logos, merch, colors, fonts, and graphics.' },
-          { type: 'video', key: 'bridging-gap-logo', alt: 'The GAP logo drawing itself, each letter ending in an arrow.' },
-          { type: 'video', key: 'bridging-logos-2', alt: 'The Bridging the GAP lockup animating in.' },
-          { key: 'bg-gap-vertical', alt: 'G, A, and P stacked, each letter shaped like a trail arrow.' },
+        cols: 4,
+        bento: [
+          { type: 'video', key: 'bridging-default', span: 'big', fit: 'contain', ground: '#152b5c', label: 'Primary lockup', alt: 'The Bridging the GAP logo animating in, the river wave drawing through the letters.' },
+          { type: 'video', key: 'bridging-gap-logo', span: 'wide', fit: 'contain', ground: '#152b5c', label: 'The GAP mark', alt: 'The GAP mark drawing itself, each letter ending in an arrow.' },
+          { type: 'video', key: 'bridging-logos-2', fit: 'contain', ground: '#152b5c', label: 'Stacked lockup', alt: 'The stacked Bridging the GAP lockup animating in.' },
+          { type: 'video', key: 'bg-logos-4', fit: 'contain', ground: '#ffffff', label: 'On light', alt: 'The Great Allegheny Passage wordmark animating on white.' },
+          { type: 'video', key: 'bridging-logos-3', span: 'wide', fit: 'contain', ground: '#152b5c', label: 'Wordmark', alt: 'The Great Allegheny Passage wordmark, its G, A, and P as trail arrows.' },
+          { key: 'bg-style-guide', span: 'wide', fit: 'contain', ground: '#ffffff', label: 'Style guide', alt: 'The style guide: logos, merch, colors, fonts, and graphics.' },
         ],
       },
     },
@@ -138,11 +140,9 @@ export const bridgingTheGap = {
       /* FS303 notes: md deliverables list (“Gap Map App (trip planner,
          tool, education, community)”) and md Market Research, verbatim
          but for “All Trails” → AllTrails and the typos noted above. */
-      notes: [
-        { label: 'Its job', text: 'Trip planner, tool, education, and community.' },
-        { label: 'Market research', text: 'We assessed pros and cons of their user experience and decided to focus our efforts on playful design and customizable trip planning with strong imagery.' },
-      ],
-      mine: 'The selfie slides, and collaboration on the features. Rui Ying owned the app and its prototypes.',
+      mine: 'The selfie slides, and collaboration on the features.',
+      /* FS385 */
+      credit: 'App UX/UI design by Rui Ying.',
       /* FS347: four screens, each named with her annotation from the
          deck (BTG_47–50), verbatim; the line under each is md's feature
          list, verbatim but for typos. */
@@ -165,28 +165,38 @@ export const bridgingTheGap = {
       /* md Challenges paragraph + its features list, and the deck's
          contents slide (BTG_37), trimmed. */
       body: 'The GAP Guide serves as an informative overview of the trail, inviting beginners to explore the GAP Map App and learn about bike touring, with recommended itineraries, an overview of trail attractions, a visual packing list, and an FAQ about bike touring.',
-      /* md caption: “My first iteration of a series of sticker badges
-         featuring trail attractions to be added to the Gap Guide Pamphlet
-         as a passport-style checklist.” PROVISIONAL: the badges may not be
-         in the final guide; hers to replace with her actual part. */
-      /* FS303 notes: md deliverables list + md image 44 caption, verbatim
-         but for “Gap” → GAP. */
-      notes: [
-        { label: 'Its job', text: 'Awareness, education, and initiation.' },
-      ],
       /* md image 44 caption, her words, recast without “I” */
       mine: 'The first iteration of the sticker badges: trail attractions as a passport-style checklist.',
-      /* FS303: the photo, then the flat panels one by one (her artwork,
-         legible at last), then the badges. */
+      /* FS385 */
+      credit: 'Bike gear illustrations and icons by Michael Juan.',
+      wide: true,
+      /* FS386: the guide itself, foldable and flippable, built from the
+         fourteen final panels (Figma frames, her LaCie). Names and alts
+         are what each panel says. */
       media: {
-        stills: [
-          { key: 'bg-guide-reading', alt: 'A rider holds the guide open to the gear guide and itineraries.' },
-          { key: 'bg-guide-panel-cover', alt: 'The cover panel: “Discover the Joy of Bike Touring the Great Allegheny Passage!”' },
-          { key: 'bg-guide-panel-route', alt: 'A stretch of the route map, with tunnels, bridges, and falls along the way.' },
-          { key: 'bg-guide-panel-2days', alt: 'A two-day itinerary, Connellsville to Cumberland, with its climb and mileage.' },
-          { key: 'bg-guide-panel-gear', alt: 'The illustrated gear guide: what to wear and pack for a bike tour.' },
-          { key: 'bg-guide-panel-faq', alt: 'The FAQ: what the GAP is, whether you can tour with no experience, and what the GAP Map App does.' },
+        exhibit: 'pamphlet',
+        data: {
+          gearLabel: 'Gear side',
+          routeLabel: 'Route side',
+          gear: [
+            { key: 'bg-pam-gear-1', name: 'Gear Guide', alt: 'Gear Guide: an illustrated packing list, from helmet to sleeping bag.' },
+            { key: 'bg-pam-gear-2', name: 'FAQ', alt: 'FAQ: what the GAP is, whether you can tour with no experience, and what the GAP Map App does.' },
+            { key: 'bg-pam-gear-3', name: '2 Days', alt: '2 Days: Connellsville to Cumberland, 88 miles, 3,000 feet of climb.' },
+            { key: 'bg-pam-gear-4', name: '3 Days', alt: '3 Days: Confluence to West Newton, 53 miles, 1,000 feet of climb.' },
+            { key: 'bg-pam-gear-5', name: '4 Days', alt: '4 Days: Paw Paw to Shepherdstown, 73 miles, 350 feet of climb.' },
+            { key: 'bg-pam-gear-6', name: '5 Days', alt: '5 Days: Pittsburgh to Cumberland, 150 miles, 4,000 feet of climb.' },
+            { key: 'bg-pam-gear-7', name: 'Cover', alt: 'The cover: the stacked Bridging the GAP logo on navy.' },
           ],
+          route: [
+            { key: 'bg-pam-route-1', name: 'Discover', alt: 'Bridging the GAP: Discover the Joy of Bike Touring the Great Allegheny Passage!' },
+            { key: 'bg-pam-route-2', name: 'GAP Trail Guide', alt: 'GAP Trail Guide: tailor the ride to your taste, and download the GAP Map App.' },
+            { key: 'bg-pam-route-3', name: 'Pittsburgh to Homestead', alt: 'The route from Pittsburgh: Hot Metal Bridge, Borden Tunnel, Carrie Furnace.' },
+            { key: 'bg-pam-route-4', name: 'West Newton', alt: 'The route past McKeesport and West Newton: Ferncliff Peninsula, Cucumber Falls, Falling Water.' },
+            { key: 'bg-pam-route-5', name: 'Rockwood', alt: 'The route through Rockwood: Pinkerton Tunnel, Gateway Arch, Bollman Bridge.' },
+            { key: 'bg-pam-route-6', name: 'To Cumberland', alt: 'The route to Cumberland: Red Falls, the river, Mason and Dixon Lane.' },
+            { key: 'bg-pam-route-7', name: 'Know Before You Go', alt: 'Know Before You Go: learn, prepare, ride, joy.' },
+          ],
+        },
       },
     },
     {
@@ -194,20 +204,17 @@ export const bridgingTheGap = {
       name: 'Signage and Trail Mural',
       /* md signage paragraph, trimmed; “milage” → mileage. */
       body: 'We explored physical signage and asphalt murals as branded wayfinding, to build awareness of trail attractions and educate trail users in Pittsburgh, Maryland, D.C., and the trail towns along the path, with arrows and mileage for upcoming attractions and resources.',
-      /* FS303 notes: md deliverables list + md signage paragraph,
-         verbatim but for “MD” → Maryland as in the body. */
-      notes: [
-        { label: 'Its job', text: 'Awareness and wayfinding.' },
-        { label: 'Steel history', text: 'Michael’s talented sketches showcase some metal trail art that would pay homage to Pittsburgh’s steel history.' },
-      ],
-      /* FS303: what the trail has now (her field photo), then the proposal. */
+      wide: true,
+      /* FS387: the work first, in its setting, all at once; what the trail
+         has now comes last, as context, not as the lead */
       media: {
-        stills: [
-          { key: 'bg-field-mile-post', alt: 'What is there now: the existing mileage post at Smithton, photographed on the field research trip.' },
-          { key: 'bg-trail-art-park', alt: 'The proposal: a branded trail sign and a painted mileage line on a park path.' },
-          { key: 'bg-trail-art-forest', alt: 'Painted mileage lines and the GAP star on a forest stretch of trail.' },
-          { key: 'bg-mural', alt: 'Asphalt mural mockups counting the miles to the campground, the waterfall, and the tunnel.' },
-          { key: 'bg-graphics', alt: 'The icon set and the badges for trail attractions.' },
+        cols: 4,
+        bento: [
+          { key: 'bg-sign-trail', span: 'big', label: 'On the trail', alt: 'The trail sign and a painted mileage line on a park path.' },
+          { key: 'bg-sign-render', span: 'tall', label: 'The sign', fit: 'contain', ground: '#f4f4f2', alt: 'The trail sign: campground, tunnel, and waterfall, each with its mileage.' },
+          { key: 'bg-mural-overhead', span: 'tall', label: 'Asphalt mural', alt: 'The asphalt mural from above: waterfalls, trail towns, a historic landmark, and the tunnel ahead.' },
+          { key: 'bg-trail-art-forest', span: 'wide', label: 'Forest stretch', alt: 'Painted mileage lines and the GAP star on a forest stretch of trail.' },
+          { key: 'bg-field-mile-post', span: 'wide', focus: '50% 40%', label: 'What’s there now', alt: 'Context: the existing mileage post at Smithton, from our field research trip.' },
         ],
       },
     },
@@ -216,20 +223,18 @@ export const bridgingTheGap = {
       name: 'Apparel',
       /* md apparel paragraph, verbatim but for typos. */
       body: 'We applied our series of logos to apparel mockups and found a good use for the playful “GAP” road-shaped logo. This apparel can be won by trail users who use the GAP Map App to log miles on the trail, and is sold in trail towns.',
-      /* FS303 notes: md deliverables list + md Iterations and Feedback,
-         verbatim. */
-      notes: [
-        { label: 'Its job', text: 'Awareness and nostalgia.' },
-        { label: 'A backup plan', text: 'We decided to incorporate apparel in case our signage or mural idea didn’t pan out.' },
-      ],
+      wide: true,
+      /* FS389: the set together, as a collection, not one piece at a time */
       media: {
-        stills: [
-          { key: 'bg-apparel', alt: 'A tote, caps, a tee, and socks in the Bridging the GAP colors.' },
-          { key: 'bg-merch-tote', alt: 'The Bridging the GAP tote.' },
-          { key: 'bg-merch-cap', alt: 'A Great Allegheny Passage cap.' },
-          { key: 'bg-merch-socks', alt: 'Socks patterned with the trail’s dashed road line.' },
-          { key: 'bg-merch-bottle-lake', alt: 'A GAP sport bottle held up over the water.' },
-          { key: 'bg-apparel-bottles', alt: 'A tote, water bottles, and tees, and a bottle held up at the river.' },
+        cols: 4,
+        bento: [
+          { key: 'bg-merch-bottle-lake', span: 'tall', label: 'On the trail', alt: 'A GAP sport bottle held up over the water.' },
+          { key: 'bg-cut-tote', fit: 'contain', ground: '#7fe0b5', label: 'Tote', alt: 'The Bridging the GAP tote.' },
+          { key: 'bg-cut-shirt', fit: 'contain', ground: '#f6dd77', label: 'Tee', alt: 'The white tee with the GAP road logo.' },
+          { key: 'bg-cut-hat', fit: 'contain', ground: '#f48b6e', label: 'Cap', alt: 'A Great Allegheny Passage cap.' },
+          { key: 'bg-cut-socks', fit: 'contain', ground: '#9dbcf7', label: 'Socks', alt: 'Socks patterned with the trail’s dashed road line.' },
+          { key: 'bg-cut-bottle', fit: 'contain', ground: '#152b5c', label: 'Sport bottle', alt: 'The GAP sport bottle.' },
+          { key: 'bg-cut-bottles', fit: 'contain', ground: '#eef3fb', label: 'Bottles', alt: 'GAP water bottles in the brand colors.' },
         ],
       },
     },
@@ -289,18 +294,37 @@ export const bridgingTheGap = {
       key: 'iteration',
       step: 'Step 3 · Refinement',
       name: 'Iteration and Feedback',
+      /* FS391, her words */
+      takeaway: 'One of the biggest challenges was finding a universal illustration style that worked for us as a team and for the product.',
       /* md Iterations and Feedback, verbatim */
-      takeaway: 'The main feedback was to get our style aligned and go for a line-art approach, and to make sure everything felt cohesive.',
-      body: 'Each of us had a different illustration style and skill set. Line art kept every deliverable in line with the logo, our true north, and Michael’s icons filled in the gaps and tied everything together.',
+      body: 'Each of us had a different illustration style and skill set. The main feedback was to get our style aligned and go for a line-art approach, and to make sure everything felt cohesive. Line art kept every deliverable in line with the logo, our true north.',
+      /* FS390: “I did the brand iteration” */
+      mine: 'The brand iteration, from hand-drawn lettering to lockup and wordmark explorations to the final logo system.',
+      wide: true,
+      /* FS390: her brand iteration first (hand lettering, then the digital
+         explorations), then the team's: Rui's lo-fi wireframes, Michael's
+         icon iterations, and her own unused stickers. The earlier
+         iteration photos are retired. */
       media: {
-        stills: [
-          /* md captions, verbatim */
-          { key: 'bg-logo-iterations', alt: 'Early iterations of the logo.' },
-          { key: 'bg-guide-layout', alt: 'Exploring the layout.' },
-          { key: 'bg-sticker-badges', alt: 'My first iteration of a series of sticker badges featuring trail attractions, as a passport-style checklist.' },
-          { key: 'bg-app-sketches', alt: 'Early sketches of web/app UX.' },
-          { key: 'bg-graphics', alt: 'Final icons.' },
+        cols: 4,
+        bento: [
+          { key: 'bg-sketch-8', span: 'wide', label: 'Hand lettering', fit: 'contain', ground: '#fff', alt: 'Her hand-drawn lettering: the river running through BRIDGING THE GAP.' },
+          { key: 'bg-sketch-7', span: 'wide', label: 'Hand lettering', fit: 'contain', ground: '#fff', alt: 'Her hand-drawn lettering: Bridging the GAP along a route line.' },
+          { key: 'bg-lockups-explore', span: 'big', label: 'Lockup explorations', fit: 'contain', ground: '#fff', alt: 'Six Bridging the GAP lockups, exploring the river, the arrow, and color.' },
+          { key: 'bg-wordmark-explore', span: 'tall', label: 'Wordmarks', fit: 'contain', ground: '#fff', alt: 'GAP and Great Allegheny Passage wordmark explorations.' },
+          { key: 'bg-sketch-9', span: 'tall', label: 'The arrow letters', fit: 'contain', ground: '#fff', alt: 'Her hand-drawn GAP, each letter ending in an arrow.' },
         ],
+        plus: {
+          cols: 4,
+          bento: [
+            { key: 'bg-app-wireframes', span: 'wide', label: 'Rui’s lo-fi wireframes', fit: 'contain', ground: '#fff', alt: 'Rui Ying’s lo-fi wireframes for the GAP Map App.' },
+            { key: 'bg-icons-3', label: 'Michael’s icons, early', fit: 'contain', ground: '#fff', alt: 'An early set of Michael Juan’s packing-list icons.' },
+            { key: 'bg-icons-1', label: 'Michael’s icons, later', fit: 'contain', ground: '#fff', alt: 'A later, line-art set of Michael Juan’s packing-list icons.' },
+            { key: 'bg-sticker-bike', span: 'wide', label: 'My unused stickers', fit: 'contain', ground: '#fff', alt: 'Her unused sticker: a bike with landscape wheels.' },
+            { key: 'bg-sticker-bridge', fit: 'contain', ground: '#fff', alt: 'Her unused sticker: the trail bridge in an arch.' },
+            { key: 'bg-sticker-river', fit: 'contain', ground: '#fff', alt: 'Her unused sticker: a waterfall in an arch.' },
+          ],
+        },
       },
     },
   ],
@@ -340,7 +364,10 @@ export const bridgingTheGap = {
 
   /* CREDITS: one column each. md Team + Class; sq Credits and thanks. */
   credits: [
-    ['Design Team', 'Lorin Anderberg, Michael Juan, Rui Ying'],
+    ['Design Team', 'Lorin Anderberg, Michael Juan, Rui Ying'],
+    /* FS385 */
+    ['Guide Illustrations and Icons', 'Michael Juan', 'join'],
+    ['App UX/UI Design', 'Rui Ying', 'join'],
     ['Studio', 'CMU MA in Design, Visual Communications Studio I, taught by Brett Yasko'],
     /* sq “Big props to my teammates”, trimmed */
     ['With Thanks', 'To Michael, who hand illustrated the icon system and did a ton of work to align our illustration styles, and Rui, a Figma wizard who owned our app prototype.'],
