@@ -3,6 +3,7 @@
 import dynamic from 'next/dynamic'
 import { useLayoutEffect, useRef, useState } from 'react'
 import { cloudVideo } from '@/lib/cloudinary'
+import InViewVideo from '@/lib/useInViewVideo'
 import styles from './SheetPrototype.module.css'
 
 /* A built piece of a case study, playing inside a sheet gallery (FS301).
@@ -86,12 +87,10 @@ function useNarrow() {
 
 /* a looping film on a project's ground; still (poster frame) under reduced motion */
 function Film({ piece }) {
-  const [reduced, setReduced] = useState(false)
-  useLayoutEffect(() => { setReduced(window.matchMedia('(prefers-reduced-motion: reduce)').matches) }, [])
+  /* FS358: from the top when it comes into view, paused when it leaves */
   return (
     <div className={styles.filmGround} style={{ background: piece.ground }}>
-      <video className={styles.film} src={cloudVideo(piece.film, 1600)} muted loop playsInline
-        autoPlay={!reduced} preload="metadata" aria-label={piece.alt} />
+      <InViewVideo className={styles.film} src={cloudVideo(piece.film, 1600)} aria-label={piece.alt} />
     </div>
   )
 }

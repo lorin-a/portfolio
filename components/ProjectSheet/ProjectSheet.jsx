@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { gsap, ScrollTrigger } from '@/lib/gsap'
 import SheetContent from './SheetContent'
+import InViewVideo from '@/lib/useInViewVideo'
 import styles from './ProjectSheet.module.css'
 
 /**
@@ -445,8 +446,7 @@ function Media({ item, gated }) {
   return (
     <div className={styles.mediaBox}>
       {item.type === 'video' ? (
-        <video src={item.src} muted loop playsInline preload="metadata"
-          className={cls} aria-label={item.alt} />
+        <InViewVideo src={item.src} className={cls} aria-label={item.alt} />
       ) : (
         <img src={item.src} alt={item.alt || ''} className={cls} loading="lazy" />
       )}

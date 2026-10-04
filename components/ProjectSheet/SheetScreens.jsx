@@ -22,9 +22,11 @@ export default function SheetScreens({ items = [] }) {
           <li key={s.name || i} className={styles.item} data-private={s.muted || undefined} style={{ '--i': i }}>
             <div className={styles.stage}>
               <span className={styles.phone}>
-                <span className={styles.notch} aria-hidden="true" />
-                <span className={styles.screen}>
-                  <img src={s.src} alt={s.alt} loading="lazy" draggable="false" />
+                <span className={styles.body}>
+                  <span className={styles.island} aria-hidden="true" />
+                  <span className={styles.screen}>
+                    <img src={s.src} alt={s.alt} loading="lazy" draggable="false" />
+                  </span>
                 </span>
               </span>
             </div>

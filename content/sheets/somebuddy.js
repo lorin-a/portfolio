@@ -54,31 +54,37 @@ export const somebuddy = {
   outcome:
     'We presented the full vision to CMU’s Department of Student Affairs, and it was met with sincere interest, especially around bringing SomeBuddy into Fall 2025 orientation. No next steps have been taken yet.',
 
-  /* FS349: the cover is the polaroid pile again, one print per part of
-     the ecosystem (sq: “a social app, branding, pop-up events, and
-     collectibles”). Square crops of her deck slides, below the title bar.
-     The concept video's opening lives on in The Concept Video. */
+  /* FS349/FS352: the cover pile, one print per part of the ecosystem (sq:
+     “a social app, branding, pop-up events, and collectibles”), each a
+     different kind of picture: the logo animating (hers), the orientation
+     card in hand, the badges worn, and the app's map and matches (not the
+     bingo card again). Stills are square crops of her deck slides, below
+     the title bar. */
   prints: [
-    { key: 'sb-print-brand', caption: 'The Brand', src: square('1', 500, 40, 920),
-      alt: 'The SomeBuddy wordmark, the D a smiling speech bubble.' },
+    { key: 'sb-logo-motion', type: 'video', caption: 'The Brand',
+      alt: 'The SomeBuddy logo animating in: the speech-bubble D drops in and smiles.' },
     { key: 'sb-print-orientation', caption: 'Orientation', src: square('26', 770, 225, 855),
       alt: 'A hand holding the orientation bingo card beside the BINGO booth.' },
     { key: 'sb-print-badges', caption: 'Badges', src: square('27', 1028, 225, 855),
       alt: 'A backpack wearing embroidered SomeBuddy badges.' },
-    { key: 'sb-print-app', caption: 'The App', src: square('31', 830, 225, 855),
-      alt: 'Bingo in the app: a shuffled card and themes to start a new one.' },
+    { key: 'sb-print-app', caption: 'The App', src: square('28', 760, 225, 855),
+      alt: 'Finding a buddy in the app: matches on a campus map and in a list.' },
   ],
 
   /* FS346: SomeBuddy's own band (lime → lavender → brand blue, washed on
      the bands) and step-tile colors, from its palette */
   band: 'linear-gradient(126deg, #d4f25a 0%, #c4c2ff 48%, #4747dc 100%)',
+  /* FS356: the phones stand on the brand blue at full strength, as in her
+     deck, not on the washed pastel band (“too pastel easter vibes”) */
+  screenBand: 'linear-gradient(126deg, #5b5bea 0%, #4747dc 50%, #3434a8 100%)',
   tiles: ['#D4F25A', '#F6A6E8', '#C4C2FF', '#9D9AF7'],
 
   meta: [
     /* med “About”, verbatim */
     ['Context', 'Final project for the Carnegie Mellon School of Design MA Interaction Design Studio II, Spring 2025'],
-    /* md + sq, her line */
-    ['Role', ['UX/UI Design, UX Research,', 'Copywriting, Brand Identity']],
+    /* FS354, her words (2026-10-04): “My role was research, brand,
+       strategy, and animation. i did not make the app or UI mockups.” */
+    ['Role', ['Research, Brand Identity,', 'Strategy, Animation']],
     /* med “Team” and “Class” */
     ['Collaborators', ['Yaezi Lee and Rui Ying, design team;', 'Ashley Deal and Raelynn O’Leary, instructors']],
     /* md + sq */
@@ -88,8 +94,9 @@ export const somebuddy = {
   ],
 
   frame: {
-    /* sq “Design Challenge”, verbatim but for a comma before “which”. */
-    why: 'Grad students seek connection but struggle to make plans due to hectic schedules, which can lead to feelings of isolation. How can we create easy, low-pressure ways for grad students to connect through simple activities, especially when it’s something they don’t want to do alone?',
+    /* sq “Design Challenge”, verbatim but for a comma before “which”, and
+       “How might we” for “How can we” (FS355). */
+    why: 'Grad students seek connection but struggle to make plans due to hectic schedules, which can lead to feelings of isolation. How might we create easy, low-pressure ways for grad students to connect through simple activities, especially when it’s something they don’t want to do alone?',
     /* sq “Research”: the two interview findings, compressed. */
     research: 'Eight interviews with grad students showed that the connection they want depends on the activity: for errands or studying, almost anyone will do; for something personal like hiking, they want to know more first. Packed schedules make short, spontaneous meetups more appealing than long-term commitments.',
   },
@@ -104,13 +111,13 @@ export const somebuddy = {
     intro: 'The research revealed a need for opt-in, opt-out, low-stakes, and lightweight opportunities for connection that give the user autonomy to express their desired level of engagement. Our ecosystem involves a social app, branding, pop-up events, and collectibles that create a movement called “social-ish,” connecting students from orientation to ongoing campus life through tasks, badges, and bingo.',
     screens: [
       { name: 'Post an Activity', text: 'Pick an activity or task, choose a general time and location, and post to the community.',
-        src: crop('28', 354), alt: 'Find your somebuddy: an activity, a time, and a place on a map, then Find Somebuddy.' },
+        src: crop('28', 357), alt: 'Find your somebuddy: an activity, a time, and a place on a map, then Find Somebuddy.' },
       { name: 'Find a Buddy', text: 'Filter potential buddies by distance, age, gender, and shared interests, in map and list views.',
-        src: crop('28', 1230), alt: 'Nearby buddies in a list, filtered to coffee and casual chat, each with Send request and Chat.' },
+        src: crop('28', 1234), alt: 'Nearby buddies in a list, filtered to coffee and casual chat, each with Send request and Chat.' },
       { name: 'Collect Badges', text: 'A badge for each task completed together with another SomeBuddy, customizable and collected.',
-        src: crop('31', 132), alt: 'My badge collection: six earned badges with the dates they were earned.' },
+        src: crop('31', 138), alt: 'My badge collection: six earned badges with the dates they were earned.' },
       { name: 'Play Bingo', text: 'Join bingo cards by theme, or create a custom card and share it with others.',
-        src: crop('31', 573), alt: 'A SomeBuddy bingo card, four of sixteen squares completed.' },
+        src: crop('31', 577), alt: 'A SomeBuddy bingo card, four of sixteen squares completed.' },
     ],
   },
 
@@ -119,8 +126,9 @@ export const somebuddy = {
     {
       key: 'orientation',
       name: 'Orientation Bingo',
-      /* sq, verbatim but for a comma after “orientation” */
-      body: 'Students discover the SomeBuddy brand and app at CMU’s grad student orientation, where they play a game of bingo to get to know their new peers and add them as buddies within the app for future connection.',
+      /* sq, verbatim but for a comma after “orientation”; the second
+         sentence is her FS359 note on what the squares are for */
+      body: 'Students discover the SomeBuddy brand and app at CMU’s grad student orientation, where they play a game of bingo to get to know their new peers and add them as buddies within the app for future connection. Each square sends them to find someone they have something in common with, or something to talk about: where they’re from, hobbies, clubs, music, activities.',
       media: {
         stills: [
           { type: 'video', key: 'sb-orientation-reel', alt: 'The orientation bingo card, banners, and booth, set on campus.' },
@@ -131,23 +139,18 @@ export const somebuddy = {
     {
       key: 'app',
       name: 'The SomeBuddy App',
-      /* sq, condensed; wording hers */
-      body: 'Finding someone to do something with is fast and low-pressure. Instead of filling out a bunch of forms, students post an activity, find nearby matches, and reach out in two ways: send a request, or chat first.',
-      notes: [
-        /* med, verbatim */
-        { label: 'The goal', text: 'Make the experience fast, effortless, and low-pressure.' },
-        /* med, lightly trimmed */
-        { label: 'A second layer', text: 'Filters change with the activity, so if you’re looking for someone craving espresso or a casual chat over coffee, you can narrow it down even more.' },
-      ],
+      /* sq + med, condensed; wording hers. FS357: “The goal” and “A
+         second layer” folded in here rather than set as labeled notes. */
+      body: 'Finding someone to do something with is fast, effortless, and low-pressure. Instead of filling out a bunch of forms, students post an activity, find nearby matches, and reach out in two ways: send a request, or chat first. Filters change with the activity, so someone craving espresso can narrow it down even more.',
       media: {
         /* sq/med lines for the request flow, trimmed */
         screens: [
           { name: 'Send a Request', text: 'A pre-filled message template that only requires a quick time adjustment.',
-            src: crop('29', 354), alt: 'A request card: Hi, shall we get coffee together at 3 pm today, with Send.' },
+            src: crop('29', 357), alt: 'A request card: Hi, shall we get coffee together at 3 pm today, with Send.' },
           { name: 'Accept or Decline', text: 'Simple accept or decline buttons avoid the need for long replies.',
-            src: crop('29', 792), alt: 'A chat with the request, and Accept or Decline buttons.' },
+            src: crop('29', 796), alt: 'A chat with the request, and Accept or Decline buttons.' },
           { name: 'Plan Made', text: 'An accepted invitation goes straight to the calendar.',
-            src: crop('29', 1230), alt: 'Jessica accepted your invitation, 3 pm today, with Add to calendar.' },
+            src: crop('29', 1234), alt: 'Jessica accepted your invitation, 3 pm today, with Add to calendar.' },
         ],
       },
     },
@@ -180,14 +183,16 @@ export const somebuddy = {
       key: 'video',
       name: 'The Concept Video',
       /* PROVISIONAL, from sq's timeline (week 4: “Video Script/Story
-         Board”; week 5: “Animation, Video Editing”) and med (the full
-         2:55 video on YouTube). Hers to rewrite. */
-      body: 'We scripted and storyboarded the concept video in week four, then animated and edited it for the final presentation. The full video runs 2:55.',
+         Board”; week 5: “Animation, Video Editing”). Hers to rewrite. */
+      body: 'We scripted and storyboarded the concept video in week four, then animated and edited it for the final presentation.',
+      /* FS360: one film behind one play button, not a gallery. The full
+         2:55 video, on her YouTube (med); the poster is a frame of her
+         animation (students in brand color on campus), chosen so the play
+         button sits on open ground, not on type. */
       media: {
         stills: [
-          { type: 'video', key: 'sb-social-solo', alt: '“Social” and “solo” in kinetic type, then “Spontaneous. Simple. Social.”' },
-          { type: 'video', key: 'sb-campus-collage', alt: 'Students cut out in brand colors over the campus and the Pittsburgh skyline.' },
-          { type: 'video', key: 'sb-backpack-collage', alt: 'A backpack gains a SomeBuddy patch, then a crowd of students in brand colors.' },
+          { type: 'youtube', youtube: 'pdlaitoGycA', length: '2:55', poster: 'sb-backpack-collage', posterVideo: true, at: 3,
+            alt: 'SomeBuddy: A Social App for Grad Students, the concept video' },
         ],
       },
     },
@@ -268,13 +273,9 @@ export const somebuddy = {
       name: 'Brand Identity',
       /* med + sq, wording hers */
       takeaway: 'Class feedback confirmed that a bright, exciting, soft, and welcoming brand fit best.',
-      body: 'Users told us trust and CMU verification mattered, so we first tried colors adjacent to the CMU brand, alongside palettes that could feel inviting but also academic. The logo plays with language and shapes to convey that SomeBuddy helps you find and message fellow students, and the Quicksand typeface softens the intensity of the color palette.',
-      notes: [
-        /* med, verbatim */
-        { label: 'The logo', text: 'The smile lets you know it is safe and friendly, while the shapes draw you in from afar.' },
-        /* med, lightly trimmed */
-        { label: 'CMU references', text: 'The badge illustrations tie in CMU references through a straightforward and approachable illustrative style.' },
-      ],
+      /* FS357's rule, applied here too: the two labeled notes folded into
+         the paragraph (med, lightly trimmed), so nothing is stacked */
+      body: 'Users told us trust and CMU verification mattered, so we first tried colors adjacent to the CMU brand, alongside palettes that could feel inviting but also academic. The logo plays with language and shapes: the smile lets you know it is safe and friendly, while the shapes draw you in from afar. The Quicksand typeface softens the intensity of the color palette, and the badge illustrations tie in CMU references.',
       media: {
         stills: [
           { type: 'video', key: 'sb-logo-motion', alt: 'The SomeBuddy logo animation: the speech-bubble D drops in and smiles.' },

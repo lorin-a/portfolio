@@ -160,6 +160,7 @@ export default function SheetContent({ sheet, num, title, tagline, titleId }) {
     /* FS346: a project's own band gradient and step-tile colors */
     <div ref={rootRef} style={{
       ...(sheet.band && { '--sheet-band': sheet.band }),
+      ...(sheet.screenBand && { '--screen-band': sheet.screenBand }),
       ...Object.fromEntries((sheet.tiles || []).map((c, i) => [`--tile-${i + 1}`, c])),
     }}>
       {/* THE COVER — a pile of content inside the folder: the name and the

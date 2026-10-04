@@ -35,9 +35,12 @@
   display: grid;
   place-items: center;
   padding: 9% 0;
-  background:
+  /* FS356: a sheet can stand its phones on its brand at full strength
+     (sheet.screenBand, as SomeBuddy and Bridging do) instead of the band
+     washed to a pastel (BirthStory) */
+  background: var(--screen-band,
     linear-gradient(rgba(250, 250, 250, 0.62), rgba(250, 250, 250, 0.62)),
-    var(--sheet-band, linear-gradient(126deg, #e7c3c8 0%, #b9c2ec 48%, #1a434d 100%));
+    var(--sheet-band, linear-gradient(126deg, #e7c3c8 0%, #b9c2ec 48%, #1a434d 100%)));
   background-size: 200% 100%;
 }
 
@@ -52,33 +55,71 @@
   }
 }
 
-/* the phone: the case study's frame, her real screen */
+/* THE PHONE (FS356: “make it look more like an iPhone”). Every measure
+   is a share of the phone's own width (cqw), so the proportions hold at
+   any size: a black glass bezel about 3% wide, corners about 15%, a
+   titanium rim, the Dynamic Island, and the side buttons. Her screen sits
+   inside, whole, with nothing of a slide's own frame around it. */
 .phone {
   position: relative;
   display: block;
   width: 66%;
-  padding: 5px;
-  border-radius: 20px;
-  background: #1d1d1f;
-  box-shadow: 0 24px 48px -26px rgba(26, 67, 77, 0.6);
+  container-type: inline-size;
 }
 
-.notch {
+.body {
+  position: relative;
+  display: block;
+  padding: 3.4cqw;
+  border-radius: 15cqw;
+  background: #0b0b0c;
+  box-shadow:
+    0 0 0 0.9cqw #3a3a3e,
+    0 0 0 calc(0.9cqw + 1px) rgba(255, 255, 255, 0.16),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.08),
+    0 28px 56px -26px rgba(0, 0, 0, 0.6);
+}
+
+/* side buttons: action and volume on the left, power on the right */
+.phone::before,
+.phone::after {
+  content: '';
   position: absolute;
-  top: 10px;
+  width: 1.1cqw;
+  border-radius: 1cqw;
+  background: #3a3a3e;
+}
+
+.phone::before {
+  left: -1.9cqw;
+  top: 22%;
+  height: 14%;
+  box-shadow: 0 -9cqw 0 0 #3a3a3e;  /* the short action button above */
+}
+
+.phone::after {
+  right: -1.9cqw;
+  top: 27%;
+  height: 18%;
+}
+
+.island {
+  position: absolute;
+  top: 5.6cqw;
   left: 50%;
   z-index: 2;
-  width: 26%;
-  height: 8px;
+  width: 29cqw;
+  height: 8.4cqw;
   border-radius: 999px;
-  background: #1d1d1f;
+  background: #000;
   transform: translateX(-50%);
 }
 
 .screen {
   display: block;
   overflow: hidden;
-  border-radius: 15px;
+  border-radius: 11.6cqw;
+  background: #fff;
 }
 
 .screen img {
@@ -86,6 +127,7 @@
   width: 100%;
   aspect-ratio: 430 / 932;
   object-fit: cover;
+  object-position: top;
 }
 
 /* the leader: dotted, from the band down to the words */

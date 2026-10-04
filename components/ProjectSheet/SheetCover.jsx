@@ -1,7 +1,8 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import { sheetImg } from './SheetMedia'
+import { sheetImg, sheetVid } from './SheetMedia'
+import InViewVideo from '@/lib/useInViewVideo'
 import SheetPrototype from './SheetPrototype'
 import styles from './SheetCover.module.css'
 import paper from './Paper.module.css'
@@ -81,8 +82,10 @@ function FitPair({ title, tagline, titleId }) {
 }
 
 function Pile({ prints }) {
-  /* a print names a media key, or a full `src` (e.g. a crop of a deck slide) */
-  const items = prints.map((p) => ({ ...p, src: p.src || sheetImg(p.key, 1400) })).filter((p) => p.src)
+  /* a print names a media key, or a full `src` (e.g. a crop of a deck
+     slide); `type: 'video'` makes it a moving print (FS352) */
+  const items = prints.map((p) => ({ ...p,
+    src: p.src || (p.type === 'video' ? sheetVid(p.key, 1000) : sheetImg(p.key, 1400)) })).filter((p) => p.src)
   /* Per-print crop: `zoom` scales the photo inside its frame, `focus` is
      the point it scales toward (e.g. to lose a table edge). */
   const crop = (p) => (p.zoom || p.focus)
@@ -128,7 +131,11 @@ function Pile({ prints }) {
             aria-pressed={depth === 0}
             aria-label={depth === 0 ? `${p.alt} (on top)` : `Bring to the top: ${p.alt}`}>
             <span className={styles.brandFrame}>
-              <span className={styles.brandPhoto}><img src={p.src} alt="" style={crop(p)} /></span>
+              <span className={styles.brandPhoto}>
+                {p.type === 'video'
+                  ? <InViewVideo src={p.src} aria-hidden="true" tabIndex={-1} style={crop(p)} />
+                  : <img src={p.src} alt="" style={crop(p)} />}
+              </span>
               <span className={styles.brandStrip}>
                 <span className={styles.brandCaption}>{p.caption}</span>
               </span>

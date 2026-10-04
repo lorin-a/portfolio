@@ -10,6 +10,7 @@ import { SB_IMAGES, SB_VIDEOS } from '@/content/sheets/media/somebuddy'
 import { TD_IMAGES } from '@/content/sheets/media/transition-design'
 import { BG_IMAGES } from '@/content/sheets/media/bridging-the-gap'
 import { useSharedAudio } from '@/lib/useSharedAudio'
+import InViewVideo from '@/lib/useInViewVideo'
 import { POEM_CREDIT } from '@/content/poems/groundswell'
 import GalleryNav from '@/components/GalleryNav/GalleryNav'
 import SheetPrototype, { hasPrototype } from './SheetPrototype'
@@ -30,6 +31,7 @@ const aud = (k) => (GS_AUDIO[k] ? cloudAudio(GS_AUDIO[k]) : null)
 
 /** Exported for the sheet's lightbox registry. */
 export const sheetImg = img
+export const sheetVid = vid
 
 
 /**
@@ -45,6 +47,13 @@ export function slidesFor(media = {}) {
     if (item.type === 'prototype') {
       if (hasPrototype(item.name)) out.push({ key: `proto-${item.name}`, type: 'prototype', name: item.name, alt: item.alt || '',
         fallback: item.fallback ? img(item.fallback, 1200) : null })
+      return
+    }
+    /* FS360: one full film behind a play button (YouTube, no-cookie) */
+    if (item.type === 'youtube') {
+      out.push({ key: `yt-${item.youtube}`, type: 'youtube', youtube: item.youtube, alt: item.alt || '',
+        poster: item.poster ? (item.posterVideo ? cloudVideoFrame(VIDEOS[item.poster], item.at) : img(item.poster, 1800)) : null,
+        length: item.length })
       return
     }
     const type = item.type || 'image'
@@ -92,8 +101,11 @@ export function SheetStage({ slides, gated, onImage, label, fit }) {
     <div key={s.key} className={styles.stageMedia} role="img" aria-label={s.alt}>
       <SheetPrototype name={s.name} fallback={s.fallback} fallbackAlt={s.alt} />
     </div>
+  ) : s.type === 'youtube' ? (
+    <YouTubeFilm key={s.key} id={s.youtube} poster={s.poster} title={s.alt} length={s.length} />
   ) : s.type === 'video' ? (
-    <video key={s.key} src={s.src} muted loop playsInline autoPlay preload="metadata"
+    /* FS358: plays from the top when it comes into view, pauses when it leaves */
+    <InViewVideo key={s.key} src={s.src}
       aria-label={s.alt} className={styles.stageMedia} data-blur={s.blur || undefined}
       style={typeof s.blur === 'number' ? { '--data-blur': `${s.blur}px` } : undefined} />
   ) : (
@@ -147,6 +159,37 @@ export function SheetStage({ slides, gated, onImage, label, fit }) {
         />
       </div>
     </div>
+  )
+}
+
+/* a still frame of a Cloudinary video, as a poster */
+function cloudVideoFrame(id, at = 2) {
+  return id ? `https://res.cloudinary.com/dc17mvdyv/video/upload/so_${at},w_1800,q_auto/${id}.jpg` : null
+}
+
+/**
+ * ONE FILM, ONE PLAY BUTTON (FS360): the full video waits behind its
+ * poster and a play button; nothing loads from YouTube until it is asked
+ * for, then the no-cookie player takes the frame and starts with sound.
+ */
+function YouTubeFilm({ id, poster, title, length }) {
+  const [on, setOn] = useState(false)
+  if (on) {
+    return (
+      <iframe className={styles.stageMedia} data-film
+        src={`https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0&modestbranding=1&playsinline=1`}
+        title={title} allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowFullScreen />
+    )
+  }
+  return (
+    <button type="button" className={styles.film} onClick={() => setOn(true)}
+      aria-label={`Play the video: ${title}${length ? ` (${length})` : ''}`}>
+      {poster && <img src={poster} alt="" className={styles.stageMedia} />}
+      <span className={styles.filmPlay} aria-hidden="true">
+        <svg viewBox="0 0 24 24"><path d="M8 5.5v13l10.5-6.5z" fill="currentColor" /></svg>
+      </span>
+      {length && <span className={styles.filmLength} aria-hidden="true">{length}</span>}
+    </button>
   )
 }
 

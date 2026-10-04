@@ -41,7 +41,9 @@
  *     (the logo animations are assumed, not confirmed).
  */
 
-/* one phone screen, cut from a deck slide (6182 × 3477) */
+/* one phone's display, cut from a deck slide just inside the slide's own
+   silver frame and bezel (FS356, measured per slide; the slides differ in
+   size), so the sheet's iPhone is the only frame */
 const crop = (id, x, y, w, h) => `https://res.cloudinary.com/dc17mvdyv/image/upload/c_crop,x_${x},y_${y},w_${w},h_${h}/f_auto,q_auto,w_600/${id}`
 
 export const bridgingTheGap = {
@@ -49,6 +51,8 @@ export const bridgingTheGap = {
      mint, sun, coral for the step tiles (from the style guide, BTG_29) */
   band: 'linear-gradient(126deg, #a8ecd0 0%, #9dbcf7 50%, #1c2f6e 100%)',
   tiles: ['#7FE0B5', '#F6DD77', '#F48B6E'],
+  /* FS356: the app's phones on the deck's own navy, not the washed band */
+  screenBand: 'linear-gradient(126deg, #24397f 0%, #1c2f6e 50%, #15235a 100%)',
 
   /* sq, verbatim. The only stated outcome; there is no client (a class
      brief), and the GAP association conversation was research, not a
@@ -154,13 +158,13 @@ export const bridgingTheGap = {
       media: {
         screens: [
           { name: 'Customized trip planner', text: 'Addresses questions about distance, elevation, difficulty level, and lets users choose routes that feature attractions they are interested in.',
-            src: crop('BTG_47', 1805, 736, 1156, 2448), alt: 'The trip planner: duration, distance, elevation gain, difficulty, attractions, and sleeping type.' },
+            src: crop('BTG_47', 1825, 750, 1118, 2420), alt: 'The trip planner: duration, distance, elevation gain, difficulty, attractions, and sleeping type.' },
           { name: 'Motivational messages', text: 'GPS with highlighted attractions, alerts for local riders, and an optional historical audio tour.',
-            src: crop('BTG_48', 1261, 705, 1125, 2426), alt: 'On the ride: “3 miles to next stop, Keep Going!” over the trail map.' },
+            src: crop('BTG_48', 1579, 891, 1379, 2985), alt: 'On the ride: “3 miles to next stop, Keep Going!” over the trail map.' },
           { name: 'In-app selfies', text: 'In-app selfies encouraged throughout your trip + compiled at the end.',
-            src: crop('BTG_49', 1289, 550, 1119, 2374), alt: 'A rider’s selfie in a playful GAP frame.' },
+            src: crop('BTG_49', 1090, 469, 908, 1963), alt: 'A rider’s selfie in a playful GAP frame.' },
           { name: 'Mileage earns you merch!', text: 'Apparel can be won by trail users who use the GAP Map App to log miles on the trail.',
-            src: crop('BTG_50', 4664, 695, 1156, 2451), alt: '32.6 miles: keep going, 27.4 miles to the gift, with the merch to claim.' },
+            src: crop('BTG_50', 5814, 891, 1398, 3020), alt: '32.6 miles: keep going, 27.4 miles to the gift, with the merch to claim.' },
         ],
       },
     },

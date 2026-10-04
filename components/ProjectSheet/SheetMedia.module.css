@@ -955,3 +955,80 @@
     opacity: 1;
   }
 }
+
+/* ONE FILM, ONE PLAY BUTTON (FS360): the poster fills the mat; a glass
+   play disc sits in the middle; the running time in the corner. */
+.film {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  background: #000;
+  cursor: pointer;
+}
+
+.film .stageMedia {
+  object-fit: cover;
+}
+
+.filmPlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: grid;
+  place-items: center;
+  width: clamp(64px, 9vw, 88px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  color: #fff;
+  background:
+    linear-gradient(135deg,
+      rgba(197, 207, 166, 0.3) 5%,
+      rgba(199, 170, 209, 0.26) 45%,
+      rgba(247, 156, 126, 0.24) 88%),
+    rgba(28, 26, 30, 0.45);
+  backdrop-filter: blur(12px) saturate(1.2);
+  -webkit-backdrop-filter: blur(12px) saturate(1.2);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.35),
+    0 14px 34px rgba(0, 0, 0, 0.4);
+  transform: translate(-50%, -50%);
+  transition: transform var(--motion-fast) var(--ease-out);
+}
+
+.filmPlay svg {
+  width: 38%;
+  margin-left: 6%;
+}
+
+.filmLength {
+  position: absolute;
+  right: 0.75rem;
+  bottom: 0.75rem;
+  padding: 0.2rem 0.55rem;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-body);
+  font-size: var(--step-label);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.55);
+}
+
+@media (hover: hover) {
+  .film:hover .filmPlay {
+    transform: translate(-50%, -50%) scale(1.06);
+  }
+}
+
+.film:focus-visible {
+  outline: 2px solid var(--color-sage);
+  outline-offset: -2px;
+}
+
+.stageMedia[data-film] {
+  border: 0;
+  animation: none;
+}

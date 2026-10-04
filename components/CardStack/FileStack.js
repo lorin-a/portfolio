@@ -172,6 +172,10 @@ export default function FileStack({
   const videoRefs = useRef([])
   const hasRevealed = useRef(false)
   const prevActiveRef = useRef(0)
+  /* FS358: the folder's clips play only while it is on screen */
+  const inViewRef = useRef(false)
+  const activeRef = useRef(0)
+  activeRef.current = activeIndex
 
   const advanceGallery = useCallback((cardIndex, dir) => {
     setGalleryIndices(prev => {
@@ -229,6 +233,31 @@ export default function FileStack({
       } catch {}
     })
     // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  /* FS358: the active clip starts from the top when the folder comes
+     into view and pauses when it leaves, so nothing runs unwatched and
+     the beginning is never missed. Reduced motion: nothing plays itself. */
+  useEffect(() => {
+    const el = containerRef.current
+    if (!el) return
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    const io = new IntersectionObserver(([e]) => {
+      inViewRef.current = e.isIntersecting
+      videoRefs.current.forEach((v, i) => {
+        if (!v) return
+        try {
+          if (e.isIntersecting && i === activeRef.current && !reduced) {
+            v.currentTime = 0
+            v.play().catch(() => {})
+          } else {
+            v.pause()
+          }
+        } catch {}
+      })
+    }, { threshold: 0.35 })
+    io.observe(el)
+    return () => io.disconnect()
   }, [])
 
   /* Initial entrance — cascade in from below, back-most first. */
@@ -333,6 +362,7 @@ export default function FileStack({
       try {
         if (i === activeIndex) {
           v.currentTime = 0
+          if (!inViewRef.current) return
           const p = v.play()
           if (p && typeof p.catch === 'function') p.catch(() => {})
         } else {
@@ -450,9 +480,15 @@ export default function FileStack({
                 return current.type === 'video' ? (
                   <video
                     key={`v-${i}-${galleryIdx}`}
-                    ref={el => { videoRefs.current[i] = el }}
+                    ref={el => {
+                      videoRefs.current[i] = el
+                      /* a clip paged in while the folder is on screen plays at once */
+                      if (el && i === activeRef.current && inViewRef.current && el.paused
+                        && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                        el.play().catch(() => {})
+                      }
+                    }}
                     src={current.src}
-                    autoPlay
                     muted
                     loop
                     playsInline

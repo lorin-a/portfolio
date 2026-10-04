@@ -40,7 +40,8 @@ export default function SheetMotionLibrary({ items = [] }) {
     if (!v) return
     v.currentTime = 0
     /* a chosen view always plays; the automatic tour only while in view */
-    if ((inView && !reduced) || chosen) v.play().then(() => setPlaying(true)).catch(() => {})
+    /* FS358: nothing plays off screen, chosen or not */
+    if (inView && (!reduced || chosen)) v.play().then(() => setPlaying(true)).catch(() => {})
     else { v.pause(); setPlaying(false) }
   }, [active, inView, reduced, chosen])
 

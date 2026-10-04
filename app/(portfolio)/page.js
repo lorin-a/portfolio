@@ -212,7 +212,7 @@ export default function Home() {
         <ProjectPreview
           num="04"
           title="SomeBuddy"
-          tagline="Approachable Socialization for Busy Buddies"
+          tagline="Approachable Socialization for Busy-Buddies"
           description="A product and brand system for university campuses, helping busy students connect over shared values through low-effort socializing."
           contributions={[
             {
