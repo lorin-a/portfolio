@@ -24,39 +24,57 @@ export default function Lightbox({
   const lightboxRef = useRef(null)
   const hasNavigation = onPrev && onNext
   
-  // Handle keyboard navigation
+  // Keyboard (FS372): Escape closes the image only, arrows page, and Tab
+  // stays inside the overlay until it closes (a modal's focus trap).
   const handleKeyDown = useCallback((e) => {
     switch (e.key) {
       case 'Escape':
+        e.preventDefault()
+        e.stopPropagation()
         onClose()
         break
       case 'ArrowLeft':
-        if (onPrev) onPrev()
+        if (onPrev) { e.preventDefault(); onPrev() }
         break
       case 'ArrowRight':
-        if (onNext) onNext()
+        if (onNext) { e.preventDefault(); onNext() }
         break
+      case 'Tab': {
+        const root = lightboxRef.current
+        const f = root ? [...root.querySelectorAll('button:not([disabled]), a[href], [tabindex]:not([tabindex="-1"])')] : []
+        if (!f.length) { e.preventDefault(); break }
+        const first = f[0], last = f[f.length - 1]
+        const inside = root.contains(document.activeElement)
+        if (e.shiftKey && (!inside || document.activeElement === first || document.activeElement === root)) { e.preventDefault(); last.focus() }
+        else if (!e.shiftKey && (!inside || document.activeElement === last)) { e.preventDefault(); first.focus() }
+        break
+      }
     }
   }, [onClose, onPrev, onNext])
-  
-  // Setup focus trap and body scroll lock
+
+  // Setup focus, scroll lock, and the flag that lets a host hide its own
+  // close button while the image is up (FS372: one close at a time)
   useEffect(() => {
-    // Focus the lightbox for keyboard events
+    const opener = document.activeElement
     lightboxRef.current?.focus()
-    
-    // Lock body scroll
+
     const originalOverflow = document.body.style.overflow
     document.body.style.overflow = 'hidden'
-    
-    // Add keyboard listener
-    window.addEventListener('keydown', handleKeyDown)
-    
+    document.documentElement.dataset.lightbox = 'open'
+
+    window.addEventListener('keydown', handleKeyDown, true)
+
     return () => {
       document.body.style.overflow = originalOverflow
-      window.removeEventListener('keydown', handleKeyDown)
+      delete document.documentElement.dataset.lightbox
+      window.removeEventListener('keydown', handleKeyDown, true)
+      // focus goes back where it came from, unless the host already moved it
+      if (opener instanceof HTMLElement && (document.activeElement === document.body || !document.activeElement)) {
+        opener.focus({ preventScroll: true })
+      }
     }
   }, [handleKeyDown])
-  
+
   return (
     <div 
       className={styles.lightbox}
@@ -77,7 +95,7 @@ export default function Lightbox({
       <button
         className={styles.closeButton}
         onClick={onClose}
-        aria-label="Close lightbox"
+        aria-label="Close image"
       >
         <svg 
           width="24" 

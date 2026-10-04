@@ -105,6 +105,8 @@ const list = (arr) => arr.join(', ').replace(/, ([^,]*)$/, arr.length > 2 ? ', a
 function Stage({ view, focus, setFocus, interactive, uid, ready = true, hint = null }) {
   const act = (f) => (interactive ? {
     tabIndex: 0, role: 'button', onMouseEnter: () => setFocus(f), onFocus: () => setFocus(f), onClick: () => setFocus(f),
+    /* FS372: a role="button" answers Enter and Space like a real one */
+    onKeyDown: (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setFocus(f) } },
   } : {})
   const isF = (kind, id) => !!focus && focus.kind === kind && focus.id === id
   /* FS283: the resting state (the guided default, or the default the map
@@ -148,7 +150,9 @@ function Stage({ view, focus, setFocus, interactive, uid, ready = true, hint = n
   }
 
   return (
-    <svg viewBox="0 0 1736 1080" className={s.svg} role="img"
+    /* FS372: a group, not an image: role="img" hid the focusable regions
+       inside it from screen readers */
+    <svg viewBox="0 0 1736 1080" className={s.svg} role="group"
       aria-label={['Research synthesis: four themes, recognition, systemic issues, environment, and culture, each touching the other three in a tetrahedron, enclosing the void: patient-centered care neglects the people who give it.',
         'Values: humanity, together, normalcy, and compassion, in a cycle.',
         'Product ecosystem: the CTB email, the restorative pod, the Garden art wall, and the reflection cards, each reached from moments across a shift.'][view]}>

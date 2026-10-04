@@ -827,3 +827,12 @@
     font-size: 0.9375rem;
   }
 }
+
+/* FS372: one close at a time. While an image is open over the sheet, the
+   project's Close steps away (and out of the tab order) so the image's
+   own close is the only one on screen. */
+:global(:root[data-lightbox]) .close {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}

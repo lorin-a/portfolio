@@ -146,18 +146,21 @@ export default function ProjectPreview({
 
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     if (prefersReduced) {
-      gsap.set(text, { autoAlpha: 1 })
+      gsap.set(text, { opacity: 1 })
       gsap.set(media, { xPercent: centerShift })
-      if (controls) gsap.set(controls, { autoAlpha: 1 })
+      if (controls) gsap.set(controls, { opacity: 1 })
       return
     }
 
-    /* Initial state: text hidden, dots hidden until compose lands. */
+    /* Initial state: text hidden, dots hidden until compose lands.
+       FS372: hidden by OPACITY, never visibility, so the folder's controls
+       stay reachable by Tab before the reveal has played (see the
+       focusin catch-up below). */
     gsap.set(text, isMobile
-      ? { autoAlpha: 0, y: 24 }
-      : { autoAlpha: 0, x: flip ? -40 : 40 })
+      ? { opacity: 0, y: 24 }
+      : { opacity: 0, x: flip ? -40 : 40 })
     gsap.set(media, { xPercent: centerShift })
-    if (controls) gsap.set(controls, { autoAlpha: 0, y: 8 })
+    if (controls) gsap.set(controls, { opacity: 0, y: 8 })
 
     /* Compose timeline: paused, played by IntersectionObserver when the
        section enters view. No scrub, no pin — same model as the bio and
@@ -180,13 +183,13 @@ export default function ProjectPreview({
 
     tl.to(text, isMobile
       ? {
-          autoAlpha: 1,
+          opacity: 1,
           y: 0,
           duration: 0.8,
           ease: 'power1.inOut',
         }
       : {
-          autoAlpha: 1,
+          opacity: 1,
           x: 0,
           duration: 0.8,
           ease: 'power1.inOut',
@@ -198,7 +201,7 @@ export default function ProjectPreview({
        interactive carousel is ready to use. */
     if (controls) {
       tl.to(controls, {
-        autoAlpha: 1,
+        opacity: 1,
         y: 0,
         duration: 0.4,
         ease: 'power2.out',
@@ -218,6 +221,15 @@ export default function ProjectPreview({
       { threshold: 0.35 }
     )
     composeObserver.observe(section)
+
+    /* FS372: a keyboard user who tabs into the folder before it has
+       composed gets it composed at once, so focus never lands on
+       something invisible. */
+    const onFocusIn = () => {
+      if (tl.progress() < 1) { tl.progress(1); composeObserver.disconnect() }
+    }
+    section.addEventListener('focusin', onFocusIn)
+    return () => section.removeEventListener('focusin', onFocusIn)
   }, { scope: sectionRef, dependencies: [mediaSrc, mediaSequence.length] })
 
   return (

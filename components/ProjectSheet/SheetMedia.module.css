@@ -1032,3 +1032,40 @@
   border: 0;
   animation: none;
 }
+
+/* FS372: the video's pause control in the gallery footer, a 44px target */
+.playToggle {
+  flex: none;
+  margin-left: auto;  /* sits beside the gallery nav, at the right */
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  margin-top: -8px;
+  margin-bottom: -8px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: none;
+  color: var(--color-ink);
+  cursor: pointer;
+}
+
+.playToggle svg {
+  width: 14px;
+  height: 14px;
+  padding: 7px;
+  box-sizing: content-box;
+  border: 1.5px solid currentColor;
+  border-radius: 50%;
+  opacity: 0.85;
+}
+
+@media (hover: hover) {
+  .playToggle:hover svg { opacity: 1; }
+}
+
+.playToggle:focus-visible {
+  outline: 2px solid var(--color-sage);
+  outline-offset: -2px;
+}

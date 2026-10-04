@@ -85,6 +85,17 @@ export function slidesFor(media = {}) {
  */
 export function SheetStage({ slides, gated, onImage, label, fit }) {
   const [at, setAt] = useState(0)
+  /* FS372 (WCAG 2.2.2): moving video has a pause control; a pause holds
+     until the viewer plays it again */
+  const videoRef = useRef(null)
+  const holdRef = useRef(false)
+  const [paused, setPaused] = useState(false)
+  const togglePlay = () => {
+    const v = videoRef.current
+    if (!v) return
+    if (v.paused) { holdRef.current = false; v.play().catch(() => {}); setPaused(false) }
+    else { holdRef.current = true; v.pause(); setPaused(true) }
+  }
   const n = slides.length
   const go = useCallback((d) => setAt((i) => (i + d + n) % n), [n])
 
@@ -105,7 +116,8 @@ export function SheetStage({ slides, gated, onImage, label, fit }) {
     <YouTubeFilm key={s.key} id={s.youtube} poster={s.poster} title={s.alt} length={s.length} />
   ) : s.type === 'video' ? (
     /* FS358: plays from the top when it comes into view, pauses when it leaves */
-    <InViewVideo key={s.key} src={s.src}
+    <InViewVideo key={s.key} src={s.src} ref={videoRef} holdRef={holdRef}
+      onPlay={() => setPaused(false)} onPause={() => setPaused(true)}
       aria-label={s.alt} className={styles.stageMedia} data-blur={s.blur || undefined}
       style={typeof s.blur === 'number' ? { '--data-blur': `${s.blur}px` } : undefined} />
   ) : (
@@ -148,6 +160,15 @@ export function SheetStage({ slides, gated, onImage, label, fit }) {
           )}
           <span className={styles.captionText}>{s.alt}</span>
         </p>
+        {s.type === 'video' && (
+          <button type="button" className={styles.playToggle} onClick={togglePlay}
+            aria-label={paused ? 'Play video' : 'Pause video'} aria-pressed={paused}>
+            <svg viewBox="0 0 16 16" aria-hidden="true">
+              {paused ? <path d="M5 3l8 5-8 5z" fill="currentColor" />
+                : <path d="M5 3h2v10H5zM9 3h2v10H9z" fill="currentColor" />}
+            </svg>
+          </button>
+        )}
         <GalleryNav
           className={styles.stageNav}
           count={n}

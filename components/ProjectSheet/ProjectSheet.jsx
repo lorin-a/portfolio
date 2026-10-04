@@ -265,6 +265,9 @@ export default function ProjectSheet({
       /* An image lightbox opened from the sheet owns its own keys — ESC
          closes IT, not the sheet, and its focus stays its business. */
       if (e.target instanceof Element && e.target.closest('[aria-label="Image lightbox"]')) return
+      /* FS372: while an image is open, every key is the image's, wherever
+         focus happens to be (Escape used to close the project too) */
+      if (document.documentElement.dataset.lightbox) return
       if (e.key === 'Escape') { e.stopPropagation(); requestClose(); return }
       if (e.key !== 'Tab') return
       const f = sheetRef.current?.querySelectorAll(

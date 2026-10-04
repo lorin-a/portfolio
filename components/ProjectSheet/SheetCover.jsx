@@ -133,7 +133,7 @@ function Pile({ prints }) {
             <span className={styles.brandFrame}>
               <span className={styles.brandPhoto}>
                 {p.type === 'video'
-                  ? <InViewVideo src={p.src} aria-hidden="true" tabIndex={-1} style={crop(p)} />
+                  ? <InViewVideo src={p.src} loop={false} aria-hidden="true" tabIndex={-1} style={crop(p)} />  /* FS372: plays once (under 5s) and rests, so no pause control is needed (WCAG 2.2.2) */
                   : <img src={p.src} alt="" style={crop(p)} />}
               </span>
               <span className={styles.brandStrip}>

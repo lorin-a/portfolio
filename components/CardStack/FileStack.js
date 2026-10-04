@@ -260,6 +260,19 @@ export default function FileStack({
     return () => io.disconnect()
   }, [])
 
+  /* FS372: the folder tabs follow the ARIA tabs pattern. Only the active
+     tab is in the Tab order; Left/Right (and Up/Down) move to the next
+     tab and select it, Home/End jump to the ends, and focus follows. */
+  const onTabKey = (e) => {
+    if (!(e.target instanceof Element) || e.target.getAttribute('role') !== 'tab') return
+    const go = { ArrowRight: activeIndex + 1, ArrowDown: activeIndex + 1, ArrowLeft: activeIndex - 1, ArrowUp: activeIndex - 1, Home: 0, End: cardCount - 1 }[e.key]
+    if (go === undefined) return
+    e.preventDefault()
+    const next = (go + cardCount) % cardCount
+    setActiveIndex(next)
+    requestAnimationFrame(() => containerRef.current?.querySelectorAll('[role="tab"]')[next]?.focus())
+  }
+
   /* Initial entrance — cascade in from below, back-most first. */
   useGSAP(() => {
     const container = containerRef.current
@@ -276,8 +289,10 @@ export default function FileStack({
       return
     }
 
+    /* FS372: opacity, not autoAlpha, so the folder's tabs and gallery stay
+       reachable by Tab before the cascade has played */
     allCards.forEach(c => {
-      gsap.set(c, { y: 100, z: -300, scale: 0.92, rotationX: 5, autoAlpha: 0 })
+      gsap.set(c, { y: 100, z: -300, scale: 0.92, rotationX: 5, opacity: 0 })
     })
     mattes.forEach(m => gsap.set(m, { autoAlpha: 0 }))
 
@@ -312,7 +327,17 @@ export default function FileStack({
     }, { threshold: 0.3 })
 
     observer.observe(container)
-    return () => observer.disconnect()
+
+    /* FS372: tabbing into the folder before it has arrived lands it at once */
+    const onFocusIn = () => {
+      if (hasRevealed.current) return
+      hasRevealed.current = true
+      observer.disconnect()
+      allCards.forEach((c, i) => gsap.set(c, restPoseFor(depthOf(i, activeIndex))))
+      if (mattes[activeIndex]) gsap.set(mattes[activeIndex], { autoAlpha: 1 })
+    }
+    container.addEventListener('focusin', onFocusIn)
+    return () => { observer.disconnect(); container.removeEventListener('focusin', onFocusIn) }
   }, { scope: containerRef })
 
   /* Active change — soft-settle lift on incoming, calm recede on others. */
@@ -401,6 +426,7 @@ export default function FileStack({
       style={{ '--slot-count': cardCount }}
       role="tablist"
       aria-label="Project files"
+      onKeyDown={onTabKey}
     >
       {cards.map((card, i) => {
         const isActive = i === activeIndex

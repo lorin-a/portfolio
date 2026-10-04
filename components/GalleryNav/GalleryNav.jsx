@@ -1,5 +1,6 @@
 'use client'
 
+import { useRef } from 'react'
 import styles from './GalleryNav.module.css'
 
 /**
@@ -36,7 +37,20 @@ export default function GalleryNav({
   arrows = true,
   className = '',
 }) {
+  const dotsRef = useRef(null)
   if (!count || count < 2) return null
+  /* FS372: the dots are one tab stop (a roving tabindex): Tab lands on the
+     current dot, the arrow keys move between images, Home and End jump to
+     the ends, and focus follows the selection. */
+  const onDotKey = (e) => {
+    const go = { ArrowRight: index + 1, ArrowDown: index + 1, ArrowLeft: index - 1, ArrowUp: index - 1, Home: 0, End: count - 1 }[e.key]
+    if (go === undefined) return
+    e.preventDefault()
+    e.stopPropagation()
+    const next = (go + count) % count
+    onSelect?.(next)
+    requestAnimationFrame(() => dotsRef.current?.children[next]?.focus())
+  }
   return (
     <div className={`${styles.nav} ${className}`} role="group" aria-label={label}>
       {arrows && (
@@ -44,13 +58,14 @@ export default function GalleryNav({
           <span className={styles.ring}><Chevron dir="left" /></span>
         </button>
       )}
-      <div className={styles.dots}>
+      <div className={styles.dots} ref={dotsRef} onKeyDown={onDotKey}>
         {Array.from({ length: count }, (_, i) => (
           <button
             key={i}
             type="button"
             className={styles.dot}
             aria-current={i === index ? 'true' : undefined}
+            tabIndex={i === index ? 0 : -1}
             aria-label={`Image ${i + 1} of ${count}`}
             onClick={() => onSelect?.(i)}
           >
