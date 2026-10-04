@@ -474,11 +474,11 @@ SomeBuddy
 - D6 C early badges → in Brand Identity? — ✅ HER ANSWER: yes, both (C1, C2)
 - D7 D CMU-palette boards (May 13) → were they the pitch? — 🟠 HER ANSWER: not sure; left out for now, open
 - D8 Pitch photo: blur the staff names / her email? — ✅ HER ANSWER: blur her email tag and the Otter notetaker tile; keep names
-- D9 Concept Video line (PROVISIONAL) → approve or rewrite — 
-- D10 Weave card (“What I’ll carry forward”) → her words — 
-- D11 Homepage folder tab “UX” → rename (Research? Strategy?) — 
-- D12 Concept video: YouTube, or self-host her local 2:56 file — 
-- D13 Busy-Buddies: keep the hyphen? — 
+- D9 Concept Video line (PROVISIONAL) → approve or rewrite — ✅ HER ANSWER: “We scripted and storyboarded the concept video in week four. I animated and edited it for the final presentation.”
+- D10 Weave card (“What I’ll carry forward”) → her words — 🟠 HER ANSWER: skip for now (open)
+- D11 Homepage folder tab “UX” → rename (Research? Strategy?) — ✅ HER ANSWER: Research (gallery: ecosystem map, what we heard, principles, affinity map)
+- D12 Concept video: YouTube, or self-host her local 2:56 file — ✅ HER ANSWER: keep YouTube
+- D13 Busy-Buddies: keep the hyphen? — ✅ HER ANSWER: “Busy Students” → tagline “Approachable Socialization for Busy Students”
 BirthStory
 - D14 Outcome: “concept only” vs old site “eventual creation… by the professors and the client” — 
 - D15 Add the parent quote “It would be tragic to lose those moments if the app disappeared someday.” — 
