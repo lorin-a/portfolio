@@ -489,10 +489,10 @@ Transition Design
 - D19 Duration: 15-week sprint vs 18 vs per-step durations — ✅ HER ANSWER: 15 weeks (Spring 2025), drop per-step week counts
 - D20 Her part in the 2050 story (“My part:”) — ✅ HER ANSWER (after asking “What would you do?”; Claude advised): drop “My part”; the team’s story, one framing line, the pictures, and the YouTube recording (qObw2qPiEmM) behind a play button
 - D21 Homepage link → Assignment #5? — ✅ HER ANSWER: Assignment #5
-- D22 Reflection cards → her words — 
+- D22 Reflection cards → her words — 🟠 HER ANSWER: skip for now (open)
 Bridging the G.A.P.
-- D23 Duration: 4 or 5 weeks; season and year — 
-- D24 Logo animations: hers? — 
+- D23 Duration: 4 or 5 weeks; season and year — ✅ HER ANSWER: 5 weeks, Fall 2024
+- D24 Logo animations: hers? — ✅ HER ANSWER: yes, all of them
 - D25 Her part in signage / mural / apparel — 
 - D26 Photo credit for the guide and app shoots (“Zo”?) — 
 - D27 Last What’s next bullet → her words — 
