@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Portfolio History</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=Public+Sans:wght@400;500;600&display=swap">
+<style>
+/* Layout: a proof sheet, then one reel oldest first. Each version is a numbered row: the number and date in a narrow
+   left column, her words first, the decision, then the frames. Two readings of one record: Pictures, and Direction
+   (words and decisions alone). Homebase's own paper and ink; the project's hue marks the version numbers. */
+:root {
+  --bg: #FFFFFF; --ink: #1F1E1B; --muted: #6F6C66; --faint: #A9A6A0; --rule: #ECEAE6; --well: #F4F3F0; --side: #FBFAF8;
+  --hue: #555; --accent: color-mix(in oklch, var(--hue) 88%, black);
+  --serif: "Fraunces", Georgia, "Times New Roman", serif;
+  --sans: "Public Sans", "Helvetica Neue", Arial, sans-serif;
+  --mono: ui-monospace, "SF Mono", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bg: #191918; --ink: #EDEBE6; --muted: #A19E97; --faint: #6E6B66; --rule: #2A2927; --well: #232220; --side: #1E1D1B; --accent: color-mix(in oklch, var(--hue) 45%, white); color-scheme: dark; } }
+:root[data-theme="dark"] { --bg: #191918; --ink: #EDEBE6; --muted: #A19E97; --faint: #6E6B66; --rule: #2A2927; --well: #232220; --side: #1E1D1B; --accent: color-mix(in oklch, var(--hue) 45%, white); color-scheme: dark; }
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { scroll-behavior: smooth; scroll-padding-top: 72px; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body { background: var(--bg); color: var(--ink); font: 400 15px/1.55 var(--sans); -webkit-font-smoothing: antialiased; }
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
+button { font: inherit; color: inherit; }
+
+.wrap { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); max-width: 1480px; margin: 0 auto; }
+@media (min-width: 900px) { .wrap { padding-left: max(40px, env(safe-area-inset-left, 0px)); padding-right: max(40px, env(safe-area-inset-right, 0px)); } }
+
+/* the bar: name, the two readings, the compare tray */
+.bar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 6; background: var(--bg); border-bottom: 1px solid var(--rule); }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--bg); }
+.bar .wrap { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 20px; padding-block: 10px; }
+.bar .who { font: 600 13px/1 var(--sans); letter-spacing: .04em; text-transform: uppercase; display: flex; align-items: center; gap: 8px; text-decoration: none; }
+.bar .who i { width: 10px; height: 10px; border-radius: 50%; background: var(--hue); display: inline-block; }
+.seg { flex: none; display: inline-flex; border: 1px solid var(--rule); border-radius: 999px; padding: 3px; margin-left: auto; }
+.seg button { border: 0; background: none; min-height: 38px; padding: 0 16px; border-radius: 999px; cursor: pointer; color: var(--muted); font-weight: 500; }
+.seg button[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
+.bar select { flex: 1 1 100%; width: 100%; min-width: 0; min-height: 44px; max-width: 100%; background: var(--well); border: 1px solid var(--rule); border-radius: 8px; padding: 0 10px; font: 500 14px var(--sans); color: var(--ink); }
+@media (min-width: 900px) { .bar select { display: none; } }
+
+/* masthead */
+.mast { padding-block: 56px 40px; display: grid; gap: 18px; max-width: 900px; min-width: 0; }
+.mast > * { min-width: 0; overflow-wrap: anywhere; }
+.mast .eyebrow { margin: 0; font: 600 12px/1 var(--sans); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.mast h1 { margin: 0; font: 400 clamp(40px, 6.4vw, 84px)/1 var(--serif); font-variation-settings: "opsz" 144; letter-spacing: -.02em; text-wrap: balance; }
+.mast h1 em { font-style: italic; color: var(--accent); font-weight: 300; }
+.mast p.lede { margin: 0; max-width: 62ch; color: var(--muted); font-size: 16px; text-wrap: pretty; }
+.mast p.lede a { color: var(--ink); }
+
+/* the proof sheet */
+.sheet { list-style: none; margin: 0 0 24px; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 18px 14px; }
+@media (min-width: 700px) { .sheet { grid-template-columns: repeat(auto-fill, minmax(176px, 1fr)); } }
+.sheet a { display: grid; gap: 7px; text-decoration: none; color: var(--muted); font-size: 12.5px; line-height: 1.35; min-width: 0; }
+.sheet .pic { aspect-ratio: 16 / 10; max-width: 100%; border-radius: 4px; background: var(--well); outline: 1px solid var(--rule); overflow: hidden; display: grid; place-items: center; }
+.sheet .pic img { width: 100%; height: 100%; object-fit: cover; object-position: top; display: block; }
+.sheet .pic span { font: italic 300 30px/1 var(--serif); color: var(--faint); }
+.sheet a:hover { color: var(--ink); }
+.sheet a:hover .pic { outline-color: var(--faint); }
+.sheet b { font: 500 12px/1 var(--sans); color: var(--accent); font-variant-numeric: tabular-nums; margin-right: 6px; }
+.sheet .n { overflow-wrap: anywhere; }
+
+/* one version */
+.it { display: grid; grid-template-columns: 1fr; gap: 16px 40px; padding-block: 48px 28px; border-top: 1px solid var(--rule); }
+@media (min-width: 900px) { .it { grid-template-columns: 148px minmax(0, 1fr); } }
+.num { display: flex; gap: 14px; align-items: baseline; flex-wrap: wrap; }
+@media (min-width: 900px) { .num { position: sticky; top: 76px; align-self: start; flex-direction: column; gap: 6px; } }
+.num .v { font: 300 56px/0.9 var(--serif); font-variation-settings: "opsz" 144; color: var(--accent); font-variant-numeric: lining-nums tabular-nums; letter-spacing: -.02em; }
+.num .v small { font-size: .5em; margin-right: 2px; }
+.num .d { font: 500 12px/1.4 var(--sans); letter-spacing: .04em; text-transform: uppercase; color: var(--muted); font-variant-numeric: tabular-nums; }
+.body { min-width: 0; display: grid; gap: 16px; }
+.body > * { min-width: 0; }
+.it h2 { margin: 0; font: 400 clamp(24px, 2.8vw, 34px)/1.15 var(--serif); text-wrap: balance; max-width: 34ch; }
+.said { margin: 0; display: grid; gap: 4px; max-width: 70ch; }
+.said blockquote { margin: 0; font: italic 400 clamp(19px, 1.9vw, 23px)/1.45 var(--serif); text-wrap: pretty; overflow-wrap: anywhere; }
+.said blockquote p { margin: 0 0 6px; }
+.said figcaption { font: 500 11.5px/1 var(--sans); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+.none { margin: 0; color: var(--faint); font-size: 14px; }
+.decided { margin: 0; max-width: 70ch; text-wrap: pretty; }
+.decided b, .what b { font: 600 11.5px/1 var(--sans); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); margin-right: 8px; }
+.what { margin: 0; color: var(--muted); max-width: 70ch; text-wrap: pretty; font-size: 14px; }
+.meta { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px; font-size: 13px; color: var(--muted); }
+.meta code { font: 12px var(--mono); color: var(--ink); background: var(--well); padding: 3px 6px; border-radius: 4px; }
+.meta .src { overflow-wrap: anywhere; min-width: 0; }
+.act { display: flex; flex-wrap: wrap; gap: 8px; }
+.btn { min-height: 44px; padding: 0 14px; border-radius: 8px; border: 1px solid var(--rule); background: var(--side); cursor: pointer; font-weight: 500; font-size: 14px; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; }
+.btn:hover { border-color: var(--faint); }
+.btn[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.frames { display: grid; gap: 14px; }
+.w { margin: 8px 0 0; font: 600 11.5px/1 var(--sans); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+.shot { display: block; cursor: zoom-in; border-radius: 4px; overflow: hidden; outline: 1px solid var(--rule); background: var(--well); }
+.shot img { display: block; width: 100%; height: auto; }
+.phones { display: grid; gap: 14px; }
+
+/* Direction: the record read as decisions, the pictures put away */
+body.direction .frames, body.direction .sheet { display: none; }
+body.direction .it { padding-block: 32px 20px; }
+body.direction .num .v { font-size: 40px; }
+
+/* compare */
+.tray { position: fixed; z-index: 8; left: 50%; transform: translateX(-50%); bottom: calc(16px + env(safe-area-inset-bottom, 0px)); display: flex; gap: 8px; align-items: center; padding: 8px 8px 8px 16px; background: var(--ink); color: var(--bg); border-radius: 999px; box-shadow: 0 8px 30px rgb(0 0 0 / .18); max-width: calc(100% - 32px); }
+.tray .btn { background: var(--bg); color: var(--ink); border-color: transparent; border-radius: 999px; }
+.tray .btn.ghost { background: none; color: var(--bg); }
+.cmp { position: fixed; inset: 0; z-index: 20; background: var(--bg); overflow: auto; padding: max(16px, env(safe-area-inset-top, 0px)) max(16px, env(safe-area-inset-right, 0px)) max(16px, env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px)); }
+.cmp .top { position: sticky; top: 0; background: var(--bg); display: flex; justify-content: space-between; align-items: center; gap: 12px; padding-bottom: 12px; z-index: 1; }
+.cmp h3 { margin: 0; font: 400 24px/1.2 var(--serif); }
+.cmp .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.cmp .col { min-width: 0; display: grid; gap: 10px; align-content: start; }
+.cmp .col h4 { margin: 0; font: 500 14px/1.3 var(--sans); }
+.cmp .col h4 span { color: var(--accent); font: 300 22px/1 var(--serif); margin-right: 6px; }
+.cmp img { width: 100%; height: auto; display: block; border-radius: 4px; outline: 1px solid var(--rule); }
+
+/* full size */
+.zoom { position: fixed; inset: 0; z-index: 30; background: var(--side); overflow: auto; padding: max(16px, env(safe-area-inset-top, 0px)) max(16px, env(safe-area-inset-right, 0px)) max(16px, env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px)); }
+.zoom img { display: block; margin: 0 auto; max-width: none; }
+.zoom .top { position: sticky; top: 0; display: flex; justify-content: flex-end; gap: 8px; margin-bottom: 12px; z-index: 1; }
+.foot { margin-block: 64px 120px; color: var(--muted); font-size: 13px; max-width: 70ch; text-wrap: pretty; }
+.foot code { font: 12px var(--mono); }
+</style>
+
+<header class="bar"><div class="wrap">
+  <a class="who" href="#top"><i aria-hidden="true"></i><span id="pname"></span></a>
+  <div class="seg" role="group" aria-label="How to read the history"><button type="button" id="r-pic" aria-pressed="true">Pictures</button><button type="button" id="r-dir" aria-pressed="false">Direction</button></div>
+  <label for="jump" class="sr" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Jump to a version</label><select id="jump"></select>
+</div></header>
+
+<main class="wrap" id="top">
+  <header class="mast">
+    <p class="eyebrow" id="eyebrow"></p>
+    <h1 id="h1"></h1>
+    <p class="lede" id="lede"></p>
+  </header>
+  <ol class="sheet" id="sheet" aria-label="Every version at a glance"></ol>
+  <div id="reel"></div>
+  <p class="foot" id="foot"></p>
+</main>
+
+<div class="tray" id="tray" hidden><span id="trayText"></span><button type="button" class="btn" id="cmpOpen">Compare</button><button type="button" class="btn ghost" id="cmpClear">Clear</button></div>
+<div class="cmp" id="cmp" hidden role="dialog" aria-modal="true" aria-labelledby="cmpH" tabindex="-1"><div class="top"><h3 id="cmpH"></h3><button type="button" class="btn" id="cmpClose">Close</button></div><div class="cols" id="cmpCols"></div></div>
+<div class="zoom" id="zoom" hidden role="dialog" aria-modal="true" aria-label="Frame at full size" tabindex="-1">
+  <div class="top"><button type="button" class="btn" id="zprev" aria-label="Previous frame">←</button><button type="button" class="btn" id="znext" aria-label="Next frame">→</button><button type="button" class="btn" id="zfit">Fit width</button><button type="button" class="btn" id="zclose">Close</button></div>
+  <img id="zimg" alt="">
+</div>
+
+<script>
+const DATA = {"project":"portfolio","name":"Portfolio","color":"#B5654A","artifact":"","archive":null,"built":1793328957587,"entries":[{"v":1,"id":"20260505-1752-cbcd031","at":1778017943531,"name":"The need beat","what":"Shot during the work: 5 of the 5 need-*.png frames saved in the repository root, in order; dated by the file.","decision":false,"chat":"","said":[],"commit":"cbcd031","source":"shots: /var/folders/db/015sv8k90t3ftj0zrt29vgg00000gn/T/history-seed-876U4u","link":"","images":{"desk":[{"src":"img/20260505-1752-cbcd031/d00.webp","w":1440,"h":2388,"screens":3},{"src":"img/20260505-1752-cbcd031/d01.webp","w":1280,"h":1464,"screens":2}],"phone":[]},"thumb":"img/20260505-1752-cbcd031/thumb.webp","archived":""},{"v":2,"id":"20260514-1236-8bd592e","at":1778776560891,"name":"The signal figure, round by round","what":"Shot during the work: 12 of the 29 signal-*.png frames saved in the repository root, in order; dated by the commit that saved them (25 June), not by when each was made.","decision":false,"chat":"","said":[],"commit":"8bd592e","source":"shots: /var/folders/db/015sv8k90t3ftj0zrt29vgg00000gn/T/history-seed-vbn3df","link":"","images":{"desk":[{"src":"img/20260514-1236-8bd592e/d00.webp","w":1440,"h":2748,"screens":3},{"src":"img/20260514-1236-8bd592e/d01.webp","w":1920,"h":3024,"screens":3},{"src":"img/20260514-1236-8bd592e/d02.webp","w":1920,"h":2932,"screens":3},{"src":"img/20260514-1236-8bd592e/d03.webp","w":1440,"h":2748,"screens":3}],"phone":[]},"thumb":"img/20260514-1236-8bd592e/thumb.webp","archived":""},{"v":3,"id":"20260514-1339-cbcd031","at":1778780365873,"name":"The portal, three takes","what":"Shot during the work: 4 of the 4 portal-*.png frames saved in the repository root, in order; dated by the file.","decision":false,"chat":"","said":[],"commit":"cbcd031","source":"shots: /var/folders/db/015sv8k90t3ftj0zrt29vgg00000gn/T/history-seed-HCaBpg","link":"","images":{"desk":[{"src":"img/20260514-1339-cbcd031/d00.webp","w":1440,"h":2748,"screens":3},{"src":"img/20260514-1339-cbcd031/d01.webp","w":1440,"h":900,"screens":1}],"phone":[]},"thumb":"img/20260514-1339-cbcd031/thumb.webp","archived":""},{"v":4,"id":"20260625-0928-8bd592e","at":1782394087000,"name":"The opener","what":"Shot during the work: 3 of the 3 opener-*.png frames saved in the repository root, in order; dated by the commit that saved them (25 June), not by when each was made.","decision":false,"chat":"","said":[],"commit":"8bd592e","source":"shots: /var/folders/db/015sv8k90t3ftj0zrt29vgg00000gn/T/history-seed-0lKgBl","link":"","images":{"desk":[{"src":"img/20260625-0928-8bd592e/d00.webp","w":1200,"h":2391,"screens":3}],"phone":[]},"thumb":"img/20260625-0928-8bd592e/thumb.webp","archived":""},{"v":5,"id":"20260625-0928-8bd592e","at":1782394087000,"name":"The hero","what":"Shot during the work: 4 of the 4 hero-*.png frames saved in the repository root, in order; dated by the commit that saved them (25 June), not by when each was made.","decision":false,"chat":"","said":[],"commit":"8bd592e","source":"shots: /var/folders/db/015sv8k90t3ftj0zrt29vgg00000gn/T/history-seed-ww358b","link":"","images":{"desk":[{"src":"img/20260625-0928-8bd592e/d00.webp","w":1920,"h":2868,"screens":3},{"src":"img/20260625-0928-8bd592e/d01.webp","w":1920,"h":940,"screens":1}],"phone":[]},"thumb":"img/20260625-0928-8bd592e/thumb.webp","archived":""},{"v":6,"id":"20260625-0928-8bd592e","at":1782394087000,"name":"The cinematic scroll","what":"Shot during the work: 12 of the 23 cinematic-*.png frames saved in the repository root, in order; dated by the commit that saved them (25 June), not by when each was made.","decision":false,"chat":"","said":[],"commit":"8bd592e","source":"shots: /var/folders/db/015sv8k90t3ftj0zrt29vgg00000gn/T/history-seed-aoYN1x","link":"","images":{"desk":[{"src":"img/20260625-0928-8bd592e/d00.webp","w":1200,"h":2391,"screens":3},{"src":"img/20260625-0928-8bd592e/d01.webp","w":1200,"h":2391,"screens":3},{"src":"img/20260625-0928-8bd592e/d02.webp","w":1200,"h":2391,"screens":3},{"src":"img/20260625-0928-8bd592e/d03.webp","w":1200,"h":2391,"screens":3}],"phone":[]},"thumb":"img/20260625-0928-8bd592e/thumb.webp","archived":""},{"v":7,"id":"20260625-0928-8bd592e","at":1782394087000,"name":"The tangle","what":"Shot during the work: 12 of the 12 tangle-*.png frames saved in the repository root, in order; dated by the commit that saved them (25 June), not by when each was made.","decision":false,"chat":"","said":[],"commit":"8bd592e","source":"shots: /var/folders/db/015sv8k90t3ftj0zrt29vgg00000gn/T/history-seed-otWHhn","link":"","images":{"desk":[{"src":"img/20260625-0928-8bd592e/d00.webp","w":1440,"h":2748,"screens":3},{"src":"img/20260625-0928-8bd592e/d01.webp","w":1440,"h":2748,"screens":3},{"src":"img/20260625-0928-8bd592e/d02.webp","w":1440,"h":2748,"screens":3},{"src":"img/20260625-0928-8bd592e/d03.webp","w":1440,"h":2748,"screens":3}],"phone":[]},"thumb":"img/20260625-0928-8bd592e/thumb.webp","archived":""},{"v":8,"id":"20260625-0928-8bd592e","at":1782394087000,"name":"The framework, v2 a to d","what":"Shot during the work: 12 of the 15 fw-v2-*.png frames saved in the repository root, in order; dated by the commit that saved them (25 June), not by when each was made.","decision":false,"chat":"","said":[],"commit":"8bd592e","source":"shots: /var/folders/db/015sv8k90t3ftj0zrt29vgg00000gn/T/history-seed-XqJcwg","link":"","images":{"desk":[{"src":"img/20260625-0928-8bd592e/d00.webp","w":1440,"h":2748,"screens":3},{"src":"img/20260625-0928-8bd592e/d01.webp","w":1440,"h":2748,"screens":3},{"src":"img/20260625-0928-8bd592e/d02.webp","w":1440,"h":2692,"screens":3},{"src":"img/20260625-0928-8bd592e/d03.webp","w":1440,"h":2636,"screens":3}],"phone":[]},"thumb":"img/20260625-0928-8bd592e/thumb.webp","archived":""},{"v":9,"id":"20260625-0928-8bd592e","at":1782394087000,"name":"The file stack","what":"Shot during the work: 12 of the 45 filestack-*.png frames saved in the repository root, in order; dated by the commit that saved them (25 June), not by when each was made.","decision":false,"chat":"","said":[],"commit":"8bd592e","source":"shots: /var/folders/db/015sv8k90t3ftj0zrt29vgg00000gn/T/history-seed-9UBbSW","link":"","images":{"desk":[{"src":"img/20260625-0928-8bd592e/d00.webp","w":1440,"h":2623,"screens":3},{"src":"img/20260625-0928-8bd592e/d01.webp","w":1200,"h":2547,"screens":3},{"src":"img/20260625-0928-8bd592e/d02.webp","w":1440,"h":2681,"screens":3},{"src":"img/20260625-0928-8bd592e/d03.webp","w":1440,"h":2748,"screens":3}],"phone":[]},"thumb":"img/20260625-0928-8bd592e/thumb.webp","archived":""},{"v":10,"id":"20260625-0928-8bd592e","at":1782394087000,"name":"The brand tool","what":"Shot during the work: 10 of the 10 brand-*.png frames saved in the repository root, in order; dated by the commit that saved them (25 June), not by when each was made.","decision":false,"chat":"","said":[],"commit":"8bd592e","source":"shots: /var/folders/db/015sv8k90t3ftj0zrt29vgg00000gn/T/history-seed-AJjOt3","link":"","images":{"desk":[{"src":"img/20260625-0928-8bd592e/d00.webp","w":1920,"h":5474,"screens":3},{"src":"img/20260625-0928-8bd592e/d01.webp","w":1728,"h":3024,"screens":3},{"src":"img/20260625-0928-8bd592e/d02.webp","w":1920,"h":3024,"screens":3},{"src":"img/20260625-0928-8bd592e/d03.webp","w":1920,"h":992,"screens":1}],"phone":[]},"thumb":"img/20260625-0928-8bd592e/thumb.webp","archived":""},{"v":11,"id":"20260625-0928-8bd592e","at":1782394087000,"name":"Whelm, the case study","what":"Shot during the work: 12 of the 42 whelm-*.png frames saved in the repository root, in order; dated by the commit that saved them (25 June), not by when each was made.","decision":false,"chat":"","said":[],"commit":"8bd592e","source":"shots: /var/folders/db/015sv8k90t3ftj0zrt29vgg00000gn/T/history-seed-LsZ2VM","link":"","images":{"desk":[{"src":"img/20260625-0928-8bd592e/d00.webp","w":1440,"h":2748,"screens":3},{"src":"img/20260625-0928-8bd592e/d01.webp","w":1440,"h":2629,"screens":3},{"src":"img/20260625-0928-8bd592e/d02.webp","w":1440,"h":2629,"screens":3},{"src":"img/20260625-0928-8bd592e/d03.webp","w":1440,"h":2629,"screens":3}],"phone":[]},"thumb":"img/20260625-0928-8bd592e/thumb.webp","archived":""}]};
+(() => {
+  const $ = (s) => document.querySelector(s), esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  const D = DATA, E = D.entries;
+  document.documentElement.style.setProperty("--hue", D.color);
+  const day = (t) => new Date(t).toLocaleDateString("en-US", { month: "long", day: "numeric" });
+  const clock = (t) => new Date(t).toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" });
+  const pull = (e) => `node ~/Desktop/homebase/scripts/history.mjs pull ${D.project} v${e.v}`;
+  $("#pname").textContent = D.name;
+  $("#eyebrow").textContent = `${D.name} · History`;
+  $("#h1").innerHTML = `${esc(D.name)}, <em>version by version</em>`;
+  const first = E[0], last = E[E.length - 1];
+  $("#lede").innerHTML = E.length
+    ? `${E.length} version${E.length > 1 ? "s" : ""}, ${esc(day(first.at))} to ${esc(day(last.at))}, oldest first. Each carries Lorin’s words when she saw it, verbatim, the decision it held, and the commit it can be brought back from. Direction reads the same record as words and decisions alone.${D.archive ? ` The pictures for the first ${D.archive.count || ""} live in <a href="${esc(D.archive.url)}" target="_blank" rel="noopener">${esc(D.archive.title || "the archive")}</a>.` : ""}`
+    : "No versions yet. The first visual pass to close out adds one.";
+  $("#foot").innerHTML = `Made in tandem with the work: each visual pass adds its version when it closes out (<code>history.mjs add</code>), shot screen by screen at 1440 and 390, twice the pixels. To bring a version back, copy its line and give it to a chat. Rebuilt ${esc(new Date(D.built).toLocaleString("en-US", { month: "short", day: "numeric", hour: "numeric", minute: "2-digit" }))}.`;
+
+  const shot = (i, alt) => `<a class="shot" href="${esc(i.src)}" data-w="${i.w}"><img src="${esc(i.src)}" width="${i.w}" height="${i.h}" loading="lazy" decoding="async" alt="${esc(alt)}"></a>`;
+  $("#sheet").innerHTML = E.map((e) => `<li><a href="#v${e.v}"><span class="pic">${e.thumb ? `<img src="${esc(e.thumb)}" alt="" loading="lazy" decoding="async">` : `<span>v${e.v}</span>`}</span><span><b>v${e.v}</b>${esc(day(e.at))}<br><span class="n">${esc(e.name)}</span></span></a></li>`).join("");
+  $("#jump").innerHTML = E.map((e) => `<option value="v${e.v}">v${e.v} · ${esc(day(e.at))} · ${esc(e.name)}</option>`).join("");
+  $("#jump").addEventListener("change", (ev) => { location.hash = ev.target.value; });
+
+  $("#reel").innerHTML = E.map((e) => {
+    const said = e.said.length ? e.said.map((s) => `<figure class="said"><blockquote>${s.words.map((w) => `<p>“${esc(w)}”</p>`).join("")}</blockquote><figcaption>Lorin${s.note ? " · note " + esc(s.note) : ""}</figcaption></figure>`).join("") : `<p class="none">No words from her logged yet.</p>`;
+    const decided = e.decision ? `<p class="decided"><b>Decided</b>${esc(e.what)}</p>` : e.what && e.what !== e.name ? `<p class="what"><b>The change</b>${esc(e.what)}</p>` : "";
+    let frames = "";
+    if (e.images) {
+      const dn = e.images.desk.reduce((a, i) => a + i.screens, 0), pn = e.images.phone.reduce((a, i) => a + i.screens, 0);
+      if (dn) frames += `<p class="w">Desktop · 1440 · ${dn} screen${dn > 1 ? "s" : ""}</p>` + e.images.desk.map((i) => shot(i, `v${e.v}, ${e.name}, desktop`)).join("");
+      if (pn) frames += `<p class="w">Phone · 390 · ${pn} screen${pn > 1 ? "s" : ""}</p><div class="phones">` + e.images.phone.map((i) => shot(i, `v${e.v}, ${e.name}, phone`)).join("") + "</div>";
+    }
+    const links = [
+      e.archived ? `<a class="btn" href="${esc(e.archived)}" target="_blank" rel="noopener">Pictures in the archive ↗</a>` : "",
+      e.link ? `<a class="btn" href="${esc(e.link)}" target="_blank" rel="noopener">Open what she saw ↗</a>` : "",
+      e.commit ? `<button type="button" class="btn" data-copy="${esc(pull(e))}">Bring it back</button>` : "",
+      e.images ? `<button type="button" class="btn" data-pick="${e.v}" aria-pressed="false">Compare</button>` : "",
+    ].join("");
+    return `<section class="it" id="v${e.v}" aria-labelledby="h-v${e.v}">
+      <div class="num"><span class="v"><small>v</small>${e.v}</span><span class="d">${esc(day(e.at))}<br>${esc(clock(e.at))}</span></div>
+      <div class="body">
+        <h2 id="h-v${e.v}">${esc(e.name)}</h2>
+        ${said}${decided}
+        <div class="meta">${e.commit ? `<code>${esc(e.commit)}</code>` : ""}${e.source ? `<span class="src">${esc(e.source)}</span>` : ""}${e.chat ? `<span>${esc(e.chat)}</span>` : ""}</div>
+        ${links ? `<div class="act">${links}</div>` : ""}
+        ${frames ? `<div class="frames">${frames}</div>` : ""}
+      </div></section>`;
+  }).join("");
+
+  // the two readings
+  const reading = (dir) => { document.body.classList.toggle("direction", dir); $("#r-pic").setAttribute("aria-pressed", String(!dir)); $("#r-dir").setAttribute("aria-pressed", String(dir)); try { localStorage.setItem("history-reading", dir ? "dir" : "pic"); } catch {} };
+  $("#r-pic").onclick = () => reading(false); $("#r-dir").onclick = () => reading(true);
+  try { if (localStorage.getItem("history-reading") === "dir") reading(true); } catch {}
+
+  // bring it back: the line a chat runs
+  document.addEventListener("click", async (ev) => {
+    const b = ev.target.closest("[data-copy]"); if (!b) return;
+    const was = b.textContent;
+    try { await navigator.clipboard.writeText(b.dataset.copy); b.textContent = "Copied the line"; }
+    catch { b.textContent = b.dataset.copy; }
+    setTimeout(() => { b.textContent = was; }, 2400);
+  });
+
+  // compare any two
+  let picks = [];
+  const syncTray = () => {
+    for (const b of document.querySelectorAll("[data-pick]")) b.setAttribute("aria-pressed", String(picks.includes(Number(b.dataset.pick))));
+    $("#tray").hidden = !picks.length;
+    $("#trayText").textContent = picks.length === 1 ? `v${picks[0]}: pick one more` : `v${picks[0]} and v${picks[1]}`;
+    $("#cmpOpen").hidden = picks.length < 2;
+  };
+  document.addEventListener("click", (ev) => {
+    const b = ev.target.closest("[data-pick]"); if (!b) return;
+    const v = Number(b.dataset.pick);
+    picks = picks.includes(v) ? picks.filter((p) => p !== v) : [...picks, v].slice(-2);
+    syncTray();
+  });
+  $("#cmpClear").onclick = () => { picks = []; syncTray(); };
+  $("#cmpOpen").onclick = () => {
+    const two = picks.map((v) => E.find((e) => e.v === v)).sort((a, b) => a.v - b.v);
+    $("#cmpH").textContent = `v${two[0].v} beside v${two[1].v}`;
+    $("#cmpCols").innerHTML = two.map((e) => `<div class="col"><h4><span>v${e.v}</span>${esc(e.name)} · ${esc(day(e.at))}</h4>${[...e.images.desk, ...e.images.phone].map((i) => `<img src="${esc(i.src)}" alt="v${e.v}, ${esc(e.name)}" loading="lazy">`).join("")}</div>`).join("");
+    $("#cmp").hidden = false; document.body.style.overflow = "hidden"; $("#cmp").focus();
+  };
+  const closeCmp = () => { $("#cmp").hidden = true; document.body.style.overflow = ""; $("#cmpOpen").focus(); };
+  $("#cmpClose").onclick = closeCmp;
+  $("#cmp").addEventListener("keydown", (ev) => { if (ev.key === "Escape") closeCmp(); });
+
+  // full size: natural pixels at the screen's density, so a screenshot is crisp
+  const z = $("#zoom"), zi = $("#zimg"); let list = [], at = 0, fit = false, back = null;
+  const show = () => { const a = list[at]; zi.src = a.getAttribute("href"); zi.alt = a.querySelector("img").alt; zi.style.width = fit ? "100%" : (a.dataset.w / 2) + "px"; $("#zfit").textContent = fit ? "Actual size" : "Fit width"; z.scrollTop = 0; };
+  document.addEventListener("click", (ev) => {
+    const a = ev.target.closest(".shot"); if (!a) return;
+    ev.preventDefault(); back = a; list = [...a.closest(".it").querySelectorAll(".shot")]; at = list.indexOf(a);
+    show(); z.hidden = false; document.body.style.overflow = "hidden"; z.focus();
+  });
+  const close = () => { z.hidden = true; document.body.style.overflow = ""; zi.removeAttribute("src"); back && back.focus(); };
+  $("#zclose").onclick = close;
+  $("#zprev").onclick = () => { at = (at - 1 + list.length) % list.length; show(); };
+  $("#znext").onclick = () => { at = (at + 1) % list.length; show(); };
+  $("#zfit").onclick = () => { fit = !fit; show(); };
+  z.addEventListener("keydown", (ev) => { if (ev.key === "Escape") close(); if (ev.key === "ArrowRight") $("#znext").click(); if (ev.key === "ArrowLeft") $("#zprev").click(); });
+})();
+</script>
