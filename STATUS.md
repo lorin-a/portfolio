@@ -1639,4 +1639,4 @@ Earlier hero concept: 3-beat typewriter with greeting, title, sentence, FLIP wor
 
 ## What goes live (2026-11-03)
 
-A push to `main` goes live at https://lorin.work (Vercel production). Other branches, including `feat/folder-expand`, do not. Before a push that goes live, a chat says “this will go live at <url>” and tells Lorin once it is live (her rule; map: `~/Desktop/homebase/docs/setup/what-goes-live.md`).
+A push to `main` goes live at https://lorin.work (Vercel production). Other branches, including `feat/folder-expand`, do not. A push that goes live needs her permission first: an ask on her To-do naming the address, her yes, then the push, then tell her it is live (her words: “just make sure that I give permission for pushes that go live”; map: `~/Desktop/homebase/docs/setup/what-goes-live.md`).
