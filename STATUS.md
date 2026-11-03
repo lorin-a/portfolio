@@ -1636,3 +1636,7 @@ Earlier hero concept: 3-beat typewriter with greeting, title, sentence, FLIP wor
 | 2026-04-22 | Drop peek-artifact concept | Tried and rejected in favor of full-media rotation (commit 7a5db8a still in history) |
 | 2026-04-22 | ProjectPreview media rotation | Hero image composes, then 2-4 rotation slides lift up in-place on continued scroll. Real assets used where available; placeholders for non-Groundswell projects pending Lorin's image swap |
 | 2026-04-22 | Grid path 1 (margins only, defer columns) | Unify horizontal margins now via `--page-gutter`; full 12-column grid adoption deferred until case study template is designed |
+
+## What goes live (2026-11-03)
+
+A push to `main` goes live at https://lorin.work (Vercel production). Other branches, including `feat/folder-expand`, do not. Before a push that goes live, a chat says “this will go live at <url>” and tells Lorin once it is live (her rule; map: `~/Desktop/homebase/docs/setup/what-goes-live.md`).
