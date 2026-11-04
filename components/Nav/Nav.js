@@ -35,9 +35,12 @@ export default function Nav() {
        no intro, so the nav must be visible immediately (it was staying hidden
        forever, leaving those pages with no chrome). */
     const isHome = pathname === '/'
-    if (isHome && (phase === null || phase === 'waiting' || phase === 'playing')) {
+    /* Under reduced motion the hero is one still, composed screen with no
+       scroll timeline to reveal the nav, so the nav is simply there. */
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    if (isHome && !reduced && (phase === null || phase === 'waiting' || phase === 'playing')) {
       gsap.set(headerRef.current, { autoAlpha: 0, pointerEvents: 'none' })
-    } else if (!isHome) {
+    } else if (!isHome || reduced) {
       gsap.set(headerRef.current, { autoAlpha: 1, pointerEvents: 'auto' })
     }
 
