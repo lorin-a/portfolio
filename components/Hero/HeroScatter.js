@@ -178,7 +178,13 @@ export default function HeroScatter() {
   /* Hover handlers — each element type responds differently */
   const { contextSafe } = useGSAP({ scope: heroRef })
 
+  /* Reduced motion: the hover play (bounce, tilt, spin, redraw) is motion
+     too, so it stays still. Read live so a mid-visit setting change holds. */
+  const stillHover = () => typeof window !== 'undefined' &&
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
   const hoverDesigning = contextSafe((el) => {
+    if (stillHover()) return
     /* Check if scale is already animating (not left/top from scrub) */
     if (el._hoverActive) return
     el._hoverActive = true
@@ -190,6 +196,7 @@ export default function HeroScatter() {
   })
 
   const hoverConnection = contextSafe((el) => {
+    if (stillHover()) return
     if (el._hoverActive) return
     el._hoverActive = true
     gsap.to(el, { rotation: '+=12', duration: 0.25, ease: 'power1.out',
@@ -209,10 +216,91 @@ export default function HeroScatter() {
     const cChars = cRefs.current.filter(Boolean)
 
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
+    /* ─── MEASURE final positions with kerning ───
+       One measuring, shared by the scrubbed timeline and the reduced-motion
+       frame, so the two can never drift apart. */
+    const mDChars = measureRef.current.querySelectorAll('[data-d]')
+    const mCChars = measureRef.current.querySelectorAll('[data-c]')
+    Object.entries(KERN_D).forEach(([i, px]) => {
+      if (mDChars[i]) mDChars[i].style.marginRight = `${px}px`
+    })
+    Object.entries(KERN_C).forEach(([i, px]) => {
+      if (mCChars[i]) mCChars[i].style.marginRight = `${px}px`
+    })
+    /* The measure layer is visibility:hidden, which keeps its layout, so it
+       measures as is. Positions are % of the section. */
+    const measure = () => {
+      const sRect = section.getBoundingClientRect()
+      const toPos = (r) => ({
+        left: ((r.left + r.width / 2 - sRect.left) / sRect.width) * 100,
+        top: ((r.top + r.height / 2 - sRect.top) / sRect.height) * 100,
+        w: r.width, h: r.height,
+      })
+      const subEl = measureRef.current.querySelector('[data-sub]')
+      return {
+        d: Array.from(mDChars).map(el => toPos(el.getBoundingClientRect())),
+        c: Array.from(mCChars).map(el => toPos(el.getBoundingClientRect())),
+        m: Array.from(measureRef.current.querySelectorAll('[data-mark]')).map(el => toPos(el.getBoundingClientRect())),
+        sub: subEl ? toPos(subEl.getBoundingClientRect()) : null,
+      }
+    }
+    gsap.set(measureRef.current, { autoAlpha: 0 })
+    let F = measure()
+    const placeSub = () => { if (F.sub) gsap.set(subtitleRef.current, { left: F.sub.left + '%', top: F.sub.top + '%' }) }
+
+    /* ─── THE COMPOSED FRAME — where the scrubbed timeline ends ───
+       Function values, so the timeline re-reads them on every refresh
+       (invalidateOnRefresh) and gsap.set reads the current measuring. */
+    const slot = (pick, sized) => ({
+      left: () => pick().left + '%', top: () => pick().top + '%',
+      ...(sized ? { width: () => pick().w, height: () => pick().h } : {}),
+    })
+    const END = {
+      d: (i) => F.d[i] && slot(() => F.d[i]),
+      c: (i) => F.c[i] && slot(() => F.c[i]),
+      sense: () => F.m[0] && slot(() => F.m[0], true),
+      weave: () => F.m[1] && slot(() => F.m[1], true),
+      flower: () => F.m[2] && slot(() => F.m[2], true),
+    }
+
+    /* ─── REDUCED MOTION: the composed hero, still ───
+       No pin, no scrub, no entrance: one screen that already says
+       “Designing Connection”, with its marks, subtitle, CTA and nav. */
     if (prefersReduced) {
-      gsap.set(flower, { display: 'none' })
-      gsap.set(measureRef.current, { autoAlpha: 1 })
-      return
+      const header = document.querySelector('header')
+      const placeComposed = () => {
+        gsap.set(flower, { xPercent: -50, yPercent: -50, autoAlpha: 1, ...END.flower() })
+        dChars.forEach((el, i) => { if (END.d(i)) gsap.set(el, { autoAlpha: 1, ...END.d(i) }) })
+        cChars.forEach((el, i) => { if (END.c(i)) gsap.set(el, { autoAlpha: 1, ...END.c(i) }) })
+        if (senseRef.current && END.sense()) gsap.set(senseRef.current, { autoAlpha: 1, ...END.sense() })
+        if (weaveRef.current && END.weave()) gsap.set(weaveRef.current, { autoAlpha: 1, ...END.weave() })
+        placeSub()
+        gsap.set([subtitleRef.current, ctaRef.current], { autoAlpha: 1 })
+        gsap.set(arrowRef.current, { autoAlpha: 0 })
+        if (header) gsap.set(header, { autoAlpha: 1, pointerEvents: 'auto' })
+      }
+      placeComposed()
+      /* The measure layer settles after mount (late font metrics, kerning,
+         a resize), and the scrubbed version re-measures on every
+         ScrollTrigger refresh. The still frame watches the layer itself:
+         whenever the section or either measured line changes size, measure
+         again and re-place, once per frame at most. */
+      let raf = 0
+      const reflow = () => {
+        cancelAnimationFrame(raf)
+        raf = requestAnimationFrame(() => { if (measureRef.current) { F = measure(); placeComposed() } })
+      }
+      const ro = new ResizeObserver(reflow)
+      ro.observe(section)
+      measureRef.current.querySelectorAll('[data-d], [data-c], [data-mark]').forEach(el => ro.observe(el))
+      document.fonts?.ready.then(reflow)
+      window.addEventListener('load', reflow)
+      return () => {
+        cancelAnimationFrame(raf)
+        ro.disconnect()
+        window.removeEventListener('load', reflow)
+      }
     }
 
     document.body.classList.add('hero-loading')
@@ -343,44 +431,12 @@ export default function HeroScatter() {
       )
 
     function buildScrollTimeline() {
-      /* ─── MEASURE final positions with kerning ─── */
-      gsap.set(measureRef.current, { autoAlpha: 1 })
-
-      /* Apply kerning to measurement chars */
-      const mDChars = measureRef.current.querySelectorAll('[data-d]')
-      const mCChars = measureRef.current.querySelectorAll('[data-c]')
-      Object.entries(KERN_D).forEach(([i, px]) => {
-        if (mDChars[i]) mDChars[i].style.marginRight = `${px}px`
-      })
-      Object.entries(KERN_C).forEach(([i, px]) => {
-        if (mCChars[i]) mCChars[i].style.marginRight = `${px}px`
-      })
-
       /* FS293: the final letter positions are measured as percentages of
          the section, but the letters stop growing at 140px. Measured once,
          a window made wider after load scaled the gaps and not the letters,
          so the word landed stretched. Measure again on every ScrollTrigger
-         refresh (it refreshes on resize), and read the positions through
-         functions so invalidateOnRefresh re-records them. The measure layer
-         is visibility:hidden, which keeps its layout, so it measures as is. */
-      const measure = () => {
-        const sRect = section.getBoundingClientRect()
-        const toPos = (r) => ({
-          left: ((r.left + r.width / 2 - sRect.left) / sRect.width) * 100,
-          top: ((r.top + r.height / 2 - sRect.top) / sRect.height) * 100,
-          w: r.width, h: r.height,
-        })
-        const subEl = measureRef.current.querySelector('[data-sub]')
-        return {
-          d: Array.from(mDChars).map(el => toPos(el.getBoundingClientRect())),
-          c: Array.from(mCChars).map(el => toPos(el.getBoundingClientRect())),
-          m: Array.from(measureRef.current.querySelectorAll('[data-mark]')).map(el => toPos(el.getBoundingClientRect())),
-          sub: subEl ? toPos(subEl.getBoundingClientRect()) : null,
-        }
-      }
-      let F = measure()
-      gsap.set(measureRef.current, { autoAlpha: 0 })
-      const placeSub = () => { if (F.sub) gsap.set(subtitleRef.current, { left: F.sub.left + '%', top: F.sub.top + '%' }) }
+         refresh (it refreshes on resize); the END values are functions, so
+         invalidateOnRefresh re-records them. */
       placeSub()
       const remeasure = () => { if (measureRef.current) { F = measure(); placeSub() } }
       /* refreshInit runs while the hero is still pinned at the OLD width, so
@@ -525,13 +581,7 @@ export default function HeroScatter() {
       tl.to(flower, {
         keyframes: [
           { width: 70, height: 70, duration: SWEEP_IN, ease: 'power2.in' },
-          F.m[2]
-            ? {
-                left: () => F.m[2].left + '%', top: () => F.m[2].top + '%',
-                width: () => F.m[2].w, height: () => F.m[2].h,
-                duration: SWEEP_OUT, ease: 'power2.out',
-              }
-            : { duration: SWEEP_OUT },
+          { ...(END.flower() || {}), duration: SWEEP_OUT, ease: 'power2.out' },
         ],
       }, 0)
 
@@ -540,7 +590,7 @@ export default function HeroScatter() {
         tl.to(el, {
           keyframes: [
             { left: D_SCATTER[i][0] + '%', top: D_SCATTER[i][1] + '%', duration: SWEEP_IN, ease: 'power2.in' },
-            { left: () => F.d[i].left + '%', top: () => F.d[i].top + '%', duration: SWEEP_OUT, ease: 'power2.out' },
+            { ...END.d(i), duration: SWEEP_OUT, ease: 'power2.out' },
           ],
         }, i * 0.005)
       })
@@ -550,7 +600,7 @@ export default function HeroScatter() {
         tl.to(el, {
           keyframes: [
             { left: C_SCATTER[i][0] + '%', top: C_SCATTER[i][1] + '%', duration: SWEEP_IN, ease: 'power2.in' },
-            { left: () => F.c[i].left + '%', top: () => F.c[i].top + '%', duration: SWEEP_OUT, ease: 'power2.out' },
+            { ...END.c(i), duration: SWEEP_OUT, ease: 'power2.out' },
           ],
         }, 0.02 + i * 0.005)
       })
@@ -559,7 +609,7 @@ export default function HeroScatter() {
         tl.to(senseRef.current, {
           keyframes: [
             { left: MARK_SCATTER.sense[0] + '%', top: MARK_SCATTER.sense[1] + '%', duration: SWEEP_IN, ease: 'power2.in' },
-            { left: () => F.m[0].left + '%', top: () => F.m[0].top + '%', width: () => F.m[0].w, height: () => F.m[0].h, duration: SWEEP_OUT, ease: 'power2.out' },
+            { ...END.sense(), duration: SWEEP_OUT, ease: 'power2.out' },
           ],
         }, 0.02)
       }
@@ -567,7 +617,7 @@ export default function HeroScatter() {
         tl.to(weaveRef.current, {
           keyframes: [
             { left: MARK_SCATTER.weave[0] + '%', top: MARK_SCATTER.weave[1] + '%', duration: SWEEP_IN, ease: 'power2.in' },
-            { left: () => F.m[1].left + '%', top: () => F.m[1].top + '%', width: () => F.m[1].w, height: () => F.m[1].h, duration: SWEEP_OUT, ease: 'power2.out' },
+            { ...END.weave(), duration: SWEEP_OUT, ease: 'power2.out' },
           ],
         }, 0.03)
       }
@@ -614,7 +664,7 @@ export default function HeroScatter() {
 
           <div ref={flowerRef} className={styles.flower}
             onMouseEnter={() => {
-              if (!flowerHoverable.current) return
+              if (!flowerHoverable.current || stillHover()) return
               const el = flowerRef.current
               if (!el || el._hoverActive) return
               el._hoverActive = true
@@ -639,11 +689,11 @@ export default function HeroScatter() {
           ))}
 
           <div ref={senseRef} className={styles.mark}
-            onMouseEnter={() => setSenseReplay(r => r + 1)}>
+            onMouseEnter={() => { if (!stillHover()) setSenseReplay(r => r + 1) }}>
             <SenseMark animate showBrush replay={senseReplay} gradientColors={isDark ? DARK_GRADIENT : LIGHT_GRADIENT} />
           </div>
           <div ref={weaveRef} className={styles.mark}
-            onMouseEnter={() => setWeaveReplay(r => r + 1)}>
+            onMouseEnter={() => { if (!stillHover()) setWeaveReplay(r => r + 1) }}>
             <WeaveMark animate showBrush replay={weaveReplay} gradientColors={isDark ? DARK_GRADIENT : LIGHT_GRADIENT} />
           </div>
 
