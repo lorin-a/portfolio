@@ -143,12 +143,24 @@ export default function AboutSection() {
       // one coherent unit across the phrase.
       let beforeChars = []
       let afterChars = []
+      // SplitText masks are inline-blocks with overflow: clip. WebKit (iOS
+      // Safari) puts the baseline of such a box at its bottom edge, so the
+      // split words ride higher than the unsplit accent span ("into" and
+      // "to" float above "thoughtful design"). Clip with clip-path instead:
+      // same vertical mask, no baseline shift, and the sides stay open so
+      // nothing slanted gets shaved.
+      const unclipBaseline = (split) =>
+        (split.masks || []).forEach((m) => {
+          m.style.overflow = 'visible'
+          m.style.clipPath = 'inset(0 -0.2em)'
+        })
       if (ledeBeforeRef.current) {
         const splitBefore = SplitText.create(ledeBeforeRef.current, {
           type: 'words,chars',
           mask: 'chars',
           autoSplit: true,
         })
+        unclipBaseline(splitBefore)
         beforeChars = splitBefore.chars || []
         ledeBeforeRef.current.removeAttribute('aria-label')
       }
@@ -158,6 +170,7 @@ export default function AboutSection() {
           mask: 'chars',
           autoSplit: true,
         })
+        unclipBaseline(splitAfter)
         afterChars = splitAfter.chars || []
         ledeAfterRef.current.removeAttribute('aria-label')
       }
