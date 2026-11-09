@@ -451,5 +451,39 @@
   "thumb": "thumb.webp",
   "by": "history.mjs",
   "v": 12
+ },
+ {
+  "id": "20261109-0851-f754f48",
+  "date": "2026-11-09T13:51:01.314Z",
+  "name": "About: the Currently card carries her new words",
+  "commit": "f754f48",
+  "repo": "/Users/lorinanderberg/Desktop/portfolio-redesign-copy-currently-card",
+  "source": "shots: /private/tmp/claude-501/-Users-lorinanderberg-Desktop-portfolio-redesign-copy-currently-card/b6ef871d-5433-4a8b-8c86-bc92cd11a3b0/scratchpad/shots",
+  "what": "About: bind the Currently card’s articles so no “a” hangs at a line end",
+  "decision": "Her 9 Nov words, verbatim; articles bound so no line ends on a lone “a”; layout unchanged (fits at 1440 and 390)",
+  "notes": [],
+  "said": [],
+  "chat": "",
+  "images": {
+   "desk": [
+    {
+     "src": "d00.webp",
+     "w": 1440,
+     "h": 900,
+     "screens": 1
+    }
+   ],
+   "phone": [
+    {
+     "src": "p00.webp",
+     "w": 390,
+     "h": 900,
+     "screens": 1
+    }
+   ]
+  },
+  "thumb": "thumb.webp",
+  "by": "history.mjs",
+  "v": 13
  }
 ]
