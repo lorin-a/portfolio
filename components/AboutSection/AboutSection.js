@@ -17,7 +17,7 @@ const CARDS = [
     id: 'currently',
     label: 'Currently',
     body:
-      'Designing and building projects I’m passionate about: a community commons for discussing mortality, an emotional processing tool for overwhelm, a collaborative brand identity platform, custom workspace tools for designers who code with AI, and entry-level learning modules for those who want to design with code.',
+      'Designing and building projects I’m passionate about: a community commons for discussing mortality, an emotional processing tool for overwhelm, a collaborative brand identity platform, custom workspace tools for designers who code with AI, and entry-level learning modules for those who want to design with code.',
   },
   {
     id: 'seeking',
