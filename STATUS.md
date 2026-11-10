@@ -1,5 +1,10 @@
 # Project Status
 
+## Where we left off (for Lorin; 2026-11-10 12:47)
+Lede fix (thoughtful design on the line on iPhone) is live at lorin.work (f542726).
+The Currently card chat is waiting on her yes to push it live (To-do rl3).
+**Next with you:** After her yes, the Currently card chat pushes, confirms it's live, and closes.
+
 ## ▶ NEXT SESSION (planned 2026-10-01): THE SHEET FOR THE OTHER CASE STUDIES
 
 **▶ RESUME (2026-10-04, end of day): ALL FIVE SHEETS REVISED FROM HER REVIEW, DEV ONLY; NEXT IS THE PLAYGROUND.** She walked the four draft sheets and answered the decision queue (D1–D31, block below the ledger; open: D7 CMU-palette boards, D10 SomeBuddy Weave card, D22 TD reflection). Every note FS348–FS392 is closed in the ledger. **Shipped to dev this session:** SomeBuddy (polaroids, real iPhones on brand blue, storyboards, affinity map, pitch photo, credits for Yaezi + Rui, her contribution boxes, one concept film); Transition Design (Context rewrite, map PDFs, Medium documentation series, affinity-mapping photos, her contribution on every board); Bridging (brand wall of logo animations, a foldable/flippable GAP Guide, bentos for signage/apparel/iteration, credits); BirthStory (parent quote, client names); Groundswell **Process chapter (workshops + playtest) in dev only: the Groundswell sheet is LIVE, so it ships only after her review**; site-wide keyboard + overlay + video-playback fixes (FS358, FS372). Renderer additions: `media.bento`, `media.pair`, `media.plus`, `media.cards`, `exhibit: 'pamphlet'`, section `links`/`credit`, `sheet.series`. **Next:** the Playground (FS392; plan in “▶ NEXT: THE PLAYGROUND” below). **Then:** her eyes on the revised sheets, the three open decisions, and a release (release recipe below; never merge this branch whole). See it: `npm run dev -- -p 3005`, Open project on each folder.
