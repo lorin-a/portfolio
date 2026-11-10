@@ -1,9 +1,9 @@
 # Project Status
 
-## Where we left off (for Lorin; 2026-11-10 12:47)
-Lede fix (thoughtful design on the line on iPhone) is live at lorin.work (f542726).
-The Currently card chat is waiting on her yes to push it live (To-do rl3).
-**Next with you:** After her yes, the Currently card chat pushes, confirms it's live, and closes.
+## Where we left off (for Lorin; 2026-11-10 13:23)
+Lede fix is live at lorin.work (f542726).
+The Currently card chat is closed with its work saved; its push live waits on her yes (To-do rl3).
+**Next with you:** On her yes, bring back the Currently card chat to push, confirm live, and close.
 
 ## ▶ NEXT SESSION (planned 2026-10-01): THE SHEET FOR THE OTHER CASE STUDIES
 
