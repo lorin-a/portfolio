@@ -135,7 +135,7 @@ Source: `content/projects/somebuddy.md` (verbatim, full file; line numbers are t
 - Medium article and Squarespace page (`medium.md`, `squarespace.md` in this folder) are the substantive text; `content/projects/somebuddy.md` has only the Tension paragraph and an HMW (lines 20-22); Context, Listen, Sense, Imagine, Try, Offer, Learn are all `[Add content]` (Context says "[Add content from PDF]").
 - No route: `app/(portfolio)/projects/` has no SomeBuddy folder (`[slug]/` is generic).
 - Files mentioning SomeBuddy: `STATUS.md` (lines 13, 360, 1054-1058, 1178, 1189, 1221, 1250, 1337, 1345), `docs/case-study-editorial/BIRTHSTORY-copy-plan.md:11` (the `MY PART.docx` note; the file is not on this machine), `docs/case-study-editorial/PORTFOLIO-all-copy-RAW.md`. `STATUS.md:1178` (R12) records that a SomeBuddy "Dezudio taught-process/method" block was removed from an earlier build. Nothing in `References/`.
-- Local originals: `~/Desktop/NEW 2026 Portfolio Files Cloudinary/SomeBuddy/` (includes `SomeBuddy Video.mp4`, `somebuddy-reel-2.mp4`, `Final SomeBuddy Animated Logo.mp4`), `~/Desktop/somebuddy-clips/`, `~/Desktop/Portfolio/Final SomeBuddy Animated Logo.mp4`, `~/Desktop/portfolio-deck/filestack-somebuddy-initial.png`.
+- Local originals: `~/Desktop/NEW 2026 Portfolio Files Cloudinary/SomeBuddy/` (includes `SomeBuddy Video.mp4`, `somebuddy-reel-2.mp4`, `Final SomeBuddy Animated Logo.mp4`), `~/Desktop/somebuddy-clips/`, `/Volumes/Lorin 10 TB/Offload from Mac/2026-11-03/Portfolio/Final SomeBuddy Animated Logo.mp4`, `~/Desktop/portfolio-deck/filestack-somebuddy-initial.png`.
 - Medium YouTube video (in the article): https://www.youtube.com/watch?v=pdlaitoGycA
 
 

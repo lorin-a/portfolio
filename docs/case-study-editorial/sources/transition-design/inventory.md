@@ -133,7 +133,7 @@ Source: `content/projects/transition-design.md` (verbatim, full file; line numbe
 - The Medium publication holds FIVE articles (assignments 1-5, all dated 4 May 2025), not one; all are in `medium.md`. Her Squarespace page links to "Read Full Documentation" and "View High-Res PDF" (Drive).
 - No route: `app/(portfolio)/projects/` has no Transition Design folder.
 - Files mentioning Transition Design: `STATUS.md` (lines 13, 360, 1058, 1192, 1219, 1231, 1241, 1248, 1252, 1272, 1295, 1337, 1345), `docs/deck-system/JOURNAL.md:909-910, 930` (planned as the "interview first, build after" arm), `docs/case-study-editorial/BIRTHSTORY-copy-plan.md:11` (`MY PART.docx` Tab 2; file not on this machine), `docs/case-study-editorial/PORTFOLIO-all-copy-RAW.md`. Nothing in `References/`.
-- Local originals: `~/Desktop/NEW 2026 Portfolio Files Cloudinary/Transition Design/`, `~/Desktop/Portfolio/Transition Design/`, `~/Desktop/cloudinary-compressed/transition-design-home-preview-*.mp4`.
+- Local originals: `~/Desktop/NEW 2026 Portfolio Files Cloudinary/Transition Design/`, `/Volumes/Lorin 10 TB/Offload from Mac/2026-11-03/Portfolio/Transition Design/`, `~/Desktop/cloudinary-compressed/transition-design-home-preview-*.mp4`.
 - Medium disclaimer (publication description): "Disclaimer: Theoretical w/ AI-Assisted Writing & Research + Imagery". Assignment 5 header: "the entirety of this project is done through speculation and internet research with AI-assistance and does not claim to truly and deeply understand the experience of anyone who is represented."
 
 
