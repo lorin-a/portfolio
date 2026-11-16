@@ -2,10 +2,10 @@
 
 **History, word for word:** `STATUS-archive.md` holds every older section, moved 2026-11-11 (nothing cut). Read it only at the lines a handoff names.
 
-## Where we left off (for Lorin; 2026-11-10 13:23)
-Lede fix is live at lorin.work (f542726).
-The Currently card chat is closed with its work saved; its push live waits on her yes (To-do rl3).
-**Next with you:** On her yes, bring back the Currently card chat to push, confirm live, and close.
+## Where we left off (for Lorin; 2026-11-16 14:42)
+The new Currently card is live at lorin.work (main 6cba78e), checked at 1440 and 390; the lede fix is live too (f542726).
+No chats open; nothing waiting on her.
+**Next with you:** Next portfolio work is hers to pick (STATUS: the Playground plan).
 
 ## ⟢ OPEN NOTES LEDGER — Birth Story (live; every note Lorin sends lands here the moment it arrives)
 
