@@ -17,7 +17,7 @@ const CARDS = [
     id: 'currently',
     label: 'Currently',
     body:
-      'Building a mental-health product from scratch with Claude Code. Diving deep into Storytelling with Data Humanism. Getting curious about projects in end-of-life care.',
+      'Designing and building projects I’m passionate about: a community commons for discussing mortality, an emotional processing tool for overwhelm, a collaborative brand identity platform, custom workspace tools for designers who code with AI, and entry-level learning modules for those who want to design with code.',
   },
   {
     id: 'seeking',
